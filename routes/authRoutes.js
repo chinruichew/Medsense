@@ -10,4 +10,5 @@ module.exports = app => {
             failureFlash: true
         })
     );
+    /* End of Local Auth */
 };
