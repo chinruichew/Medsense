@@ -2,14 +2,6 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "proxy": {
-    "/auth/local": {
-      "target": "http://localhost:5000"
-    },
-    "/api/*": {
-      "target": "http://localhost:5000"
-    }
-  },
   "dependencies": {
     "axios": "^0.16.2",
     "bootstrap": "^3.3.7",
