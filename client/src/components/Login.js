@@ -9,7 +9,7 @@ class Login extends Component {
         };
     }
 
-    handleUserChange(e) {
+    handleUsernameChange(e) {
         this.setState({ username: e.target.value });
     }
 
@@ -28,7 +28,7 @@ class Login extends Component {
                 <input type="text"
                     placeholder="Enter Username"
                     value={this.state.username}
-                    onChange={(e) => this.handleUserChange(e)} />
+                    onChange={(e) => this.handleUsernameChange(e)} />
 
                 <input type="text"
                     placeholder="Enter Password"
