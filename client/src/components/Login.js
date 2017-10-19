@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import * as actions from '../actions';
 
 class Login extends Component {
     constructor(props) {
@@ -18,13 +19,13 @@ class Login extends Component {
     }
 
     handleLogin(e) {
-        console.log(this.state.username);
-        console.log(this.state.password);
+        actions.localLogin(this.state.username, this.state.password);
     }
 
     render() {
         return (
-            <div>
+            <div className="text-center">
+                <br/>
                 <input type="text"
                     placeholder="Enter Username"
                     value={this.state.username}
@@ -39,7 +40,7 @@ class Login extends Component {
                     onClick={(e) => this.handleLogin(e)}>
                     Login </button>
             </div>
-        )
+        );
     }
 }
 
