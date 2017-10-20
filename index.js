@@ -7,6 +7,9 @@ const keys = require('./config/keys');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Connect to MLab
+mongoose.connect(keys.mongoURI);
+
 require('app-module-path').addPath(require('path').join(__dirname, '/routes'));
 
 const router = express.Router();
