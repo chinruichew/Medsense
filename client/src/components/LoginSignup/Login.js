@@ -27,30 +27,19 @@ class Login extends Component {
 
     render() {
         return (
-            <div style={{
-                "position": "fixed",
-                "top": "35%",
-                "left": "40%",
-                "margin-top": "-30px",
-                "margin-left": "-40px"
-            }}>
-                <div className="row">
-                    <div className="col-lg-4 col-lg-offset-4">
-                        <div className="input-group">
+            <div className="container-fluid">
+                <div className="row" style={{"marginTop": '150px'}}>
+                    <div className="col-sm-4 col-sm-offset-4">
+                        <div className="input-group" style={{"marginBottom": '10px'}}>
                             <span className="input-group-addon"><span className="glyphicon glyphicon-user"></span></span>
                             <input type="text"
-                                placeholder="Enter Username"
-                                value={this.state.username}
-                                className="form-control"
-                                style={{ "width": "180px" }}
-                                onChange={(e) => this.handleUsernameChange(e)} />
+                                   placeholder="Enter Username"
+                                   value={this.state.username}
+                                   className="form-control"
+                                   style={{ "width": "180px" }}
+                                   onChange={(e) => this.handleUsernameChange(e)} />
                         </div>
-                    </div>
-                </div>
-                <br />
-                <div className="row">
-                    <div className="col-lg-4 col-lg-offset-4">
-                        <div className="input-group">
+                        <div className="input-group" style={{"marginBottom": '10px'}}>
                             <span className="input-group-addon"><span className="glyphicon glyphicon-lock"></span></span>
                             <input type="password"
                                 placeholder="Enter Password"
@@ -59,13 +48,13 @@ class Login extends Component {
                                 style={{ "width": "180px" }}
                                 onChange={(e) => this.handlePasswordChange(e)} />
                         </div>
+                        <button type="button"
+                                className="btn btn-primary"
+                                onClick={(e) => this.handleLogin(e)}>
+                            Login </button>
                     </div>
                 </div>
                 <br />
-                <button style={{"marginRight":"30px"}}type="button"
-                    className="btn btn-primary"
-                    onClick={(e) => this.handleLogin(e)}>
-                    Login </button>
             </div >
         )
     }
