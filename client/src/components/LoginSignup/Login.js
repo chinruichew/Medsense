@@ -34,24 +34,24 @@ class Login extends Component {
                 "margin-top": "-30px",
                 "margin-left": "-40px"
             }}>
-                <div class="row">
-                    <div class="col-lg-4 col-lg-offset-4">
-                        <div class="input-group">
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                <div className="row">
+                    <div className="col-lg-4 col-lg-offset-4">
+                        <div className="input-group">
+                            <span className="input-group-addon"><span className="glyphicon glyphicon-user"></span></span>
                             <input type="text"
                                 placeholder="Enter Username"
                                 value={this.state.username}
-                                class="form-control"
+                                className="form-control"
                                 style={{ "width": "180px" }}
                                 onChange={(e) => this.handleUsernameChange(e)} />
                         </div>
                     </div>
                 </div>
                 <br />
-                <div class="row">
-                    <div class="col-lg-4 col-lg-offset-4">
-                        <div class="input-group">
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                <div className="row">
+                    <div className="col-lg-4 col-lg-offset-4">
+                        <div className="input-group">
+                            <span className="input-group-addon"><span className="glyphicon glyphicon-lock"></span></span>
                             <input type="password"
                                 placeholder="Enter Password"
                                 value={this.state.password}
@@ -63,7 +63,7 @@ class Login extends Component {
                 </div>
                 <br />
                 <button style={{"marginRight":"30px"}}type="button"
-                    class="btn btn-primary"
+                    className="btn btn-primary"
                     onClick={(e) => this.handleLogin(e)}>
                     Login </button>
             </div >
