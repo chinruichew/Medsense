@@ -11,6 +11,8 @@ import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
 import Bootstrap from 'bootstrap/dist/css/bootstrap.css';
 
+import reducers from './reducers/index'
+
 const store = createStore(reducers, {}, applyMiddleware(reduxThunk));
 
 ReactDOM.render(

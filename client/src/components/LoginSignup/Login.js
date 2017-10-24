@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Button } from 'react-bootstrap';
+import { bindAll } from 'lodash';
 
 class Login extends Component {
     constructor(props) {
@@ -7,6 +10,7 @@ class Login extends Component {
             username: '',
             password: ''
         };
+        bindAll(this, 'handleUsernameChange', 'handlePasswordChange', 'handleLogin');
     }
 
     handleUsernameChange(e) {
@@ -18,27 +22,51 @@ class Login extends Component {
     }
 
     handleLogin(e) {
-        console.log(this.state.username);
-        console.log(this.state.password);
+        let { username, password } = this.state;
     }
 
     render() {
         return (
-            <div>
-                <input type="text"
-                    placeholder="Enter Username"
-                    value={this.state.username}
-                    onChange={(e) => this.handleUsernameChange(e)} />
-
-                <input type="text"
-                    placeholder="Enter Password"
-                    value={this.state.password}
-                    onChange={(e) => this.handlePasswordChange(e)} />
-
-                <button type="button"
+            <div style={{
+                "position": "fixed",
+                "top": "35%",
+                "left": "40%",
+                "margin-top": "-30px",
+                "margin-left": "-40px"
+            }}>
+                <div class="row">
+                    <div class="col-lg-4 col-lg-offset-4">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                            <input type="text"
+                                placeholder="Enter Username"
+                                value={this.state.username}
+                                class="form-control"
+                                style={{ "width": "180px" }}
+                                onChange={(e) => this.handleUsernameChange(e)} />
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-lg-4 col-lg-offset-4">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                            <input type="password"
+                                placeholder="Enter Password"
+                                value={this.state.password}
+                                className="form-control has-error"
+                                style={{ "width": "180px" }}
+                                onChange={(e) => this.handlePasswordChange(e)} />
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <button style={{"marginRight":"30px"}}type="button"
+                    class="btn btn-primary"
                     onClick={(e) => this.handleLogin(e)}>
                     Login </button>
-            </div>
+            </div >
         )
     }
 }
