@@ -3,18 +3,29 @@ import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { bindAll } from 'lodash';
 
-class StudentProfile extends Component {
+class StudentSignup extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            student: this.props.student,
-            school: this.props.student.school,
-            year: this.props.student.year,
-            profilepicture: this.props.student.profilepicture,
-            filename: null,
-            filetype: null
+            username: null,
+            password: null,
+            confirmpassword: null,
+            school: "Duke-NUS",
+            year: "Year 1"
         };
-        bindAll(this, 'handleSchoolChange', 'handleYearChange', 'handleFile');
+        bindAll(this, 'handleUsernameChange', 'handlePasswordChange', 'handleConfirmPasswordChange', 'handleSchoolChange', 'handleYearChange', 'handleFile');
+    }
+
+    handleUsernameChange(e) {
+        this.setState({ username: e.target.value });
+    }
+
+    handlePasswordChange(e) {
+        this.setState({ password: e.target.value });
+    }
+
+    handleConfirmPasswordChange(e) {
+        this.setState({ confirmpassword: e.target.value });
     }
 
     handleSchoolChange(e) {
@@ -40,13 +51,14 @@ class StudentProfile extends Component {
 
     saveChanges(e) {
         e.preventDefault();
-        let { school, year, profilepicture, filename, filetype} = this.state;
+        if (this.state.password == null || this.state.confirmpassword == null) {
 
-        let student = Object.assign({}, this.state.student);
-        student.school = school;
-        student.year = year;
-        student.profilepicture = profilepicture;
-        this.setState({ student });
+        } else if (this.state.password !== this.state.confirmpassword) {
+            window.alert("Passwords do not match!");
+        }
+
+        let { username, password, confirmpassword, school, year, profilepicture, filename, filetype} = this.state;
+        console.log(this.state);
     }
 
     render() {
@@ -59,13 +71,34 @@ class StudentProfile extends Component {
             );
         }
 
+
         return (
             <div>
+
                 <table style={{ "table-layout": "fixed", "width": "350px", "line-height": "90px", "margin": "0 auto" }}>
-                    <tr align="left"> <td>Username</td> <td>Username</td> </tr>
+                    <tr align="left"> <td >Username</td> <td><input type="text"
+                        placeholder="Enter Username"
+                        value={this.state.username}
+                        className="form-control has-error"
+                        style={{ "width": "180px" }}
+                        onChange={(e) => this.handleUsernameChange(e)} /></td> </tr>
+
+                    <tr align="left"> <td>Password</td> <td> <input type="password"
+                        placeholder="Enter Password"
+                        value={this.state.password}
+                        className="form-control has-error"
+                        style={{ "width": "180px" }}
+                        onChange={(e) => this.handlePasswordChange(e)} /> </td> </tr>
+
+                    <tr align="left"> <td>Confirm Password</td> <td> <input type="password"
+                        placeholder="Confirm Password"
+                        value={this.state.confirmpassword}
+                        className="form-control has-error"
+                        style={{ "width": "180px" }}
+                        onChange={(e) => this.handleConfirmPasswordChange(e)} /> </td> </tr>
 
                     <tr align="left"> <td>School</td> <td> <select value={this.state.school}
-                        onChange={this.handleSchoolChange}
+                        onChange={(e) => this.handleSchoolChange(e)}
                         style={{ "width": "160px" }}
                         className="form-control has-error">
                         <option value="Duke-NUS">Duke-NUS</option>
@@ -74,7 +107,7 @@ class StudentProfile extends Component {
                     </select> </td> </tr>
 
                     <tr align="left"> <td>Year of Study</td> <td> <select value={this.state.year}
-                        onChange={this.handleYearChange}
+                        onChange={(e) => this.handleYearChange(e)}
                         style={{ "width": "160px" }}
                         className="form-control has-error">
                         <option value="1">Year 1</option>
@@ -91,9 +124,10 @@ class StudentProfile extends Component {
                 </table>
 
                 <Button align="right" bsStyle="primary" onClick={(e) => this.saveChanges(e)}>Save Changes</Button>
+
             </div>
         )
     }
 }
 
-export default StudentProfile;
+export default StudentSignup;
