@@ -9,13 +9,6 @@ const app = express();
 // Connect to MLab
 mongoose.connect(keys.mongoURI);
 
-require('app-module-path').addPath(require('path').join(__dirname, '/routes'));
-
-const router = express.Router();
-router.use(function (req, res, next) {
-    next();
-});
-
 /* Start of Middleware configuration */
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -29,14 +22,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 /* End of Middleware configuration */
 
-app.get('/', (req, res) => {
-    res.json({ message: 'Hello World!' });
-});
-
-const testRoute = require('test');
-
-app.use('/api', router);
-app.use('/test', testRoute);
+require('./routes/authRoutes')(app);
 
 if (process.env.NODE_ENV === 'production') {
     // Express will serve up production assets

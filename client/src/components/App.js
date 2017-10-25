@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 
@@ -12,7 +12,7 @@ class App extends Component {
         return (
             <BrowserRouter>
                 <div>
-                    <Login exact path="/" component={Login} />
+                    <Login path="/" component={Login} />
                 </div>
             </BrowserRouter>
         );
