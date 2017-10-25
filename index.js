@@ -6,8 +6,18 @@ const bodyParser = require('body-parser');
 const keys = require('./config/keys');
 const app = express();
 
+const DBURI = 'mongodb://localhost/Medsense';
 // Connect to MLab
-mongoose.connect(keys.mongoURI);
+mongoose.Promise = global.Promise;
+mongoose.connect(DBURI).then(() =>  console.log('connection succesful')).catch((err) => console.error(err));
+require('app-module-path').addPath(require('path').join(__dirname, '/routes'));
+const router = express.Router();
+router.use(function (req, res, next) {
+    next();
+});
+const testRoute = require('test');
+app.use('/api', router);
+app.use('/test', testRoute);
 
 /* Start of Middleware configuration */
 app.use(bodyParser.urlencoded({ extended: true }));
