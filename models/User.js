@@ -4,6 +4,9 @@ var { Schema } = mongoose;
 var userSchema = new Schema({
     username: { type: String, default: "" },
     password: { type: String, default: "" },
+    school: { type: String, default: "" },
+    year: { type: String, default: "" },
+    profilepicture: { type: String, default: "" },
     usertype: { type: String, default: "" }
 });
 var userModel = mongoose.model('users', userSchema);
