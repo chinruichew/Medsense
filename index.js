@@ -15,9 +15,9 @@ const router = express.Router();
 router.use(function (req, res, next) {
     next();
 });
-const testRoute = require('test');
+const signupRoute = require('signup');
 app.use('/api', router);
-app.use('/test', testRoute);
+app.use('/signup', signupRoute
 
 /* Start of Middleware configuration */
 app.use(bodyParser.urlencoded({ extended: true }));
