@@ -6,8 +6,7 @@ module.exports = app => {
         '/auth/local',
         passport.authenticate('local', {
             successRedirect: '/',
-            failureRedirect: '/login',
-            failureFlash: true
+            failureRedirect: '/login'
         })
     );
     /* End of Local Auth */

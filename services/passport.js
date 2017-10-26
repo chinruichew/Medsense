@@ -15,9 +15,11 @@ passport.deserializeUser((id, done) => {
     });
 });
 
-// Local Strategy
+// Local Strategy Login
 passport.use(
-    new LocalStrategy({}, async(username, password, done) => {
+    new LocalStrategy({
+        passReqToCallback : true
+    }, async(username, password, done) => {
         const existingUser = await User.findOne({ username });
 
         if (!existingUser || existingUser.password !== password) {
