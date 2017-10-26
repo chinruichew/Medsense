@@ -17,7 +17,7 @@ router.use(function (req, res, next) {
 });
 const signupRoute = require('signup');
 app.use('/api', router);
-app.use('/signup', signupRoute
+app.use('/signup', signupRoute);
 
 /* Start of Middleware configuration */
 app.use(bodyParser.urlencoded({ extended: true }));
