@@ -5,6 +5,7 @@ import * as actions from '../actions';
 
 import Login from './LoginSignup/Login';
 import Header from './Header';
+import Home from './Home';
 
 import './App.css';
 
@@ -15,7 +16,7 @@ class App extends Component {
                 <div>
                     <Header />
                     <Route exact path="/login" component={Login} />
-
+                    <Route exact path="/" component={Home} />
                 </div>
             </BrowserRouter>
         );

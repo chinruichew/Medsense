@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Button } from 'react-bootstrap';
 import { bindAll } from 'lodash';
 
 class Login extends Component {
@@ -22,7 +20,7 @@ class Login extends Component {
     }
 
     handleLogin(e) {
-        let { username, password } = this.state;
+        //let { username, password } = this.state;
     }
 
     render() {
