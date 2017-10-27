@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 
 import Login from './LoginSignup/Login';
+import Header from './Header';
 
 import './App.css';
 
@@ -12,7 +13,9 @@ class App extends Component {
         return (
             <BrowserRouter>
                 <div>
-                    <Login path="/" component={Login} />
+                    <Header />
+                    <Route exact path="/login" component={Login} />
+
                 </div>
             </BrowserRouter>
         );
