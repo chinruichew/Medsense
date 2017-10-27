@@ -38,7 +38,8 @@ class Login extends Component {
                                        value={this.state.username}
                                        className="form-control"
                                        style={{ "width": "180px" }}
-                                       onChange={(e) => this.handleUsernameChange(e)} />
+                                       onChange={(e) => this.handleUsernameChange(e)}
+                                        name="email"/>
                             </div>
                             <div className="input-group" style={{"marginBottom": '10px'}}>
                                 <span className="input-group-addon"><span className="glyphicon glyphicon-lock"></span></span>
@@ -47,11 +48,11 @@ class Login extends Component {
                                        value={this.state.password}
                                        className="form-control has-error"
                                        style={{ "width": "180px" }}
-                                       onChange={(e) => this.handlePasswordChange(e)} />
+                                       onChange={(e) => this.handlePasswordChange(e)}
+                                       name="password"/>
                             </div>
-                            <button type="button"
-                                    className="btn btn-primary"
-                                    onClick={(e) => this.handleLogin(e)}>
+                            <button type="submit"
+                                    className="btn btn-primary">
                                 Login
                             </button>
                         </form>

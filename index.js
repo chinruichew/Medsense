@@ -4,12 +4,27 @@ const cookieSession = require('cookie-session');
 const passport = require('passport');
 const bodyParser = require('body-parser');
 const keys = require('./config/keys');
+require('./models/User');
+require('./services/passport');
 const app = express();
 
-const DBURI = 'mongodb://localhost/Medsense';
-// Connect to MLab
-mongoose.Promise = global.Promise;
-mongoose.connect(DBURI).then(() =>  console.log('connection succesful')).catch((err) => console.error(err));
+/* Start of MongoDB Connection */
+const config = {
+    "USER"    : "",
+    "PASS"    : "",
+    "HOST"    : "ec2-54-169-186-57.ap-southeast-1.compute.amazonaws.com",
+    "PORT"    : "27017",
+    "DATABASE" : "medsenseDB"
+};
+const dbPath  = "mongodb://"+config.USER + ":"+
+    config.PASS + "@"+
+    config.HOST + ":"+
+    config.PORT + "/"+
+    config.DATABASE;
+
+const db = mongoose.connect(dbPath);
+/* End of MongoDB Connection */
+
 require('app-module-path').addPath(require('path').join(__dirname, '/routes'));
 const router = express.Router();
 router.use(function (req, res, next) {

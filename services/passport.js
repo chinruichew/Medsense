@@ -18,9 +18,12 @@ passport.deserializeUser((id, done) => {
 // Local Strategy Login
 passport.use(
     new LocalStrategy({
+        usernameField : 'email',
+        passwordField : 'password',
         passReqToCallback : true
-    }, async(username, password, done) => {
-        const existingUser = await User.findOne({ username });
+    }, async(req, email, password, done) => {
+        console.log(email, password);
+        const existingUser = await User.findOne({ email: email });
 
         if (!existingUser || existingUser.password !== password) {
             return done(null, false, { message: 'Invalid Username or Password!' });
