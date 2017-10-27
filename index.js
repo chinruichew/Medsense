@@ -31,8 +31,10 @@ router.use(function (req, res, next) {
     next();
 });
 const signupRoute = require('signup');
+const uploadRoute = require('upload')
 app.use('/api', router);
 app.use('/signup', signupRoute);
+app.use('/upload', uploadRoute);
 
 /* Start of Middleware configuration */
 app.use(bodyParser.urlencoded({ extended: true }));

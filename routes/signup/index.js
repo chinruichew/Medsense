@@ -4,14 +4,14 @@ var bodyParser = require('body-parser');
 var path = require('path')
 require('app-module-path').addPath(path.join(__dirname, '/routes'))
 router.use(bodyParser.urlencoded({ extended: true }));
-
+var mongoose = require('mongoose')
 var User = require('../../models/User');
 
 router.post('/', function (req, res) {
     User.findOne({ username: req.body.username }, function (err, user) {
         if (err) { return res.send(err) }
         if (user) {
-            return res.status(409).send({ data: null, message: "user exists" });  
+            return res.status(409).send({ data: null, message: "user exists" });
         }
         if (!user) {
             var newUser = new User();
