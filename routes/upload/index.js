@@ -55,12 +55,12 @@ router.post('/', function (req, res) {
 
 router.post('/update', function (req, res) {
     Case.findById(req.body.id, function (err, oneCase) {
-        oneCase.title = "req.body.title"
-        oneCase.difficulty = "req.body.difficulty"
-        oneCase.speciality = "req.body.speciality"
-        oneCase.subspeciality = "req.body.subspeciality"
-        oneCase.approach = "req.body.aproach"
-        oneCase.scenario = "req.body.scenario"
+        oneCase.title = req.body.title
+        oneCase.difficulty = req.body.difficulty
+        oneCase.speciality = req.body.speciality
+        oneCase.subspeciality = req.body.subspeciality
+        oneCase.approach = req.body.aproach
+        oneCase.scenario = req.body.scenario
 
         var questionArray = req.body.questionArray;
         var jsonObject = JSON.parse(questionArray);
@@ -130,15 +130,23 @@ router.post('/deleteCase', function (req, res) {
 
 router.post('/updateCase', function (req, res) {
     Case.findById(req.body.caseid, function (err, oneCase) {
-        oneCase.title = "req.body.title"
-        oneCase.difficulty = "req.body.difficulty"
-        oneCase.speciality = "req.body.speciality"
-        oneCase.subspeciality = "req.body.subspeciality"
-        oneCase.approach = "req.body.aproach"
-        oneCase.scenario = "req.body.scenario"
+        oneCase.title = req.body.title
+        oneCase.difficulty = req.body.difficulty
+        oneCase.speciality = req.body.speciality
+        oneCase.subspeciality = req.body.subspeciality
+        oneCase.approach = req.body.aproach
+        oneCase.scenario = req.body.scenario
         oneCase.save();
     })
     return res.status(201).send({ data: null, message: "updateCase success" });
+})
+
+router.post('/updateCaseTakeaway', function (req, res) {
+    Case.findById(req.body.caseid, function (err, oneCase) {
+        oneCase.takeaway = req.body.takeaway
+        oneCase.save();
+    })
+    return res.status(201).send({ data: null, message: "updateCaseTakeaway success" });
 })
 
 module.exports = router;
