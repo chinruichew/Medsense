@@ -22,7 +22,7 @@ passport.use(
     }, async(req, username, password, done) => {
         const existingUser = await User.findOne({ username: username });
 
-        if (!existingUser || existingUser.password !== password) {
+        if (!existingUser || !existingUser.validPassword(password)) {
             return done(null, false, { message: 'Invalid Username or Password!' });
         }
 
@@ -51,7 +51,7 @@ passport.use('local-signup', new LocalStrategy({
                 // create the user
                 let newUser = new User({
                     username: username,
-                    password: password
+                    password: User.generateHash(password)
                 }).save();
 
                 return done(null, newUser);

@@ -6,13 +6,15 @@ module.exports = app => {
         '/auth/local',
         passport.authenticate('local', {
             successRedirect: '/',
-            failureRedirect: '/login'
+            failureRedirect: '/login',
+            failureFlash : true
         })
     );
 
     app.get('/auth/local/signup', passport.authenticate('local-signup', {
         successRedirect : '/login',
         failureRedirect : '/signup',
+        failureFlash : true,
         session: false
     }));
     /* End of Local Auth */
