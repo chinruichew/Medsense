@@ -30,12 +30,14 @@ router.post('/', function (req, res) {
             pearl: jsonObject[prop]['pearl'],
             timelimit: jsonObject[prop]['timelimit'],
             reference: jsonObject[prop]['reference'],
-            stem: jsonObject[prop]['stem']
+            stem: jsonObject[prop]['stem'],
+            case: newCase._id
         })
         for (var key in jsonObject[prop]['mcqs']) {
             var newMCQ = new MCQ({
                 answer: "",
-                status: true
+                status: true,
+                question: newQuestion._id
             })
             for (var key1 in jsonObject[prop]['mcqs'][key]) {
                 newMCQ.answer = jsonObject[prop]['mcqs'][key]["answer"];
@@ -102,7 +104,7 @@ router.post('/fetchAll', function (req, res) {
 });
 
 router.post('/fetchAllByAuthor', function (req, res) {
-    Case.find({author: req.body.authorid}).populate({
+    Case.find({ author: req.body.authorid }).populate({
         path: 'questions',
         model: 'questions',
         populate: {
@@ -112,6 +114,16 @@ router.post('/fetchAllByAuthor', function (req, res) {
     }).exec(function (error, cases) {
         return res.status(201).send({ data: cases, message: "fetchAllByAuthor success" });
     })
+});
+
+router.post('/deleteCase', function (req, res) {
+    Case.find({ _id: req.body.caseid }, function(err, oneCase) {
+        Question.find({ case: req.body.caseid }, function(err, questions ) {
+            for(var prop in questions) {
+                MCQ.find({ question: questions[prop]['_id'] }).remove().exec();
+            }
+        }).remove().exec();
+    }).remove().exec();
 });
 
 module.exports = router;
