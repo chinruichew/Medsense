@@ -77,7 +77,7 @@ router.post('/update', function (req, res) {
                 for (var key in jsonObject[prop]['mcqs']) {
                     MCQ.findById(jsonObject[prop]['mcqs'][key]["id"], function (err, oneMCQ) {
                         if (oneMCQ) {
-                            oneMCQ.answer = jsonObject[prop]['mcqs'][key]["answer"]
+                            oneMCQ.answer = jsonObject[prop]['mcqs'][key]["answer"];
                             oneMCQ.status = jsonObject[prop]['mcqs'][key]["status"];
                             oneMCQ.save();
                         }
@@ -117,13 +117,28 @@ router.post('/fetchAllByAuthor', function (req, res) {
 });
 
 router.post('/deleteCase', function (req, res) {
-    Case.find({ _id: req.body.caseid }, function(err, oneCase) {
-        Question.find({ case: req.body.caseid }, function(err, questions ) {
-            for(var prop in questions) {
+    Case.find({ _id: req.body.caseid }, function (err, oneCase) {
+        Question.find({ case: req.body.caseid }, function (err, questions) {
+            for (var prop in questions) {
                 MCQ.find({ question: questions[prop]['_id'] }).remove().exec();
             }
         }).remove().exec();
     }).remove().exec();
+
+    return res.status(201).send({ data: null, message: "deleteCase success" });
 });
+
+router.post('/updateCase', function (req, res) {
+    Case.findById(req.body.caseid, function (err, oneCase) {
+        oneCase.title = "req.body.title"
+        oneCase.difficulty = "req.body.difficulty"
+        oneCase.speciality = "req.body.speciality"
+        oneCase.subspeciality = "req.body.subspeciality"
+        oneCase.approach = "req.body.aproach"
+        oneCase.scenario = "req.body.scenario"
+        oneCase.save();
+    })
+    return res.status(201).send({ data: null, message: "updateCase success" });
+})
 
 module.exports = router;
