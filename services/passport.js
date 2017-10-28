@@ -23,7 +23,7 @@ passport.use(
         const existingUser = await User.findOne({ username: username });
 
         if (!existingUser || !existingUser.validPassword(password)) {
-            return done(null, false, { message: 'Invalid Username or Password!' });
+            return done(null, false, req.flash('loginError', 'Invalid Username or Password!'));
         }
 
         return done(null, existingUser);
@@ -44,15 +44,15 @@ passport.use('local-signup', new LocalStrategy({
 
             // check to see if there is already a user with that email
             if (user) {
-                return done(null, false, { message: 'Username has already been used!' });
+                return done(null, false, req.flash('signupError', 'Username has already been used!'));
             } else {
 
                 // if there is no user with that email
                 // create the user
-                let newUser = new User({
-                    username: username,
-                    password: User.generateHash(password)
-                }).save();
+                let newUser = new User();
+                newUser.username = username;
+                newUser.password = newUser.generateHash(password);
+                newUser.save();
 
                 return done(null, newUser);
             }

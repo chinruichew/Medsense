@@ -80,6 +80,7 @@ class StudentSignup extends Component {
                             value={this.state.username}
                             className="form-control has-error"
                             style={{ "width": "180px" }}
+                            name="username"
                             onChange={(e) => this.handleUsernameChange(e)} /></td> </tr>
 
                         <tr align="left"> <td>Password</td> <td> <input type="password"
@@ -87,6 +88,7 @@ class StudentSignup extends Component {
                             value={this.state.password}
                             className="form-control has-error"
                             style={{ "width": "180px" }}
+                            name="password"
                             onChange={(e) => this.handlePasswordChange(e)} /> </td> </tr>
 
                         <tr align="left"> <td>Confirm Password</td> <td> <input type="password"
