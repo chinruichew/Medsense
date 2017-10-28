@@ -48,7 +48,7 @@ router.post('/', function (req, res) {
         newCase.questions.push(newQuestion._id);
         newCase.save();
     }
-    return res.status(201).send({ data: null, message: "case created" });
+    return res.status(201).send({ data: null, message: "uploadCase success" });
 });
 
 router.post('/update', function (req, res) {
@@ -84,8 +84,34 @@ router.post('/update', function (req, res) {
             })
         }
         oneCase.save()
-        return res.status(201).send({ data: null, message: "case updated" });
+        return res.status(201).send({ data: null, message: "updateCase success" });
     });
+});
+
+router.post('/fetchAll', function (req, res) {
+    Case.find({}).populate({
+        path: 'questions',
+        model: 'questions',
+        populate: {
+            path: 'mcqs',
+            model: 'mcqs'
+        }
+    }).exec(function (error, cases) {
+        return res.status(201).send({ data: cases, message: "fetchAll success" });
+    })
+});
+
+router.post('/fetchAllByAuthor', function (req, res) {
+    Case.find({author: req.body.authorid}).populate({
+        path: 'questions',
+        model: 'questions',
+        populate: {
+            path: 'mcqs',
+            model: 'mcqs'
+        }
+    }).exec(function (error, cases) {
+        return res.status(201).send({ data: cases, message: "fetchAllByAuthor success" });
+    })
 });
 
 module.exports = router;
