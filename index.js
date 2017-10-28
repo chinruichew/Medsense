@@ -2,6 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
+const flash = require('connect-flash');
+const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const keys = require('./config/keys');
 require('./models/User');
@@ -31,12 +33,13 @@ router.use(function (req, res, next) {
     next();
 });
 const signupRoute = require('signup');
-const uploadRoute = require('upload')
+const uploadRoute = require('upload');
 app.use('/api', router);
 app.use('/signup', signupRoute);
 app.use('/upload', uploadRoute);
 
 /* Start of Middleware configuration */
+app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(
@@ -47,6 +50,7 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 /* End of Middleware configuration */
 
 require('./routes/authRoutes')(app);
