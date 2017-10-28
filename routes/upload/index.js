@@ -64,6 +64,7 @@ router.post('/update', function (req, res) {
 
         var questionArray = req.body.questionArray;
         var jsonObject = JSON.parse(questionArray);
+
         for (var prop in jsonObject) {
             Question.findById(jsonObject[prop]['id'], function (err, oneQuestion) {
                 oneQuestion.title = jsonObject[prop]['title']
@@ -147,6 +148,34 @@ router.post('/updateCaseTakeaway', function (req, res) {
         oneCase.save();
     })
     return res.status(201).send({ data: null, message: "updateCaseTakeaway success" });
+})
+
+router.post('/updateQuestion', function (req, res) {
+    Question.findById(req.body.questionid, function (err, oneQuestion) {
+        oneQuestion.title = req.body.title
+        oneQuestion.type = req.body.type
+        oneQuestion.open = req.body.open
+        oneQuestion.pearl = req.body.pearl
+        oneQuestion.timelimit = req.body.timelimit
+        oneQuestion.reference = req.body.reference
+        oneQuestion.stem = req.body.stem
+
+        var questionArray = req.body.questionArray;
+        var jsonObject = JSON.parse(questionArray);
+
+        for (var prop in jsonObject) {
+            for (var key in jsonObject[prop]['mcqs']) {
+                MCQ.findById(jsonObject[prop]['mcqs'][key]["id"], function (err, oneMCQ) {
+                    if (oneMCQ) {
+                        oneMCQ.answer = jsonObject[prop]['mcqs'][key]["answer"];
+                        oneMCQ.status = jsonObject[prop]['mcqs'][key]["status"];
+                        oneMCQ.save();
+                    }
+                })
+            }
+        }
+        return res.status(201).send({ data: null, message: "updateCaseQuestion success" });
+    })
 })
 
 module.exports = router;
