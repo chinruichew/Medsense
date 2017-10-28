@@ -1,8 +1,8 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-var { Schema } = mongoose;
+const { Schema } = mongoose;
 
-var userSchema = new Schema({
+const userSchema = new Schema({
     username: { type: String, default: "" },
     password: { type: String, default: "" },
     school: { type: String, default: "" },
@@ -12,6 +12,6 @@ var userSchema = new Schema({
     cases: [{type: Schema.Types.ObjectId, ref: 'cases'}]
 });
 
-var userModel = mongoose.model('users', userSchema);
+const userModel = mongoose.model('users', userSchema);
 
-module.exports = userModel
+module.exports = userModel;

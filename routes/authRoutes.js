@@ -9,5 +9,11 @@ module.exports = app => {
             failureRedirect: '/login'
         })
     );
+
+    app.get('/auth/local/signup', passport.authenticate('local-signup', {
+        successRedirect : '/login',
+        failureRedirect : '/signup',
+        session: false
+    }));
     /* End of Local Auth */
 };

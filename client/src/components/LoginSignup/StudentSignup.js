@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { bindAll } from 'lodash';
 
@@ -74,57 +73,56 @@ class StudentSignup extends Component {
 
         return (
             <div>
+                <form action="/auth/local/signup" method="get">
+                    <table style={{ "table-layout": "fixed", "width": "350px", "line-height": "90px", "margin": "0 auto" }}>
+                        <tr align="left"> <td >Username</td> <td><input type="text"
+                            placeholder="Enter Username"
+                            value={this.state.username}
+                            className="form-control has-error"
+                            style={{ "width": "180px" }}
+                            onChange={(e) => this.handleUsernameChange(e)} /></td> </tr>
 
-                <table style={{ "table-layout": "fixed", "width": "350px", "line-height": "90px", "margin": "0 auto" }}>
-                    <tr align="left"> <td >Username</td> <td><input type="text"
-                        placeholder="Enter Username"
-                        value={this.state.username}
-                        className="form-control has-error"
-                        style={{ "width": "180px" }}
-                        onChange={(e) => this.handleUsernameChange(e)} /></td> </tr>
+                        <tr align="left"> <td>Password</td> <td> <input type="password"
+                            placeholder="Enter Password"
+                            value={this.state.password}
+                            className="form-control has-error"
+                            style={{ "width": "180px" }}
+                            onChange={(e) => this.handlePasswordChange(e)} /> </td> </tr>
 
-                    <tr align="left"> <td>Password</td> <td> <input type="password"
-                        placeholder="Enter Password"
-                        value={this.state.password}
-                        className="form-control has-error"
-                        style={{ "width": "180px" }}
-                        onChange={(e) => this.handlePasswordChange(e)} /> </td> </tr>
+                        <tr align="left"> <td>Confirm Password</td> <td> <input type="password"
+                            placeholder="Confirm Password"
+                            value={this.state.confirmpassword}
+                            className="form-control has-error"
+                            style={{ "width": "180px" }}
+                            onChange={(e) => this.handleConfirmPasswordChange(e)} /> </td> </tr>
 
-                    <tr align="left"> <td>Confirm Password</td> <td> <input type="password"
-                        placeholder="Confirm Password"
-                        value={this.state.confirmpassword}
-                        className="form-control has-error"
-                        style={{ "width": "180px" }}
-                        onChange={(e) => this.handleConfirmPasswordChange(e)} /> </td> </tr>
+                        <tr align="left"> <td>School</td> <td> <select value={this.state.school}
+                            onChange={(e) => this.handleSchoolChange(e)}
+                            style={{ "width": "160px" }}
+                            className="form-control has-error">
+                            <option value="Duke-NUS">Duke-NUS</option>
+                            <option value="NTU">NTU</option>
+                            <option value="NUS">NUS</option>
+                        </select> </td> </tr>
 
-                    <tr align="left"> <td>School</td> <td> <select value={this.state.school}
-                        onChange={(e) => this.handleSchoolChange(e)}
-                        style={{ "width": "160px" }}
-                        className="form-control has-error">
-                        <option value="Duke-NUS">Duke-NUS</option>
-                        <option value="NTU">NTU</option>
-                        <option value="NUS">NUS</option>
-                    </select> </td> </tr>
+                        <tr align="left"> <td>Year of Study</td> <td> <select value={this.state.year}
+                            onChange={(e) => this.handleYearChange(e)}
+                            style={{ "width": "160px" }}
+                            className="form-control has-error">
+                            <option value="1">Year 1</option>
+                            <option value="2">Year 2</option>
+                            <option value="3">Year 3</option>
+                            <option value="4">Year 4</option>
+                            <option value="5">Year 5</option>
+                        </select> </td> </tr>
 
-                    <tr align="left"> <td>Year of Study</td> <td> <select value={this.state.year}
-                        onChange={(e) => this.handleYearChange(e)}
-                        style={{ "width": "160px" }}
-                        className="form-control has-error">
-                        <option value="1">Year 1</option>
-                        <option value="2">Year 2</option>
-                        <option value="3">Year 3</option>
-                        <option value="4">Year 4</option>
-                        <option value="5">Year 5</option>
-                    </select> </td> </tr>
-
-                    <tr align="left">
-                        <td>Profile Picture</td>
-                        <td> <input type="file" onChange={this.handleFile} /> </td>
-                    </tr>
-                </table>
-
-                <Button align="right" bsStyle="primary" onClick={(e) => this.saveChanges(e)}>Save Changes</Button>
-
+                        <tr align="left">
+                            <td>Profile Picture</td>
+                            <td> <input type="file" onChange={this.handleFile} /> </td>
+                        </tr>
+                    </table>
+                    <Button type="submit" align="right" bsStyle="primary">Sign Up</Button>
+                </form>
             </div>
         )
     }
