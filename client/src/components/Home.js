@@ -57,7 +57,7 @@ class Home extends Component {
                         <h1>
                             The time now is {this.state.currentTime}.
                         </h1>
-                        <h1>
+                        <h1 style={{color: 'red'}}>
                             We have {this.state.doomsdayCountdown} days left to FYP Acceptance.
                         </h1>
                         <h2>
