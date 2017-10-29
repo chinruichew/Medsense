@@ -26,6 +26,7 @@
   "homepage": "https://github.com/kronos292/Medsense#readme",
   "dependencies": {
     "app-module-path": "^2.2.0",
+    "aws-sdk": "^2.141.0",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.2",
     "concurrently": "^3.5.0",
