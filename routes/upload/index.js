@@ -1,10 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
-var path = require('path')
-require('app-module-path').addPath(path.join(__dirname, '/routes'))
+var path = require('path');
+require('app-module-path').addPath(path.join(__dirname, '/routes'));
 router.use(bodyParser.urlencoded({ extended: true }));
-var mongoose = require('mongoose')
+var mongoose = require('mongoose');
 var User = require('../../models/User');
 var Case = require('../../models/Case');
 var Question = require('../../models/Question');
@@ -14,7 +14,7 @@ router.post('/', function (req, res) {
     var questionArray = req.body.questionArray;
     var jsonObject = JSON.parse(questionArray);
     var newCase = new Case({
-        title: req.body.title,
+        casetitle: req.body.casetitle,
         difficulty: req.body.difficulty,
         speciality: req.body.speciality,
         subspeciality: req.body.subspeciality,
@@ -24,7 +24,8 @@ router.post('/', function (req, res) {
     });
     for (var prop in jsonObject) {
         var newQuestion = new Question({
-            title: jsonObject[prop]['title'],
+            questiontitle: jsonObject[prop]['questiontitle'],
+            attachment: jsonObject[prop]['attachment'],
             type: jsonObject[prop]['type'],
             open: jsonObject[prop]['open'],
             pearl: jsonObject[prop]['pearl'],
@@ -32,17 +33,17 @@ router.post('/', function (req, res) {
             reference: jsonObject[prop]['reference'],
             stem: jsonObject[prop]['stem'],
             case: newCase._id
-        })
+        });
         for (var key in jsonObject[prop]['mcqs']) {
             var newMCQ = new MCQ({
                 answer: "",
                 status: true,
                 question: newQuestion._id
-            })
+            });
             for (var key1 in jsonObject[prop]['mcqs'][key]) {
                 newMCQ.answer = jsonObject[prop]['mcqs'][key]["answer"];
                 newMCQ.status = jsonObject[prop]['mcqs'][key]["status"];
-            }
+            };
             newMCQ.save();
             newQuestion.mcqs.push(newMCQ._id);
             newQuestion.save();
@@ -54,26 +55,27 @@ router.post('/', function (req, res) {
 });
 
 router.post('/update', function (req, res) {
-    Case.findById(req.body.id, function (err, oneCase) {
-        oneCase.title = req.body.title
-        oneCase.difficulty = req.body.difficulty
-        oneCase.speciality = req.body.speciality
-        oneCase.subspeciality = req.body.subspeciality
-        oneCase.approach = req.body.aproach
-        oneCase.scenario = req.body.scenario
+    Case.findById(req.body.caseid, function (err, oneCase) {
+        oneCase.casetitle = req.body.casetitle;
+        oneCase.difficulty = req.body.difficulty;
+        oneCase.speciality = req.body.speciality;
+        oneCase.subspeciality = req.body.subspeciality;
+        oneCase.approach = req.body.approach;
+        oneCase.scenario = req.body.scenario;
 
         var questionArray = req.body.questionArray;
         var jsonObject = JSON.parse(questionArray);
 
         for (var prop in jsonObject) {
             Question.findById(jsonObject[prop]['id'], function (err, oneQuestion) {
-                oneQuestion.title = jsonObject[prop]['title']
-                oneQuestion.type = jsonObject[prop]['type']
-                oneQuestion.open = jsonObject[prop]['open']
-                oneQuestion.pearl = jsonObject[prop]['pearl']
-                oneQuestion.timelimit = jsonObject[prop]['timelimit']
-                oneQuestion.reference = jsonObject[prop]['reference']
-                oneQuestion.stem = jsonObject[prop]['stem']
+                oneQuestion.title = jsonObject[prop]['title'];
+                oneQuestion.attachment = jsonObject[prop]['attachment'];
+                oneQuestion.type = jsonObject[prop]['type'];
+                oneQuestion.open = jsonObject[prop]['open'];
+                oneQuestion.pearl = jsonObject[prop]['pearl'];
+                oneQuestion.timelimit = jsonObject[prop]['timelimit'];
+                oneQuestion.reference = jsonObject[prop]['reference'];
+                oneQuestion.stem = jsonObject[prop]['stem'];
 
                 for (var key in jsonObject[prop]['mcqs']) {
                     MCQ.findById(jsonObject[prop]['mcqs'][key]["id"], function (err, oneMCQ) {
@@ -86,7 +88,7 @@ router.post('/update', function (req, res) {
                 }
             })
         }
-        oneCase.save()
+        oneCase.save();
         return res.status(201).send({ data: null, message: "updateCase success" });
     });
 });
@@ -153,6 +155,7 @@ router.post('/updateCaseTakeaway', function (req, res) {
 router.post('/updateQuestion', function (req, res) {
     Question.findById(req.body.questionid, function (err, oneQuestion) {
         oneQuestion.title = req.body.title
+        oneQuestion.attachment = req.body.attachment
         oneQuestion.type = req.body.type
         oneQuestion.open = req.body.open
         oneQuestion.pearl = req.body.pearl

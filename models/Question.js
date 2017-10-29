@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var { Schema } = mongoose;
 
 var questionSchema = new Schema({
-    title: { type: String, default: "" },
+    questiontitle: { type: String, default: "" },
     attachment: { type: String, default: "" },
     type: { type: String, default: "" },
     mcqs: [{ type: Schema.Types.ObjectId, ref: 'mcqs' }],

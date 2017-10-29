@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var { Schema } = mongoose;
 
 var caseSchema = new Schema({
-    title: { type: String, default: "" },
+    casetitle: { type: String, default: "" },
     questions: [{ type: Schema.Types.ObjectId, ref: 'questions' }],
     difficulty: { type: String, default: "" },
     speciality: { type: String, default: "" },
