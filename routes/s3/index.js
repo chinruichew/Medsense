@@ -1,21 +1,22 @@
-var express = require('express');
-var router = express.Router();
-var bodyParser = require('body-parser');
-var path = require('path')
-require('app-module-path').addPath(path.join(__dirname, '/routes'))
+const express = require('express');
+const router = express.Router();
+const bodyParser = require('body-parser');
+const path = require('path');
+const keys = require('./config/keys');
+require('app-module-path').addPath(path.join(__dirname, '/routes'));
 router.use(bodyParser.urlencoded({ extended: true }));
-var aws = require('aws-sdk');
+const aws = require('aws-sdk');
 aws.config.update({
-  accessKeyId: "",
-  secretAccessKey: ""
+  accessKeyId: keys.awsAccessKeyId,
+  secretAccessKey: keys.awsSecretKey
 });
 
 router.post('/sign', function (req, res) {
-    var fileName = req.body.filename;
-    var fileType = req.body.filetype;
-    var s3 = new aws.S3();
-    var params = {
-        Bucket: "",
+    const fileName = req.body.filename;
+    const fileType = req.body.filetype;
+    const s3 = new aws.S3();
+    const params = {
+        Bucket: "case-upload-images",
         Key: fileName,
         Expires: 60,
         ContentType: fileType
@@ -27,8 +28,8 @@ router.post('/sign', function (req, res) {
         } else {
             const returnData = {
                 signedRequest: data
-            }
+            };
             return res.send(JSON.stringify(returnData));
         }
     });
-})
+});
