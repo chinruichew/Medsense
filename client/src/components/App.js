@@ -11,6 +11,10 @@ import StudentSignup from "./LoginSignup/StudentSignup";
 import './App.css';
 
 class App extends Component {
+    componentDidMount() {
+        this.props.fetchUser();
+    }
+
     render() {
         return (
             <BrowserRouter>

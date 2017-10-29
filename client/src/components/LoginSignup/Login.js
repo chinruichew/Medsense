@@ -37,7 +37,7 @@ class Login extends Component {
                                        className="form-control"
                                        style={{ "width": "180px" }}
                                        onChange={(e) => this.handleUsernameChange(e)}
-                                        name="email"/>
+                                        name="username"/>
                             </div>
                             <div className="input-group" style={{"marginBottom": '10px'}}>
                                 <span className="input-group-addon"><span className="glyphicon glyphicon-lock"></span></span>
