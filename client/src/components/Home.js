@@ -29,7 +29,7 @@ class Home extends Component {
         let date2 = new Date("11/7/2017");
         let timeDiff = Math.abs(date2.getTime() - date1.getTime());
         let diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-        return(diffDays);
+        return(diffDays - 1);
     }
 
     getMotivationalQuote() {
