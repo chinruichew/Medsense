@@ -27,16 +27,12 @@ const dbPath  = "mongodb://"+config.USER + ":"+
 const db = mongoose.connect(dbPath);
 /* End of MongoDB Connection */
 
-require('app-module-path').addPath(require('path').join(__dirname, '/routes'));
 const router = express.Router();
 router.use(function (req, res, next) {
     next();
 });
-const signupRoute = require('signup');
-const uploadRoute = require('upload');
+
 app.use('/api', router);
-app.use('/signup', signupRoute);
-app.use('/upload', uploadRoute);
 
 /* Start of Middleware configuration */
 app.use(morgan('dev'));
@@ -54,6 +50,7 @@ app.use(flash());
 /* End of Middleware configuration */
 
 require('./routes/authRoutes')(app);
+require('./routes/caseRoutes')(app);
 
 if (process.env.NODE_ENV === 'production') {
     // Express will serve up production assets
