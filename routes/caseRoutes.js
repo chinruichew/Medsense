@@ -1,14 +1,14 @@
-var mongoose = require('mongoose');
-var User = require('../models/User');
-var Case = require('../models/Case');
-var Question = require('../models/Question');
-var MCQ = require('../models/MCQ');
+const mongoose = require('mongoose');
+const User = require('../models/User');
+const Case = require('../models/Case');
+const Question = require('../models/Question');
+const MCQ = require('../models/MCQ');
 
 module.exports = app => {
     app.post('/uploadCase', function (req, res) {
-        var questionArray = req.body.questionArray;
-        var jsonObject = JSON.parse(questionArray);
-        var newCase = new Case({
+        const questionArray = req.body.questionArray;
+        const jsonObject = JSON.parse(questionArray);
+        const newCase = new Case({
             casetitle: req.body.casetitle,
             difficulty: req.body.difficulty,
             speciality: req.body.speciality,
@@ -17,8 +17,8 @@ module.exports = app => {
             scenario: req.body.scenario,
             author: mongoose.Types.ObjectId(req.body.author),
         });
-        for (var prop in jsonObject) {
-            var newQuestion = new Question({
+        for (const prop in jsonObject) {
+            const newQuestion = new Question({
                 questiontitle: jsonObject[prop]['questiontitle'],
                 attachment: jsonObject[prop]['attachment'],
                 type: jsonObject[prop]['type'],
@@ -29,13 +29,13 @@ module.exports = app => {
                 stem: jsonObject[prop]['stem'],
                 case: newCase._id
             });
-            for (var key in jsonObject[prop]['mcqs']) {
-                var newMCQ = new MCQ({
+            for (const key in jsonObject[prop]['mcqs']) {
+                const newMCQ = new MCQ({
                     answer: "",
                     status: true,
                     question: newQuestion._id
                 });
-                for (var key1 in jsonObject[prop]['mcqs'][key]) {
+                for (const key1 in jsonObject[prop]['mcqs'][key]) {
                     newMCQ.answer = jsonObject[prop]['mcqs'][key]["answer"];
                     newMCQ.status = jsonObject[prop]['mcqs'][key]["status"];
                 };
@@ -58,10 +58,10 @@ module.exports = app => {
             oneCase.approach = req.body.approach;
             oneCase.scenario = req.body.scenario;
 
-            var questionArray = req.body.questionArray;
-            var jsonObject = JSON.parse(questionArray);
+            const questionArray = req.body.questionArray;
+            const jsonObject = JSON.parse(questionArray);
 
-            for (var prop in jsonObject) {
+            for (const prop in jsonObject) {
                 Question.findById(jsonObject[prop]['id'], function (err, oneQuestion) {
                     oneQuestion.title = jsonObject[prop]['title'];
                     oneQuestion.attachment = jsonObject[prop]['attachment'];
@@ -72,7 +72,7 @@ module.exports = app => {
                     oneQuestion.reference = jsonObject[prop]['reference'];
                     oneQuestion.stem = jsonObject[prop]['stem'];
 
-                    for (var key in jsonObject[prop]['mcqs']) {
+                    for (const key in jsonObject[prop]['mcqs']) {
                         MCQ.findById(jsonObject[prop]['mcqs'][key]["id"], function (err, oneMCQ) {
                             if (oneMCQ) {
                                 oneMCQ.answer = jsonObject[prop]['mcqs'][key]["answer"];
@@ -117,7 +117,7 @@ module.exports = app => {
     app.post('/deleteCase', function (req, res) {
         Case.find({ _id: req.body.caseid }, function (err, oneCase) {
             Question.find({ case: req.body.caseid }, function (err, questions) {
-                for (var prop in questions) {
+                for (const prop in questions) {
                     MCQ.find({ question: questions[prop]['_id'] }).remove().exec();
                 }
             }).remove().exec();
@@ -158,11 +158,11 @@ module.exports = app => {
             oneQuestion.reference = req.body.reference
             oneQuestion.stem = req.body.stem
 
-            var questionArray = req.body.questionArray;
-            var jsonObject = JSON.parse(questionArray);
+            const questionArray = req.body.questionArray;
+            const jsonObject = JSON.parse(questionArray);
 
-            for (var prop in jsonObject) {
-                for (var key in jsonObject[prop]['mcqs']) {
+            for (const prop in jsonObject) {
+                for (const key in jsonObject[prop]['mcqs']) {
                     MCQ.findById(jsonObject[prop]['mcqs'][key]["id"], function (err, oneMCQ) {
                         if (oneMCQ) {
                             oneMCQ.answer = jsonObject[prop]['mcqs'][key]["answer"];

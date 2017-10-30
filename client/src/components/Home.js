@@ -61,7 +61,7 @@ class Home extends Component {
                             We have {this.state.doomsdayCountdown} days left to FYP Acceptance.
                         </h1>
                         <h2>
-                            {this.state.motivationalQuote}.
+                            {this.state.motivationalQuote}
                         </h2>
                     </div>
                 </div>
