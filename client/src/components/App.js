@@ -7,6 +7,7 @@ import Login from './LoginSignup/Login';
 import Header from './Header';
 import Home from './Home';
 import StudentSignup from "./LoginSignup/StudentSignup";
+import Main from './CaseUpload/Main';
 
 import './App.css';
 
@@ -16,6 +17,7 @@ class App extends Component {
     }
 
     render() {
+        //need to store session
         return (
             <BrowserRouter>
                 <div>
@@ -23,6 +25,8 @@ class App extends Component {
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/signup" component={StudentSignup} />
                     <Route exact path="/" component={Home} />
+                    <Route exact path="/upload" component={Main} />
+
                 </div>
             </BrowserRouter>
         );
