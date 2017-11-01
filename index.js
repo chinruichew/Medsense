@@ -23,7 +23,6 @@ const dbPath  = "mongodb://"+config.USER + ":"+
     config.HOST + ":"+
     config.PORT + "/"+
     config.DATABASE;
-
 const db = mongoose.connect(dbPath);
 /* End of MongoDB Connection */
 
@@ -52,6 +51,7 @@ app.use(flash());
 require('./routes/authRoutes')(app);
 require('./routes/caseRoutes')(app);
 require('./routes/userRoutes')(app);
+require('./routes/s3Routes')(app);
 
 if (process.env.NODE_ENV === 'production') {
     // Express will serve up production assets
