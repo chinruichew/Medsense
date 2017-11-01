@@ -38,7 +38,7 @@ module.exports = app => {
                 for (const key1 in jsonObject[prop]['mcqs'][key]) {
                     newMCQ.answer = jsonObject[prop]['mcqs'][key]["answer"];
                     newMCQ.status = jsonObject[prop]['mcqs'][key]["status"];
-                };
+                }
                 newMCQ.save();
                 newQuestion.mcqs.push(newMCQ._id);
                 newQuestion.save();

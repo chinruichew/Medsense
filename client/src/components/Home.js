@@ -63,6 +63,11 @@ class Home extends Component {
                         <h2>
                             {this.state.motivationalQuote}
                         </h2>
+                        <form action="/api/uploadS3Image" encType="multipart/form-data" method="post">
+                            <input type="file" name="upload" multiple="multiple" />
+                            <br/>
+                            <input type="submit" value="Upload" />
+                        </form>
                     </div>
                 </div>
             </div>
