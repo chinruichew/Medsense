@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { Button } from 'react-bootstrap';
-//import { Collapse } from 'react-bootstrap';
 import { bindAll } from 'lodash';
 
 class Question extends React.Component{
@@ -34,8 +32,7 @@ class Question extends React.Component{
         bindAll(this, 'handleFile', 'handleStemChange', 'handleQuestionChange', 'handleTypeChange', 'handleOpenEndedChange',
             'handleMCQ1Change', 'handleMCQ2Change', 'handleMCQ3Change', 'handleMCQ4Change', 'handleMCQ5Change', 'handleMCQ6Change',
             'handleCheck1Change', 'handleCheck2Change', 'handleCheck3Change', 'handleCheck4Change', 'handleCheck5Change',
-            'handleCheck6Change', 'handlePearlChange', 'handleTimeChange', 'handleReferenceChange', 'saveChanges','answer',
-            'nextQuestion', 'question');
+            'handleCheck6Change', 'handlePearlChange', 'handleTimeChange', 'handleReferenceChange', 'saveChanges','answer');
     }
 
     handleFile(e){
@@ -111,8 +108,12 @@ class Question extends React.Component{
 
     saveChanges(e){
         e.preventDefault();
-        if (this.state.type==="Select One"|| this.state.question==='' || this.state.time==="Select One"){
-            window.alert("Please fill in all required information!");
+        if (this.state.type==="Select One"){
+            window.alert("Please select a Question Type!");
+        } else if (this.state.question===''){
+            window.alert("Please fill in the Question!");
+        } else if (this.state.time==="Select One"){
+            window.alert("Please select a Time Limit!");
         } else if (this.state.type==="MCQ"){
             if (this.state.mcq1==='' || this.state.mcq2===''){
                 window.alert("Please fill in the first 2 MCQ answers!");
@@ -137,7 +138,6 @@ class Question extends React.Component{
             window.alert("Success!");
         }
 
-        let {title, difficulty, speciality, subspeciality, approach, scenario, valid} = this.state;
         console.log(this.state);
     }
 
@@ -190,24 +190,9 @@ class Question extends React.Component{
         return;
     }
 
-    nextQuestion(){
-        if (!this.state.valid){
-            return(
-                <Button type="submit" align="center" bsStyle="primary" onClick={(e)=>this.saveChanges(e)}>Add Question</Button>
-            );
-        }
-    }
-
-    question(){
-        if (this.state.valid){
-            return <Question />;
-        }
-    }
-
     render(){
         return(
             <div>
-                <form action="/uploadQuestion" method="post">
                     <table>
                         <tr align="left">
                             <th>STEM</th>
@@ -282,9 +267,6 @@ class Question extends React.Component{
                             <td><input type="text" placeholder="Enter your references" value={this.state.reference} name="reference" onChange={(e)=>this.handleReferenceChange(e)}/></td>
                         </tr>
                     </table>
-                    {this.nextQuestion()}
-                </form>
-                {this.question()}
             </div>
         );
     }
