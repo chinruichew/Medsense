@@ -3,20 +3,20 @@ import React, { Component } from 'react';
 class Home extends Component {
     constructor(props){
         super(props);
-        this.state = {currentTime: new Date().toLocaleTimeString(), motivationalQuote: '', doomsdayCountdown: 0}
+        this.state = {currentTime: new Date().toLocaleTimeString(), motivationalQuote: '', doomsdayCountdown: ''}
     }
 
     timer() {
         this.setState({
-            currentTime: new Date().toLocaleTimeString()
+            currentTime: new Date().toLocaleTimeString(),
+            doomsdayCountdown: this.getDoomsdayCountdown()
         });
     }
 
     componentDidMount() {
         this.intervalId = setInterval(this.timer.bind(this), 1000);
         this.setState({
-            motivationalQuote: this.getMotivationalQuote(),
-            doomsdayCountdown: this.getDoomsdayCountdown()
+            motivationalQuote: this.getMotivationalQuote()
         });
     }
 
@@ -26,10 +26,26 @@ class Home extends Component {
 
     getDoomsdayCountdown() {
         let date1 = new Date();
-        let date2 = new Date("11/7/2017");
+        let date2 = new Date("November 7, 2017 10:00:00");
         let timeDiff = Math.abs(date2.getTime() - date1.getTime());
-        let diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-        return(diffDays - 1);
+        let seconds = (timeDiff / 1000).toFixed(0);
+        let minutes = Math.floor(seconds / 60);
+        let hours = "";
+        if (minutes > 59) {
+            hours = Math.floor(minutes / 60);
+            hours = (hours >= 10) ? hours : "0" + hours;
+            minutes = minutes - (hours * 60);
+            minutes = (minutes >= 10) ? minutes : "0" + minutes;
+        }
+        seconds = Math.floor(seconds % 60);
+        seconds = (seconds >= 10) ? seconds : "0" + seconds;
+        let countdown = "";
+        if (hours !== "") {
+            countdown = hours + " hours, " + minutes + " minutes and " + seconds + " seconds";
+        } else {
+            countdown = minutes + " minutes and " + seconds + " seconds"
+        }
+        return "We have " + countdown + " left to FYP Acceptance.";
     }
 
     getMotivationalQuote() {
@@ -58,7 +74,7 @@ class Home extends Component {
                             The time now is {this.state.currentTime}.
                         </h1>
                         <h1 style={{color: 'red'}}>
-                            We have {this.state.doomsdayCountdown} days left to FYP Acceptance.
+                            {this.state.doomsdayCountdown}
                         </h1>
                         <h2>
                             {this.state.motivationalQuote}
