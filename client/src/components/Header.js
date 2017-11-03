@@ -11,16 +11,22 @@ class Header extends Component {
             case false:
                 return(
                     <Nav pullRight>
+                        <NavItem eventKey={1}><Link to="/acknowledgement">Acknowledgement</Link></NavItem>
                         <NavDropdown eventKey={2} title="Login/Sign Up" id="login-dropdown">
-                            <MenuItem eventKey={2.3} href="/login">Login</MenuItem>
-                            <MenuItem eventKey={2.4} href="/signup">Sign Up</MenuItem>
+                            <MenuItem eventKey={2.1} href="/login">Login</MenuItem>
+                            <MenuItem eventKey={2.2} href="/signup">Sign Up</MenuItem>
                         </NavDropdown>
                     </Nav>
                 );
             default:
                 return(
                     <Nav pullRight>
-                        <NavItem eventKey={2} href="/api/logout">Logout</NavItem>
+                        <NavItem eventKey={1}><Link to="/upload">Case Upload</Link></NavItem>
+                        <NavItem eventKey={2}><Link to="/vetting">Case Vetting</Link></NavItem>
+                        <NavItem eventKey={3}><Link to="/forum">Discussion Forum</Link></NavItem>
+                        <NavItem eventKey={4}><Link to="/profile">My Profile</Link></NavItem>
+                        <NavItem eventKey={5}><Link to="/acknowledgement">Acknowledgement</Link></NavItem>
+                        <NavItem eventKey={6} href="/api/logout">Logout</NavItem>
                     </Nav>
                 );
         }
