@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindAll } from 'lodash';
 
-class Question extends React.Component{
+class Question extends Component {
     constructor(props){
         super(props);
         this.state={
