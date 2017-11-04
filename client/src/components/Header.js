@@ -26,7 +26,7 @@ class Header extends Component {
                                 <NavItem className="navItem" eventKey={1} href="/upload">Case Upload</NavItem>
                                 <NavItem className="navItem" eventKey={2} href="/vetting">Case Vetting</NavItem>
                                 <NavItem className="navItem" eventKey={3} href="/forum">Discussion Forum</NavItem>
-                                <NavItem className="navItem" eventKey={4} href="/dashboard">Dashboard</NavItem>
+                                <NavItem className="navItem" eventKey={4} href="/professor_dashboard">Dashboard</NavItem>
                                 <NavItem className="navItem" eventKey={5} href="/acknowledgement">Acknowledgement</NavItem>
                                 <NavItem className="navItem" eventKey={6} href="/api/logout">Logout</NavItem>
                             </Nav>
@@ -37,7 +37,7 @@ class Header extends Component {
                                 <NavItem className="navItem" eventKey={1} href="/upload">Case Challenge</NavItem>
                                 <NavItem className="navItem" eventKey={2} href="/upload">Case Upload</NavItem>
                                 <NavItem className="navItem" eventKey={3} href="/forum">Discussion Forum</NavItem>
-                                <NavItem className="navItem" eventKey={4} href="/dashboard">Dashboard</NavItem>
+                                <NavItem className="navItem" eventKey={4} href="/student_dashboard">Dashboard</NavItem>
                                 <NavItem className="navItem" eventKey={5} href="/acknowledgement">Acknowledgement</NavItem>
                                 <NavItem className="navItem" eventKey={6} href="/api/logout">Logout</NavItem>
                             </Nav>
