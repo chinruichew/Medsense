@@ -1,63 +1,43 @@
 import React, { Component } from 'react';
-import { bindAll } from 'lodash';
 
 class Login extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            username: '',
-            password: ''
-        };
-        bindAll(this, 'handleUsernameChange', 'handlePasswordChange', 'handleLogin');
-    }
-
-    handleUsernameChange(e) {
-        this.setState({ username: e.target.value });
-    }
-
-    handlePasswordChange(e) {
-        this.setState({ password: e.target.value });
-    }
-
-    handleLogin(e) {
-        //let { username, password } = this.state;
+    componentDidMount() {
+        // Dynamically set background image
+        document.body.style.backgroundImage = "url('./home_background.jpg')";
     }
 
     render() {
         return (
             <div className="container-fluid">
-                <div className="row" style={{"marginTop": '150px'}}>
-                    <div className="col-sm-4 col-sm-offset-4">
-                        <form action="/auth/local" method="get">
-                            <div className="input-group" style={{"marginBottom": '10px'}}>
-                                <span className="input-group-addon"><span className="glyphicon glyphicon-user"></span></span>
-                                <input type="text"
-                                       placeholder="Enter Username"
-                                       value={this.state.username}
-                                       className="form-control"
-                                       style={{ "width": "180px" }}
-                                       onChange={(e) => this.handleUsernameChange(e)}
-                                        name="username"/>
+                <div className="row">
+                    <div className="main-login main-center">
+                        <img src="./medsense_logo.png" style={{height: '120px', width: '300px'}} />
+                        <form className="form-horizontal" method="get" action="/auth/local">
+                            <div className="form-group">
+                                <label for="username" className="cols-sm-2 control-label">Username</label>
+                                <div className="cols-sm-10">
+                                    <div className="input-group">
+                                        <span className="input-group-addon"><i className="fa fa-user fa" aria-hidden="true"></i></span>
+                                        <input type="text" className="form-control" name="username" id="username"  placeholder="Enter your Username"/>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="input-group" style={{"marginBottom": '10px'}}>
-                                <span className="input-group-addon"><span className="glyphicon glyphicon-lock"></span></span>
-                                <input type="password"
-                                       placeholder="Enter Password"
-                                       value={this.state.password}
-                                       className="form-control has-error"
-                                       style={{ "width": "180px" }}
-                                       onChange={(e) => this.handlePasswordChange(e)}
-                                       name="password"/>
+                            <div className="form-group">
+                                <label for="password" className="cols-sm-2 control-label">Password</label>
+                                <div className="cols-sm-10">
+                                    <div className="input-group">
+                                        <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                                        <input type="password" className="form-control" name="password" id="password"  placeholder="Enter your Password"/>
+                                    </div>
+                                </div>
                             </div>
-                            <button type="submit"
-                                    className="btn btn-primary">
-                                Login
-                            </button>
+                            <div className="form-group ">
+                                <button type="submit" className="btn btn-primary btn-lg btn-block login-button">Login</button>
+                            </div>
                         </form>
                     </div>
                 </div>
-                <br />
-            </div >
+            </div>
         )
     }
 }

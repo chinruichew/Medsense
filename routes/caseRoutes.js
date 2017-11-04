@@ -4,7 +4,23 @@ const Case = require('../models/Case');
 const Question = require('../models/Question');
 const MCQ = require('../models/MCQ');
 
+function IsValidNRIC(theNric) {
+    var patt = new RegExp(/^[STFG]\d{7}[A-Z]$/);
+    if(patt.test(theNric)) {
+        return true
+    }
+}
+
 module.exports = app => {
+
+    app.post('/api/validate', function (req, res) {
+        if (IsValidNRIC(req.body.nric)) {
+            return res.status(201).send({ data: null, message: "validate" });
+        } else {
+            return res.status(404).send({ data: null, message: "validatewrong" });
+        }
+    });
+
     app.post('/api/uploadCase', function (req, res) {
         const questionArray = req.body.questionArray;
         const jsonObject = JSON.parse(questionArray);
@@ -54,7 +70,7 @@ module.exports = app => {
     });
 
     app.post('/api/updateCase', function (req, res) {
-        Case.update({ _id: req.body.caseid }, { $set: { subspeciality: [] } }, function (err, response) {});
+        Case.update({ _id: req.body.caseid }, { $set: { subspeciality: [] } }, function (err, response) { });
         Case.findById(req.body.caseid, function (err, oneCase) {
             oneCase.casetitle = req.body.casetitle;
             oneCase.difficulty = req.body.difficulty;
@@ -111,7 +127,7 @@ module.exports = app => {
     });
 
     app.post('/api/fetchAllCasesByAuthor', function (req, res) {
-        Case.find({author: req.body.authorid}).populate({
+        Case.find({ author: req.body.authorid }).populate({
             path: 'questions',
             model: 'questions',
             populate: {
@@ -136,7 +152,7 @@ module.exports = app => {
     });
 
     app.post('/api/updateCaseOnly', function (req, res) {
-        Case.update({ _id: req.body.caseid }, { $set: { subspeciality: [] } }, function (err, response) {});
+        Case.update({ _id: req.body.caseid }, { $set: { subspeciality: [] } }, function (err, response) { });
         Case.findById(req.body.caseid, function (err, oneCase) {
             oneCase.casetitle = req.body.title
             oneCase.difficulty = req.body.difficulty
