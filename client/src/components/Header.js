@@ -11,8 +11,8 @@ class Header extends Component {
             case false:
                 return(
                     <Nav pullRight>
-                        <NavItem eventKey={1}><Link to="/acknowledgement">Acknowledgement</Link></NavItem>
-                        <NavDropdown eventKey={2} title="Login/Sign Up" id="login-dropdown">
+                        <NavItem className="navItem" eventKey={1} href="/acknowledgement" >Acknowledgement</NavItem>
+                        <NavDropdown className="navItem" eventKey={2} title="Login/Sign Up" id="login-dropdown">
                             <MenuItem eventKey={2.1} href="/login">Login</MenuItem>
                             <MenuItem eventKey={2.2} href="/signup">Sign Up</MenuItem>
                         </NavDropdown>
@@ -24,22 +24,23 @@ class Header extends Component {
                     case 'professor':
                         return(
                             <Nav pullRight>
-                                <NavItem eventKey={1}><Link to="/upload">Case Upload</Link></NavItem>
-                                <NavItem eventKey={2}><Link to="/vetting">Case Vetting</Link></NavItem>
-                                <NavItem eventKey={3}><Link to="/forum">Discussion Forum</Link></NavItem>
-                                <NavItem eventKey={4}><Link to="/profile">My Profile</Link></NavItem>
-                                <NavItem eventKey={5}><Link to="/acknowledgement">Acknowledgement</Link></NavItem>
-                                <NavItem eventKey={6} href="/api/logout">Logout</NavItem>
+                                <NavItem className="navItem" eventKey={1} href="/upload">Case Upload</NavItem>
+                                <NavItem className="navItem" eventKey={2} href="/vetting">Case Vetting</NavItem>
+                                <NavItem className="navItem" eventKey={3} href="/forum">Discussion Forum</NavItem>
+                                <NavItem className="navItem" eventKey={4} href="/dashboard">Dashboard</NavItem>
+                                <NavItem className="navItem" eventKey={5} href="/acknowledgement">Acknowledgement</NavItem>
+                                <NavItem className="navItem" eventKey={6} href="/api/logout">Logout</NavItem>
                             </Nav>
                         );
                     case 'student':
                         return(
                             <Nav pullRight>
-                                <NavItem eventKey={1}><Link to="/upload">Case Upload</Link></NavItem>
-                                <NavItem eventKey={3}><Link to="/forum">Discussion Forum</Link></NavItem>
-                                <NavItem eventKey={4}><Link to="/profile">My Profile</Link></NavItem>
-                                <NavItem eventKey={5}><Link to="/acknowledgement">Acknowledgement</Link></NavItem>
-                                <NavItem eventKey={6} href="/api/logout">Logout</NavItem>
+                                <NavItem className="navItem" eventKey={1} href="/upload">Case Challenge</NavItem>
+                                <NavItem className="navItem" eventKey={2} href="/upload">Case Upload</NavItem>
+                                <NavItem className="navItem" eventKey={3} href="/forum">Discussion Forum</NavItem>
+                                <NavItem className="navItem" eventKey={4} href="/dashboard">Dashboard</NavItem>
+                                <NavItem className="navItem" eventKey={5} href="/acknowledgement">Acknowledgement</NavItem>
+                                <NavItem className="navItem" eventKey={6} href="/api/logout">Logout</NavItem>
                             </Nav>
                         );
                 }
@@ -51,7 +52,7 @@ class Header extends Component {
             <Navbar>
                 <Navbar.Header>
                     <Navbar.Brand>
-                        <Link to="/">Medsense</Link>
+                        <a href="/" style={{padding: '0px'}}><img src="./medsense_logo.png" style={{height: '60px', width: '200px', padding: '0px'}}/></a>
                     </Navbar.Brand>
                     <Navbar.Toggle />
                 </Navbar.Header>
