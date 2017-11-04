@@ -15,6 +15,11 @@ class StudentSignup extends Component {
         bindAll(this, 'handleUsernameChange', 'handlePasswordChange', 'handleConfirmPasswordChange', 'handleSchoolChange', 'handleYearChange', 'handleFile');
     }
 
+    componentDidMount() {
+        // Dynamically set background image
+        document.body.style.backgroundImage = "url('./home_background.jpg')";
+    }
+
     handleUsernameChange(e) {
         this.setState({ username: e.target.value });
     }
@@ -72,59 +77,76 @@ class StudentSignup extends Component {
 
 
         return (
-            <div>
-                <form action="/auth/local/signup" method="get">
-                    <table style={{ "table-layout": "fixed", "width": "350px", "line-height": "90px", "margin": "0 auto" }}>
-                        <tr align="left"> <td >Username</td> <td><input type="text"
-                            placeholder="Enter Username"
-                            value={this.state.username}
-                            className="form-control has-error"
-                            style={{ "width": "180px" }}
-                            name="username"
-                            onChange={(e) => this.handleUsernameChange(e)} /></td> </tr>
-
-                        <tr align="left"> <td>Password</td> <td> <input type="password"
-                            placeholder="Enter Password"
-                            value={this.state.password}
-                            className="form-control has-error"
-                            style={{ "width": "180px" }}
-                            name="password"
-                            onChange={(e) => this.handlePasswordChange(e)} /> </td> </tr>
-
-                        <tr align="left"> <td>Confirm Password</td> <td> <input type="password"
-                            placeholder="Confirm Password"
-                            value={this.state.confirmpassword}
-                            className="form-control has-error"
-                            style={{ "width": "180px" }}
-                            onChange={(e) => this.handleConfirmPasswordChange(e)} /> </td> </tr>
-
-                        <tr align="left"> <td>School</td> <td> <select value={this.state.school}
-                            onChange={(e) => this.handleSchoolChange(e)}
-                            style={{ "width": "160px" }}
-                            className="form-control has-error">
-                            <option value="Duke-NUS">Duke-NUS</option>
-                            <option value="NTU">NTU</option>
-                            <option value="NUS">NUS</option>
-                        </select> </td> </tr>
-
-                        <tr align="left"> <td>Year of Study</td> <td> <select value={this.state.year}
-                            onChange={(e) => this.handleYearChange(e)}
-                            style={{ "width": "160px" }}
-                            className="form-control has-error">
-                            <option value="1">Year 1</option>
-                            <option value="2">Year 2</option>
-                            <option value="3">Year 3</option>
-                            <option value="4">Year 4</option>
-                            <option value="5">Year 5</option>
-                        </select> </td> </tr>
-
-                        <tr align="left">
-                            <td>Profile Picture</td>
-                            <td> <input type="file" onChange={this.handleFile} /> </td>
-                        </tr>
-                    </table>
-                    <Button type="submit" align="right" bsStyle="primary">Sign Up</Button>
-                </form>
+            <div className="container-fluid">
+                <div className="row">
+                    <div className="main-login main-center">
+                        <img src="./medsense_logo.png" style={{height: '120px', width: '300px'}} />
+                        <form className="form-horizontal" method="get" action="/auth/local/signup">
+                            <div className="form-group">
+                                <label for="username" className="cols-sm-2 control-label">Username</label>
+                                <div className="cols-sm-10">
+                                    <div className="input-group">
+                                        <span className="input-group-addon"><i className="fa fa-user fa" aria-hidden="true"></i></span>
+                                        <input type="text" className="form-control" name="username" id="username"  placeholder="Enter your Username"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="form-group">
+                                <label for="password" className="cols-sm-2 control-label">Password</label>
+                                <div className="cols-sm-10">
+                                    <div className="input-group">
+                                        <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                                        <input type="password" className="form-control" name="password" id="password"  placeholder="Enter your Password"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="form-group">
+                                <label for="confirm_password" className="cols-sm-2 control-label">Confirm Password</label>
+                                <div className="cols-sm-10">
+                                    <div className="input-group">
+                                        <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                                        <input type="password" className="form-control" name="confirm_password" id="confirm_password"  placeholder="Confirm your Password"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="form-group">
+                                <label className="cols-sm-2 control-label">School</label>
+                                <div className="cols-sm-10">
+                                    <div className="input-group">
+                                        <span className="input-group-addon"><i className="fa fa-university fa-lg" aria-hidden="true"></i></span>
+                                        <select className="form-control" value={this.state.school} onChange={(e) => this.handleSchoolChange(e)}>
+                                            <option value="Duke-NUS">Duke-NUS</option>
+                                            <option value="NTU">NTU</option>
+                                            <option value="NUS">NUS</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="form-group">
+                                <label className="cols-sm-2 control-label">Year of Study</label>
+                                <div className="cols-sm-10">
+                                    <div className="input-group">
+                                        <span className="input-group-addon"><i className="fa fa-graduation-cap fa-lg" aria-hidden="true"></i></span>
+                                        <select className="form-control" value={this.state.year} onChange={(e) => this.handleYearChange(e)}>
+                                            <option value="1">Year 1</option>
+                                            <option value="2">Year 2</option>
+                                            <option value="3">Year 3</option>
+                                            <option value="4">Year 4</option>
+                                            <option value="5">Year 5</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="form-group">
+                                <label>Upload a profile picture:</label>
+                                <input type="file" onChange={this.handleFile} />
+                            </div>
+                            <div className="form-group ">
+                                <button type="submit" className="btn btn-primary btn-lg btn-block login-button">Sign Up</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         )
     }
