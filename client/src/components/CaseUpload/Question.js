@@ -5,6 +5,7 @@ class Question extends React.Component{
     constructor(props){
         super(props);
         this.state={
+            qID:this.props.qID,
             stem:'',
             question:'',
             attachment:null,
@@ -144,8 +145,8 @@ class Question extends React.Component{
     answer(){
         if(this.state.type==="MCQ"){
             return(
-                <table>
-                    <tr align="left">
+                <div>
+                    <tr>
                         <td>
                             <input type="checkbox" checked={this.state.check1} name="check1" onChange={(e)=>this.handleCheck1Change(e)}/>
                             <input type="text" placeholder="Enter an answer" value={this.state.mcq1} name="mcq1" onChange={(e)=>this.handleMCQ1Change(e)}/>
@@ -157,7 +158,7 @@ class Question extends React.Component{
                             <br/>
                         </td>
                     </tr>
-                    <tr align="left">
+                    <tr>
                         <td>
                             <input type="checkbox" checked={this.state.check3} name="check3" onChange={(e)=>this.handleCheck3Change(e)}/>
                             <input type="text" placeholder="Optional" value={this.state.mcq3} name="mcq3" onChange={(e)=>this.handleMCQ3Change(e)}/>
@@ -169,7 +170,7 @@ class Question extends React.Component{
                             <br/>
                         </td>
                     </tr>
-                    <tr align="left">
+                    <tr>
                         <td>
                             <input type="checkbox" checked={this.state.check5} name="check5" onChange={(e)=>this.handleCheck5Change(e)}/>
                             <input type="text" placeholder="Optional" value={this.state.mcq5} name="mcq5" onChange={(e)=>this.handleMCQ5Change(e)}/>
@@ -180,11 +181,15 @@ class Question extends React.Component{
                             <input type="text" placeholder="Optional" value={this.state.mcq6} name="mcq6" onChange={(e)=>this.handleMCQ6Change(e)}/>
                         </td>
                     </tr>
-                </table>
+                </div>
             );
         } else if(this.state.type==="Open-ended"){
             return(
-                <input type="text" placeholder="Enter an answer" value={this.state.openEnded} name="openEnded" onChange={(e)=>this.handleOpenEndedChange(e)}/>
+                <tr colspan="2">
+                    <td>
+                        <input type="text" placeholder="Enter an answer" value={this.state.openEnded} name="openEnded" onChange={(e)=>this.handleOpenEndedChange(e)}/>
+                    </td>
+                </tr>
             );
         }
         return;
@@ -192,33 +197,35 @@ class Question extends React.Component{
 
     render(){
         return(
+
             <div>
+                <p>Insert Question {this.state.qID} collapsible bar over here :D</p>
                     <table>
-                        <tr align="left">
+                        <tr colspan="2">
                             <th>STEM</th>
                         </tr>
-                        <tr align="left">
+                        <tr colspan="2">
                             <td><input type="text" placeholder="Enter a continuation of the scenario" value={this.state.stem} name="stem" onChange={(e)=>this.handleStemChange(e)}/></td>
                         </tr>
 
-                        <tr align="left">
+                        <tr colspan="2">
                             <th>Question</th>
                         </tr>
-                        <tr align="left">
+                        <tr colspan="2">
                             <td><input type="text" placeholder="Enter a question" value={this.state.question} name="question" onChange={(e)=>this.handleQuestionChange(e)}/></td>
                         </tr>
 
-                        <tr align="left">
+                        <tr colspan="2">
                             <th>Add Attachment</th>
                         </tr>
-                        <tr align="left">
+                        <tr colspan="2">
                             <td><input type="file" onChange={(e)=>this.handleFile(e)}/></td>
                         </tr>
 
-                        <tr align="left">
+                        <tr colspan="2">
                             <th>Question Type</th>
                         </tr>
-                        <tr align="left">
+                        <tr colspan="2">
                             <td>
                                 <select value={this.state.type} name="type" onChange={(e)=>this.handleTypeChange(e)}>
                                     <option value="Select One">Select One</option>
@@ -228,24 +235,23 @@ class Question extends React.Component{
                             </td>
                         </tr>
 
-                        <tr align="left">
+                        <tr colspan="2">
                             <th>Answer(s)</th>
                         </tr>
-                        <tr align="left">
-                            <td>{this.answer()}</td>
-                        </tr>
 
-                        <tr align="left">
+                        {this.answer()}
+
+                        <tr colspan="2">
                             <th>PEARL</th>
                         </tr>
-                        <tr align="left">
+                        <tr colspan="2">
                             <td><input type="text" placeholder="Enter an explanation for the answer(s)" value={this.state.pearl} name="pearl" onChange={(e)=>this.handlePearlChange(e)}/></td>
                         </tr>
 
-                        <tr align="left">
+                        <tr colspan="2">
                             <th>Time Limit</th>
                         </tr>
-                        <tr align="left">
+                        <tr colspan="2">
                             <td>
                                 <select value={this.state.time} name="time" onChange={(e)=>this.handleTimeChange(e)}>
                                     <option value="Select One">Select One</option>
@@ -260,10 +266,10 @@ class Question extends React.Component{
                             </td>
                         </tr>
 
-                        <tr align="left">
+                        <tr colspan="2">
                             <th>Reference(s)</th>
                         </tr>
-                        <tr align="left">
+                        <tr colspan="2">
                             <td><input type="text" placeholder="Enter your references" value={this.state.reference} name="reference" onChange={(e)=>this.handleReferenceChange(e)}/></td>
                         </tr>
                     </table>

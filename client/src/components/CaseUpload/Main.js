@@ -9,7 +9,7 @@ class Main extends React.Component{
     constructor(props){
         super(props);
         this.state={
-            qID:0,
+            qID:1,
             valid:false,
             qnList:[],
         };

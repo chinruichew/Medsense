@@ -131,8 +131,7 @@ class Overview extends React.Component{
     render(){
         return(
             <div>
-
-                    <table>
+                <table>
                         <tr>
                             <th>Case Title</th>
                             <th>Difficulty Level</th>
@@ -212,8 +211,7 @@ class Overview extends React.Component{
                         <tr>
                             <td colspan="2"><input type="text" placeholder="Enter the key learning points of this case" value={this.state.learning} name="learning" onChange={(e)=>this.handleLearningChange(e)}/></td>
                         </tr>
-                    </table>
-
+                </table>
             </div>
         );
     }
