@@ -48,7 +48,7 @@ class Header extends Component {
 
     render() {
         return (
-            <Navbar>
+            <Navbar id="navbar">
                 <Navbar.Header>
                     <Navbar.Brand>
                         <a href="/" style={{padding: '0px'}}><img src="./medsense_logo.png" style={{height: '60px', width: '200px', padding: '0px'}}/></a>

@@ -120,4 +120,8 @@ span.input-group-addon i {
 .navItem {
     margin-top: 0px;
 }
+
+.navbar-default {
+    background-color: teal;
+}
 /* End of Navbar styling */

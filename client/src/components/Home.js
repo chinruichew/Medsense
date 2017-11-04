@@ -14,6 +14,9 @@ class Home extends Component {
     }
 
     componentDidMount() {
+        // Dynamically set background image
+        document.body.style.backgroundImage = "url('./home_background.jpg')";
+
         this.intervalId = setInterval(this.timer.bind(this), 1000);
         this.setState({
             motivationalQuote: this.getMotivationalQuote()
