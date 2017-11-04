@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class Home extends Component {
+class About extends Component {
     constructor(props){
         super(props);
         this.state = {currentTime: new Date().toLocaleTimeString(), motivationalQuote: '', doomsdayCountdown: ''}
@@ -82,6 +82,9 @@ class Home extends Component {
                         <h2>
                             {this.state.motivationalQuote}
                         </h2>
+                        <h2>
+                            Medsense is a gamified learning platform for medical students in Singapore. Its was developed as a collaboration between NUS Yong Loo Lin School of Medicine, and Singapore Management University. This platform is a web application that simulates interaction with “patients”, facilitates peer learning via a discussion board, and allow Professors to track the performance of students anonymously.
+                        </h2>
                         <div className="container">
                             <div className="row main">
                                 <div className="main-login main-center">
@@ -103,4 +106,4 @@ class Home extends Component {
     }
 }
 
-export default Home;
+export default About;

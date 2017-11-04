@@ -5,7 +5,7 @@ import * as actions from '../actions';
 
 import Login from './LoginSignup/Login';
 import Header from './Header';
-import Home from './Home';
+import About from './About';
 import StudentSignup from "./LoginSignup/StudentSignup";
 import CaseUpload from './CaseUpload/Main';
 import StudentDashboard from './ProfileDashboard/StudentProfile';
@@ -29,7 +29,7 @@ class App extends Component {
                     <Route exact path="/upload" component={CaseUpload} />
                     <Route exact path="/student_dashboard" component={StudentDashboard} />
                     <Route exact path="/professor_dashboard" component={ProfessorDashboard} />
-                    <Route exact path="/" component={Home} />
+                    <Route exact path="/" component={About} />
                 </div>
             </BrowserRouter>
         );
