@@ -12,11 +12,15 @@ module.exports = app => {
             casetitle: req.body.casetitle,
             difficulty: req.body.difficulty,
             speciality: req.body.speciality,
-            subspeciality: req.body.subspeciality,
             approach: req.body.approach,
             scenario: req.body.scenario,
             author: mongoose.Types.ObjectId(req.body.author),
         });
+
+        const jsonObjectSS = JSON.parse(req.body.subspeciality);
+        for (const prop in jsonObjectSS) {
+            newCase.subspeciality.push(jsonObjectSS[prop])
+        }
         for (const prop in jsonObject) {
             const newQuestion = new Question({
                 questiontitle: jsonObject[prop]['questiontitle'],
@@ -49,14 +53,19 @@ module.exports = app => {
         return res.status(201).send({ data: null, message: "uploadCase success" });
     });
 
-    app.post('/updateCase', function (req, res) {
+    app.post('/api/updateCase', function (req, res) {
+        Case.update({ _id: req.body.caseid }, { $set: { subspeciality: [] } }, function (err, response) {});
         Case.findById(req.body.caseid, function (err, oneCase) {
             oneCase.casetitle = req.body.casetitle;
             oneCase.difficulty = req.body.difficulty;
             oneCase.speciality = req.body.speciality;
-            oneCase.subspeciality = req.body.subspeciality;
             oneCase.approach = req.body.approach;
             oneCase.scenario = req.body.scenario;
+
+            const jsonObjectSS = JSON.parse(req.body.subspeciality);
+            for (const prop in jsonObjectSS) {
+                oneCase.subspeciality.push(jsonObjectSS[prop])
+            }
 
             const questionArray = req.body.questionArray;
             const jsonObject = JSON.parse(questionArray);
@@ -88,7 +97,7 @@ module.exports = app => {
         });
     });
 
-    app.post('/fetchAllCases', function (req, res) {
+    app.post('/api/fetchAllCases', function (req, res) {
         Case.find({}).populate({
             path: 'questions',
             model: 'questions',
@@ -96,13 +105,13 @@ module.exports = app => {
                 path: 'mcqs',
                 model: 'mcqs'
             }
-        }).exec(function (error, cases) {   
+        }).exec(function (error, cases) {
             return res.status(201).send({ data: cases, message: "fetchAllCases success" });
         })
     });
 
-    app.post('/fetchAllCasesByAuthor', function (req, res) {
-        Case.find({ author: req.body.authorid }).populate({
+    app.post('/api/fetchAllCasesByAuthor', function (req, res) {
+        Case.find({author: req.body.authorid}).populate({
             path: 'questions',
             model: 'questions',
             populate: {
@@ -114,7 +123,7 @@ module.exports = app => {
         })
     });
 
-    app.post('/deleteCase', function (req, res) {
+    app.post('/api/deleteCase', function (req, res) {
         Case.find({ _id: req.body.caseid }, function (err, oneCase) {
             Question.find({ case: req.body.caseid }, function (err, questions) {
                 for (const prop in questions) {
@@ -126,30 +135,27 @@ module.exports = app => {
         return res.status(201).send({ data: null, message: "deleteCase success" });
     });
 
-    app.post('/updateCase', function (req, res) {
+    app.post('/api/updateCaseOnly', function (req, res) {
+        Case.update({ _id: req.body.caseid }, { $set: { subspeciality: [] } }, function (err, response) {});
         Case.findById(req.body.caseid, function (err, oneCase) {
-            oneCase.title = req.body.title
+            oneCase.casetitle = req.body.title
             oneCase.difficulty = req.body.difficulty
             oneCase.speciality = req.body.speciality
-            oneCase.subspeciality = req.body.subspeciality
             oneCase.approach = req.body.aproach
             oneCase.scenario = req.body.scenario
-            oneCase.save();
-        })
-        return res.status(201).send({ data: null, message: "updateCase success" });
-    })
-
-    app.post('/updateCaseTakeaway', function (req, res) {
-        Case.findById(req.body.caseid, function (err, oneCase) {
             oneCase.takeaway = req.body.takeaway
+            const jsonObjectSS = JSON.parse(req.body.subspeciality);
+            for (const prop in jsonObjectSS) {
+                oneCase.subspeciality.push(jsonObjectSS[prop])
+            }
             oneCase.save();
         })
-        return res.status(201).send({ data: null, message: "updateCaseTakeaway success" });
+        return res.status(201).send({ data: null, message: "updateCaseOnly success" });
     })
 
-    app.post('/updateQuestion', function (req, res) {
+    app.post('/api/updateQuestion', function (req, res) {
         Question.findById(req.body.questionid, function (err, oneQuestion) {
-            oneQuestion.title = req.body.title
+            oneQuestion.questiontitle = req.body.title
             oneQuestion.attachment = req.body.attachment
             oneQuestion.type = req.body.type
             oneQuestion.open = req.body.open
@@ -175,6 +181,14 @@ module.exports = app => {
             return res.status(201).send({ data: null, message: "updateCaseQuestion success" });
         })
     })
+
+    app.post('/api/fetchAllCasesByProfessor', function (req, res) {
+        User.findById(req.body.authorid, function (err, oneUser) {
+            Case.find({ subspeciality: { $in: oneUser.subspeciality } }, function (err, cases) {
+                return res.status(201).send({ data: cases, message: "fetchAllByAuthor success" });
+            })
+        })
+    });
 };
 
 
