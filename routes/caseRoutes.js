@@ -5,7 +5,7 @@ const Question = require('../models/Question');
 const MCQ = require('../models/MCQ');
 
 module.exports = app => {
-    app.post('/uploadCase', function (req, res) {
+    app.post('/api/uploadCase', function (req, res) {
         const questionArray = req.body.questionArray;
         const jsonObject = JSON.parse(questionArray);
         const newCase = new Case({

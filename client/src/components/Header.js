@@ -19,16 +19,30 @@ class Header extends Component {
                     </Nav>
                 );
             default:
-                return(
-                    <Nav pullRight>
-                        <NavItem eventKey={1}><Link to="/upload">Case Upload</Link></NavItem>
-                        <NavItem eventKey={2}><Link to="/vetting">Case Vetting</Link></NavItem>
-                        <NavItem eventKey={3}><Link to="/forum">Discussion Forum</Link></NavItem>
-                        <NavItem eventKey={4}><Link to="/profile">My Profile</Link></NavItem>
-                        <NavItem eventKey={5}><Link to="/acknowledgement">Acknowledgement</Link></NavItem>
-                        <NavItem eventKey={6} href="/api/logout">Logout</NavItem>
-                    </Nav>
-                );
+                // Check for user type
+                switch (this.props.auth.usertype) {
+                    case 'professor':
+                        return(
+                            <Nav pullRight>
+                                <NavItem eventKey={1}><Link to="/upload">Case Upload</Link></NavItem>
+                                <NavItem eventKey={2}><Link to="/vetting">Case Vetting</Link></NavItem>
+                                <NavItem eventKey={3}><Link to="/forum">Discussion Forum</Link></NavItem>
+                                <NavItem eventKey={4}><Link to="/profile">My Profile</Link></NavItem>
+                                <NavItem eventKey={5}><Link to="/acknowledgement">Acknowledgement</Link></NavItem>
+                                <NavItem eventKey={6} href="/api/logout">Logout</NavItem>
+                            </Nav>
+                        );
+                    case 'student':
+                        return(
+                            <Nav pullRight>
+                                <NavItem eventKey={1}><Link to="/upload">Case Upload</Link></NavItem>
+                                <NavItem eventKey={3}><Link to="/forum">Discussion Forum</Link></NavItem>
+                                <NavItem eventKey={4}><Link to="/profile">My Profile</Link></NavItem>
+                                <NavItem eventKey={5}><Link to="/acknowledgement">Acknowledgement</Link></NavItem>
+                                <NavItem eventKey={6} href="/api/logout">Logout</NavItem>
+                            </Nav>
+                        );
+                }
         }
     }
 

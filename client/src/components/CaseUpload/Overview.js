@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindAll } from 'lodash';
 
-class Overview extends React.Component{
+class Overview extends Component {
     constructor(props){
         super(props);
         this.state={
@@ -89,7 +89,6 @@ class Overview extends React.Component{
                     <option value="Renal Medicine">Renal Medicine</option>
                     <option value="Respiratory & Critical Care Medicine">Respiratory & Critical Care Medicine</option>
                     <option value="Rheumatology & Immunology">Rheumatology & Immunology</option>
-
                 </select>
             );
         } else if (this.state.speciality==="Others"){
@@ -131,7 +130,11 @@ class Overview extends React.Component{
     render(){
         return(
             <div>
+<<<<<<< HEAD
                 <table>
+=======
+                    <table>
+>>>>>>> 8319e7987ae46a5ead7dc15dc2649986536af927
                         <tr>
                             <th>Case Title</th>
                             <th>Difficulty Level</th>
@@ -166,13 +169,13 @@ class Overview extends React.Component{
                         </tr>
 
                         <tr>
-                            <th colspan="2">Approach(es)</th>
+                            <th colSpan="2">Approach(es)</th>
                         </tr>
                         <tr>
-                            <td colspan="2">Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.</td>
+                            <td colSpan="2">Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.</td>
                         </tr>
                         <tr>
-                            <td colspan="2">
+                            <td colSpan="2">
                                 <select value={this.state.approach} name="approach" onChange={(e)=>this.handleApproachChange(e)} multiple>
                                     <option value="Select All Relevant">Select All Relevant</option>
                                     <option value="Abdominal Pain">Abdominal Pain</option>
@@ -199,17 +202,17 @@ class Overview extends React.Component{
                         </tr>
 
                         <tr>
-                            <th colspan="2">Case Scenario</th>
+                            <th colSpan="2">Case Scenario</th>
                         </tr>
                         <tr>
-                            <td colspan="2"><input type="text" placeholder="Enter a brief description of the patient" value={this.state.scenario} name="scenario" onChange={(e)=>this.handleScenarioChange(e)}/></td>
+                            <td colSpan="2"><input type="text" placeholder="Enter a brief description of the patient" value={this.state.scenario} name="scenario" onChange={(e)=>this.handleScenarioChange(e)}/></td>
                         </tr>
 
                         <tr>
-                            <th colspan="2">Key Learning Points</th>
+                            <th colSpan="2">Key Learning Points</th>
                         </tr>
                         <tr>
-                            <td colspan="2"><input type="text" placeholder="Enter the key learning points of this case" value={this.state.learning} name="learning" onChange={(e)=>this.handleLearningChange(e)}/></td>
+                            <td colSpan="2"><input type="text" placeholder="Enter the key learning points of this case" value={this.state.learning} name="learning" onChange={(e)=>this.handleLearningChange(e)}/></td>
                         </tr>
                 </table>
             </div>

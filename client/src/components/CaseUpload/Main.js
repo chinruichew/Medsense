@@ -26,7 +26,7 @@ class Main extends React.Component{
     render(){
         return(
             <div>
-                <form action="/uploadMain" method="post">
+                <form action="/api/uploadCase" method="post">
                     <p>Insert Case Overview collapsible bar over here :D</p>
                     <Overview />
                     <p>Insert Case Question collapsible bar over here :D</p>
@@ -34,8 +34,6 @@ class Main extends React.Component{
                     <Button type="button" bsStyle="primary" onClick={(e)=>this.addQuestion()}>Add Question</Button><br/>
                     <Button type="submit" align="center" bsStyle="primary" onClick={(e)=>this.saveChanges(e)}>Submit</Button>
                 </form>
-
-
             </div>
         );
     }

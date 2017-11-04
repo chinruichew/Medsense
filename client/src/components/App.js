@@ -7,7 +7,7 @@ import Login from './LoginSignup/Login';
 import Header from './Header';
 import Home from './Home';
 import StudentSignup from "./LoginSignup/StudentSignup";
-import Main from './CaseUpload/Main';
+import CaseUpload from './CaseUpload/Main';
 
 import './App.css';
 
@@ -24,7 +24,7 @@ class App extends Component {
                     <Header />
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/signup" component={StudentSignup} />
-                    <Route exact path="/upload" component={Main} />
+                    <Route exact path="/upload" component={CaseUpload} />
                     <Route exact path="/" component={Home} />
                 </div>
             </BrowserRouter>
