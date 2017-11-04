@@ -7,7 +7,7 @@ var caseSchema = new Schema({
     questions: [{ type: Schema.Types.ObjectId, ref: 'questions' }],
     difficulty: { type: String, default: "" },
     speciality: { type: String, default: "" },
-    subspeciality: { type: String, default: "" },
+    subspeciality: [{ type: String, default: "" }],
     approach: { type: String, default: "" },
     scenario: { type: String, default: "" },
     takeaway: { type: String, default: "" },
