@@ -5,7 +5,6 @@ class Question extends Component {
     constructor(props){
         super(props);
         this.state={
-            qID:this.props.qID,
             stem:'',
             question:'',
             attachment:null,
@@ -185,7 +184,7 @@ class Question extends Component {
             );
         } else if(this.state.type==="Open-ended"){
             return(
-                <tr colspan="2">
+                <tr colSpan="2">
                     <td>
                         <input type="text" placeholder="Enter an answer" value={this.state.openEnded} name="openEnded" onChange={(e)=>this.handleOpenEndedChange(e)}/>
                     </td>
@@ -199,33 +198,33 @@ class Question extends Component {
         return(
 
             <div>
-                <p>Insert Question {this.state.qID} collapsible bar over here :D</p>
+                <p>Insert Question {this.props.qID} collapsible bar over here :D</p>
                     <table>
-                        <tr colspan="2">
+                        <tr colSpan="2">
                             <th>STEM</th>
                         </tr>
-                        <tr colspan="2">
+                        <tr colSpan="2">
                             <td><input type="text" placeholder="Enter a continuation of the scenario" value={this.state.stem} name="stem" onChange={(e)=>this.handleStemChange(e)}/></td>
                         </tr>
 
-                        <tr colspan="2">
+                        <tr colSpan="2">
                             <th>Question</th>
                         </tr>
-                        <tr colspan="2">
+                        <tr colSpan="2">
                             <td><input type="text" placeholder="Enter a question" value={this.state.question} name="question" onChange={(e)=>this.handleQuestionChange(e)}/></td>
                         </tr>
 
-                        <tr colspan="2">
+                        <tr colSpan="2">
                             <th>Add Attachment</th>
                         </tr>
-                        <tr colspan="2">
+                        <tr colSpan="2">
                             <td><input type="file" onChange={(e)=>this.handleFile(e)}/></td>
                         </tr>
 
-                        <tr colspan="2">
+                        <tr colSpan="2">
                             <th>Question Type</th>
                         </tr>
-                        <tr colspan="2">
+                        <tr colSpan="2">
                             <td>
                                 <select value={this.state.type} name="type" onChange={(e)=>this.handleTypeChange(e)}>
                                     <option value="Select One">Select One</option>
@@ -235,23 +234,23 @@ class Question extends Component {
                             </td>
                         </tr>
 
-                        <tr colspan="2">
+                        <tr colSpan="2">
                             <th>Answer(s)</th>
                         </tr>
 
                         {this.answer()}
 
-                        <tr colspan="2">
+                        <tr colSpan="2">
                             <th>PEARL</th>
                         </tr>
-                        <tr colspan="2">
+                        <tr colSpan="2">
                             <td><input type="text" placeholder="Enter an explanation for the answer(s)" value={this.state.pearl} name="pearl" onChange={(e)=>this.handlePearlChange(e)}/></td>
                         </tr>
 
-                        <tr colspan="2">
+                        <tr colSpan="2">
                             <th>Time Limit</th>
                         </tr>
-                        <tr colspan="2">
+                        <tr colSpan="2">
                             <td>
                                 <select value={this.state.time} name="time" onChange={(e)=>this.handleTimeChange(e)}>
                                     <option value="Select One">Select One</option>
@@ -266,10 +265,10 @@ class Question extends Component {
                             </td>
                         </tr>
 
-                        <tr colspan="2">
+                        <tr colSpan="2">
                             <th>Reference(s)</th>
                         </tr>
-                        <tr colspan="2">
+                        <tr colSpan="2">
                             <td><input type="text" placeholder="Enter your references" value={this.state.reference} name="reference" onChange={(e)=>this.handleReferenceChange(e)}/></td>
                         </tr>
                     </table>

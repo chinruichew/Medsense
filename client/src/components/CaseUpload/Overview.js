@@ -130,90 +130,86 @@ class Overview extends Component {
     render(){
         return(
             <div>
-<<<<<<< HEAD
                 <table>
-=======
-                    <table>
->>>>>>> 8319e7987ae46a5ead7dc15dc2649986536af927
-                        <tr>
-                            <th>Case Title</th>
-                            <th>Difficulty Level</th>
-                        </tr>
-                        <tr>
-                            <td><input type="text" placeholder="Enter a title" value={this.state.title} name="title" onChange={(e)=>this.handleTitleChange(e)}/></td>
-                            <td>
-                                <select value={this.state.difficulty} name="difficulty" onChange={(e)=>this.handleDifficultyChange(e)}>
-                                    <option value="Select One">Select One</option>
-                                    <option value="Beginner">Beginner</option>
-                                    <option value="Advanced">Advanced</option>
-                                </select>
-                            </td>
-                        </tr>
+                    <tr>
+                        <th>Case Title</th>
+                        <th>Difficulty Level</th>
+                    </tr>
+                    <tr>
+                        <td><input type="text" placeholder="Enter a title" value={this.state.title} name="title" onChange={(e)=>this.handleTitleChange(e)}/></td>
+                        <td>
+                            <select value={this.state.difficulty} name="difficulty" onChange={(e)=>this.handleDifficultyChange(e)}>
+                                <option value="Select One">Select One</option>
+                                <option value="Beginner">Beginner</option>
+                                <option value="Advanced">Advanced</option>
+                            </select>
+                        </td>
+                    </tr>
 
-                        <tr>
-                            <th>Speciality</th>
-                            <th>Sub-speciality</th>
-                        </tr>
-                        <tr>
-                            <td>
-                                <select value={this.state.speciality} name="speciality" onChange={(e)=>this.handleSpecialityChange(e)}>
-                                    <option value="Select One">Select One</option>
-                                    <option value="Medicine">Medicine</option>
-                                    <option value="Surgery">Surgery</option>
-                                    <option value="Others">Others</option>
-                                </select>
-                            </td>
-                            <td>
-                                {this.subspeciality()}
-                            </td>
-                        </tr>
+                    <tr>
+                        <th>Speciality</th>
+                        <th>Sub-speciality</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select value={this.state.speciality} name="speciality" onChange={(e)=>this.handleSpecialityChange(e)}>
+                                <option value="Select One">Select One</option>
+                                <option value="Medicine">Medicine</option>
+                                <option value="Surgery">Surgery</option>
+                                <option value="Others">Others</option>
+                            </select>
+                        </td>
+                        <td>
+                            {this.subspeciality()}
+                        </td>
+                    </tr>
 
-                        <tr>
-                            <th colSpan="2">Approach(es)</th>
-                        </tr>
-                        <tr>
-                            <td colSpan="2">Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.</td>
-                        </tr>
-                        <tr>
-                            <td colSpan="2">
-                                <select value={this.state.approach} name="approach" onChange={(e)=>this.handleApproachChange(e)} multiple>
-                                    <option value="Select All Relevant">Select All Relevant</option>
-                                    <option value="Abdominal Pain">Abdominal Pain</option>
-                                    <option value="Breathlessness">Breathlessness</option>
-                                    <option value="Chest Pain">Chest Pain</option>
-                                    <option value="Confusion">Confusion</option>
-                                    <option value="Cough">Cough</option>
-                                    <option value="Diarrhea">Diarrhea</option>
-                                    <option value="Dizziness">Dizziness</option>
-                                    <option value="Falls">Falls</option>
-                                    <option value="Fever">Fever</option>
-                                    <option value="Gastrointestinal bleed">Gastrointestinal bleed</option>
-                                    <option value="Headache">Headache</option>
-                                    <option value="Jaundice">Jaundice</option>
-                                    <option value="Limb pain">Limb pain</option>
-                                    <option value="Limb swelling ">Limb swelling</option>
-                                    <option value="Palpitations">Palpitations</option>
-                                    <option value="Seizure">Seizure</option>
-                                    <option value="Syncope">Syncope</option>
-                                    <option value="Vomiting">Vomiting</option>
-                                    <option value="Weakness">Weakness</option>
-                                </select>
-                            </td>
-                        </tr>
+                    <tr>
+                        <th colSpan="2">Approach(es)</th>
+                    </tr>
+                    <tr>
+                        <td colSpan="2">Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.</td>
+                    </tr>
+                    <tr>
+                        <td colSpan="2">
+                            <select value={this.state.approach} name="approach" onChange={(e)=>this.handleApproachChange(e)} multiple>
+                                <option value="Select All Relevant">Select All Relevant</option>
+                                <option value="Abdominal Pain">Abdominal Pain</option>
+                                <option value="Breathlessness">Breathlessness</option>
+                                <option value="Chest Pain">Chest Pain</option>
+                                <option value="Confusion">Confusion</option>
+                                <option value="Cough">Cough</option>
+                                <option value="Diarrhea">Diarrhea</option>
+                                <option value="Dizziness">Dizziness</option>
+                                <option value="Falls">Falls</option>
+                                <option value="Fever">Fever</option>
+                                <option value="Gastrointestinal bleed">Gastrointestinal bleed</option>
+                                <option value="Headache">Headache</option>
+                                <option value="Jaundice">Jaundice</option>
+                                <option value="Limb pain">Limb pain</option>
+                                <option value="Limb swelling ">Limb swelling</option>
+                                <option value="Palpitations">Palpitations</option>
+                                <option value="Seizure">Seizure</option>
+                                <option value="Syncope">Syncope</option>
+                                <option value="Vomiting">Vomiting</option>
+                                <option value="Weakness">Weakness</option>
+                            </select>
+                        </td>
+                    </tr>
 
-                        <tr>
-                            <th colSpan="2">Case Scenario</th>
-                        </tr>
-                        <tr>
-                            <td colSpan="2"><input type="text" placeholder="Enter a brief description of the patient" value={this.state.scenario} name="scenario" onChange={(e)=>this.handleScenarioChange(e)}/></td>
-                        </tr>
+                    <tr>
+                        <th colSpan="2">Case Scenario</th>
+                    </tr>
+                    <tr>
+                        <td colSpan="2"><input type="text" placeholder="Enter a brief description of the patient" value={this.state.scenario} name="scenario" onChange={(e)=>this.handleScenarioChange(e)}/></td>
+                    </tr>
 
-                        <tr>
-                            <th colSpan="2">Key Learning Points</th>
-                        </tr>
-                        <tr>
-                            <td colSpan="2"><input type="text" placeholder="Enter the key learning points of this case" value={this.state.learning} name="learning" onChange={(e)=>this.handleLearningChange(e)}/></td>
-                        </tr>
+                    <tr>
+                        <th colSpan="2">Key Learning Points</th>
+                    </tr>
+                    <tr>
+                        <td colSpan="2"><input type="text" placeholder="Enter the key learning points of this case" value={this.state.learning} name="learning" onChange={(e)=>this.handleLearningChange(e)}/></td>
+                    </tr>
                 </table>
             </div>
         );
