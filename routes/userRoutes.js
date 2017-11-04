@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var User = require('../models/User');
 
 module.exports = app => {
-    app.post('/signup', function (req, res) {
+    app.post('/api/signup', function (req, res) {
         User.findOne({ username: req.body.username }, function (err, user) {
             if (err) { return res.send(err) }
             if (user) {
@@ -16,6 +16,13 @@ module.exports = app => {
                 newUser.year = req.body.year;
                 newUser.profilepicture = req.body.profilepicture;
                 newUser.usertype = req.body.usertype;
+                newUser.speciality = req.body.speciality;
+
+                const jsonObjectSS = JSON.parse(req.body.subspeciality);
+                for (const prop in jsonObjectSS) {
+                    newUser.subspeciality.push(jsonObjectSS[prop])
+                }
+
                 newUser.save();
                 return res.status(201).send({ data: user, message: "user created" });
             }
