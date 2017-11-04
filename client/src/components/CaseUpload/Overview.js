@@ -17,7 +17,7 @@ class Overview extends Component {
             'handleApproachChange', 'handleScenarioChange', 'handleLearningChange', 'setSubspeciality', 'update');
     }
 
-    update(){
+    update(value, key){
         let details = {
             title: this.state.title,
             difficulty: this.state.difficulty,
@@ -27,29 +27,64 @@ class Overview extends Component {
             scenario: this.state.scenario,
             learning: this.state.learning,
         };
-        this.props.handleUpdateOverview(details);
+
+        switch(key) {
+            case "title":
+                details.title = value;
+                this.props.handleUpdateOverview(details);
+                return;
+            case "difficulty":
+                details.difficulty = value;
+                this.props.handleUpdateOverview(details);
+                return;
+            case "speciality":
+                details.speciality = value;
+                this.props.handleUpdateOverview(details);
+                return;
+            case "subspeciality":
+                details.subspeciality = value;
+                this.props.handleUpdateOverview(details);
+                return;
+            case "approach":
+                details.approach = value;
+                this.props.handleUpdateOverview(details);
+                return;
+            case "scenario":
+                details.scenario = value;
+                this.props.handleUpdateOverview(details);
+                return;
+            case "learning":
+                details.learning = value;
+                this.props.handleUpdateOverview(details);
+                return;
+            default:
+                this.props.handleUpdateOverview(details);
+                return;
+        }
     }
 
     handleTitleChange(e){
         const value = e.target.value;
-        this.setState({ title: e.target.value });
-        this.update();
+        this.setState({ title: value });
+        this.update(value, "title");
     }
     handleDifficultyChange(e){
-        this.setState({ difficulty: e.target.value });
-        this.update();
+        const value = e.target.value;
+        this.setState({ difficulty: value });
+        this.update(value, "difficulty");
     }
     handleSpecialityChange(e){
-        this.setState({ speciality: e.target.value });
-        this.update();
-
+        const value = e.target.value;
+        this.setState({ speciality: value });
+        this.update(value, "speciality");
     }
     handleSubspecialityChange(e){
-        this.setState({ subspeciality: e.target.value });
-        this.update();
+        const value = e.target.value;
+        this.setState({ subspeciality: value });
+        this.update(value, "subspeciality");
     }
     handleApproachChange(e){
-        let options = e.target.options;
+        const options = e.target.options;
         let value = [];
         for (let i = 1, l = options.length; i < l; i++) {
             if (options[i].selected) {
@@ -58,16 +93,18 @@ class Overview extends Component {
         }
         if (value.length>0){
             this.setState({ approach: value });
+            this.update(value, "approach");
         }
-        this.update();
     }
     handleScenarioChange(e){
-        this.setState({ scenario: e.target.value });
-        this.update();
+        const value = e.target.value;
+        this.setState({ scenario: value });
+        this.update(value, "scenario");
     }
     handleLearningChange(e){
-        this.setState({ learning: e.target.value });
-        this.update();
+        const value = e.target.value;
+        this.setState({ learning: value });
+        this.update(value, "learning");
     }
 
     setSubspeciality(){

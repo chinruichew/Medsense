@@ -5,34 +5,143 @@ class Question extends Component {
     constructor(props){
         super(props);
         this.state={
-            stem:'',
-            question:'',
-            attachment:null,
-            filename:null,
-            filetype:null,
-            type:"Select One",
-            openEnded:'',
-            mcq1:'',
-            mcq2:'',
-            mcq3:'',
-            mcq4:'',
-            mcq5:'',
-            mcq6:'',
-            check1:false,
-            check2:false,
-            check3:false,
-            check4:false,
-            check5:false,
-            check6:false,
-            pearl:'',
-            time:"Select One",
-            reference:'',
-
+            id: this.props.id,
+            stem: this.props.stem,
+            question: this.props.question,
+            attachment: this.props.attachment,
+            filename: this.props.filename,
+            filetype: this.props.filetype,
+            type: this.props.type,
+            openEnded: this.props.openEnded,
+            mcq1: this.props.mcq1,
+            mcq2: this.props.mcq2,
+            mcq3: this.props.mcq3,
+            mcq4: this.props.mcq4,
+            mcq5: this.props.mcq5,
+            mcq6: this.props.mcq6,
+            check1: this.props.check1,
+            check2: this.props.check2,
+            check3: this.props.check3,
+            check4: this.props.check4,
+            check5: this.props.check5,
+            check6: this.props.check6,
+            pearl: this.props.pearl,
+            time: this.props.time,
+            reference: this.props.reference,
         };
         bindAll(this, 'handleFile', 'handleStemChange', 'handleQuestionChange', 'handleTypeChange', 'handleOpenEndedChange',
             'handleMCQ1Change', 'handleMCQ2Change', 'handleMCQ3Change', 'handleMCQ4Change', 'handleMCQ5Change', 'handleMCQ6Change',
             'handleCheck1Change', 'handleCheck2Change', 'handleCheck3Change', 'handleCheck4Change', 'handleCheck5Change',
-            'handleCheck6Change', 'handlePearlChange', 'handleTimeChange', 'handleReferenceChange','answer');
+            'handleCheck6Change', 'handlePearlChange', 'handleTimeChange', 'handleReferenceChange','answer', 'update');
+    }
+
+    update(value,key){
+        let details = {
+            stem: this.state.stem,
+            question: this.state.question,
+            attachment: this.state.attachment,
+            filename: this.state.filename,
+            filetype: this.state.filetype,
+            type: this.state.type,
+            openEnded: this.state.openEnded,
+            mcq1: this.state.mcq1,
+            mcq2: this.state.mcq2,
+            mcq3: this.state.mcq3,
+            mcq4: this.state.mcq4,
+            mcq5: this.state.mcq5,
+            mcq6: this.state.mcq6,
+            check1: this.state.check1,
+            check2: this.state.check2,
+            check3: this.state.check3,
+            check4: this.state.check4,
+            check5: this.state.check5,
+            check6: this.state.check6,
+            pearl: this.state.pearl,
+            time: this.state.time,
+            reference: this.state.reference,
+        };
+
+        switch(key) {
+            case "stem":
+                details.stem = value;
+                this.props.handleUpdateQuestion(details,this.state.id);
+                return;
+            case "question":
+                details.question = value;
+                this.props.handleUpdateQuestion(details,this.state.id);
+                return;
+            case "type":
+                details.type = value;
+                this.props.handleUpdateQuestion(details,this.state.id);
+                return;
+            case "openEnded":
+                details.openEnded = value;
+                this.props.handleUpdateQuestion(details,this.state.id);
+                return;
+            case "mcq1":
+                details.mcq1 = value;
+                this.props.handleUpdateQuestion(details,this.state.id);
+                return;
+            case "mcq2":
+                details.mcq2 = value;
+                this.props.handleUpdateQuestion(details,this.state.id);
+                return;
+            case "mcq3":
+                details.mcq3 = value;
+                this.props.handleUpdateQuestion(details,this.state.id);
+                return;
+            case "mcq4":
+                details.mcq4 = value;
+                this.props.handleUpdateQuestion(details,this.state.id);
+                return;
+            case "mcq5":
+                details.mcq5 = value;
+                this.props.handleUpdateQuestion(details,this.state.id);
+                return;
+            case "mcq6":
+                details.mcq6 = value;
+                this.props.handleUpdateQuestion(details,this.state.id);
+                return;
+            case "check1":
+                details.check1 = value;
+                this.props.handleUpdateQuestion(details,this.state.id);
+                return;
+            case "check2":
+                details.check2 = value;
+                this.props.handleUpdateQuestion(details,this.state.id);
+                return;
+            case "check3":
+                details.check3 = value;
+                this.props.handleUpdateQuestion(details,this.state.id);
+                return;
+            case "check4":
+                details.check4 = value;
+                this.props.handleUpdateQuestion(details,this.state.id);
+                return;
+            case "check5":
+                details.check5 = value;
+                this.props.handleUpdateQuestion(details,this.state.id);
+                return;
+            case "check6":
+                details.check6 = value;
+                this.props.handleUpdateQuestion(details,this.state.id);
+                return;
+            case "pearl":
+                details.pearl = value;
+                this.props.handleUpdateQuestion(details,this.state.id);
+                return;
+            case "time":
+                details.time = value;
+                this.props.handleUpdateQuestion(details,this.state.id);
+                return;
+            case "reference":
+                details.reference = value;
+                this.props.handleUpdateQuestion(details,this.state.id);
+                return;
+            default:
+                this.props.handleUpdateQuestion(details,this.state.id);
+                return;
+        }
     }
 
     handleFile(e){
@@ -42,68 +151,106 @@ class Question extends Component {
             this.setState({
                 attachment: upload.target.result,
                 filename: file.name,
-                filetype: file.type
+                filetype: file.type,
             });
         };
         reader.readAsDataURL(file);
     }
 
     handleStemChange(e){
-        this.setState({ stem: e.target.value });
+        const value = e.target.value;
+        this.setState({ stem: value });
+        this.update(value, "stem");
     }
     handleQuestionChange(e){
-        this.setState({ question: e.target.value });
+        const value = e.target.value;
+        this.setState({ question: value });
+        this.update(value, "question");
     }
     handleTypeChange(e){
-        this.setState({ type: e.target.value });
+        const value = e.target.value;
+        this.setState({ type: value });
+        this.update(value, "type");
     }
     handleOpenEndedChange(e){
-        this.setState({ openEnded: e.target.value });
+        const value = e.target.value;
+        this.setState({ openEnded: value });
+        this.update(value, "openEnded");
     }
     handleMCQ1Change(e){
-        this.setState({ mcq1: e.target.value });
+        const value = e.target.value;
+        this.setState({ mcq1: value });
+        this.update(value, "mcq1");
     }
     handleMCQ2Change(e){
-        this.setState({ mcq2: e.target.value });
+        const value = e.target.value;
+        this.setState({ mcq2: value });
+        this.update(value, "mcq2");
     }
     handleMCQ3Change(e){
-        this.setState({ mcq3: e.target.value });
+        const value = e.target.value;
+        this.setState({ mcq3: value });
+        this.update(value, "mcq3");
     }
     handleMCQ4Change(e){
-        this.setState({ mcq4: e.target.value });
+        const value = e.target.value;
+        this.setState({ mcq4: value });
+        this.update(value, "mcq4");
     }
     handleMCQ5Change(e){
-        this.setState({ mcq5: e.target.value });
+        const value = e.target.value;
+        this.setState({ mcq5: value });
+        this.update(value, "mcq5");
     }
     handleMCQ6Change(e){
-        this.setState({ mcq6: e.target.value });
+        const value = e.target.value;
+        this.setState({ mcq6: value });
+        this.update(value, "mcq6");
     }
     handleCheck1Change(e){
-        this.setState({ check1: e.target.checked });
+        const value = e.target.checked;
+        this.setState({ check1: value });
+        this.update(value, "check1");
     }
     handleCheck2Change(e){
-        this.setState({ check2: e.target.checked });
+        const value = e.target.checked;
+        this.setState({ check2: value });
+        this.update(value, "check2");
     }
     handleCheck3Change(e){
-        this.setState({ check3: e.target.checked });
+        const value = e.target.checked;
+        this.setState({ check3: value });
+        this.update(value, "check3");
     }
     handleCheck4Change(e){
-        this.setState({ check4: e.target.checked });
+        const value = e.target.checked;
+        this.setState({ check4: value });
+        this.update(value, "check4");
     }
     handleCheck5Change(e){
-        this.setState({ check5: e.target.checked });
+        const value = e.target.checked;
+        this.setState({ check5: value });
+        this.update(value, "check5");
     }
     handleCheck6Change(e){
-        this.setState({ check6: e.target.checked });
+        const value = e.target.checked;
+        this.setState({ check6: value });
+        this.update(value, "check6");
     }
     handlePearlChange(e){
-        this.setState({ pearl: e.target.value });
+        const value = e.target.value;
+        this.setState({ pearl: value });
+        this.update(value, "pearl");
     }
     handleTimeChange(e){
-        this.setState({ time: e.target.value });
+        const value = e.target.value;
+        this.setState({ time: value });
+        this.update(value, "time");
     }
     handleReferenceChange(e){
-        this.setState({ reference: e.target.value });
+        const value = e.target.value;
+        this.setState({ reference: value });
+        this.update(value, "reference");
     }
 
     answer(){
