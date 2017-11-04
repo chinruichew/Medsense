@@ -27,12 +27,12 @@ class Question extends Component {
             pearl:'',
             time:"Select One",
             reference:'',
-            valid:false,
+
         };
         bindAll(this, 'handleFile', 'handleStemChange', 'handleQuestionChange', 'handleTypeChange', 'handleOpenEndedChange',
             'handleMCQ1Change', 'handleMCQ2Change', 'handleMCQ3Change', 'handleMCQ4Change', 'handleMCQ5Change', 'handleMCQ6Change',
             'handleCheck1Change', 'handleCheck2Change', 'handleCheck3Change', 'handleCheck4Change', 'handleCheck5Change',
-            'handleCheck6Change', 'handlePearlChange', 'handleTimeChange', 'handleReferenceChange', 'saveChanges','answer');
+            'handleCheck6Change', 'handlePearlChange', 'handleTimeChange', 'handleReferenceChange','answer');
     }
 
     handleFile(e){
@@ -106,41 +106,6 @@ class Question extends Component {
         this.setState({ reference: e.target.value });
     }
 
-    saveChanges(e){
-        e.preventDefault();
-        if (this.state.type==="Select One"){
-            window.alert("Please select a Question Type!");
-        } else if (this.state.question===''){
-            window.alert("Please fill in the Question!");
-        } else if (this.state.time==="Select One"){
-            window.alert("Please select a Time Limit!");
-        } else if (this.state.type==="MCQ"){
-            if (this.state.mcq1==='' || this.state.mcq2===''){
-                window.alert("Please fill in the first 2 MCQ answers!");
-            } else if (this.state.mcq3==='' && this.state.check3){
-                window.alert("Please fill in an answer for third answer option or uncheck that option!");
-            } else if (this.state.mcq4==='' && this.state.check4){
-                window.alert("Please fill in an answer for fourth answer option or uncheck that option!");
-            } else if (this.state.mcq5==='' && this.state.check5){
-                window.alert("Please fill in an answer for fifth answer option or uncheck that option!");
-            } else if (this.state.mcq6==='' && this.state.check6){
-                window.alert("Please fill in an answer for sixth answer option or uncheck that option!");
-            } else if (!this.state.check1 && !this.state.check2 && !this.state.check3 && !this.state.check4 && !this.state.check5 && !this.state.check6){
-                window.alert("Please check at least 1 correct answer!");
-            } else {
-                this.setState({ valid: true });
-                window.alert("Success!");
-            }
-        } else if (this.state.type==="Open-ended" && this.state.openEnded===''){
-            window.alert("Please fill in the Open-ended answer!");
-        } else {
-            this.setState({ valid: true });
-            window.alert("Success!");
-        }
-
-        console.log(this.state);
-    }
-
     answer(){
         if(this.state.type==="MCQ"){
             return(
@@ -198,7 +163,7 @@ class Question extends Component {
         return(
 
             <div>
-                <p>Insert Question {this.props.qID} collapsible bar over here :D</p>
+                <p>Insert Question {this.props.id} collapsible bar over here :D</p>
                     <table>
                         <tr colSpan="2">
                             <th>STEM</th>

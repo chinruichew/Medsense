@@ -5,31 +5,48 @@ class Overview extends Component {
     constructor(props){
         super(props);
         this.state={
-            title:'',
-            difficulty:"Select One",
-            speciality:"Select One",
-            subspeciality:"Select One",
-            approach:null,
-            scenario:'',
-            learning: '',
-            valid:false,
+            title: this.props.title,
+            difficulty: this.props.difficulty,
+            speciality: this.props.speciality,
+            subspeciality: this.props.subspeciality,
+            approach: this.props.approach,
+            scenario: this.props.scenario,
+            learning: this.props.learning,
         };
         bindAll(this, 'handleTitleChange', 'handleDifficultyChange', 'handleSpecialityChange', 'handleSubspecialityChange',
-            'handleApproachChange', 'handleScenarioChange', 'handleLearningChange', 'saveChanges', 'subspeciality');
+            'handleApproachChange', 'handleScenarioChange', 'handleLearningChange', 'setSubspeciality', 'update');
+    }
+
+    update(){
+        let details = {
+            title: this.state.title,
+            difficulty: this.state.difficulty,
+            speciality: this.state.speciality,
+            subspeciality: this.state.subspeciality,
+            approach: this.state.approach,
+            scenario: this.state.scenario,
+            learning: this.state.learning,
+        };
+        this.props.handleUpdateOverview(details);
     }
 
     handleTitleChange(e){
+        const value = e.target.value;
         this.setState({ title: e.target.value });
+        this.update();
     }
     handleDifficultyChange(e){
         this.setState({ difficulty: e.target.value });
+        this.update();
     }
     handleSpecialityChange(e){
         this.setState({ speciality: e.target.value });
+        this.update();
 
     }
     handleSubspecialityChange(e){
         this.setState({ subspeciality: e.target.value });
+        this.update();
     }
     handleApproachChange(e){
         let options = e.target.options;
@@ -42,38 +59,18 @@ class Overview extends Component {
         if (value.length>0){
             this.setState({ approach: value });
         }
-
+        this.update();
     }
     handleScenarioChange(e){
         this.setState({ scenario: e.target.value });
+        this.update();
     }
     handleLearningChange(e){
         this.setState({ learning: e.target.value });
+        this.update();
     }
 
-    saveChanges(e) {
-        e.preventDefault();
-        if (this.state.title===''){
-            window.alert("Please fill in the Case Title!");
-        } else if (this.state.difficulty==="Select One"){
-            window.alert("Please select a Difficulty Level!");
-        } else if (this.state.speciality==="Select One"){
-            window.alert("Please select a Speciality!");
-        } else if (this.state.subspeciality==="Select One"){
-            window.alert("Please select a Sub-specialiy!");
-        } else if (this.state.approach===null){
-            window.alert("Please select at least 1 Approach!");
-        } else if (this.state.scenario===''){
-            window.alert("Please fill in the Case Scenario!");
-        } else {
-            this.setState({ valid: true });
-            window.alert("Success!");
-        }
-
-        console.log(this.state);
-    }
-
-    subspeciality(){
+    setSubspeciality(){
 
         if (this.state.speciality==="Medicine"){
             return(
@@ -160,7 +157,7 @@ class Overview extends Component {
                             </select>
                         </td>
                         <td>
-                            {this.subspeciality()}
+                            {this.setSubspeciality()}
                         </td>
                     </tr>
 
