@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { Button } from 'react-bootstrap';
-import { bindAll } from 'lodash';
 
 class StudentSignup extends Component {
     constructor(props) {
@@ -12,24 +10,11 @@ class StudentSignup extends Component {
             school: "Duke-NUS",
             year: "Year 1"
         };
-        bindAll(this, 'handleUsernameChange', 'handlePasswordChange', 'handleConfirmPasswordChange', 'handleSchoolChange', 'handleYearChange', 'handleFile');
     }
 
     componentDidMount() {
         // Dynamically set background image
         document.body.style.backgroundImage = "url('./home_background.jpg')";
-    }
-
-    handleUsernameChange(e) {
-        this.setState({ username: e.target.value });
-    }
-
-    handlePasswordChange(e) {
-        this.setState({ password: e.target.value });
-    }
-
-    handleConfirmPasswordChange(e) {
-        this.setState({ confirmpassword: e.target.value });
     }
 
     handleSchoolChange(e) {
@@ -38,31 +23,6 @@ class StudentSignup extends Component {
 
     handleYearChange(e) {
         this.setState({ year: e.target.value });
-    }
-
-    handleFile(e) {
-        const reader = new FileReader();
-        const file = e.target.files[0];
-        reader.onload = (upload) => {
-            this.setState({
-                profilepicture: upload.target.result,
-                filename: file.name,
-                filetype: file.type
-            });
-        };
-        reader.readAsDataURL(file);
-    }
-
-    saveChanges(e) {
-        e.preventDefault();
-        if (this.state.password == null || this.state.confirmpassword == null) {
-
-        } else if (this.state.password !== this.state.confirmpassword) {
-            window.alert("Passwords do not match!");
-        }
-
-        let { username, password, confirmpassword, school, year, profilepicture, filename, filetype} = this.state;
-        console.log(this.state);
     }
 
     render() {
@@ -81,7 +41,7 @@ class StudentSignup extends Component {
                 <div className="row">
                     <div className="main-login main-center">
                         <img src="./medsense_logo.png" style={{height: '120px', width: '300px'}} />
-                        <form className="form-horizontal" method="get" action="/auth/local/signup">
+                        <form className="form-horizontal" method="post" action="/auth/local/signup">
                             <div className="form-group">
                                 <label for="username" className="cols-sm-2 control-label">Username</label>
                                 <div className="cols-sm-10">
@@ -139,7 +99,7 @@ class StudentSignup extends Component {
                             </div>
                             <div className="form-group">
                                 <label>Upload a profile picture:</label>
-                                <input type="file" onChange={this.handleFile} />
+                                <input type="file" value="profile_picture" />
                             </div>
                             <div className="form-group ">
                                 <button type="submit" className="btn btn-primary btn-lg btn-block login-button">Sign Up</button>

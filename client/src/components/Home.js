@@ -85,7 +85,7 @@ class Home extends Component {
                         <div className="container">
                             <div className="row main">
                                 <div className="main-login main-center">
-                                    <form action="/api/uploadS3Image" encType="multipart/form-data" method="post">
+                                    <form action="/api/uploadProfileImage" encType="multipart/form-data" method="post">
                                         <div className="form-group">
                                             <label className="cols-sm-2 control-label">Upload File</label>
                                             <input type="file" name="upload" multiple="multiple" />

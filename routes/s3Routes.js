@@ -29,7 +29,7 @@ module.exports = app => {
         });
     });
 
-    app.post('/api/uploadS3Image', (req, res) => {
+    app.post('/api/uploadProfileImage', (req, res) => {
         const form = new multiparty.Form();
         form.parse(req, function(err, fields, files) {
             Object.keys(fields).forEach(function(name) {
@@ -41,12 +41,10 @@ module.exports = app => {
             });
 
             const file = files.upload[0];
-            console.log(file);
             fs.readFile(file.path, function (err, data) {
                 const s3 = new aws.S3();
                 const myBucket = 'case-upload-images';
                 const params = {Bucket: myBucket, Key: 'test_key.jpg', Body: data, ACL: 'public-read'};
-                console.log(data);
                 s3.putObject(params, function(err, data) {
                     if (err) {
                         console.log(err)
@@ -55,7 +53,6 @@ module.exports = app => {
                     }
                 });
             });
-            console.log('Upload completed!');
         });
     });
 };
