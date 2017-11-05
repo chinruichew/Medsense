@@ -32,11 +32,11 @@ class StudentProfile extends Component {
             <div>
                 <div className="col-sm-5 col-sm-offset-2">
                     <form method="post" action="/api/updateStudent">
-                        <div class="row" style={{ marginRight: "200px", marginLeft: "0px" }}>
+                        <div className="row" style={{ marginRight: "200px", marginLeft: "0px" }}>
                             <h3> <b>{this.state.username}</b> </h3>
                         </div>
 
-                        <div class="row">
+                        <div className="row">
                             <div className="form-group col-lg-5">
                                 <div className="cols-sm-5">
                                     <div className="input-group">
@@ -53,7 +53,7 @@ class StudentProfile extends Component {
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div className="row">
                             <div className="form-group col-lg-5">
                                 <div className="cols-sm-5">
                                     <div className="input-group">
@@ -76,16 +76,16 @@ class StudentProfile extends Component {
 
                     </form>
 
-                    <div class="row" style={{ marginRight: "200px", marginLeft: "55px" }}>
+                    <div className="row" style={{ marginRight: "200px", marginLeft: "55px" }}>
                         <h3> <b>Scoreboard</b> </h3>
                     </div>
                 </div>
 
                 <div className="col-sm-4">
-                    <div class="row" style={{ marginRight: "200px", marginLeft: "55px", marginBottom: "260px" }}>
+                    <div className="row" style={{ marginRight: "200px", marginLeft: "55px", marginBottom: "260px" }}>
                         <h3> <b>Analytics1</b> </h3>
                     </div>
-                    <div class="row" style={{ marginRight: "200px", marginLeft: "55px" }}>
+                    <div className="row" style={{ marginRight: "200px", marginLeft: "55px" }}>
                         <h3> <b>Analytics2</b> </h3>
                     </div>
                 </div>
