@@ -32,6 +32,7 @@ class ProfessorProfile extends Component {
     handleSaveChange(e) {
         this.props.updateProfessor(this.state).then((response) => {
             if (response) {
+                console.log(response)
                 window.alert("Successfully Updated")
             }
         }).catch(() => { })
@@ -93,17 +94,17 @@ class ProfessorProfile extends Component {
 
                     </form>
 
-                    <div className="row" style={{ marginRight: "200px", marginLeft: "55px" }}>
-                        <h3> <b>Scoreboard</b> </h3>
+                    <div className="row" style={{ marginRight: "200px", marginLeft: "0px" }}>
+                        <h3> <b>Scoreboard</b> <img src="./placeholder.png" alt="" /> </h3>
                     </div>
                 </div>
 
                 <div className="col-sm-4">
-                    <div className="row" style={{ marginRight: "200px", marginLeft: "55px", marginBottom: "300px" }}>
-                        <h3> <b>Analytics1</b> </h3>
+                    <div className="row" style={{ marginRight: "200px", marginLeft: "0px" }}>
+                        <h3> <b>Graphs</b> <img src="./placeholder.png" alt="" /> </h3>
                     </div>
-                    <div className="row" style={{ marginRight: "200px", marginLeft: "55px" }}>
-                        <h3> <b>Analytics2</b> </h3>
+                    <div className="row" style={{ marginRight: "200px", marginLeft: "0px" }}>
+                        <h3> <b>Analytics</b> <img src="./placeholder.png" alt="" /> </h3>
                     </div>
                 </div>
 
