@@ -12,6 +12,7 @@ const caseSchema = new Schema({
     scenario: { type: String, default: "" },
     learning: { type: String, default: "" },
     status: { type: String, default: "Pending" },
+    timestamp: {type: String, default: ""},
     author: { type: Schema.Types.ObjectId, ref: 'users' }
 });
 
