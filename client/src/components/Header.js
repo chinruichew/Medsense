@@ -29,6 +29,7 @@ class Header extends Component {
                                 <NavItem className="navItem" eventKey={4} href="/professor_dashboard">Dashboard</NavItem>
                                 <NavItem className="navItem" eventKey={5} href="/acknowledgement">Acknowledgement</NavItem>
                                 <NavItem className="navItem" eventKey={6} href="/api/logout">Logout</NavItem>
+                                <img src="https://s3-ap-southeast-1.amazonaws.com/profile-picture-images/user_profile.jpg" className="img-circle" style={{height: '45px', width: '45px'}} />
                             </Nav>
                         );
                     case 'student':
@@ -40,6 +41,7 @@ class Header extends Component {
                                 <NavItem className="navItem" eventKey={4} href="/student_dashboard">Dashboard</NavItem>
                                 <NavItem className="navItem" eventKey={5} href="/acknowledgement">Acknowledgement</NavItem>
                                 <NavItem className="navItem" eventKey={6} href="/api/logout">Logout</NavItem>
+                                <img src="https://s3-ap-southeast-1.amazonaws.com/profile-picture-images/user_profile.jpg" className="img-circle" style={{height: '45px', width: '45px'}} />
                             </Nav>
                         );
                 }
