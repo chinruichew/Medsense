@@ -9,7 +9,7 @@ const userSchema = new Schema({
     year: { type: String, default: "" },
     profilepicture: { type: String, default: "" },
     speciality: { type: String, default: "" },
-    subspeciality: [{ type: String, default: "" }],
+    subspeciality: { type: String, default: "" },
     usertype: { type: String, default: "" },
     cases: [{ type: Schema.Types.ObjectId, ref: 'cases' }]
 });

@@ -27,6 +27,7 @@ module.exports = app => {
             title: req.body.title,
             difficulty: req.body.difficulty,
             speciality: req.body.speciality,
+            subspeciality: req.body.subspeciality,
             approach: req.body.approach,
             scenario: req.body.scenario,
             learning: req.body.learning,
@@ -34,10 +35,10 @@ module.exports = app => {
             author: mongoose.Types.ObjectId(req.body.author)
         });
 
-        const jsonObjectSS = JSON.parse(req.body.subspeciality);
-        for (const prop in jsonObjectSS) {
-            newCase.subspeciality.push(jsonObjectSS[prop])
-        }
+        // const jsonObjectSS = JSON.parse(req.body.subspeciality);
+        // for (const prop in jsonObjectSS) {
+        //     newCase.subspeciality.push(jsonObjectSS[prop])
+        // }
 
         for (const prop in jsonObject) {
             const newQuestion = new Question({
@@ -78,15 +79,16 @@ module.exports = app => {
             oneCase.title = req.body.title;
             oneCase.difficulty = req.body.difficulty;
             oneCase.speciality = req.body.speciality;
+            oneCase.subspeciality = req.body.subspeciality;
             oneCase.approach = req.body.approach;
             oneCase.scenario = req.body.scenario;
             oneCase.learning = req.body.learning;
             oneCase.timestamp = req.body.timestamp;
 
-            const jsonObjectSS = JSON.parse(req.body.subspeciality);
-            for (const prop in jsonObjectSS) {
-                oneCase.subspeciality.push(jsonObjectSS[prop])
-            }
+            // const jsonObjectSS = JSON.parse(req.body.subspeciality);
+            // for (const prop in jsonObjectSS) {
+            //     oneCase.subspeciality.push(jsonObjectSS[prop])
+            // }
 
             const questionArray = req.body.questionArray;
             const jsonObject = JSON.parse(questionArray);
@@ -161,15 +163,16 @@ module.exports = app => {
             oneCase.casetitle = req.body.title
             oneCase.difficulty = req.body.difficulty
             oneCase.speciality = req.body.speciality
+            oneCase.subspeciality = req.body.subspeciality
             oneCase.approach = req.body.aproach
             oneCase.scenario = req.body.scenario
             oneCase.learning = req.body.learning
             oneCase.timestamp = req.body.timestamp
 
-            const jsonObjectSS = JSON.parse(req.body.subspeciality);
-            for (const prop in jsonObjectSS) {
-                oneCase.subspeciality.push(jsonObjectSS[prop])
-            }
+            // const jsonObjectSS = JSON.parse(req.body.subspeciality);
+            // for (const prop in jsonObjectSS) {
+            //     oneCase.subspeciality.push(jsonObjectSS[prop])
+            // }
             oneCase.save();
         })
         return res.status(201).send({ data: null, message: "updateCaseOnly success" });
