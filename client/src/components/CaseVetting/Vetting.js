@@ -23,12 +23,11 @@ class Vetting extends Component {
 
     renderUnvetCases() {
         return this.props.cases.map((vetCase, index) => {
-            console.log(vetCase);
             return(
                 <tr key={vetCase._id}>
                     <td>{vetCase.title}</td>
                     <td>{vetCase.subspeciality[0]}</td>
-                    <td>{vetCase.author.username}</td>
+                    <td>{vetCase.author}</td>
                     <td>{vetCase.timestamp}</td>
                     <td><Button  type="button" bsStyle="primary" onClick={(e)=>this.vetCase(vetCase._id)}>Vet</Button></td>
                 </tr>
@@ -134,7 +133,9 @@ class Vetting extends Component {
                     );
                 } else {
                     return(
-                        <div></div>
+                        <div>
+                            <h1>IMPLEMENT CASE VETTING UI HERE</h1>
+                        </div>
                     );
                 }
         }
