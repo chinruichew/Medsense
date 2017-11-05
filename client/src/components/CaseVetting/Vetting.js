@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import { bindAll } from 'lodash';
-import {Form, Button, Tabs, Tab, FormGroup, FormControl, InputGroup, Table, ControlLabel, Col} from 'react-bootstrap';
+import { bindAll } from 'lodash';   
+import {Form, Button, Tabs, Tab, FormGroup, FormControl, Table, ControlLabel, Col} from 'react-bootstrap';
 import {fetchCases} from '../../actions';
 
 class Vetting extends Component {
@@ -78,7 +78,7 @@ class Vetting extends Component {
                                 <br/>
                                 <Table responsive>
                                     <thead>
-                                    <tr>
+                                    <tr style={{background: '#82C5D9'}}>
                                         <th>Case Title</th>
                                         <th>Sub-speciality</th>
                                         <th>Uploaded by</th>
@@ -112,7 +112,7 @@ class Vetting extends Component {
                                 <br/>
                                 <Table responsive>
                                     <thead>
-                                    <tr>
+                                    <tr style={{background: '#82C5D9'}}>
                                         <th>Case Title</th>
                                         <th>Sub-speciality</th>
                                         <th>Uploaded by</th>
@@ -152,7 +152,7 @@ class Vetting extends Component {
 
     render(){
         return(
-            <div>
+            <div style={{padding: "5%"}}>
                 {this.renderContent()}
             </div>
         );
