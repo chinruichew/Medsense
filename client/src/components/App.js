@@ -11,6 +11,8 @@ import CaseUpload from './CaseUpload/Main';
 import StudentDashboard from './ProfileDashboard/StudentProfile';
 import ProfessorDashboard from './ProfileDashboard/ProfessorProfile';
 
+import Test from './test';
+
 import './App.css';
 
 class App extends Component {
@@ -30,6 +32,7 @@ class App extends Component {
                     <Route exact path="/student_dashboard" component={StudentDashboard} />
                     <Route exact path="/professor_dashboard" component={ProfessorDashboard} />
                     <Route exact path="/" component={Home} />
+                    <Route exact path="/test" component={Test} />
                 </div>
             </BrowserRouter>
         );
