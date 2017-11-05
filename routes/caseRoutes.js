@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const User = require('../models/User');
 const Case = require('../models/Case');
 const Question = require('../models/Question');
-const MCQ = require('../models/MCQ');
 
 function IsValidNRIC(theNric) {
     var patt = new RegExp(/^[STFG]\d{7}[A-Z]$/);
