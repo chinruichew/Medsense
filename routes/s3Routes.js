@@ -73,7 +73,7 @@ module.exports = app => {
                 });
             });
 
-            res.redirect("/");
+            res.redirect("/login");
         });
     });
 };

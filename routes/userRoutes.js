@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const User = require('../models/User');
+const User = mongoose.model('users');
 
 module.exports = app => {
     app.post('/api/signup', async (req, res) => {
@@ -8,8 +8,8 @@ module.exports = app => {
             if (!user) {
                 const newUser = new User();
                 newUser.username = values.username;
-                newUser.password = values.password;
-                newUser.bodytype = "student";
+                newUser.password = newUser.generateHash(values.password);
+                newUser.usertype = "student";
                 newUser.school = values.school;
                 newUser.year = values.year;
                 newUser.save();
