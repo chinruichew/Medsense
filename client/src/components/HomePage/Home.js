@@ -14,19 +14,19 @@ class Home extends Component {
                     return(
                         <div className="container-fluid">
                             <div className="row">
-                                <div className="col-sm-6 text-center">
-                                    <a href="/upload"><img className="left-picture" src="./profUpload.png" alt="" /><br/>Create a case.<br/>Share your knowledge!</a>
+                                <div className="col-sm-6 text-center" style={{fontSize:'150%'}}> 
+                                    <a href="/upload"><img className="left-picture" src="./profUpload.png" alt="" /><br/><br/>Create a case.<br/>Share your knowledge!</a>
                                 </div>
-                                <div className="col-sm-6 text-center">
-                                    <a href="/vetting"><img src="./profVet.png" alt="" /><br/>Vet a case.<br/>There are 20 pending cases!</a>
+                                <div className="col-sm-6 text-center" style={{fontSize:'150%'}}>
+                                    <a href="/vetting"><img src="./profVet.png" alt="" /><br/><br/>Vet a case.<br/>There are 20 pending cases!</a>
                                 </div>
                             </div>
                             <br/>
                             <div className="row">
-                                <h3>Latest Discussion Posts</h3>
+                                <strong><h3>Latest Discussion Posts</h3></strong>
                                 <Table responsive>
                                     <thead >
-                                    <tr style={{color: "#82C5D9"}}>
+                                    <tr style={{background: "#82C5D9", fontSize:'120%'}}>
                                         <th>Discussion Post</th>
                                         <th>Authored by</th>
                                         <th>Sub-speciality</th>
@@ -65,19 +65,19 @@ class Home extends Component {
                     return(
                         <div className="container-fluid">
                             <div className="row">
-                                <div className="col-sm-6 text-center">
-                                    <a href="/challenge"><img src="./stuChallenge.png" alt="" height="310" width="470"/><br/>Try a case.<br/>There are 26 new cases!</a><br/>
+                                <div className="col-sm-6 text-center" style={{fontSize:'150%'}}> 
+                                    <a href="/challenge"><img src="./stuChallenge.png" alt="" height="310" width="470"/><br/><br/>Try a case.<br/>There are 26 new cases!</a><br/>
                                 </div>
-                                <div className="col-sm-6 text-center">
-                                    <a href="/upload"><img src="./stuUpload.png" alt="" height="310" width="470"/><br/>Create a case.<br/>Share your experiences!</a><br/>
+                                <div className="col-sm-6 text-center" style={{fontSize:'150%'}}>
+                                    <a href="/upload"><img src="./stuUpload.png" alt="" height="310" width="470"/><br/><br/>Create a case.<br/>Share your experiences!</a><br/>
                                 </div>
                             </div>
                             <br/>
                             <div className="row">
-                                <h3>Latest Discussion Replies</h3><br/>
+                                <strong><h3>Latest Discussion Replies</h3></strong><br/>
                                 <Table responsive>
                                     <thead>
-                                    <tr>
+                                    <tr style={{background: '#82C5D9', fontSize:'120%'}}>
                                         <th>Your Post</th>
                                         <th>Case Title</th>
                                         <th>Reply</th>
@@ -122,7 +122,7 @@ class Home extends Component {
 
     render(){
         return(
-            <div>
+            <div style={{padding:'5%'}}>
                 {this.renderContent()}
             </div>
         );
