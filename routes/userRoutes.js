@@ -1,14 +1,11 @@
 const mongoose = require('mongoose');
 const User = require('../models/User');
-//const s3Upload = require('../utils/s3Upload');
 
 module.exports = app => {
     app.post('/api/signup', async (req, res) => {
-        console.log(req.body.values);
         const values = req.body.values;
         User.findOne({ username: values.username }, function (err, user) {
             if (!user) {
-                //const imageURL = s3Upload.uploadProfilePicture(req);
                 const newUser = new User();
                 newUser.username = values.username;
                 newUser.password = values.password;
