@@ -82,7 +82,7 @@ class StudentProfile extends Component {
                 </div>
 
                 <div className="col-sm-4">
-                    <div class="row" style={{ marginRight: "200px", marginLeft: "55px", marginBottom: "270px" }}>
+                    <div class="row" style={{ marginRight: "200px", marginLeft: "55px", marginBottom: "260px" }}>
                         <h3> <b>Analytics1</b> </h3>
                     </div>
                     <div class="row" style={{ marginRight: "200px", marginLeft: "55px" }}>

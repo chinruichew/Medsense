@@ -7,145 +7,157 @@ class ProfessorProfile extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            professor: this.props.professor,
-            school: this.props.professor.school,
-            speciality: this.props.professor.speciality,
-            subspeciality: this.props.professor.subspeciality,
-            profilepicture: this.props.professor.profilepicture,
-            filename: null,
-            filetype: null
+            professor: "this.props.profesor",
+            username: "this.props.profesor.username",
+            speciality: "Medicine",
+            subspeciality: "Cardiology",
+            school: "this.props.profesor.school"
         };
-        bindAll(this, 'handleSchoolChange', 'handleSpecialityChange', 'handleSubspecialityChange', 'handleFile');
-    }
-
-    handleSchoolChange(e) {
-        this.setState({ school: e.target.value });
+        bindAll(this, 'handleSpecialityChange', 'handleSubSpecialityChange', 'handleSchoolChange', 'setSubspeciality');
     }
 
     handleSpecialityChange(e) {
         this.setState({ speciality: e.target.value });
     }
 
-    handleSubspecialityChange(e) {
+    handleSubSpecialityChange(e) {
         this.setState({ subspeciality: e.target.value });
     }
 
-    handleFile(e) {
-        const reader = new FileReader();
-        const file = e.target.files[0];
-        reader.onload = (upload) => {
-            this.setState({
-                profilepicture: upload.target.result,
-                filename: file.name,
-                filetype: file.type
-            });
-        };
-        reader.readAsDataURL(file);
-    }
-
-    saveChanges(e) {
-        e.preventDefault();
-        let { school, speciality, subspeciality, profilepicture, filename, filetype} = this.state;
-
-        let professor = Object.assign({}, this.state.professor);
-        professor.school = school;
-        professor.speciality = speciality;
-        professor.subspeciality = subspeciality;
-        professor.profilepicture = profilepicture;
-
-        this.setState({ professor });
+    handleSchoolChange(e) {
+        this.setState({ school: e.target.value });
     }
 
     render() {
-        let imagepreview;
-        if (this.state.profilepicture) {
-            imagepreview = (
-                <div>
-                    <img className='image-preview' src={this.state.profilepicture} width="80" height="80" />
-                </div>
-            );
-        }
-
-        let subspeciality;
-        if (this.state.speciality == "Surgery") {
-            subspeciality = (<select value={this.state.subspeciality}
-                onChange={this.handleSubspecialityChange}
-                style={{ "width": "160px" }}
-                className="form-control has-error">
-                <option value="Cardiology">Cardiology</option>
-                <option value="Respiratory">Respiratory</option>
-                <option value="Gastroenterology">Gastroenterology</option>
-                <option value="Renal">Renal</option>
-                <option value="Neurology">Neurology</option>
-                <option value="Rheumatology">Rheumatology</option>
-                <option value="Endocrinology">Endocrinology</option>
-                <option value="Oncology">Oncology</option>
-
-            </select>);
-        } else if (this.state.speciality == "Medicine") {
-            subspeciality = (<select value={this.state.subspeciality}
-                onChange={this.handleSubspecialityChange}
-                style={{ "width": "160px" }}
-                className="form-control has-error">
-                <option value="Upper GI">Upper GI</option>
-                <option value="Colorectal">Colorectal</option>
-                <option value="HPB">HPB</option>
-                <option value="HN">HN</option>
-                <option value="Breast">Breast</option>
-                <option value="Urology">Urology</option>
-                <option value="Vascular">Vascular</option>
-            </select>);
-        } else {
-            subspeciality = (<select value={this.state.subspeciality}
-                onChange={this.handleSubspecialityChange}
-                style={{ "width": "160px" }}
-                className="form-control has-error">
-                <option value="Hand">Hand</option>
-                <option value="UL">UL</option>
-                <option value="LL">LL</option>
-                <option value="Spine">Spine</option>
-                <option value="Oncology">Oncology</option>
-            </select>);
-        }
-
         return (
             <div>
-                <table style={{ "tableLayout": "fixed", "width": "350px", "lineHeight": "90px", "margin": "0 auto" }}>
-                    <tbody>
-                    <tr align="left"><td>Username</td><td>{this.state.professor.username}</td></tr>
+                <div className="col-sm-5 col-sm-offset-2">
+                    <form method="post" action="/api/updateProfessor">
+                        <div class="row" style={{ marginRight: "200px", marginLeft: "0px" }}>
+                            <h3> <b>{this.state.username}</b> </h3>
+                        </div>
 
-                    <tr align="left"><td>School</td><td><select value={this.state.school}
-                        onChange={this.handleSchoolChange}
-                        style={{ "width": "160px" }}
-                        className="form-control has-error">
-                        <option value="Duke-NUS">Duke-NUS</option>
-                        <option value="NTU">NTU</option>
-                        <option value="NUS">NUS</option>
-                    </select></td></tr>
+                        <div class="row">
+                            <div className="form-group col-lg-5">
+                                <div className="cols-sm-5">
+                                    <div className="input-group">
+                                        <span className="input-group-addon"><i className="fa fa-heartbeat fa-lg" aria-hidden="true"></i></span>
+                                        <select className="form-control" value={this.state.speciality} onChange={(e) => this.handleSpecialityChange(e)}>
+                                            <option value="Medicine">Medicine</option>
+                                            <option value="Surgery">Surgery</option>
+                                            <option value="Others">Others</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                    <tr align="left"><td>Speciality</td><td><select value={this.state.speciality}
-                        onChange={this.handleSpecialityChange}
-                        style={{ "width": "160px" }}
-                        className="form-control has-error">
-                        <option value="Surgery">Surgery</option>
-                        <option value="Medicine">Medicine</option>
-                        <option value="Orthopaedics">Orthopaedics</option>
-                    </select></td></tr>
+                        <div class="row">
+                            <div className="form-group col-lg-5">
+                                <div className="cols-sm-5">
+                                    <div className="input-group">
+                                        <span className="input-group-addon"><i className="fa fa-plus-square fa-lg" aria-hidden="true"></i></span>
+                                        {this.setSubspeciality()}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                    <tr align="left"><td>Sub-Speciality</td><td>
-                        {subspeciality}</td></tr>
+                        <div class="row">
+                            <div className="form-group col-lg-5">
+                                <div className="cols-sm-5">
+                                    <div className="input-group">
+                                        <span className="input-group-addon"><i className="fa fa-university fa-lg" aria-hidden="true"></i></span>
+                                        <select className="form-control" value={this.state.school} onChange={(e) => this.handleSchoolChange(e)}>
+                                            <option value="Duke-NUS">Duke-NUS</option>
+                                            <option value="NTU">NTU</option>
+                                            <option value="NUS">NUS</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                    <tr align="left">
-                        <td>Profile Picture</td>
-                        <td><input type="file" onChange={this.handleFile} /></td>
-                    </tr>
-                    </tbody>
-                </table>
+                        {/*<input type="hidden" value={this.props.professor.id} name="professorid" />*/}
 
-                <Button align="right" bsStyle="primary" onClick={(e) => this.saveChanges(e)}>Save Changes</Button>
+                        <div className="form-group col-lg-8" style={{ marginRight: "200px", marginLeft: "190px", marginBottom: "150px" }}>
+                            <button type="submit" className="btn btn-primary">Save</button>
+                        </div>
+
+                    </form>
+
+                    <div class="row" style={{ marginRight: "200px", marginLeft: "55px" }}>
+                        <h3> <b>Scoreboard</b> </h3>
+                    </div>
+                </div>
+
+                <div className="col-sm-4">
+                    <div class="row" style={{ marginRight: "200px", marginLeft: "55px", marginBottom: "300px" }}>
+                        <h3> <b>Analytics1</b> </h3>
+                    </div>
+                    <div class="row" style={{ marginRight: "200px", marginLeft: "55px" }}>
+                        <h3> <b>Analytics2</b> </h3>
+                    </div>
+                </div>
+
             </div>
         )
+    }
+
+
+    setSubspeciality() {
+        if (this.state.speciality === "Medicine") {
+            return (
+                <select className="form-control" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubSpecialityChange(e)}>
+                    <option value="Select One">Select One</option>
+                    <option value="Cardiology">Cardiology</option>
+                    <option value="Endocrinology">Endocrinology</option>
+                    <option value="Gastroenterology & Hepatology">Gastroenterology & Hepatology</option>
+                    <option value="Haematology">Haematology</option>
+                    <option value="Internal Medicine">Internal Medicine</option>
+                    <option value="Medical Oncology">Medical Oncology</option>
+                    <option value="Neurology">Neurology</option>
+                    <option value="Renal Medicine">Renal Medicine</option>
+                    <option value="Respiratory & Critical Care Medicine">Respiratory & Critical Care Medicine</option>
+                    <option value="Rheumatology & Immunology">Rheumatology & Immunology</option>
+                </select>
+            );
+        } else if (this.state.speciality === "Others") {
+            return (
+                <select className="form-control" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubSpecialityChange(e)}>
+                    <option value="Select One">Select One</option>
+                    <option value="Anaesthesiology">Anaesthesiology</option>
+                    <option value="Ear Nose & Throat">Ear Nose & Throat</option>
+                    <option value="Emergency Medicine">Emergency Medicine</option>
+                    <option value="Geriatric Medicine">Geriatric Medicine</option>
+                    <option value="Infectious Diseases">Infectious Diseases</option>
+                    <option value="Neonatal">Neonatal</option>
+                    <option value="Obstetrics & Gynaecology">Obstetrics & Gynaecology</option>
+                    <option value="Ophthalmology">Ophthalmology</option>
+                    <option value="Palliative Medicine">Palliative Medicine</option>
+                    <option value="Psychiatry">Psychiatry</option>
+                    <option value="Rehabilitation Medicine">Rehabilitation Medicine</option>
+                </select>
+            );
+        } else if (this.state.speciality === "Surgery") {
+            return (
+                <select className="form-control" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubSpecialityChange(e)}>
+                    <option value="Select One">Select One</option>
+                    <option value="Breast">Breast</option>
+                    <option value="Colorectal">Colorectal</option>
+                    <option value="General Surgery">General Surgery</option>
+                    <option value="Head & Neck">Head & Neck</option>
+                    <option value="Hepato-pancreato-biliary">Hepato-pancreato-biliary</option>
+                    <option value="Surgical Oncology">Surgical Oncology</option>
+                    <option value="Upper Gastrointestinal & Bariatric Surgery">Upper Gastrointestinal & Bariatric Surgery</option>
+                    <option value="Urology">Urology</option>
+                    <option value="Vascular Surgery">Vascular Surgery</option>
+                </select>
+            );
+        }
+        return;
     }
 }
 
 export default ProfessorProfile;
+
