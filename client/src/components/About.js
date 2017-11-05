@@ -85,20 +85,6 @@ class About extends Component {
                         <h2>
                             Medsense is a gamified learning platform for medical students in Singapore. Its was developed as a collaboration between NUS Yong Loo Lin School of Medicine, and Singapore Management University. This platform is a web application that simulates interaction with “patients”, facilitates peer learning via a discussion board, and allow Professors to track the performance of students anonymously.
                         </h2>
-                        <div className="container">
-                            <div className="row main">
-                                <div className="main-login main-center">
-                                    <form action="/api/uploadProfileImage" encType="multipart/form-data" method="post">
-                                        <div className="form-group">
-                                            <label className="cols-sm-2 control-label">Upload File</label>
-                                            <input type="file" name="upload" multiple="multiple" />
-                                            <br/>
-                                            <input type="submit" value="Upload" />
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
