@@ -25,11 +25,12 @@ module.exports = app => {
         const questionArray = req.body.questionArray;
         const jsonObject = JSON.parse(questionArray);
         const newCase = new Case({
-            casetitle: req.body.casetitle,
+            title: req.body.title,
             difficulty: req.body.difficulty,
             speciality: req.body.speciality,
             approach: req.body.approach,
             scenario: req.body.scenario,
+            learning: req.body.learning,
             author: mongoose.Types.ObjectId(req.body.author),
         });
 
@@ -37,32 +38,34 @@ module.exports = app => {
         for (const prop in jsonObjectSS) {
             newCase.subspeciality.push(jsonObjectSS[prop])
         }
+
         for (const prop in jsonObject) {
             const newQuestion = new Question({
-                questiontitle: jsonObject[prop]['questiontitle'],
+                stem: jsonObject[prop]['stem'],
+                question: jsonObject[prop]['question'],
                 attachment: jsonObject[prop]['attachment'],
+                filename: jsonObject[prop]['filename'],
+                filetype: jsonObject[prop]['filetype'],
                 type: jsonObject[prop]['type'],
-                open: jsonObject[prop]['open'],
+                openEnded: jsonObject[prop]['openEnded'],
                 pearl: jsonObject[prop]['pearl'],
                 timelimit: jsonObject[prop]['timelimit'],
                 reference: jsonObject[prop]['reference'],
-                stem: jsonObject[prop]['stem'],
+                mcq1: jsonObject[prop]['mcq1'],
+                mcq2: jsonObject[prop]['mcq2'],
+                mcq3: jsonObject[prop]['mcq3'],
+                mcq4: jsonObject[prop]['mcq4'],
+                mcq5: jsonObject[prop]['mcq5'],
+                mcq6: jsonObject[prop]['mcq6'],
+                check1: jsonObject[prop]['check1'],
+                check2: jsonObject[prop]['check2'],
+                check3: jsonObject[prop]['check3'],
+                check4: jsonObject[prop]['check4'],
+                check5: jsonObject[prop]['check5'],
+                check6: jsonObject[prop]['check6'],
                 case: newCase._id
             });
-            for (const key in jsonObject[prop]['mcqs']) {
-                const newMCQ = new MCQ({
-                    answer: "",
-                    status: true,
-                    question: newQuestion._id
-                });
-                for (const key1 in jsonObject[prop]['mcqs'][key]) {
-                    newMCQ.answer = jsonObject[prop]['mcqs'][key]["answer"];
-                    newMCQ.status = jsonObject[prop]['mcqs'][key]["status"];
-                }
-                newMCQ.save();
-                newQuestion.mcqs.push(newMCQ._id);
-                newQuestion.save();
-            }
+            newQuestion.save();
             newCase.questions.push(newQuestion._id);
             newCase.save();
         }
