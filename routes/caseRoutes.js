@@ -97,7 +97,7 @@ module.exports = app => {
                     oneQuestion.question = jsonObject[prop]['question'];
                     oneQuestion.attachment = jsonObject[prop]['attachment'];
                     oneQuestion.type = jsonObject[prop]['type'];
-                    oneQuestion.open = jsonObject[prop]['open'];
+                    oneQuestion.openEnded = jsonObject[prop]['open'];
                     oneQuestion.pearl = jsonObject[prop]['pearl'];
                     oneQuestion.timelimit = jsonObject[prop]['timelimit'];
                     oneQuestion.reference = jsonObject[prop]['reference'];
@@ -125,11 +125,7 @@ module.exports = app => {
     app.post('/api/fetchAllCases', function (req, res) {
         Case.find({}).populate({
             path: 'questions',
-            model: 'questions',
-            populate: {
-                path: 'mcqs',
-                model: 'mcqs'
-            }
+            model: 'questions'
         }).exec(function (error, cases) {
             return res.status(201).send({ data: cases, message: "fetchAllCases success" });
         })
@@ -139,10 +135,6 @@ module.exports = app => {
         Case.find({ author: req.body.authorid }).populate({
             path: 'questions',
             model: 'questions',
-            populate: {
-                path: 'mcqs',
-                model: 'mcqs'
-            }
         }).exec(function (error, cases) {
             return res.status(201).send({ data: cases, message: "fetchAllByAuthor success" });
         })
@@ -151,9 +143,6 @@ module.exports = app => {
     app.post('/api/deleteCase', function (req, res) {
         Case.find({ _id: req.body.caseid }, function (err, oneCase) {
             Question.find({ case: req.body.caseid }, function (err, questions) {
-                for (const prop in questions) {
-                    MCQ.find({ question: questions[prop]['_id'] }).remove().exec();
-                }
             }).remove().exec();
         }).remove().exec();
 
@@ -168,7 +157,9 @@ module.exports = app => {
             oneCase.speciality = req.body.speciality
             oneCase.approach = req.body.aproach
             oneCase.scenario = req.body.scenario
-            oneCase.takeaway = req.body.takeaway
+            oneCase.learning = req.body.learning
+            oneCase.timestamp = req.body.timestamp
+
             const jsonObjectSS = JSON.parse(req.body.subspeciality);
             for (const prop in jsonObjectSS) {
                 oneCase.subspeciality.push(jsonObjectSS[prop])
@@ -183,26 +174,24 @@ module.exports = app => {
             oneQuestion.questiontitle = req.body.title
             oneQuestion.attachment = req.body.attachment
             oneQuestion.type = req.body.type
-            oneQuestion.open = req.body.open
+            oneQuestion.openEnded = req.body.openEnded
             oneQuestion.pearl = req.body.pearl
             oneQuestion.timelimit = req.body.timelimit
             oneQuestion.reference = req.body.reference
             oneQuestion.stem = req.body.stem
-
-            const questionArray = req.body.questionArray;
-            const jsonObject = JSON.parse(questionArray);
-
-            for (const prop in jsonObject) {
-                for (const key in jsonObject[prop]['mcqs']) {
-                    MCQ.findById(jsonObject[prop]['mcqs'][key]["id"], function (err, oneMCQ) {
-                        if (oneMCQ) {
-                            oneMCQ.answer = jsonObject[prop]['mcqs'][key]["answer"];
-                            oneMCQ.status = jsonObject[prop]['mcqs'][key]["status"];
-                            oneMCQ.save();
-                        }
-                    })
-                }
-            }
+            oneQuestion.mcq1 = req.body.mcq1
+            oneQuestion.mcq2 = req.body.mcq2
+            oneQuestion.mcq3 = req.body.mcq3
+            oneQuestion.mcq4 = req.body.mcq4
+            oneQuestion.mcq5 = req.body.mcq5
+            oneQuestion.mcq6 = req.body.mcq6
+            oneQuestion.check1 = req.body.check1
+            oneQuestion.check2 = req.body.check2
+            oneQuestion.check3 = req.body.check3
+            oneQuestion.check4 = req.body.check4
+            oneQuestion.check5 = req.body.check5
+            oneQuestion.check6 = req.body.check6
+            oneQuestion.save();
             return res.status(201).send({ data: null, message: "updateCaseQuestion success" });
         })
     })
@@ -217,4 +206,3 @@ module.exports = app => {
 };
 
 
-    
