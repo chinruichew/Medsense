@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as actions from '../actions';
 
 import Login from './LoginSignup/Login';
+import Home from './HomePage/Home';
 import Header from './Header';
 import About from './About';
 import StudentSignup from "./LoginSignup/StudentSignup";
@@ -25,6 +26,7 @@ class App extends Component {
                 <div>
                     <Header />
                     <Route exact path="/login" component={Login} />
+                    <Route exact path="/home" component={Home} />
                     <Route exact path="/signup" component={StudentSignup} />
                     <Route exact path="/upload" component={CaseUpload} />
                     <Route exact path="/vetting" component={CaseVetting} />
