@@ -1,10 +1,9 @@
 const mongoose = require('mongoose');
-const passport = require('passport');
 const aws = require('aws-sdk');
 const keys = require('../config/keys.js');
 const multiparty = require('multiparty');
+const util = require('util');
 const fs = require('fs');
-const User = require('../models/User');
 aws.config.update({
     accessKeyId: keys.awsAccessKeyId,
     secretAccessKey: keys.awsSecretKey
@@ -33,47 +32,27 @@ module.exports = app => {
     app.post('/api/uploadProfileImage', (req, res) => {
         const form = new multiparty.Form();
         form.parse(req, function(err, fields, files) {
+            Object.keys(fields).forEach(function(name) {
+                console.log('got field named ' + name);
+            });
+
+            Object.keys(files).forEach(function(name) {
+                console.log('got file named ' + name);
+            });
+
             const file = files.upload[0];
             fs.readFile(file.path, function (err, data) {
                 const s3 = new aws.S3();
-                const myBucket = 'profile-picture-images';
-                const key = 'user_' + 'profile' + '.jpg';
-
-                const deleteParams = {
-                    Bucket: myBucket,
-                    Delete: { // required
-                        Objects: [ // required
-                            {
-                                Key: key // required
-                            }
-                        ],
-                    },
-                };
-                s3.deleteObjects(deleteParams, function(err, data) {
-                    if (err) console.log(err, err.stack); // an error occurred
-                    else     console.log(data);           // successful response
-                });
-
-                const params = {Bucket: myBucket, Key: key, Body: data, ACL: 'public-read'};
+                const myBucket = 'case-upload-images';
+                const params = {Bucket: myBucket, Key: 'test_key.jpg', Body: data, ACL: 'public-read'};
                 s3.putObject(params, function(err, data) {
                     if (err) {
                         console.log(err)
                     } else {
                         console.log("Successfully uploaded data to myBucket/myKey");
-                        /*
-                        const s3Url = 'https://s3-ap-southeast-1.amazonaws.com/profile-picture-images/' + key;
-                        User.findById(auth_user._id, function(err, user) {
-                            user.set({profilepicture: s3Url});
-                            user.save(function(err, updatedUser) {
-                                res.send(updatedUser);
-                            });
-                        });
-                        */
                     }
                 });
             });
-
-            res.redirect("/login");
         });
     });
 };

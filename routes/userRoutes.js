@@ -1,21 +1,33 @@
-const mongoose = require('mongoose');
-const User = mongoose.model('users');
+var mongoose = require('mongoose');
+var User = require('../models/User');
 
 module.exports = app => {
-    app.post('/api/signup', async (req, res) => {
-        const values = req.body.values;
-        User.findOne({ username: values.username }, function (err, user) {
+    app.post('/api/signup', function (req, res) {
+        User.findOne({ username: req.body.username }, function (err, user) {
+            if (err) { return res.send(err) }
+            if (user) {
+                return res.status(409).send({ data: null, message: "user exists" });
+            }
             if (!user) {
-                const newUser = new User();
-                newUser.username = values.username;
-                newUser.password = newUser.generateHash(values.password);
-                newUser.usertype = "student";
-                newUser.school = values.school;
-                newUser.year = values.year;
+                var newUser = new User();
+                newUser.username = req.body.username;
+                newUser.password = req.body.password;
+                newUser.school = req.body.school;
+                newUser.year = req.body.year;
+                newUser.profilepicture = req.body.profilepicture;
+                newUser.usertype = req.body.usertype;
+                newUser.speciality = req.body.speciality;
+
+                const jsonObjectSS = JSON.parse(req.body.subspeciality);
+                for (const prop in jsonObjectSS) {
+                    newUser.subspeciality.push(jsonObjectSS[prop])
+                }
+
                 newUser.save();
+                return res.status(201).send({ data: user, message: "user created" });
             }
         });
-    });
+    })
 
     app.post('/api/updateStudent', function (req, res) {
         User.findById(req.body.id, function (err, user) {
@@ -26,7 +38,7 @@ module.exports = app => {
                 user.save();
             }
         });
-    });
+    })
 
     app.post('/api/updateProfessor', function (req, res) {
         User.update({ _id: req.body.id }, { $set: { subspeciality: [] } }, function (err, response) { });
