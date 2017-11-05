@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { bindAll } from 'lodash';
 import {Button, Table} from 'react-bootstrap';
 
+import './Home.css';
+
 class Home extends Component {
     constructor(props){
         super(props);
@@ -12,13 +14,15 @@ class Home extends Component {
     render(){
         if (this.state.user==="prof"){
             return(
-                <div>
-                    <a href="/upload"><img src="./profUpload.png" height="310" width="470"/><br/>Create a case.<br/>Share your knowledge!</a><br/>
-                    <a href="/vetting"><img src="./profVet.png" height="310" width="470"/><br/>Vet a case.<br/>There are 20 pending cases!</a><br/>
+                <div className="home-container">
+                    <div className="picture">
+                        <a href="/upload"><img className="left-picture" src="./profUpload.png" /><br/>Create a case.<br/>Share your knowledge!</a>
+                        <a href="/vetting"><img src="./profVet.png" /><br/>Vet a case.<br/>There are 20 pending cases!</a>
+                    </div>
                     <h3>Latest Discussion Posts</h3><br/>
                     <Table responsive>
-                        <thead>
-                        <tr>
+                        <thead >
+                        <tr style={{color: "#82C5D9"}}>
                             <th>Discussion Post</th>
                             <th>Authored by</th>
                             <th>Sub-speciality</th>
@@ -54,7 +58,7 @@ class Home extends Component {
             );
         } else {
             return(
-                <div>
+                <div className="home-container">
                     <a href="/challenge"><img src="./stuChallenge.png" height="310" width="470"/><br/>Try a case.<br/>There are 26 new cases!</a><br/>
                     <a href="/upload"><img src="./stuUpload.png" height="310" width="470"/><br/>Create a case.<br/>Share your experiences!</a><br/>
                     <h3>Latest Discussion Replies</h3><br/>
