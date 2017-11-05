@@ -125,7 +125,7 @@ module.exports = app => {
     app.get('/api/fetchAllCases', async (req, res) => {
         const cases = await Case.find().select();
         res.send(cases);
-    }
+    });
 
     app.post('/api/fetchAllCases', function (req, res) {
         Case.find({}).populate({
@@ -200,7 +200,7 @@ module.exports = app => {
             oneQuestion.save();
             return res.status(201).send({ data: null, message: "updateCaseQuestion success" });
         })
-    })
+    });
 
     app.post('/api/fetchAllCasesByProfessor', function (req, res) {
         User.findById(req.body.authorid, function (err, oneUser) {
