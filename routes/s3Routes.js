@@ -38,6 +38,22 @@ module.exports = app => {
                 const s3 = new aws.S3();
                 const myBucket = 'profile-picture-images';
                 const key = 'user_' + 'profile' + '.jpg';
+
+                const deleteParams = {
+                    Bucket: myBucket,
+                    Delete: { // required
+                        Objects: [ // required
+                            {
+                                Key: key // required
+                            }
+                        ],
+                    },
+                };
+                s3.deleteObjects(deleteParams, function(err, data) {
+                    if (err) console.log(err, err.stack); // an error occurred
+                    else     console.log(data);           // successful response
+                });
+
                 const params = {Bucket: myBucket, Key: key, Body: data, ACL: 'public-read'};
                 s3.putObject(params, function(err, data) {
                     if (err) {

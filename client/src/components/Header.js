@@ -15,7 +15,6 @@ class Header extends Component {
                             <MenuItem eventKey={2.1} href="/login">Login</MenuItem>
                             <MenuItem eventKey={2.2} href="/signup">Sign Up</MenuItem>
                         </NavDropdown>
-                        <img src="https://s3-ap-southeast-1.amazonaws.com/profile-picture-images/user_profile.jpg" className="img-circle" style={{height: '45px', width: '45px'}} />
                     </Nav>
                 );
             default:
