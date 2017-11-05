@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FETCH_USER, FETCH_CASES } from './types';
+import { FETCH_USER, FETCH_CASES, UPDATE_PROFESSOR } from './types';
 
 export const fetchUser = () => async dispatch => {
     const res = await axios.get('/api/current_user');
@@ -11,8 +11,18 @@ export const fetchCases = () => async dispatch => {
     dispatch({ type: FETCH_CASES, payload: res.data });
 };
 
-    export const handleSignUp = (values) => {
+export const handleSignUp = (values) => {
     const res = axios.post('/api/signup', {
         values
     });
+};
+
+export const updateProfessor = (values) => async dispatch => {
+    const res = axios.post('/api/updateProfessor', {
+        values
+    });
+    return {
+        type: UPDATE_PROFESSOR,
+        payload: res
+    }
 };

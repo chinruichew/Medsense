@@ -29,16 +29,18 @@ module.exports = app => {
     });
 
     app.post('/api/updateProfessor', function (req, res) {
-        User.update({ _id: req.body.id }, { $set: { subspeciality: [] } }, function (err, response) { });
-        User.findById(req.body.id, function (err, user) {
+        // User.update({ _id: req.body.values.id }, { $set: { subspeciality: [] } }, function (err, response) { });
+        User.findById(req.body.values.id, function (err, user) {
+            console.log(req.body.values)
             if (err) { return res.send(err) }
             if (user) {
-                user.school = req.body.school;
-                user.speciality = req.body.speciality;
-                const jsonObjectSS = JSON.parse(req.body.subspeciality);
-                for (const prop in jsonObjectSS) {
-                    user.subspeciality.push(jsonObjectSS[prop]);
-                }
+                user.school = req.body.values.school;
+                user.speciality = req.body.values.speciality;
+                user.subspeciality = req.body.values.subspeciality;
+                // const jsonObjectSS = JSON.parse(req.body.subspeciality);
+                // for (const prop in jsonObjectSS) {
+                //     user.subspeciality.push(jsonObjectSS[prop]);
+                // }
                 user.save();
             }
         });

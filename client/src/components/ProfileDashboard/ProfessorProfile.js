@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { bindAll } from 'lodash';
+import { updateProfessor } from '../../actions/index';
 
 class ProfessorProfile extends Component {
     constructor(props) {
@@ -29,14 +30,18 @@ class ProfessorProfile extends Component {
     }
 
     handleSaveChange(e) {
-
+        this.props.updateProfessor(this.state).then((response) => {
+            if (response) {
+                window.alert("Successfully Updated")
+            }
+        }).catch(() => { })
     }
 
     render() {
         return (
             <div>
                 <div className="col-sm-5 col-sm-offset-2">
-                    <form method="post" action="/api/updateProfessor">
+                    <form >
                         <div className="row" style={{ marginRight: "200px", marginLeft: "0px" }}>
                             <h3> <b>{this.state.username}</b> </h3>
                         </div>
@@ -82,11 +87,8 @@ class ProfessorProfile extends Component {
                             </div>
                         </div>
 
-                        <input type="hidden" value={this.state.id} name="id" />
-                         <input type="hidden" value={this.state.speciality} name="speciality" />
-
                         <div className="form-group col-lg-8" style={{ marginRight: "200px", marginLeft: "190px", marginBottom: "150px" }}>
-                            <button type="submit" className="btn btn-primary">Save</button>
+                            <button type="submit" onClick={(e) => this.handleSaveChange(e)} className="btn btn-primary">Save</button>
                         </div>
 
                     </form>
@@ -164,5 +166,9 @@ class ProfessorProfile extends Component {
     }
 }
 
-export default ProfessorProfile;
+function mapStateToProps({ auth }) {
+    return { auth };
+}
+
+export default connect(mapStateToProps, { updateProfessor })(ProfessorProfile);
 
