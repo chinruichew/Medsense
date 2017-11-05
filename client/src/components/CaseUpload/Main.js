@@ -200,8 +200,8 @@ class Main extends Component{
             );
         });
         return(
-            <div id="main">
-                <form action="/api/uploadCase" method="post" className="case-area">
+            <div>
+                <form action="/api/uploadCase" method="post">
                     <p>Insert Case Overview collapsible bar over here :D</p>
                     <Overview
                         title={this.state.title}
@@ -214,9 +214,7 @@ class Main extends Component{
                         handleUpdateOverview={this.handleUpdateOverview}/>
                     <p>Insert Case Question collapsible bar over here :D</p>
                     {questionNodes}
-                    <div className="add-question">
-                    <Button  type="button" bsStyle="primary" onClick={(e)=>this.addQuestion()}>Add Question</Button><br/>
-                    </div>
+                    <Button type="button" bsStyle="primary" onClick={(e)=>this.addQuestion()}>Add Question</Button><br/>
                     <Button type="submit" align="center" bsStyle="primary" onClick={(e)=>this.saveChanges(e)}>Submit</Button>
                 </form>
             </div>

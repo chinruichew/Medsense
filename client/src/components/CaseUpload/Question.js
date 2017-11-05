@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { bindAll } from 'lodash';
 
-import "./CaseUpload.css";
-
 class Question extends Component {
     constructor(props){
         super(props);
@@ -30,7 +28,6 @@ class Question extends Component {
             pearl: this.props.pearl,
             time: this.props.time,
             reference: this.props.reference,
-            open: false,
         };
         bindAll(this, 'handleFile', 'handleStemChange', 'handleQuestionChange', 'handleTypeChange', 'handleOpenEndedChange',
             'handleMCQ1Change', 'handleMCQ2Change', 'handleMCQ3Change', 'handleMCQ4Change', 'handleMCQ5Change', 'handleMCQ6Change',
@@ -259,7 +256,7 @@ class Question extends Component {
     answer(){
         if(this.state.type==="MCQ"){
             return(
-                <div className="mcq-option">
+                <div>
                     <tr>
                         <td>
                             <input type="checkbox" checked={this.state.check1} name="check1" onChange={(e)=>this.handleCheck1Change(e)}/>
@@ -309,26 +306,12 @@ class Question extends Component {
         return;
     }
 
-    toggle() {
-        this.setState({
-          open: !this.state.open
-        });
-      }
-
     render(){
         return(
 
-            <div id="question">
-                {/* <p>Insert Question  collapsible bar over here :D</p> */}
-                <div className="cart">
-                    <button className="btn btn-block" onClick={this.toggle.bind(this)}>
-                                            Qn{this.props.id}
-                    </button>
-                    <div id="test" className={"collapse" + (this.state.open ? ' in' : '')}>
-                        <div>
-                            
-                            
-                            <table className="question-table">
+            <div>
+                <p>Insert Question {this.props.id} collapsible bar over here :D</p>
+                    <table>
                         <tr colSpan="2">
                             <th>STEM</th>
                         </tr>
@@ -401,12 +384,6 @@ class Question extends Component {
                             <td><input type="text" placeholder="Enter your references" value={this.state.reference} name="reference" onChange={(e)=>this.handleReferenceChange(e)}/></td>
                         </tr>
                     </table>
-                        
-                        </div>
-                    </div>
-                </div>
-                    {/* <p className="qn-corner">Qn 1</p> */}
-                    
             </div>
         );
     }
