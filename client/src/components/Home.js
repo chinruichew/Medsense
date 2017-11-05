@@ -16,6 +16,7 @@ class Home extends Component {
     componentDidMount() {
         // Dynamically set background image
         document.body.style.backgroundImage = "url('./home_background.jpg')";
+        document.body.style.backgroundSize = "100% 100%";
 
         this.intervalId = setInterval(this.timer.bind(this), 1000);
         this.setState({
@@ -82,20 +83,18 @@ class Home extends Component {
                         <h2>
                             {this.state.motivationalQuote}
                         </h2>
-                        <div className="container">
-                            <div className="row main">
-                                <div className="main-login main-center">
-                                    <form action="/api/uploadProfileImage" encType="multipart/form-data" method="post">
-                                        <div className="form-group">
-                                            <label className="cols-sm-2 control-label">Upload File</label>
-                                            <input type="file" name="upload" multiple="multiple" />
-                                            <br/>
-                                            <input type="submit" value="Upload" />
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-offset-2 col-md-8 text-center">
+                        <img src="./medsense_logo.png" style={{height: '200px', width: '550px'}} />
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-offset-2 col-md-8 text-center main-login" style={{backgroundColor: 'rgba(255,255,255,0.4)'}}>
+                        <h3>
+                            Medsense is a gamified learning platform for medical students in Singapore. It was developed as a collaboration between NUS Yong Loo Lin School of Medicine, and Singapore Management University. This platform is a web application that simulates interaction with "patients", facilitates peer learning via a discussion board, and allow Professors to track the performance of students anonymously.
+                        </h3>
                     </div>
                 </div>
             </div>

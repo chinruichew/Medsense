@@ -4,6 +4,7 @@ class Login extends Component {
     componentDidMount() {
         // Dynamically set background image
         document.body.style.backgroundImage = "url('./home_background.jpg')";
+        document.body.style.backgroundSize = "100% 100%";
     }
 
     render() {
