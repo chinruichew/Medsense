@@ -12,29 +12,28 @@ class Vetting extends Component {
             vetId: '',
             filterPending:"All",
             filterVetted:"All",
+            renderedCases: ''
         };
-        bindAll(this, 'renderUnVetCases');
+        bindAll('renderUnvetCases');
     }
 
     componentDidMount() {
         this.props.fetchCases();
     }
 
-    renderUnVetCases() {
-        console.log(this.props.cases);
-
+    renderUnvetCases() {
         return this.props.cases.map((vetCase, index) => {
+            console.log(vetCase);
             return(
                 <tr key={vetCase._id}>
-                    <td>{index + 1}</td>
                     <td>{vetCase.title}</td>
+                    <td>{vetCase.subspeciality[0]}</td>
                     <td>{vetCase.author.username}</td>
                     <td>{vetCase.timestamp}</td>
                     <td><Button  type="button" bsStyle="primary" onClick={(e)=>this.vetCase(vetCase._id)}>Vet</Button></td>
                 </tr>
             );
         });
-
     }
 
     handleFilterPendingChange(e){
@@ -52,88 +51,101 @@ class Vetting extends Component {
         });
     }
 
-    render(){
-        if(!this.state.showVetView) {
-            return(
-                <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
-                    <Tab eventKey={1} title="Pending Cases">
-                        <br/>
-                        <FormGroup controlId="formControlsPending">
-                            <InputGroup>
-                                <InputGroup.Addon>Filter by Sub-speciality</InputGroup.Addon>
-                                <FormControl componentClass="select" value={this.state.filterPending} name="filterPending" onChange={(e)=>this.handleFilterPendingChange(e)}>
-                                    <option value="All">All</option>
-                                    <option value="Sub1">Sub1</option>
-                                    <option value="Sub2">Sub2</option>
-                                </FormControl>
-                            </InputGroup>
-                        </FormGroup>
+    renderContent() {
+        switch(this.props.cases) {
+            case null:
+                return;
+            default:
+                if(!this.state.showVetView) {
+                    return(
+                        <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
+                            <Tab eventKey={1} title="Pending Cases">
+                                <br/>
+                                <FormGroup controlId="formControlsPending">
+                                    <InputGroup>
+                                        <InputGroup.Addon>Filter by Sub-speciality</InputGroup.Addon>
+                                        <FormControl componentClass="select" value={this.state.filterPending} name="filterPending" onChange={(e)=>this.handleFilterPendingChange(e)}>
+                                            <option value="All">All</option>
+                                            <option value="Sub1">Sub1</option>
+                                            <option value="Sub2">Sub2</option>
+                                        </FormControl>
+                                    </InputGroup>
+                                </FormGroup>
 
-                        <br/>
-                        <Table responsive>
-                            <thead>
-                            <tr>
-                                <th>Case Title</th>
-                                <th>Sub-sepciality</th>
-                                <th>Uploaded by</th>
-                                <th>Upload Date</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                {this.renderUnVetCases()}
-                            </tbody>
-                        </Table>
-                    </Tab>
-                    <Tab eventKey={2} title="Vetted Cases">
-                        <br/>
-                        <FormGroup controlId="formControlsVetted">
-                            <InputGroup>
-                                <InputGroup.Addon>Filter by Sub-speciality</InputGroup.Addon>
-                                <FormControl componentClass="select" value={this.state.filterVetted} name="filterVetted" onChange={(e)=>this.handleFilterVettedChange(e)}>
-                                    <option value="All">All</option>
-                                    <option value="Sub1">Sub1</option>
-                                    <option value="Sub2">Sub2</option>
-                                </FormControl>
-                            </InputGroup>
-                        </FormGroup>
+                                <br/>
+                                <Table responsive>
+                                    <thead>
+                                    <tr>
+                                        <th>Case Title</th>
+                                        <th>Sub-speciality</th>
+                                        <th>Uploaded by</th>
+                                        <th>Upload Date</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {this.renderUnvetCases()}
+                                    </tbody>
+                                </Table>
+                            </Tab>
+                            <Tab eventKey={2} title="Vetted Cases">
+                                <br/>
+                                <FormGroup controlId="formControlsVetted">
+                                    <InputGroup>
+                                        <InputGroup.Addon>Filter by Sub-speciality</InputGroup.Addon>
+                                        <FormControl componentClass="select" value={this.state.filterVetted} name="filterVetted" onChange={(e)=>this.handleFilterVettedChange(e)}>
+                                            <option value="All">All</option>
+                                            <option value="Sub1">Sub1</option>
+                                            <option value="Sub2">Sub2</option>
+                                        </FormControl>
+                                    </InputGroup>
+                                </FormGroup>
 
-                        <br/>
-                        <Table responsive>
-                            <thead>
-                            <tr>
-                                <th>Case Title</th>
-                                <th>Sub-speciality</th>
-                                <th>Uploaded by</th>
-                                <th>Date Uploaded</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>xxx</td>
-                                <td>Amy</td>
-                                <td>4:51PM<br/>3 November 2017</td>
-                                <td><Button  type="button" bsStyle="primary" onClick={(e)=>this.vetCase()}>Vet</Button></td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>xxx</td>
-                                <td>Bob</td>
-                                <td>10:41PM<br/>4 November 2017</td>
-                                <td><Button  type="button" bsStyle="primary" onClick={(e)=>this.vetCase()}>Vet</Button></td>
-                            </tr>
-                            </tbody>
-                        </Table>
-                    </Tab>
-                </Tabs>
-            );
-        } else {
-            return(
-                <div></div>
-            );
+                                <br/>
+                                <Table responsive>
+                                    <thead>
+                                    <tr>
+                                        <th>Case Title</th>
+                                        <th>Sub-speciality</th>
+                                        <th>Uploaded by</th>
+                                        <th>Date Uploaded</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>xxx</td>
+                                        <td>Amy</td>
+                                        <td>4:51PM<br/>3 November 2017</td>
+                                        <td><Button  type="button" bsStyle="primary" onClick={(e)=>this.vetCase()}>Vet</Button></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>xxx</td>
+                                        <td>Bob</td>
+                                        <td>10:41PM<br/>4 November 2017</td>
+                                        <td><Button  type="button" bsStyle="primary" onClick={(e)=>this.vetCase()}>Vet</Button></td>
+                                    </tr>
+                                    </tbody>
+                                </Table>
+                            </Tab>
+                        </Tabs>
+                    );
+                } else {
+                    return(
+                        <div></div>
+                    );
+                }
         }
+    }
+
+    render(){
+        return(
+            <div>
+                {this.renderContent()}
+            </div>
+        );
     }
 }
 

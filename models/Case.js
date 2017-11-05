@@ -1,8 +1,8 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-var { Schema } = mongoose;
+const { Schema } = mongoose;
 
-var caseSchema = new Schema({
+const caseSchema = new Schema({
     title: { type: String, default: "" },
     questions: [{ type: Schema.Types.ObjectId, ref: 'questions' }],
     difficulty: { type: String, default: "" },
@@ -15,6 +15,6 @@ var caseSchema = new Schema({
     author: { type: Schema.Types.ObjectId, ref: 'users' }
 });
 
-var caseModel = mongoose.model('cases', caseSchema);
+const caseModel = mongoose.model('cases', caseSchema);
 
 module.exports = caseModel;
