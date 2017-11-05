@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { bindAll } from 'lodash';
 
+import "./CaseUpload.css";
+
 class Overview extends Component {
     constructor(props){
         super(props);
@@ -163,8 +165,8 @@ class Overview extends Component {
 
     render(){
         return(
-            <div>
-                <table>
+            <div id="overview">
+                <table className="overview-table">
                     <tr>
                         <th>Case Title</th>
                         <th>Difficulty Level</th>
@@ -202,11 +204,11 @@ class Overview extends Component {
                         <th colSpan="2">Approach(es)</th>
                     </tr>
                     <tr>
-                        <td colSpan="2">Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.</td>
+                        <td className="approach" colSpan="2">Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.</td>
                     </tr>
                     <tr>
-                        <td colSpan="2">
-                            <select value={this.state.approach} name="approach" onChange={(e)=>this.handleApproachChange(e)} multiple>
+                        <td  colSpan="2" >
+                            <select className="approach-dropdown"  value={this.state.approach} name="approach" onChange={(e)=>this.handleApproachChange(e)} multiple>
                                 <option value="Select All Relevant">Select All Relevant</option>
                                 <option value="Abdominal Pain">Abdominal Pain</option>
                                 <option value="Breathlessness">Breathlessness</option>
@@ -235,14 +237,14 @@ class Overview extends Component {
                         <th colSpan="2">Case Scenario</th>
                     </tr>
                     <tr>
-                        <td colSpan="2"><input type="text" placeholder="Enter a brief description of the patient" value={this.state.scenario} name="scenario" onChange={(e)=>this.handleScenarioChange(e)}/></td>
+                        <td colSpan="2"><input type="textarea" placeholder="Enter a brief description of the patient" value={this.state.scenario} name="scenario" onChange={(e)=>this.handleScenarioChange(e)}/></td>
                     </tr>
 
                     <tr>
                         <th colSpan="2">Key Learning Points</th>
                     </tr>
                     <tr>
-                        <td colSpan="2"><input type="text" placeholder="Enter the key learning points of this case" value={this.state.learning} name="learning" onChange={(e)=>this.handleLearningChange(e)}/></td>
+                        <td colSpan="2"><input type="textarea" placeholder="Enter the key learning points of this case" value={this.state.learning} name="learning" onChange={(e)=>this.handleLearningChange(e)}/></td>
                     </tr>
                 </table>
             </div>

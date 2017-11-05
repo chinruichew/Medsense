@@ -1,0 +1,107 @@
+#main{
+    display: grid;
+    grid-template-columns: 40%, auto;
+    grid-gap: 10px;
+    grid-template-rows: auto; 
+    /* float: left;
+    padding: 10px; */
+    font-family: 'Merriweather', serif;
+}
+
+#main .case-area{
+
+    grid-column: 3/5;
+    grid-row: 5/6;
+    /* width: 60%; */
+}
+
+#main .add-question{
+    text-align: center;
+}
+
+#overview .overview-table  {
+    background-color: #4CAF50;
+    color: black;
+    padding: 30px;
+    width: 90%;
+    table-layout: fixed;
+}
+
+#question .question-table  {
+    /* background-color: rgb(194, 206, 28); */
+    color: black;
+    padding: 30px;
+    width: 90%;
+    table-layout: fixed;
+}
+
+#overview .overview-table input[type="textarea"]{
+    width: 80%;
+    height: 150px;
+    word-wrap: break-word;
+}
+
+#overview .overview-table select{
+    width: 60%;
+    height: 27px;
+}
+
+#overview .overview-table input{
+    width: 60%;
+    height: 27px;
+}
+
+#overview .overview-table td{
+    width: 50%;
+    padding-top: 3px;
+    padding-left: 10px;
+    padding-bottom: 15px;
+}
+
+#question .question-table td{
+    width: 50%;
+    padding-top: 3px;
+    padding-left: 10px;
+    padding-bottom: 15px;
+}
+
+#overview .overview-table th{
+    padding-left: 10px;
+    font-size: 130%;
+}
+
+#question .question-table th{
+    padding-left: 10px;
+    font-size: 130%;
+}
+
+#overview .overview-table .approach{
+    padding-bottom: 3px;
+}
+
+#overview .overview-table .approach-dropdown{
+    width: 45%;
+    height: 100px;
+}
+
+#question .mcq-option{
+    width: 90%;
+}
+
+#question .mcq-option td{
+    width: 60%;
+}
+
+#question .mcq-option input[type="checkbox"]{
+    padding-left: 30px;
+}
+
+#question .qn-corner{
+    border-radius: 25px;
+    background: #A4B2C8;
+    padding-left: 10px; 
+    width: 80%;
+    height: 32px; 
+    /* vertical-align: center; */
+    font-size: 150%;
+}
