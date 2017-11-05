@@ -10,7 +10,7 @@ class Header extends Component {
             case false:
                 return(
                     <Nav pullRight>
-                        <NavItem className="navItem" eventKey={1} href="/acknowledgement" >Acknowledgement</NavItem>
+                        <NavItem className="navItem" eventKey={1} href="/acknowledgements" >Acknowledgements</NavItem>
                         <NavDropdown className="navItem" eventKey={2} title="Login/Sign Up" id="login-dropdown">
                             <MenuItem eventKey={2.1} href="/login">Login</MenuItem>
                             <MenuItem eventKey={2.2} href="/signup">Sign Up</MenuItem>
@@ -27,7 +27,7 @@ class Header extends Component {
                                 <NavItem className="navItem" eventKey={2} href="/vetting">Case Vetting</NavItem>
                                 <NavItem className="navItem" eventKey={3} href="/forum">Discussion Forum</NavItem>
                                 <NavItem className="navItem" eventKey={4} href="/professor_dashboard">Dashboard</NavItem>
-                                <NavItem className="navItem" eventKey={5} href="/acknowledgement">Acknowledgement</NavItem>
+                                <NavItem className="navItem" eventKey={5} href="/acknowledgements">Acknowledgements</NavItem>
                                 <NavItem className="navItem" eventKey={6} href="/api/logout">Logout</NavItem>
                                 <img src="https://s3-ap-southeast-1.amazonaws.com/profile-picture-images/user_profile.jpg" className="img-circle" style={{height: '45px', width: '45px'}} />
                             </Nav>
@@ -35,11 +35,11 @@ class Header extends Component {
                     case 'student':
                         return(
                             <Nav pullRight>
-                                <NavItem className="navItem" eventKey={1} href="/upload">Case Challenge</NavItem>
+                                <NavItem className="navItem" eventKey={1} href="/case_challenge">Case Challenge</NavItem>
                                 <NavItem className="navItem" eventKey={2} href="/upload">Case Upload</NavItem>
                                 <NavItem className="navItem" eventKey={3} href="/forum">Discussion Forum</NavItem>
                                 <NavItem className="navItem" eventKey={4} href="/student_dashboard">Dashboard</NavItem>
-                                <NavItem className="navItem" eventKey={5} href="/acknowledgement">Acknowledgement</NavItem>
+                                <NavItem className="navItem" eventKey={5} href="/acknowledgements">Acknowledgements</NavItem>
                                 <NavItem className="navItem" eventKey={6} href="/api/logout">Logout</NavItem>
                                 <img src="https://s3-ap-southeast-1.amazonaws.com/profile-picture-images/user_profile.jpg" className="img-circle" style={{height: '45px', width: '45px'}} />
                             </Nav>
