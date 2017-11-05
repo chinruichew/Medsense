@@ -8,7 +8,7 @@ class StudentSignup extends Component {
         this.state = {
             username: null,
             password: null,
-            confirmpassword: null,
+            confirm_password: null,
             school: "Duke-NUS",
             year: "Year 1"
         };
@@ -42,13 +42,11 @@ class StudentSignup extends Component {
         return (
             <div className="container-fluid">
                 <div className="row">
-                    <StudentSignUpForm />
+                    <StudentSignUpForm username={this.state.username} password={this.state.password} confirm_password={this.state.confirm_password} school={this.state.school} year={this.state.year} />
                 </div>
             </div>
         )
     }
 }
 
-export default reduxForm({
-    form: 'studentSignUpForm'
-})(StudentSignup);
+export default StudentSignup;
