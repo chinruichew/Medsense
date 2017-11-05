@@ -7,14 +7,12 @@ class StudentProfile extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            student: this.props.student,
-            school: this.props.student.school,
-            year: this.props.student.year,
-            profilepicture: this.props.student.profilepicture,
-            filename: null,
-            filetype: null
+            id: this.props.id,
+            username: this.props.username,
+            school: this.props.school,
+            year: this.props.year
         };
-        bindAll(this, 'handleSchoolChange', 'handleYearChange', 'handleFile');
+        bindAll(this, 'handleSchoolChange', 'handleYearChange', 'handleSave');
     }
 
     handleSchoolChange(e) {
@@ -25,75 +23,77 @@ class StudentProfile extends Component {
         this.setState({ year: e.target.value });
     }
 
-    handleFile(e) {
-        const reader = new FileReader();
-        const file = e.target.files[0];
-        reader.onload = (upload) => {
-            this.setState({
-                profilepicture: upload.target.result,
-                filename: file.name,
-                filetype: file.type
-            });
-        };
-        reader.readAsDataURL(file);
-    }
+    handleSave(e) {
 
-    saveChanges(e) {
-        e.preventDefault();
-        let { school, year, profilepicture, filename, filetype} = this.state;
-
-        let student = Object.assign({}, this.state.student);
-        student.school = school;
-        student.year = year;
-        student.profilepicture = profilepicture;
-        this.setState({ student });
     }
 
     render() {
-        let imagepreview;
-        if (this.state.profilepicture) {
-            imagepreview = (
-                <div>
-                    <img className='image-preview' src={this.state.profilepicture} width="80" height="80" />
-                </div>
-            );
-        }
-
         return (
             <div>
-                <table style={{ "table-layout": "fixed", "width": "350px", "line-height": "90px", "margin": "0 auto" }}>
-                    <tr align="left"> <td>Username</td> <td>Username</td> </tr>
+                <div className="col-sm-5 col-sm-offset-2">
+                    <form method="post" action="/api/updateStudent">
+                        <div class="row" style={{ marginRight: "200px", marginLeft: "0px" }}>
+                            <h3> <b>{this.state.username}</b> </h3>
+                        </div>
 
-                    <tr align="left"> <td>School</td> <td> <select value={this.state.school}
-                        onChange={this.handleSchoolChange}
-                        style={{ "width": "160px" }}
-                        className="form-control has-error">
-                        <option value="Duke-NUS">Duke-NUS</option>
-                        <option value="NTU">NTU</option>
-                        <option value="NUS">NUS</option>
-                    </select> </td> </tr>
+                        <div class="row">
+                            <div className="form-group col-lg-5">
+                                <div className="cols-sm-5">
+                                    <div className="input-group">
+                                        <span className="input-group-addon"><i className="fa fa-graduation-cap fa-lg" aria-hidden="true"></i></span>
+                                        <select className="form-control" value={this.state.year} onChange={(e) => this.handleYearChange(e)}>
+                                            <option value="1">Year 1</option>
+                                            <option value="2">Year 2</option>
+                                            <option value="3">Year 3</option>
+                                            <option value="4">Year 4</option>
+                                            <option value="5">Year 5</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                    <tr align="left"> <td>Year of Study</td> <td> <select value={this.state.year}
-                        onChange={this.handleYearChange}
-                        style={{ "width": "160px" }}
-                        className="form-control has-error">
-                        <option value="1">Year 1</option>
-                        <option value="2">Year 2</option>
-                        <option value="3">Year 3</option>
-                        <option value="4">Year 4</option>
-                        <option value="5">Year 5</option>
-                    </select> </td> </tr>
+                        <div class="row">
+                            <div className="form-group col-lg-5">
+                                <div className="cols-sm-5">
+                                    <div className="input-group">
+                                        <span className="input-group-addon"><i className="fa fa-university fa-lg" aria-hidden="true"></i></span>
+                                        <select className="form-control" value={this.state.school} onChange={(e) => this.handleSchoolChange(e)}>
+                                            <option value="Duke-NUS">Duke-NUS</option>
+                                            <option value="NTU">NTU</option>
+                                            <option value="NUS">NUS</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                    <tr align="left">
-                        <td>Profile Picture</td>
-                        <td> <input type="file" onChange={this.handleFile} /> </td>
-                    </tr>
-                </table>
+                        {/*<input type="hidden" value={this.props.student.id} name="studentid" />*/}
 
-                <Button align="right" bsStyle="primary" onClick={(e) => this.saveChanges(e)}>Save Changes</Button>
+                        <div className="form-group col-lg-8" style={{ marginRight: "200px", marginLeft: "190px", marginBottom: "150px" }}>
+                            <button type="submit" className="btn btn-primary">Save</button>
+                        </div>
+
+                    </form>
+
+                    <div class="row" style={{ marginRight: "200px", marginLeft: "55px" }}>
+                        <h3> <b>Scoreboard</b> </h3>
+                    </div>
+                </div>
+
+                <div className="col-sm-4">
+                    <div class="row" style={{ marginRight: "200px", marginLeft: "55px", marginBottom: "260px" }}>
+                        <h3> <b>Analytics1</b> </h3>
+                    </div>
+                    <div class="row" style={{ marginRight: "200px", marginLeft: "55px" }}>
+                        <h3> <b>Analytics2</b> </h3>
+                    </div>
+                </div>
+
             </div>
         )
     }
 }
 
 export default StudentProfile;
+
