@@ -18,11 +18,11 @@ module.exports = app => {
     });
 
     app.post('/api/updateStudent', function (req, res) {
-        User.findById(req.body.id, function (err, user) {
+        User.findById(req.body.values.id, function (err, user) {
             if (err) { return res.send(err) }
             if (user) {
-                user.year = req.body.year;
-                user.school = req.body.school;
+                user.year = req.body.values.year;
+                user.school = req.body.values.school;
                 user.save();
             }
         });
@@ -31,7 +31,7 @@ module.exports = app => {
     app.post('/api/updateProfessor', function (req, res) {
         // User.update({ _id: req.body.values.id }, { $set: { subspeciality: [] } }, function (err, response) { });
         User.findById(req.body.values.id, function (err, user) {
-            console.log(req.body.values)
+            // console.log(req.body.values)
             if (err) { return res.send(err) }
             if (user) {
                 user.school = req.body.values.school;

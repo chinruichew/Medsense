@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { bindAll } from 'lodash';
+import { updateStudent } from '../../actions/index';
 
 class StudentProfile extends Component {
     constructor(props) {
@@ -12,7 +13,7 @@ class StudentProfile extends Component {
             school: this.props.school,
             year: this.props.year
         };
-        bindAll(this, 'handleSchoolChange', 'handleYearChange', 'handleSave');
+        bindAll(this, 'handleSchoolChange', 'handleYearChange', 'handleSaveChange');
     }
 
     handleSchoolChange(e) {
@@ -23,15 +24,19 @@ class StudentProfile extends Component {
         this.setState({ year: e.target.value });
     }
 
-    handleSave(e) {
-
+    handleSaveChange(e) {
+        this.props.updateStudent(this.state).then((response) => {
+            if (response) {
+                window.alert("Successfully Updated")
+            }
+        }).catch(() => { })
     }
 
     render() {
         return (
             <div>
                 <div className="col-sm-5 col-sm-offset-2">
-                    <form method="post" action="/api/updateStudent">
+                  
                         <div className="row" style={{ marginRight: "200px", marginLeft: "0px" }}>
                             <h3> <b>{this.state.username}</b> </h3>
                         </div>
@@ -71,10 +76,8 @@ class StudentProfile extends Component {
                         {/*<input type="hidden" value={this.props.student.id} name="studentid" />*/}
 
                         <div className="form-group col-lg-8" style={{ marginRight: "200px", marginLeft: "190px", marginBottom: "150px" }}>
-                            <button type="submit" className="btn btn-primary">Save</button>
+                            <button type="submit" onClick={(e) => this.handleSaveChange(e)} className="btn btn-primary">Save</button>
                         </div>
-
-                    </form>
 
                     <div className="row" style={{ marginRight: "200px", marginLeft: "55px" }}>
                         <h3> <b>Scoreboard</b> </h3>
@@ -95,5 +98,10 @@ class StudentProfile extends Component {
     }
 }
 
-export default StudentProfile;
+function mapStateToProps({ auth }) {
+    return { auth };
+}
+
+export default connect(mapStateToProps, { updateStudent })(StudentProfile);
+
 

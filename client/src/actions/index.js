@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FETCH_USER, FETCH_CASES, UPDATE_PROFESSOR } from './types';
+import { FETCH_USER, FETCH_CASES, UPDATE_PROFESSOR, UPDATE_STUDENT} from './types';
 
 export const fetchUser = () => async dispatch => {
     const res = await axios.get('/api/current_user');
@@ -23,6 +23,16 @@ export const updateProfessor = (values) => async dispatch => {
     });
     return {
         type: UPDATE_PROFESSOR,
+        payload: res
+    }
+};
+
+export const updateStudent = (values) => async dispatch => {
+    const res = axios.post('/api/updateStudent', {
+        values
+    });
+    return {
+        type: UPDATE_STUDENT,
         payload: res
     }
 };
