@@ -21,6 +21,8 @@ class Vetting extends Component {
     }
 
     renderUnVetCases() {
+        console.log(this.props.cases);
+
         return this.props.cases.map((vetCase, index) => {
             return(
                 <tr key={vetCase._id}>
@@ -32,6 +34,7 @@ class Vetting extends Component {
                 </tr>
             );
         });
+
     }
 
     handleFilterPendingChange(e){

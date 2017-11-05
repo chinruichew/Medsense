@@ -7,7 +7,7 @@ export const fetchUser = () => async dispatch => {
 };
 
 export const fetchCases = () => async dispatch => {
-    const res = await axios.get('/api/cases');
+    const res = await axios.get('/api/fetchAllCases');
     dispatch({ type: FETCH_CASES, payload: res.data });
 };
 

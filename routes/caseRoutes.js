@@ -115,14 +115,10 @@ module.exports = app => {
         });
     });
 
-    app.post('/api/fetchAllCases', function (req, res) {
+    app.get('/api/fetchAllCases', function (req, res) {
         Case.find({}).populate({
             path: 'questions',
-            model: 'questions',
-            populate: {
-                path: 'mcqs',
-                model: 'mcqs'
-            }
+            model: 'questions'
         }).exec(function (error, cases) {
             return res.status(201).send({ data: cases, message: "fetchAllCases success" });
         })
