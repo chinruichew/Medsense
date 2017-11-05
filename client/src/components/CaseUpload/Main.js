@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import { Collapse } from 'react-bootstrap';
 import { bindAll } from 'lodash';
-import Question from './Question.js'
-import Overview from './Overview.js'
+import Question from './Question.js';
+import Overview from './Overview.js';
+import BootstrapModal from './BootstrapModal.js';
 
 class Main extends Component{
     constructor(props){
@@ -58,65 +59,66 @@ class Main extends Component{
     saveChanges(e){
         e.preventDefault();
         if (this.state.title===''){
-            window.alert("Please fill in the Case Title!");
-        }else if (this.state.difficulty==="Select One"){
-            window.alert("Please select a Difficulty Level!");
-        }
-        else if (this.state.speciality==="Select One"){
-            window.alert("Please select a Speciality!");
+            this.setState({vmShow:true, error: "Case Overview: Please fill in the Case Title!"});
+        } else if (this.state.difficulty==="Select One"){
+            this.setState({vmShow:true, error: "Case Overview: Please select a Difficulty Level!"});
+        } else if (this.state.speciality==="Select One"){
+            this.setState({vmShow:true, error: "Case Overview: Please select a Speciality!"});
         } else if (this.state.subspeciality==="Select One"){
-            window.alert("Please select a Sub-specialiy!");
+            this.setState({vmShow:true, error: "Case Overview: Please select a Sub-specialiy!"});
         } else if (this.state.approach===null){
-            window.alert("Please select at least 1 Approach!");
+            this.setState({vmShow:true, error: "Case Overview: Please select at least 1 Approach!"});
         } else if (this.state.scenario===''){
-            window.alert("Please fill in the Case Scenario!");
+            this.setState({vmShow:true, error: "Case Overview: Please fill in the Case Scenario!"});
         } else if (this.state.learning==='') {
-            window.alert("Please fill in the Key Learning Points!");
+            this.setState({vmShow:true, error: "Case Overview: Please fill in the Key Learning Points!"});
         } else if (true){
 
             let questions = this.state.qnData;
-            let BreakException = {};
+            let error='';
+            let BreakException ={};
             try {
                 questions.forEach(function (obj) {
                     if (obj.question === '') {
-                        window.alert("Question " + obj.id + ": Please fill in the Question!");
+                        console.log(this);
+                        error="Question " + obj.id + ": Please fill in the Question!";
                         throw BreakException;
                     } else if (obj.type === "Select One") {
-                        window.alert("Question " + obj.id + ": Please select a Question Type!");
+                        error="Question " + obj.id + ": Please select a Question Type!";
                         throw BreakException;
                     } else if (obj.pearl === '') {
-                        window.alert("Question " + obj.id + ": Please fill in the PEARL!");
+                        error="Question " + obj.id + ": Please fill in the PEARL!";
                         throw BreakException;
                     } else if (obj.time === "Select One") {
-                        window.alert("Question " + obj.id + ": Please select a Time Limit!");
+                        error="Question " + obj.id + ": Please select a Time Limit!";
                         throw BreakException;
                     } else if (obj.type === "MCQ") {
                         if (obj.mcq1 === '' || obj.mcq2 === '') {
-                            window.alert("Question " + obj.id + ": Please fill in the first 2 MCQ answers!");
+                            error="Question " + obj.id + ": Please fill in the first 2 MCQ answers!";
                             throw BreakException;
                         } else if (obj.mcq3 === '' && obj.check3) {
-                            window.alert("Question " + obj.id + ": Please fill in an answer for third answer option or uncheck that option!");
+                            error="Question " + obj.id + ": Please fill in an answer for third answer option or uncheck that option!";
                             throw BreakException;
                         } else if (obj.mcq4 === '' && obj.check4) {
-                            window.alert("Question " + obj.id + ": Please fill in an answer for fourth answer option or uncheck that option!");
+                            error="Question " + obj.id + ": Please fill in an answer for fourth answer option or uncheck that option!";
                             throw BreakException;
                         } else if (obj.mcq5 === '' && obj.check5) {
-                            window.alert("Question " + obj.id + ": Please fill in an answer for fifth answer option or uncheck that option!");
+                            error="Question " + obj.id + ": Please fill in an answer for fifth answer option or uncheck that option!";
                             throw BreakException;
                         } else if (obj.mcq6 === '' && obj.check6) {
-                            window.alert("Question " + obj.id + ": Please fill in an answer for sixth answer option or uncheck that option!");
+                            error="Question " + obj.id + ": Please fill in an answer for sixth answer option or uncheck that option!";
                             throw BreakException;
                         } else if (!obj.check1 && !obj.check2 && !obj.check3 && !obj.check4 && !obj.check5 && !obj.check6) {
-                            window.alert("Question " + obj.id + ": Please check at least 1 correct answer!");
+                            error="Question " + obj.id + ": Please check at least 1 correct answer!";
                             throw BreakException;
                         }
                     } else if (obj.type === "Open-ended" && obj.openEnded === '') {
-                        window.alert("Question " + obj.id + ": Please fill in the Open-ended answer!");
+                        error="Question " + obj.id + ": Please fill in the Open-ended answer!";
                         throw BreakException;
                     }
                 });
             } catch(e){
-
+                this.setState({vmShow:true, error: error});
                 return;
             }
         } else {
@@ -168,7 +170,7 @@ class Main extends Component{
     }
 
     render(){
-
+        let vmClose = () => this.setState({vmShow:false});
         let questionNodes = this.state.qnData.map((obj, index) => {
 
             return (
@@ -199,9 +201,28 @@ class Main extends Component{
                     handleUpdateQuestion={this.handleUpdateQuestion}/>
             );
         });
+
+        let stems = this.state.qnData.map((obj, index) => {
+            return (
+                <div>
+                    Question {obj.id}<br/>
+                    {obj.stem}
+                </div>
+            );
+        });
+
+
         return(
             <div>
-                <form action="/api/uploadCase" method="post">
+                <div>
+                    <p>Story So Far</p>
+                    <p>Case Scenario</p>
+                    {this.state.scenario}<br/>
+                    <p>Case Continuation</p>
+                    {stems}<br/>
+                </div>
+
+                <form action="/api/uploadCase" method="post" className="case-area">
                     <p>Insert Case Overview collapsible bar over here :D</p>
                     <Overview
                         title={this.state.title}
@@ -214,8 +235,25 @@ class Main extends Component{
                         handleUpdateOverview={this.handleUpdateOverview}/>
                     <p>Insert Case Question collapsible bar over here :D</p>
                     {questionNodes}
-                    <Button type="button" bsStyle="primary" onClick={(e)=>this.addQuestion()}>Add Question</Button><br/>
+
+                    <Button  type="button" bsStyle="primary" onClick={(e)=>this.addQuestion()}>Add Question</Button><br/>
+
                     <Button type="submit" align="center" bsStyle="primary" onClick={(e)=>this.saveChanges(e)}>Submit</Button>
+
+                    <BootstrapModal
+                        show={this.state.vmShow}
+                        onHide={vmClose}
+                        aria-labelledby="contained-modal-title-sm">
+                        <BootstrapModal.Header closeButton>
+                            <BootstrapModal.Title id="contained-modal-title-sm">Unable to Submit</BootstrapModal.Title>
+                        </BootstrapModal.Header>
+                        <BootstrapModal.Body>
+                            <p>{this.state.error}</p>
+                        </BootstrapModal.Body>
+                        <BootstrapModal.Footer>
+                            <Button onClick={vmClose}>Close</Button>
+                        </BootstrapModal.Footer>
+                    </BootstrapModal>
                 </form>
             </div>
         );

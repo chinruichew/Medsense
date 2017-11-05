@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { bindAll } from 'lodash';
+import { FormGroup, Checkbox, ControlLabel, FormControl, InputGroup } from 'react-bootstrap';
 
 class Question extends Component {
     constructor(props){
@@ -28,6 +29,7 @@ class Question extends Component {
             pearl: this.props.pearl,
             time: this.props.time,
             reference: this.props.reference,
+            open: false,
         };
         bindAll(this, 'handleFile', 'handleStemChange', 'handleQuestionChange', 'handleTypeChange', 'handleOpenEndedChange',
             'handleMCQ1Change', 'handleMCQ2Change', 'handleMCQ3Change', 'handleMCQ4Change', 'handleMCQ5Change', 'handleMCQ6Change',
@@ -257,50 +259,73 @@ class Question extends Component {
         if(this.state.type==="MCQ"){
             return(
                 <div>
-                    <tr>
-                        <td>
-                            <input type="checkbox" checked={this.state.check1} name="check1" onChange={(e)=>this.handleCheck1Change(e)}/>
-                            <input type="text" placeholder="Enter an answer" value={this.state.mcq1} name="mcq1" onChange={(e)=>this.handleMCQ1Change(e)}/>
-                            <br/>
-                        </td>
-                        <td>
-                            <input type="checkbox" checked={this.state.check2} name="check2" onChange={(e)=>this.handleCheck2Change(e)}/>
-                            <input type="text" placeholder="Enter an answer" value={this.state.mcq2} name="mcq2" onChange={(e)=>this.handleMCQ2Change(e)}/>
-                            <br/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="checkbox" checked={this.state.check3} name="check3" onChange={(e)=>this.handleCheck3Change(e)}/>
-                            <input type="text" placeholder="Optional" value={this.state.mcq3} name="mcq3" onChange={(e)=>this.handleMCQ3Change(e)}/>
-                            <br/>
-                        </td>
-                        <td>
-                            <input type="checkbox" checked={this.state.check4} name="check4" onChange={(e)=>this.handleCheck4Change(e)}/>
-                            <input type="text" placeholder="Optional" value={this.state.mcq4} name="mcq4" onChange={(e)=>this.handleMCQ4Change(e)}/>
-                            <br/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="checkbox" checked={this.state.check5} name="check5" onChange={(e)=>this.handleCheck5Change(e)}/>
-                            <input type="text" placeholder="Optional" value={this.state.mcq5} name="mcq5" onChange={(e)=>this.handleMCQ5Change(e)}/>
-                            <br/>
-                        </td>
-                        <td>
-                            <input type="checkbox" checked={this.state.check6} name="check6" onChange={(e)=>this.handleCheck6Change(e)}/>
-                            <input type="text" placeholder="Optional" value={this.state.mcq6} name="mcq6" onChange={(e)=>this.handleMCQ6Change(e)}/>
-                        </td>
-                    </tr>
+                    <FormGroup>
+                        <ControlLabel>Answer 1</ControlLabel>
+                        <InputGroup>
+                            <InputGroup.Addon>
+                                <input type="checkbox" aria-label="..." checked={this.state.check1} name="check1" onChange={(e)=>this.handleCheck1Change(e)}/>
+                            </InputGroup.Addon>
+                            <FormControl type="text" placeholder="Enter an answer" value={this.state.mcq1} name="mcq1" onChange={(e)=>this.handleMCQ1Change(e)}/>
+                        </InputGroup>
+                    </FormGroup>
+
+                    <FormGroup>
+                        <ControlLabel>Answer 2</ControlLabel>
+                        <InputGroup>
+                            <InputGroup.Addon>
+                                <input type="checkbox" aria-label="..." checked={this.state.check2} name="check2" onChange={(e)=>this.handleCheck2Change(e)}/>
+                            </InputGroup.Addon>
+                            <FormControl type="text" placeholder="Enter an answer" value={this.state.mcq2} name="mcq2" onChange={(e)=>this.handleMCQ2Change(e)}/>
+                        </InputGroup>
+                    </FormGroup>
+
+                    <FormGroup>
+                        <ControlLabel>Answer 3</ControlLabel>
+                        <InputGroup>
+                            <InputGroup.Addon>
+                                <input type="checkbox" aria-label="..." checked={this.state.check3} name="check3" onChange={(e)=>this.handleCheck3Change(e)}/>
+                            </InputGroup.Addon>
+                            <FormControl type="text" placeholder="Optional" value={this.state.mcq3} name="mcq3" onChange={(e)=>this.handleMCQ3Change(e)}/>
+                        </InputGroup>
+                    </FormGroup>
+
+                    <FormGroup>
+                        <ControlLabel>Answer 4</ControlLabel>
+                        <InputGroup>
+                            <InputGroup.Addon>
+                                <input type="checkbox" aria-label="..." checked={this.state.check4} name="check4" onChange={(e)=>this.handleCheck4Change(e)}/>
+                            </InputGroup.Addon>
+                            <FormControl type="text" placeholder="Optional" value={this.state.mcq4} name="mcq4" onChange={(e)=>this.handleMCQ4Change(e)}/>
+                        </InputGroup>
+                    </FormGroup>
+
+                    <FormGroup>
+                        <ControlLabel>Answer 5</ControlLabel>
+                        <InputGroup>
+                            <InputGroup.Addon>
+                                <input type="checkbox" aria-label="..." checked={this.state.check5} name="check5" onChange={(e)=>this.handleCheck5Change(e)}/>
+                            </InputGroup.Addon>
+                            <FormControl type="text" placeholder="Optional" value={this.state.mcq5} name="mcq5" onChange={(e)=>this.handleMCQ5Change(e)}/>
+                        </InputGroup>
+                    </FormGroup>
+
+                    <FormGroup>
+                        <ControlLabel>Answer 6</ControlLabel>
+                        <InputGroup>
+                            <InputGroup.Addon>
+                                <input type="checkbox" aria-label="..." checked={this.state.check6} name="check6" onChange={(e)=>this.handleCheck6Change(e)}/>
+                            </InputGroup.Addon>
+                            <FormControl type="text" placeholder="Optional" value={this.state.mcq6} name="mcq6" onChange={(e)=>this.handleMCQ6Change(e)}/>
+                        </InputGroup>
+                    </FormGroup>
                 </div>
             );
         } else if(this.state.type==="Open-ended"){
             return(
-                <tr colSpan="2">
-                    <td>
-                        <input type="text" placeholder="Enter an answer" value={this.state.openEnded} name="openEnded" onChange={(e)=>this.handleOpenEndedChange(e)}/>
-                    </td>
-                </tr>
+                <FormGroup controlId="formControlsOpenEnded">
+                    <ControlLabel>Answer</ControlLabel>
+                    <FormControl componentClass="textarea" placeholder="Enter an answer" value={this.state.openEnded} name="openEnded" onChange={(e)=>this.handleOpenEndedChange(e)}/>
+                </FormGroup>
             );
         }
         return;
@@ -308,82 +333,61 @@ class Question extends Component {
 
     render(){
         return(
-
             <div>
                 <p>Insert Question {this.props.id} collapsible bar over here :D</p>
-                    <table>
-                        <tr colSpan="2">
-                            <th>STEM</th>
-                        </tr>
-                        <tr colSpan="2">
-                            <td><input type="text" placeholder="Enter a continuation of the scenario" value={this.state.stem} name="stem" onChange={(e)=>this.handleStemChange(e)}/></td>
-                        </tr>
 
-                        <tr colSpan="2">
-                            <th>Question</th>
-                        </tr>
-                        <tr colSpan="2">
-                            <td><input type="text" placeholder="Enter a question" value={this.state.question} name="question" onChange={(e)=>this.handleQuestionChange(e)}/></td>
-                        </tr>
+                <FormGroup controlId="formControlsSTEM">
+                    <ControlLabel>STEM</ControlLabel>
+                    <FormControl componentClass="textarea" placeholder="Enter a continuation of the scenario" value={this.state.stem} name="stem" onChange={(e)=>this.handleStemChange(e)} />
+                </FormGroup>
 
-                        <tr colSpan="2">
-                            <th>Add Attachment</th>
-                        </tr>
-                        <tr colSpan="2">
-                            <td><input type="file" onChange={(e)=>this.handleFile(e)}/></td>
-                        </tr>
+                <FormGroup controlId="formControlsQuestion">
+                    <ControlLabel>Question {this.props.id}</ControlLabel>
+                    <FormControl componentClass="textarea" placeholder="Enter a question" value={this.state.question} name="question" onChange={(e)=>this.handleQuestionChange(e)} />
+                </FormGroup>
 
-                        <tr colSpan="2">
-                            <th>Question Type</th>
-                        </tr>
-                        <tr colSpan="2">
-                            <td>
-                                <select value={this.state.type} name="type" onChange={(e)=>this.handleTypeChange(e)}>
-                                    <option value="Select One">Select One</option>
-                                    <option value="MCQ">MCQ</option>
-                                    <option value="Open-ended">Open-ended</option>
-                                </select>
-                            </td>
-                        </tr>
+                <FormGroup controlId="formControlsAttachment">
+                    <ControlLabel>Add Attachment</ControlLabel>
+                    <FormControl type="file" onChange={(e)=>this.handleFile(e)} />
+                </FormGroup>
 
-                        <tr colSpan="2">
-                            <th>Answer(s)</th>
-                        </tr>
+                <FormGroup controlId="formControlsType">
+                    <ControlLabel>Question Type</ControlLabel>
+                    <FormControl componentClass="select" value={this.state.type} name="type" onChange={(e)=>this.handleTypeChange(e)}>
+                        <option value="Select One">Select One</option>
+                        <option value="MCQ">MCQ</option>
+                        <option value="Open-ended">Open-ended</option>
+                    </FormControl>
+                </FormGroup>
 
-                        {this.answer()}
+                {this.answer()}
 
-                        <tr colSpan="2">
-                            <th>PEARL</th>
-                        </tr>
-                        <tr colSpan="2">
-                            <td><input type="text" placeholder="Enter an explanation for the answer(s)" value={this.state.pearl} name="pearl" onChange={(e)=>this.handlePearlChange(e)}/></td>
-                        </tr>
+                <FormGroup controlId="formControlsPEARL">
+                    <ControlLabel>PEARL</ControlLabel>
+                    <FormControl componentClass="textarea" placeholder="Enter an explanation for the answer(s)" value={this.state.pearl} name="pearl" onChange={(e)=>this.handlePearlChange(e)} />
+                </FormGroup>
 
-                        <tr colSpan="2">
-                            <th>Time Limit</th>
-                        </tr>
-                        <tr colSpan="2">
-                            <td>
-                                <select value={this.state.time} name="time" onChange={(e)=>this.handleTimeChange(e)}>
-                                    <option value="Select One">Select One</option>
-                                    <option value="0.5">0.5</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="5">5</option>
-                                    <option value="8">8</option>
-                                    <option value="10">10</option>
-                                    <option value="12">12</option>
-                                </select> Minute(s)
-                            </td>
-                        </tr>
+                <FormGroup controlId="formControlsTime">
+                    <ControlLabel>Time Limit</ControlLabel>
+                    <InputGroup>
+                        <FormControl componentClass="select" value={this.state.time} name="time" onChange={(e)=>this.handleTimeChange(e)}>
+                            <option value="Select One">Select One</option>
+                            <option value="0.5">0.5</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="5">5</option>
+                            <option value="8">8</option>
+                            <option value="10">10</option>
+                            <option value="12">12</option>
+                        </FormControl>
+                        <InputGroup.Addon>Minute(s)</InputGroup.Addon>
+                    </InputGroup>
+                </FormGroup>
 
-                        <tr colSpan="2">
-                            <th>Reference(s)</th>
-                        </tr>
-                        <tr colSpan="2">
-                            <td><input type="text" placeholder="Enter your references" value={this.state.reference} name="reference" onChange={(e)=>this.handleReferenceChange(e)}/></td>
-                        </tr>
-                    </table>
+                <FormGroup controlId="formControlsReferences">
+                    <ControlLabel>References</ControlLabel>
+                    <FormControl componentClass="textarea" placeholder="Enter your references" value={this.state.reference} name="reference" onChange={(e)=>this.handleReferenceChange(e)} />
+                </FormGroup>
             </div>
         );
     }
