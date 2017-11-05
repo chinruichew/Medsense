@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { bindAll } from 'lodash';
-import { FormGroup, Checkbox, ControlLabel, FormControl, InputGroup } from 'react-bootstrap';
-import Collapsible from 'react-collapsible';
+import { FormGroup, ControlLabel, FormControl, InputGroup, Accordion, Panel } from 'react-bootstrap';
 
 import './Upload.css';
 
@@ -327,71 +326,81 @@ class Question extends Component {
             return(
                 <FormGroup controlId="formControlsOpenEnded">
                     <ControlLabel>Answer</ControlLabel>
-                    <FormControl componentClass="textarea" placeholder="Enter an answer" value={this.state.openEnded} name="openEnded" onChange={(e)=>this.handleOpenEndedChange(e)}/>
+                    <FormControl componentClass="textarea" style={{height:400}} placeholder="Enter an answer" value={this.state.openEnded} name="openEnded" onChange={(e)=>this.handleOpenEndedChange(e)}/>
                 </FormGroup>
             );
         }
         return;
     }
 
+    checkQ1(){
+        if (this.props.id===1){
+            return;
+        }
+        return (
+            <FormGroup controlId="formControlsSTEM">
+                <ControlLabel style={{ fontSize: "150%" }}>STEM</ControlLabel>
+                <FormControl componentClass="textarea" style={{height:'600px'}} placeholder="Enter a continuation of the scenario" value={this.state.stem} name="stem" onChange={(e)=>this.handleStemChange(e)} />
+            </FormGroup>
+        );
+    }
+
     render(){
         return(
             <div >
-                <p>Insert Question  collapsible bar over here :D</p>
-                <Collapsible trigger={"Qn" + this.props.id} id="collapse-bar">
-                    <FormGroup controlId="formControlsSTEM">
-                        <ControlLabel style={{ fontSize: "150%" }}>STEM</ControlLabel>
-                        <FormControl componentClass="textarea" style={{height:'600px'}} placeholder="Enter a continuation of the scenario" value={this.state.stem} name="stem" onChange={(e)=>this.handleStemChange(e)} />
-                    </FormGroup>
+                <Accordion>
+                    <Panel header={"▽ Question #"+this.props.id} eventKey="1">
+                        {this.checkQ1()}
 
-                    <FormGroup controlId="formControlsQuestion">
-                        <ControlLabel style={{ fontSize: "150%" }}>Question {this.props.id}</ControlLabel>
-                        <FormControl componentClass="textarea" placeholder="Enter a question" value={this.state.question} name="question" onChange={(e)=>this.handleQuestionChange(e)} />
-                    </FormGroup>
+                        <FormGroup controlId="formControlsQuestion">
+                            <ControlLabel style={{ fontSize: "150%" }}>Question {this.props.id}</ControlLabel>
+                            <FormControl componentClass="textarea" placeholder="Enter a question" value={this.state.question} name="question" onChange={(e)=>this.handleQuestionChange(e)} />
+                        </FormGroup>
 
-                    <FormGroup controlId="formControlsAttachment">
-                        <ControlLabel style={{ fontSize: "150%" }}>Add Attachment</ControlLabel>
-                        <FormControl type="file" onChange={(e)=>this.handleFile(e)} />
-                    </FormGroup>
+                        <FormGroup controlId="formControlsAttachment">
+                            <ControlLabel style={{ fontSize: "150%" }}>Add Attachment</ControlLabel>
+                            <FormControl type="file" onChange={(e)=>this.handleFile(e)} />
+                        </FormGroup>
 
-                    <FormGroup controlId="formControlsType">
-                        <ControlLabel style={{ fontSize: "150%" }}>Question Type</ControlLabel>
-                        <FormControl componentClass="select" value={this.state.type} name="type" onChange={(e)=>this.handleTypeChange(e)}>
-                            <option value="Select One">Select One</option>
-                            <option value="MCQ">MCQ</option>
-                            <option value="Open-ended">Open-ended</option>
-                        </FormControl>
-                    </FormGroup>
-
-                    {this.answer()}
-
-                    <FormGroup controlId="formControlsPEARL">
-                        <ControlLabel style={{ fontSize: "150%" }}>PEARL</ControlLabel>
-                        <FormControl componentClass="textarea" placeholder="Enter an explanation for the answer(s)" value={this.state.pearl} name="pearl" onChange={(e)=>this.handlePearlChange(e)} />
-                    </FormGroup>
-
-                    <FormGroup controlId="formControlsTime">
-                        <ControlLabel style={{ fontSize: "150%" }}>Time Limit</ControlLabel>
-                        <InputGroup>
-                            <FormControl componentClass="select" value={this.state.time} name="time" onChange={(e)=>this.handleTimeChange(e)}>
+                        <FormGroup controlId="formControlsType">
+                            <ControlLabel style={{ fontSize: "150%" }}>Question Type</ControlLabel>
+                            <FormControl componentClass="select" value={this.state.type} name="type" onChange={(e)=>this.handleTypeChange(e)}>
                                 <option value="Select One">Select One</option>
-                                <option value="0.5">0.5</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="5">5</option>
-                                <option value="8">8</option>
-                                <option value="10">10</option>
-                                <option value="12">12</option>
+                                <option value="MCQ">MCQ</option>
+                                <option value="Open-ended">Open-ended</option>
                             </FormControl>
-                            <InputGroup.Addon>Minute(s)</InputGroup.Addon>
-                        </InputGroup>
-                    </FormGroup>
+                        </FormGroup>
 
-                    <FormGroup controlId="formControlsReferences">
-                        <ControlLabel style={{ fontSize: "150%" }}>References</ControlLabel>
-                        <FormControl componentClass="textarea" placeholder="Enter your references" value={this.state.reference} name="reference" onChange={(e)=>this.handleReferenceChange(e)} />
-                    </FormGroup>
-                </Collapsible>
+                        {this.answer()}
+
+                        <FormGroup controlId="formControlsPEARL">
+                            <ControlLabel style={{ fontSize: "150%" }}>PEARL</ControlLabel>
+                            <FormControl componentClass="textarea" placeholder="Enter an explanation for the answer(s)" value={this.state.pearl} name="pearl" onChange={(e)=>this.handlePearlChange(e)} />
+                        </FormGroup>
+
+                        <FormGroup controlId="formControlsTime">
+                            <ControlLabel style={{ fontSize: "150%" }}>Time Limit</ControlLabel>
+                            <InputGroup>
+                                <FormControl componentClass="select" value={this.state.time} name="time" onChange={(e)=>this.handleTimeChange(e)}>
+                                    <option value="Select One">Select One</option>
+                                    <option value="0.5">0.5</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="5">5</option>
+                                    <option value="8">8</option>
+                                    <option value="10">10</option>
+                                    <option value="12">12</option>
+                                </FormControl>
+                                <InputGroup.Addon>Minute(s)</InputGroup.Addon>
+                            </InputGroup>
+                        </FormGroup>
+
+                        <FormGroup controlId="formControlsReferences">
+                            <ControlLabel style={{ fontSize: "150%" }}>References</ControlLabel>
+                            <FormControl componentClass="textarea" placeholder="Enter your references" value={this.state.reference} name="reference" onChange={(e)=>this.handleReferenceChange(e)} />
+                        </FormGroup>
+                    </Panel>
+                </Accordion>
             </div>
         );
     }

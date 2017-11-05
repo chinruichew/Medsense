@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { bindAll } from 'lodash';
-import {Button, Tabs, Tab, FormGroup, FormControl, InputGroup, Table} from 'react-bootstrap';
+import {Form, Button, Tabs, Tab, FormGroup, FormControl, InputGroup, Table, ControlLabel, Col} from 'react-bootstrap';
 import {fetchCases} from '../../actions';
 
 class Vetting extends Component {
@@ -60,17 +60,21 @@ class Vetting extends Component {
                         <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
                             <Tab eventKey={1} title="Pending Cases">
                                 <br/>
-                                <FormGroup controlId="formControlsPending">
-                                    <InputGroup>
-                                        <InputGroup.Addon>Filter by Sub-speciality</InputGroup.Addon>
-                                        <FormControl componentClass="select" value={this.state.filterPending} name="filterPending" onChange={(e)=>this.handleFilterPendingChange(e)}>
-                                            <option value="All">All</option>
-                                            <option value="Sub1">Sub1</option>
-                                            <option value="Sub2">Sub2</option>
-                                        </FormControl>
-                                    </InputGroup>
-                                </FormGroup>
+                                <Form horizontal>
+                                    <FormGroup controlId="formControlsPending">
+                                        <Col componentClass={ControlLabel} sm={2}>
+                                            Filter by Sub-speciality
+                                        </Col>
 
+                                        <Col sm={3}>
+                                            <FormControl componentClass="select" value={this.state.filterPending} name="filterPending" onChange={(e)=>this.handleFilterPendingChange(e)}>
+                                                <option value="All">All</option>
+                                                <option value="Sub1">Sub1</option>
+                                                <option value="Sub2">Sub2</option>
+                                            </FormControl>
+                                        </Col>
+                                    </FormGroup>
+                                </Form>
                                 <br/>
                                 <Table responsive>
                                     <thead>
@@ -89,16 +93,21 @@ class Vetting extends Component {
                             </Tab>
                             <Tab eventKey={2} title="Vetted Cases">
                                 <br/>
-                                <FormGroup controlId="formControlsVetted">
-                                    <InputGroup>
-                                        <InputGroup.Addon>Filter by Sub-speciality</InputGroup.Addon>
-                                        <FormControl componentClass="select" value={this.state.filterVetted} name="filterVetted" onChange={(e)=>this.handleFilterVettedChange(e)}>
-                                            <option value="All">All</option>
-                                            <option value="Sub1">Sub1</option>
-                                            <option value="Sub2">Sub2</option>
-                                        </FormControl>
-                                    </InputGroup>
-                                </FormGroup>
+                                <Form horizontal>
+                                    <FormGroup controlId="formControlsVetted">
+                                        <Col componentClass={ControlLabel} sm={2}>
+                                            Filter by Sub-speciality
+                                        </Col>
+
+                                        <Col sm={3}>
+                                            <FormControl componentClass="select" value={this.state.filterVetted} name="filterVetted" onChange={(e)=>this.handleFilterVettedChange(e)}>
+                                                <option value="All">All</option>
+                                                <option value="Sub1">Sub1</option>
+                                                <option value="Sub2">Sub2</option>
+                                            </FormControl>
+                                        </Col>
+                                    </FormGroup>
+                                </Form>
 
                                 <br/>
                                 <Table responsive>

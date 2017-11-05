@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Button } from 'react-bootstrap';
-import { Collapse } from 'react-bootstrap';
+import { Button, Accordion, Panel } from 'react-bootstrap';
 import { bindAll } from 'lodash';
 import Question from './Question.js';
 import Overview from './Overview.js';
 import BootstrapModal from './BootstrapModal.js';
 import './Upload.css';
+
 class Main extends Component{
     constructor(props){
         super(props);
@@ -81,39 +81,39 @@ class Main extends Component{
                 questions.forEach(function (obj) {
                     if (obj.question === '') {
                         console.log(this);
-                        error="Question " + obj.id + ": Please fill in the Question!";
+                        error="Question #" + obj.id + ": Please fill in the Question!";
                         throw BreakException;
                     } else if (obj.type === "Select One") {
-                        error="Question " + obj.id + ": Please select a Question Type!";
+                        error="Question #" + obj.id + ": Please select a Question Type!";
                         throw BreakException;
                     } else if (obj.pearl === '') {
-                        error="Question " + obj.id + ": Please fill in the PEARL!";
+                        error="Question #" + obj.id + ": Please fill in the PEARL!";
                         throw BreakException;
                     } else if (obj.time === "Select One") {
-                        error="Question " + obj.id + ": Please select a Time Limit!";
+                        error="Question #" + obj.id + ": Please select a Time Limit!";
                         throw BreakException;
                     } else if (obj.type === "MCQ") {
                         if (obj.mcq1 === '' || obj.mcq2 === '') {
-                            error="Question " + obj.id + ": Please fill in the first 2 MCQ answers!";
+                            error="Question #" + obj.id + ": Please fill in the first 2 MCQ answers!";
                             throw BreakException;
                         } else if (obj.mcq3 === '' && obj.check3) {
-                            error="Question " + obj.id + ": Please fill in an answer for third answer option or uncheck that option!";
+                            error="Question #" + obj.id + ": Please fill in an answer for third answer option or uncheck that option!";
                             throw BreakException;
                         } else if (obj.mcq4 === '' && obj.check4) {
-                            error="Question " + obj.id + ": Please fill in an answer for fourth answer option or uncheck that option!";
+                            error="Question #" + obj.id + ": Please fill in an answer for fourth answer option or uncheck that option!";
                             throw BreakException;
                         } else if (obj.mcq5 === '' && obj.check5) {
-                            error="Question " + obj.id + ": Please fill in an answer for fifth answer option or uncheck that option!";
+                            error="Question #" + obj.id + ": Please fill in an answer for fifth answer option or uncheck that option!";
                             throw BreakException;
                         } else if (obj.mcq6 === '' && obj.check6) {
-                            error="Question " + obj.id + ": Please fill in an answer for sixth answer option or uncheck that option!";
+                            error="Question #" + obj.id + ": Please fill in an answer for sixth answer option or uncheck that option!";
                             throw BreakException;
                         } else if (!obj.check1 && !obj.check2 && !obj.check3 && !obj.check4 && !obj.check5 && !obj.check6) {
-                            error="Question " + obj.id + ": Please check at least 1 correct answer!";
+                            error="Question #" + obj.id + ": Please check at least 1 correct answer!";
                             throw BreakException;
                         }
                     } else if (obj.type === "Open-ended" && obj.openEnded === '') {
-                        error="Question " + obj.id + ": Please fill in the Open-ended answer!";
+                        error="Question #" + obj.id + ": Please fill in the Open-ended answer!";
                         throw BreakException;
                     }
                 });
@@ -225,23 +225,33 @@ class Main extends Component{
                 </div>
 
                 <form action="/api/uploadCase" method="post" className="case-area">
-                    <p>Insert Case Overview collapsible bar over here :D</p>
-                    <Overview
-                        title={this.state.title}
-                        difficulty={this.state.difficulty}
-                        speciality={this.state.speciality}
-                        subspeciality={this.state.subspeciality}
-                        approach={this.state.approach}
-                        scenario={this.state.scenario}
-                        learning={this.state.learning}
-                        handleUpdateOverview={this.handleUpdateOverview}/>
-                    <p>Insert Case Question collapsible bar over here :D</p>
-                    <div className="question-area">
-                        {questionNodes}
-                    </div>
-                    <div className="add-question-button">
-                    <Button  type="button" bsStyle="primary" onClick={(e)=>this.addQuestion()}>Add Question</Button><br/>
-                    </div><div className="submit-case-button">
+                    <Accordion>
+                        <Panel header="▽ Case Overview" eventKey="1">
+                            <Overview
+                                title={this.state.title}
+                                difficulty={this.state.difficulty}
+                                speciality={this.state.speciality}
+                                subspeciality={this.state.subspeciality}
+                                approach={this.state.approach}
+                                scenario={this.state.scenario}
+                                learning={this.state.learning}
+                                handleUpdateOverview={this.handleUpdateOverview}/>
+                        </Panel>
+                    </Accordion>
+
+                    <Accordion>
+                        <Panel header="▽ Case Questions" eventKey="1">
+                            <div className="question-area">
+                                {questionNodes}
+                            </div>
+
+
+                            <div className="add-question-button">
+                            <Button  type="button" bsStyle="primary" onClick={(e)=>this.addQuestion()}>Add Question</Button><br/>
+                            </div>
+                        </Panel>
+                    </Accordion>
+                    <div className="submit-case-button">
                     <Button type="submit" align="center" bsStyle="primary" onClick={(e)=>this.saveChanges(e)}>Submit</Button>
                     </div>
                     <BootstrapModal
