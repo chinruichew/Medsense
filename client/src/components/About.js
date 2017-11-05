@@ -16,7 +16,7 @@ class Home extends Component {
     componentDidMount() {
         // Dynamically set background image
         document.body.style.backgroundImage = "url('./home_background.jpg')";
-        document.body.style.backgroundSize = "100% 100%";
+        document.body.style.backgroundSize = "100% 1200px";
 
         this.intervalId = setInterval(this.timer.bind(this), 1000);
         this.setState({
