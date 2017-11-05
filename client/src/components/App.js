@@ -5,12 +5,10 @@ import * as actions from '../actions';
 
 import Login from './LoginSignup/Login';
 import Header from './Header';
-import Home from './Home';
+import About from './About';
 import StudentSignup from "./LoginSignup/StudentSignup";
 import CaseUpload from './CaseUpload/Main';
-import StudentDashboard from './ProfileDashboard/StudentProfile';
-import ProfessorDashboard from './ProfileDashboard/ProfessorProfile';
-import MainProfile from './ProfileDashboard/MainProfile';
+import Dashboard from './ProfileDashboard/MainProfile';
 import CaseVetting from './CaseVetting/Vetting';
 
 import './App.css';
@@ -30,9 +28,8 @@ class App extends Component {
                     <Route exact path="/signup" component={StudentSignup} />
                     <Route exact path="/upload" component={CaseUpload} />
                     <Route exact path="/vetting" component={CaseVetting} />
-                    <Route exact path="/student_dashboard" component={MainProfile} />
-                    <Route exact path="/professor_dashboard" component={MainProfile} />
-                    <Route exact path="/" component={Home} />
+                    <Route exact path="/dashboard" component={Dashboard} />
+                    <Route exact path="/" component={About} />
                 </div>
             </BrowserRouter>
         );

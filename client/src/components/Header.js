@@ -26,7 +26,7 @@ class Header extends Component {
                                 <NavItem className="navItem" eventKey={1} href="/upload">Case Upload</NavItem>
                                 <NavItem className="navItem" eventKey={2} href="/vetting">Case Vetting</NavItem>
                                 <NavItem className="navItem" eventKey={3} href="/forum">Discussion Forum</NavItem>
-                                <NavItem className="navItem" eventKey={4} href="/professor_dashboard">Dashboard</NavItem>
+                                <NavItem className="navItem" eventKey={4} href="/dashboard">Dashboard</NavItem>
                                 <NavItem className="navItem" eventKey={5} href="/acknowledgements">Acknowledgements</NavItem>
                                 <NavItem className="navItem" eventKey={6} href="/api/logout">Logout</NavItem>
                                 <img src="https://s3-ap-southeast-1.amazonaws.com/profile-picture-images/user_profile.jpg" className="img-circle" style={{height: '45px', width: '45px'}} />
@@ -38,7 +38,7 @@ class Header extends Component {
                                 <NavItem className="navItem" eventKey={1} href="/case_challenge">Case Challenge</NavItem>
                                 <NavItem className="navItem" eventKey={2} href="/upload">Case Upload</NavItem>
                                 <NavItem className="navItem" eventKey={3} href="/forum">Discussion Forum</NavItem>
-                                <NavItem className="navItem" eventKey={4} href="/student_dashboard">Dashboard</NavItem>
+                                <NavItem className="navItem" eventKey={4} href="/dashboard">Dashboard</NavItem>
                                 <NavItem className="navItem" eventKey={5} href="/acknowledgements">Acknowledgements</NavItem>
                                 <NavItem className="navItem" eventKey={6} href="/api/logout">Logout</NavItem>
                                 <img src="https://s3-ap-southeast-1.amazonaws.com/profile-picture-images/user_profile.jpg" className="img-circle" style={{height: '45px', width: '45px'}} />
