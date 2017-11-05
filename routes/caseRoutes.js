@@ -122,11 +122,11 @@ module.exports = app => {
         });
     });
 
-<<<<<<< HEAD
     app.get('/api/fetchAllCases', async (req, res) => {
         const cases = await Case.find().select();
         res.send(cases);
-=======
+    }
+
     app.post('/api/fetchAllCases', function (req, res) {
         Case.find({}).populate({
             path: 'questions',
@@ -134,7 +134,7 @@ module.exports = app => {
         }).exec(function (error, cases) {
             return res.status(201).send({ data: cases, message: "fetchAllCases success" });
         })
->>>>>>> b94073bcff40034636da98130852fce73ac40cbf
+
     });
 
     app.post('/api/fetchAllCasesByAuthor', function (req, res) {
