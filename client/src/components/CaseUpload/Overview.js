@@ -115,7 +115,7 @@ class Overview extends Component {
         if (this.state.speciality === "Medicine") {
             return (
                 <FormGroup controlId="formControlsSubspeciality">
-                    <ControlLabel>Sub-speciality</ControlLabel>
+                    <ControlLabel>Sub-speciality<span style={{color:"red"}}>*</span></ControlLabel>
                     <FormControl componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)}>
                         <option value="Select One">Select One</option>
                         <option value="Cardiology">Cardiology</option>
@@ -134,7 +134,7 @@ class Overview extends Component {
         } else if (this.state.speciality === "Others") {
             return (
                 <FormGroup controlId="formControlsSepciality">
-                    <ControlLabel>Sub-speciality</ControlLabel>
+                    <ControlLabel>Sub-speciality<span style={{color:"red"}}>*</span></ControlLabel>
                     <FormControl componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)}>
                         <option value="Select One">Select One</option>
                         <option value="Anaesthesiology">Anaesthesiology</option>
@@ -154,7 +154,7 @@ class Overview extends Component {
         } else if (this.state.speciality === "Surgery") {
             return (
                 <FormGroup controlId="formControlsSepciality">
-                    <ControlLabel>Sub-speciality</ControlLabel>
+                    <ControlLabel>Sub-speciality<span style={{color:"red"}}>*</span></ControlLabel>
                     <FormControl componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)}>
                         <option value="Select One">Select One</option>
                         <option value="Breast">Breast</option>
@@ -178,12 +178,12 @@ class Overview extends Component {
         return (
             <div id="overview-box">
                 <FormGroup controlId="formControlsTitle">
-                    <ControlLabel style={{ fontSize: "150%" }}>Case Title</ControlLabel>
+                    <ControlLabel style={{ fontSize: "150%" }}>Case Title<span style={{color:"red"}}>*</span></ControlLabel>
                     <FormControl type="text" placeholder="Enter a title" value={this.state.title} name="title" onChange={(e) => this.handleTitleChange(e)} />
                 </FormGroup>
 
                 <FormGroup controlId="formControlsDifficulty">
-                    <ControlLabel style={{ fontSize: "150%" }}>Difficulty Level</ControlLabel>
+                    <ControlLabel style={{ fontSize: "150%" }}>Difficulty Level<span style={{color:"red"}}>*</span></ControlLabel>
                     <FormControl componentClass="select" value={this.state.difficulty} name="difficulty" onChange={(e) => this.handleDifficultyChange(e)}>
                         <option value="Select One">Select One</option>
                         <option value="Beginner">Beginner</option>
@@ -192,7 +192,7 @@ class Overview extends Component {
                 </FormGroup>
 
                 <FormGroup controlId="formControlsSepciality" style={{paddingBottom:"0"}}>
-                    <ControlLabel style={{ fontSize: "150%"}}>Speciality</ControlLabel>
+                    <ControlLabel style={{ fontSize: "150%"}}>Speciality<span style={{color:"red"}}>*</span></ControlLabel>
                     <FormControl componentClass="select" value={this.state.speciality} name="speciality" onChange={(e) => this.handleSpecialityChange(e)}>
                         <option value="Select One">Select One</option>
                         <option value="Medicine">Medicine</option>
@@ -204,7 +204,7 @@ class Overview extends Component {
                 {this.setSubspeciality()}
 
                 <FormGroup controlId="formControlsApproach">
-                    <ControlLabel style={{ fontSize: "150%" }}>Approach(es)
+                    <ControlLabel style={{ fontSize: "150%" }}>Approach(es)<span style={{color:"red"}}>*</span>
                         <br />
                         <div style={{ fontSize: "70%", fontWeight:"200"}}>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.
                         </div>
@@ -234,12 +234,12 @@ class Overview extends Component {
                 </FormGroup>
 
                 <FormGroup controlId="formControlsScenario">
-                    <ControlLabel style={{ fontSize: "150%" }}>Case Scenario</ControlLabel>
+                    <ControlLabel style={{ fontSize: "150%" }}>Case Scenario<span style={{color:"red"}}>*</span></ControlLabel>
                     <FormControl componentClass="textarea" placeholder="Enter a brief description of the patient" value={this.state.scenario} name="scenario" onChange={(e) => this.handleScenarioChange(e)} />
                 </FormGroup>
 
                 <FormGroup controlId="formControlsLearning">
-                    <ControlLabel style={{ fontSize: "150%" }}>Key Learning Points</ControlLabel>
+                    <ControlLabel style={{ fontSize: "150%" }}>Key Learning Points<span style={{color:"red"}}>*</span></ControlLabel>
                     <FormControl componentClass="textarea" placeholder="Enter the key learning points of this case" value={this.state.learning} name="learning" onChange={(e) => this.handleLearningChange(e)} />
                 </FormGroup>
 

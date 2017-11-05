@@ -48,6 +48,10 @@
     text-align: center;
 }
 
+#question .delete-question-button{
+    text-align: right;
+}
+
 #main .submit-case-button{
     padding-top: 10%;
     text-align: right;

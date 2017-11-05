@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { bindAll } from 'lodash';
-import { FormGroup, ControlLabel, FormControl, InputGroup, Accordion, Panel } from 'react-bootstrap';
+import { Button, FormGroup, ControlLabel, FormControl, InputGroup, Accordion, Panel } from 'react-bootstrap';
 
 import './Upload.css';
 
@@ -36,7 +36,12 @@ class Question extends Component {
         bindAll(this, 'handleFile', 'handleStemChange', 'handleQuestionChange', 'handleTypeChange', 'handleOpenEndedChange',
             'handleMCQ1Change', 'handleMCQ2Change', 'handleMCQ3Change', 'handleMCQ4Change', 'handleMCQ5Change', 'handleMCQ6Change',
             'handleCheck1Change', 'handleCheck2Change', 'handleCheck3Change', 'handleCheck4Change', 'handleCheck5Change',
-            'handleCheck6Change', 'handlePearlChange', 'handleTimeChange', 'handleReferenceChange','answer', 'update');
+            'handleCheck6Change', 'handlePearlChange', 'handleTimeChange', 'handleReferenceChange','answer', 'update', 'deleteQuestion');
+    }
+
+    deleteQuestion(){
+        let id = this.props.id;
+        this.props.handleDeleteQuestion(id);
     }
 
     update(value,key){
@@ -262,7 +267,7 @@ class Question extends Component {
             return(
                 <div>
                     <FormGroup>
-                        <ControlLabel>Answer 1</ControlLabel>
+                        <ControlLabel>Answer 1<span style={{color:"red"}}>*</span></ControlLabel>
                         <InputGroup>
                             <InputGroup.Addon>
                                 <input type="checkbox" aria-label="..." checked={this.state.check1} name="check1" onChange={(e)=>this.handleCheck1Change(e)}/>
@@ -272,7 +277,7 @@ class Question extends Component {
                     </FormGroup>
 
                     <FormGroup>
-                        <ControlLabel>Answer 2</ControlLabel>
+                        <ControlLabel>Answer 2<span style={{color:"red"}}>*</span></ControlLabel>
                         <InputGroup>
                             <InputGroup.Addon>
                                 <input type="checkbox" aria-label="..." checked={this.state.check2} name="check2" onChange={(e)=>this.handleCheck2Change(e)}/>
@@ -325,7 +330,7 @@ class Question extends Component {
         } else if(this.state.type==="Open-ended"){
             return(
                 <FormGroup controlId="formControlsOpenEnded">
-                    <ControlLabel>Answer</ControlLabel>
+                    <ControlLabel>Answer<span style={{color:"red"}}>*</span></ControlLabel>
                     <FormControl componentClass="textarea" style={{height:400}} placeholder="Enter an answer" value={this.state.openEnded} name="openEnded" onChange={(e)=>this.handleOpenEndedChange(e)}/>
                 </FormGroup>
             );
@@ -347,13 +352,16 @@ class Question extends Component {
 
     render(){
         return(
-            <div >
+            <div id="question">
                 <Accordion>
                     <Panel header={"▽ Question #"+this.props.id} eventKey="1">
+                        <div className="delete-question-button">
+                        <Button  type="button" bsStyle="primary" onClick={(e)=>this.deleteQuestion()}>Delete Question</Button><br/>
+                        </div>
                         {this.checkQ1()}
 
                         <FormGroup controlId="formControlsQuestion">
-                            <ControlLabel style={{ fontSize: "150%" }}>Question {this.props.id}</ControlLabel>
+                            <ControlLabel style={{ fontSize: "150%" }}>Question {this.props.id}<span style={{color:"red"}}>*</span></ControlLabel>
                             <FormControl componentClass="textarea" placeholder="Enter a question" value={this.state.question} name="question" onChange={(e)=>this.handleQuestionChange(e)} />
                         </FormGroup>
 
@@ -363,7 +371,7 @@ class Question extends Component {
                         </FormGroup>
 
                         <FormGroup controlId="formControlsType">
-                            <ControlLabel style={{ fontSize: "150%" }}>Question Type</ControlLabel>
+                            <ControlLabel style={{ fontSize: "150%" }}>Question Type<span style={{color:"red"}}>*</span></ControlLabel>
                             <FormControl componentClass="select" value={this.state.type} name="type" onChange={(e)=>this.handleTypeChange(e)}>
                                 <option value="Select One">Select One</option>
                                 <option value="MCQ">MCQ</option>
@@ -374,12 +382,12 @@ class Question extends Component {
                         {this.answer()}
 
                         <FormGroup controlId="formControlsPEARL">
-                            <ControlLabel style={{ fontSize: "150%" }}>PEARL</ControlLabel>
+                            <ControlLabel style={{ fontSize: "150%" }}>PEARL<span style={{color:"red"}}>*</span></ControlLabel>
                             <FormControl componentClass="textarea" placeholder="Enter an explanation for the answer(s)" value={this.state.pearl} name="pearl" onChange={(e)=>this.handlePearlChange(e)} />
                         </FormGroup>
 
                         <FormGroup controlId="formControlsTime">
-                            <ControlLabel style={{ fontSize: "150%" }}>Time Limit</ControlLabel>
+                            <ControlLabel style={{ fontSize: "150%" }}>Time Limit<span style={{color:"red"}}>*</span></ControlLabel>
                             <InputGroup>
                                 <FormControl componentClass="select" value={this.state.time} name="time" onChange={(e)=>this.handleTimeChange(e)}>
                                     <option value="Select One">Select One</option>

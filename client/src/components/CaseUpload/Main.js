@@ -20,7 +20,7 @@ class Main extends Component{
             scenario:'',
             learning: '',
         };
-        bindAll(this, 'addQuestion', 'saveChanges', 'handleUpdateOverview', 'handleUpdateQuestion');
+        bindAll(this, 'addQuestion', 'saveChanges', 'handleUpdateOverview', 'handleUpdateQuestion', 'handleDeleteQuestion');
     }
 
     addQuestion(){
@@ -72,15 +72,17 @@ class Main extends Component{
             this.setState({vmShow:true, error: "Case Overview: Please fill in the Case Scenario!"});
         } else if (this.state.learning==='') {
             this.setState({vmShow:true, error: "Case Overview: Please fill in the Key Learning Points!"});
-        } else if (true){
+        } else {
 
             let questions = this.state.qnData;
+            if (questions.length===0){
+                this.setState({vmShow:true, error: "Case Question: Please add at least 1 Question!"});
+            }
             let error='';
             let BreakException ={};
             try {
                 questions.forEach(function (obj) {
                     if (obj.question === '') {
-                        console.log(this);
                         error="Question #" + obj.id + ": Please fill in the Question!";
                         throw BreakException;
                     } else if (obj.type === "Select One") {
@@ -94,36 +96,86 @@ class Main extends Component{
                         throw BreakException;
                     } else if (obj.type === "MCQ") {
                         if (obj.mcq1 === '' || obj.mcq2 === '') {
-                            error="Question #" + obj.id + ": Please fill in the first 2 MCQ answers!";
+                            error="Question #" + obj.id + ": Please fill in Answer 1 and Answer 2!";
                             throw BreakException;
                         } else if (obj.mcq3 === '' && obj.check3) {
-                            error="Question #" + obj.id + ": Please fill in an answer for third answer option or uncheck that option!";
+                            error="Question #" + obj.id + ": Please fill in Answer 3 or uncheck the answer!";
                             throw BreakException;
                         } else if (obj.mcq4 === '' && obj.check4) {
-                            error="Question #" + obj.id + ": Please fill in an answer for fourth answer option or uncheck that option!";
+                            error="Question #" + obj.id + ": Please fill in Answer 4 or uncheck the answer!";
                             throw BreakException;
                         } else if (obj.mcq5 === '' && obj.check5) {
-                            error="Question #" + obj.id + ": Please fill in an answer for fifth answer option or uncheck that option!";
+                            error="Question #" + obj.id + ": Please fill in Answer 5 or uncheck the answer!";
                             throw BreakException;
                         } else if (obj.mcq6 === '' && obj.check6) {
-                            error="Question #" + obj.id + ": Please fill in an answer for sixth answer option or uncheck that option!";
+                            error="Question #" + obj.id + ": Please fill in Answer 6 or uncheck the answer!";
                             throw BreakException;
                         } else if (!obj.check1 && !obj.check2 && !obj.check3 && !obj.check4 && !obj.check5 && !obj.check6) {
                             error="Question #" + obj.id + ": Please check at least 1 correct answer!";
                             throw BreakException;
                         }
                     } else if (obj.type === "Open-ended" && obj.openEnded === '') {
-                        error="Question #" + obj.id + ": Please fill in the Open-ended answer!";
+                        error="Question #" + obj.id + ": Please fill in the Answer!";
                         throw BreakException;
                     }
                 });
+                window.alert("Success!");
+
             } catch(e){
                 this.setState({vmShow:true, error: error});
                 return;
             }
-        } else {
-            window.alert("Success!");
         }
+    }
+
+    handleDeleteQuestion(id){
+        let questions = this.state.qnData;
+        let newQuestions = [];
+        let offset=1;
+        questions.forEach(function (obj) {
+            if (obj.id > id) {
+
+                newQuestions=newQuestions.concat(
+                    {
+                        "id": obj.id-offset,
+                        "stem": obj.stem,
+                        "question": obj.question,
+                        "attachment": obj.attachment,
+                        "filename": obj.filename,
+                        "filetype": obj.filtype,
+                        "type": obj.type,
+                        "openEnded": obj.openEnded,
+                        "mcq1": obj.mcq1,
+                        "mcq2": obj.mcq2,
+                        "mcq3": obj.mcq3,
+                        "mcq4": obj.mcq4,
+                        "mcq5": obj.mcq5,
+                        "mcq6": obj.mcq6,
+                        "check1": obj.check1,
+                        "check2": obj.check2,
+                        "check3": obj.check3,
+                        "check4": obj.check4,
+                        "check5": obj.check5,
+                        "check6": obj.check6,
+                        "pearl": obj.pearl,
+                        "time": obj.time,
+                        "reference": obj.reference,
+                    }
+                );
+                console.log("hi");
+                offset+=1;
+            } else if (obj.id < id){
+
+                newQuestions=newQuestions.concat(obj);
+                console.log("yo");
+            }
+        });
+        console.log(newQuestions);
+        this.setState({ qnData: newQuestions },()=>{
+            this.forceUpdate();
+            console.log(this.state.qnData);
+        });
+
     }
 
     handleUpdateQuestion(details, id){
@@ -171,8 +223,9 @@ class Main extends Component{
 
     render(){
         let vmClose = () => this.setState({vmShow:false});
+        console.log(this.state.qnData);
         let questionNodes = this.state.qnData.map((obj, index) => {
-
+            console.log(obj);
             return (
                 <Question
                     id={obj.id}
@@ -198,7 +251,8 @@ class Main extends Component{
                     pearl={obj.pearl}
                     time={obj.time}
                     reference={obj.reference}
-                    handleUpdateQuestion={this.handleUpdateQuestion}/>
+                    handleUpdateQuestion={this.handleUpdateQuestion}
+                    handleDeleteQuestion={this.handleDeleteQuestion}/>
             );
         });
 
