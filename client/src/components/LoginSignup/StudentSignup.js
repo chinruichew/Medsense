@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { reduxForm } from 'redux-form';
 import StudentSignUpForm from './StudentSignUpForm';
 
 class StudentSignup extends Component {
@@ -8,7 +7,7 @@ class StudentSignup extends Component {
         this.state = {
             username: null,
             password: null,
-            confirmpassword: null,
+            confirm_password: null,
             school: "Duke-NUS",
             year: "Year 1"
         };
@@ -17,14 +16,6 @@ class StudentSignup extends Component {
     componentDidMount() {
         // Dynamically set background image
         document.body.style.backgroundImage = "url('./home_background.jpg')";
-    }
-
-    handleSchoolChange(e) {
-        this.setState({ school: e.target.value });
-    }
-
-    handleYearChange(e) {
-        this.setState({ year: e.target.value });
     }
 
     render() {
@@ -41,13 +32,11 @@ class StudentSignup extends Component {
         return (
             <div className="container-fluid">
                 <div className="row">
-                    <StudentSignUpForm />
+                    <StudentSignUpForm username={this.state.username} password={this.state.password} confirm_password={this.state.confirm_password} school={this.state.school} year={this.state.year} />
                 </div>
             </div>
         )
     }
 }
 
-export default reduxForm({
-    form: 'studentSignUpForm'
-})(StudentSignup);
+export default StudentSignup;
