@@ -337,22 +337,22 @@ class Question extends Component {
                 <p>Insert Question {this.props.id} collapsible bar over here :D</p>
 
                 <FormGroup controlId="formControlsSTEM">
-                    <ControlLabel>STEM</ControlLabel>
-                    <FormControl componentClass="textarea" placeholder="Enter a continuation of the scenario" value={this.state.stem} name="stem" onChange={(e)=>this.handleStemChange(e)} />
+                    <ControlLabel style={{ fontSize: "150%" }}>STEM</ControlLabel>
+                    <FormControl componentClass="textarea" style={{height:'600px'}} placeholder="Enter a continuation of the scenario" value={this.state.stem} name="stem" onChange={(e)=>this.handleStemChange(e)} />
                 </FormGroup>
 
                 <FormGroup controlId="formControlsQuestion">
-                    <ControlLabel>Question {this.props.id}</ControlLabel>
+                    <ControlLabel style={{ fontSize: "150%" }}>Question {this.props.id}</ControlLabel>
                     <FormControl componentClass="textarea" placeholder="Enter a question" value={this.state.question} name="question" onChange={(e)=>this.handleQuestionChange(e)} />
                 </FormGroup>
 
                 <FormGroup controlId="formControlsAttachment">
-                    <ControlLabel>Add Attachment</ControlLabel>
+                    <ControlLabel style={{ fontSize: "150%" }}>Add Attachment</ControlLabel>
                     <FormControl type="file" onChange={(e)=>this.handleFile(e)} />
                 </FormGroup>
 
                 <FormGroup controlId="formControlsType">
-                    <ControlLabel>Question Type</ControlLabel>
+                    <ControlLabel style={{ fontSize: "150%" }}>Question Type</ControlLabel>
                     <FormControl componentClass="select" value={this.state.type} name="type" onChange={(e)=>this.handleTypeChange(e)}>
                         <option value="Select One">Select One</option>
                         <option value="MCQ">MCQ</option>
@@ -363,12 +363,12 @@ class Question extends Component {
                 {this.answer()}
 
                 <FormGroup controlId="formControlsPEARL">
-                    <ControlLabel>PEARL</ControlLabel>
+                    <ControlLabel style={{ fontSize: "150%" }}>PEARL</ControlLabel>
                     <FormControl componentClass="textarea" placeholder="Enter an explanation for the answer(s)" value={this.state.pearl} name="pearl" onChange={(e)=>this.handlePearlChange(e)} />
                 </FormGroup>
 
                 <FormGroup controlId="formControlsTime">
-                    <ControlLabel>Time Limit</ControlLabel>
+                    <ControlLabel style={{ fontSize: "150%" }}>Time Limit</ControlLabel>
                     <InputGroup>
                         <FormControl componentClass="select" value={this.state.time} name="time" onChange={(e)=>this.handleTimeChange(e)}>
                             <option value="Select One">Select One</option>
@@ -385,7 +385,7 @@ class Question extends Component {
                 </FormGroup>
 
                 <FormGroup controlId="formControlsReferences">
-                    <ControlLabel>References</ControlLabel>
+                    <ControlLabel style={{ fontSize: "150%" }}>References</ControlLabel>
                     <FormControl componentClass="textarea" placeholder="Enter your references" value={this.state.reference} name="reference" onChange={(e)=>this.handleReferenceChange(e)} />
                 </FormGroup>
             </div>

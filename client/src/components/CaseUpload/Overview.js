@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import { bindAll } from 'lodash';
 import { FormGroup, Checkbox, ControlLabel, FormControl, InputGroup } from 'react-bootstrap';
 
+import './Upload.css';
+
 class Overview extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state={
+        this.state = {
             title: this.props.title,
             difficulty: this.props.difficulty,
             speciality: this.props.speciality,
@@ -18,7 +20,7 @@ class Overview extends Component {
             'handleApproachChange', 'handleScenarioChange', 'handleLearningChange', 'setSubspeciality', 'update');
     }
 
-    update(value, key){
+    update(value, key) {
         let details = {
             title: this.state.title,
             difficulty: this.state.difficulty,
@@ -29,7 +31,7 @@ class Overview extends Component {
             learning: this.state.learning,
         };
 
-        switch(key) {
+        switch (key) {
             case "title":
                 details.title = value;
                 this.props.handleUpdateOverview(details);
@@ -64,27 +66,27 @@ class Overview extends Component {
         }
     }
 
-    handleTitleChange(e){
+    handleTitleChange(e) {
         const value = e.target.value;
         this.setState({ title: value });
         this.update(value, "title");
     }
-    handleDifficultyChange(e){
+    handleDifficultyChange(e) {
         const value = e.target.value;
         this.setState({ difficulty: value });
         this.update(value, "difficulty");
     }
-    handleSpecialityChange(e){
+    handleSpecialityChange(e) {
         const value = e.target.value;
         this.setState({ speciality: value });
         this.update(value, "speciality");
     }
-    handleSubspecialityChange(e){
+    handleSubspecialityChange(e) {
         const value = e.target.value;
         this.setState({ subspeciality: value });
         this.update(value, "subspeciality");
     }
-    handleApproachChange(e){
+    handleApproachChange(e) {
         const options = e.target.options;
         let value = [];
         for (let i = 1, l = options.length; i < l; i++) {
@@ -92,29 +94,29 @@ class Overview extends Component {
                 value.push(options[i].value);
             }
         }
-        if (value.length>0){
+        if (value.length > 0) {
             this.setState({ approach: value });
             this.update(value, "approach");
         }
     }
-    handleScenarioChange(e){
+    handleScenarioChange(e) {
         const value = e.target.value;
         this.setState({ scenario: value });
         this.update(value, "scenario");
     }
-    handleLearningChange(e){
+    handleLearningChange(e) {
         const value = e.target.value;
         this.setState({ learning: value });
         this.update(value, "learning");
     }
 
-    setSubspeciality(){
+    setSubspeciality() {
 
-        if (this.state.speciality==="Medicine"){
-            return(
+        if (this.state.speciality === "Medicine") {
+            return (
                 <FormGroup controlId="formControlsSubspeciality">
                     <ControlLabel>Sub-speciality</ControlLabel>
-                    <FormControl componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e)=>this.handleSubspecialityChange(e)}>
+                    <FormControl componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)}>
                         <option value="Select One">Select One</option>
                         <option value="Cardiology">Cardiology</option>
                         <option value="Endocrinology">Endocrinology</option>
@@ -129,11 +131,11 @@ class Overview extends Component {
                     </FormControl>
                 </FormGroup>
             );
-        } else if (this.state.speciality==="Others"){
-            return(
+        } else if (this.state.speciality === "Others") {
+            return (
                 <FormGroup controlId="formControlsSepciality">
                     <ControlLabel>Sub-speciality</ControlLabel>
-                    <FormControl componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e)=>this.handleSubspecialityChange(e)}>
+                    <FormControl componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)}>
                         <option value="Select One">Select One</option>
                         <option value="Anaesthesiology">Anaesthesiology</option>
                         <option value="Ear Nose & Throat">Ear Nose & Throat</option>
@@ -149,11 +151,11 @@ class Overview extends Component {
                     </FormControl>
                 </FormGroup>
             );
-        } else if (this.state.speciality==="Surgery"){
-            return(
+        } else if (this.state.speciality === "Surgery") {
+            return (
                 <FormGroup controlId="formControlsSepciality">
                     <ControlLabel>Sub-speciality</ControlLabel>
-                    <FormControl componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e)=>this.handleSubspecialityChange(e)}>
+                    <FormControl componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)}>
                         <option value="Select One">Select One</option>
                         <option value="Breast">Breast</option>
                         <option value="Colorectal">Colorectal</option>
@@ -171,26 +173,27 @@ class Overview extends Component {
         return;
     }
 
-    render(){
-        return(
-            <div>
+
+    render() {
+        return (
+            <div id="overview-box">
                 <FormGroup controlId="formControlsTitle">
-                    <ControlLabel>Case Title</ControlLabel>
-                    <FormControl type="text" placeholder="Enter a title" value={this.state.title} name="title" onChange={(e)=>this.handleTitleChange(e)} />
+                    <ControlLabel style={{ fontSize: "150%" }}>Case Title</ControlLabel>
+                    <FormControl type="text" placeholder="Enter a title" value={this.state.title} name="title" onChange={(e) => this.handleTitleChange(e)} />
                 </FormGroup>
 
                 <FormGroup controlId="formControlsDifficulty">
-                    <ControlLabel>Difficulty Level</ControlLabel>
-                    <FormControl componentClass="select" value={this.state.difficulty} name="difficulty" onChange={(e)=>this.handleDifficultyChange(e)}>
+                    <ControlLabel style={{ fontSize: "150%" }}>Difficulty Level</ControlLabel>
+                    <FormControl componentClass="select" value={this.state.difficulty} name="difficulty" onChange={(e) => this.handleDifficultyChange(e)}>
                         <option value="Select One">Select One</option>
                         <option value="Beginner">Beginner</option>
                         <option value="Advanced">Advanced</option>
                     </FormControl>
                 </FormGroup>
 
-                <FormGroup controlId="formControlsSepciality">
-                    <ControlLabel>Speciality</ControlLabel>
-                    <FormControl componentClass="select" value={this.state.speciality} name="speciality" onChange={(e)=>this.handleSpecialityChange(e)}>
+                <FormGroup controlId="formControlsSepciality" style={{paddingBottom:"0"}}>
+                    <ControlLabel style={{ fontSize: "150%"}}>Speciality</ControlLabel>
+                    <FormControl componentClass="select" value={this.state.speciality} name="speciality" onChange={(e) => this.handleSpecialityChange(e)}>
                         <option value="Select One">Select One</option>
                         <option value="Medicine">Medicine</option>
                         <option value="Surgery">Surgery</option>
@@ -201,8 +204,12 @@ class Overview extends Component {
                 {this.setSubspeciality()}
 
                 <FormGroup controlId="formControlsApproach">
-                    <ControlLabel>Approach(es)<br/>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.</ControlLabel>
-                    <FormControl componentClass="select" value={this.state.approach} name="approach" onChange={(e)=>this.handleApproachChange(e)} multiple>
+                    <ControlLabel style={{ fontSize: "150%" }}>Approach(es)
+                        <br />
+                        <div style={{ fontSize: "70%", fontWeight:"200"}}>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.
+                        </div>
+                    </ControlLabel>
+                    <FormControl componentClass="select" value={this.state.approach} name="approach" onChange={(e) => this.handleApproachChange(e)} multiple>
                         <option value="Select All Relevant">Select All Relevant</option>
                         <option value="Abdominal Pain">Abdominal Pain</option>
                         <option value="Breathlessness">Breathlessness</option>
@@ -227,13 +234,13 @@ class Overview extends Component {
                 </FormGroup>
 
                 <FormGroup controlId="formControlsScenario">
-                    <ControlLabel>Case Scenario</ControlLabel>
-                    <FormControl componentClass="textarea" placeholder="Enter a brief description of the patient" value={this.state.scenario} name="scenario" onChange={(e)=>this.handleScenarioChange(e)} />
+                    <ControlLabel style={{ fontSize: "150%" }}>Case Scenario</ControlLabel>
+                    <FormControl componentClass="textarea" placeholder="Enter a brief description of the patient" value={this.state.scenario} name="scenario" onChange={(e) => this.handleScenarioChange(e)} />
                 </FormGroup>
 
                 <FormGroup controlId="formControlsLearning">
-                    <ControlLabel>Key Learning Points</ControlLabel>
-                    <FormControl componentClass="textarea" placeholder="Enter the key learning points of this case" value={this.state.learning} name="learning" onChange={(e)=>this.handleLearningChange(e)}/>
+                    <ControlLabel style={{ fontSize: "150%" }}>Key Learning Points</ControlLabel>
+                    <FormControl componentClass="textarea" placeholder="Enter the key learning points of this case" value={this.state.learning} name="learning" onChange={(e) => this.handleLearningChange(e)} />
                 </FormGroup>
 
             </div>

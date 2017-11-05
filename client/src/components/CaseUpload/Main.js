@@ -5,7 +5,7 @@ import { bindAll } from 'lodash';
 import Question from './Question.js';
 import Overview from './Overview.js';
 import BootstrapModal from './BootstrapModal.js';
-
+import './Upload.css';
 class Main extends Component{
     constructor(props){
         super(props);
@@ -204,8 +204,10 @@ class Main extends Component{
 
         let stems = this.state.qnData.map((obj, index) => {
             return (
-                <div>
-                    Question {obj.id}<br/>
+                <div className="stem">
+                    <div className="stem-label">
+                        Question {obj.id}
+                    </div>
                     {obj.stem}
                 </div>
             );
@@ -213,13 +215,13 @@ class Main extends Component{
 
 
         return(
-            <div>
-                <div>
-                    <p>Story So Far</p>
+            <div id="main">
+                <div className="story">
+                    <p className="story-title">Story So Far</p>
                     <p>Case Scenario</p>
-                    {this.state.scenario}<br/>
+                    {this.state.scenario}<br/><br/>
                     <p>Case Continuation</p>
-                    {stems}<br/>
+                    {stems}<br/><br/>
                 </div>
 
                 <form action="/api/uploadCase" method="post" className="case-area">
@@ -234,12 +236,14 @@ class Main extends Component{
                         learning={this.state.learning}
                         handleUpdateOverview={this.handleUpdateOverview}/>
                     <p>Insert Case Question collapsible bar over here :D</p>
-                    {questionNodes}
-
+                    <div className="question-area">
+                        {questionNodes}
+                    </div>
+                    <div className="add-question-button">
                     <Button  type="button" bsStyle="primary" onClick={(e)=>this.addQuestion()}>Add Question</Button><br/>
-
+                    </div><div className="submit-case-button">
                     <Button type="submit" align="center" bsStyle="primary" onClick={(e)=>this.saveChanges(e)}>Submit</Button>
-
+                    </div>
                     <BootstrapModal
                         show={this.state.vmShow}
                         onHide={vmClose}

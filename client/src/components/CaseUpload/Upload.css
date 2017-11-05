@@ -1,0 +1,59 @@
+#main{
+    box-sizing: border-box;
+    padding: 5%;
+}
+
+#main .story{
+    width: 35%;
+    float: left;
+    padding: 3%;
+    background-color:#DCE1E9;
+    border-radius: 25px;
+}
+
+#main .story p{
+    font-size: 140%;
+    text-decoration: underline;
+}
+
+#main .story .story-title{
+    text-align: center;
+    font-weight: bold;
+    font-size: 150%;
+    text-decoration: none;
+    padding: 6%;
+}
+
+#main .case-area{
+    width: 65%;
+    float: right;
+    padding-left: 3%;
+}
+
+#main .stem{
+    padding-bottom: 7%;
+}
+
+#main .stem-label{
+    font-style: italic;
+    padding-bottom: 2%;
+    font-size: 120%;
+}
+
+#overview-box FormGroup ControlLabel{
+    font-size: 150%;
+}
+
+#main .add-question-button{
+    text-align: center;
+}
+
+#main .submit-case-button{
+    padding-top: 10%;
+    text-align: right;
+}
+
+#overview-box{
+    margin: 0;
+}
+
