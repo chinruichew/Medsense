@@ -79,7 +79,8 @@ module.exports = app => {
             oneCase.approach = req.body.values.approach;
             oneCase.scenario = req.body.values.scenario;
             oneCase.learning = req.body.values.learning;
-            oneCase.vetter = req.body.vetter;
+            oneCase.vetter = req.body.values.authname;
+            oneCase.status = "Vetted";
             //oneCase.timestamp = req.body.timestamp;
 
             // const jsonObjectSS = JSON.parse(req.body.subspeciality);
@@ -92,12 +93,13 @@ module.exports = app => {
             for (const prop in jsonObject) {
                 console.log(jsonObject[prop]['id']);
                 Question.findById(jsonObject[prop]['id'], function (err, oneQuestion) {
+                    oneQuestion.id = jsonObject[prop]['id'];
                     oneQuestion.question = jsonObject[prop]['question'];
                     oneQuestion.attachment = jsonObject[prop]['attachment'];
                     oneQuestion.type = jsonObject[prop]['type'];
                     oneQuestion.openEnded = jsonObject[prop]['open'];
                     oneQuestion.pearl = jsonObject[prop]['pearl'];
-                    oneQuestion.timelimit = jsonObject[prop]['timelimit'];
+                    oneQuestion.time = jsonObject[prop]['time'];
                     oneQuestion.reference = jsonObject[prop]['reference'];
                     oneQuestion.stem = jsonObject[prop]['stem'];
                     oneQuestion.mcq1 = jsonObject[prop]['mcq1'];

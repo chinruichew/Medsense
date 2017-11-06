@@ -6,23 +6,23 @@ import Question from './Question.js';
 import Overview from './Overview.js';
 import BootstrapModal from './BootstrapModal.js';
 import './Upload.css';
-import { uploadCase } from '../../actions/index';
+import { updateCase } from '../../actions/index';
 
 class Main extends Component {
     constructor(props) {
         super(props);
         this.state = {
             qID: 1,
-            qnData: [],
-            title: '',
-            difficulty: "Select One",
-            speciality: "Select One",
-            subspeciality: "Select One",
-            approach: null,
-            scenario: '',
-            learning: '',
-            authid: this.props.authid,
-            authname: this.props.authname
+            qnData: this.props.questions,
+            title: this.props.title,
+            difficulty: this.props.difficulty,
+            speciality: this.props.speciality,
+            subspeciality: this.props.subspeciality,
+            approach: this.props.approach,
+            scenario: this.props.scenario,
+            learning: this.props.learning,
+            authid: this.props.authorid,
+            authname: this.props.authorname
         };
         bindAll(this, 'addQuestion', 'saveChanges', 'handleUpdateOverview', 'handleUpdateQuestion', 'handleDeleteQuestion');
     }
@@ -125,7 +125,7 @@ class Main extends Component {
                             throw BreakException;
                         }
                     });
-                    this.props.uploadCase(this.state).then((response) => {
+                    this.props.updateCase(this.state).then((response) => {
                         if (response) {
                             this.setState({vm: true});
                         }
@@ -360,7 +360,7 @@ class Main extends Component {
                             <BootstrapModal.Title id="success-modal">Case Submitted</BootstrapModal.Title>
                         </BootstrapModal.Header>
                         <BootstrapModal.Body>
-                            <p>Your case has been uploaded successfully! You will be redirected to the Homepage.</p>
+                            <p>Your case has been released successfully! You will be redirected to the Homepage.</p>
                         </BootstrapModal.Body>
                         <BootstrapModal.Footer>
                             <Button onClick={this.redirect}>OK</Button>
@@ -373,4 +373,4 @@ class Main extends Component {
     }
 }
 
-export default connect(null, { uploadCase })(Main);
+export default connect(null, { updateCase })(Main);

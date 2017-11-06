@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { fetchCaseById } from '../../actions';
 import { bindAll } from 'lodash';
 import dispatch from "redux/es/createStore";
+import Main from './Main.js';
 
 class VetOne extends Component {
     constructor(props) {
@@ -17,7 +18,9 @@ class VetOne extends Component {
             scenario: this.props.scenario,
             learning: this.props.learning,
             timestamp: this.props.timestamp,
-            questions: this.props.questions
+            questions: this.props.questions,
+            authorname:this.props.authorname,
+            authorid: this.props.authorid,
         };
     }
 
@@ -28,8 +31,18 @@ class VetOne extends Component {
     render() {
         return (
             <div>
-                {this.state.id}
-
+                <Main
+                    title={this.props.title}
+                    difficulty={this.props.difficulty}
+                    speciality={this.props.speciality}
+                    subspeciality={this.props.subspeciality}
+                    approach={this.props.approach}
+                    scenario={this.props.scenario}
+                    learning={this.props.learning}
+                    timestamp={this.props.timestamp}
+                    questions={this.props.questions}
+                    authorname={this.props.authorname}
+                    authorid={this.props.authorid}/>
             </div>
         );
     }

@@ -35,6 +35,8 @@ class VettingEditing extends Component {
                             learning={this.props.caseById.learning}
                             timestamp={this.props.caseById.timestamp}
                             questions={this.props.caseById.questions}
+                            authorname={this.props.caseById.authorname}
+                            authorid={this.props.caseById.authorid}
                         ></VetOne>
                     </div>
                 );
