@@ -12,6 +12,7 @@ class Main extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            mOpen:false,
             qID: 1,
             qnData: [],
             title: '',
@@ -79,60 +80,63 @@ class Main extends Component {
         } else {
 
             let questions = this.state.qnData;
+            console.log(questions);
             if (questions.length === 0) {
                 this.setState({ vmShow: true, error: "Case Question: Please add at least 1 Question!" });
-            }
-            let error = '';
-            let BreakException = {};
-            try {
-                questions.forEach(function (obj) {
-                    if (obj.question === '') {
-                        error = "Question #" + obj.id + ": Please fill in the Question!";
-                        throw BreakException;
-                    } else if (obj.type === "Select One") {
-                        error = "Question #" + obj.id + ": Please select a Question Type!";
-                        throw BreakException;
-                    } else if (obj.pearl === '') {
-                        error = "Question #" + obj.id + ": Please fill in the PEARL!";
-                        throw BreakException;
-                    } else if (obj.time === "Select One") {
-                        error = "Question #" + obj.id + ": Please select a Time Limit!";
-                        throw BreakException;
-                    } else if (obj.type === "MCQ") {
-                        if (obj.mcq1 === '' || obj.mcq2 === '') {
-                            error = "Question #" + obj.id + ": Please fill in Answer 1 and Answer 2!";
+                console.log(this.state.vmShow);
+            } else {
+                let error = '';
+                let BreakException = {};
+                try {
+                    questions.forEach(function (obj) {
+                        if (obj.question === '') {
+                            error = "Question #" + obj.id + ": Please fill in the Question!";
                             throw BreakException;
-                        } else if (obj.mcq3 === '' && obj.check3) {
-                            error = "Question #" + obj.id + ": Please fill in Answer 3 or uncheck the answer!";
+                        } else if (obj.type === "Select One") {
+                            error = "Question #" + obj.id + ": Please select a Question Type!";
                             throw BreakException;
-                        } else if (obj.mcq4 === '' && obj.check4) {
-                            error = "Question #" + obj.id + ": Please fill in Answer 4 or uncheck the answer!";
+                        } else if (obj.pearl === '') {
+                            error = "Question #" + obj.id + ": Please fill in the PEARL!";
                             throw BreakException;
-                        } else if (obj.mcq5 === '' && obj.check5) {
-                            error = "Question #" + obj.id + ": Please fill in Answer 5 or uncheck the answer!";
+                        } else if (obj.time === "Select One") {
+                            error = "Question #" + obj.id + ": Please select a Time Limit!";
                             throw BreakException;
-                        } else if (obj.mcq6 === '' && obj.check6) {
-                            error = "Question #" + obj.id + ": Please fill in Answer 6 or uncheck the answer!";
-                            throw BreakException;
-                        } else if (!obj.check1 && !obj.check2 && !obj.check3 && !obj.check4 && !obj.check5 && !obj.check6) {
-                            error = "Question #" + obj.id + ": Please check at least 1 correct answer!";
+                        } else if (obj.type === "MCQ") {
+                            if (obj.mcq1 === '' || obj.mcq2 === '') {
+                                error = "Question #" + obj.id + ": Please fill in Answer 1 and Answer 2!";
+                                throw BreakException;
+                            } else if (obj.mcq3 === '' && obj.check3) {
+                                error = "Question #" + obj.id + ": Please fill in Answer 3 or uncheck the answer!";
+                                throw BreakException;
+                            } else if (obj.mcq4 === '' && obj.check4) {
+                                error = "Question #" + obj.id + ": Please fill in Answer 4 or uncheck the answer!";
+                                throw BreakException;
+                            } else if (obj.mcq5 === '' && obj.check5) {
+                                error = "Question #" + obj.id + ": Please fill in Answer 5 or uncheck the answer!";
+                                throw BreakException;
+                            } else if (obj.mcq6 === '' && obj.check6) {
+                                error = "Question #" + obj.id + ": Please fill in Answer 6 or uncheck the answer!";
+                                throw BreakException;
+                            } else if (!obj.check1 && !obj.check2 && !obj.check3 && !obj.check4 && !obj.check5 && !obj.check6) {
+                                error = "Question #" + obj.id + ": Please check at least 1 correct answer!";
+                                throw BreakException;
+                            }
+                        } else if (obj.type === "Open-ended" && obj.openEnded === '') {
+                            error = "Question #" + obj.id + ": Please fill in the Answer!";
                             throw BreakException;
                         }
-                    } else if (obj.type === "Open-ended" && obj.openEnded === '') {
-                        error = "Question #" + obj.id + ": Please fill in the Answer!";
-                        throw BreakException;
-                    }
-                });
-                this.props.uploadCase(this.state).then((response) => {
-                    if (response) {
-                        window.alert("Successfully Updated")
-                        window.location.reload();
-                    }
-                }).catch(() => { })
+                    });
+                    this.props.uploadCase(this.state).then((response) => {
+                        if (response) {
+                            this.setState({vm: true});
+                        }
+                    }).catch(() => {
+                    })
 
-            } catch (e) {
-                this.setState({ vmShow: true, error: error });
-                return;
+                } catch (e) {
+                    this.setState({vmShow: true, error: error});
+                    return;
+                }
             }
         }
     }
@@ -230,6 +234,10 @@ class Main extends Component {
         });
     }
 
+    redirect(){
+        window.location = '/home';
+    }
+
     render() {
         let vmClose = () => this.setState({ vmShow: false });
         console.log(this.state.qnData);
@@ -320,15 +328,29 @@ class Main extends Component {
                     <BootstrapModal
                         show={this.state.vmShow}
                         onHide={vmClose}
-                        aria-labelledby="contained-modal-title-sm">
+                        aria-labelledby="contained-modal-title-vm">
                         <BootstrapModal.Header closeButton>
-                            <BootstrapModal.Title id="contained-modal-title-sm">Unable to Submit</BootstrapModal.Title>
+                            <BootstrapModal.Title id="contained-modal-title-vm">Unable to Submit</BootstrapModal.Title>
                         </BootstrapModal.Header>
                         <BootstrapModal.Body>
                             <p>{this.state.error}</p>
                         </BootstrapModal.Body>
                         <BootstrapModal.Footer>
                             <Button onClick={vmClose}>Close</Button>
+                        </BootstrapModal.Footer>
+                    </BootstrapModal>
+
+                    <BootstrapModal
+                        show={this.state.vm}
+                        aria-labelledby="success-modal">
+                        <BootstrapModal.Header>
+                            <BootstrapModal.Title id="success-modal">Case Submitted</BootstrapModal.Title>
+                        </BootstrapModal.Header>
+                        <BootstrapModal.Body>
+                            <p>Your case has been uploaded successfully! You will be redirected to the Homepage.</p>
+                        </BootstrapModal.Body>
+                        <BootstrapModal.Footer>
+                            <Button onClick={this.redirect}>OK</Button>
                         </BootstrapModal.Footer>
                     </BootstrapModal>
                 </form>
