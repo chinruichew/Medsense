@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import { bindAll } from 'lodash';   
 import {Form, Button, Tabs, Tab, FormGroup, FormControl, Table, ControlLabel, Col} from 'react-bootstrap';
 import {fetchUnvetCases} from '../../actions';
+import VettedCases from './VettedCases';
 
 class Vetting extends Component {
     constructor(props){
@@ -110,31 +111,7 @@ class Vetting extends Component {
                                 </Form>
 
                                 <br/>
-                                <Table responsive>
-                                    <thead>
-                                    <tr style={{background: '#82C5D9'}}>
-                                        <th>Case Title</th>
-                                        <th>Sub-speciality</th>
-                                        <th>Uploaded by</th>
-                                        <th>Date Uploaded</th>
-                                        <th></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>xxx</td>
-                                        <td>Amy</td>
-                                        <td>4:51PM<br/>3 November 2017</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>xxx</td>
-                                        <td>Bob</td>
-                                        <td>10:41PM<br/>4 November 2017</td>
-                                    </tr>
-                                    </tbody>
-                                </Table>
+                                <VettedCases />
                             </Tab>
                         </Tabs>
                     );

@@ -12,7 +12,7 @@ export const fetchUnvetCases = () => async dispatch => {
 };
 
 export const fetchVettedCases = () => async dispatch => {
-    const res = await axios.get('/api/fetchUnvetCases');
+    const res = await axios.get('/api/fetchVettedCases');
     dispatch({ type: FETCH_VETTED_CASES, payload: res.data });
 };
 
