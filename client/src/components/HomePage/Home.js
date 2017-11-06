@@ -18,7 +18,7 @@ class Home extends Component {
                                     <a href="/upload"><img className="left-picture" src="./profUpload.png" alt="" /><br/><br/>Create a case.<br/>Share your knowledge!</a>
                                 </div>
                                 <div className="col-sm-6 text-center" style={{fontSize:'150%'}}>
-                                    <a href="/vetting"><img src="./profVet.png" alt="" /><br/><br/>Vet a case.<br/>There are 20 pending cases!</a>
+                                    <a href="/vetting"><img src="./profVet.png" alt="" /><br/><br/>Vet a case.<br/>You have pending cases!</a>
                                 </div>
                             </div>
                             <br/>
