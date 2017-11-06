@@ -209,15 +209,15 @@ module.exports = app => {
         })
     });
 
-    app.post('/api/fetchCaseByID', function (req, res) {
-        Case.findById(req.body.caseid).populate({
+    app.post('/api/fetchCaseById', async (req, res) => {
+        const id = req.body.id;
+        const cases = await Case.findOne({ _id: req.body.values.vetId }).select().populate({
             path: 'questions',
             model: 'questions'
-        }).exec(function (error, cases) {
-            return res.status(201).send({ data: cases, message: "fetchCaseByID success" });
         })
+        res.send(cases);
     });
-    
+
 };
 
 
