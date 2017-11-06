@@ -18,7 +18,7 @@ class VettedCases extends Component {
                 <tr align="center" key={vettedCase._id}>
                     <td>{vettedCase.title}</td>
                     <td>{vettedCase.subspeciality}</td>
-                    <td>{vettedCase.author}</td>
+                    <td>{vettedCase.authorname}</td>
                     <td>{date}<br/>{time}</td>
                 </tr>
             );
