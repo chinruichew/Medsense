@@ -78,6 +78,7 @@ module.exports = app => {
             oneCase.approach = req.body.approach;
             oneCase.scenario = req.body.scenario;
             oneCase.learning = req.body.learning;
+            oneCase.vetter = req.body.vetter;
             //oneCase.timestamp = req.body.timestamp;
 
             // const jsonObjectSS = JSON.parse(req.body.subspeciality);
