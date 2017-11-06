@@ -129,14 +129,10 @@ module.exports = app => {
         res.send(cases);
     });
 
-    app.post('/api/fetchAllCases', function (req, res) {
-        Case.find({}).populate({
-            path: 'questions',
-            model: 'questions'
-        }).exec(function (error, cases) {
-            return res.status(201).send({ data: cases, message: "fetchAllCases success" });
-        })
-
+    app.get('/api/fetchAllCases', async (req, res) => {
+        const id = req.body.id;
+        const cases = await Case.findOne({ _id: id }).select();
+        res.send(cases);
     });
 
     app.post('/api/fetchAllCasesByAuthor', function (req, res) {

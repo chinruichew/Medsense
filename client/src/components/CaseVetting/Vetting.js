@@ -4,6 +4,7 @@ import { bindAll } from 'lodash';
 import {Form, Button, Tabs, Tab, FormGroup, FormControl, Table, ControlLabel, Col} from 'react-bootstrap';
 import {fetchUnvetCases} from '../../actions';
 import VettedCases from './VettedCases';
+import VettingEditing from './VettingEditing';
 
 class Vetting extends Component {
     constructor(props){
@@ -118,7 +119,7 @@ class Vetting extends Component {
                 } else {
                     return(
                         <div>
-                            <h1>IMPLEMENT CASE VETTING UI HERE</h1>
+                            <VettingEditing vetId={this.state.vetId}/>
                         </div>
                     );
                 }
