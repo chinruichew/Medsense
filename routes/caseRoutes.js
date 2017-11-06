@@ -21,25 +21,19 @@ module.exports = app => {
     });
 
     app.post('/api/uploadCase', function (req, res) {
-        const questionArray = req.body.questionArray;
-        const jsonObject = JSON.parse(questionArray);
         const newCase = new Case({
-            title: req.body.title,
-            difficulty: req.body.difficulty,
-            speciality: req.body.speciality,
-            subspeciality: req.body.subspeciality,
-            approach: req.body.approach,
-            scenario: req.body.scenario,
-            learning: req.body.learning,
-            timestamp: req.body.timestamp,
-            author: mongoose.Types.ObjectId(req.body.author)
+            title: req.body.values.title,
+            difficulty: req.body.values.difficulty,
+            speciality: req.body.values.speciality,
+            subspeciality: req.body.values.subspeciality,
+            approach: req.body.values.approach[0],
+            scenario: req.body.values.scenario,
+            learning: req.body.values.learning,
+            timestamp: req.body.values.timestamp,
+            author: mongoose.Types.ObjectId(req.body.values.authid)
         });
 
-        // const jsonObjectSS = JSON.parse(req.body.subspeciality);
-        // for (const prop in jsonObjectSS) {
-        //     newCase.subspeciality.push(jsonObjectSS[prop])
-        // }
-
+        const jsonObject = req.body.values.qnData;
         for (const prop in jsonObject) {
             const newQuestion = new Question({
                 stem: jsonObject[prop]['stem'],

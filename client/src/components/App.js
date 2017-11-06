@@ -11,6 +11,7 @@ import StudentSignup from "./LoginSignup/StudentSignup";
 import CaseUpload from './CaseUpload/Main';
 import Dashboard from './ProfileDashboard/MainProfile';
 import CaseVetting from './CaseVetting/Vetting';
+import CaseStart from './CaseUpload/CaseStart';
 
 import './App.css';
 
@@ -28,7 +29,7 @@ class App extends Component {
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/home" component={Home} />
                     <Route exact path="/signup" component={StudentSignup} />
-                    <Route exact path="/upload" component={CaseUpload} />
+                    <Route exact path="/upload" component={CaseStart} />
                     <Route exact path="/vetting" component={CaseVetting} />
                     <Route exact path="/dashboard" component={Dashboard} />
                     <Route exact path="/" component={About} />
