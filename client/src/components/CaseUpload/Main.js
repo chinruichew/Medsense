@@ -124,9 +124,8 @@ class Main extends Component {
                 });
                 this.props.uploadCase(this.state).then((response) => {
                     if (response) {
-                        console.log(this.state.authid)
                         window.alert("Successfully Updated")
-                        this.forceUpdate();
+                        window.location.reload();
                     }
                 }).catch(() => { })
 
