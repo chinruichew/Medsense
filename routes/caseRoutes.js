@@ -118,8 +118,8 @@ module.exports = app => {
         });
     });
 
-    app.get('/api/fetchAllCases', async (req, res) => {
-        const cases = await Case.find().select();
+    app.get('/api/fetchUnvetCases', async (req, res) => {
+        const cases = await Case.find({status: 'Pending'}).select();
         res.send(cases);
     });
 

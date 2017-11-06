@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { bindAll } from 'lodash';   
 import {Form, Button, Tabs, Tab, FormGroup, FormControl, Table, ControlLabel, Col} from 'react-bootstrap';
-import {fetchCases} from '../../actions';
+import {fetchUnvetCases} from '../../actions';
 
 class Vetting extends Component {
     constructor(props){
@@ -18,11 +18,11 @@ class Vetting extends Component {
     }
 
     componentDidMount() {
-        this.props.fetchCases();
+        this.props.fetchUnvetCases();
     }
 
     renderUnvetCases() {
-        return this.props.cases.map((vetCase, index) => {
+        return this.props.cases.reverse().map((vetCase, index) => {
             return(
                 <tr key={vetCase._id}>
                     <td>{vetCase.title}</td>
@@ -126,14 +126,12 @@ class Vetting extends Component {
                                         <td>xxx</td>
                                         <td>Amy</td>
                                         <td>4:51PM<br/>3 November 2017</td>
-                                        <td><Button  type="button" bsStyle="primary" onClick={(e)=>this.vetCase()}>Vet</Button></td>
                                     </tr>
                                     <tr>
                                         <td>2</td>
                                         <td>xxx</td>
                                         <td>Bob</td>
                                         <td>10:41PM<br/>4 November 2017</td>
-                                        <td><Button  type="button" bsStyle="primary" onClick={(e)=>this.vetCase()}>Vet</Button></td>
                                     </tr>
                                     </tbody>
                                 </Table>
@@ -165,4 +163,4 @@ function mapStateToProps({cases}) {
     };
 }
 
-export default connect(mapStateToProps, {fetchCases})(Vetting);
+export default connect(mapStateToProps, {fetchUnvetCases})(Vetting);
