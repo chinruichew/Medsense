@@ -2,7 +2,7 @@ const passport = require('passport');
 
 module.exports = app => {
     /* Start of Local Auth */
-    app.get(
+    app.post(
         '/auth/local',
         passport.authenticate('local', {
             successRedirect: '/',

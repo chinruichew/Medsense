@@ -13,7 +13,7 @@ class Login extends Component {
                 <div className="row">
                     <div className="main-login main-center">
                         <img src="./medsense_logo.png" style={{height: '120px', width: '300px'}} />
-                        <form className="form-horizontal" method="get" action="/auth/local">
+                        <form className="form-horizontal" method="post" action="/auth/local">
                             <div className="form-group">
                                 <label for="username" className="cols-sm-2 control-label">Username</label>
                                 <div className="cols-sm-10">
