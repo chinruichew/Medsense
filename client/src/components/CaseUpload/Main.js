@@ -18,7 +18,8 @@ class Main extends Component {
             difficulty: "Select One",
             speciality: "Select One",
             subspeciality: "Select One",
-            approach: null,
+            approach: "Select One",
+            // approach: null,
             scenario: '',
             learning: '',
             authid: this.props.authid,
@@ -70,8 +71,10 @@ class Main extends Component {
             this.setState({ vmShow: true, error: "Case Overview: Please select a Speciality!" });
         } else if (this.state.subspeciality === "Select One") {
             this.setState({ vmShow: true, error: "Case Overview: Please select a Sub-specialiy!" });
-        } else if (this.state.approach === null) {
-            this.setState({ vmShow: true, error: "Case Overview: Please select at least 1 Approach!" });
+        // } else if (this.state.approach === null) {
+        } else if (this.state.approach === "Select One") {
+            this.setState({ vmShow: true, error: "Case Overview: Please select an Approach!" });
+            // this.setState({ vmShow: true, error: "Case Overview: Please select at least 1 Approach!" });
         } else if (this.state.scenario === '') {
             this.setState({ vmShow: true, error: "Case Overview: Please fill in the Case Scenario!" });
         } else if (this.state.learning === '') {
