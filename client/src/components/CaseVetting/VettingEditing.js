@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { fetchCaseById } from '../../actions';
 import { bindAll } from 'lodash';
 import dispatch from "redux/es/createStore";
+import VetOne from './VetOne';
 
 class VettingEditing extends Component {
     constructor(props) {
@@ -23,7 +24,19 @@ class VettingEditing extends Component {
                 return;
             default:
                 return (
-                    <div>{this.props.caseById.speciality}</div>
+                    <div>
+                        <VetOne id={this.props.caseById._id}
+                            title={this.props.caseById.title}
+                            difficulty={this.props.caseById.difficulty}
+                            speciality={this.props.caseById.speciality}
+                            subspeciality={this.props.caseById.subspeciality}
+                            approach={this.props.caseById.approach}
+                            scenario={this.props.caseById.scenario}
+                            learning={this.props.caseById.learning}
+                            timestamp={this.props.caseById.timestamp}
+                            questions={this.props.caseById.questions}
+                        ></VetOne>
+                    </div>
                 );
         }
     }
