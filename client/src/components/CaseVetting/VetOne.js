@@ -12,7 +12,7 @@ class VetOne extends Component {
             title: this.props.title,
             difficulty: this.props.difficulty,
             speciality: this.props.speciality,
-            subspecialit: this.props.subspeciality,
+            subspeciality: this.props.subspeciality,
             approach: this.props.approach,
             scenario: this.props.scenario,
             learning: this.props.learning,
