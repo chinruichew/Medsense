@@ -70,8 +70,9 @@ module.exports = app => {
     });
 
     app.post('/api/updateCase', function (req, res) {
-        Case.update({ _id: req.body.caseid }, { $set: { subspeciality: [] } }, function (err, response) { });
-        Case.findById(req.body.caseid, function (err, oneCase) {
+        console.log(req.body.values.title)
+        Case.findById(req.body.values.id, function (err, oneCase) {
+            console.log(oneCase)
             oneCase.title = req.body.values.title;
             oneCase.difficulty = req.body.values.difficulty;
             oneCase.speciality = req.body.values.speciality;
@@ -79,20 +80,14 @@ module.exports = app => {
             oneCase.approach = req.body.values.approach;
             oneCase.scenario = req.body.values.scenario;
             oneCase.learning = req.body.values.learning;
-            oneCase.vetter = req.body.values.authname;
+            oneCase.vetter = req.body.values.authid;
             oneCase.status = "Vetted";
-            //oneCase.timestamp = req.body.timestamp;
-
-            // const jsonObjectSS = JSON.parse(req.body.subspeciality);
-            // for (const prop in jsonObjectSS) {
-            //     oneCase.subspeciality.push(jsonObjectSS[prop])
-            // }
-
+            oneCase.save();
+            
             const jsonObject = req.body.values.qnData;
 
             for (const prop in jsonObject) {
-                console.log(jsonObject[prop]['id']);
-                Question.findById(jsonObject[prop]['id'], function (err, oneQuestion) {
+                Question.findById(jsonObject[prop]['_id'], function (err, oneQuestion) {
                     oneQuestion.id = jsonObject[prop]['id'];
                     oneQuestion.question = jsonObject[prop]['question'];
                     oneQuestion.attachment = jsonObject[prop]['attachment'];

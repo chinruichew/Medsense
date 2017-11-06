@@ -32,6 +32,7 @@ class VetOne extends Component {
         return (
             <div>
                 <Main
+                    id={this.props.id}
                     title={this.props.title}
                     difficulty={this.props.difficulty}
                     speciality={this.props.speciality}

@@ -12,6 +12,7 @@ class Main extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            id: this.props.id,
             qID: this.props.questions.length,
             qnData: this.props.questions,
             title: this.props.title,
@@ -70,8 +71,8 @@ class Main extends Component {
             this.setState({ vmShow: true, error: "Case Overview: Please select a Speciality!" });
         } else if (this.state.subspeciality === "Select One") {
             this.setState({ vmShow: true, error: "Case Overview: Please select a Sub-specialiy!" });
-        // } else if (this.state.approach === null) {
-        //     this.setState({ vmShow: true, error: "Case Overview: Please select at least 1 Approach!" });
+            // } else if (this.state.approach === null) {
+            //     this.setState({ vmShow: true, error: "Case Overview: Please select at least 1 Approach!" });
         } else if (this.state.approach === "Select One") {
             this.setState({ vmShow: true, error: "Case Overview: Please select an Approach!" });
         } else if (this.state.scenario === '') {
@@ -129,13 +130,13 @@ class Main extends Component {
                     });
                     this.props.updateCase(this.state).then((response) => {
                         if (response) {
-                            this.setState({vm: true});
+                            this.setState({ vm: true });
                         }
                     }).catch(() => {
                     })
 
                 } catch (e) {
-                    this.setState({vmShow: true, error: error});
+                    this.setState({ vmShow: true, error: error });
                     return;
                 }
             }
@@ -235,18 +236,18 @@ class Main extends Component {
         });
     }
 
-    redirect(){
+    redirect() {
         window.location = '/home';
     }
 
 
     render() {
         const overviewTitle = (
-            <span style={{fontSize:'150%'}}><center>▽ Case Overview</center></span>
+            <span style={{ fontSize: '150%' }}><center>▽ Case Overview</center></span>
         );
 
         const questionTitle = (
-            <span style={{fontSize:'150%'}}><center>▽ Case Question</center></span>
+            <span style={{ fontSize: '150%' }}><center>▽ Case Question</center></span>
         );
         let vmClose = () => this.setState({ vmShow: false });
         console.log(this.state.qnData);
@@ -303,10 +304,10 @@ class Main extends Component {
                     <p className="story-title">Story So Far</p>
                     <p>Case Scenario</p>
                     <div className="row">{this.state.scenario}</div>
-                    <br/><br/>
+                    <br /><br />
                     <p>Case Continuation</p>
                     <div className="row">{stems}</div>
-                    <br/><br/>
+                    <br /><br />
 
                 </div>
 
