@@ -13,7 +13,8 @@ const caseSchema = new Schema({
     learning: { type: String, default: "" },
     status: { type: String, default: "Pending" },
     timestamp: {type: String, default: ""},
-    author: { type: Schema.Types.ObjectId, ref: 'users' }
+    authorid: { type: Schema.Types.ObjectId, ref: 'users' },
+    authorname: { type: String, default: ""}
 });
 
 const caseModel = mongoose.model('cases', caseSchema);

@@ -29,8 +29,9 @@ module.exports = app => {
             approach: req.body.values.approach[0],
             scenario: req.body.values.scenario,
             learning: req.body.values.learning,
-            timestamp: req.body.values.timestamp,
-            author: mongoose.Types.ObjectId(req.body.values.authid)
+            timestamp: new Date(),
+            authorid: mongoose.Types.ObjectId(req.body.values.authid),
+            authorname: req.body.values.authname
         });
 
         const jsonObject = req.body.values.qnData;
@@ -77,7 +78,7 @@ module.exports = app => {
             oneCase.approach = req.body.approach;
             oneCase.scenario = req.body.scenario;
             oneCase.learning = req.body.learning;
-            oneCase.timestamp = req.body.timestamp;
+            //oneCase.timestamp = req.body.timestamp;
 
             // const jsonObjectSS = JSON.parse(req.body.subspeciality);
             // for (const prop in jsonObjectSS) {

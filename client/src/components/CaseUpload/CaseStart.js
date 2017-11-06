@@ -15,11 +15,13 @@ class CaseStart extends Component {
                 switch (this.props.auth.usertype) {
                     case 'professor':
                         return (
-                            <Main authid={this.props.auth._id} />
+                            <Main authid={this.props.auth._id}
+                                authname={this.props.auth.username} />
                         );
                     case 'student':
                         return (
-                            <Main authid={this.props.auth._id} />
+                            <Main authid={this.props.auth._id}
+                                authname={this.props.auth.username} />
                         );
                 }
         }

@@ -21,7 +21,8 @@ class Main extends Component {
             approach: null,
             scenario: '',
             learning: '',
-            authid: this.props.authid
+            authid: this.props.authid,
+            authname: this.props.authname
         };
         bindAll(this, 'addQuestion', 'saveChanges', 'handleUpdateOverview', 'handleUpdateQuestion', 'handleDeleteQuestion');
     }

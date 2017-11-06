@@ -28,7 +28,7 @@ class Vetting extends Component {
                 <tr key={vetCase._id}>
                     <td>{vetCase.title}</td>
                     <td>{vetCase.subspeciality}</td>
-                    <td>{vetCase.author}</td>
+                    <td>{vetCase.authorname}</td>
                     <td>{vetCase.timestamp}</td>
                     <td><Button  type="button" bsStyle="primary" onClick={(e)=>this.vetCase(vetCase._id)}>Vet</Button></td>
                 </tr>
