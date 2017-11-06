@@ -120,12 +120,12 @@ module.exports = app => {
     });
 
     app.get('/api/fetchUnvetCases', async (req, res) => {
-        const cases = await Case.find({status: 'Pending'}).select();
+        const cases = await Case.find({ status: 'Pending' }).select();
         res.send(cases);
     });
 
     app.get('/api/fetchVettedCases', async (req, res) => {
-        const cases = await Case.find({status: 'Vetted'}).select();
+        const cases = await Case.find({ status: 'Vetted' }).select();
         res.send(cases);
     });
 
@@ -212,6 +212,16 @@ module.exports = app => {
             })
         })
     });
+
+    app.post('/api/fetchCaseByID', function (req, res) {
+        Case.findById(req.body.caseid).populate({
+            path: 'questions',
+            model: 'questions'
+        }).exec(function (error, cases) {
+            return res.status(201).send({ data: cases, message: "fetchCaseByID success" });
+        })
+    });
+    
 };
 
 
