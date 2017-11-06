@@ -123,6 +123,11 @@ module.exports = app => {
         res.send(cases);
     });
 
+    app.get('/api/fetchVettedCases', async (req, res) => {
+        const cases = await Case.find({status: 'Vetted'}).select();
+        res.send(cases);
+    });
+
     app.post('/api/fetchAllCases', function (req, res) {
         Case.find({}).populate({
             path: 'questions',

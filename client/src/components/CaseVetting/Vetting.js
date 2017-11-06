@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { bindAll } from 'lodash';   
 import {Form, Button, Tabs, Tab, FormGroup, FormControl, Table, ControlLabel, Col} from 'react-bootstrap';
-import {fetchUnvetCases} from '../../actions';
+import {fetchUnvetCases, fetchVettedCases} from '../../actions';
 
 class Vetting extends Component {
     constructor(props){
@@ -19,9 +19,11 @@ class Vetting extends Component {
 
     componentDidMount() {
         this.props.fetchUnvetCases();
+        //this.props.fetchVettedCases();
     }
 
     renderUnvetCases() {
+        console.log(this.props.cases);
         return this.props.cases.reverse().map((vetCase, index) => {
             return(
                 <tr key={vetCase._id}>
@@ -157,10 +159,11 @@ class Vetting extends Component {
     }
 }
 
-function mapStateToProps({cases}) {
+function mapStateToProps({cases, vettedCases}) {
     return {
-        cases
+        cases,
+        vettedCases
     };
 }
 
-export default connect(mapStateToProps, {fetchUnvetCases})(Vetting);
+export default connect(mapStateToProps, {fetchUnvetCases, fetchVettedCases})(Vetting);

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FETCH_USER, FETCH_CASES, UPDATE_PROFESSOR, UPDATE_STUDENT, UPLOAD_CASE} from './types';
+import { FETCH_USER, FETCH_CASES, FETCH_VETTED_CASES, UPDATE_PROFESSOR, UPDATE_STUDENT, UPLOAD_CASE} from './types';
 
 export const fetchUser = () => async dispatch => {
     const res = await axios.get('/api/current_user');
@@ -9,6 +9,11 @@ export const fetchUser = () => async dispatch => {
 export const fetchUnvetCases = () => async dispatch => {
     const res = await axios.get('/api/fetchUnvetCases');
     dispatch({ type: FETCH_CASES, payload: res.data });
+};
+
+export const fetchVettedCases = () => async dispatch => {
+    const res = await axios.get('/api/fetchUnvetCases');
+    dispatch({ type: FETCH_VETTED_CASES, payload: res.data });
 };
 
 export const handleSignUp = (values) => {
