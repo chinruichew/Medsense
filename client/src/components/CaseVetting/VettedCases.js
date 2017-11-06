@@ -10,12 +10,16 @@ class VettedCases extends Component {
 
     renderVettedCases() {
         return this.props.vettedCases.reverse().map((vettedCase, index) => {
+            let timeStamp = vettedCase.timestamp.split(" ");
+            let date = timeStamp[2]+" "+timeStamp[1]+" "+timeStamp[3];
+            let timeArr = timeStamp[4].split(":")
+            let time = timeArr[0]+":"+timeArr[1];
             return(
-                <tr key={vettedCase._id}>
+                <tr align="center" key={vettedCase._id}>
                     <td>{vettedCase.title}</td>
                     <td>{vettedCase.subspeciality}</td>
                     <td>{vettedCase.author}</td>
-                    <td>{vettedCase.timestamp}</td>
+                    <td>{date}<br/>{time}</td>
                 </tr>
             );
         });
@@ -38,13 +42,13 @@ class VettedCases extends Component {
         return(
             <Table responsive>
                 <thead>
-                    <tr style={{background: '#82C5D9'}}>
-                        <th>Case Title</th>
-                        <th>Sub-speciality</th>
-                        <th>Uploaded by</th>
-                        <th>Date Uploaded</th>
-                        <th></th>
-                    </tr>
+                <tr style={{background: '#D9EDF7', fontSize: "130%"}}>
+                    <th><center>Case Title</center></th>
+                    <th><center>Sub-speciality</center></th>
+                    <th><center>Uploaded by</center></th>
+                    <th><center>Upload Date</center></th>
+                    <th></th>
+                </tr>
                 </thead>
                 {this.renderContent()}
             </Table>

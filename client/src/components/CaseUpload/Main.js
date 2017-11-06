@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Accordion, Panel } from 'react-bootstrap';
+import { Button, Accordion, Panel, Well } from 'react-bootstrap';
 import { bindAll } from 'lodash';
 import Question from './Question.js';
 import Overview from './Overview.js';
@@ -238,7 +238,15 @@ class Main extends Component {
         window.location = '/home';
     }
 
+
     render() {
+        const overviewTitle = (
+            <span style={{fontSize:'150%'}}><center>▽ Case Overview</center></span>
+        );
+
+        const questionTitle = (
+            <span style={{fontSize:'150%'}}><center>▽ Case Question</center></span>
+        );
         let vmClose = () => this.setState({ vmShow: false });
         console.log(this.state.qnData);
         let questionNodes = this.state.qnData.map((obj, index) => {
@@ -286,18 +294,24 @@ class Main extends Component {
 
 
         return (
+
             <div id="main">
+
                 <div className="story">
+
                     <p className="story-title">Story So Far</p>
                     <p>Case Scenario</p>
-                    {this.state.scenario}<br /><br />
+                    <div className="row">{this.state.scenario}</div>
+                    <br/><br/>
                     <p>Case Continuation</p>
-                    {stems}<br /><br />
+                    <div className="row">{stems}</div>
+                    <br/><br/>
+
                 </div>
 
                 <form action="/api/uploadCase" method="post" className="case-area">
                     <Accordion>
-                        <Panel header="▽ Case Overview" eventKey="1">
+                        <Panel header={overviewTitle} eventKey="1" bsStyle="info">
                             <Overview
                                 title={this.state.title}
                                 difficulty={this.state.difficulty}
@@ -311,7 +325,7 @@ class Main extends Component {
                     </Accordion>
 
                     <Accordion>
-                        <Panel header="▽ Case Questions" eventKey="1">
+                        <Panel header={questionTitle} eventKey="1" bsStyle="info">
                             <div className="question-area">
                                 {questionNodes}
                             </div>
@@ -354,6 +368,7 @@ class Main extends Component {
                         </BootstrapModal.Footer>
                     </BootstrapModal>
                 </form>
+
             </div>
         );
     }

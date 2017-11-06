@@ -23,37 +23,37 @@ class Home extends Component {
                             </div>
                             <br/>
                             <div className="row">
-                                <strong><h3>Latest Discussion Posts</h3></strong>
+                                <strong><h3>Latest Discussion Posts</h3></strong><br/>
                                 <Table responsive>
                                     <thead >
-                                    <tr style={{background: "#82C5D9", fontSize:'120%'}}>
-                                        <th>Discussion Post</th>
-                                        <th>Authored by</th>
-                                        <th>Sub-speciality</th>
-                                        <th>Date Posted</th>
+                                    <tr style={{background: '#D9EDF7', fontSize:'130%'}}>
+                                        <th><center>Discussion Post</center></th>
+                                        <th><center>Authored by</center></th>
+                                        <th><center>Sub-speciality</center></th>
+                                        <th><center>Date Posted</center></th>
                                         <th></th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
+                                    <tr align="center">
                                         <td>Clarification on  case 1 Qn 2 answer</td>
                                         <td>You</td>
                                         <td>Sub-Speciality 1</td>
-                                        <td>4:51PM<br/>5 November 2017</td>
+                                        <td>05 Nov 2017<br/>16:51</td>
                                         <td><Button  type="button" bsStyle="primary">View</Button></td>
                                     </tr>
-                                    <tr>
+                                    <tr align="center">
                                         <td>Key learning points of case 2</td>
                                         <td>Prof. Ng</td>
                                         <td>Sub-Speciality 2</td>
-                                        <td>10:41PM<br/>4 November 2017</td>
+                                        <td>04 Nov 2017<br/>22:41</td>
                                         <td><Button  type="button" bsStyle="primary">View</Button></td>
                                     </tr>
-                                    <tr>
+                                    <tr align="center">
                                         <td>Why is the answer "Stage1 Colorectal Cancer"???</td>
                                         <td>Ketty123</td>
                                         <td>Sub-Speciality 1</td>
-                                        <td>10:41PM<br/>3 November 2017</td>
+                                        <td>03 Nov 2017<br/>22:41</td>
                                         <td><Button  type="button" bsStyle="primary">View</Button></td>
                                     </tr>
                                     </tbody>
@@ -77,38 +77,38 @@ class Home extends Component {
                                 <strong><h3>Latest Discussion Replies</h3></strong><br/>
                                 <Table responsive>
                                     <thead>
-                                    <tr style={{background: '#82C5D9', fontSize:'120%'}}>
-                                        <th>Your Post</th>
-                                        <th>Case Title</th>
-                                        <th>Reply</th>
-                                        <th>Replied by</th>
-                                        <th>Date Replied</th>
+                                    <tr style={{background: '#D9EDF7', fontSize:'130%'}}>
+                                        <th><center>Your Post</center></th>
+                                        <th><center>Case Title</center></th>
+                                        <th><center>Reply</center></th>
+                                        <th><center>Replied by</center></th>
+                                        <th><center>Date Replied</center></th>
                                         <th></th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
+                                    <tr align="center">
                                         <td>Can someone explain Qn1?</td>
                                         <td>Case 1</td>
                                         <td>xxxxx...xxxx</td>
                                         <td>Prof. Chong</td>
-                                        <td>4:51PM<br/>5 November 2017</td>
+                                        <td>05 Nov 2017<br/>16:51</td>
                                         <td><Button  type="button" bsStyle="primary">View</Button></td>
                                     </tr>
-                                    <tr>
+                                    <tr align="center">
                                         <td>Key learning points of case 2</td>
                                         <td>Case 2</td>
                                         <td>xxx....xxxxxxx</td>
                                         <td>Kimberly_Yay</td>
-                                        <td>10:41PM<br/>4 November 2017</td>
+                                        <td>04 Nov 2017<br/>22:41</td>
                                         <td><Button  type="button" bsStyle="primary">View</Button></td>
                                     </tr>
-                                    <tr>
+                                    <tr align="center">
                                         <td>Why should we ask for "Fever chills rigor"???</td>
                                         <td>Case 10</td>
                                         <td>xxx....xxxx</td>
                                         <td>Cici2</td>
-                                        <td>10:41PM<br/>1 November 2017</td>
+                                        <td>01 Nov 2017<br/>22:41</td>
                                         <td><Button  type="button" bsStyle="primary">View</Button></td>
                                     </tr>
                                     </tbody>

@@ -25,12 +25,16 @@ class Vetting extends Component {
 
     renderUnvetCases() {
         return this.props.cases.reverse().map((vetCase, index) => {
+            let timeStamp = vetCase.timestamp.split(" ");
+            let date = timeStamp[2]+" "+timeStamp[1]+" "+timeStamp[3];
+            let timeArr = timeStamp[4].split(":")
+            let time = timeArr[0]+":"+timeArr[1];
             return(
-                <tr key={vetCase._id}>
+                <tr align="center" key={vetCase._id}>
                     <td>{vetCase.title}</td>
                     <td>{vetCase.subspeciality}</td>
                     <td>{vetCase.authorname}</td>
-                    <td>{vetCase.timestamp}</td>
+                    <td>{date}<br/>{time}</td>
                     <td><Button  type="button" bsStyle="primary" onClick={(e)=>this.vetCase(vetCase._id)}>Vet</Button></td>
                 </tr>
             );
@@ -80,11 +84,11 @@ class Vetting extends Component {
                                 <br/>
                                 <Table responsive>
                                     <thead>
-                                    <tr style={{background: '#82C5D9'}}>
-                                        <th>Case Title</th>
-                                        <th>Sub-speciality</th>
-                                        <th>Uploaded by</th>
-                                        <th>Upload Date</th>
+                                    <tr style={{background: '#D9EDF7', fontSize: "130%"}}>
+                                        <th><center>Case Title</center></th>
+                                        <th><center>Sub-speciality</center></th>
+                                        <th><center>Uploaded by</center></th>
+                                        <th><center>Upload Date</center></th>
                                         <th></th>
                                     </tr>
                                     </thead>

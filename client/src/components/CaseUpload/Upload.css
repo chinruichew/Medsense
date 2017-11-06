@@ -7,7 +7,7 @@
     width: 35%;
     float: left;
     padding: 3%;
-    background-color:#DCE1E9;
+    background-color:#D9EDF7;
     border-radius: 25px;
 }
 
@@ -16,12 +16,18 @@
     text-decoration: underline;
 }
 
+#main .row{
+    word-wrap: break-word;
+    padding: 3%;
+}
+
 #main .story .story-title{
     text-align: center;
     font-weight: bold;
-    font-size: 150%;
+    font-size: 300%;
     text-decoration: none;
     padding: 6%;
+    font-family: 'Great Vibes', cursive;
 }
 
 #main .case-area{
