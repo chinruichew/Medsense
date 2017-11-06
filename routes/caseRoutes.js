@@ -83,36 +83,68 @@ module.exports = app => {
             oneCase.vetter = req.body.values.authid;
             oneCase.status = "Vetted";
             oneCase.save();
-            
+
             const jsonObject = req.body.values.qnData;
 
             for (const prop in jsonObject) {
                 Question.findById(jsonObject[prop]['_id'], function (err, oneQuestion) {
-                    oneQuestion.id = jsonObject[prop]['id'];
-                    oneQuestion.question = jsonObject[prop]['question'];
-                    oneQuestion.attachment = jsonObject[prop]['attachment'];
-                    oneQuestion.type = jsonObject[prop]['type'];
-                    oneQuestion.openEnded = jsonObject[prop]['open'];
-                    oneQuestion.pearl = jsonObject[prop]['pearl'];
-                    oneQuestion.time = jsonObject[prop]['time'];
-                    oneQuestion.reference = jsonObject[prop]['reference'];
-                    oneQuestion.stem = jsonObject[prop]['stem'];
-                    oneQuestion.mcq1 = jsonObject[prop]['mcq1'];
-                    oneQuestion.mcq2 = jsonObject[prop]['mcq2'];
-                    oneQuestion.mcq3 = jsonObject[prop]['mcq3'];
-                    oneQuestion.mcq4 = jsonObject[prop]['mcq4'];
-                    oneQuestion.mcq5 = jsonObject[prop]['mcq5'];
-                    oneQuestion.mcq6 = jsonObject[prop]['mcq6'];
-                    oneQuestion.check1 = jsonObject[prop]['check1'];
-                    oneQuestion.check2 = jsonObject[prop]['check2'];
-                    oneQuestion.check3 = jsonObject[prop]['check3'];
-                    oneQuestion.check4 = jsonObject[prop]['check4'];
-                    oneQuestion.check5 = jsonObject[prop]['check5'];
-                    oneQuestion.check6 = jsonObject[prop]['check6'];
-                    oneQuestion.save();
+                    if (oneQuestion) {
+                        oneQuestion.id = jsonObject[prop]['id'];
+                        oneQuestion.question = jsonObject[prop]['question'];
+                        oneQuestion.attachment = jsonObject[prop]['attachment'];
+                        oneQuestion.type = jsonObject[prop]['type'];
+                        oneQuestion.openEnded = jsonObject[prop]['open'];
+                        oneQuestion.pearl = jsonObject[prop]['pearl'];
+                        oneQuestion.time = jsonObject[prop]['time'];
+                        oneQuestion.reference = jsonObject[prop]['reference'];
+                        oneQuestion.stem = jsonObject[prop]['stem'];
+                        oneQuestion.mcq1 = jsonObject[prop]['mcq1'];
+                        oneQuestion.mcq2 = jsonObject[prop]['mcq2'];
+                        oneQuestion.mcq3 = jsonObject[prop]['mcq3'];
+                        oneQuestion.mcq4 = jsonObject[prop]['mcq4'];
+                        oneQuestion.mcq5 = jsonObject[prop]['mcq5'];
+                        oneQuestion.mcq6 = jsonObject[prop]['mcq6'];
+                        oneQuestion.check1 = jsonObject[prop]['check1'];
+                        oneQuestion.check2 = jsonObject[prop]['check2'];
+                        oneQuestion.check3 = jsonObject[prop]['check3'];
+                        oneQuestion.check4 = jsonObject[prop]['check4'];
+                        oneQuestion.check5 = jsonObject[prop]['check5'];
+                        oneQuestion.check6 = jsonObject[prop]['check6'];
+                        oneQuestion.save();
+                    }
+                    if (!oneQuestion) {
+                        const newQuestion = new Question({
+                            id: jsonObject[prop]['id'],
+                            stem: jsonObject[prop]['stem'],
+                            question: jsonObject[prop]['question'],
+                            attachment: jsonObject[prop]['attachment'],
+                            filename: jsonObject[prop]['filename'],
+                            filetype: jsonObject[prop]['filetype'],
+                            type: jsonObject[prop]['type'],
+                            openEnded: jsonObject[prop]['openEnded'],
+                            pearl: jsonObject[prop]['pearl'],
+                            time: jsonObject[prop]['time'],
+                            reference: jsonObject[prop]['reference'],
+                            mcq1: jsonObject[prop]['mcq1'],
+                            mcq2: jsonObject[prop]['mcq2'],
+                            mcq3: jsonObject[prop]['mcq3'],
+                            mcq4: jsonObject[prop]['mcq4'],
+                            mcq5: jsonObject[prop]['mcq5'],
+                            mcq6: jsonObject[prop]['mcq6'],
+                            check1: jsonObject[prop]['check1'],
+                            check2: jsonObject[prop]['check2'],
+                            check3: jsonObject[prop]['check3'],
+                            check4: jsonObject[prop]['check4'],
+                            check5: jsonObject[prop]['check5'],
+                            check6: jsonObject[prop]['check6'],
+                            case: oneCase._id
+                        });
+                        newQuestion.save();
+                        oneCase.questions.push(newQuestion._id);
+                        oneCase.save();
+                    }
                 })
             }
-            oneCase.save();
             return res.status(201).send({ data: null, message: "updateCase success" });
         });
     });

@@ -13,7 +13,7 @@ class Main extends Component {
         super(props);
         this.state = {
             id: this.props.id,
-            qID: this.props.questions.length,
+            qID: this.props.questions.length+1,
             qnData: this.props.questions,
             title: this.props.title,
             difficulty: this.props.difficulty,
@@ -59,6 +59,7 @@ class Main extends Component {
                 }
             ),
         });
+        console.log(this.state.qID);
     }
 
     saveChanges(e) {
