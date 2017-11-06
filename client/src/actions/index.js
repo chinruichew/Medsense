@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FETCH_USER, FETCH_CASES, FETCH_VETTED_CASES, UPDATE_PROFESSOR, UPDATE_STUDENT, UPLOAD_CASE, FETCH_CASE_BY_ID } from './types';
+import { FETCH_USER, FETCH_CASES, FETCH_VETTED_CASES, UPDATE_PROFESSOR, UPDATE_STUDENT, UPLOAD_CASE, FETCH_CASE_BY_ID, UPDATE_CASE } from './types';
 
 export const fetchUser = () => async dispatch => {
     const res = await axios.get('/api/current_user');
@@ -55,6 +55,16 @@ export const uploadCase = (values) => async dispatch => {
     });
     return {
         type: UPLOAD_CASE,
+        payload: res
+    }
+};
+
+export const updateCase = (values) => async dispatch => {
+    const res = axios.post('/api/updateCase', {
+        values
+    });
+    return {
+        type: UPDATE_CASE,
         payload: res
     }
 };

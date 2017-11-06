@@ -71,13 +71,13 @@ module.exports = app => {
     app.post('/api/updateCase', function (req, res) {
         Case.update({ _id: req.body.caseid }, { $set: { subspeciality: [] } }, function (err, response) { });
         Case.findById(req.body.caseid, function (err, oneCase) {
-            oneCase.title = req.body.title;
-            oneCase.difficulty = req.body.difficulty;
-            oneCase.speciality = req.body.speciality;
-            oneCase.subspeciality = req.body.subspeciality;
-            oneCase.approach = req.body.approach;
-            oneCase.scenario = req.body.scenario;
-            oneCase.learning = req.body.learning;
+            oneCase.title = req.body.values.title;
+            oneCase.difficulty = req.body.values.difficulty;
+            oneCase.speciality = req.body.values.speciality;
+            oneCase.subspeciality = req.body.values.subspeciality;
+            oneCase.approach = req.body.values.approach;
+            oneCase.scenario = req.body.values.scenario;
+            oneCase.learning = req.body.values.learning;
             oneCase.vetter = req.body.vetter;
             //oneCase.timestamp = req.body.timestamp;
 
@@ -86,8 +86,7 @@ module.exports = app => {
             //     oneCase.subspeciality.push(jsonObjectSS[prop])
             // }
 
-            const questionArray = req.body.questionArray;
-            const jsonObject = JSON.parse(questionArray);
+            const jsonObject = req.body.values.qnData;
 
             for (const prop in jsonObject) {
                 console.log(jsonObject[prop]['id']);
