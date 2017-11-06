@@ -37,6 +37,7 @@ module.exports = app => {
         const jsonObject = req.body.values.qnData;
         for (const prop in jsonObject) {
             const newQuestion = new Question({
+                id: jsonObject[prop]['id'],
                 stem: jsonObject[prop]['stem'],
                 question: jsonObject[prop]['question'],
                 attachment: jsonObject[prop]['attachment'],
@@ -45,7 +46,7 @@ module.exports = app => {
                 type: jsonObject[prop]['type'],
                 openEnded: jsonObject[prop]['openEnded'],
                 pearl: jsonObject[prop]['pearl'],
-                timelimit: jsonObject[prop]['timelimit'],
+                time: jsonObject[prop]['time'],
                 reference: jsonObject[prop]['reference'],
                 mcq1: jsonObject[prop]['mcq1'],
                 mcq2: jsonObject[prop]['mcq2'],
