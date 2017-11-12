@@ -30,7 +30,7 @@ class Home extends Component {
 
     getDoomsdayCountdown() {
         let date1 = new Date();
-        let date2 = new Date("November 7, 2017 10:00:00");
+        let date2 = new Date("November 13, 2017 13:00:00");
         let timeDiff = Math.abs(date2.getTime() - date1.getTime());
         let seconds = (timeDiff / 1000).toFixed(0);
         let minutes = Math.floor(seconds / 60);
@@ -49,7 +49,7 @@ class Home extends Component {
         } else {
             countdown = minutes + " minutes and " + seconds + " seconds"
         }
-        return "We have " + countdown + " left to FYP Acceptance.";
+        return "We have " + countdown + " left to EWS Final Submission.";
     }
 
     getMotivationalQuote() {
@@ -69,22 +69,22 @@ class Home extends Component {
     render() {
         return(
             <div className="container-fluid">
-                {/*<div className="row">*/}
-                    {/*<div className="col-md-12 text-center">*/}
-                        {/*<h1>*/}
-                            {/*Welcome to Medsense!*/}
-                        {/*</h1>*/}
-                        {/*<h1>*/}
-                            {/*The time now is {this.state.currentTime}.*/}
-                        {/*</h1>*/}
-                        {/*<h1 style={{color: 'red'}}>*/}
-                            {/*{this.state.doomsdayCountdown}*/}
-                        {/*</h1>*/}
-                        {/*<h2>*/}
-                            {/*{this.state.motivationalQuote}*/}
-                        {/*</h2>*/}
-                    {/*</div>*/}
-                {/*</div>*/}
+                <div className="row">
+                    <div className="col-md-12 text-center">
+                        <h1>
+                            Welcome to Medsense!
+                        </h1>
+                        <h1>
+                            The time now is {this.state.currentTime}.
+                        </h1>
+                        <h1 style={{color: 'red'}}>
+                            {this.state.doomsdayCountdown}
+                        </h1>
+                        <h2>
+                            {this.state.motivationalQuote}
+                        </h2>
+                    </div>
+                </div>
                 <div className="row">
                     <div className="col-md-offset-2 col-md-8 text-center">
                         <img src="./medsense_logo.png" style={{height: '200px', width: '550px'}} />
