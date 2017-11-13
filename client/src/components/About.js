@@ -29,8 +29,10 @@ class Home extends Component {
     }
 
     getDoomsdayCountdown() {
+        const doomsDayDateString = "February 26, 2018 10:00:00";
+
         let date1 = new Date();
-        let date2 = new Date("November 13, 2017 13:00:00");
+        let date2 = new Date(doomsDayDateString);
         let timeDiff = Math.abs(date2.getTime() - date1.getTime());
         let seconds = (timeDiff / 1000).toFixed(0);
         let minutes = Math.floor(seconds / 60);
@@ -49,7 +51,7 @@ class Home extends Component {
         } else {
             countdown = minutes + " minutes and " + seconds + " seconds"
         }
-        return "We have " + countdown + " left to EWS Final Submission.";
+        return "We have " + countdown + " left to FYP Mid Term Presentation.";
     }
 
     getMotivationalQuote() {
