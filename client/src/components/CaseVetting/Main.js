@@ -4,7 +4,7 @@ import { Button, Accordion, Panel, Well } from 'react-bootstrap';
 import { bindAll } from 'lodash';
 import Question from './Question.js';
 import Overview from './Overview.js';
-import BootstrapModal from './BootstrapModal.js';
+import BootstrapModal from '../UI/Modal/VettingBootstrapModal.js';
 import './Upload.css';
 import { updateCase } from '../../actions/index';
 

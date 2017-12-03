@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class Home extends Component {
+class About extends Component {
     constructor(props){
         super(props);
         this.state = {currentTime: new Date().toLocaleTimeString(), motivationalQuote: '', doomsdayCountdown: ''}
@@ -104,4 +104,4 @@ class Home extends Component {
     }
 }
 
-export default Home;
+export default About;

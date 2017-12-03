@@ -14,7 +14,7 @@ class Home extends Component {
                     return(
                         <div className="container-fluid">
                             <div className="row">
-                                <div className="col-sm-6 text-center" style={{fontSize:'150%'}}> 
+                                <div className="col-sm-6 text-center" style={{fontSize:'150%'}}>
                                     <a href="/upload"><img className="left-picture" src="./profUpload.png" alt="" /><br/><br/>Create a case.<br/>Share your knowledge!</a>
                                 </div>
                                 <div className="col-sm-6 text-center" style={{fontSize:'150%'}}>
@@ -65,7 +65,7 @@ class Home extends Component {
                     return(
                         <div className="container-fluid">
                             <div className="row">
-                                <div className="col-sm-6 text-center" style={{fontSize:'150%'}}> 
+                                <div className="col-sm-6 text-center" style={{fontSize:'150%'}}>
                                     <a href="/challenge"><img src="./stuChallenge.png" alt="" height="310" width="470"/><br/><br/>Try a case.<br/>There are 26 new cases!</a><br/>
                                 </div>
                                 <div className="col-sm-6 text-center" style={{fontSize:'150%'}}>

@@ -12,7 +12,7 @@ class VettedCases extends Component {
         return this.props.vettedCases.reverse().map((vettedCase, index) => {
             let timeStamp = vettedCase.timestamp.split(" ");
             let date = timeStamp[2]+" "+timeStamp[1]+" "+timeStamp[3];
-            let timeArr = timeStamp[4].split(":")
+            let timeArr = timeStamp[4].split(":");
             let time = timeArr[0]+":"+timeArr[1];
             return(
                 <tr align="center" key={vettedCase._id}>

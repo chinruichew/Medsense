@@ -6,7 +6,7 @@ import * as actions from '../actions';
 import Login from './LoginSignup/Login';
 import Home from './HomePage/Home';
 import Header from './Header';
-import About from './About';
+import About from './about/About';
 import StudentSignup from "./LoginSignup/StudentSignup";
 import CaseUpload from './CaseUpload/Main';
 import Dashboard from './ProfileDashboard/MainProfile';

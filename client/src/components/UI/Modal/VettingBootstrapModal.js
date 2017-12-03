@@ -7,7 +7,7 @@ class BaseModal extends ReactOverlayModal {
     focus = () => {}
 }
 
-class BootstrapModal extends Modal {
+class VettingBootstrapModal extends Modal {
     render () {
         const {
             backdrop,
@@ -80,4 +80,4 @@ const splitComponentProps = (props, Component) => {
     return [parentProps, childProps]
 }
 
-export default BootstrapModal;
+export default VettingBootstrapModal;
