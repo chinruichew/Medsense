@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {Button, Table} from 'react-bootstrap';
+import { Redirect } from 'react-router-dom';
 
 import './Home.css';
 
@@ -9,6 +10,8 @@ class Home extends Component {
         switch(this.props.auth) {
             case null:
                 return;
+            case false:
+                return <Redirect to='/' />;
             default:
                 if (this.props.auth.usertype === "professor"){
                     return(
