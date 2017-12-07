@@ -46,9 +46,6 @@
     font-size: 120%;
 }
 
-#overview-box FormGroup ControlLabel{
-    font-size: 150%;
-}
 
 #main .add-question-button{
     text-align: center;
@@ -63,12 +60,7 @@
     text-align: right;
 }
 
-#overview-box{
-    margin: 0;
-}
-
 #collapse-bar{
     background-color:#A4B2C8;
     border-radius: 25px;
 }
-

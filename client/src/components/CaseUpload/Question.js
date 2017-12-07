@@ -39,8 +39,36 @@ class Question extends Component {
             'handleCheck6Change', 'handlePearlChange', 'handleTimeChange', 'handleReferenceChange','answer', 'update', 'deleteQuestion');
     }
 
+    componentWillReceiveProps(nextProps){
+        this.setState({
+            id: nextProps.id,
+            stem: nextProps.stem,
+            question: nextProps.question,
+            attachment: nextProps.attachment,
+            filename: nextProps.filename,
+            filetype: nextProps.filetype,
+            type: nextProps.type,
+            openEnded: nextProps.openEnded,
+            mcq1: nextProps.mcq1,
+            mcq2: nextProps.mcq2,
+            mcq3: nextProps.mcq3,
+            mcq4: nextProps.mcq4,
+            mcq5: nextProps.mcq5,
+            mcq6: nextProps.mcq6,
+            check1: nextProps.check1,
+            check2: nextProps.check2,
+            check3: nextProps.check3,
+            check4: nextProps.check4,
+            check5: nextProps.check5,
+            check6: nextProps.check6,
+            pearl: nextProps.pearl,
+            time: nextProps.time,
+            reference: nextProps.reference,
+        });
+    }
+
     deleteQuestion(){
-        let id = this.props.id;
+        let id = this.state.id;
         this.props.handleDeleteQuestion(id);
     }
 
@@ -339,7 +367,7 @@ class Question extends Component {
     }
 
     checkQ1(){
-        if (this.props.id===1){
+        if (this.state.id===1){
             return;
         }
         return (
@@ -351,17 +379,19 @@ class Question extends Component {
     }
 
     render(){
+        console.log(this.props.stem);
+        console.log(this.state.stem);
         return(
             <div id="question">
                 <Accordion>
-                    <Panel header={"▽ Question #"+this.props.id} eventKey="1">
+                    <Panel header={"▽ Question #"+this.state.id} eventKey="1">
                         <div className="delete-question-button">
-                        {/*<Button  type="button" bsStyle="primary" onClick={(e)=>this.deleteQuestion()}>Delete Question</Button><br/>*/}
+                        <Button  type="button" bsStyle="primary" onClick={(e)=>this.deleteQuestion()}>Delete Question</Button><br/>
                         </div>
                         {this.checkQ1()}
 
                         <FormGroup controlId="formControlsQuestion">
-                            <ControlLabel style={{ fontSize: "150%" }}>Question {this.props.id}<span style={{color:"red"}}>*</span></ControlLabel>
+                            <ControlLabel style={{ fontSize: "150%" }}>Question {this.state.id}<span style={{color:"red"}}>*</span></ControlLabel>
                             <FormControl componentClass="textarea" placeholder="Enter a question" value={this.state.question} name="question" onChange={(e)=>this.handleQuestionChange(e)} />
                         </FormGroup>
 

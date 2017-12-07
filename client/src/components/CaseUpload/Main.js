@@ -12,7 +12,7 @@ class Main extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            qID: 1,
+            // qID: 1,
             qnData: [],
             title: '',
             difficulty: "Select One",
@@ -29,11 +29,12 @@ class Main extends Component {
     }
 
     addQuestion() {
+        let len = this.state.qnData.length;
         this.setState({
-            qID: this.state.qID + 1,
+            // qID: this.state.qID + 1,
             qnData: this.state.qnData.concat(
                 {
-                    "id": this.state.qID,
+                    "id": len+1,
                     "stem": '',
                     "question": '',
                     "attachment": null,
@@ -59,7 +60,7 @@ class Main extends Component {
                 }
             ),
         });
-        console.log(this.state.qID);
+
     }
 
     saveChanges(e) {
@@ -83,10 +84,10 @@ class Main extends Component {
         } else {
 
             let questions = this.state.qnData;
-            console.log(questions);
+
             if (questions.length === 0) {
                 this.setState({ vmShow: true, error: "Case Question: Please add at least 1 Question!" });
-                console.log(this.state.vmShow);
+
             } else {
                 let error = '';
                 let BreakException = {};
@@ -150,7 +151,6 @@ class Main extends Component {
         let offset = 1;
         questions.forEach(function (obj) {
             if (obj.id > id) {
-
                 newQuestions = newQuestions.concat(
                     {
                         "id": obj.id - offset,
@@ -158,7 +158,7 @@ class Main extends Component {
                         "question": obj.question,
                         "attachment": obj.attachment,
                         "filename": obj.filename,
-                        "filetype": obj.filtype,
+                        "filetype": obj.filetype,
                         "type": obj.type,
                         "openEnded": obj.openEnded,
                         "mcq1": obj.mcq1,
@@ -178,19 +178,13 @@ class Main extends Component {
                         "reference": obj.reference,
                     }
                 );
-                console.log("hi");
-                offset += 1;
-            } else if (obj.id < id) {
 
+            } else if (obj.id < id) {
                 newQuestions = newQuestions.concat(obj);
-                console.log("yo");
             }
         });
-        console.log(newQuestions);
-        this.setState({ qnData: newQuestions }, () => {
-            this.forceUpdate();
-            console.log(this.state.qnData);
-        });
+
+        this.setState({ qnData: newQuestions});
 
     }
 
@@ -202,7 +196,7 @@ class Main extends Component {
                 obj.question = details.question;
                 obj.attachment = details.attachment;
                 obj.filename = details.filename;
-                obj.filtype = details.filetype;
+                obj.filetype = details.filetype;
                 obj.type = details.type;
                 obj.openEnded = details.openEnded;
                 obj.mcq1 = details.mcq1;
@@ -251,7 +245,7 @@ class Main extends Component {
             <span style={{fontSize:'150%'}}><center>▽ Case Question</center></span>
         );
         let vmClose = () => this.setState({ vmShow: false });
-        console.log(this.state.qnData);
+
         let questionNodes = this.state.qnData.map((obj, index) => {
             console.log(obj);
             return (
@@ -261,7 +255,7 @@ class Main extends Component {
                     question={obj.question}
                     attachment={obj.attachment}
                     filename={obj.filename}
-                    filetype={obj.filtype}
+                    filetype={obj.filetype}
                     type={obj.type}
                     openEnded={obj.openEnded}
                     mcq1={obj.mcq1}
@@ -285,12 +279,18 @@ class Main extends Component {
         });
 
         let stems = this.state.qnData.map((obj, index) => {
+            let stem
+            if (obj.id===1){
+                stem='';
+            } else {
+                stem=obj.stem;
+            }
             return (
                 <div className="stem">
                     <div className="stem-label">
                         Question {obj.id}
                     </div>
-                    {obj.stem}
+                        {stem}
                 </div>
             );
         });
@@ -339,9 +339,11 @@ class Main extends Component {
                             </div>
                         </Panel>
                     </Accordion>
+
                     <div className="submit-case-button">
                         <Button type="submit" align="center" bsStyle="primary" onClick={(e) => this.saveChanges(e)}>Submit</Button>
                     </div>
+
                     <BootstrapModal
                         show={this.state.vmShow}
                         onHide={vmClose}
