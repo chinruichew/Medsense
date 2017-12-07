@@ -12,14 +12,13 @@ class Main extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            // qID: 1,
             qnData: [],
             title: '',
             difficulty: "Select One",
             speciality: "Select One",
             subspeciality: "Select One",
-            approach: "Select One",
-            // approach: null,
+            // approach: "Select One",
+            approach: null,
             scenario: '',
             learning: '',
             authid: this.props.authid,
@@ -31,7 +30,6 @@ class Main extends Component {
     addQuestion() {
         let len = this.state.qnData.length;
         this.setState({
-            // qID: this.state.qID + 1,
             qnData: this.state.qnData.concat(
                 {
                     "id": len+1,
@@ -73,10 +71,10 @@ class Main extends Component {
             this.setState({ vmShow: true, error: "Case Overview: Please select a Speciality!" });
         } else if (this.state.subspeciality === "Select One") {
             this.setState({ vmShow: true, error: "Case Overview: Please select a Sub-specialiy!" });
-        // } else if (this.state.approach === null) {
-        } else if (this.state.approach === "Select One") {
-            this.setState({ vmShow: true, error: "Case Overview: Please select an Approach!" });
-            // this.setState({ vmShow: true, error: "Case Overview: Please select at least 1 Approach!" });
+        } else if (this.state.approach === null) {
+        // } else if (this.state.approach === "Select One") {
+        //     this.setState({ vmShow: true, error: "Case Overview: Please select an Approach!" });
+            this.setState({ vmShow: true, error: "Case Overview: Please select at least 1 Approach!" });
         } else if (this.state.scenario === '') {
             this.setState({ vmShow: true, error: "Case Overview: Please fill in the Case Scenario!" });
         } else if (this.state.learning === '') {

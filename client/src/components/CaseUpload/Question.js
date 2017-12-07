@@ -379,8 +379,6 @@ class Question extends Component {
     }
 
     render(){
-        console.log(this.props.stem);
-        console.log(this.state.stem);
         return(
             <div id="question">
                 <Accordion>

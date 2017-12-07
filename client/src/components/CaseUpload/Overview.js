@@ -87,20 +87,20 @@ class Overview extends Component {
         this.update(value, "subspeciality");
     }
     handleApproachChange(e) {
-        // const options = e.target.options;
-        // let value = [];
-        // for (let i = 1, l = options.length; i < l; i++) {
-        //     if (options[i].selected) {
-        //         value.push(options[i].value);
-        //     }
-        // }
-        // if (value.length > 0) {
-        //     this.setState({ approach: value });
-        //     this.update(value, "approach");
-        // }
-        const value = e.target.value;
-        this.setState({ approach: value });
-        this.update(value, "approach");
+        const options = e.target.options;
+        let value = [];
+        for (let i = 1, l = options.length; i < l; i++) {
+            if (options[i].selected) {
+                value.push(options[i].value);
+            }
+        }
+        if (value.length > 0) {
+            this.setState({ approach: value });
+            this.update(value, "approach");
+        }
+        // const value = e.target.value;
+        // this.setState({ approach: value });
+        // this.update(value, "approach");
     }
     handleScenarioChange(e) {
         const value = e.target.value;
@@ -207,16 +207,16 @@ class Overview extends Component {
                 {this.setSubspeciality()}
 
                 <FormGroup controlId="formControlsApproach">
-                    {/*<ControlLabel style={{ fontSize: "150%" }}>Approach(es)<span style={{color:"red"}}>*</span>*/}
-                    <ControlLabel style={{ fontSize: "150%" }}>Approach<span style={{color:"red"}}>*</span>
+                    <ControlLabel style={{ fontSize: "150%" }}>Approach(es)<span style={{color:"red"}}>*</span>
+                    {/*<ControlLabel style={{ fontSize: "150%" }}>Approach<span style={{color:"red"}}>*</span>*/}
                         <br />
-                        {/*<div style={{ fontSize: "70%", fontWeight:"200"}}>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.*/}
-                        {/*</div>*/}
+                        <div style={{ fontSize: "70%", fontWeight:"200"}}>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.
+                        </div>
                     </ControlLabel>
-                    {/*<FormControl componentClass="select" value={this.state.approach} name="approach" onChange={(e) => this.handleApproachChange(e)} multiple>*/}
-                    <FormControl componentClass="select" value={this.state.approach} name="approach" onChange={(e) => this.handleApproachChange(e)}>
-                        {/*<option value="Select All Relevant">Select All Relevant</option>*/}
-                        <option value="Select One">Select One</option>
+                    <FormControl componentClass="select" value={this.state.approach} name="approach" onChange={(e) => this.handleApproachChange(e)} multiple>
+                    {/*<FormControl componentClass="select" value={this.state.approach} name="approach" onChange={(e) => this.handleApproachChange(e)}>*/}
+                        <option value="Select All Relevant">Select All Relevant</option>
+                        {/*<option value="Select One">Select One</option>*/}
                         <option value="Abdominal Pain">Abdominal Pain</option>
                         <option value="Breathlessness">Breathlessness</option>
                         <option value="Chest Pain">Chest Pain</option>
