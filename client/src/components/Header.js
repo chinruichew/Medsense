@@ -18,9 +18,11 @@ class Header extends Component {
                     </Nav>
                 );
             default:
+                let imageSRC = "";
                 // Check for user type
                 switch (this.props.auth.usertype) {
                     case 'professor':
+                        imageSRC = "https://s3-ap-southeast-1.amazonaws.com/profile-picture-images/" + this.props.auth._id + "/user_profile.jpg";
                         return(
                             <Nav pullRight>
                                 <NavItem className="navItem" eventKey={1} href="/home">Home</NavItem>
@@ -30,10 +32,11 @@ class Header extends Component {
                                 <NavItem className="navItem" eventKey={5} href="/dashboard">Dashboard</NavItem>
                                 <NavItem className="navItem" eventKey={6} href="/acknowledgements">Acknowledgements</NavItem>
                                 <NavItem className="navItem" eventKey={7} href="/api/logout">Logout</NavItem>
-                                <img src="https://s3-ap-southeast-1.amazonaws.com/profile-picture-images/user_profile.jpg" className="img-circle" style={{height: '45px', width: '45px'}} />
+                                <img src={imageSRC} className="img-circle" style={{height: '45px', width: '45px'}} />
                             </Nav>
                         );
                     case 'student':
+                        imageSRC = "https://s3-ap-southeast-1.amazonaws.com/profile-picture-images/" + this.props.auth._id + "/user_profile.jpg";
                         return(
                             <Nav pullRight>
                                 <NavItem className="navItem" eventKey={1} href="/home">Home</NavItem>
@@ -43,7 +46,7 @@ class Header extends Component {
                                 <NavItem className="navItem" eventKey={5} href="/dashboard">Dashboard</NavItem>
                                 <NavItem className="navItem" eventKey={6} href="/acknowledgements">Acknowledgements</NavItem>
                                 <NavItem className="navItem" eventKey={7} href="/api/logout">Logout</NavItem>
-                                <img src="https://s3-ap-southeast-1.amazonaws.com/profile-picture-images/user_profile.jpg" className="img-circle" style={{height: '45px', width: '45px'}} />
+                                <img src={imageSRC} className="img-circle" style={{height: '45px', width: '45px'}} />
                             </Nav>
                         );
                 }

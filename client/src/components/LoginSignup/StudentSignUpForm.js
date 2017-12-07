@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindAll } from 'lodash';
 import * as actions from '../../actions';
-import axios, {post} from 'axios';
+import axios from 'axios';
 
 class StudentSignUpForm extends Component {
     constructor(props) {
@@ -11,11 +11,9 @@ class StudentSignUpForm extends Component {
             password: this.props.password,
             confirm_password: this.props.confirm_password,
             school: this.props.school,
-            year: this.props.year,
-            signupComplete: false,
-            file: null
+            year: this.props.year
         };
-        bindAll(this, 'handleUserSignUp', 'onFileUploadChange', 'profilePictureUpload');
+        bindAll(this, 'handleUserSignUp');
     }
 
     handleSchoolChange(e) {
@@ -40,112 +38,74 @@ class StudentSignUpForm extends Component {
 
     handleUserSignUp() {
         actions.handleSignUp(this.state);
-        this.setState({signupComplete: true});
-    }
-
-    onFormSubmit = (e) => {
-        e.preventDefault();
-        this.profilePictureUpload(this.state.file);
-    };
-
-    profilePictureUpload(file){
-        const formData = new FormData();
-        formData.append('file',file);
-        const config = {
-            headers: {
-                'content-type': 'multipart/form-data'
-            }
-        };
-        axios.post('/api/uploadProfileImage', formData, config).then(res => {
-            console.log(res);
-        });
-    }
-
-    onFileUploadChange(e) {
-        this.setState({file:e.target.files[0]});
     }
 
     render() {
-        if(!this.state.signupComplete) {
-            return(
-                <div className="main-login main-center">
-                    <img src="./medsense_logo.png" style={{height: '120px', width: '300px'}} />
-                    <form className="form-horizontal">
-                        <div className="form-group">
-                            <label for="username" className="cols-sm-2 control-label">Username</label>
-                            <div className="cols-sm-10">
-                                <div className="input-group">
-                                    <span className="input-group-addon"><i className="fa fa-user fa" aria-hidden="true"></i></span>
-                                    <input type="text" className="form-control" name="username" id="username"  placeholder="Enter your Username" value={this.state.username} onChange={(e) => this.handleUsernameChange(e)}  />
-                                </div>
+        return(
+            <div className="main-login main-center">
+                <img src="./medsense_logo.png" style={{height: '120px', width: '300px'}} />
+                <form className="form-horizontal">
+                    <div className="form-group">
+                        <label for="username" className="cols-sm-2 control-label">Username</label>
+                        <div className="cols-sm-10">
+                            <div className="input-group">
+                                <span className="input-group-addon"><i className="fa fa-user fa" aria-hidden="true"></i></span>
+                                <input type="text" className="form-control" name="username" id="username"  placeholder="Enter your Username" value={this.state.username} onChange={(e) => this.handleUsernameChange(e)}  />
                             </div>
                         </div>
-                        <div className="form-group">
-                            <label for="password" className="cols-sm-2 control-label">Password</label>
-                            <div className="cols-sm-10">
-                                <div className="input-group">
-                                    <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                                    <input type="password" className="form-control" name="password" id="password"  placeholder="Enter your Password" value={this.state.password} onChange={(e) => this.handlePasswordChange(e)} />
-                                </div>
+                    </div>
+                    <div className="form-group">
+                        <label for="password" className="cols-sm-2 control-label">Password</label>
+                        <div className="cols-sm-10">
+                            <div className="input-group">
+                                <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                                <input type="password" className="form-control" name="password" id="password"  placeholder="Enter your Password" value={this.state.password} onChange={(e) => this.handlePasswordChange(e)} />
                             </div>
                         </div>
-                        <div className="form-group">
-                            <label for="confirm_password" className="cols-sm-2 control-label">Confirm Password</label>
-                            <div className="cols-sm-10">
-                                <div className="input-group">
-                                    <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                                    <input type="password" className="form-control" name="confirm_password" id="confirm_password"  placeholder="Confirm your Password" value={this.state.confirm_password} onChange={(e) => this.handleConfirmPasswordChange(e)} />
-                                </div>
+                    </div>
+                    <div className="form-group">
+                        <label for="confirm_password" className="cols-sm-2 control-label">Confirm Password</label>
+                        <div className="cols-sm-10">
+                            <div className="input-group">
+                                <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                                <input type="password" className="form-control" name="confirm_password" id="confirm_password"  placeholder="Confirm your Password" value={this.state.confirm_password} onChange={(e) => this.handleConfirmPasswordChange(e)} />
                             </div>
                         </div>
-                        <div className="form-group">
-                            <label className="cols-sm-2 control-label">School</label>
-                            <div className="cols-sm-10">
-                                <div className="input-group">
-                                    <span className="input-group-addon"><i className="fa fa-university fa-lg" aria-hidden="true"></i></span>
-                                    <select className="form-control" value={this.state.school} onChange={(e) => this.handleSchoolChange(e)}>
-                                        <option value="Duke-NUS">Duke-NUS</option>
-                                        <option value="NTU">NTU</option>
-                                        <option value="NUS">NUS</option>
-                                    </select>
-                                </div>
+                    </div>
+                    <div className="form-group">
+                        <label className="cols-sm-2 control-label">School</label>
+                        <div className="cols-sm-10">
+                            <div className="input-group">
+                                <span className="input-group-addon"><i className="fa fa-university fa-lg" aria-hidden="true"></i></span>
+                                <select className="form-control" value={this.state.school} onChange={(e) => this.handleSchoolChange(e)}>
+                                    <option value="Duke-NUS">Duke-NUS</option>
+                                    <option value="NTU">NTU</option>
+                                    <option value="NUS">NUS</option>
+                                </select>
                             </div>
                         </div>
-                        <div className="form-group">
-                            <label className="cols-sm-2 control-label">Year of Study</label>
-                            <div className="cols-sm-10">
-                                <div className="input-group">
-                                    <span className="input-group-addon"><i className="fa fa-graduation-cap fa-lg" aria-hidden="true"></i></span>
-                                    <select className="form-control" value={this.state.year} onChange={(e) => this.handleYearChange(e)}>
-                                        <option value="1">Year 1</option>
-                                        <option value="2">Year 2</option>
-                                        <option value="3">Year 3</option>
-                                        <option value="4">Year 4</option>
-                                        <option value="5">Year 5</option>
-                                    </select>
-                                </div>
+                    </div>
+                    <div className="form-group">
+                        <label className="cols-sm-2 control-label">Year of Study</label>
+                        <div className="cols-sm-10">
+                            <div className="input-group">
+                                <span className="input-group-addon"><i className="fa fa-graduation-cap fa-lg" aria-hidden="true"></i></span>
+                                <select className="form-control" value={this.state.year} onChange={(e) => this.handleYearChange(e)}>
+                                    <option value="1">Year 1</option>
+                                    <option value="2">Year 2</option>
+                                    <option value="3">Year 3</option>
+                                    <option value="4">Year 4</option>
+                                    <option value="5">Year 5</option>
+                                </select>
                             </div>
                         </div>
-                        <div className="form-group">
-                            <button onClick={this.handleUserSignUp} type="button" className="btn btn-primary btn-lg btn-block login-button">Sign Up</button>
-                        </div>
-                    </form>
-                </div>
-            );
-        } else {
-            return(
-                <div className="main-login main-center">
-                    <img src="./medsense_logo.png" style={{height: '120px', width: '300px'}} />
-                    <form onSubmit={this.onFormSubmit} className="form-horizontal" method="post" action="/api/uploadProfileImage" encType="multipart/form-data">
-                        <div className="form-group">
-                            <label>Upload a profile picture:</label>
-                            <input id="profile_picture" type="file" name="upload" multiple="multiple" onChange={this.onFileUploadChange} />
-                        </div>
-                        <button type="submit" className="btn btn-primary btn-lg btn-block login-button">Submit</button>
-                    </form>
-                </div>
-            );
-        }
+                    </div>
+                    <div className="form-group">
+                        <button onClick={this.handleUserSignUp} type="button" className="btn btn-primary btn-lg btn-block login-button">Sign Up</button>
+                    </div>
+                </form>
+            </div>
+        );
     }
 }
 

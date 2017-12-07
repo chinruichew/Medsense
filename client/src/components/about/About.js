@@ -71,22 +71,22 @@ class About extends Component {
     render() {
         return(
             <div className="container-fluid">
-                {/*<div className="row">*/}
-                    {/*<div className="col-md-12 text-center">*/}
-                        {/*<h1>*/}
-                            {/*Welcome to Medsense!*/}
-                        {/*</h1>*/}
-                        {/*<h1>*/}
-                            {/*The time now is {this.state.currentTime}.*/}
-                        {/*</h1>*/}
-                        {/*<h1 style={{color: 'red'}}>*/}
-                            {/*{this.state.doomsdayCountdown}*/}
-                        {/*</h1>*/}
-                        {/*<h2>*/}
-                            {/*{this.state.motivationalQuote}*/}
-                        {/*</h2>*/}
-                    {/*</div>*/}
-                {/*</div>*/}
+                <div className="row">
+                    <div className="col-md-12 text-center">
+                        <h1>
+                            Welcome to Medsense!
+                        </h1>
+                        <h1>
+                            The time now is {this.state.currentTime}.
+                        </h1>
+                        <h1 style={{color: 'red'}}>
+                            {this.state.doomsdayCountdown}
+                        </h1>
+                        <h2>
+                            {this.state.motivationalQuote}
+                        </h2>
+                    </div>
+                </div>
                 <div className="row">
                     <div className="col-md-offset-2 col-md-8 text-center">
                         <img src="./medsense_logo.png" style={{height: '200px', width: '550px'}} />

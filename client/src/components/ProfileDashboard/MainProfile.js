@@ -4,6 +4,8 @@ import ProfessorProfile from './ProfessorProfile';
 import StudentProfile from './StudentProfile';
 import { Redirect } from 'react-router-dom';
 
+import UploadProfilePicture from './UploadProfilePicture';
+
 class MainProfile extends Component {
     renderContent() {
         switch (this.props.auth) {
@@ -38,6 +40,7 @@ class MainProfile extends Component {
     render() {
         return (
             <div>
+                <UploadProfilePicture />
                 {this.renderContent()}
             </div>
         )

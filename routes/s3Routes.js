@@ -44,7 +44,7 @@ module.exports = app => {
                     }
                 });
             });
-            res.redirect("/login");
+            res.send("done");
         });
     });
 };
