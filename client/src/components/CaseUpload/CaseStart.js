@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Main from './Main';
+import { Redirect } from 'react-router-dom';
 
 class CaseStart extends Component {
     renderContent() {
@@ -8,9 +9,7 @@ class CaseStart extends Component {
             case null:
                 return;
             case false:
-                return (
-                    <div />
-                );
+                return <Redirect to='/' />;
             default:
                 switch (this.props.auth.usertype) {
                     case 'professor':

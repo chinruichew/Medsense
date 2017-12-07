@@ -8,7 +8,6 @@ import Home from './HomePage/Home';
 import Header from './Header';
 import About from './about/About';
 import StudentSignup from "./LoginSignup/StudentSignup";
-import CaseUpload from './CaseUpload/Main';
 import Dashboard from './ProfileDashboard/MainProfile';
 import CaseVetting from './CaseVetting/Vetting';
 import CaseStart from './CaseUpload/CaseStart';

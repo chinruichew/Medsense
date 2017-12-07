@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ProfessorProfile from './ProfessorProfile';
 import StudentProfile from './StudentProfile';
+import { Redirect } from 'react-router-dom';
 
 class MainProfile extends Component {
     renderContent() {
@@ -9,9 +10,7 @@ class MainProfile extends Component {
             case null:
                 return;
             case false:
-                return (
-                    <div />
-                );
+                return <Redirect to='/' />;
             default:
                 switch (this.props.auth.usertype) {
                     case 'professor':

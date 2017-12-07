@@ -5,6 +5,8 @@ import {Form, Button, Tabs, Tab, FormGroup, FormControl, Table, ControlLabel, Co
 import {fetchUnvetCases} from '../../actions';
 import VettedCases from './VettedCases';
 import VettingEditing from './VettingEditing';
+import { Redirect } from 'react-router-dom';
+import axios from 'axios';
 
 class Vetting extends Component {
     constructor(props){
@@ -14,13 +16,17 @@ class Vetting extends Component {
             vetId: '',
             filterPending:"All",
             filterVetted:"All",
-            renderedCases: ''
+            renderedCases: '',
+            auth: ''
         };
         bindAll('renderUnvetCases');
     }
 
     componentDidMount() {
         this.props.fetchUnvetCases();
+        axios.get('/api/current_user').then(res => {
+            this.setState({auth: res.data!==''});
+        });
     }
 
     renderUnvetCases() {
@@ -57,75 +63,80 @@ class Vetting extends Component {
     }
 
     renderContent() {
-        switch(this.props.cases) {
-            case null:
-                return;
+        switch(this.state.auth) {
+            case false:
+                return <Redirect to='/' />;
             default:
-                if(!this.state.showVetView) {
-                    return(
-                        <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
-                            <Tab eventKey={1} title="Pending Cases">
-                                <br/>
-                                <Form horizontal>
-                                    <FormGroup controlId="formControlsPending">
-                                        <Col componentClass={ControlLabel} sm={2}>
-                                            Filter by Sub-speciality
-                                        </Col>
+                switch(this.props.cases) {
+                    case null:
+                        return;
+                    default:
+                        if(!this.state.showVetView) {
+                            return(
+                                <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
+                                    <Tab eventKey={1} title="Pending Cases">
+                                        <br/>
+                                        <Form horizontal>
+                                            <FormGroup controlId="formControlsPending">
+                                                <Col componentClass={ControlLabel} sm={2}>
+                                                    Filter by Sub-speciality
+                                                </Col>
 
-                                        <Col sm={3}>
-                                            <FormControl componentClass="select" value={this.state.filterPending} name="filterPending" onChange={(e)=>this.handleFilterPendingChange(e)}>
-                                                <option value="All">All</option>
-                                                <option value="Sub1">Sub1</option>
-                                                <option value="Sub2">Sub2</option>
-                                            </FormControl>
-                                        </Col>
-                                    </FormGroup>
-                                </Form>
-                                <br/>
-                                <Table responsive>
-                                    <thead>
-                                    <tr style={{background: '#D9EDF7', fontSize: "130%"}}>
-                                        <th><center>Case Title</center></th>
-                                        <th><center>Sub-speciality</center></th>
-                                        <th><center>Uploaded by</center></th>
-                                        <th><center>Upload Date</center></th>
-                                        <th></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {this.renderUnvetCases()}
-                                    </tbody>
-                                </Table>
-                            </Tab>
-                            <Tab eventKey={2} title="Vetted Cases">
-                                <br/>
-                                <Form horizontal>
-                                    <FormGroup controlId="formControlsVetted">
-                                        <Col componentClass={ControlLabel} sm={2}>
-                                            Filter by Sub-speciality
-                                        </Col>
+                                                <Col sm={3}>
+                                                    <FormControl componentClass="select" value={this.state.filterPending} name="filterPending" onChange={(e)=>this.handleFilterPendingChange(e)}>
+                                                        <option value="All">All</option>
+                                                        <option value="Sub1">Sub1</option>
+                                                        <option value="Sub2">Sub2</option>
+                                                    </FormControl>
+                                                </Col>
+                                            </FormGroup>
+                                        </Form>
+                                        <br/>
+                                        <Table responsive>
+                                            <thead>
+                                            <tr style={{background: '#D9EDF7', fontSize: "130%"}}>
+                                                <th><center>Case Title</center></th>
+                                                <th><center>Sub-speciality</center></th>
+                                                <th><center>Uploaded by</center></th>
+                                                <th><center>Upload Date</center></th>
+                                                <th></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {this.renderUnvetCases()}
+                                            </tbody>
+                                        </Table>
+                                    </Tab>
+                                    <Tab eventKey={2} title="Vetted Cases">
+                                        <br/>
+                                        <Form horizontal>
+                                            <FormGroup controlId="formControlsVetted">
+                                                <Col componentClass={ControlLabel} sm={2}>
+                                                    Filter by Sub-speciality
+                                                </Col>
 
-                                        <Col sm={3}>
-                                            <FormControl componentClass="select" value={this.state.filterVetted} name="filterVetted" onChange={(e)=>this.handleFilterVettedChange(e)}>
-                                                <option value="All">All</option>
-                                                <option value="Sub1">Sub1</option>
-                                                <option value="Sub2">Sub2</option>
-                                            </FormControl>
-                                        </Col>
-                                    </FormGroup>
-                                </Form>
+                                                <Col sm={3}>
+                                                    <FormControl componentClass="select" value={this.state.filterVetted} name="filterVetted" onChange={(e)=>this.handleFilterVettedChange(e)}>
+                                                        <option value="All">All</option>
+                                                        <option value="Sub1">Sub1</option>
+                                                        <option value="Sub2">Sub2</option>
+                                                    </FormControl>
+                                                </Col>
+                                            </FormGroup>
+                                        </Form>
 
-                                <br/>
-                                <VettedCases />
-                            </Tab>
-                        </Tabs>
-                    );
-                } else {
-                    return(
-                        <div>
-                            <VettingEditing vetId={this.state.vetId}/>
-                        </div>
-                    );
+                                        <br/>
+                                        <VettedCases />
+                                    </Tab>
+                                </Tabs>
+                            );
+                        } else {
+                            return(
+                                <div>
+                                    <VettingEditing vetId={this.state.vetId}/>
+                                </div>
+                            );
+                        }
                 }
         }
     }

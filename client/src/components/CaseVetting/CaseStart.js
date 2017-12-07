@@ -7,10 +7,6 @@ class CaseStart extends Component {
         switch (this.props.auth) {
             case null:
                 return;
-            case false:
-                return (
-                    <div />
-                );
             default:
                 switch (this.props.auth.usertype) {
                     case 'professor':
