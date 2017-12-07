@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { bindAll } from 'lodash';
 import * as actions from '../../actions';
+import axios, {post} from 'axios';
 
 class StudentSignUpForm extends Component {
     constructor(props) {
@@ -11,9 +12,10 @@ class StudentSignUpForm extends Component {
             confirm_password: this.props.confirm_password,
             school: this.props.school,
             year: this.props.year,
-            signupComplete: false
+            signupComplete: false,
+            file: null
         };
-        bindAll(this, 'handleUserSignUp');
+        bindAll(this, 'handleUserSignUp', 'onFileUploadChange', 'profilePictureUpload');
     }
 
     handleSchoolChange(e) {
@@ -39,6 +41,28 @@ class StudentSignUpForm extends Component {
     handleUserSignUp() {
         actions.handleSignUp(this.state);
         this.setState({signupComplete: true});
+    }
+
+    onFormSubmit = (e) => {
+        e.preventDefault();
+        this.profilePictureUpload(this.state.file);
+    };
+
+    profilePictureUpload(file){
+        const formData = new FormData();
+        formData.append('file',file);
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        };
+        axios.post('/api/uploadProfileImage', formData, config).then(res => {
+            console.log(res);
+        });
+    }
+
+    onFileUploadChange(e) {
+        this.setState({file:e.target.files[0]});
     }
 
     render() {
@@ -112,10 +136,10 @@ class StudentSignUpForm extends Component {
             return(
                 <div className="main-login main-center">
                     <img src="./medsense_logo.png" style={{height: '120px', width: '300px'}} />
-                    <form className="form-horizontal" method="post" action="/api/uploadProfileImage" encType="multipart/form-data">
+                    <form onSubmit={this.onFormSubmit} className="form-horizontal" method="post" action="/api/uploadProfileImage" encType="multipart/form-data">
                         <div className="form-group">
                             <label>Upload a profile picture:</label>
-                            <input type="file" name="upload" multiple="multiple" />
+                            <input id="profile_picture" type="file" name="upload" multiple="multiple" onChange={this.onFileUploadChange} />
                         </div>
                         <button type="submit" className="btn btn-primary btn-lg btn-block login-button">Submit</button>
                     </form>

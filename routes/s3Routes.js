@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
 const aws = require('aws-sdk');
 const keys = require('../config/keys.js');
 const multiparty = require('multiparty');
 const fs = require('fs');
+
 aws.config.update({
     accessKeyId: keys.awsAccessKeyId,
     secretAccessKey: keys.awsSecretKey
@@ -31,16 +31,16 @@ module.exports = app => {
     app.post('/api/uploadProfileImage', (req, res) => {
         const form = new multiparty.Form();
         form.parse(req, function(err, fields, files) {
-            const file = files.upload[0];
+            const file = files.file[0];
             fs.readFile(file.path, function (err, data) {
                 const s3 = new aws.S3();
                 const myBucket = 'profile-picture-images';
-                const params = {Bucket: myBucket, Key: 'user_profile.jpg', Body: data, ACL: 'public-read'};
+                const params = {Bucket: myBucket, Key: req.user._id + '/user_profile.jpg', Body: data, ACL: 'public-read'};
                 s3.putObject(params, function(err, data) {
                     if (err) {
                         console.log(err)
                     } else {
-                        console.log("Successfully uploaded data to myBucket/myKey");
+                        console.log("Successfully uploaded data to profile-picture-images/" + req.user._id + '/user_profile.jpg');
                     }
                 });
             });

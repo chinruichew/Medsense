@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const User = mongoose.model('users');
+const axios = require('axios');
 
 module.exports = app => {
     app.post('/api/signup', function (req, res) {
