@@ -26,13 +26,16 @@ module.exports = app => {
             difficulty: req.body.values.difficulty,
             speciality: req.body.values.speciality,
             subspeciality: req.body.values.subspeciality,
-            approach: req.body.values.approach[0],
             scenario: req.body.values.scenario,
             learning: req.body.values.learning,
             timestamp: new Date(),
             authorid: mongoose.Types.ObjectId(req.body.values.authid),
             authorname: req.body.values.authname
         });
+
+        for (var key in req.body.values.approach) {
+            newCase.approach.push(req.body.values.approach[key])
+        }
 
         const jsonObject = req.body.values.qnData;
         for (const prop in jsonObject) {

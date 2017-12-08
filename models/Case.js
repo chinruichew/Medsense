@@ -8,7 +8,7 @@ const caseSchema = new Schema({
     difficulty: { type: String, default: "" },
     speciality: { type: String, default: "" },
     subspeciality: { type: String, default: "" },
-    approach: { type: String, default: "" },
+    approach: [{ type: String, default: "" }],
     scenario: { type: String, default: "" },
     learning: { type: String, default: "" },
     status: { type: String, default: "Pending" },
