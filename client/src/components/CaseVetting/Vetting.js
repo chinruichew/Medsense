@@ -143,7 +143,7 @@ class Vetting extends Component {
 
     render(){
         return(
-            <div style={{padding: "5%"}}>
+            <div>
                 {this.renderContent()}
             </div>
         );
