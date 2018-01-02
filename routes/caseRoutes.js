@@ -80,7 +80,11 @@ module.exports = app => {
             oneCase.difficulty = req.body.values.difficulty;
             oneCase.speciality = req.body.values.speciality;
             oneCase.subspeciality = req.body.values.subspeciality;
-            oneCase.approach = req.body.values.approach;
+
+            for (var key in req.body.values.approach) {
+                oneCase.approach.push(req.body.values.approach[key])
+            }
+
             oneCase.scenario = req.body.values.scenario;
             oneCase.learning = req.body.values.learning;
             oneCase.vetter = req.body.values.authid;
