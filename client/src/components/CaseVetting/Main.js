@@ -5,7 +5,7 @@ import { bindAll } from 'lodash';
 import Question from './Question.js';
 import Overview from './Overview.js';
 import BootstrapModal from '../UI/Modal/VettingBootstrapModal.js';
-import './Upload.css';
+import './Vetting.css';
 import { updateCase } from '../../actions/index';
 
 class Main extends Component {
@@ -97,12 +97,6 @@ class Main extends Component {
                         } else if (obj.type === "Select One") {
                             error = "Question #" + obj.id + ": Please select a Question Type!";
                             throw BreakException;
-                        } else if (obj.pearl === '') {
-                            error = "Question #" + obj.id + ": Please fill in the PEARL!";
-                            throw BreakException;
-                        } else if (obj.time === "Select One") {
-                            error = "Question #" + obj.id + ": Please select a Time Limit!";
-                            throw BreakException;
                         } else if (obj.type === "MCQ") {
                             if (obj.mcq1 === '' || obj.mcq2 === '') {
                                 error = "Question #" + obj.id + ": Please fill in Answer 1 and Answer 2!";
@@ -126,11 +120,17 @@ class Main extends Component {
                         } else if (obj.type === "Open-ended" && obj.openEnded === '') {
                             error = "Question #" + obj.id + ": Please fill in the Answer!";
                             throw BreakException;
+                        } else if (obj.pearl === '') {
+                            error = "Question #" + obj.id + ": Please fill in the PEARL!";
+                            throw BreakException;
+                        } else if (obj.time === "Select One") {
+                            error = "Question #" + obj.id + ": Please select a Time Limit!";
+                            throw BreakException;
                         }
                     });
                     this.props.updateCase(this.state).then((response) => {
                         if (response) {
-                            this.setState({ vm: true });
+                            this.setState({ vmConfirm: true });
                         }
                     }).catch(() => {
                     })
@@ -244,7 +244,8 @@ class Main extends Component {
             <span style={{ fontSize: '150%' }}><center>▽ Case Question</center></span>
         );
         let vmClose = () => this.setState({ vmShow: false });
-
+        let vmConfirmClose = () => this.setState({ vmConfirm: false });
+        let vmSuccessShow = () => this.setState({ vm: true });
         let questionNodes = this.state.qnData.map((obj, index) => {
 
             return (
@@ -292,7 +293,14 @@ class Main extends Component {
         return (
 
             <div id="main">
-
+                <center>
+                    <table>
+                        <tr>
+                            <td width="60px"><a href="/disclaimer"><img src="./stop.png" alt="" style={{height:"50px", width:"50px"}}/></a></td>
+                            <td>Before you upload the case, please ensure that all texts and attachments <br/> do not contain identifiable information such as IC number or patient's face</td>
+                        </tr>
+                    </table>
+                </center>
                 <div className="story">
 
                     <p className="story-title">Story So Far</p>
@@ -347,6 +355,21 @@ class Main extends Component {
                         </BootstrapModal.Body>
                         <BootstrapModal.Footer>
                             <Button onClick={vmClose}>Close</Button>
+                        </BootstrapModal.Footer>
+                    </BootstrapModal>
+
+                    <BootstrapModal
+                        show={this.state.vmConfirm}
+                        onHide={vmConfirmClose}
+                        aria-labelledby="confirm-modal" >
+                        <BootstrapModal.Header closeButton>
+                            <BootstrapModal.Title id="confirm-modal">Case Submission</BootstrapModal.Title>
+                        </BootstrapModal.Header>
+                        <BootstrapModal.Body>
+                            <p>Before you upload the case, please ensure that all texts and attachments do not contain identifiable information eg. IC number or patient's face</p>
+                        </BootstrapModal.Body>
+                        <BootstrapModal.Footer>
+                            <Button onClick={vmSuccessShow}>Proceed to Submit</Button>
                         </BootstrapModal.Footer>
                     </BootstrapModal>
 

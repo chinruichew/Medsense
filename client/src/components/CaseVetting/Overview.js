@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bindAll } from 'lodash';
 import { FormGroup, Checkbox, ControlLabel, FormControl, InputGroup } from 'react-bootstrap';
 
-import './Upload.css';
+import './Vetting.css';
 
 class Overview extends Component {
     constructor(props) {
@@ -82,9 +82,17 @@ class Overview extends Component {
         this.update(value, "speciality");
     }
     handleSubspecialityChange(e) {
-        const value = e.target.value;
-        this.setState({ subspeciality: value });
-        this.update(value, "subspeciality");
+        const options = e.target.options;
+        let value = [];
+        for (let i = 1, l = options.length; i < l; i++) {
+            if (options[i].selected) {
+                value.push(options[i].value);
+            }
+        }
+        if (value.length > 0) {
+            this.setState({ subspeciality: value });
+            this.update(value, "subspeciality");
+        }
     }
     handleApproachChange(e) {
         // const value = e.target.value;
@@ -172,7 +180,51 @@ class Overview extends Component {
                     </FormControl>
                 </FormGroup>
             );
+        } else if (this.state.speciality === "Clinical Practicum") {
+            return (
+                <FormGroup controlId="formControlsSubspeciality">
+                    <ControlLabel>Sub-speciality<span style={{color:"red"}}>*</span>
+                        <br />
+                        <div style={{ fontSize: "70%", fontWeight:"200"}}>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.
+                        </div>
+                    </ControlLabel>
+                    <FormControl componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)} multiple>
+                        <option value="Select One">Select All Relevant</option>
+                        <option value="Anaesthesiology">Anaesthesiology</option>
+                        <option value="Breast">Breast</option>
+                        <option value="Cardiology">Cardiology</option>
+                        <option value="Colorectal">Colorectal</option>
+                        <option value="Ear Nose & Throat">Ear Nose & Throat</option>
+                        <option value="Emergency Medicine">Emergency Medicine</option>
+                        <option value="Endocrinology">Endocrinology</option>
+                        <option value="Gastroenterology & Hepatology">Gastroenterology & Hepatology</option>
+                        <option value="General Surgery">General Surgery</option>
+                        <option value="Geriatric Medicine">Geriatric Medicine</option>
+                        <option value="Haematology">Haematology</option>
+                        <option value="Head & Neck">Head & Neck</option>
+                        <option value="Hepato-pancreato-biliary">Hepato-pancreato-biliary</option>
+                        <option value="Infectious Diseases">Infectious Diseases</option>
+                        <option value="Internal Medicine">Internal Medicine</option>
+                        <option value="Medical Oncology">Medical Oncology</option>
+                        <option value="Neonatal">Neonatal</option>
+                        <option value="Neurology">Neurology</option>
+                        <option value="Obstetrics & Gynaecology">Obstetrics & Gynaecology</option>
+                        <option value="Ophthalmology">Ophthalmology</option>
+                        <option value="Palliative Medicine">Palliative Medicine</option>
+                        <option value="Psychiatry">Psychiatry</option>
+                        <option value="Rehabilitation Medicine">Rehabilitation Medicine</option>
+                        <option value="Renal Medicine">Renal Medicine</option>
+                        <option value="Respiratory & Critical Care Medicine">Respiratory & Critical Care Medicine</option>
+                        <option value="Rheumatology & Immunology">Rheumatology & Immunology</option>
+                        <option value="Surgical Oncology">Surgical Oncology</option>
+                        <option value="Upper Gastrointestinal & Bariatric Surgery">Upper Gastrointestinal & Bariatric Surgery</option>
+                        <option value="Urology">Urology</option>
+                        <option value="Vascular Surgery">Vascular Surgery</option>
+                    </FormControl>
+                </FormGroup>
+            );
         }
+
         return;
     }
 
@@ -198,6 +250,7 @@ class Overview extends Component {
                     <ControlLabel style={{ fontSize: "150%"}}>Speciality<span style={{color:"red"}}>*</span></ControlLabel>
                     <FormControl componentClass="select" value={this.state.speciality} name="speciality" onChange={(e) => this.handleSpecialityChange(e)}>
                         <option value="Select One">Select One</option>
+                        <option value="Clinical Practicum">Clinical Practicum</option>
                         <option value="Medicine">Medicine</option>
                         <option value="Surgery">Surgery</option>
                         <option value="Others">Others</option>
