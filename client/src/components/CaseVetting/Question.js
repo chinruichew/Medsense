@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bindAll } from 'lodash';
 import { Button, FormGroup, ControlLabel, FormControl, InputGroup, Accordion, Panel } from 'react-bootstrap';
 
-import './Vetting.css';
+import '../CaseUpload/Upload.css';
 
 class Question extends Component {
     constructor(props){

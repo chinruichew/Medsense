@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bindAll } from 'lodash';
 import { FormGroup, Checkbox, ControlLabel, FormControl, InputGroup } from 'react-bootstrap';
 
-import './Vetting.css';
+import '../CaseUpload/Upload.css';
 
 class Overview extends Component {
     constructor(props) {
