@@ -25,16 +25,16 @@ const dbPath  = "mongodb://"+config.USER + ":"+
     config.DATABASE;
 const db = mongoose.connect(dbPath);
 
-// const config = {
-//     username:'',
-//     Password:'',
-//     host:sshServer,
-//     port:22,
-//     dstHost:'ec2-13-250-12-26.ap-southeast-1.compute.amazonaws.com',
-//     dstPort:27017,
-//     localHost:'127.0.0.1',
-//     localPort: 27000
-// };
+// const tunnel = require('reverse-tunnel-ssh');
+// tunnel({
+//     host: 'ec2-13-250-12-26.ap-southeast-1.compute.amazonaws.com',
+//     username: 'ec2-user',
+//     dstHost: '0.0.0.0', // bind to all IPv4 interfaces
+//     dstPort: 22
+// }, function(error, clientConnection) {
+//     console.log(clientConnection);
+//     console.log(error);
+// });
 /* End of MongoDB Connection */
 
 const router = express.Router();
