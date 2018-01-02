@@ -12,29 +12,30 @@ const app = express();
 
 /* Start of MongoDB Connection */
 const config = {
-    "USER"    : '',
-    "PASS"    : '',
-    "HOST"    : "ec2-13-250-12-26.ap-southeast-1.compute.amazonaws.com",
-    "PORT"    : "27017",
-    "DATABASE" : "Medsense"
+    username:'ec2-user',
+    host: keys.mongoURI,
+    port: 22,
+    dstPort:27017,
+    localPort: 2000,
+    privateKey: require('fs').readFileSync('./id_rsa')
 };
-const dbPath  = "mongodb://"+config.USER + ":"+
-    config.PASS + "@"+
-    config.HOST + ":"+
-    config.PORT + "/"+
-    config.DATABASE;
-const db = mongoose.connect(dbPath);
+const tunnel = require('tunnel-ssh');
+const server = tunnel(config, function (error, server) {
 
-// const tunnel = require('reverse-tunnel-ssh');
-// tunnel({
-//     host: 'ec2-13-250-12-26.ap-southeast-1.compute.amazonaws.com',
-//     username: 'ec2-user',
-//     dstHost: '0.0.0.0', // bind to all IPv4 interfaces
-//     dstPort: 22
-// }, function(error, clientConnection) {
-//     console.log(clientConnection);
-//     console.log(error);
-// });
+    if(error){
+        console.log("SSH connection error: " + error);
+    }
+
+    mongoose.connect('mongodb://127.0.0.1:2000/Medsense');
+
+    const db = mongoose.connection;
+    db.on('error', console.error.bind(console, 'DB connection error:'));
+    db.once('open', function() {
+        console.log("DB connection successful");
+    });
+
+});
+
 /* End of MongoDB Connection */
 
 const router = express.Router();
