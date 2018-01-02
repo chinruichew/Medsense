@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { bindAll } from 'lodash';
-import * as actions from '../../actions';
 import axios from 'axios';
 
 class StudentSignUpForm extends Component {
@@ -37,7 +36,13 @@ class StudentSignUpForm extends Component {
     }
 
     handleUserSignUp() {
-        actions.handleSignUp(this.state);
+        axios.post('/api/signup', {
+            ...this.state
+        }).then(res => {
+            if(res.data === 'User Exists') {
+                alert('User Exists');
+            }
+        });
     }
 
     render() {

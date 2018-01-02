@@ -27,6 +27,7 @@ export const handleSignUp = (values) => {
     const res = axios.post('/api/signup', {
         values
     });
+    console.log(res);
 };
 
 export const updateProfessor = (values) => async dispatch => {

@@ -4,8 +4,10 @@ const axios = require('axios');
 
 module.exports = app => {
     app.post('/api/signup', function (req, res) {
-        const values = req.body.values;
-        User.findOne({ username: req.body.username }, function (err, user) {
+        const values = req.body;
+        // console.log(values);
+        let userExists = false;
+        User.findOne({ username: values.username }, function (err, user) {
             if (!user) {
                 const newUser = new User();
                 newUser.username = values.username;
@@ -14,6 +16,9 @@ module.exports = app => {
                 newUser.school = values.school;
                 newUser.year = values.year;
                 newUser.save();
+                res.send('Done');
+            } else {
+                res.send('User Exists');
             }
         });
     });
