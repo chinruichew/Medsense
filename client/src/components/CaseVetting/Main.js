@@ -13,7 +13,6 @@ class Main extends Component {
         super(props);
         this.state = {
             id: this.props.id,
-            qID: this.props.questions.length+1,
             qnData: this.props.questions,
             title: this.props.title,
             difficulty: this.props.difficulty,
@@ -29,11 +28,11 @@ class Main extends Component {
     }
 
     addQuestion() {
+        let len = this.state.qnData.length;
         this.setState({
-            qID: this.state.qID + 1,
             qnData: this.state.qnData.concat(
                 {
-                    "id": this.state.qID,
+                    "id": len+1,
                     "stem": '',
                     "question": '',
                     "attachment": null,
@@ -59,7 +58,7 @@ class Main extends Component {
                 }
             ),
         });
-        console.log(this.state.qID);
+
     }
 
     saveChanges(e) {
@@ -71,11 +70,11 @@ class Main extends Component {
         } else if (this.state.speciality === "Select One") {
             this.setState({ vmShow: true, error: "Case Overview: Please select a Speciality!" });
         } else if (this.state.subspeciality === "Select One") {
-            this.setState({ vmShow: true, error: "Case Overview: Please select a Sub-specialiy!" });
-            // } else if (this.state.approach === null) {
-            //     this.setState({ vmShow: true, error: "Case Overview: Please select at least 1 Approach!" });
-        } else if (this.state.approach === "Select One") {
-            this.setState({ vmShow: true, error: "Case Overview: Please select an Approach!" });
+            this.setState({ vmShow: true, error: "Case Overview: Please select a Sub-speciality!" });
+        } else if (this.state.approach === null) {
+            this.setState({ vmShow: true, error: "Case Overview: Please select at least 1 Approach!" });
+        // } else if (this.state.approach === "Select One") {
+        //     this.setState({ vmShow: true, error: "Case Overview: Please select an Approach!" });
         } else if (this.state.scenario === '') {
             this.setState({ vmShow: true, error: "Case Overview: Please fill in the Case Scenario!" });
         } else if (this.state.learning === '') {
@@ -83,10 +82,10 @@ class Main extends Component {
         } else {
 
             let questions = this.state.qnData;
-            console.log(questions);
+
             if (questions.length === 0) {
                 this.setState({ vmShow: true, error: "Case Question: Please add at least 1 Question!" });
-                console.log(this.state.vmShow);
+
             } else {
                 let error = '';
                 let BreakException = {};
@@ -178,19 +177,13 @@ class Main extends Component {
                         "reference": obj.reference,
                     }
                 );
-                console.log("hi");
-                offset += 1;
-            } else if (obj.id < id) {
 
+            } else if (obj.id < id) {
                 newQuestions = newQuestions.concat(obj);
-                console.log("yo");
             }
         });
-        console.log(newQuestions);
-        this.setState({ qnData: newQuestions }, () => {
-            this.forceUpdate();
-            console.log(this.state.qnData);
-        });
+
+        this.setState({ qnData: newQuestions });
 
     }
 
@@ -251,9 +244,9 @@ class Main extends Component {
             <span style={{ fontSize: '150%' }}><center>▽ Case Question</center></span>
         );
         let vmClose = () => this.setState({ vmShow: false });
-        console.log(this.state.qnData);
+
         let questionNodes = this.state.qnData.map((obj, index) => {
-            console.log(obj);
+
             return (
                 <Question
                     id={obj.id}

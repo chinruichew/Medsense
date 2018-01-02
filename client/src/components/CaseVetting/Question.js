@@ -356,7 +356,7 @@ class Question extends Component {
                 <Accordion>
                     <Panel header={"▽ Question #"+this.props.id} eventKey="1">
                         <div className="delete-question-button">
-                        {/*<Button  type="button" bsStyle="primary" onClick={(e)=>this.deleteQuestion()}>Delete Question</Button><br/>*/}
+                        <Button  type="button" bsStyle="primary" onClick={(e)=>this.deleteQuestion()}>Delete Question</Button><br/>
                         </div>
                         {this.checkQ1()}
 

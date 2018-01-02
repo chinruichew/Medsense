@@ -70,7 +70,7 @@ class Main extends Component {
         } else if (this.state.speciality === "Select One") {
             this.setState({ vmShow: true, error: "Case Overview: Please select a Speciality!" });
         } else if (this.state.subspeciality === "Select One") {
-            this.setState({ vmShow: true, error: "Case Overview: Please select a Sub-specialiy!" });
+            this.setState({ vmShow: true, error: "Case Overview: Please select a Sub-speciality!" });
         } else if (this.state.approach === null) {
         // } else if (this.state.approach === "Select One") {
         //     this.setState({ vmShow: true, error: "Case Overview: Please select an Approach!" });
