@@ -12,8 +12,8 @@ const app = express();
 
 /* Start of MongoDB Connection */
 const config = {
-    "USER"    : "",
-    "PASS"    : "",
+    "USER"    : '',
+    "PASS"    : '',
     "HOST"    : "ec2-13-250-12-26.ap-southeast-1.compute.amazonaws.com",
     "PORT"    : "27017",
     "DATABASE" : "Medsense"
