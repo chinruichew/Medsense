@@ -5,7 +5,7 @@ import { bindAll } from 'lodash';
 import Question from './Question.js';
 import Overview from './Overview.js';
 import BootstrapModal from '../UI/Modal/VettingBootstrapModal.js';
-import './Vetting.css';
+import '../CaseUpload/Upload.css';
 import { updateCase } from '../../actions/index';
 
 class Main extends Component {
@@ -279,6 +279,12 @@ class Main extends Component {
         });
 
         let stems = this.state.qnData.map((obj, index) => {
+            let stem
+            if (obj.id===1){
+                stem='';
+            } else {
+                stem=obj.stem;
+            }
             return (
                 <div className="stem">
                     <div className="stem-label">

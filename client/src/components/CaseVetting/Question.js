@@ -39,6 +39,34 @@ class Question extends Component {
             'handleCheck6Change', 'handlePearlChange', 'handleTimeChange', 'handleReferenceChange','answer', 'update', 'deleteQuestion');
     }
 
+    componentWillReceiveProps(nextProps){
+        this.setState({
+            id: nextProps.id,
+            stem: nextProps.stem,
+            question: nextProps.question,
+            attachment: nextProps.attachment,
+            filename: nextProps.filename,
+            filetype: nextProps.filetype,
+            type: nextProps.type,
+            openEnded: nextProps.openEnded,
+            mcq1: nextProps.mcq1,
+            mcq2: nextProps.mcq2,
+            mcq3: nextProps.mcq3,
+            mcq4: nextProps.mcq4,
+            mcq5: nextProps.mcq5,
+            mcq6: nextProps.mcq6,
+            check1: nextProps.check1,
+            check2: nextProps.check2,
+            check3: nextProps.check3,
+            check4: nextProps.check4,
+            check5: nextProps.check5,
+            check6: nextProps.check6,
+            pearl: nextProps.pearl,
+            time: nextProps.time,
+            reference: nextProps.reference,
+        });
+    }
+
     deleteQuestion(){
         let id = this.props.id;
         this.props.handleDeleteQuestion(id);
