@@ -14,9 +14,9 @@ const app = express();
 const config = {
     "USER"    : "",
     "PASS"    : "",
-    "HOST"    : "ec2-54-169-186-57.ap-southeast-1.compute.amazonaws.com",
+    "HOST"    : "ec2-13-250-12-26.ap-southeast-1.compute.amazonaws.com",
     "PORT"    : "27017",
-    "DATABASE" : "medsenseDB"
+    "DATABASE" : "Medsense"
 };
 const dbPath  = "mongodb://"+config.USER + ":"+
     config.PASS + "@"+
@@ -24,6 +24,17 @@ const dbPath  = "mongodb://"+config.USER + ":"+
     config.PORT + "/"+
     config.DATABASE;
 const db = mongoose.connect(dbPath);
+
+// const config = {
+//     username:'',
+//     Password:'',
+//     host:sshServer,
+//     port:22,
+//     dstHost:'ec2-13-250-12-26.ap-southeast-1.compute.amazonaws.com',
+//     dstPort:27017,
+//     localHost:'127.0.0.1',
+//     localPort: 27000
+// };
 /* End of MongoDB Connection */
 
 const router = express.Router();
