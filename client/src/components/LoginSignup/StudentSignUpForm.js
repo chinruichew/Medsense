@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { bindAll } from 'lodash';
 import axios from 'axios';
+import BootstrapModal from '../UI/Modal/VettingBootstrapModal.js';
+import { Button } from 'react-bootstrap';
 
 class StudentSignUpForm extends Component {
     constructor(props) {
@@ -39,13 +41,30 @@ class StudentSignUpForm extends Component {
         axios.post('/api/signup', {
             ...this.state
         }).then(res => {
+            let regex = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/;
+            console.log(this.state.password)
+            console.log(this.state.confirm_password)
             if(res.data === 'User Exists') {
-                alert('User Exists');
+                // alert('User Exists');
+                this.setState({vmShow: true, error: "The username already exists, please choose another one."});
+            } else if(this.state.password.length<8){
+                this.setState({vmShow: true, error: "The password should contain at least 8 characters."});
+            } else if(!regex.test(this.state.password)){
+                this.setState({vmShow: true, error: "The password should contain both letter(s) and number(s)."});
+            } else if(this.state.password!==this.state.confirm_password){
+                this.setState({vmShow: true, error: "The passwords do not match, please check again."});
+            } else{
+                this.setState({vm: true});
             }
         });
     }
 
+    redirect() {
+        window.location = '/login';
+    }
+
     render() {
+        let vmClose = () => this.setState({ vmShow: false });
         return(
             <div className="main-login main-center">
                 <img src="./medsense_logo.png" style={{height: '120px', width: '300px'}} />
@@ -109,6 +128,33 @@ class StudentSignUpForm extends Component {
                         <button onClick={this.handleUserSignUp} type="button" className="btn btn-primary btn-lg btn-block login-button">Sign Up</button>
                     </div>
                 </form>
+                <BootstrapModal
+                    show={this.state.vmShow}
+                    onHide={vmClose}
+                    aria-labelledby="username-modal">
+                    <BootstrapModal.Header closeButton>
+                        <BootstrapModal.Title id="username-modal">Unable to Sign Up</BootstrapModal.Title>
+                    </BootstrapModal.Header>
+                    <BootstrapModal.Body>
+                        <p>{this.state.error}</p>
+                    </BootstrapModal.Body>
+                    <BootstrapModal.Footer>
+                        <Button onClick={vmClose}>Close</Button>
+                    </BootstrapModal.Footer>
+                </BootstrapModal>
+                <BootstrapModal
+                    show={this.state.vm}
+                    aria-labelledby="success-modal">
+                    <BootstrapModal.Header>
+                        <BootstrapModal.Title id="success-modal">Account Created</BootstrapModal.Title>
+                    </BootstrapModal.Header>
+                    <BootstrapModal.Body>
+                        <p>Your account has been created successfully! You will be redirected to the Login page.</p>
+                    </BootstrapModal.Body>
+                    <BootstrapModal.Footer>
+                        <Button onClick={this.redirect}>OK</Button>
+                    </BootstrapModal.Footer>
+                </BootstrapModal>
             </div>
         );
     }
