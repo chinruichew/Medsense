@@ -38,25 +38,25 @@ class StudentSignUpForm extends Component {
     }
 
     handleUserSignUp() {
-        axios.post('/api/signup', {
-            ...this.state
-        }).then(res => {
-            let regex = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/;
-            console.log(this.state.password)
-            console.log(this.state.confirm_password)
-            if(res.data === 'User Exists') {
-                // alert('User Exists');
-                this.setState({vmShow: true, error: "The username already exists, please choose another one."});
-            } else if(this.state.password.length<8){
-                this.setState({vmShow: true, error: "The password should contain at least 8 characters."});
-            } else if(!regex.test(this.state.password)){
-                this.setState({vmShow: true, error: "The password should contain both letter(s) and number(s)."});
-            } else if(this.state.password!==this.state.confirm_password){
-                this.setState({vmShow: true, error: "The passwords do not match, please check again."});
-            } else{
-                this.setState({vm: true});
-            }
-        });
+        let regex = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/;
+        if(this.state.password.length<8){
+            this.setState({vmShow: true, error: "The password should contain at least 8 characters.", password: "", confirm_password: ""});
+        } else if(!regex.test(this.state.password)){
+            this.setState({vmShow: true, error: "The password should contain both letter(s) and number(s).", password: "", confirm_password: ""});
+        } else if(this.state.password!==this.state.confirm_password){
+            this.setState({vmShow: true, error: "The passwords do not match, please check again.", password: "", confirm_password: ""});
+        } else {
+            axios.post('/api/signup', {
+                ...this.state
+            }).then(res => {
+                if (res.data === 'User Exists') {
+                    // alert('User Exists');
+                    this.setState({vmShow: true, error: "The username already exists, please choose another one."});
+                } else {
+                    this.setState({vm: true});
+                }
+            });
+        }
     }
 
     redirect() {
