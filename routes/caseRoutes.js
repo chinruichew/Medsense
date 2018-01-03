@@ -83,6 +83,9 @@ module.exports = app => {
             oneCase.difficulty = req.body.values.difficulty;
             oneCase.speciality = req.body.values.speciality;
 
+            oneCase.approach = []
+            oneCase.subspeciality = []
+
             for (var key in req.body.values.approach) {
                 oneCase.approach.push(req.body.values.approach[key])
             }
