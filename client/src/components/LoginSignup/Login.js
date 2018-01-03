@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import {connect} from "react-redux";
 import axios from 'axios';
+import BootstrapModal from '../UI/Modal/VettingBootstrapModal.js';
+import { Button } from 'react-bootstrap';
 
 class Login extends Component {
     state = {
@@ -33,12 +35,14 @@ class Login extends Component {
                 // this.setState({authentication: true});
                 window.location = '/home';
             } else {
-                alert(res.data);
+                // alert(res.data);
+                this.setState({vmShow: true});
             }
         });
     };
 
     renderContent() {
+        let vmClose = () => this.setState({ vmShow: false });
         switch(this.props.auth) {
             case null:
                 return;
@@ -73,6 +77,20 @@ class Login extends Component {
                                 </form>
                             </div>
                         </div>
+                        <BootstrapModal
+                            show={this.state.vmShow}
+                            onHide={vmClose}
+                            aria-labelledby="error-modal">
+                            <BootstrapModal.Header closeButton>
+                                <BootstrapModal.Title id="error-modal-">Unable to Login</BootstrapModal.Title>
+                            </BootstrapModal.Header>
+                            <BootstrapModal.Body>
+                                <p>The username or password is incorrect, please try again.</p>
+                            </BootstrapModal.Body>
+                            <BootstrapModal.Footer>
+                                <Button onClick={vmClose}>Close</Button>
+                            </BootstrapModal.Footer>
+                        </BootstrapModal>
                     </div>
                 );
             default:
