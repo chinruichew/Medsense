@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 
 class About extends Component {
-    constructor(props){
-        super(props);
-        this.state = {currentTime: new Date().toLocaleTimeString(), motivationalQuote: '', doomsdayCountdown: ''}
-    }
+    state = {
+        currentTime: new Date().toLocaleTimeString(),
+        motivationalQuote: '',
+        doomsdayCountdown: ''
+    };
 
     timer() {
         this.setState({
