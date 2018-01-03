@@ -25,7 +25,6 @@ module.exports = app => {
             title: req.body.values.title,
             difficulty: req.body.values.difficulty,
             speciality: req.body.values.speciality,
-            subspeciality: req.body.values.subspeciality,
             scenario: req.body.values.scenario,
             learning: req.body.values.learning,
             timestamp: new Date(),
@@ -35,6 +34,10 @@ module.exports = app => {
 
         for (var key in req.body.values.approach) {
             newCase.approach.push(req.body.values.approach[key])
+        }
+
+        for (var key in req.body.values.subspeciality) {
+            newCase.subspeciality.push(req.body.values.subspeciality[key])
         }
 
         const jsonObject = req.body.values.qnData;
@@ -79,10 +82,13 @@ module.exports = app => {
             oneCase.title = req.body.values.title;
             oneCase.difficulty = req.body.values.difficulty;
             oneCase.speciality = req.body.values.speciality;
-            oneCase.subspeciality = req.body.values.subspeciality;
 
             for (var key in req.body.values.approach) {
                 oneCase.approach.push(req.body.values.approach[key])
+            }
+
+            for (var key in req.body.values.subspeciality) {
+                oneCase.subspeciality.push(req.body.values.subspeciality[key])
             }
 
             oneCase.scenario = req.body.values.scenario;
