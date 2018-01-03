@@ -7,10 +7,18 @@ module.exports = app => {
         User.findOne({ username: values.username }, function (err, user) {
             if (user) {
                 req.session.user = user;
-                console.log(req.session);
                 res.send('Authenticated');
             } else {
                 res.send('Invalid Username/Password!');
+            }
+        });
+    });
+
+    app.get('/api/updateSessionUser', (req, res) => {
+        User.findOne({ username: req.session.user.username }, function (err, user) {
+            if (user) {
+                req.session.user = user;
+                res.send('Authenticated');
             }
         });
     });

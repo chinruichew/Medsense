@@ -26,7 +26,11 @@ class UploadProfilePicture extends Component {
         };
         axios.post('/api/uploadProfileImage', formData, config).then(res => {
             console.log(res);
+            axios.get('/api/updateSessionUser').then(res => {
+                window.location = '/dashboard';
+            });
         });
+
     }
 
     onFileUploadChange(e) {

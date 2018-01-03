@@ -8,6 +8,7 @@ const userSchema = new Schema({
     school: { type: String, default: "" },
     year: { type: String, default: "" },
     profilepicture: { type: String, default: "" },
+    profilepictureVersion: {type: Number, default: 0},
     speciality: { type: String, default: "" },
     subspeciality: { type: String, default: "" },
     usertype: { type: String, default: "" },

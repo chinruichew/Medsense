@@ -2,6 +2,8 @@ const aws = require('aws-sdk');
 const keys = require('../config/keys.js');
 const multiparty = require('multiparty');
 const fs = require('fs');
+const mongoose = require('mongoose');
+const User = mongoose.model('users');
 
 aws.config.update({
     accessKeyId: keys.awsAccessKeyId,
@@ -35,16 +37,19 @@ module.exports = app => {
             fs.readFile(file.path, function (err, data) {
                 const s3 = new aws.S3();
                 const myBucket = 'profile-picture-images';
-                const params = {Bucket: myBucket, Key: req.user._id + '/user_profile.jpg', Body: data, ACL: 'public-read'};
+                const params = {Bucket: myBucket, Key: req.session.user._id + "/user_profile" + (req.session.user.profilepictureVersion + 1) + ".jpg", Body: data, ACL: 'public-read'};
                 s3.putObject(params, function(err, data) {
                     if (err) {
-                        console.log(err)
+                        console.log(err);
+                        res.send("done");
                     } else {
-                        console.log("Successfully uploaded data to profile-picture-images/" + req.user._id + '/user_profile.jpg');
+                        User.update({_id: req.session.user._id}, {profilepicture: "https://s3-ap-southeast-1.amazonaws.com/profile-picture-images/" + req.session.user._id + "/user_profile" + (req.session.user.profilepictureVersion + 1) + ".jpg", profilepictureVersion: req.session.user.profilepictureVersion + 1 }, function (err, response) {
+                            console.log("Successfully uploaded data to profile-picture-images/" + req.session.user._id + "/user_profile" + (req.session.user.profilepictureVersion + 1) + ".jpg");
+                            res.send("done");
+                        });
                     }
                 });
             });
-            res.send("done");
         });
     });
 };
