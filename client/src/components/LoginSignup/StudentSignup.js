@@ -5,16 +5,13 @@ import StudentSignUpForm from './StudentSignUpForm';
 import {connect} from "react-redux";
 
 class StudentSignup extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            username: null,
-            password: null,
-            confirm_password: null,
-            school: "Duke-NUS",
-            year: "Year 1"
-        };
-    }
+    state = {
+        username: null,
+        password: null,
+        confirm_password: null,
+        school: "Duke-NUS",
+        year: "Year 1"
+    };
 
     componentDidMount() {
         // Dynamically set background image

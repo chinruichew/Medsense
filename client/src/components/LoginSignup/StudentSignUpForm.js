@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { bindAll } from 'lodash';
 import axios from 'axios';
 import BootstrapModal from '../UI/Modal/VettingBootstrapModal.js';
 import { Button } from 'react-bootstrap';
@@ -14,7 +13,6 @@ class StudentSignUpForm extends Component {
             school: this.props.school,
             year: this.props.year
         };
-        bindAll(this, 'handleUserSignUp');
     }
 
     handleSchoolChange(e) {
@@ -37,7 +35,7 @@ class StudentSignUpForm extends Component {
         this.setState({ confirm_password: e.target.value });
     }
 
-    handleUserSignUp() {
+    handleUserSignUp = () => {
         let regex = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/;
         if(this.state.password.length<8){
             this.setState({vmShow: true, error: "The password should contain at least 8 characters.", password: "", confirm_password: ""});
@@ -50,14 +48,13 @@ class StudentSignUpForm extends Component {
                 ...this.state
             }).then(res => {
                 if (res.data === 'User Exists') {
-                    // alert('User Exists');
                     this.setState({vmShow: true, error: "The username already exists, please choose another one."});
                 } else {
                     this.setState({vm: true});
                 }
             });
         }
-    }
+    };
 
     redirect() {
         window.location = '/login';
