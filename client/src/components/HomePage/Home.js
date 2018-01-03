@@ -18,10 +18,10 @@ class Home extends Component {
                         <div className="container-fluid">
                             <div className="row">
                                 <div className="col-sm-6 text-center" style={{fontSize:'150%'}}>
-                                    <a href="/upload"><img className="left-picture" src="./profUpload.png" alt="" /><br/><br/>Create a case.<br/>Share your knowledge!</a>
+                                    <a href="/upload"><img className="left-picture" src="./profUpload.png" alt="" style={{height:"200px"}}/><br/><br/>Create a case.<br/>Share your knowledge!</a>
                                 </div>
                                 <div className="col-sm-6 text-center" style={{fontSize:'150%'}}>
-                                    <a href="/vetting"><img src="./profVet.png" alt="" /><br/><br/>Vet a case.<br/>You have pending cases!</a>
+                                    <a href="/vetting"><img src="./profVet.png" alt="" style={{height:"200px"}}/><br/><br/>Vet a case.<br/>You have pending cases!</a>
                                 </div>
                             </div>
                             <br/>
@@ -69,10 +69,10 @@ class Home extends Component {
                         <div className="container-fluid">
                             <div className="row">
                                 <div className="col-sm-6 text-center" style={{fontSize:'150%'}}>
-                                    <a href="/challenge"><img src="./stuChallenge.png" alt="" height="310" width="470"/><br/><br/>Try a case.<br/>There are 26 new cases!</a><br/>
+                                    <a href="/challenge"><img src="./stuChallenge.png" alt="" style={{height:"200px"}}/><br/><br/>Try a case.<br/>There are 26 new cases!</a><br/>
                                 </div>
                                 <div className="col-sm-6 text-center" style={{fontSize:'150%'}}>
-                                    <a href="/upload"><img src="./stuUpload.png" alt="" height="310" width="470"/><br/><br/>Create a case.<br/>Share your experiences!</a><br/>
+                                    <a href="/upload"><img src="./stuUpload.png" alt="" style={{height:"200px"}}/><br/><br/>Create a case.<br/>Share your experiences!</a><br/>
                                 </div>
                             </div>
                             <br/>
