@@ -32,7 +32,7 @@ class Header extends Component {
                                 <NavItem className="navItem" eventKey={5} href="/dashboard">Dashboard</NavItem>
                                 <NavItem className="navItem" eventKey={6} href="/acknowledgements">Acknowledgements</NavItem>
                                 <NavItem className="navItem" eventKey={7} href="/api/logout">Logout</NavItem>
-                                <img src={this.props.auth.profilepicture} className="img-circle" style={{height: '45px', width: '45px'}} />
+                                <NavLink to="/profile"><Image src={this.props.auth.profilepicture} className="img-circle" style={{height: '45px', width: '45px'}} /></NavLink>
                             </Nav>
                         );
                     case 'student':
@@ -45,7 +45,7 @@ class Header extends Component {
                                 <NavItem className="navItem" eventKey={5} href="/dashboard">Dashboard</NavItem>
                                 <NavItem className="navItem" eventKey={6} href="/acknowledgements">Acknowledgements</NavItem>
                                 <NavItem className="navItem" eventKey={7} href="/api/logout">Logout</NavItem>
-                                <img src={this.props.auth.profilepicture} className="img-circle" style={{height: '45px', width: '45px'}} />
+                                <NavLink to="/profile"><Image src={this.props.auth.profilepicture} className="img-circle" style={{height: '45px', width: '45px'}} /></NavLink>
                             </Nav>
                         );
                 }

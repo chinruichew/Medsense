@@ -8,7 +8,7 @@ import Home from './HomePage/Home';
 import Header from './header/Header';
 import About from './about/About';
 import StudentSignup from "./LoginSignup/StudentSignup";
-import Dashboard from './ProfileDashboard/MainProfile';
+import Profile from './Profile/MainProfile';
 import CaseVetting from './CaseVetting/Vetting';
 import CaseStart from './CaseUpload/CaseStart';
 
@@ -30,7 +30,7 @@ class App extends Component {
                     <Route exact path="/signup" component={StudentSignup} />
                     <Route exact path="/upload" component={CaseStart} />
                     <Route exact path="/vetting" component={CaseVetting} />
-                    <Route exact path="/dashboard" component={Dashboard} />
+                    <Route exact path="/profile" component={Profile} />
                     <Route exact path="/" component={About} />
                 </div>
             </BrowserRouter>
