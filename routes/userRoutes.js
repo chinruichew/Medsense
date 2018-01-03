@@ -5,8 +5,6 @@ const axios = require('axios');
 module.exports = app => {
     app.post('/api/signup', function (req, res) {
         const values = req.body;
-        // console.log(values);
-        let userExists = false;
         User.findOne({ username: values.username }, function (err, user) {
             if (!user) {
                 const newUser = new User();

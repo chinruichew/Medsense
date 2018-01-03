@@ -1,30 +1,26 @@
-const passport = require('passport');
+const mongoose = require('mongoose');
+const User = mongoose.model('users');
 
 module.exports = app => {
-    /* Start of Local Auth */
-    app.post(
-        '/auth/local',
-        passport.authenticate('local', {
-            successRedirect: '/home',
-            failureRedirect: '/login',
-            failureFlash : true
-        })
-    );
-
-    app.post('/auth/local/signup', passport.authenticate('local-signup', {
-        successRedirect : '/login',
-        failureRedirect : '/signup',
-        failureFlash : true,
-        session: false
-    }));
-    /* End of Local Auth */
+    app.post('/api/login', (req, res) => {
+        const values = req.body;
+        User.findOne({ username: values.username }, function (err, user) {
+            if (user) {
+                req.session.user = user;
+                console.log(req.session);
+                res.send('Authenticated');
+            } else {
+                res.send('Invalid Username/Password!');
+            }
+        });
+    });
 
     app.get('/api/logout', (req, res) => {
-        req.logout();
+        req.session.user = '';
         res.redirect('/');
     });
 
     app.get('/api/current_user', (req, res) => {
-        res.send(req.user);
+        res.send(req.session.user);
     });
 };

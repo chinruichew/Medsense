@@ -1,13 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
-const passport = require('passport');
 const flash = require('connect-flash');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const keys = require('./config/keys');
 require('./models/User');
-require('./services/passport');
 const app = express();
 
 /* Start of MongoDB Connection */
@@ -55,8 +53,6 @@ app.use(
         keys: [keys.cookieKey]
     })
 );
-app.use(passport.initialize());
-app.use(passport.session());
 app.use(flash());
 /* End of Middleware configuration */
 
