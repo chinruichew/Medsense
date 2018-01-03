@@ -79,25 +79,7 @@ class StudentProfile extends Component {
                     <div className="form-group col-lg-8" style={{ marginRight: "200px", marginLeft: "190px", marginBottom: "150px" }}>
                         <button type="submit" onClick={(e) => this.handleSaveChange(e)} className="btn btn-primary">Save</button>
                     </div>
-
-                    {/*<div className="row" style={{ marginRight: "250px", marginLeft: "100px" }}>
-                        <h3> <b>Scoreboard</b> <img src="./placeholder.png" alt="" /> </h3>
-                    </div>*/}
-
-                    <div className="row" style={{ marginRight: "200px", marginLeft: "0px" }}>
-                        <h3> <b>Scoreboard</b> <img src="./placeholder.png" alt="" /> </h3>
-                    </div>
                 </div>
-
-                <div className="col-sm-4">
-                    <div className="row" style={{ marginRight: "200px", marginLeft: "0px" }}>
-                        <h3> <b>Graphs</b> <img src="./placeholder.png" alt="" /> </h3>
-                    </div>
-                    <div className="row" style={{ marginRight: "200px", marginLeft: "0px" }}>
-                        <h3> <b>Analytics</b> <img src="./placeholder.png" alt="" /> </h3>
-                    </div>
-                </div>
-
             </div>
         )
     }

@@ -93,19 +93,6 @@ class ProfessorProfile extends Component {
                         </div>
 
                     </form>
-
-                    <div className="row" style={{ marginRight: "200px", marginLeft: "0px" }}>
-                        <h3> <b>Scoreboard</b> <img src="./placeholder.png" alt="" /> </h3>
-                    </div>
-                </div>
-
-                <div className="col-sm-4">
-                    <div className="row" style={{ marginRight: "200px", marginLeft: "0px" }}>
-                        <h3> <b>Graphs</b> <img src="./placeholder.png" alt="" /> </h3>
-                    </div>
-                    <div className="row" style={{ marginRight: "200px", marginLeft: "0px" }}>
-                        <h3> <b>Analytics</b> <img src="./placeholder.png" alt="" /> </h3>
-                    </div>
                 </div>
 
             </div>

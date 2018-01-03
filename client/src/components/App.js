@@ -5,10 +5,11 @@ import * as actions from '../actions';
 
 import Login from './LoginSignup/Login';
 import Home from './HomePage/Home';
-import Header from './header/Header';
+import Header from './Header/Header';
 import About from './about/About';
 import StudentSignup from "./LoginSignup/StudentSignup";
 import Profile from './Profile/MainProfile';
+import Dashboard from './Dashboard';
 import CaseVetting from './CaseVetting/Vetting';
 import CaseStart from './CaseUpload/CaseStart';
 
@@ -31,6 +32,7 @@ class App extends Component {
                     <Route exact path="/upload" component={CaseStart} />
                     <Route exact path="/vetting" component={CaseVetting} />
                     <Route exact path="/profile" component={Profile} />
+                    <Route exact path="/dashboard" component={Dashboard} />
                     <Route exact path="/" component={About} />
                 </div>
             </BrowserRouter>
