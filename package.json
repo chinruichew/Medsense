@@ -13,7 +13,8 @@
     "server": "nodemon index.js",
     "client": "npm run start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "deploy": "npm run build --prefix client && git add . && git commit -m \"aws deploy\" && git push origin master && eb deploy && eb open"
+    "deploy": "npm run build --prefix client && git add . && git commit -m \"aws deploy\" && git push origin master && eb deploy && eb open",
+    "update": "npm install && npm install --prefix client"
   },
   "repository": {
     "type": "git",
