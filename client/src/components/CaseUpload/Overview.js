@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { bindAll } from 'lodash';
-import { FormGroup, Checkbox, ControlLabel, FormControl, InputGroup } from 'react-bootstrap';
+import { FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 
 import './Upload.css';
 
@@ -125,7 +125,6 @@ class Overview extends Component {
     }
 
     setSubspeciality() {
-        console.log(this.state.speciality);
         if (this.state.speciality === "Medicine") {
             return (
                 <FormGroup controlId="formControlsSubspeciality">

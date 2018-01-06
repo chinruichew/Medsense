@@ -52,6 +52,32 @@ module.exports = app => {
             });
         });
     });
+
+    app.post('/api/uploadCaseAttachment', (req, res) => {
+        const form = new multiparty.Form();
+        form.parse(req, function(err, fields, files) {
+            console.log(files);
+            const file = files.file[0];
+            const title = fields.title;
+            const qID = fields.question;
+            fs.readFile(file.path, function (err, data) {
+                const s3 = new aws.S3();
+                const myBucket = 'case-upload-attachments';
+                const params = {Bucket: myBucket, Key: title + "/question" + qID + ".jpg", Body: data, ACL: 'public-read'};
+                s3.putObject(params, function(err, data) {
+                    if (err) {
+                        console.log(err);
+                        res.send("done");
+                    } else {
+                        // User.update({_id: req.session.user._id}, {profilepicture: "https://s3-ap-southeast-1.amazonaws.com/profile-picture-images/" + req.session.user._id + "/user_profile" + (req.session.user.profilepictureVersion + 1) + ".jpg", profilepictureVersion: req.session.user.profilepictureVersion + 1 }, function (err, response) {
+                        //     console.log("Successfully uploaded data to profile-picture-images/" + req.session.user._id + "/user_profile" + (req.session.user.profilepictureVersion + 1) + ".jpg");
+                        //     res.send("done");
+                        // });
+                    }
+                });
+            });
+        });
+    });
 };
 
 

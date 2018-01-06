@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button } from 'react-bootstrap';
+// import { Button } from 'react-bootstrap';
 import { bindAll } from 'lodash';
 import { updateProfessor } from '../../actions/index';
 

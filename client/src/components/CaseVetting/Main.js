@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Accordion, Panel, Well } from 'react-bootstrap';
+import { Button, Accordion, Panel } from 'react-bootstrap';
 import { bindAll } from 'lodash';
 import Question from './Question.js';
 import Overview from './Overview.js';
@@ -36,8 +36,6 @@ class Main extends Component {
                     "stem": '',
                     "question": '',
                     "attachment": null,
-                    "filename": null,
-                    "filetype": null,
                     "type": "Select One",
                     "openEnded": '',
                     "mcq1": '',
@@ -128,12 +126,7 @@ class Main extends Component {
                             throw BreakException;
                         }
                     });
-                    this.props.updateCase(this.state).then((response) => {
-                        if (response) {
-                            this.setState({ vmConfirm: true });
-                        }
-                    }).catch(() => {
-                    })
+                    this.setState({vmConfirm: true});
 
                 } catch (e) {
                     this.setState({ vmShow: true, error: error });
@@ -141,6 +134,15 @@ class Main extends Component {
                 }
             }
         }
+    }
+
+    submitCase = (e) => {
+        this.props.updateCase(this.state).then((response) => {
+            if (response) {
+                this.setState({ vm: true });
+            }
+        }).catch(() => {
+        })
     }
 
     handleDeleteQuestion(id) {
@@ -156,8 +158,6 @@ class Main extends Component {
                         "stem": obj.stem,
                         "question": obj.question,
                         "attachment": obj.attachment,
-                        "filename": obj.filename,
-                        "filetype": obj.filtype,
                         "type": obj.type,
                         "openEnded": obj.openEnded,
                         "mcq1": obj.mcq1,
@@ -194,8 +194,6 @@ class Main extends Component {
                 obj.stem = details.stem;
                 obj.question = details.question;
                 obj.attachment = details.attachment;
-                obj.filename = details.filename;
-                obj.filtype = details.filetype;
                 obj.type = details.type;
                 obj.openEnded = details.openEnded;
                 obj.mcq1 = details.mcq1;
@@ -245,7 +243,6 @@ class Main extends Component {
         );
         let vmClose = () => this.setState({ vmShow: false });
         let vmConfirmClose = () => this.setState({ vmConfirm: false });
-        let vmSuccessShow = () => this.setState({ vm: true });
         let questionNodes = this.state.qnData.map((obj, index) => {
 
             return (
@@ -254,8 +251,6 @@ class Main extends Component {
                     stem={obj.stem}
                     question={obj.question}
                     attachment={obj.attachment}
-                    filename={obj.filename}
-                    filetype={obj.filtype}
                     type={obj.type}
                     openEnded={obj.openEnded}
                     mcq1={obj.mcq1}
@@ -279,11 +274,9 @@ class Main extends Component {
         });
 
         let stems = this.state.qnData.map((obj, index) => {
-            let stem
+
             if (obj.id===1){
-                stem='';
-            } else {
-                stem=obj.stem;
+                obj.stem='';
             }
             return (
                 <div className="stem">
@@ -375,7 +368,7 @@ class Main extends Component {
                             <p>Before you upload the case, please ensure that all texts and attachments do not contain identifiable information eg. IC number or patient's face</p>
                         </BootstrapModal.Body>
                         <BootstrapModal.Footer>
-                            <Button onClick={vmSuccessShow}>Proceed to Submit</Button>
+                            <Button onClick={this.submitCase}>Proceed to Submit</Button>
                         </BootstrapModal.Footer>
                     </BootstrapModal>
 

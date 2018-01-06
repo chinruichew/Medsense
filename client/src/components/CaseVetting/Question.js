@@ -12,8 +12,6 @@ class Question extends Component {
             stem: this.props.stem,
             question: this.props.question,
             attachment: this.props.attachment,
-            filename: this.props.filename,
-            filetype: this.props.filetype,
             type: this.props.type,
             openEnded: this.props.openEnded,
             mcq1: this.props.mcq1,
@@ -45,8 +43,6 @@ class Question extends Component {
             stem: nextProps.stem,
             question: nextProps.question,
             attachment: nextProps.attachment,
-            filename: nextProps.filename,
-            filetype: nextProps.filetype,
             type: nextProps.type,
             openEnded: nextProps.openEnded,
             mcq1: nextProps.mcq1,
@@ -77,8 +73,6 @@ class Question extends Component {
             stem: this.state.stem,
             question: this.state.question,
             attachment: this.state.attachment,
-            filename: this.state.filename,
-            filetype: this.state.filetype,
             type: this.state.type,
             openEnded: this.state.openEnded,
             mcq1: this.state.mcq1,
@@ -182,16 +176,9 @@ class Question extends Component {
     }
 
     handleFile(e){
-        const reader = new FileReader();
-        const file = e.target.files[0];
-        reader.onload = (upload) => {
-            this.setState({
-                attachment: upload.target.result,
-                filename: file.name,
-                filetype: file.type,
-            });
-        };
-        reader.readAsDataURL(file);
+        const value = e.target.files[0];
+        this.setState({ file: value });
+        this.update(value, "attachment");
     }
 
     handleStemChange(e){

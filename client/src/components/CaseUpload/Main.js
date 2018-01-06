@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Accordion, Panel, Well } from 'react-bootstrap';
+import { Button, Accordion, Panel } from 'react-bootstrap';
 import { bindAll } from 'lodash';
 import Question from './Question.js';
 import Overview from './Overview.js';
 import BootstrapModal from '../UI/Modal/UploadBootstrapModal.js';
 import './Upload.css';
 import { uploadCase } from '../../actions/index';
+import axios from 'axios';
 
 class Main extends Component {
     constructor(props) {
@@ -37,8 +38,6 @@ class Main extends Component {
                     "stem": '',
                     "question": '',
                     "attachment": null,
-                    "filename": null,
-                    "filetype": null,
                     "type": "Select One",
                     "openEnded": '',
                     "mcq1": '',
@@ -130,12 +129,8 @@ class Main extends Component {
                             throw BreakException;
                         }
                     });
-                    this.props.uploadCase(this.state).then((response) => {
-                        if (response) {
-                            this.setState({vmConfirm: true});
-                        }
-                    }).catch(() => {
-                    })
+                    this.setState({vmConfirm: true});
+
 
                 } catch (e) {
                     this.setState({vmShow: true, error: error});
@@ -144,6 +139,37 @@ class Main extends Component {
             }
         }
     }
+
+    uploadFile = (file, qID) => {
+        const formData = new FormData();
+        formData.append('file',file);
+        formData.append('title',this.state.title);
+        formData.append('question',qID);
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        };
+        axios.post('/api/uploadCaseAttachment', formData, config).then(res => {
+            console.log(res);
+        });
+    }
+
+    submitCase = (e) => {
+        let questions = this.state.qnData;
+        console.log(questions);
+        for (let i=0; i<questions.length; i++){
+            let question = questions[i];
+            console.log(question.id);
+            this.uploadFile(question.attachment, question.id);
+        }
+        this.props.uploadCase(this.state).then((response) => {
+            if (response) {
+                this.setState({vm: true});
+            }
+        }).catch(() => {
+        })
+    };
 
     handleDeleteQuestion(id) {
         let questions = this.state.qnData;
@@ -157,8 +183,6 @@ class Main extends Component {
                         "stem": obj.stem,
                         "question": obj.question,
                         "attachment": obj.attachment,
-                        "filename": obj.filename,
-                        "filetype": obj.filetype,
                         "type": obj.type,
                         "openEnded": obj.openEnded,
                         "mcq1": obj.mcq1,
@@ -195,8 +219,6 @@ class Main extends Component {
                 obj.stem = details.stem;
                 obj.question = details.question;
                 obj.attachment = details.attachment;
-                obj.filename = details.filename;
-                obj.filetype = details.filetype;
                 obj.type = details.type;
                 obj.openEnded = details.openEnded;
                 obj.mcq1 = details.mcq1;
@@ -246,17 +268,13 @@ class Main extends Component {
         );
         let vmClose = () => this.setState({ vmShow: false });
         let vmConfirmClose = () => this.setState({ vmConfirm: false });
-        let vmSuccessShow = () => this.setState({ vm: true });
         let questionNodes = this.state.qnData.map((obj, index) => {
-            console.log(obj);
             return (
                 <Question
                     id={obj.id}
                     stem={obj.stem}
                     question={obj.question}
                     attachment={obj.attachment}
-                    filename={obj.filename}
-                    filetype={obj.filetype}
                     type={obj.type}
                     openEnded={obj.openEnded}
                     mcq1={obj.mcq1}
@@ -380,7 +398,7 @@ class Main extends Component {
                             <p>Before you upload the case, please ensure that all texts and attachments do not contain identifiable information eg. IC number or patient's face</p>
                         </BootstrapModal.Body>
                         <BootstrapModal.Footer>
-                            <Button onClick={vmSuccessShow}>Proceed to Submit</Button>
+                            <Button onClick={this.submitCase}>Proceed to Submit</Button>
                         </BootstrapModal.Footer>
                     </BootstrapModal>
 

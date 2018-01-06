@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import { bindAll } from 'lodash';
 import axios from 'axios';
 
 class UploadProfilePicture extends Component {
