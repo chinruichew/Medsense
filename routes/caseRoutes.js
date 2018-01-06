@@ -161,7 +161,7 @@ module.exports = app => {
                     }
                 })
             }
-            return res.status(201).send({ data: null, message: "updateCase success" });
+            return res.send({ data: jsonObject, message: "updateCase success" });
         });
     });
 
