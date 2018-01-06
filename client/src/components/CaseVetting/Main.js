@@ -148,7 +148,6 @@ class Main extends Component {
             }
         };
         axios.post('/api/uploadCaseAttachment', formData, config).then(res => {
-            console.log(res);
         });
     }
 
@@ -162,7 +161,6 @@ class Main extends Component {
 
             for (let i=0; i<questions.length; i++){
                 let question = questions[i];
-                console.log(question.attachment)
                 this.uploadFile(question.attachment, caseID, question.id);
             }
         });
@@ -241,6 +239,7 @@ class Main extends Component {
     }
 
     handleUpdateOverview(details) {
+        console.log(this.state.qnData);
         this.setState({
             title: details.title,
             difficulty: details.difficulty,

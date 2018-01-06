@@ -63,7 +63,8 @@ module.exports = app => {
             const objID = fields.objID;
             const myBucket = 'case-upload-attachments';
             const s3 = new aws.S3();
-            if (files.file!==undefined){
+            console.log(files.file);
+            if (files.file!==undefined && files.file!==null){
                 const file = files.file[0];
                 fs.readFile(file.path, function (err, data) {
                     const params = {Bucket: myBucket, Key: caseID + "/question" + qID + ".jpg", Body: data, ACL: 'public-read'};
@@ -72,6 +73,7 @@ module.exports = app => {
                             console.log(err);
                             res.send("done");
                         } else {
+                            console.log("hi");
                             Question.update({_id: objID}, {attachment: "https://s3-ap-southeast-1.amazonaws.com/case-upload-attachments/" + caseID + "/question" + qID + ".jpg" }, function (err, response) {
                                 console.log("Successfully uploaded data to case-upload-attachments/" + caseID + "/question" + qID + ".jpg");
                                 res.send("done");
@@ -85,12 +87,12 @@ module.exports = app => {
                 s3.getObject(params, function(err, data) {
                     // Handle any error and exit
                     if (err) {
-                        console.log(err);
+                        // console.log(err);
                     } else {
                         const params = {Bucket: myBucket, Delete: {Objects:[{Key:caseID + "/question" + qID + ".jpg"}]}};
                         s3.deleteObjects(params, function(err, data) {
                             if (err) {
-                                console.log(err);
+                                // console.log(err);
                             }
                         });
                     }

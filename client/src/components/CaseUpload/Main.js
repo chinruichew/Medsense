@@ -162,14 +162,15 @@ class Main extends Component {
         }).then(res => {
             const caseID = res.data.data.case;
             let questions = res.data.data.question;
+            let qnData = this.state.qnData;
             console.log(res)
             this.setState({vm: true});
             // let questions = this.state.qnData;
 
             for (let i=0; i<questions.length; i++){
                 let question = questions[i];
-                console.log(question.attachment)
-                this.uploadFile(question.attachment, caseID, question.id, question._id);
+                let qn = qnData[i]
+                this.uploadFile(qn.attachment, caseID, question.id, question._id);
             }
         });
 

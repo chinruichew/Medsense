@@ -48,7 +48,7 @@ module.exports = app => {
                 id: jsonObject[prop]['id'],
                 stem: jsonObject[prop]['stem'],
                 question: jsonObject[prop]['question'],
-                attachment: jsonObject[prop]['attachment'],
+                attachment: null,
                 type: jsonObject[prop]['type'],
                 openEnded: jsonObject[prop]['openEnded'],
                 pearl: jsonObject[prop]['pearl'],
