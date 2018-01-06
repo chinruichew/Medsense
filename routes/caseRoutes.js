@@ -72,7 +72,7 @@ module.exports = app => {
             newCase.questions.push(newQuestion._id);
             newCase.save();
         }
-        return res.status(201).send({ data: null, message: "uploadCase success" });
+        return res.send({ data: jsonObject, message: "uploadCase success" });
     });
 
     app.post('/api/updateCase', function (req, res) {
