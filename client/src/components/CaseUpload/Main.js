@@ -156,13 +156,19 @@ class Main extends Component {
     }
 
     submitCase = (e) => {
-        this.props.uploadCase(this.state).then((response) => {
-            if (response) {
-                console.log(response.payload);
-                this.setState({vm: true});
-            }
-        }).catch(() => {
-        })
+        // this.props.uploadCase(this.state).then((response) => {
+        //     if (response) {
+        //         console.log(response.payload);
+        //         this.setState({vm: true});
+        //     }
+        // }).catch(() => {
+        // })
+
+        axios.post('/api/uploadCase', {
+            values: this.state
+        }).then(res => {
+            console.log(res.data.data);
+        });
 
         let questions = this.state.qnData;
         console.log(questions);
