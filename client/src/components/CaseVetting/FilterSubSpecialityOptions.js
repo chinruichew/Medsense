@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {FormControl} from "react-bootstrap";
 import axios from 'axios';
 
-class FilterPendingOptions extends Component {
+class FilterSubSpecialityOptions extends Component {
     state = {
         subSpecialityList: null
     };
@@ -36,4 +36,4 @@ class FilterPendingOptions extends Component {
     }
 }
 
-export default FilterPendingOptions;
+export default FilterSubSpecialityOptions;

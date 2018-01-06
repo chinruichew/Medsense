@@ -10,18 +10,44 @@ class VettedCases extends Component {
 
     renderVettedCases() {
         return this.props.vettedCases.reverse().map((vettedCase, index) => {
-            let timeStamp = vettedCase.timestamp.split(" ");
-            let date = timeStamp[2]+" "+timeStamp[1]+" "+timeStamp[3];
-            let timeArr = timeStamp[4].split(":");
-            let time = timeArr[0]+":"+timeArr[1];
-            return(
-                <tr align="center" key={vettedCase._id}>
-                    <td>{vettedCase.title}</td>
-                    <td>{vettedCase.subspeciality}</td>
-                    <td>{vettedCase.authorname}</td>
-                    <td>{date}<br/>{time}</td>
-                </tr>
-            );
+            switch(this.props.filterVetted) {
+                case 'All':
+                    let timeStamp = vettedCase.timestamp.split(" ");
+                    let date = timeStamp[2]+" "+timeStamp[1]+" "+timeStamp[3];
+                    let timeArr = timeStamp[4].split(":");
+                    let time = timeArr[0]+":"+timeArr[1];
+                    return(
+                        <tr align="center" key={vettedCase._id}>
+                            <td>{vettedCase.title}</td>
+                            <td>{vettedCase.subspeciality}</td>
+                            <td>{vettedCase.authorname}</td>
+                            <td>{date}<br/>{time}</td>
+                        </tr>
+                    );
+                default:
+                    let toRenderCase = false;
+                    for(let i = 0; i < vettedCase.subspeciality.length; i++) {
+                        const vettedCaseSubspeciality = vettedCase.subspeciality[i];
+                        if(vettedCaseSubspeciality === this.props.filterVetted) {
+                            toRenderCase = true;
+                        }
+                    }
+                    if(toRenderCase) {
+                        let timeStamp = vettedCase.timestamp.split(" ");
+                        let date = timeStamp[2]+" "+timeStamp[1]+" "+timeStamp[3];
+                        let timeArr = timeStamp[4].split(":");
+                        let time = timeArr[0]+":"+timeArr[1];
+                        return(
+                            <tr align="center" key={vettedCase._id}>
+                                <td>{vettedCase.title}</td>
+                                <td>{vettedCase.subspeciality}</td>
+                                <td>{vettedCase.authorname}</td>
+                                <td>{date}<br/>{time}</td>
+                            </tr>
+                        );
+                    }
+                    return;
+            }
         });
     }
 

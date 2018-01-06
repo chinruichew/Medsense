@@ -6,7 +6,7 @@ import VettedCases from './VettedCases';
 import VettingEditing from './VettingEditing';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
-import FilterPendingOptions from "./FilterPendingOptions";
+import FilterSubSpecialityOptions from "./FilterSubSpecialityOptions";
 
 class Vetting extends Component {
     state = {
@@ -26,7 +26,6 @@ class Vetting extends Component {
     }
 
     renderUnvetCases() {
-        console.log(this.state.filterPending);
         return this.props.cases.reverse().map((vetCase, index) => {
             switch(this.state.filterPending) {
                 case 'All':
@@ -66,6 +65,7 @@ class Vetting extends Component {
                             </tr>
                         );
                     }
+                    return;
             }
         });
     }
@@ -106,7 +106,7 @@ class Vetting extends Component {
                                                 </Col>
 
                                                 <Col sm={3}>
-                                                    <FilterPendingOptions value={this.state.filterPending} name='filterPending' change={(e)=>this.handleFilterPendingChange(e)} />
+                                                    <FilterSubSpecialityOptions value={this.state.filterPending} name='filterPending' change={(e)=>this.handleFilterPendingChange(e)} />
                                                 </Col>
                                             </FormGroup>
                                         </Form>
@@ -135,17 +135,13 @@ class Vetting extends Component {
                                                 </Col>
 
                                                 <Col sm={3}>
-                                                    <FormControl componentClass="select" value={this.state.filterVetted} name="filterVetted" onChange={(e)=>this.handleFilterVettedChange(e)}>
-                                                        <option value="All">All</option>
-                                                        <option value="Sub1">Sub1</option>
-                                                        <option value="Sub2">Sub2</option>
-                                                    </FormControl>
+                                                    <FilterSubSpecialityOptions value={this.state.filterVetted} name='filterVetted' change={(e)=>this.handleFilterVettedChange(e)} />
                                                 </Col>
                                             </FormGroup>
                                         </Form>
 
                                         <br/>
-                                        <VettedCases />
+                                        <VettedCases filterVetted={this.state.filterVetted} />
                                     </Tab>
                                 </Tabs>
                             );
