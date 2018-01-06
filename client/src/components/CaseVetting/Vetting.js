@@ -6,6 +6,7 @@ import VettedCases from './VettedCases';
 import VettingEditing from './VettingEditing';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
+import FilterPendingOptions from "./FilterPendingOptions";
 
 class Vetting extends Component {
     state = {
@@ -105,39 +106,7 @@ class Vetting extends Component {
                                                 </Col>
 
                                                 <Col sm={3}>
-                                                    <FormControl componentClass="select" value={this.state.filterPending} name="filterPending" onChange={(e)=>this.handleFilterPendingChange(e)}>
-                                                        <option value="All">All</option>
-                                                        <option value="Anaesthesiology">Anaesthesiology</option>
-                                                        <option value="Breast">Breast</option>
-                                                        <option value="Cardiology">Cardiology</option>
-                                                        <option value="Colorectal">Colorectal</option>
-                                                        <option value="Ear Nose & Throat">Ear Nose & Throat</option>
-                                                        <option value="Emergency Medicine">Emergency Medicine</option>
-                                                        <option value="Endocrinology">Endocrinology</option>
-                                                        <option value="Gastroenterology & Hepatology">Gastroenterology & Hepatology</option>
-                                                        <option value="General Surgery">General Surgery</option>
-                                                        <option value="Geriatric Medicine">Geriatric Medicine</option>
-                                                        <option value="Haematology">Haematology</option>
-                                                        <option value="Head & Neck">Head & Neck</option>
-                                                        <option value="Hepato-pancreato-biliary">Hepato-pancreato-biliary</option>
-                                                        <option value="Infectious Diseases">Infectious Diseases</option>
-                                                        <option value="Internal Medicine">Internal Medicine</option>
-                                                        <option value="Medical Oncology">Medical Oncology</option>
-                                                        <option value="Neonatal">Neonatal</option>
-                                                        <option value="Neurology">Neurology</option>
-                                                        <option value="Obstetrics & Gynaecology">Obstetrics & Gynaecology</option>
-                                                        <option value="Ophthalmology">Ophthalmology</option>
-                                                        <option value="Palliative Medicine">Palliative Medicine</option>
-                                                        <option value="Psychiatry">Psychiatry</option>
-                                                        <option value="Rehabilitation Medicine">Rehabilitation Medicine</option>
-                                                        <option value="Renal Medicine">Renal Medicine</option>
-                                                        <option value="Respiratory & Critical Care Medicine">Respiratory & Critical Care Medicine</option>
-                                                        <option value="Rheumatology & Immunology">Rheumatology & Immunology</option>
-                                                        <option value="Surgical Oncology">Surgical Oncology</option>
-                                                        <option value="Upper Gastrointestinal & Bariatric Surgery">Upper Gastrointestinal & Bariatric Surgery</option>
-                                                        <option value="Urology">Urology</option>
-                                                        <option value="Vascular Surgery">Vascular Surgery</option>
-                                                    </FormControl>
+                                                    <FilterPendingOptions value={this.state.filterPending} name='filterPending' change={(e)=>this.handleFilterPendingChange(e)} />
                                                 </Col>
                                             </FormGroup>
                                         </Form>

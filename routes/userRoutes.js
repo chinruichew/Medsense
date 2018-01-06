@@ -49,5 +49,11 @@ module.exports = app => {
             }
         });
         return res.status(201).send({ data: null, message: "updated" });
-    })
+    });
+
+    app.get('/api/getSubSpeciality', function(req, res) {
+        User.findById(req.session.user._id, function(err, user) {
+            res.send(user.subspeciality.split(","));
+        });
+    });
 };
