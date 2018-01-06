@@ -385,6 +385,8 @@ class Question extends Component {
                             <FormControl type="file" onChange={(e)=>this.handleFile(e)} />
                         </FormGroup>
 
+                        <img src={this.state.attachment} alt="No attachment was added."/>
+
                         <FormGroup controlId="formControlsType">
                             <ControlLabel style={{ fontSize: "150%" }}>Question Type<span style={{color:"red"}}>*</span></ControlLabel>
                             <FormControl componentClass="select" value={this.state.type} name="type" onChange={(e)=>this.handleTypeChange(e)}>

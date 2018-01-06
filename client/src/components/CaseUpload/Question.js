@@ -182,7 +182,6 @@ class Question extends Component {
     handleFile(e){
         const value = e.target.files[0];
         this.setState({ file: value });
-        console.log(value);
         this.update(value, "attachment");
     }
 

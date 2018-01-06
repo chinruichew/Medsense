@@ -140,11 +140,12 @@ class Main extends Component {
         }
     }
 
-    uploadFile = (file, qID) => {
+    uploadFile = (file, caseID, qID, objID) => {
         const formData = new FormData();
         formData.append('file',file);
-        formData.append('title',this.state.title);
-        formData.append('question',qID);
+        formData.append('caseID',caseID);
+        formData.append('qID',qID);
+        formData.append('objID',objID);
         const config = {
             headers: {
                 'content-type': 'multipart/form-data'
@@ -156,28 +157,23 @@ class Main extends Component {
     }
 
     submitCase = (e) => {
-        // this.props.uploadCase(this.state).then((response) => {
-        //     if (response) {
-        //         console.log(response.payload);
-        //         this.setState({vm: true});
-        //     }
-        // }).catch(() => {
-        // })
-
         axios.post('/api/uploadCase', {
             values: this.state
         }).then(res => {
-            console.log(res.data.data);
+            const caseID = res.data.data.case;
+            let questions = res.data.data.question;
+            console.log(res)
+            this.setState({vm: true});
+            // let questions = this.state.qnData;
+
+            for (let i=0; i<questions.length; i++){
+                let question = questions[i];
+                console.log(question.attachment)
+                this.uploadFile(question.attachment, caseID, question.id, question._id);
+            }
         });
 
-        let questions = this.state.qnData;
-        console.log(questions);
-        for (let i=0; i<questions.length; i++){
-            let question = questions[i];
-            if (questions.attachment) {
-                this.uploadFile(question.attachment, question.id);
-            }
-        }
+
     };
 
     handleDeleteQuestion(id) {
@@ -307,16 +303,18 @@ class Main extends Component {
         });
 
         let stems = this.state.qnData.map((obj, index) => {
+            let stem
             if (obj.id===1){
-                obj.stem='';
+                stem='';
+            } else {
+                stem=obj.stem;
             }
             return (
                 <div className="stem">
                     <div className="stem-label">
                         Question {obj.id}
                     </div>
-                        {obj.stem}
-                        {obj.stem}
+                        {stem}
                 </div>
             );
         });

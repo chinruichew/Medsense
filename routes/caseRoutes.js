@@ -41,14 +41,14 @@ module.exports = app => {
         }
 
         const jsonObject = req.body.values.qnData;
+
+        let questions=[];
         for (const prop in jsonObject) {
             const newQuestion = new Question({
                 id: jsonObject[prop]['id'],
                 stem: jsonObject[prop]['stem'],
                 question: jsonObject[prop]['question'],
                 attachment: jsonObject[prop]['attachment'],
-                filename: jsonObject[prop]['filename'],
-                filetype: jsonObject[prop]['filetype'],
                 type: jsonObject[prop]['type'],
                 openEnded: jsonObject[prop]['openEnded'],
                 pearl: jsonObject[prop]['pearl'],
@@ -71,8 +71,9 @@ module.exports = app => {
             newQuestion.save();
             newCase.questions.push(newQuestion._id);
             newCase.save();
+            questions.push(newQuestion);
         }
-        return res.send({ data: newCase._id, message: "uploadCase success" });
+        return res.send({ data: {case:newCase._id, question:questions}, message: "uploadCase success" });
     });
 
     app.post('/api/updateCase', function (req, res) {
@@ -134,8 +135,6 @@ module.exports = app => {
                             stem: jsonObject[prop]['stem'],
                             question: jsonObject[prop]['question'],
                             attachment: jsonObject[prop]['attachment'],
-                            filename: jsonObject[prop]['filename'],
-                            filetype: jsonObject[prop]['filetype'],
                             type: jsonObject[prop]['type'],
                             openEnded: jsonObject[prop]['openEnded'],
                             pearl: jsonObject[prop]['pearl'],

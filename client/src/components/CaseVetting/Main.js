@@ -7,6 +7,7 @@ import Overview from './Overview.js';
 import BootstrapModal from '../UI/Modal/VettingBootstrapModal.js';
 import '../CaseUpload/Upload.css';
 import { updateCase } from '../../actions/index';
+import axios from 'axios';
 
 class Main extends Component {
     constructor(props) {
@@ -136,13 +137,36 @@ class Main extends Component {
         }
     }
 
-    submitCase = (e) => {
-        this.props.updateCase(this.state).then((response) => {
-            if (response) {
-                this.setState({ vm: true });
+    uploadFile = (file, caseID, qID) => {
+        const formData = new FormData();
+        formData.append('file',file);
+        formData.append('caseID',caseID);
+        formData.append('qID',qID);
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data'
             }
-        }).catch(() => {
-        })
+        };
+        axios.post('/api/uploadCaseAttachment', formData, config).then(res => {
+            console.log(res);
+        });
+    }
+
+    submitCase = (e) => {
+        axios.post('/api/updateCase', {
+            values: this.state
+        }).then(res => {
+            const caseID = res.data.data;
+            this.setState({vm: true});
+            let questions = this.state.qnData;
+
+            for (let i=0; i<questions.length; i++){
+                let question = questions[i];
+                console.log(question.attachment)
+                this.uploadFile(question.attachment, caseID, question.id);
+            }
+        });
+
     }
 
     handleDeleteQuestion(id) {
@@ -274,16 +298,18 @@ class Main extends Component {
         });
 
         let stems = this.state.qnData.map((obj, index) => {
-
+            let stem
             if (obj.id===1){
-                obj.stem='';
+                stem='';
+            } else {
+                stem=obj.stem;
             }
             return (
                 <div className="stem">
                     <div className="stem-label">
                         Question {obj.id}
                     </div>
-                    {obj.stem}
+                    {stem}
                 </div>
             );
         });
