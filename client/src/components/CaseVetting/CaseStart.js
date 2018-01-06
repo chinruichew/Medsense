@@ -19,6 +19,8 @@ class CaseStart extends Component {
                             <Main authid={this.props.auth._id}
                                 authname={this.props.auth.username} />
                         );
+                    default:
+                        return;
                 }
         }
     }

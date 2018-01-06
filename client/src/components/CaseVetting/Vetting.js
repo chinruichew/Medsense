@@ -8,7 +8,7 @@ import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 
 class Vetting extends Component {
-    state= {
+    state = {
         showVetView: false,
         vetId: '',
         filterPending:"All",

@@ -35,7 +35,7 @@ class UploadProfilePicture extends Component {
     render() {
         return(
             <div className="main-login main-center">
-                <img src="./medsense_logo.png" style={{height: '120px', width: '300px'}} />
+                <img src="./medsense_logo.png" style={{height: '120px', width: '300px'}} alt="Medsense" />
                 {/*Note*/}
                 <form onSubmit={this.onFormSubmit} className="form-horizontal" method="post" action="/api/uploadProfileImage" encType="multipart/form-data">
                     <div className="form-group">

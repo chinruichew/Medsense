@@ -33,6 +33,8 @@ class MainProfile extends Component {
                                 year={this.props.auth.year}
                                 school={this.props.auth.school} />
                         );
+                    default:
+                        return;
                 }
         }
     }

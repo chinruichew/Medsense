@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchCaseById } from '../../actions';
-import { bindAll } from 'lodash';
-import dispatch from "redux/es/createStore";
 import VetOne from './VetOne';
 
 class VettingEditing extends Component {
