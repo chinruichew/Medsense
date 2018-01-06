@@ -6,32 +6,54 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const keys = require('./config/keys');
 require('./models/User');
+
 const app = express();
 
 /* Start of MongoDB Connection */
-const config = {
-    username:'ec2-user',
-    host: keys.mongoURI,
-    port: 22,
-    dstPort:27017,
-    localPort: 2000,
-    privateKey: require('fs').readFileSync('./id_rsa')
+const aws = require('aws-sdk');
+aws.config.update({
+    accessKeyId: keys.awsAccessKeyId,
+    secretAccessKey: keys.awsSecretKey
+});
+const s3 = new aws.S3();
+const getParams = {
+    Bucket: 'medsense-credentials', // your bucket name,
+    Key: 'id_rsa' // path to the object you're looking for
 };
-const tunnel = require('tunnel-ssh');
-const server = tunnel(config, function (error, server) {
+s3.getObject(getParams, function(err, data) {
+    // Handle any error and exit
+    if (err)
+        return err;
 
-    if(error){
-        console.log("SSH connection error: " + error);
-    }
+    // No error happened
+    // Convert Body from a Buffer to a String
 
-    mongoose.connect('mongodb://127.0.0.1:2000/Medsense');
+    const credentialData = data.Body.toString('utf-8'); // Use the encoding necessary
 
-    const db = mongoose.connection;
-    db.on('error', console.error.bind(console, 'DB connection error:'));
-    db.once('open', function() {
-        console.log("DB connection successful");
+    const config = {
+        username:'ec2-user',
+        host: keys.mongoURI,
+        port: 22,
+        dstPort:27017,
+        localPort: 2000,
+        privateKey: credentialData
+    };
+    const tunnel = require('tunnel-ssh');
+    const server = tunnel(config, function (error, server) {
+
+        if(error){
+            console.log("SSH connection error: " + error);
+        }
+
+        mongoose.connect('mongodb://127.0.0.1:2000/Medsense');
+
+        const db = mongoose.connection;
+        db.on('error', console.error.bind(console, 'DB connection error:'));
+        db.once('open', function() {
+            console.log("DB connection successful");
+        });
+
     });
-
 });
 
 /* End of MongoDB Connection */
