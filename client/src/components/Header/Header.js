@@ -20,7 +20,6 @@ class Header extends Component {
                 );
             default:
                 // Check for user type
-                console.log(this.props.auth);
                 switch (this.props.auth.usertype) {
                     case 'professor':
                         return(
@@ -48,6 +47,8 @@ class Header extends Component {
                                 <NavLink to="/profile"><Image src={this.props.auth.profilepicture} className="img-circle" style={{height: '45px', width: '45px'}} /></NavLink>
                             </Nav>
                         );
+                    default:
+                        return;
                 }
         }
     }

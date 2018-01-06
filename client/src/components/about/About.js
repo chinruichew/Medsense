@@ -90,7 +90,7 @@ class About extends Component {
                 {/*</div>*/}
                 <div className="row">
                     <div className="col-md-offset-2 col-md-8 text-center">
-                        <img src="./medsense_logo.png" style={{height: '200px', width: '550px'}} />
+                        <img src="./medsense_logo.png" style={{height: '200px', width: '550px'}} alt="Medsense" />
                     </div>
                 </div>
                 <div className="row">

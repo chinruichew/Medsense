@@ -43,15 +43,6 @@ class StudentSignup extends Component {
     }
 
     render() {
-        let imagepreview;
-        if (this.state.profilepicture) {
-            imagepreview = (
-                <div>
-                    <img className='image-preview' src={this.state.profilepicture} width="80" height="80" />
-                </div>
-            );
-        }
-
         return (
             <div className="container-fluid">
                 {this.renderContent()}
