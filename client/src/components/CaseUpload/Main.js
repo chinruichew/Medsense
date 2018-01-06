@@ -156,19 +156,22 @@ class Main extends Component {
     }
 
     submitCase = (e) => {
-        let questions = this.state.qnData;
-        console.log(questions);
-        for (let i=0; i<questions.length; i++){
-            let question = questions[i];
-            console.log(question.id);
-            this.uploadFile(question.attachment, question.id);
-        }
         this.props.uploadCase(this.state).then((response) => {
             if (response) {
+                console.log(response.payload);
                 this.setState({vm: true});
             }
         }).catch(() => {
         })
+
+        let questions = this.state.qnData;
+        console.log(questions);
+        for (let i=0; i<questions.length; i++){
+            let question = questions[i];
+            if (questions.attachment) {
+                this.uploadFile(question.attachment, question.id);
+            }
+        }
     };
 
     handleDeleteQuestion(id) {
@@ -298,18 +301,16 @@ class Main extends Component {
         });
 
         let stems = this.state.qnData.map((obj, index) => {
-            let stem
             if (obj.id===1){
-                stem='';
-            } else {
-                stem=obj.stem;
+                obj.stem='';
             }
             return (
                 <div className="stem">
                     <div className="stem-label">
                         Question {obj.id}
                     </div>
-                        {stem}
+                        {obj.stem}
+                        {obj.stem}
                 </div>
             );
         });
