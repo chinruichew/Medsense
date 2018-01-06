@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import {Form, Button, Tabs, Tab, FormGroup, FormControl, Table, ControlLabel, Col} from 'react-bootstrap';
+import {Form, Button, Tabs, Tab, FormGroup, Table, ControlLabel, Col} from 'react-bootstrap';
 import {fetchUnvetCases} from '../../actions';
 import VettedCases from './VettedCases';
 import VettingEditing from './VettingEditing';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
+
 import FilterSubSpecialityOptions from "./FilterSubSpecialityOptions";
 
 class Vetting extends Component {
@@ -65,7 +66,6 @@ class Vetting extends Component {
                             </tr>
                         );
                     }
-                    return;
             }
         });
     }
