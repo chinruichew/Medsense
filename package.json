@@ -9,12 +9,12 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "server": "nodemon index.js",
+    "start": "node index.js --verbose",
+    "server": "nodemon index.js --verbose",
     "client": "npm run start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "deploy": "npm run build --prefix client && git add . && git commit -m \"aws deploy\" && git push origin master && eb deploy && eb open",
-    "update": "npm install && npm install --prefix client"
+    "deploy": "npm run build --prefix client --verbose && git add . --verbose && git commit -m \"aws deploy\" --verbose && git push origin master --verbose && eb deploy --verbose && eb open --verbose",
+    "update": "npm install --verbose && npm install --prefix client --verbose"
   },
   "repository": {
     "type": "git",
