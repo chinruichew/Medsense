@@ -82,6 +82,8 @@ require('./routes/authRoutes')(app);
 require('./routes/caseRoutes')(app);
 require('./routes/userRoutes')(app);
 require('./routes/s3Routes')(app);
+require('./routes/adminRoutes')(app);
+
 
 if (process.env.NODE_ENV === 'production') {
     // Express will serve up production assets
