@@ -12,6 +12,7 @@ import Profile from './Profile/MainProfile';
 import Dashboard from './Dashboard';
 import CaseVetting from './CaseVetting/Vetting';
 import CaseStart from './CaseUpload/CaseStart';
+import CaseChallenge from './CaseChallenge/Main';
 
 import './App.css';
 
@@ -33,6 +34,7 @@ class App extends Component {
                     <Route exact path="/vetting" component={CaseVetting} />
                     <Route exact path="/profile" component={Profile} />
                     <Route exact path="/dashboard" component={Dashboard} />
+                    <Route exact path="/case_challenge" component={CaseChallenge} />
                     <Route exact path="/" component={About} />
                 </div>
             </BrowserRouter>
