@@ -69,6 +69,16 @@ module.exports = app => {
         });
     });
 
+    app.post('/api/deleteStudent', function (req, res) {
+        User.find({ _id: req.body.values.studentid }, function (err, deleteStudent) { }).remove().exec();
+        return res.status(201).send({ data: null, message: "deleteStudent success" });
+    });
+
+    app.post('/api/deleteProfessor', function (req, res) {
+        User.find({ _id: req.body.values.professorid }, function (err, deleteProfessor) { }).remove().exec();
+        return res.status(201).send({ data: null, message: "deleteProfessor success" });
+    });
+
     app.post('/api/addApproach', function (req, res) {
         const newApproach = new Approach({
             approach: req.body.approach
