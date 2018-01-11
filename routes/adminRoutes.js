@@ -86,6 +86,11 @@ module.exports = app => {
         newApproach.save()
         return res.status(201).send({ data: null, message: "approach success" });
     });
+
+    app.post('/api/fetchApproaches', async (req, res) => {
+        const approaches = await Approach.find({}).lean().distinct('approach');
+        res.send(approaches);
+    });
 };
 
 
