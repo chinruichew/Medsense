@@ -6,3 +6,4 @@ export const UPDATE_PROFESSOR = 'update_professor';
 export const UPDATE_STUDENT = 'update_student';
 export const UPLOAD_CASE = 'upload_case';
 export const UPDATE_CASE = 'update_case';
+export const FETCH_RANDOM_CASE = 'fetch_random_case';

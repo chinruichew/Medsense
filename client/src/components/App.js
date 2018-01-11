@@ -15,6 +15,7 @@ import CaseStart from './CaseUpload/CaseStart';
 import CaseChallenge from './CaseChallenge/Main';
 
 import './App.css';
+import Temp from "./CaseChallenge/Temp";
 
 class App extends Component {
     componentDidMount() {
@@ -35,6 +36,7 @@ class App extends Component {
                     <Route exact path="/profile" component={Profile} />
                     <Route exact path="/dashboard" component={Dashboard} />
                     <Route exact path="/case_challenge" component={CaseChallenge} />
+                    <Route exact path="/test" component={Temp} />
                     <Route exact path="/" component={About} />
                 </div>
             </BrowserRouter>
