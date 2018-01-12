@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const compression = require('compression');
 const slug = require('slug');
+const chalk = require('chalk');
 const keys = require('./config/keys');
 require('./models/User');
 
@@ -44,7 +45,7 @@ s3.getObject(getParams, function(err, data) {
     const server = tunnel(config, function (error, server) {
 
         if(error){
-            console.log("SSH connection error: " + error);
+            console.log(chalk.red.underline.bold("SSH connection error: " + error));
         }
 
         mongoose.connect('mongodb://127.0.0.1:2000/Medsense');
@@ -52,7 +53,7 @@ s3.getObject(getParams, function(err, data) {
         const db = mongoose.connection;
         db.on('error', console.error.bind(console, 'DB connection error:'));
         db.once('open', function() {
-            console.log("DB connection successful");
+            console.log(chalk.green.underline.bold("DB connection successful!"));
         });
 
     });
