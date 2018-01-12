@@ -5,11 +5,12 @@ const Question = require('../models/Question');
 const Approach = require('../models/Approach')
 
 module.exports = app => {
-    app.get('/api/fetchAllCases', async (req, res) => {
+    app.get('/api/fetchAdminCases', async (req, res) => {
         const cases = await Case.find({}).select().populate({
             path: 'questions',
             model: 'questions'
         })
+        console.log(cases);
         res.send(cases);
     });
 
