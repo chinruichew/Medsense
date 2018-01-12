@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, ButtonToolbar, FormGroup, ControlLabel, FormControl, Table } from 'react-bootstrap';
+import { Button, ButtonToolbar, FormGroup, ControlLabel, FormControl, Table, Modal } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import { bindAll } from 'lodash';
 import Main from './Main';
 import Admin from './Admin';
 import UserManager from './UserManager';
+import { fetchCaseById } from '../../actions';
 
 import './Admin.css';
 
@@ -13,6 +14,8 @@ class CaseManager extends Component {
     constructor(props) {
         super(props);
         this.state = {
+
+            display: 'case',
             adminCases: this.props.adminCases,
             title: this.props.title,
             difficulty: this.props.difficulty,
@@ -21,17 +24,33 @@ class CaseManager extends Component {
             approach: this.props.approach,
             scenario: this.props.scenario,
             learning: this.props.learning,
+            displayModal: false,
+            case: null,
+            vetId: ''
         };
         bindAll(this, 'handleTitleChange', 'handleDifficultyChange', 'handleSpecialityChange', 'handleSubspecialityChange',
-            'handleApproachChange', 'handleScenarioChange', 'setSubspeciality', 'setName', 'setSpeciality', 'setApproach', 'setDifficulty');
+            'handleApproachChange', 'handleScenarioChange', 'setSubspeciality', 'setName', 'setSpeciality', 'setApproach', 'setDifficulty', 'handleOpenModal', 'handleCloseModal');
+    }
+    
+    componentDidMount() {
+        this.props.fetchCaseById(this.state);
+        console.log(this.state.vetId)
     }
 
-    state = {
-        display: 'case'
-    };
+
+
+    handleOpenModal(id) {
+        this.setState({ displayModal: true, vetId: id });
+        console.log(this.state.vetId)
+    }
+
+    handleCloseModal() {
+        this.setState({ displayModal: false });
+    }
+
 
     searchCases(e) {
-        
+
     }
 
     handleTitleChange(e) {
@@ -255,7 +274,7 @@ class CaseManager extends Component {
                 </FormGroup>
             );
         }
-        return;
+
     }
 
     setDifficulty() {
@@ -305,7 +324,7 @@ class CaseManager extends Component {
                 <td>{item.difficulty}</td>
                 <td>{item.authorname}</td>
                 <td>{item.timestamp.split(" ")[2] + " " + item.timestamp.split(" ")[1] + " " + item.timestamp.split(" ")[3]}<br />{item.timestamp.split(" ")[4].split(":")[0] + ":" + item.timestamp.split(" ")[4].split(":")[1]}</td>
-                <td> <Button type="button" bsStyle="primary">View</Button></td >
+                <td> <Button type="button" bsStyle="primary" onClick={(e)=>this.handleOpenModal(item._id)}>View</Button></td >
             </tr>
 
         ))
@@ -373,7 +392,7 @@ class CaseManager extends Component {
                                         </div>
                                         <div className='col-sm-6'>
                                             <center>
-                                            <Button type="button" bsSize="lg" bsStyle="primary" onClick={(e)=>this.searchCases()}> &nbsp; Search &nbsp;</Button>
+                                                <Button type="button" bsSize="lg" bsStyle="primary" onClick={(e) => this.searchCases()}> &nbsp; Search &nbsp;</Button>
                                             </center>
                                         </div>
                                     </div>
@@ -381,6 +400,7 @@ class CaseManager extends Component {
                                     <div className='col-sm-12'>
                                         {this.renderTable()}
                                     </div>
+                                    {this.renderModal()}
                                 </div>
                             );
                         }
@@ -389,8 +409,25 @@ class CaseManager extends Component {
     }
 
     renderModal() {
+        
+        
+        return (
+            <Modal show={this.state.displayModal} onHide={this.handleCloseModal}>
+                <Modal.Header closeButton>
+                    <Modal.Title>{this.props.caseById}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Modal Body
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button onClick={this.handleCloseModal}>Close</Button>
+                </Modal.Footer>
+            </Modal>
+        );
 
     }
+
+    
 
     render() {
         return (
@@ -423,4 +460,4 @@ function mapStateToProps({ auth }) {
 
 
 
-export default connect(mapStateToProps)(CaseManager);
+export default connect(mapStateToProps, { fetchCaseById })(CaseManager);

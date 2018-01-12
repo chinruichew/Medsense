@@ -5,6 +5,7 @@ import { fetchAdminCases } from '../../actions';
 import { Redirect } from 'react-router-dom';
 import Main from './Main';
 import CaseManager from './CaseManager';
+import UserManager from './UserManager';
 import './Admin.css';
 import axios from 'axios';
 
@@ -56,10 +57,16 @@ class Admin extends Component {
                                     <br />
                                 </div>
                             );
-                        } else {
+                        } else if(this.state.display === 'case') {
                             return (
                                 <div>
                                     <CaseManager adminCases={this.props.adminCases} />
+                                </div>
+                            );
+                        } else if (this.state.display === 'user'){
+                            return (
+                                <div>
+                                    <UserManager/>
                                 </div>
                             );
                         }
