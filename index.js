@@ -4,6 +4,7 @@ const cookieSession = require('cookie-session');
 const flash = require('connect-flash');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+const compression = require('compression');
 const keys = require('./config/keys');
 require('./models/User');
 
@@ -76,6 +77,15 @@ app.use(
     })
 );
 app.use(flash());
+
+function shouldCompress(req, res) {
+    if (req.headers['x-no-compression']) {
+        return false;
+    }
+
+    return compression.filter(req, res);
+}
+app.use(compression({filter: shouldCompress}));
 /* End of Middleware configuration */
 
 require('./routes/authRoutes')(app);
