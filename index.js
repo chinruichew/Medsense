@@ -67,7 +67,7 @@ router.use(function (req, res, next) {
 app.use('/api', router);
 
 /* Start of Middleware configuration */
-app.use(morgan('dev'));
+app.use(morgan('combined'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(
