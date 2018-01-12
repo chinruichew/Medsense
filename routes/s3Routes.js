@@ -3,6 +3,8 @@ const keys = require('../config/keys.js');
 const multiparty = require('multiparty');
 const fs = require('fs-extra');
 const mongoose = require('mongoose');
+const mime = require('mime-types');
+
 const User = mongoose.model('users');
 const Question = mongoose.model('questions');
 
@@ -35,6 +37,7 @@ module.exports = app => {
         const form = new multiparty.Form();
         form.parse(req, function(err, fields, files) {
             const file = files.file[0];
+            console.log("mime is: ");
             fs.readFile(file.path, function (err, data) {
                 const s3 = new aws.S3();
                 const myBucket = 'profile-picture-images';
