@@ -5,6 +5,7 @@ const flash = require('connect-flash');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const compression = require('compression');
+const slug = require('slug');
 const keys = require('./config/keys');
 require('./models/User');
 
@@ -56,7 +57,6 @@ s3.getObject(getParams, function(err, data) {
 
     });
 });
-
 /* End of MongoDB Connection */
 
 const router = express.Router();
@@ -87,6 +87,26 @@ function shouldCompress(req, res) {
 }
 app.use(compression({filter: shouldCompress}));
 /* End of Middleware configuration */
+
+/* Start of Slug URL String configuration */
+slug.defaults.mode ='pretty';
+slug.defaults.modes['rfc3986'] = {
+    replacement: '-',      // replace spaces with replacement
+    symbols: true,         // replace unicode symbols or not
+    remove: null,          // (optional) regex to remove characters
+    lower: true,           // result in lower case
+    charmap: slug.charmap, // replace special characters
+    multicharmap: slug.multicharmap // replace multi-characters
+};
+slug.defaults.modes['pretty'] = {
+    replacement: '-',
+    symbols: true,
+    remove: /[.]/g,
+    lower: false,
+    charmap: slug.charmap,
+    multicharmap: slug.multicharmap
+};
+/* End of Slug URL String configuration */
 
 require('./routes/authRoutes')(app);
 require('./routes/caseRoutes')(app);
