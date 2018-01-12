@@ -5,6 +5,14 @@ const Question = require('../models/Question');
 const Approach = require('../models/Approach')
 
 module.exports = app => {
+    app.get('/api/fetchAllCases', async (req, res) => {
+        const cases = await Case.find({}).select().populate({
+            path: 'questions',
+            model: 'questions'
+        })
+        res.send(cases);
+    });
+
     app.post('/api/fetchFilteredCases', async (req, res) => {
         var approachArray = []
         var subspecialityArray = []
@@ -21,7 +29,10 @@ module.exports = app => {
             difficulty: req.body.difficulty,
             approach: { "$in": approachArray },
             subspeciality: { "$in": subspecialityArray }
-        }).select();
+        }).select().populate({
+            path: 'questions',
+            model: 'questions'
+        });
         res.send(cases);
     });
 

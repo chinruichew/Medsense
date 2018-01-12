@@ -5,6 +5,7 @@ import caseReducer from './caseReducer';
 import vettedCaseReducer from './vettedCaseReducer';
 import caseByIdReducer from './caseByIdReducer';
 import gameReducer from './gameReducer';
+import adminReducer from './adminReducer';
 
 export default combineReducers({
     auth: authReducer,
@@ -12,5 +13,6 @@ export default combineReducers({
     vettedCases: vettedCaseReducer,
     caseById: caseByIdReducer,
     games: gameReducer,
+    adminCases: adminReducer,
     form: reduxForm
 });
