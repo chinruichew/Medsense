@@ -7,6 +7,8 @@ const bodyParser = require('body-parser');
 const compression = require('compression');
 const slug = require('slug');
 const chalk = require('chalk');
+const colors = require('colors');
+
 const keys = require('./config/keys');
 require('./models/User');
 
