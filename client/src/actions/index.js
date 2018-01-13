@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FETCH_USER, FETCH_CASES, FETCH_VETTED_CASES, UPDATE_PROFESSOR, UPDATE_STUDENT, UPLOAD_CASE, FETCH_CASE_BY_ID, UPDATE_CASE, FETCH_RANDOM_CASE, FETCH_ADMIN_CASES, FETCH_CASE_BY_APPROACH } from './types';
+import { FETCH_USER, FETCH_CASES, FETCH_VETTED_CASES, UPDATE_PROFESSOR, UPDATE_STUDENT, UPLOAD_CASE, FETCH_CASE_BY_ID, UPDATE_CASE, FETCH_RANDOM_CASE, FETCH_ADMIN_CASES, FETCH_CASE_BY_APPROACH, FETCH_CASE_BY_SPECIALITY } from './types';
 
 export const fetchUser = () => async dispatch => {
     const res = await axios.get('/api/current_user');
@@ -24,6 +24,11 @@ export const fetchRandomCase = () => async dispatch => {
 export const fetchCaseByApproach = () => async dispatch => {
     const res = await axios.get('/api/fetchCaseByApproach');
     dispatch({ type: FETCH_CASE_BY_APPROACH, payload: res.data });
+};
+
+export const fetchCaseBySpeciality = () => async dispatch => {
+    const res = await axios.get('/api/fetchCaseBySpeciality');
+    dispatch({ type: FETCH_CASE_BY_SPECIALITY, payload: res.data });
 };
 
 export const fetchCaseById = (values) => async dispatch => {

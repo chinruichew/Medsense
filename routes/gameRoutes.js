@@ -30,6 +30,13 @@ module.exports = app => {
         res.send(result);
     });
 
+    app.get('/api/fetchCaseBySpeciality', async (req, res) => {
+        const speciality = 'Medicine';
+        const subspecialities = ['Cardiology'];
+        const result = await Case.find({status:'Vetted', speciality: speciality, subspeciality: { $all: subspecialities}});
+        console.log(result);
+        res.send(result);
+    });
 
 
 };

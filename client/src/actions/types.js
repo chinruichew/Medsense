@@ -9,3 +9,4 @@ export const UPDATE_CASE = 'update_case';
 export const FETCH_RANDOM_CASE = 'fetch_random_case';
 export const FETCH_ADMIN_CASES = "fetch_admin_cases";
 export const FETCH_CASE_BY_APPROACH = 'fetch_case_by_approach';
+export const FETCH_CASE_BY_SPECIALITY = 'fetch_case_by_speciality';

@@ -23,7 +23,7 @@ import './App.css';
 import TimeLimit from './CaseChallenge/TimeLimit';
 import MCQquestion from './CaseChallenge/MCQquestion';
 import Temp from "./CaseChallenge/Temp";
-
+import SpecialityCases from "./CaseChallenge/SpecialityCases";
 
 class App extends Component {
     componentDidMount() {
@@ -45,11 +45,12 @@ class App extends Component {
                     <Route exact path="/dashboard" component={Dashboard} />
                     <Route exact path="/case_challenge" component={CaseChallenge} />
                     <Route exact path="/test" component={Temp} />
+                    <Route exact path="/testspec" component={SpecialityCases} />
                     <Route exact path="/admin" component={Admin} />
-                    <Route exact path="/" component={About} />
                     <Route exact path="/Time_Limit" component={TimeLimit} />
                     <Route exact path="/MCQquestion" component={MCQquestion} />
                     <Route exact path="/OpenEnded" component={OpenEnded} />
+                    <Route exact path="/" component={About} />
                 </div>
             </BrowserRouter>
         );
