@@ -14,10 +14,16 @@ import CaseVetting from './CaseVetting/Vetting';
 import CaseStart from './CaseUpload/CaseStart';
 import CaseChallenge from './CaseChallenge/Main';
 import Admin from './Admin/Admin'
+import CaseTimeLimit from './CaseChallenge/TimeLimit';
+import CaseMCQ from './CaseChallenge/MCQquestion';
+import OpenEnded from './CaseChallenge/OpenEnded';
+
 
 import './App.css';
+import TimeLimit from './CaseChallenge/TimeLimit';
+import MCQquestion from './CaseChallenge/MCQquestion';
 import Temp from "./CaseChallenge/Temp";
-import ApproachCases from "./CaseChallenge/ApproachCases";
+
 
 class App extends Component {
     componentDidMount() {
@@ -39,9 +45,11 @@ class App extends Component {
                     <Route exact path="/dashboard" component={Dashboard} />
                     <Route exact path="/case_challenge" component={CaseChallenge} />
                     <Route exact path="/test" component={Temp} />
-                    <Route exact path="/testapproach" component={ApproachCases} />
                     <Route exact path="/admin" component={Admin} />
                     <Route exact path="/" component={About} />
+                    <Route exact path="/Time_Limit" component={TimeLimit} />
+                    <Route exact path="/MCQquestion" component={MCQquestion} />
+                    <Route exact path="/OpenEnded" component={OpenEnded} />
                 </div>
             </BrowserRouter>
         );
