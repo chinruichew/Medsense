@@ -4,7 +4,6 @@ import {connect} from "react-redux";
 import axios from 'axios';
 import BootstrapModal from '../UI/Modal/VettingBootstrapModal.js';
 import { Button } from 'react-bootstrap';
-import * as ReactGA from "react-ga";
 
 class Login extends Component {
     state = {
@@ -100,10 +99,6 @@ class Login extends Component {
     }
 
     render() {
-        // React GA
-        ReactGA.initialize('UA-112382826-1');
-        ReactGA.pageview(window.location.pathname + window.location.search);
-
         return(
             <div>
                 {this.renderContent()}

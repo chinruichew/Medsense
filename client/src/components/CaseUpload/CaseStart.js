@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Main from './Main';
 import { Redirect } from 'react-router-dom';
-import * as ReactGA from "react-ga";
 
 class CaseStart extends Component {
     renderContent() {
@@ -30,10 +29,6 @@ class CaseStart extends Component {
     }
 
     render() {
-        // React GA
-        ReactGA.initialize('UA-112382826-1');
-        ReactGA.pageview(window.location.pathname + window.location.search);
-
         return (
             <div>
                 {this.renderContent()}

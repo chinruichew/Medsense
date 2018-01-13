@@ -5,7 +5,6 @@ import StudentProfile from './StudentProfile';
 import { Redirect } from 'react-router-dom';
 
 import UploadProfilePicture from './UploadProfilePicture';
-import * as ReactGA from "react-ga";
 
 class MainProfile extends Component {
     renderContent() {
@@ -41,10 +40,6 @@ class MainProfile extends Component {
     }
 
     render() {
-        // React GA
-        ReactGA.initialize('UA-112382826-1');
-        ReactGA.pageview(window.location.pathname + window.location.search);
-
         return (
             <div>
                 <UploadProfilePicture />
