@@ -7,7 +7,7 @@ import Main from './Main';
 import CaseManager from './CaseManager';
 import UserManager from './UserManager';
 import './Admin.css';
-import axios from 'axios';
+import * as ReactGA from "react-ga";
 
 class Admin extends Component {
     state = {
@@ -75,6 +75,10 @@ class Admin extends Component {
     }
 
     render() {
+        // React GA
+        ReactGA.initialize('UA-112382826-1');
+        ReactGA.pageview(window.location.pathname + window.location.search);
+
         return (
             <div>
                 {this.renderContent()}

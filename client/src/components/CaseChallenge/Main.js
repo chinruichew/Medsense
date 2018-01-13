@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Button, Table, Panel } from 'react-bootstrap';
 import { bindAll } from 'lodash';
 import FindCase from './FindCase';
+import * as ReactGA from "react-ga";
 
 
 class Main extends Component {
@@ -27,6 +28,10 @@ class Main extends Component {
     }
 
     render() {
+        // React GA
+        ReactGA.initialize('UA-112382826-1');
+        ReactGA.pageview(window.location.pathname + window.location.search);
+
         return (
             <div className="container">
                 <h2>
