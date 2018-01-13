@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 
 import StudentSignUpForm from './StudentSignUpForm';
 import {connect} from "react-redux";
+import * as ReactGA from "react-ga";
 
 class StudentSignup extends Component {
     state = {
@@ -43,6 +44,10 @@ class StudentSignup extends Component {
     }
 
     render() {
+        // React GA
+        ReactGA.initialize('UA-112382826-1');
+        ReactGA.pageview(window.location.pathname + window.location.search);
+
         return (
             <div className="container-fluid">
                 {this.renderContent()}

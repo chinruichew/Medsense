@@ -4,6 +4,7 @@ import {Button, Table} from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 
 import './Home.css';
+import * as ReactGA from "react-ga";
 
 class Home extends Component {
     renderContent() {
@@ -124,6 +125,10 @@ class Home extends Component {
     }
 
     render(){
+        // React GA
+        ReactGA.initialize('UA-112382826-1');
+        ReactGA.pageview(window.location.pathname + window.location.search);
+
         return(
             <div style={{padding:'5%'}}>
                 {this.renderContent()}
