@@ -5,6 +5,13 @@ const Question = require('../models/Question');
 const Approach = require('../models/Approach')
 
 module.exports = app => {
+
+    app.get('/api/fetchAdminUsers', async (req, res) => {
+        const users = await User.find({}).select("-password");
+        res.send(users);
+    });
+
+
     app.get('/api/fetchAdminCases', async (req, res) => {
         const cases = await Case.find({}).select().populate({
             path: 'questions',

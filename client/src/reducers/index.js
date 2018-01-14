@@ -9,6 +9,7 @@ import gameReducer from './gameReducer';
 import caseByApproachReducer from './caseByApproachReducer';
 import caseBySpecialityReducer from './caseBySpecialityReducer';
 import adminReducer from './adminReducer';
+import adminUsersReducer from './adminUsersReducer';
 
 export default combineReducers({
     auth: authReducer,
@@ -20,5 +21,6 @@ export default combineReducers({
     approachCases: caseByApproachReducer,
     specialityCases: caseBySpecialityReducer,
     adminCases: adminReducer,
+    adminUsers: adminUsersReducer,
     form: reduxForm
 });

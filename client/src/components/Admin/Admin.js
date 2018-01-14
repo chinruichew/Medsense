@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, ButtonToolbar } from 'react-bootstrap';
-import { fetchAdminCases } from '../../actions';
+import { fetchAdminCases, fetchAdminUsers } from '../../actions';
 import { Redirect } from 'react-router-dom';
 import CaseManager from './CaseManager';
 import UserManager from './UserManager';
@@ -13,8 +13,9 @@ class Admin extends Component {
         display: ''
     };
 
-    componentDidMount() {
+    componentWillMount() {
         this.props.fetchAdminCases();
+        this.props.fetchAdminUsers();
     }
 
     renderContent() {
@@ -104,10 +105,10 @@ class Admin extends Component {
     }
 }
 
-function mapStateToProps({ auth, adminCases }) {
-    return { auth, adminCases};
+function mapStateToProps({ auth, adminCases, adminUsers }) {
+    return { auth, adminCases, adminUsers};
 }
 
 
 
-export default connect(mapStateToProps, { fetchAdminCases })(Admin);
+export default connect(mapStateToProps, { fetchAdminCases, fetchAdminUsers })(Admin);

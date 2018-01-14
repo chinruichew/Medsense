@@ -12,3 +12,4 @@ export const FETCH_CASE_BY_APPROACH = 'fetch_case_by_approach';
 export const FETCH_CASE_BY_SPECIALITY = 'fetch_case_by_speciality';
 export const FETCH_GAME_BY_ID = 'fetch_game_by_id';
 export const DELETE_ADMIN_CASE = 'delete_admin_case';
+export const FETCH_ADMIN_USERS = 'fetch_admin_users';

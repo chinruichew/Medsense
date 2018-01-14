@@ -252,9 +252,6 @@ class UserManager extends Component {
                     </thead>
                     {this.renderStudents()}
                     {this.renderStudents()}
-                    
-    
-    
                 </Table>
             );
         }
@@ -422,8 +419,8 @@ class UserManager extends Component {
     }
 }
 
-function mapStateToProps({ auth }) {
-    return { auth };
+function mapStateToProps({ auth, adminUsers }) {
+    return { auth, adminUsers };
 }
 
 
