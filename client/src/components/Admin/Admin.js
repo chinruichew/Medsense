@@ -19,7 +19,9 @@ class Admin extends Component {
     }
 
     renderContent() {
-        switch (this.state.auth) {
+        switch (this.props.auth) {
+            case null:
+            return;
             case false:
                 return <Redirect to='/' />;
             default:
@@ -60,7 +62,7 @@ class Admin extends Component {
                         } else if(this.state.display === 'case') {
                             return (
                                 <div>
-                                    <CaseManager adminCases={this.props.adminCases} />
+                                    <CaseManager />
                                 </div>
                             );
                         } else if (this.state.display === 'user'){
@@ -103,8 +105,8 @@ class Admin extends Component {
     }
 }
 
-function mapStateToProps({ adminCases }) {
-    return { adminCases };
+function mapStateToProps({ auth }) {
+    return { auth };
 }
 
 

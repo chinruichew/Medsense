@@ -6,7 +6,8 @@ import { bindAll } from 'lodash';
 import Main from './Main';
 import Admin from './Admin';
 import UserManager from './UserManager';
-import { fetchCaseById } from '../../actions';
+import { fetchAdminCases  } from '../../actions';
+
 
 import './Admin.css';
 
@@ -32,9 +33,9 @@ class CaseManager extends Component {
             'handleApproachChange', 'handleScenarioChange', 'setSubspeciality', 'setName', 'setSpeciality', 'setApproach', 'setDifficulty', 'handleOpenModal', 'handleCloseModal');
     }
     
+
     componentDidMount() {
-        this.props.fetchCaseById(this.state);
-        console.log(this.state.vetId)
+        this.props.fetchAdminCases();
     }
 
 
@@ -454,10 +455,10 @@ class CaseManager extends Component {
     }
 }
 
-function mapStateToProps({ auth }) {
-    return { auth };
+function mapStateToProps({ adminCases }) {
+    return { adminCases };
 }
 
 
 
-export default connect(mapStateToProps, { fetchCaseById })(CaseManager);
+export default connect(mapStateToProps, { fetchAdminCases })(CaseManager);
