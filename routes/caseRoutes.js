@@ -4,10 +4,7 @@ const Case = require('../models/Case');
 const Question = require('../models/Question');
 
 function IsValidNRIC(theNric) {
-    var patt = new RegExp(/^[STFG]\d{7}[A-Z]$/);
-    if (patt.test(theNric)) {
-        return true
-    }
+    return new RegExp(/^[STFG]\d{7}[A-Z]$/).test(theNric);
 }
 
 module.exports = app => {
@@ -32,12 +29,12 @@ module.exports = app => {
             authorname: req.body.values.authname
         });
 
-        for (var key in req.body.values.approach) {
-            newCase.approach.push(req.body.values.approach[key])
+        for (const key in req.body.values.approach) {
+            newCase.approach.push(req.body.values.approach[key]);
         }
 
-        for (var key in req.body.values.subspeciality) {
-            newCase.subspeciality.push(req.body.values.subspeciality[key])
+        for (const key in req.body.values.subspeciality) {
+            newCase.subspeciality.push(req.body.values.subspeciality[key]);
         }
 
         const jsonObject = req.body.values.qnData;
@@ -66,6 +63,7 @@ module.exports = app => {
                 check4: jsonObject[prop]['check4'],
                 check5: jsonObject[prop]['check5'],
                 check6: jsonObject[prop]['check6'],
+                timestamp: new Date(),
                 case: newCase._id
             });
             newQuestion.save();
@@ -77,22 +75,22 @@ module.exports = app => {
     });
 
     app.post('/api/updateCase', function (req, res) {
-        console.log(req.body.values.title)
+        console.log(req.body.values.title);
         Case.findById(req.body.values.id, function (err, oneCase) {
-            console.log(oneCase)
+            console.log(oneCase);
             oneCase.title = req.body.values.title;
             oneCase.difficulty = req.body.values.difficulty;
             oneCase.speciality = req.body.values.speciality;
 
-            oneCase.approach = []
-            oneCase.subspeciality = []
+            oneCase.approach = [];
+            oneCase.subspeciality = [];
 
-            for (var key in req.body.values.approach) {
-                oneCase.approach.push(req.body.values.approach[key])
+            for (const key in req.body.values.approach) {
+                oneCase.approach.push(req.body.values.approach[key]);
             }
 
-            for (var key in req.body.values.subspeciality) {
-                oneCase.subspeciality.push(req.body.values.subspeciality[key])
+            for (const key in req.body.values.subspeciality) {
+                oneCase.subspeciality.push(req.body.values.subspeciality[key]);
             }
 
             oneCase.scenario = req.body.values.scenario;
@@ -201,46 +199,41 @@ module.exports = app => {
     app.post('/api/updateCaseOnly', function (req, res) {
         Case.update({ _id: req.body.caseid }, { $set: { subspeciality: [] } }, function (err, response) { });
         Case.findById(req.body.caseid, function (err, oneCase) {
-            oneCase.casetitle = req.body.title
-            oneCase.difficulty = req.body.difficulty
-            oneCase.speciality = req.body.speciality
-            oneCase.subspeciality = req.body.subspeciality
-            oneCase.approach = req.body.aproach
-            oneCase.scenario = req.body.scenario
-            oneCase.learning = req.body.learning
-            oneCase.timestamp = req.body.timestamp
-
-            // const jsonObjectSS = JSON.parse(req.body.subspeciality);
-            // for (const prop in jsonObjectSS) {
-            //     oneCase.subspeciality.push(jsonObjectSS[prop])
-            // }
+            oneCase.casetitle = req.body.title;
+            oneCase.difficulty = req.body.difficulty;
+            oneCase.speciality = req.body.speciality;
+            oneCase.subspeciality = req.body.subspeciality;
+            oneCase.approach = req.body.aproach;
+            oneCase.scenario = req.body.scenario;
+            oneCase.learning = req.body.learning;
+            oneCase.timestamp = req.body.timestamp;
             oneCase.save();
-        })
+        });
         return res.status(201).send({ data: null, message: "updateCaseOnly success" });
-    })
+    });
 
     app.post('/api/updateQuestion', function (req, res) {
         Question.findById(req.body.questionid, function (err, oneQuestion) {
-            oneQuestion.questiontitle = req.body.title
-            oneQuestion.attachment = req.body.attachment
-            oneQuestion.type = req.body.type
-            oneQuestion.openEnded = req.body.openEnded
-            oneQuestion.pearl = req.body.pearl
-            oneQuestion.timelimit = req.body.timelimit
-            oneQuestion.reference = req.body.reference
-            oneQuestion.stem = req.body.stem
-            oneQuestion.mcq1 = req.body.mcq1
-            oneQuestion.mcq2 = req.body.mcq2
-            oneQuestion.mcq3 = req.body.mcq3
-            oneQuestion.mcq4 = req.body.mcq4
-            oneQuestion.mcq5 = req.body.mcq5
-            oneQuestion.mcq6 = req.body.mcq6
-            oneQuestion.check1 = req.body.check1
-            oneQuestion.check2 = req.body.check2
-            oneQuestion.check3 = req.body.check3
-            oneQuestion.check4 = req.body.check4
-            oneQuestion.check5 = req.body.check5
-            oneQuestion.check6 = req.body.check6
+            oneQuestion.questiontitle = req.body.title;
+            oneQuestion.attachment = req.body.attachment;
+            oneQuestion.type = req.body.type;
+            oneQuestion.openEnded = req.body.openEnded;
+            oneQuestion.pearl = req.body.pearl;
+            oneQuestion.timelimit = req.body.timelimit;
+            oneQuestion.reference = req.body.reference;
+            oneQuestion.stem = req.body.stem;
+            oneQuestion.mcq1 = req.body.mcq1;
+            oneQuestion.mcq2 = req.body.mcq2;
+            oneQuestion.mcq3 = req.body.mcq3;
+            oneQuestion.mcq4 = req.body.mcq4;
+            oneQuestion.mcq5 = req.body.mcq5;
+            oneQuestion.mcq6 = req.body.mcq6;
+            oneQuestion.check1 = req.body.check1;
+            oneQuestion.check2 = req.body.check2;
+            oneQuestion.check3 = req.body.check3;
+            oneQuestion.check4 = req.body.check4;
+            oneQuestion.check5 = req.body.check5;
+            oneQuestion.check6 = req.body.check6;
             oneQuestion.save();
             return res.status(201).send({ data: null, message: "updateCaseQuestion success" });
         })
@@ -259,7 +252,7 @@ module.exports = app => {
         const cases = await Case.findOne({ _id: req.body.values.vetId }).select().populate({
             path: 'questions',
             model: 'questions'
-        })
+        });
         res.send(cases);
     });
 
