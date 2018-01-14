@@ -44,7 +44,7 @@ s3.getObject(getParams, function(err, data) {
     tunnel(config, function (error, server) {
 
         if(error){
-            console.log(chalk.red.underline.bold("SSH connection error: " + error));
+            chalkAnimation.rainbow("SSH connection error: " + error);
         }
 
         mongoose.connect('mongodb://127.0.0.1:2000/Medsense');
