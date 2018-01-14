@@ -11,7 +11,7 @@ class Header extends Component {
             case false:
                 return(
                     <Nav pullRight>
-                        <NavItem className="navItem" eventKey={1} href="/acknowledgements" >Acknowledgements</NavItem>
+                        <NavItem className="navItem" eventKey={1}><NavLink to="/acknowledgements">Acknowledgements</NavLink></NavItem>
                         <NavDropdown className="navItem" eventKey={2} title="Login/Sign Up" id="login-dropdown">
                             <MenuItem eventKey={2.1}><NavLink to="/login">Login</NavLink></MenuItem>
                             <MenuItem eventKey={2.2}><NavLink to="/signup">Sign Up</NavLink></MenuItem>
@@ -24,11 +24,11 @@ class Header extends Component {
                     case 'professor':
                         return(
                             <Nav pullRight>
-                                <NavItem className="navItem" eventKey={2} href="/upload">Case Upload</NavItem>
-                                <NavItem className="navItem" eventKey={3} href="/vetting">Case Vetting</NavItem>
-                                <NavItem className="navItem" eventKey={4} href="/forum">Discussion Forum</NavItem>
-                                <NavItem className="navItem" eventKey={5} href="/dashboard">Dashboard</NavItem>
-                                <NavItem className="navItem" eventKey={6} href="/acknowledgements">Acknowledgements</NavItem>
+                                <NavItem className="navItem" eventKey={2}><NavLink to="/upload">Case Upload</NavLink></NavItem>
+                                <NavItem className="navItem" eventKey={3}><NavLink to="/vetting">Case Vetting</NavLink></NavItem>
+                                <NavItem className="navItem" eventKey={4}><NavLink to="/forum">Discussion Forum</NavLink></NavItem>
+                                <NavItem className="navItem" eventKey={5}><NavLink to="/dashboard">Dashboard</NavLink></NavItem>
+                                <NavItem className="navItem" eventKey={6}><NavLink to="/acknowledgements">Acknowledgements</NavLink></NavItem>
                                 <NavItem className="navItem" eventKey={7} href="/api/logout">Logout</NavItem>
                                 <NavLink to="/profile"><Image src={this.props.auth.profilepicture} className="img-circle" style={{height: '45px', width: '45px'}} /></NavLink>
                             </Nav>
@@ -36,11 +36,11 @@ class Header extends Component {
                     case 'student':
                         return(
                             <Nav pullRight>
-                                <NavItem className="navItem" eventKey={2} href="/case_challenge">Case Challenge</NavItem>
-                                <NavItem className="navItem" eventKey={3} href="/upload">Case Upload</NavItem>
-                                <NavItem className="navItem" eventKey={4} href="/forum">Discussion Forum</NavItem>
-                                <NavItem className="navItem" eventKey={5} href="/dashboard">Dashboard</NavItem>
-                                <NavItem className="navItem" eventKey={6} href="/acknowledgements">Acknowledgements</NavItem>
+                                <NavItem className="navItem" eventKey={2}><NavLink to="/case_challenge">Case Challenge</NavLink></NavItem>
+                                <NavItem className="navItem" eventKey={3}><NavLink to="/upload">Case Upload</NavLink></NavItem>
+                                <NavItem className="navItem" eventKey={4}><NavLink to="/forum">Discussion Forum</NavLink></NavItem>
+                                <NavItem className="navItem" eventKey={5}><NavLink to="/dashboard">Dashboard</NavLink></NavItem>
+                                <NavItem className="navItem" eventKey={6}><NavLink to="/acknowledgements">Acknowledgements</NavLink></NavItem>
                                 <NavItem className="navItem" eventKey={7} href="/api/logout">Logout</NavItem>
                                 <NavLink to="/profile"><Image src={this.props.auth.profilepicture} className="img-circle" style={{height: '45px', width: '45px'}} /></NavLink>
                             </Nav>

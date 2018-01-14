@@ -63,7 +63,6 @@ module.exports = app => {
                 check4: jsonObject[prop]['check4'],
                 check5: jsonObject[prop]['check5'],
                 check6: jsonObject[prop]['check6'],
-                timestamp: new Date(),
                 case: newCase._id
             });
             newQuestion.save();
