@@ -104,8 +104,8 @@ class Admin extends Component {
     }
 }
 
-function mapStateToProps({ auth }) {
-    return { auth };
+function mapStateToProps({ auth, adminCases }) {
+    return { auth, adminCases};
 }
 
 
