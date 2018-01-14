@@ -38,7 +38,7 @@ class UserManager extends Component {
         const value = e.target.value;
         this.setState({ password: value });
     }
-    
+
     handleYearChange(e) {
         const value = e.target.value;
         this.setState({ year: value });
@@ -58,7 +58,7 @@ class UserManager extends Component {
         const value = e.target.value;
         this.setState({ subspeciality: value });
     }
-    
+
     handleSeniorChange(e) {
         const value = e.target.value;
         this.setState({ seniorStatus: value });
@@ -95,21 +95,21 @@ class UserManager extends Component {
     }
 
     setSchool() {
-            return (
-                <FormGroup controlId="formControlsDifficulty">
-                    <ControlLabel style={{ fontSize: "100%" }}>Select School:</ControlLabel>
-                    <FormControl componentClass="select" value={this.state.usertype} name="usertype" onChange={(e) => this.handleSchoolChange(e)}>
-                        <option value="Duke-NUS">Duke-NUS</option>
-                        <option value="NTU">NTU</option>
-                        <option value="NUS">NUS</option>
-                    </FormControl>
-                </FormGroup>
-            );
-        
+        return (
+            <FormGroup controlId="formControlsDifficulty">
+                <ControlLabel style={{ fontSize: "100%" }}>Select School:</ControlLabel>
+                <FormControl componentClass="select" value={this.state.usertype} name="usertype" onChange={(e) => this.handleSchoolChange(e)}>
+                    <option value="Duke-NUS">Duke-NUS</option>
+                    <option value="NTU">NTU</option>
+                    <option value="NUS">NUS</option>
+                </FormControl>
+            </FormGroup>
+        );
+
     }
 
     setYear() {
-        if (this.state.usertype === "Student"){
+        if (this.state.usertype === "Student") {
             return (
                 <FormGroup controlId="formControlsDifficulty">
                     <ControlLabel style={{ fontSize: "100%" }}>Select Year:</ControlLabel>
@@ -125,7 +125,7 @@ class UserManager extends Component {
         }
     }
     setSeniorStatus() {
-        if (this.state.usertype === "Student"){
+        if (this.state.usertype === "Student") {
             return (
                 <FormGroup controlId="formControlsDifficulty">
                     <ControlLabel style={{ fontSize: "100%" }}>Senior Team:</ControlLabel>
@@ -152,7 +152,7 @@ class UserManager extends Component {
                 </FormGroup>
             );
         }
-        
+
     }
     setSubspeciality() {
         if (this.state.usertype === "Professor") {
@@ -213,7 +213,7 @@ class UserManager extends Component {
                         </FormControl>
                     </FormGroup>
                 );
-    
+
             } else {
                 return (
                     <FormGroup controlId="formControlsSubspeciality">
@@ -224,17 +224,17 @@ class UserManager extends Component {
                     </FormGroup>
                 );
             }
-    
+
         }
-        
+
     }
 
-    createUser(){
+    createUser() {
         /*add create user code here*/
     }
 
     renderTableStudent() {
-        if (this.state.usertype === "Student"){
+        if (this.state.usertype === "Student") {
             return (
                 <Table responsive>
                     <thead>
@@ -248,38 +248,40 @@ class UserManager extends Component {
                             <th><center>Date Registered</center></th>
                             <th> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
                         </tr>
-                        
+
                     </thead>
                     {this.renderStudents()}
                     {this.renderStudents()}
                 </Table>
             );
         }
-        
+
     }
 
-    renderStudents(){
-        if (this.state.usertype === "Student"){
+    renderStudents() {
+        let allStudents = this.props.adminUsers.map(user => {
+            if (user.usertype == "student") {
+                return <tr>
+                    <td><center>{user.username}</center></td>
+                    <td><center>School 1</center></td>
+                    <td><center>Speciality 1</center>></td>
+                    <td><center>Sub-Speciality 1</center>></td>
+                    <td><center>Contribution 1</center></td>
+                    <td> <Button type="button" bsStyle="primary">View</Button></td >
+                </tr>
+            }
+        })
+        if (this.state.usertype === "Student") {
             return (
-                
-                    <tbody>
-                        <tr>
-                            <td><center>Username 1</center></td>
-                            <td><center>School 1</center></td>
-                            <td><center>Year 1</center></td>
-                            <td><center>Senior Team 1</center></td>
-                            <td><center>Level 1</center></td>
-                            <td><center>XP 1</center></td>
-                            <td><center>Date Registered 1</center></td>
-                            <td> <Button type="button" bsStyle="primary">View</Button></td >
-                        </tr>
-                    </tbody> 
+                <tbody>
+                    {allStudents}
+                </tbody>
             );
         }
     }
 
     renderTableProfessors() {
-        if (this.state.usertype === "Professor"){
+        if (this.state.usertype === "Professor") {
             return (
                 <Table responsive>
                     <thead>
@@ -292,28 +294,31 @@ class UserManager extends Component {
                             <th> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
                         </tr>
                     </thead>
-                    {this.renderProfessors()}
-                    {this.renderProfessors()}
+                    {this.renderProfessors()} 
                 </Table>
             );
         }
-        
+
     }
-    
-    renderProfessors(){
-        if (this.state.usertype === "Professor"){
+
+    renderProfessors() {
+        let allProfessors = this.props.adminUsers.map(user => {
+            if (user.usertype == "professor") {
+                return <tr>
+                    <td><center>{user.username}</center></td>
+                    <td><center>School 1</center></td>
+                    <td><center>Speciality 1</center>></td>
+                    <td><center>Sub-Speciality 1</center>></td>
+                    <td><center>Contribution 1</center></td>
+                    <td> <Button type="button" bsStyle="primary">View</Button></td >
+                </tr>
+            }
+        })
+        if (this.state.usertype === "Professor") {
             return (
-                
-                    <tbody>
-                        <tr>
-                            <td><center>Username 1</center></td>
-                            <td><center>School 1</center></td>
-                            <td><center>Speciality 1</center>></td>
-                            <td><center>Sub-Speciality 1</center>></td>
-                            <td><center>Contribution 1</center></td>
-                            <td> <Button type="button" bsStyle="primary">View</Button></td >
-                        </tr>
-                    </tbody> 
+                <tbody>
+                    {allProfessors}
+                </tbody>
             );
         }
     }
@@ -361,26 +366,26 @@ class UserManager extends Component {
                                                     {this.setSchool()}
                                                     {this.setYear()}
                                                     {this.setSpeciality()}
-                                                    {this.setSubspeciality()}  
-                                                    <br /> 
+                                                    {this.setSubspeciality()}
+                                                    <br />
                                                     <Button bsStyle="primary" onClick={(e) => this.createUser()}>Create User</Button>
                                                 </Tab>
                                                 <Tab eventKey={2} title="Delete User">
-                                                <br />
-                                                {this.setUserType()}
-                                                {this.setUsername()} 
-                                                {this.setSchool()}
-                                                {this.setYear()}
-                                                {this.setSeniorStatus()}
-                                                {this.setSpeciality()}
-                                                {this.setSubspeciality()}
-                                                <br />
-                                                {this.renderTableStudent()}
-                                                {this.renderTableProfessors()}
-                                                
-                                                    
+                                                    <br />
+                                                    {this.setUserType()}
+                                                    {this.setUsername()}
+                                                    {this.setSchool()}
+                                                    {this.setYear()}
+                                                    {this.setSeniorStatus()}
+                                                    {this.setSpeciality()}
+                                                    {this.setSubspeciality()}
+                                                    <br />
+                                                    {this.renderTableStudent()}
+                                                    {this.renderTableProfessors()}
 
-	                                            </Tab>
+
+
+                                                </Tab>
                                             </Tabs>
                                         </div>
                                     </div>
