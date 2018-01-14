@@ -24,9 +24,19 @@ module.exports = app => {
     });
 
     app.get('/api/fetchCaseByApproach', async (req, res) => {
+        console.log("something");
         const approaches = ['Breathlessness'];
         const result = await Case.find({status:'Vetted', approach: { $all: approaches}})
         console.log(result);
+        res.send(result);
+    });
+
+    app.post('/api/fetchGameById', async (req, res) => {
+        console.log(req.body.values);
+        const result = await Case.findOne({ _id: req.body.values }).select().populate({
+            path: 'questions',
+            model: 'questions'
+        })
         res.send(result);
     });
 

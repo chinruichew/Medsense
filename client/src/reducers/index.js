@@ -4,6 +4,7 @@ import authReducer from './authReducer';
 import caseReducer from './caseReducer';
 import vettedCaseReducer from './vettedCaseReducer';
 import caseByIdReducer from './caseByIdReducer';
+import gameByIdReducer from './gameByIdReducer';
 import gameReducer from './gameReducer';
 import caseByApproachReducer from './caseByApproachReducer';
 import caseBySpecialityReducer from './caseBySpecialityReducer';
@@ -15,6 +16,7 @@ export default combineReducers({
     vettedCases: vettedCaseReducer,
     caseById: caseByIdReducer,
     games: gameReducer,
+    game: gameByIdReducer,
     approachCases: caseByApproachReducer,
     specialityCases: caseBySpecialityReducer,
     adminCases: adminReducer,

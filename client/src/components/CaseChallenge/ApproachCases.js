@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {fetchCaseByApproach} from '../../actions';
-import {Table} from 'react-bootstrap';
+import {Table, Button} from 'react-bootstrap';
+import Game from "./Game";
+
 
 class ApproachCases extends Component {
-    // constructor(props){
-    //     super(props);
-    //     this.state = {
-    //         approach:this.props.approach,
-    //     }
-    // }
+    constructor(props){
+        super(props);
+        this.state = {
+            // approach:this.props.approach,
+            showGameView: false,
+            caseId: '',
+        }
+    }
 
     componentDidMount() {
         // this.props.fetchCaseByApproach(this.state);
@@ -35,7 +39,7 @@ class ApproachCases extends Component {
             }
             let additionalApproach = "";
             for (let k=0; k<additional.length-1; k++){
-                additionalApproach+=additional[k] + ", \n";
+                additionalApproach+=additional[k] + ", ";
             }
             // additionalApproach+=additional[additional.length-1];
             // let additionalApproach = "";
@@ -56,9 +60,17 @@ class ApproachCases extends Component {
                     <td>{approachCase.difficulty}</td>
                     <td>{approachCase.authorname}</td>
                     <td>{date}<br/>{time}</td>
+                    <td><Button  type="button" bsStyle="primary" onClick={(e)=>this.tryCase(approachCase._id)}>Try</Button></td>
                 </tr>
             );
 
+        });
+    }
+
+    tryCase(id){
+        this.setState({
+            showGameView: true,
+            caseId: id
         });
     }
 
@@ -67,31 +79,57 @@ class ApproachCases extends Component {
             case null:
                 return;
             default:
-                return(
-                    <tbody>
-                    {this.renderApproachCases()}
-                    </tbody>
-                );
+                if (!this.state.showGameView) {
+                    return (
+                        <Table responsive>
+                            <thead>
+                                <tr style={{background: '#D9EDF7', fontSize: "130%"}}>
+                                    <th>
+                                        <center>Case Title</center>
+                                    </th>
+                                    <th>
+                                        <center>Additional Approaches</center>
+                                    </th>
+                                    <th>
+                                        <center>Speciality</center>
+                                    </th>
+                                    <th>
+                                        <center>Sub-speciality</center>
+                                    </th>
+                                    <th>
+                                        <center>Difficulty Level</center>
+                                    </th>
+                                    <th>
+                                        <center>Uploaded by</center>
+                                    </th>
+                                    <th>
+                                        <center>Last Updated</center>
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {this.renderApproachCases()}
+                            </tbody>
+
+                        </Table>
+
+                    );
+                } else {
+                    return(
+                        <div>
+                            <Game caseId={this.state.caseId}/>
+                        </div>
+                    );
+                }
         }
     }
 
     render() {
         return(
-            <Table responsive>
-                <thead>
-                <tr style={{background: '#D9EDF7', fontSize: "130%"}}>
-                    <th><center>Case Title</center></th>
-                    <th><center>Additional Approaches</center></th>
-                    <th><center>Speciality</center></th>
-                    <th><center>Sub-speciality</center></th>
-                    <th><center>Difficulty Level</center></th>
-                    <th><center>Uploaded by</center></th>
-                    <th><center>Last Updated</center></th>
-                    <th></th>
-                </tr>
-                </thead>
+            <div>
                 {this.renderContent()}
-            </Table>
+            </div>
         );
     }
 }
