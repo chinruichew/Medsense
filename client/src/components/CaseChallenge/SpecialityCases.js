@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {fetchCaseBySpeciality} from '../../actions';
-import {Table} from 'react-bootstrap';
+import {Table, Button} from 'react-bootstrap';
+import Game from "./Game";
 
 class SpecialityCases extends Component {
-    // constructor(props){
-    //     super(props);
-    //     this.state = {
-    //         speciality:this.props.speciality,
-    //         subspeciality:this.props.subspeciality,
-    //     }
-    // }
+    constructor(props){
+        super(props);
+        this.state = {
+            // speciality:this.props.speciality,
+            // subspeciality:this.props.subspeciality,
+            showGameView: false,
+            caseId: '',
+        }
+    }
 
     componentDidMount() {
         // this.props.fetchCaseBySpeciality(this.state);
@@ -50,9 +53,17 @@ class SpecialityCases extends Component {
                     <td>{specialityCase.difficulty}</td>
                     <td>{specialityCase.authorname}</td>
                     <td>{date}<br/>{time}</td>
+                    <td><Button  type="button" bsStyle="primary" onClick={(e)=>this.tryCase(specialityCase._id)}>Try</Button></td>
                 </tr>
             );
 
+        });
+    }
+
+    tryCase(id){
+        this.setState({
+            showGameView: true,
+            caseId: id
         });
     }
 
@@ -61,31 +72,56 @@ class SpecialityCases extends Component {
             case null:
                 return;
             default:
-                return(
-                    <tbody>
-                    {this.renderSpecialityCases()}
-                    </tbody>
-                );
+                if (!this.state.showGameView) {
+                    return (
+                        <Table responsive>
+                            <thead>
+                            <tr style={{background: '#D9EDF7', fontSize: "130%"}}>
+                                <th>
+                                    <center>Case Title</center>
+                                </th>
+                                <th>
+                                    <center>Approaches</center>
+                                </th>
+                                <th>
+                                    <center>Speciality</center>
+                                </th>
+                                <th>
+                                    <center>Sub-speciality</center>
+                                </th>
+                                <th>
+                                    <center>Difficulty Level</center>
+                                </th>
+                                <th>
+                                    <center>Uploaded by</center>
+                                </th>
+                                <th>
+                                    <center>Last Updated</center>
+                                </th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {this.renderSpecialityCases()}
+                            </tbody>
+                        </Table>
+
+                    );
+                } else {
+                    return(
+                        <div>
+                            <Game caseId={this.state.caseId}/>
+                        </div>
+                    );
+                }
         }
     }
 
     render() {
         return(
-            <Table responsive>
-                <thead>
-                <tr style={{background: '#D9EDF7', fontSize: "130%"}}>
-                    <th><center>Case Title</center></th>
-                    <th><center>Approaches</center></th>
-                    <th><center>Speciality</center></th>
-                    <th><center>Sub-speciality</center></th>
-                    <th><center>Difficulty Level</center></th>
-                    <th><center>Uploaded by</center></th>
-                    <th><center>Last Updated</center></th>
-                    <th></th>
-                </tr>
-                </thead>
+            <div>
                 {this.renderContent()}
-            </Table>
+            </div>
         );
     }
 }
