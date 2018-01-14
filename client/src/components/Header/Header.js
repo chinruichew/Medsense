@@ -24,7 +24,6 @@ class Header extends Component {
                     case 'professor':
                         return(
                             <Nav pullRight>
-                                <NavItem className="navItem" eventKey={1} href="/home">Home</NavItem>
                                 <NavItem className="navItem" eventKey={2} href="/upload">Case Upload</NavItem>
                                 <NavItem className="navItem" eventKey={3} href="/vetting">Case Vetting</NavItem>
                                 <NavItem className="navItem" eventKey={4} href="/forum">Discussion Forum</NavItem>
@@ -37,7 +36,6 @@ class Header extends Component {
                     case 'student':
                         return(
                             <Nav pullRight>
-                                <NavItem className="navItem" eventKey={1} href="/home">Home</NavItem>
                                 <NavItem className="navItem" eventKey={2} href="/case_challenge">Case Challenge</NavItem>
                                 <NavItem className="navItem" eventKey={3} href="/upload">Case Upload</NavItem>
                                 <NavItem className="navItem" eventKey={4} href="/forum">Discussion Forum</NavItem>
@@ -53,12 +51,27 @@ class Header extends Component {
         }
     }
 
+    renderLogo() {
+        switch(this.props.auth) {
+            case null:
+                return;
+            case false:
+                return(
+                    <NavLink to="/" style={{padding: '0px'}}><Image src="./medsense_logo.png" style={{height: '60px', width: '200px', padding: '0px'}}/></NavLink>
+                );
+            default:
+                return(
+                    <NavLink to="/home" style={{padding: '0px'}}><Image src="./medsense_logo.png" style={{height: '60px', width: '200px', padding: '0px'}}/></NavLink>
+                );
+        }
+    }
+
     render() {
         return (
             <Navbar id="navbar" fixedTop={false}>
                 <Navbar.Header>
                     <Navbar.Brand>
-                        <NavLink to="/" style={{padding: '0px'}}><Image src="./medsense_logo.png" style={{height: '60px', width: '200px', padding: '0px'}}/></NavLink>
+                        {this.renderLogo()}
                     </Navbar.Brand>
                     <Navbar.Toggle />
                 </Navbar.Header>
