@@ -6,7 +6,7 @@ import { bindAll } from 'lodash';
 import Main from './Main';
 import Admin from './Admin';
 import UserManager from './UserManager';
-import { fetchAdminCases  } from '../../actions';
+import { fetchAdminCases } from '../../actions';
 
 
 import './Admin.css';
@@ -15,9 +15,7 @@ class CaseManager extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
             display: 'case',
-            adminCases: this.props.adminCases,
             title: this.props.title,
             difficulty: this.props.difficulty,
             speciality: this.props.speciality,
@@ -32,13 +30,6 @@ class CaseManager extends Component {
         bindAll(this, 'handleTitleChange', 'handleDifficultyChange', 'handleSpecialityChange', 'handleSubspecialityChange',
             'handleApproachChange', 'handleScenarioChange', 'setSubspeciality', 'setName', 'setSpeciality', 'setApproach', 'setDifficulty', 'handleOpenModal', 'handleCloseModal');
     }
-    
-
-    componentDidMount() {
-        this.props.fetchAdminCases();
-    }
-
-
 
     handleOpenModal(id) {
         this.setState({ displayModal: true, vetId: id });
@@ -325,7 +316,7 @@ class CaseManager extends Component {
                 <td>{item.difficulty}</td>
                 <td>{item.authorname}</td>
                 <td>{item.timestamp.split(" ")[2] + " " + item.timestamp.split(" ")[1] + " " + item.timestamp.split(" ")[3]}<br />{item.timestamp.split(" ")[4].split(":")[0] + ":" + item.timestamp.split(" ")[4].split(":")[1]}</td>
-                <td> <Button type="button" bsStyle="primary" onClick={(e)=>this.handleOpenModal(item._id)}>View</Button></td >
+                <td> <Button type="button" bsStyle="primary" onClick={(e) => this.handleOpenModal(item._id)}>View</Button></td >
             </tr>
 
         ))
@@ -410,8 +401,8 @@ class CaseManager extends Component {
     }
 
     renderModal() {
-        
-        
+
+
         return (
             <Modal show={this.state.displayModal} onHide={this.handleCloseModal}>
                 <Modal.Header closeButton>
@@ -428,7 +419,7 @@ class CaseManager extends Component {
 
     }
 
-    
+
 
     render() {
         return (
@@ -461,4 +452,4 @@ function mapStateToProps({ adminCases }) {
 
 
 
-export default connect(mapStateToProps, { fetchAdminCases })(CaseManager);
+export default connect(mapStateToProps)(CaseManager);

@@ -10,7 +10,6 @@ module.exports = app => {
             path: 'questions',
             model: 'questions'
         })
-        console.log(cases);
         res.send(cases);
     });
 
