@@ -6,7 +6,7 @@ import { bindAll } from 'lodash';
 import Main from './Main';
 import Admin from './Admin';
 import UserManager from './UserManager';
-import { fetchAdminCases } from '../../actions';
+import { fetchAdminCases, deleteAdminCase } from '../../actions';
 
 
 import './Admin.css';
@@ -46,7 +46,9 @@ class CaseManager extends Component {
     }
 
     deleteCase(e) {
-
+        var oneCaseId = this.state.oneCaseId
+        this.props.deleteAdminCase(oneCaseId)
+        this.setState({ displayModal: false });
     }
 
     handleTitleChange(e) {
@@ -433,7 +435,7 @@ class CaseManager extends Component {
                     {allQuestions}
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={(e) => this.deleteCases()}>Delete</Button>
+                    <Button onClick={(e) => this.deleteCase()}>Delete</Button>
                 </Modal.Footer>
             </Modal>
         );
@@ -473,4 +475,4 @@ function mapStateToProps({ adminCases }) {
 
 
 
-export default connect(mapStateToProps)(CaseManager);
+export default connect(mapStateToProps, { deleteAdminCase })(CaseManager);

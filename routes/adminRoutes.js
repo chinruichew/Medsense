@@ -36,8 +36,8 @@ module.exports = app => {
         res.send(cases);
     });
 
-    app.post('/api/deleteCase', function (req, res) {
-        Case.find({ _id: req.body.caseid }, function (err, oneCase) {
+    app.post('/api/deleteAdminCase', function (req, res) {
+        Case.find({ _id: req.body.values }, function (err, oneCase) {
             Question.find({ case: req.body.caseid }, function (err, questions) {
             }).remove().exec();
         }).remove().exec();
