@@ -10,7 +10,7 @@ const slug = require('slug');
 const chalk = require('chalk');
 const chalkAnimation = require('chalk-animation');
 const helmet = require('helmet');
-const csrf = require('csurf');
+const csurf = require('csurf');
 
 const keys = require('./config/keys');
 require('./models/User');
@@ -91,7 +91,7 @@ function shouldCompress(req, res) {
 }
 app.use(compression({filter: shouldCompress}));
 
-const csrfProtection = csrf({ cookie: true });
+const csurfProtection = csurf({ cookie: true });
 /* End of Middleware configuration */
 
 /* Start of Slug URL String configuration */
