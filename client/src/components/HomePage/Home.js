@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {Button, Table} from 'react-bootstrap';
-import { Redirect } from 'react-router-dom';
+import {NavLink, Redirect} from 'react-router-dom';
 
 import './Home.css';
 import * as ReactGA from "react-ga";
@@ -19,10 +19,10 @@ class Home extends Component {
                         <div className="container-fluid">
                             <div className="row">
                                 <div className="col-sm-6 text-center" style={{fontSize:'150%'}}>
-                                    <a href="/upload"><img className="left-picture" src="./profUpload.png" alt="" style={{height:"200px"}}/><br/><br/>Create a case.<br/>Share your knowledge!</a>
+                                    <NavLink to="/upload"><img className="left-picture" src="./profUpload.png" alt="" style={{height:"200px"}}/><br/><br/>Create a case.<br/>Share your knowledge!</NavLink>
                                 </div>
                                 <div className="col-sm-6 text-center" style={{fontSize:'150%'}}>
-                                    <a href="/vetting"><img src="./profVet.png" alt="" style={{height:"200px"}}/><br/><br/>Vet a case.<br/>You have pending cases!</a>
+                                    <NavLink to="/vetting"><img src="./profVet.png" alt="" style={{height:"200px"}}/><br/><br/>Vet a case.<br/>You have pending cases!</NavLink>
                                 </div>
                             </div>
                             <br/>
@@ -70,10 +70,10 @@ class Home extends Component {
                         <div className="container-fluid">
                             <div className="row">
                                 <div className="col-sm-6 text-center" style={{fontSize:'150%'}}>
-                                    <a href="/challenge"><img src="./stuChallenge.png" alt="" style={{height:"200px"}}/><br/><br/>Try a case.<br/>There are 26 new cases!</a><br/>
+                                    <NavLink to="/challenge"><img src="./stuChallenge.png" alt="" style={{height:"200px"}}/><br/><br/>Try a case.<br/>There are 26 new cases!</NavLink><br/>
                                 </div>
                                 <div className="col-sm-6 text-center" style={{fontSize:'150%'}}>
-                                    <a href="/upload"><img src="./stuUpload.png" alt="" style={{height:"200px"}}/><br/><br/>Create a case.<br/>Share your experiences!</a><br/>
+                                    <NavLink to="/upload"><img src="./stuUpload.png" alt="" style={{height:"200px"}}/><br/><br/>Create a case.<br/>Share your experiences!</NavLink><br/>
                                 </div>
                             </div>
                             <br/>
