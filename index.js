@@ -4,10 +4,10 @@ const cookieSession = require('cookie-session');
 const flash = require('connect-flash');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+const tunnel = require('tunnel-ssh');
 const compression = require('compression');
 const slug = require('slug');
 const chalk = require('chalk');
-const colors = require('colors');
 
 const keys = require('./config/keys');
 require('./models/User');
@@ -30,9 +30,6 @@ s3.getObject(getParams, function(err, data) {
     if (err)
         return err;
 
-    // No error happened
-    // Convert Body from a Buffer to a String
-
     const credentialData = data.Body.toString('utf-8'); // Use the encoding necessary
 
     const config = {
@@ -43,8 +40,7 @@ s3.getObject(getParams, function(err, data) {
         localPort: 2000,
         privateKey: credentialData
     };
-    const tunnel = require('tunnel-ssh');
-    const server = tunnel(config, function (error, server) {
+    tunnel(config, function (error, server) {
 
         if(error){
             console.log(chalk.red.underline.bold("SSH connection error: " + error));
@@ -62,14 +58,13 @@ s3.getObject(getParams, function(err, data) {
 });
 /* End of MongoDB Connection */
 
+/* Start of Middleware configuration */
 const router = express.Router();
 router.use(function (req, res, next) {
     next();
 });
+app.use(router);
 
-app.use('/api', router);
-
-/* Start of Middleware configuration */
 app.use(morgan('combined'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -132,4 +127,6 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 const PORT = process.env.PORT || 5000;
+console.log(chalk.blue.underline.bold('Listening to PORT:', PORT));
+
 app.listen(PORT);
