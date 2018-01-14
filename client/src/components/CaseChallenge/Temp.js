@@ -8,12 +8,12 @@ class Temp extends Component {
     }
 
     renderRandomCase(){
-        switch(this.props.games) {
+        switch(this.props.randomCase) {
             case null:
                 return;
             default:
-                console.log(this.props.games);
-                return this.props.games.title;
+                console.log(this.props.randomCase);
+                return this.props.randomCase.title;
         }
     }
 
@@ -27,9 +27,9 @@ class Temp extends Component {
     }
 }
 
-function mapStateToProps({games}) {
+function mapStateToProps({randomCase}) {
     return {
-        games
+        randomCase
     };
 }
 

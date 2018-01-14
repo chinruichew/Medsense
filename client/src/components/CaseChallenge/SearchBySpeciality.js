@@ -3,16 +3,18 @@ import { connect } from 'react-redux';
 import { Form, Button, Tabs, Tab, FormGroup, FormControl, Table, ControlLabel, Col, Row } from 'react-bootstrap';
 //import axios from 'axios';
 import { bindAll } from 'lodash';
+import SpecialityCases from './SpecialityCases';
 
 
 class SearchBySpeciality extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            speciality: this.props.speciality,
-            subspeciality: this.props.subspeciality,
+            showTable: false,
+            speciality: "Select One",
+            subspeciality: null,
         };
-        bindAll(this, 'handleSpecialityChange', 'handleSubspecialityChange', 'setSubspeciality');
+        bindAll(this, 'handleSpecialityChange', 'handleSubspecialityChange', 'setSubspeciality', 'filterBySpeciality');
     }
 
 
@@ -33,6 +35,10 @@ class SearchBySpeciality extends Component {
         if (value.length > 0) {
             this.setState({ subspeciality: value });
         }
+    }
+
+    filterBySpeciality(){
+        this.setState({ showTable: true });
     }
 
     setSubspeciality() {
@@ -175,28 +181,20 @@ class SearchBySpeciality extends Component {
                                 <option value="Others">Others</option>
                             </FormControl>
                         </Col>
-                        <Col sm={2}><Button style={{ background: "#199ED8", border: 0 }} bsStyle="primary" onClick={this.filterBySpeciality}>Search</Button></Col>
+                        <Col sm={2}>
+                            <Button style={{ background: "#199ED8", border: 0 }} bsStyle="primary"
+                                    onClick={(e) => this.filterBySpeciality()}>
+                                Search
+                            </Button>
+                        </Col>
                     </FormGroup>
                 </Row>
                 <Row>
                     {this.setSubspeciality()}
                 </Row>
                 <br />
-                <Table responsive>
-                    <thead>
-                        <tr style={{ background: '#82C5D9', fontSize: "130%" }}>
-                            <th><center>Case Title</center></th>
-                            <th><center>Approach</center></th>
-                            <th><center>Difficulty Level</center></th>
-                            <th><center>Uploaded by</center></th>
-                            <th><center>Upload Date</center></th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        table
-                    </tbody>
-                </Table>
+
+                {this.state.showTable && <SpecialityCases speciality={this.state.speciality} subspeciality={this.state.subspeciality}/>}
             </div>
         );
     }

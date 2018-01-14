@@ -5,7 +5,7 @@ import caseReducer from './caseReducer';
 import vettedCaseReducer from './vettedCaseReducer';
 import caseByIdReducer from './caseByIdReducer';
 import gameByIdReducer from './gameByIdReducer';
-import gameReducer from './gameReducer';
+import randomGameReducer from './randomGameReducer';
 import caseByApproachReducer from './caseByApproachReducer';
 import caseBySpecialityReducer from './caseBySpecialityReducer';
 import adminReducer from './adminReducer';
@@ -16,7 +16,7 @@ export default combineReducers({
     cases: caseReducer,
     vettedCases: vettedCaseReducer,
     caseById: caseByIdReducer,
-    games: gameReducer,
+    randomCase: randomGameReducer,
     game: gameByIdReducer,
     approachCases: caseByApproachReducer,
     specialityCases: caseBySpecialityReducer,

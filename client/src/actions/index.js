@@ -26,8 +26,10 @@ export const fetchCaseByApproach = () => async dispatch => {
     dispatch({ type: FETCH_CASE_BY_APPROACH, payload: res.data });
 };
 
-export const fetchCaseBySpeciality = () => async dispatch => {
-    const res = await axios.get('/api/fetchCaseBySpeciality');
+export const fetchCaseBySpeciality = (values) => async dispatch => {
+    const res = await axios.post('/api/fetchCaseBySpeciality', {
+        values
+    });
     dispatch({ type: FETCH_CASE_BY_SPECIALITY, payload: res.data });
 };
 

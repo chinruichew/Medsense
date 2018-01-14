@@ -8,22 +8,22 @@ class SpecialityCases extends Component {
     constructor(props){
         super(props);
         this.state = {
-            // speciality:this.props.speciality,
-            // subspeciality:this.props.subspeciality,
+            speciality:this.props.speciality,
+            subspeciality:this.props.subspeciality,
             showGameView: false,
             caseId: '',
         }
     }
 
     componentDidMount() {
-        // this.props.fetchCaseBySpeciality(this.state);
-        this.props.fetchCaseBySpeciality();
+        this.props.fetchCaseBySpeciality(this.state);
+        // this.props.fetchCaseBySpeciality();
     }
 
     renderSpecialityCases() {
-        // const subspecialities = this.state.subspeciality;
-        const subspecialities = ['Cardiology'];
-        console.log(this.props.specialityCases);
+        const subspecialities = this.state.subspeciality;
+        // const subspecialities = ['Rheumatology & Immunology'];
+
         return this.props.specialityCases.map((specialityCase, index) => {
             console.log(specialityCase);
 
@@ -58,6 +58,8 @@ class SpecialityCases extends Component {
             );
 
         });
+
+
     }
 
     tryCase(id){
@@ -73,40 +75,49 @@ class SpecialityCases extends Component {
                 return;
             default:
                 if (!this.state.showGameView) {
-                    return (
-                        <Table responsive>
-                            <thead>
-                            <tr style={{background: '#D9EDF7', fontSize: "130%"}}>
-                                <th>
-                                    <center>Case Title</center>
-                                </th>
-                                <th>
-                                    <center>Approaches</center>
-                                </th>
-                                <th>
-                                    <center>Speciality</center>
-                                </th>
-                                <th>
-                                    <center>Sub-speciality</center>
-                                </th>
-                                <th>
-                                    <center>Difficulty Level</center>
-                                </th>
-                                <th>
-                                    <center>Uploaded by</center>
-                                </th>
-                                <th>
-                                    <center>Last Updated</center>
-                                </th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {this.renderSpecialityCases()}
-                            </tbody>
-                        </Table>
-
-                    );
+                    if(this.props.specialityCases.length === 0){
+                        return (
+                            <div style={{ fontSize: "150%", fontWeight: "200" }}>
+                                <br />
+                                <img src="./sad.png" hspace='5' alt="" style={{ height: "35px" }} />
+                                Sorry, no cases found.  Please try other approaches!
+                            </div>
+                        )
+                    }else {
+                        return (
+                            <Table responsive>
+                                <thead>
+                                <tr style={{background: '#82C5D9', fontSize: "130%"}}>
+                                    <th>
+                                        <center>Case Title</center>
+                                    </th>
+                                    <th>
+                                        <center>Approaches</center>
+                                    </th>
+                                    <th>
+                                        <center>Speciality</center>
+                                    </th>
+                                    <th>
+                                        <center>Sub-speciality</center>
+                                    </th>
+                                    <th>
+                                        <center>Difficulty Level</center>
+                                    </th>
+                                    <th>
+                                        <center>Uploaded by</center>
+                                    </th>
+                                    <th>
+                                        <center>Last Updated</center>
+                                    </th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {this.renderSpecialityCases()}
+                                </tbody>
+                            </Table>
+                        );
+                    }
                 } else {
                     return(
                         <div>
@@ -120,7 +131,9 @@ class SpecialityCases extends Component {
     render() {
         return(
             <div>
+                {/*{this.state.speciality}*/}
                 {this.renderContent()}
+
             </div>
         );
     }

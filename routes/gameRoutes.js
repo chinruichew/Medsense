@@ -16,7 +16,7 @@ module.exports = app => {
             Case.findOne({ status: 'Vetted' }).skip(random).exec(
                 function (err, result) {
                     // Tada! random user
-                    console.log(result);
+                    // console.log(result);
                     res.send(result);
                 })
         })
@@ -40,10 +40,11 @@ module.exports = app => {
         res.send(result);
     });
 
-    app.get('/api/fetchCaseBySpeciality', async (req, res) => {
-        const speciality = 'Medicine';
-        const subspecialities = ['Cardiology'];
-        const result = await Case.find({status:'Vetted', speciality: speciality, subspeciality: { $all: subspecialities}});
+    app.post('/api/fetchCaseBySpeciality', async (req, res) => {
+        // const speciality = 'Medicine';
+        // const subspecialities = ['Rheumatology & Immunology'];
+        console.log(req.body.values.subspeciality);
+        const result = await Case.find({status: 'Vetted', speciality: req.body.values.speciality, subspeciality: { $all: req.body.values.subspeciality}});
         console.log(result);
         res.send(result);
     });
