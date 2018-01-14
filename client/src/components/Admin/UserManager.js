@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { Button, ButtonToolbar, Tabs, Tab, ControlLabel, FormGroup, FormControl, Table } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import { bindAll } from 'lodash';
-import Main from './Main';
 import Admin from './Admin';
 import CaseManager from './CaseManager';
 import './Admin.css';

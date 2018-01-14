@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Checkbox, Button, InputGroup } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 class Answers extends Component {
 

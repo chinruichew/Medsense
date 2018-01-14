@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Form, FormControl, FormGroup, ControlLabel, HelpBlock, Table, Col, Thumbnail } from 'react-bootstrap';
-import { Checkbox, Button, InputGroup, Row } from 'react-bootstrap';
+import { Form, FormGroup, Table, Col } from 'react-bootstrap';
+import { Checkbox, Button, Row } from 'react-bootstrap';
 import { bindAll } from 'lodash';
 import Answers from './Answers';
 import { Line } from 'rc-progress';

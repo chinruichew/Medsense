@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Form, FormGroup, ControlLabel, Col } from 'react-bootstrap';
-import { Button, InputGroup } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 class TimeLimit extends Component {
 
@@ -40,14 +40,14 @@ class TimeLimit extends Component {
             <FormGroup>
                 <Col sm={2} className='pull-left'>
                 <Button onClick={this.chooseRandom} bsStyle="primary" bsSize="large" >
-                    <img className="left-picture" hspace = "5" src="./backArrow.png"style={{height:"18px"}}/>
+                    <img className="left-picture" hspace = "5" src="./backArrow.png"style={{height:"18px"}} alt=""/>
                     Find a case
                 </Button>
                 </Col>
                 <Col sm={2} className='pull-right'>
                 <Button onClick={this.chooseRandom} bsStyle="primary" bsSize="large" >
                     Start Challenge
-                    <img className="left-picture" hspace = "5" src="./nextarrow.png"style={{height:"18px"}}/>
+                    <img className="left-picture" hspace = "5" src="./nextarrow.png"style={{height:"18px"}} alt=""/>
                 </Button>
                 </Col>
             </FormGroup>
