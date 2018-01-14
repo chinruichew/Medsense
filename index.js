@@ -9,6 +9,7 @@ const compression = require('compression');
 const slug = require('slug');
 const chalk = require('chalk');
 const chalkAnimation = require('chalk-animation');
+const helmet = require('helmet');
 
 const keys = require('./config/keys');
 require('./models/User');
@@ -68,7 +69,7 @@ router.use(function (req, res, next) {
     next();
 });
 app.use(router);
-
+app.use(helmet());
 app.use(morgan('combined'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
