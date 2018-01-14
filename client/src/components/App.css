@@ -14,7 +14,8 @@ body, html{
     height: 100%;
     background-repeat: no-repeat;
     /* background:url(https://i.ytimg.com/vi/4kfXjatgeEU/maxresdefault.jpg); */
-    font-family: 'Cabin', sans-serif;
+    /* font-family: 'Cabin', sans-serif; */
+    font-family: 'myFont', CORBEL;
     background-size: cover;
 }
 
