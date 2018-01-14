@@ -3,8 +3,10 @@ import { connect } from 'react-redux';
 import { Button, ButtonToolbar, FormGroup, ControlLabel, FormControl, Table, Modal } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import { bindAll } from 'lodash';
+import Main from './Main';
 import Admin from './Admin';
 import UserManager from './UserManager';
+import { fetchAdminCases } from '../../actions';
 
 
 import './Admin.css';
@@ -23,15 +25,15 @@ class CaseManager extends Component {
             learning: this.props.learning,
             displayModal: false,
             case: null,
-            vetId: ''
+            oneCaseQuestions: [],
+            oneCaseId: ''
         };
         bindAll(this, 'handleTitleChange', 'handleDifficultyChange', 'handleSpecialityChange', 'handleSubspecialityChange',
             'handleApproachChange', 'handleScenarioChange', 'setSubspeciality', 'setName', 'setSpeciality', 'setApproach', 'setDifficulty', 'handleOpenModal', 'handleCloseModal');
     }
 
-    handleOpenModal(id) {
-        this.setState({ displayModal: true, vetId: id });
-        console.log(this.state.vetId)
+    handleOpenModal(oneCase) {
+        this.setState({ displayModal: true, oneCaseQuestions: oneCase.questions, oneCaseId: oneCase._id });
     }
 
     handleCloseModal() {
@@ -40,6 +42,10 @@ class CaseManager extends Component {
 
 
     searchCases(e) {
+
+    }
+
+    deleteCase(e) {
 
     }
 
@@ -314,7 +320,7 @@ class CaseManager extends Component {
                 <td>{item.difficulty}</td>
                 <td>{item.authorname}</td>
                 <td>{item.timestamp.split(" ")[2] + " " + item.timestamp.split(" ")[1] + " " + item.timestamp.split(" ")[3]}<br />{item.timestamp.split(" ")[4].split(":")[0] + ":" + item.timestamp.split(" ")[4].split(":")[1]}</td>
-                <td> <Button type="button" bsStyle="primary" onClick={(e) => this.handleOpenModal(item._id)}>View</Button></td >
+                <td> <Button type="button" bsStyle="primary" onClick={(e) => this.handleOpenModal(item)}>View</Button></td >
             </tr>
 
         ))
@@ -398,19 +404,36 @@ class CaseManager extends Component {
         }
     }
 
-    renderModal() {
-
+    renderModal() { 
+        let allQuestions = this.state.oneCaseQuestions.map(question => {
+            if (question.type == "MCQ") {
+                return <div>
+                    <p> Stem {question.stem} </p>
+                    <p> MCQ 1: &nbsp; {question.mcq1} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Answer 1: {JSON.stringify(question.check1)} </p>
+                    <p> MCQ 2: &nbsp; {question.mcq2} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Answer 1: {JSON.stringify(question.check2)} </p>
+                    <p> MCQ 3: &nbsp; {question.mcq3} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Answer 1: {JSON.stringify(question.check3)} </p>
+                    <p> MCQ 4: &nbsp; {question.mcq4} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Answer 1: {JSON.stringify(question.check4)} </p>
+                    <p> MCQ 5: &nbsp; {question.mcq5} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Answer 1: {JSON.stringify(question.check5)} </p>
+                    <p> MCQ 6: &nbsp; {question.mcq6} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Answer 1: {JSON.stringify(question.check6)} </p>
+                </div>
+            } else {
+                return <div>
+                    <p> Stem {question.stem} </p>
+                    <p> Open Ended: &nbsp; {question.mcq1} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Answer 1: {JSON.stringify(question.check1)} </p>
+                </div>
+            }
+        })
 
         return (
             <Modal show={this.state.displayModal} onHide={this.handleCloseModal}>
                 <Modal.Header closeButton>
-                    <Modal.Title>{this.props.caseById}</Modal.Title>
+                    <Modal.Title></Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    Modal Body
+                    {allQuestions}
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={this.handleCloseModal}>Close</Button>
+                    <Button onClick={(e) => this.deleteCases()}>Delete</Button>
                 </Modal.Footer>
             </Modal>
         );
