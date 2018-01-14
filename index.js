@@ -8,6 +8,7 @@ const tunnel = require('tunnel-ssh');
 const compression = require('compression');
 const slug = require('slug');
 const chalk = require('chalk');
+const chalkAnimation = require('chalk-animation');
 
 const keys = require('./config/keys');
 require('./models/User');
@@ -51,7 +52,10 @@ s3.getObject(getParams, function(err, data) {
         const db = mongoose.connection;
         db.on('error', console.error.bind(console, 'DB connection error:'));
         db.once('open', function() {
-            console.log(chalk.green.underline.bold("DB connection successful!"));
+            chalkAnimation.rainbow("DB connection successful!");
+            setTimeout(() => {
+                console.log(chalk.green.underline.bold('Initializing...'));
+            }, 500);
         });
 
     });

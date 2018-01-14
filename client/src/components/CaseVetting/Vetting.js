@@ -29,61 +29,66 @@ class Vetting extends Component {
     }
 
     renderUnvetCases() {
-        return this.props.cases.reverse().map((vetCase, index) => {
-            const userSubSpecialities = this.state.currentUser.subspeciality.split(",");
-            switch(this.state.filterPending) {
-                case 'All':
-                    let toRenderAllCase = false;
-                    for(let i = 0; i < userSubSpecialities.length; i++) {
-                        const userSubSpeciality = userSubSpecialities[i];
-                        for(let j = 0; j < vetCase.subspeciality.length; j++) {
-                            if(vetCase.subspeciality[j] === userSubSpeciality) {
-                                toRenderAllCase = true;
-                                break;
+        switch(this.state.currentUser) {
+            case null:
+                return;
+            default:
+                return this.props.cases.reverse().map((vetCase, index) => {
+                    const userSubSpecialities = this.state.currentUser.subspeciality.split(",");
+                    switch(this.state.filterPending) {
+                        case 'All':
+                            let toRenderAllCase = false;
+                            for(let i = 0; i < userSubSpecialities.length; i++) {
+                                const userSubSpeciality = userSubSpecialities[i];
+                                for(let j = 0; j < vetCase.subspeciality.length; j++) {
+                                    if(vetCase.subspeciality[j] === userSubSpeciality) {
+                                        toRenderAllCase = true;
+                                        break;
+                                    }
+                                }
                             }
-                        }
+                            if(toRenderAllCase) {
+                                let timeStamp = vetCase.timestamp.split(" ");
+                                let date = timeStamp[2]+" "+timeStamp[1]+" "+timeStamp[3];
+                                let timeArr = timeStamp[4].split(":");
+                                let time = timeArr[0]+":"+timeArr[1];
+                                return(
+                                    <tr align="center" key={vetCase._id}>
+                                        <td>{vetCase.title}</td>
+                                        <td>{vetCase.subspeciality}</td>
+                                        <td>{vetCase.authorname}</td>
+                                        <td>{date}<br/>{time}</td>
+                                        <td><Button  type="button" bsStyle="primary" onClick={(e)=>this.vetCase(vetCase._id)}>Vet</Button></td>
+                                    </tr>
+                                );
+                            }
+                            return;
+                        default:
+                            let toRenderCase = false;
+                            for(let i = 0; i < vetCase.subspeciality.length; i++) {
+                                const vetcaseSubspeciality = vetCase.subspeciality[i];
+                                if(vetcaseSubspeciality === this.state.filterPending) {
+                                    toRenderCase = true;
+                                }
+                            }
+                            if(toRenderCase) {
+                                let timeStamp = vetCase.timestamp.split(" ");
+                                let date = timeStamp[2]+" "+timeStamp[1]+" "+timeStamp[3];
+                                let timeArr = timeStamp[4].split(":");
+                                let time = timeArr[0]+":"+timeArr[1];
+                                return(
+                                    <tr align="center" key={vetCase._id}>
+                                        <td>{vetCase.title}</td>
+                                        <td>{vetCase.subspeciality}</td>
+                                        <td>{vetCase.authorname}</td>
+                                        <td>{date}<br/>{time}</td>
+                                        <td><Button  type="button" bsStyle="primary" onClick={(e)=>this.vetCase(vetCase._id)}>Vet</Button></td>
+                                    </tr>
+                                );
+                            }
                     }
-                    if(toRenderAllCase) {
-                        let timeStamp = vetCase.timestamp.split(" ");
-                        let date = timeStamp[2]+" "+timeStamp[1]+" "+timeStamp[3];
-                        let timeArr = timeStamp[4].split(":");
-                        let time = timeArr[0]+":"+timeArr[1];
-                        return(
-                            <tr align="center" key={vetCase._id}>
-                                <td>{vetCase.title}</td>
-                                <td>{vetCase.subspeciality}</td>
-                                <td>{vetCase.authorname}</td>
-                                <td>{date}<br/>{time}</td>
-                                <td><Button  type="button" bsStyle="primary" onClick={(e)=>this.vetCase(vetCase._id)}>Vet</Button></td>
-                            </tr>
-                        );
-                    }
-                    return;
-                default:
-                    let toRenderCase = false;
-                    for(let i = 0; i < vetCase.subspeciality.length; i++) {
-                        const vetcaseSubspeciality = vetCase.subspeciality[i];
-                        if(vetcaseSubspeciality === this.state.filterPending) {
-                            toRenderCase = true;
-                        }
-                    }
-                    if(toRenderCase) {
-                        let timeStamp = vetCase.timestamp.split(" ");
-                        let date = timeStamp[2]+" "+timeStamp[1]+" "+timeStamp[3];
-                        let timeArr = timeStamp[4].split(":");
-                        let time = timeArr[0]+":"+timeArr[1];
-                        return(
-                            <tr align="center" key={vetCase._id}>
-                                <td>{vetCase.title}</td>
-                                <td>{vetCase.subspeciality}</td>
-                                <td>{vetCase.authorname}</td>
-                                <td>{date}<br/>{time}</td>
-                                <td><Button  type="button" bsStyle="primary" onClick={(e)=>this.vetCase(vetCase._id)}>Vet</Button></td>
-                            </tr>
-                        );
-                    }
-            }
-        });
+                });
+        }
     }
 
     handleFilterPendingChange(e){
