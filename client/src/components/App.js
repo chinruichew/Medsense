@@ -13,9 +13,7 @@ import Dashboard from './Dashboard';
 import CaseVetting from './CaseVetting/Vetting';
 import CaseStart from './CaseUpload/CaseStart';
 import CaseChallenge from './CaseChallenge/Main';
-import Admin from './Admin/Admin'
-import CaseTimeLimit from './CaseChallenge/TimeLimit';
-import CaseMCQ from './CaseChallenge/MCQquestion';
+import Admin from './Admin/Admin';
 import OpenEnded from './CaseChallenge/OpenEnded';
 
 

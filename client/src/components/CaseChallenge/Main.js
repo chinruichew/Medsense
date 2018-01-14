@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Button, Table, Panel } from 'react-bootstrap';
+import { Button, Table } from 'react-bootstrap';
 import { bindAll } from 'lodash';
 import FindCase from './FindCase';
 import * as ReactGA from "react-ga";
@@ -24,8 +23,7 @@ class Main extends Component {
         if(!showFindTable){
             this.setState({showFindTable: !showFindTable})
         }
-        
-    }
+    };
 
     render() {
         // React GA

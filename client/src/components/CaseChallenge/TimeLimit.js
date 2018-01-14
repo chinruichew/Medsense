@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Form, FormControl, FormGroup, ControlLabel, HelpBlock, Table, Col, Thumbnail } from 'react-bootstrap';
-import { Checkbox, Button, InputGroup } from 'react-bootstrap';
-import { bindAll } from 'lodash';
+import { Form, FormGroup, ControlLabel, Col } from 'react-bootstrap';
+import { Button, InputGroup } from 'react-bootstrap';
 
 class TimeLimit extends Component {
 

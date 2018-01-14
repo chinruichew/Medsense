@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Form, Button, Tabs, Tab, FormGroup, FormControl, Table, ControlLabel, Col } from 'react-bootstrap';
-import axios from 'axios';
-import FilterSubSpecialityOptions from "../CaseVetting/FilterSubSpecialityOptions";
+import { Form, Button, Tabs, Tab, FormGroup, FormControl, ControlLabel, Col } from 'react-bootstrap';
 
 
 class FindCase extends Component {
