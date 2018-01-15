@@ -9,7 +9,7 @@ class SearchBySpeciality extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            showTable: false,
+            showSpecialityTable: false,
             speciality: "Select One",
             subspeciality: null,
         };
@@ -37,7 +37,7 @@ class SearchBySpeciality extends Component {
     }
 
     filterBySpeciality(){
-        this.setState({ showTable: true });
+        this.setState({ showSpecialityTable: true });
     }
 
     setSubspeciality() {
@@ -193,7 +193,7 @@ class SearchBySpeciality extends Component {
                 </Row>
                 <br />
 
-                {this.state.showTable && <SpecialityCases speciality={this.state.speciality} subspeciality={this.state.subspeciality}/>}
+                {this.state.showSpecialityTable && <SpecialityCases speciality={this.state.speciality} subspeciality={this.state.subspeciality}/>}
             </div>
         );
     }

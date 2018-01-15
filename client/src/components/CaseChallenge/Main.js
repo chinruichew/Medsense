@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-//import { Form, Button, Table, FormGroup, Col, ControlLabel, FormControl, Row } from 'react-bootstrap';
 import { Button, Form, FormGroup, FormControl, Table, ControlLabel, Col, Row } from 'react-bootstrap';
 import { bindAll } from 'lodash';
 import * as ReactGA from "react-ga";
@@ -7,7 +6,7 @@ import SearchBySpeciality from './SearchBySpeciality';
 import TimeLimit from "./TimeLimit";
 import {connect} from "react-redux";
 import {fetchRandomCase} from "../../actions";
-import ApproachCases from './ApproachCases';
+import SearchByApproach from './SearchByApproach';
 
 
 class Main extends Component {
@@ -17,18 +16,17 @@ class Main extends Component {
         this.state = {
             approachBtnBackground: false,
             specialityBtnBackground: false,
-            showApproachTable: false,
+            //showApproachTable: false,
             showApproachSearch: false,
-            showSpecialityTable: false,
+            //showSpecialityTable: false,
             showSpecialitySearch: false,
             showTimeLimit: false,
-            approach: null,
+            //approach: null,
             authid: this.props.authid,
             authname: this.props.authname
         };
 
-        bindAll(this, 'chooseApproachSearch', 'chooseSpecialitySearch', 'getRandomCase', 'renderMainContent',
-            'handleApproachChange','renderApproachSearch', 'filterByApproach');
+        bindAll(this, 'chooseApproachSearch', 'chooseSpecialitySearch', 'getRandomCase', 'renderMainContent');
     }
 
     componentDidMount() {
@@ -65,75 +63,6 @@ class Main extends Component {
         }
     }
 
-    handleApproachChange(e) {
-        const options = e.target.options;
-        let value = [];
-        for (let i = 1, l = options.length; i < l; i++) {
-            if (options[i].selected) {
-                value.push(options[i].value);
-            }
-        }
-        if (value.length > 0) {
-            this.setState({ approach: value });
-            //this.update(value, "approach");
-        }
-        // const value = e.target.value;
-        // this.setState({ approach: value });
-        // this.update(value, "approach");
-    }
-
-    renderApproachSearch(){
-        return(
-            <div>
-            <FormGroup controlId="formControlsApproach">
-
-                <ControlLabel style={{ fontSize: "150%" }}>Approach(es)<br />
-                    <div style={{ fontSize: "70%", fontWeight:"200"}}>
-                        Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.
-                    </div>
-                </ControlLabel>
-                <Row>
-                    <Col sm={10}>
-                <FormControl componentClass="select" value={this.state.approach} name="approach" onChange={(e) => this.handleApproachChange(e)} multiple>
-                    <option value="Select All Relevant">Select All Relevant</option>
-                    <option value="Abdominal Pain">Abdominal Pain</option>
-                    <option value="Breathlessness">Breathlessness</option>
-                    <option value="Chest Pain">Chest Pain</option>
-                    <option value="Confusion">Confusion</option>
-                    <option value="Cough">Cough</option>
-                    <option value="Diarrhea">Diarrhea</option>
-                    <option value="Dizziness">Dizziness</option>
-                    <option value="Falls">Falls</option>
-                    <option value="Fever">Fever</option>
-                    <option value="Gastrointestinal bleed">Gastrointestinal bleed</option>
-                    <option value="Headache">Headache</option>
-                    <option value="Jaundice">Jaundice</option>
-                    <option value="Limb pain">Limb pain</option>
-                    <option value="Limb swelling ">Limb swelling</option>
-                    <option value="Palpitations">Palpitations</option>
-                    <option value="Seizure">Seizure</option>
-                    <option value="Syncope">Syncope</option>
-                    <option value="Vomiting">Vomiting</option>
-                    <option value="Weakness">Weakness</option>
-                </FormControl>
-                </Col>
-                <Col sm={2}>
-                    <Button style={{ background: "#199ED8", border: 0 }} bsStyle="primary"
-                            onClick={(e) => this.filterByApproach()}>
-                        Search
-                    </Button>
-                </Col>
-                </Row>
-            </FormGroup>
-
-                {this.state.showApproachTable && <ApproachCases approach={this.state.approach}/>}
-            </div>
-        );
-    }
-
-    filterByApproach(){
-        this.setState({ showApproachTable: true });
-    }
 
     renderMainContent(){
         console.log(this.state.showTimeLimit);
@@ -207,7 +136,7 @@ class Main extends Component {
             {this.renderMainContent()}
             <br />
             <br />
-            {this.state.showApproachSearch && this.renderApproachSearch()}
+            {this.state.showApproachSearch && <SearchByApproach/>}
             {this.state.showSpecialitySearch && <SearchBySpeciality/>}
         </div>
         );
