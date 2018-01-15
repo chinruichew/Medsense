@@ -20,7 +20,7 @@ class FilterSubSpecialityOptions extends Component {
             default:
                 return this.state.subSpecialityList.map((subSpeciality, index) => {
                     return(
-                        <option value={subSpeciality}>{subSpeciality}</option>
+                        <option key={index} value={subSpeciality}>{subSpeciality}</option>
                     );
                 });
         }

@@ -52,13 +52,17 @@ class Vetting extends Component {
                                 let date = timeStamp[2]+" "+timeStamp[1]+" "+timeStamp[3];
                                 let timeArr = timeStamp[4].split(":");
                                 let time = timeArr[0]+":"+timeArr[1];
+                                let vetButton = <Button type="button" bsStyle="danger">Vet</Button>;
+                                if(vetCase.status === "Pending") {
+                                    vetButton = <Button type="button" bsStyle="primary" onClick={(e)=>this.vetCase(vetCase._id)}>Vet</Button>
+                                }
                                 return(
                                     <tr align="center" key={vetCase._id}>
                                         <td>{vetCase.title}</td>
                                         <td>{vetCase.subspeciality}</td>
                                         <td>{vetCase.authorname}</td>
                                         <td>{date}<br/>{time}</td>
-                                        <td><Button  type="button" bsStyle="primary" onClick={(e)=>this.vetCase(vetCase._id)}>Vet</Button></td>
+                                        <td>{vetButton}</td>
                                     </tr>
                                 );
                             }
@@ -76,13 +80,18 @@ class Vetting extends Component {
                                 let date = timeStamp[2]+" "+timeStamp[1]+" "+timeStamp[3];
                                 let timeArr = timeStamp[4].split(":");
                                 let time = timeArr[0]+":"+timeArr[1];
+                                let vetButton = <Button type="button" bsStyle="danger">Vet</Button>;
+                                console.log(vetCase);
+                                if(vetCase.status === "Pending") {
+                                    vetButton = <Button type="button" bsStyle="primary" onClick={(e)=>this.vetCase(vetCase._id)}>Vet</Button>
+                                }
                                 return(
                                     <tr align="center" key={vetCase._id}>
                                         <td>{vetCase.title}</td>
                                         <td>{vetCase.subspeciality}</td>
                                         <td>{vetCase.authorname}</td>
                                         <td>{date}<br/>{time}</td>
-                                        <td><Button  type="button" bsStyle="primary" onClick={(e)=>this.vetCase(vetCase._id)}>Vet</Button></td>
+                                        <td>{vetButton}</td>
                                     </tr>
                                 );
                             }

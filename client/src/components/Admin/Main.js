@@ -5,5 +5,13 @@ class Main extends Component {
         authid: this.props.authid,
         authname: this.props.authname
     };
+
+    render() {
+        return(
+            <div>
+                Hello World!
+            </div>
+        );
+    }
 }
 export default Main;
