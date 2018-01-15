@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import BootstrapModal from '../UI/Modal/VettingBootstrapModal.js';
-import { Button } from 'react-bootstrap';
+import { Button, Popover, OverlayTrigger } from 'react-bootstrap';
 
 class StudentSignUpForm extends Component {
     constructor(props) {
@@ -37,7 +37,10 @@ class StudentSignUpForm extends Component {
 
     handleUserSignUp = () => {
         let regex = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/;
-        if(this.state.password.length<8){
+        if (this.state.password===null){
+            this.setState({vmShow: true, error: "The password should contain at least 8 characters.", password: "", confirm_password: ""});
+        }
+        else if(this.state.password.length<8){
             this.setState({vmShow: true, error: "The password should contain at least 8 characters.", password: "", confirm_password: ""});
         } else if(!regex.test(this.state.password)){
             this.setState({vmShow: true, error: "The password should contain both letter(s) and number(s).", password: "", confirm_password: ""});
@@ -60,7 +63,14 @@ class StudentSignUpForm extends Component {
         window.location = '/login';
     }
 
+
+
     render() {
+        const popoverHover = (
+            <Popover id="popover-trigger-hover" title="Password">
+                Passwords must contain both letter(s) and number(s) and be at least 8 characters long.
+            </Popover>
+        );
         let vmClose = () => this.setState({ vmShow: false });
         return(
             <div className="main-login main-center">
@@ -76,7 +86,10 @@ class StudentSignUpForm extends Component {
                         </div>
                     </div>
                     <div className="form-group">
-                        <label for="password" className="cols-sm-2 control-label">Password</label>
+
+                        <label for="password" className="cols-sm-2 control-label">Password
+                        <OverlayTrigger trigger={['hover']} placement="bottom" overlay={popoverHover}><img src='./info.png' hspace="5" alt="" style={{height:"1.5em"}}/></OverlayTrigger>
+                        </label>
                         <div className="cols-sm-10">
                             <div className="input-group">
                                 <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
