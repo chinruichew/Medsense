@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Form, Button, Tabs, Tab, FormGroup, FormControl, Table, ControlLabel, Col, Row } from 'react-bootstrap';
+import { Form, Button, FormGroup, FormControl, ControlLabel, Col, Row } from 'react-bootstrap';
 //import axios from 'axios';
 import { bindAll } from 'lodash';
 import SpecialityCases from './SpecialityCases';

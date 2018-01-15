@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-//import { Button, Table, FormGroup, Col, ControlLabel, FormControl, Row } from 'react-bootstrap';
-import { Form, Button, Tabs, Tab, FormGroup, FormControl, Table, ControlLabel, Col, Row } from 'react-bootstrap';
+//import { Form, Button, Table, FormGroup, Col, ControlLabel, FormControl, Row } from 'react-bootstrap';
+import { Button, Form, FormGroup, FormControl, Table, ControlLabel, Col, Row } from 'react-bootstrap';
 import { bindAll } from 'lodash';
 import * as ReactGA from "react-ga";
 import SearchBySpeciality from './SearchBySpeciality';
