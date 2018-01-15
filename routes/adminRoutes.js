@@ -52,7 +52,7 @@ module.exports = app => {
     });
 
     app.post('/api/addNewStudent', function (req, res) {
-        const values = req.body;
+        const values = req.body.values;
         User.findOne({ username: values.username }, function (err, user) {
             if (!user) {
                 const newUser = new User();
@@ -62,7 +62,7 @@ module.exports = app => {
                 newUser.school = values.school;
                 newUser.year = values.year;
                 newUser.save();
-                return res.send('Done');
+                return res.send(newUser);
             } else {
                 return res.send('User Exists');
             }
@@ -70,7 +70,7 @@ module.exports = app => {
     });
 
     app.post('/api/addNewProfessor', function (req, res) {
-        const values = req.body;
+        const values = req.body.values;
         User.findOne({ username: values.username }, function (err, user) {
             if (!user) {
                 const newUser = new User();
@@ -80,7 +80,7 @@ module.exports = app => {
                 newUser.speciality = values.speciality;
                 newUser.subspeciality = values.subspeciality;
                 newUser.save();
-                return res.send('Done');
+                return res.send(newUser);
             } else {
                 return res.send('User Exists');
             }

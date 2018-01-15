@@ -6,6 +6,7 @@ import { bindAll } from 'lodash';
 import Admin from './Admin';
 import CaseManager from './CaseManager';
 import './Admin.css';
+import { addNewStudent, addNewProfessor } from '../../actions';
 
 class NewUser extends Component {
     constructor(props) {
@@ -52,12 +53,12 @@ class NewUser extends Component {
 
     handleSpecialityChange(e) {
         const value = e.target.value;
-        if(value == "Surgery") {
+        if (value == "Surgery") {
             this.setState({ subspeciality: "Breast" })
         }
 
-        if(value == "Others") {
-            this.setState({subspeciality: "Anaesthesiology"})    
+        if (value == "Others") {
+            this.setState({ subspeciality: "Anaesthesiology" })
         }
 
         this.setState({ speciality: value });
@@ -208,8 +209,29 @@ class NewUser extends Component {
     }
 
     createUser() {
-        /*add create user code here*/
-        console.log(this.state)
+        if (this.state.username.trim() == '' || this.state.username == null) {
+            window.alert("Username not filled")
+        } else if (this.state.password.trim() == '' || this.state.password == null) {
+            window.alert("Password not filled")
+        } else {
+            if (this.state.usertype == "Student") {
+                this.props.addNewStudent(this.state).then(function (response) {
+                    if (response.data == "User Exists") {
+                        window.alert("User Exists")
+                    } else {
+                        window.alert("User Created")
+                    }
+                })
+            } else {
+                this.props.addNewProfessor(this.state).then(function (response) {
+                    if (response.data == "User Exists") {
+                        window.alert("User Exists")
+                    } else {
+                        window.alert("User Created")
+                    }
+                })
+            }
+        }
     }
 
     render() {
@@ -232,4 +254,4 @@ function mapStateToProps({ auth }) {
     return { auth };
 }
 
-export default connect(mapStateToProps)(NewUser);
+export default connect(mapStateToProps, { addNewStudent, addNewProfessor })(NewUser);
