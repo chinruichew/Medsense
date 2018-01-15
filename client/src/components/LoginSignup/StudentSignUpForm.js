@@ -88,7 +88,7 @@ class StudentSignUpForm extends Component {
                     <div className="form-group">
 
                         <label for="password" className="cols-sm-2 control-label">Password
-                        <OverlayTrigger trigger={['hover']} placement="bottom" overlay={popoverHover}><img src='./info.png' hspace="5" alt="" style={{height:"1.5em"}}/></OverlayTrigger>
+                        <OverlayTrigger trigger={['hover']} placement="bottom" overlay={popoverHover}><img src='./info2.png' hspace="5" alt="" style={{height:"1.5em"}}/></OverlayTrigger>
                         </label>
                         <div className="cols-sm-10">
                             <div className="input-group">
