@@ -149,7 +149,7 @@ class Main extends Component {
         };
         axios.post('/api/uploadCaseAttachment', formData, config).then(res => {
         });
-    }
+    };
 
     submitCase = (e) => {
         axios.post('/api/updateCase', {
@@ -165,7 +165,7 @@ class Main extends Component {
             }
         });
 
-    }
+    };
 
     handleDeleteQuestion(id) {
         let questions = this.state.qnData;
@@ -297,7 +297,7 @@ class Main extends Component {
         });
 
         let stems = this.state.qnData.map((obj, index) => {
-            let stem
+            let stem;
             if (obj.id===1){
                 stem='';
             } else {

@@ -4,13 +4,10 @@ import { fetchCaseById } from '../../actions';
 import VetOne from './VetOne';
 
 class VettingEditing extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            case: null,
-            vetId: this.props.vetId,
-        };
-    }
+    state = {
+        case: null,
+        vetId: this.props.vetId,
+    };
 
     componentDidMount() {
         this.props.fetchCaseById(this.state);

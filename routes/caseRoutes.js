@@ -74,9 +74,7 @@ module.exports = app => {
     });
 
     app.post('/api/updateCase', function (req, res) {
-        console.log(req.body.values.title);
         Case.findById(req.body.values.id, function (err, oneCase) {
-            console.log(oneCase);
             oneCase.title = req.body.values.title;
             oneCase.difficulty = req.body.values.difficulty;
             oneCase.speciality = req.body.values.speciality;
