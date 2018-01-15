@@ -17,7 +17,7 @@ class ApproachCases extends Component {
 
     componentDidMount() {
         this.props.fetchCaseByApproach(this.state);
-        this.props.fetchCaseByApproach();
+        // this.props.fetchCaseByApproach();
     }
 
     renderApproachCases() {

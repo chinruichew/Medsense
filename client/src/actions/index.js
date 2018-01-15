@@ -21,8 +21,10 @@ export const fetchRandomCase = () => async dispatch => {
     dispatch({ type: FETCH_RANDOM_CASE, payload: res.data });
 };
 
-export const fetchCaseByApproach = () => async dispatch => {
-    const res = await axios.get('/api/fetchCaseByApproach');
+export const fetchCaseByApproach = (values) => async dispatch => {
+    const res = await axios.post('/api/fetchCaseByApproach', {
+        values
+    });
     dispatch({ type: FETCH_CASE_BY_APPROACH, payload: res.data });
 };
 

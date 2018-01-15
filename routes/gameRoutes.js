@@ -23,10 +23,10 @@ module.exports = app => {
 
     });
 
-    app.get('/api/fetchCaseByApproach', async (req, res) => {
-        console.log("something");
-        const approaches = ['Breathlessness'];
-        const result = await Case.find({status:'Vetted', approach: { $all: approaches}})
+    app.post('/api/fetchCaseByApproach', async (req, res) => {
+        // console.log("something");
+        // const approaches = ['Breathlessness'];
+        const result = await Case.find({status:'Vetted', approach: { $all: req.body.values.approach}})
         console.log(result);
         res.send(result);
     });
