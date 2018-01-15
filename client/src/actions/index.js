@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FETCH_USER, FETCH_CASES, FETCH_VETTED_CASES, UPDATE_PROFESSOR, UPDATE_STUDENT, UPLOAD_CASE, FETCH_GAME_BY_ID, FETCH_CASE_BY_ID, UPDATE_CASE, FETCH_RANDOM_CASE, FETCH_ADMIN_CASES, FETCH_CASE_BY_APPROACH, FETCH_CASE_BY_SPECIALITY, DELETE_ADMIN_CASE, FETCH_ADMIN_USERS, ADD_NEW_STUDENT, ADD_NEW_PROFESSOR } from './types';
+import { FETCH_USER, FETCH_CASES, FETCH_VETTED_CASES, UPDATE_PROFESSOR, UPDATE_STUDENT, UPLOAD_CASE, FETCH_GAME_BY_ID, FETCH_CASE_BY_ID, UPDATE_CASE, FETCH_RANDOM_CASE, FETCH_ADMIN_CASES, FETCH_CASE_BY_APPROACH, FETCH_CASE_BY_SPECIALITY, DELETE_ADMIN_CASE, FETCH_ADMIN_USERS, ADD_NEW_STUDENT, ADD_NEW_PROFESSOR, FETCH_FILTERED_ADMIN_STUDENTS } from './types';
 
 export const fetchUser = () => async dispatch => {
     const res = await axios.get('/api/current_user');
@@ -120,6 +120,13 @@ export const addNewProfessor = (values) => async dispatch => {
     });
     dispatch({ type: ADD_NEW_PROFESSOR, payload: res.data });
     return res
+};
+
+export const fetchFilteredAdminStudents = (values) => async dispatch => {
+    const res = await axios.post('/api/fetchFilteredAdminStudents', {
+        values
+    });
+    dispatch({ type: FETCH_FILTERED_ADMIN_STUDENTS, payload: res.data });
 };
 
 export const fetchGameById = (values) => async dispatch => {

@@ -6,6 +6,7 @@ import { bindAll } from 'lodash';
 import Admin from './Admin';
 import CaseManager from './CaseManager';
 import './Admin.css';
+import { fetchFilteredAdminStudents } from '../../actions';
 
 class DeleteUser extends Component {
     constructor(props) {
@@ -14,11 +15,10 @@ class DeleteUser extends Component {
             display: 'user',
             usertype: 'Student',
             username: '',
-            password: '',
-            school: '',
-            year: '',
-            speciality: '',
-            subspeciality: '',
+            school: 'Duke-NUS',
+            year: 'Year 1',
+            speciality: 'Medicine',
+            subspeciality: 'Cardiology',
             seniorStatus: '',
         };
         bindAll(this, 'handleUsertypeChange');
@@ -46,6 +46,14 @@ class DeleteUser extends Component {
 
     handleSpecialityChange(e) {
         const value = e.target.value;
+        if (value == "Surgery") {
+            this.setState({ subspeciality: "Breast" })
+        }
+
+        if (value == "Others") {
+            this.setState({ subspeciality: "Anaesthesiology" })
+        }
+
         this.setState({ speciality: value });
     }
 
@@ -88,7 +96,7 @@ class DeleteUser extends Component {
         return (
             <FormGroup controlId="formControlsDifficulty">
                 <ControlLabel style={{ fontSize: "100%" }}>Select School:</ControlLabel>
-                <FormControl componentClass="select" value={this.state.usertype} name="usertype" onChange={(e) => this.handleSchoolChange(e)}>
+                <FormControl componentClass="select" value={this.state.school} name="usertype" onChange={(e) => this.handleSchoolChange(e)}>
                     <option value="Duke-NUS">Duke-NUS</option>
                     <option value="NTU">NTU</option>
                     <option value="NUS">NUS</option>
@@ -104,11 +112,11 @@ class DeleteUser extends Component {
                 <FormGroup controlId="formControlsDifficulty">
                     <ControlLabel style={{ fontSize: "100%" }}>Select Year:</ControlLabel>
                     <FormControl componentClass="select" value={this.state.year} name="year" onChange={(e) => this.handleYearChange(e)}>
-                        <option value="1">Year 1</option>
-                        <option value="2">Year 2</option>
-                        <option value="3">Year 3</option>
-                        <option value="4">Year 4</option>
-                        <option value="5">Year 5</option>
+                        <option value="Year 1">Year 1</option>
+                        <option value="Year 2">Year 2</option>
+                        <option value="Year 3">Year 3</option>
+                        <option value="Year 4">Year 4</option>
+                        <option value="Year 5">Year 5</option>
                     </FormControl>
                 </FormGroup>
             );
@@ -151,7 +159,6 @@ class DeleteUser extends Component {
                     <FormGroup controlId="formControlsSubspeciality">
                         <ControlLabel style={{ fontSize: "100%" }}>Sub-speciality</ControlLabel>
                         <FormControl componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)}>
-                            <option value="Select One">Select One</option>
                             <option value="Cardiology">Cardiology</option>
                             <option value="Endocrinology">Endocrinology</option>
                             <option value="Gastroenterology & Hepatology">Gastroenterology & Hepatology</option>
@@ -170,7 +177,6 @@ class DeleteUser extends Component {
                     <FormGroup controlId="formControlsSubspeciality">
                         <ControlLabel style={{ fontSize: "150%" }}>Sub-speciality<span style={{ color: "red" }}>*</span></ControlLabel>
                         <FormControl componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)}>
-                            <option value="Select One">Select One</option>
                             <option value="Anaesthesiology">Anaesthesiology</option>
                             <option value="Ear Nose & Throat">Ear Nose & Throat</option>
                             <option value="Emergency Medicine">Emergency Medicine</option>
@@ -190,7 +196,6 @@ class DeleteUser extends Component {
                     <FormGroup controlId="formControlsSubspeciality">
                         <ControlLabel style={{ fontSize: "150%" }}>Sub-speciality<span style={{ color: "red" }}>*</span></ControlLabel>
                         <FormControl componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)}>
-                            <option value="Select One">Select One</option>
                             <option value="Breast">Breast</option>
                             <option value="Colorectal">Colorectal</option>
                             <option value="General Surgery">General Surgery</option>
@@ -253,9 +258,9 @@ class DeleteUser extends Component {
             if (user.usertype == "student") {
                 return <tr>
                     <td><center>{user.username}</center></td>
-                    <td><center>School 1</center></td>
-                    <td><center>Speciality 1</center>></td>
-                    <td><center>Sub-Speciality 1</center>></td>
+                    <td><center>{user.school}</center></td>
+                    <td><center>{user.year}</center></td>
+                    <td><center>{user._id}</center></td>
                     <td><center>Contribution 1</center></td>
                     <td> <Button type="button" bsStyle="primary">View</Button></td >
                 </tr>
@@ -314,7 +319,11 @@ class DeleteUser extends Component {
     }
 
     searchUser() {
-        console.log(this.state)
+        if (this.state.usertype == "Student") {
+            this.props.fetchFilteredAdminStudents(this.state);
+        } else {
+
+        }
     }
 
     render() {
@@ -340,4 +349,4 @@ function mapStateToProps({ auth, adminUsers }) {
     return { auth, adminUsers };
 }
 
-export default connect(mapStateToProps)(DeleteUser);
+export default connect(mapStateToProps, { fetchFilteredAdminStudents })(DeleteUser);

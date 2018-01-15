@@ -11,6 +11,23 @@ module.exports = app => {
         res.send(users);
     });
 
+    app.post('/api/fetchFilteredAdminStudents', async (req, res) => {
+        var users
+        if (req.body.values.username == "") {
+            users = await User.find({
+                school: req.body.values.school,
+                year: req.body.values.year
+            }).select("-password");
+        } else {
+            users = await User.find({
+                username: req.body.values.username,
+                school: req.body.values.school,
+                year: req.body.values.year
+            }).select("-password");
+        }
+        res.send(users);
+    });
+
 
     app.get('/api/fetchAdminCases', async (req, res) => {
         const cases = await Case.find({}).select().populate({
