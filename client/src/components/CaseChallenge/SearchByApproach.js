@@ -9,9 +9,14 @@ class SearchByApproach extends Component {
         super(props);
         this.state = {
             showApproachTable: false,
-            appraoch: null,
+            approach: null,
+            finalApproach: null,
         };
-        bindAll(this, 'handleApproachChange', 'filterByApproach');
+        bindAll(this, 'handleApproachChange', 'filterByApproach', 'renderTable', 'handleReturnCase');
+    }
+
+    handleReturnCase(game){
+        this.props.handleReturnCase(game);
     }
 
     handleApproachChange(e) {
@@ -32,9 +37,17 @@ class SearchByApproach extends Component {
     }
 
     filterByApproach(){
-        this.setState({ showApproachTable: true });
+        this.setState({ showApproachTable: true, finalApproach:this.state.approach });
     }
 
+    renderTable(){
+
+        if(this.state.showApproachTable){
+            return <ApproachCases approach={this.state.finalApproach} handleReturnCase={this.handleReturnCase}/>
+            // this.setState({showApproachTable:false});
+        }
+
+    }
     render(){
         return(
             <div>
@@ -77,8 +90,8 @@ class SearchByApproach extends Component {
                         </Col>
                     </Row>
                 </FormGroup>
+                {this.renderTable()}
 
-                {this.state.showApproachTable && <ApproachCases approach={this.state.approach}/>}
 
             </div>
         );

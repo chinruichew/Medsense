@@ -12,10 +12,15 @@ class SearchBySpeciality extends Component {
             showSpecialityTable: false,
             speciality: "Select One",
             subspeciality: null,
+            finalSpeciality: "Select One",
+            finalSubspeciality: null,
         };
-        bindAll(this, 'handleSpecialityChange', 'handleSubspecialityChange', 'setSubspeciality', 'filterBySpeciality');
+        bindAll(this, 'handleSpecialityChange', 'handleSubspecialityChange', 'setSubspeciality', 'filterBySpeciality', 'handleReturnCase');
     }
 
+    handleReturnCase(game){
+        this.props.handleReturnCase(game);
+    }
 
     handleSpecialityChange(e) {
         const value = e.target.value;
@@ -37,7 +42,7 @@ class SearchBySpeciality extends Component {
     }
 
     filterBySpeciality(){
-        this.setState({ showSpecialityTable: true });
+        this.setState({ showSpecialityTable: true, finalSpeciality: this.state.speciality, finalSubspeciality: this.state.subspeciality });
     }
 
     setSubspeciality() {
@@ -193,7 +198,7 @@ class SearchBySpeciality extends Component {
                 </Row>
                 <br />
 
-                {this.state.showSpecialityTable && <SpecialityCases speciality={this.state.speciality} subspeciality={this.state.subspeciality}/>}
+                {this.state.showSpecialityTable && <SpecialityCases speciality={this.state.finalSpeciality} subspeciality={this.state.finalSubspeciality} handleReturnCase={this.handleReturnCase}/>}
             </div>
         );
     }

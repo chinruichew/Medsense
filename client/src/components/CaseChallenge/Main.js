@@ -23,10 +23,11 @@ class Main extends Component {
             showTimeLimit: false,
             //approach: null,
             authid: this.props.authid,
-            authname: this.props.authname
+            authname: this.props.authname,
+            random: false,
         };
 
-        bindAll(this, 'chooseApproachSearch', 'chooseSpecialitySearch', 'getRandomCase', 'renderMainContent');
+        bindAll(this, 'chooseApproachSearch', 'chooseSpecialitySearch', 'getRandomCase', 'renderMainContent', 'handleReturnCase', 'renderSearch');
     }
 
     componentDidMount() {
@@ -36,7 +37,7 @@ class Main extends Component {
 
     getRandomCase(){
         //set showTimeLimit to true
-        this.setState({showTimeLimit: true});
+        this.setState({showTimeLimit: true, random: true});
 
     }
     chooseApproachSearch () {
@@ -63,6 +64,12 @@ class Main extends Component {
         }
     }
 
+    handleReturnCase(game){
+        this.setState({
+            showTimeLimit: true,
+            game: game,
+        })
+    }
 
     renderMainContent(){
         console.log(this.state.showTimeLimit);
@@ -118,8 +125,26 @@ class Main extends Component {
                     return;
                 default:
                     console.log(this.props.randomCase);
-                    return <TimeLimit case={this.props.randomCase}/>
+                    if (this.state.random){
+                        return <TimeLimit case={this.props.randomCase}/>
+                    } else {
+                        //this.setState({showApproachSearch:false, showSpecialitySearch:false})
+                        return <TimeLimit case={this.state.game}/>
+                    }
+
             }
+        }
+    }
+
+    renderSearch(){
+        if(!this.state.showTimeLimit){
+            return(
+              <div>
+                  {this.state.showApproachSearch && <SearchByApproach handleReturnCase={this.handleReturnCase}/>}
+                  {this.state.showSpecialitySearch && <SearchBySpeciality handleReturnCase={this.handleReturnCase}/>}
+              </div>
+            );
+
         }
     }
 
@@ -132,13 +157,10 @@ class Main extends Component {
 
         return (
             <div className="container">
-
-            {this.renderMainContent()}
-            <br />
-            <br />
-            {this.state.showApproachSearch && <SearchByApproach/>}
-            {this.state.showSpecialitySearch && <SearchBySpeciality/>}
-        </div>
+                {this.renderMainContent()}
+                <br /><br />
+                {this.renderSearch()}
+            </div>
         );
 
 

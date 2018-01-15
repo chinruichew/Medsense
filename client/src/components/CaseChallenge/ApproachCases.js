@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {fetchCaseByApproach} from '../../actions';
 import {Table, Button} from 'react-bootstrap';
 import Game from "./Game";
+import { bindAll } from 'lodash';
 
 
 class ApproachCases extends Component {
@@ -10,9 +11,11 @@ class ApproachCases extends Component {
         super(props);
         this.state = {
             approach:this.props.approach,
-            showGameView: false,
-            caseId: '',
+            // showGameView: false,
+            // caseId: '',
         }
+
+        bindAll(this, 'renderApproachCases', 'tryCase', 'renderContent');
     }
 
     componentDidMount() {
@@ -20,7 +23,21 @@ class ApproachCases extends Component {
         // this.props.fetchCaseByApproach();
     }
 
+    componentWillReceiveProps(nextProps){
+        // this.setState(() => {
+        //     return{
+        //         approach:nextProps.approach,
+        //     }
+        // });
+        this.setState({
+            approach:nextProps.approach,
+        });
+        console.log(nextProps.approach);
+        this.props.fetchCaseByApproach(this.state);
+    }
+
     renderApproachCases() {
+        // this.props.fetchCaseByApproach(this.state);
         const approaches = this.state.approach;
         //const approaches = ['Breathlessness'];
         console.log(this.props.approachCases);
@@ -60,18 +77,19 @@ class ApproachCases extends Component {
                     <td>{approachCase.difficulty}</td>
                     <td>{approachCase.authorname}</td>
                     <td>{date}<br/>{time}</td>
-                    <td><Button  type="button" bsStyle="primary" onClick={(e)=>this.tryCase(approachCase._id)}>Try</Button></td>
+                    <td><Button  type="button" bsStyle="primary" onClick={(e)=>this.tryCase(approachCase)}>Try</Button></td>
                 </tr>
             );
 
         });
     }
 
-    tryCase(id){
-        this.setState({
-            showGameView: true,
-            caseId: id
-        });
+    tryCase(game){
+        // this.setState({
+        //     showGameView: true,
+        //     caseId: id
+        // });
+        this.props.handleReturnCase(game);
     }
 
     renderContent() {
@@ -79,48 +97,52 @@ class ApproachCases extends Component {
             case null:
                 return;
             default:
-                if (!this.state.showGameView) {
+
+                if(this.props.approachCases.length === 0){
+                    return (
+                        <div style={{ fontSize: "150%", fontWeight: "200" }}>
+                            <br />
+                            <img src="./sad.png" hspace='5' alt="" style={{ height: "35px" }} />
+                            Sorry, no cases found.  Please try other approaches!
+                        </div>
+                    )
+                }else {
                     return (
                         <Table responsive>
                             <thead>
-                                <tr style={{background: '#82C5D9', fontSize: "130%"}}>
-                                    <th>
-                                        <center>Case Title</center>
-                                    </th>
-                                    <th>
-                                        <center>Additional Approaches</center>
-                                    </th>
-                                    <th>
-                                        <center>Speciality</center>
-                                    </th>
-                                    <th>
-                                        <center>Sub-speciality</center>
-                                    </th>
-                                    <th>
-                                        <center>Difficulty Level</center>
-                                    </th>
-                                    <th>
-                                        <center>Uploaded by</center>
-                                    </th>
-                                    <th>
-                                        <center>Last Updated</center>
-                                    </th>
-                                    <th></th>
-                                </tr>
+                            <tr style={{background: '#82C5D9', fontSize: "130%"}}>
+                                <th>
+                                    <center>Case Title</center>
+                                </th>
+                                <th>
+                                    <center>Additional Approaches</center>
+                                </th>
+                                <th>
+                                    <center>Speciality</center>
+                                </th>
+                                <th>
+                                    <center>Sub-speciality</center>
+                                </th>
+                                <th>
+                                    <center>Difficulty Level</center>
+                                </th>
+                                <th>
+                                    <center>Uploaded by</center>
+                                </th>
+                                <th>
+                                    <center>Last Updated</center>
+                                </th>
+                                <th></th>
+                            </tr>
                             </thead>
                             <tbody>
-                                {this.renderApproachCases()}
+                            {this.renderApproachCases()}
                             </tbody>
 
                         </Table>
 
                     );
-                } else {
-                    return(
-                        <div>
-                            <Game caseId={this.state.caseId}/>
-                        </div>
-                    );
+
                 }
         }
     }
