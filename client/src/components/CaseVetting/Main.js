@@ -320,7 +320,7 @@ class Main extends Component {
                 <center>
                     <table>
                         <tr>
-                            <td width="60px"><a href="/disclaimer"><img src="./stop.png" alt="" style={{height:"5em"}}/></a></td>
+                            <td width="60px"><a href="/disclaimer"><img src="./stop.png" alt="" style={{height:"4em"}}/></a></td>
                             <td>Before you upload the case, please ensure that all texts and attachments <br/> do not contain identifiable information such as IC number or patient's face</td>
                         </tr>
                     </table>
