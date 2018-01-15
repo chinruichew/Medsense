@@ -9,20 +9,20 @@ class ApproachCases extends Component {
     constructor(props){
         super(props);
         this.state = {
-            // approach:this.props.approach,
+            approach:this.props.approach,
             showGameView: false,
             caseId: '',
         }
     }
 
     componentDidMount() {
-        // this.props.fetchCaseByApproach(this.state);
+        this.props.fetchCaseByApproach(this.state);
         this.props.fetchCaseByApproach();
     }
 
     renderApproachCases() {
-        // const approaches = this.state.approach;
-        const approaches = ['Breathlessness'];
+        const approaches = this.state.approach;
+        //const approaches = ['Breathlessness'];
         console.log(this.props.approachCases);
         return this.props.approachCases.map((approachCase, index) => {
             console.log(approachCase);
@@ -83,7 +83,7 @@ class ApproachCases extends Component {
                     return (
                         <Table responsive>
                             <thead>
-                                <tr style={{background: '#D9EDF7', fontSize: "130%"}}>
+                                <tr style={{background: '#82C5D9', fontSize: "130%"}}>
                                     <th>
                                         <center>Case Title</center>
                                     </th>

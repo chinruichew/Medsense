@@ -166,9 +166,9 @@ class SearchBySpeciality extends Component {
 
     render() {
         return (
-            <div id="challenge" className="game-search-table">
+            <div>
                 <Row>
-                    <FormGroup controlId="formControlsSpeciality" style={{ paddingTop: "15%", paddingLeft: "0" }}>
+                    <FormGroup controlId="formControlsSpeciality" style={{ paddingTop: "0", paddingLeft: "0" }}>
                         <Col componentClass={ControlLabel} sm={2}>
                             <ControlLabel style={{ fontSize: "120%", textAlign: "left" }}>Speciality</ControlLabel>
                         </Col>
