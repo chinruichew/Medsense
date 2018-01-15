@@ -52,8 +52,8 @@ class Vetting extends Component {
                                 let date = timeStamp[2]+" "+timeStamp[1]+" "+timeStamp[3];
                                 let timeArr = timeStamp[4].split(":");
                                 let time = timeArr[0]+":"+timeArr[1];
-                                let vetButton = <Button type="button" bsStyle="danger">Vet</Button>;
-                                if(vetCase.status === "Pending") {
+                                let vetButton = <Button type="button" bsStyle="primary" disabled>Vet</Button>;
+                                if(vetCase.status === "Pending" || vetCase.vetter._id === this.state.currentUser._id) {
                                     vetButton = <Button type="button" bsStyle="primary" onClick={(e)=>this.vetCase(vetCase._id)}>Vet</Button>
                                 }
                                 return(
@@ -80,9 +80,9 @@ class Vetting extends Component {
                                 let date = timeStamp[2]+" "+timeStamp[1]+" "+timeStamp[3];
                                 let timeArr = timeStamp[4].split(":");
                                 let time = timeArr[0]+":"+timeArr[1];
-                                let vetButton = <Button type="button" bsStyle="danger">Vet</Button>;
+                                let vetButton = <Button type="button" bsStyle="primary" disabled>Vet</Button>;
                                 console.log(vetCase);
-                                if(vetCase.status === "Pending") {
+                                if(vetCase.status === "Pending" || vetCase.vetter._id === this.state.currentUser._id) {
                                     vetButton = <Button type="button" bsStyle="primary" onClick={(e)=>this.vetCase(vetCase._id)}>Vet</Button>
                                 }
                                 return(
@@ -112,6 +112,15 @@ class Vetting extends Component {
         this.setState({
             showVetView: true,
             vetId: id
+        });
+
+        // Lock case for vetting by one user
+        axios.post('/api/lockCaseForVetting', {
+            vetId: id
+        }).then(res => {
+            console.log(res);
+        }).catch(err => {
+            console.log(err);
         });
     }
 

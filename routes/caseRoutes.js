@@ -159,8 +159,18 @@ module.exports = app => {
         });
     });
 
+    app.post('/api/lockCaseForVetting', async(req, res) => {
+        Case.update({ _id: req.body.vetId }, { $set: { vetter: req.session.user._id } }, function (err, response) {
+            if(err) {
+                console.log(err);
+            }
+
+            res.send(response);
+        });
+    });
+
     app.get('/api/fetchUnvetCases', async (req, res) => {
-        const cases = await Case.find({ status: 'Pending' }).select();
+        const cases = await Case.find({ $or: [{status: 'Pending'}, {status: 'Vetting'}] }).select();
         res.send(cases);
     });
 
