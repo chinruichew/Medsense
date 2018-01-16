@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, FormControl, Table, ControlLabel, Col, Row } from 'react-bootstrap';
+import { Button, Table, Col } from 'react-bootstrap';
 import { bindAll } from 'lodash';
 import * as ReactGA from "react-ga";
 import SearchBySpeciality from './SearchBySpeciality';
@@ -27,7 +27,7 @@ class Main extends Component {
             random: false,
         };
 
-        bindAll(this, 'chooseApproachSearch', 'chooseSpecialitySearch', 'getRandomCase', 'renderMainContent', 'handleReturnCase', 'renderSearch');
+        bindAll(this, 'chooseApproachSearch', 'chooseSpecialitySearch', 'getRandomCase', 'renderMainContent', 'renderSearch');
     }
 
     componentDidMount() {
@@ -47,32 +47,31 @@ class Main extends Component {
         }
 
         if(!this.state.approachBtnBackground){
-            this.setState({approachBtnBackground: !this.state.approachBtnBackground})
+            this.setState({approachBtnBackground: !this.state.approachBtnBackground});
             this.setState({specialityBtnBackground: false})
         }
     }
 
     chooseSpecialitySearch(){
         if(!this.state.showSpecialitySearch){
-            this.setState({showSpecialitySearch: !this.state.showSpecialitySearch})
+            this.setState({showSpecialitySearch: !this.state.showSpecialitySearch});
             this.setState({showApproachSearch: false})
         }
         
         if(!this.state.specialityBtnBackground){
-            this.setState({specialityBtnBackground: !this.state.specialityBtnBackground})
+            this.setState({specialityBtnBackground: !this.state.specialityBtnBackground});
             this.setState({approachBtnBackground: false})
         }
     }
 
-    handleReturnCase(game){
+    handleReturnCase = (game) => {
         this.setState({
             showTimeLimit: true,
             game: game,
         })
-    }
+    };
 
     renderMainContent(){
-        console.log(this.state.showTimeLimit);
         if(!this.state.showTimeLimit){
             let approachBtnBgColor = this.state.approachBtnBackground ?  "#F2F2F2": "white";
             let specialityBtnBgColor = this.state.specialityBtnBackground ?  "#F2F2F2": "white";
@@ -124,7 +123,6 @@ class Main extends Component {
                 case null:
                     return;
                 default:
-                    console.log(this.props.randomCase);
                     if (this.state.random){
                         return <TimeLimit case={this.props.randomCase}/>
                     } else {
@@ -144,7 +142,6 @@ class Main extends Component {
                   {this.state.showSpecialitySearch && <SearchBySpeciality handleReturnCase={this.handleReturnCase}/>}
               </div>
             );
-
         }
     }
 
@@ -152,8 +149,6 @@ class Main extends Component {
         // React GA
         ReactGA.initialize('UA-112382826-1');
         ReactGA.pageview(window.location.pathname + window.location.search);
-
-        console.log(this.state.showTimeLimit);
 
         return (
             <div className="container">

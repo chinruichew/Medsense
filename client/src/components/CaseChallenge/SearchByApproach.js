@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Form, Button, FormGroup, FormControl, ControlLabel, Col, Row } from 'react-bootstrap';
-//import axios from 'axios';
 import { bindAll } from 'lodash';
 import ApproachCases from './ApproachCases';
 
@@ -12,7 +11,7 @@ class SearchByApproach extends Component {
             approach: null,
             finalApproach: null,
         };
-        bindAll(this, 'handleApproachChange', 'filterByApproach', 'renderTable', 'handleReturnCase');
+        bindAll(this, 'handleApproachChange', 'renderTable', 'handleReturnCase');
     }
 
     handleReturnCase(game){
@@ -36,12 +35,11 @@ class SearchByApproach extends Component {
         // this.update(value, "approach");
     }
 
-    filterByApproach(){
+    filterByApproach = () => {
         this.setState({ showApproachTable: true, finalApproach:this.state.approach });
-    }
+    };
 
     renderTable(){
-
         if(this.state.showApproachTable){
             return <ApproachCases approach={this.state.finalApproach} handleReturnCase={this.handleReturnCase}/>
             // this.setState({showApproachTable:false});
@@ -83,16 +81,13 @@ class SearchByApproach extends Component {
                             </FormControl>
                         </Col>
                         <Col sm={2}>
-                            <Button style={{ background: "#199ED8", border: 0 }} bsStyle="primary"
-                                    onClick={(e) => this.filterByApproach()}>
+                            <Button style={{ background: "#199ED8", border: 0 }} bsStyle="primary" onClick={(e) => this.filterByApproach()}>
                                 Search
                             </Button>
                         </Col>
                     </Row>
                 </FormGroup>
                 {this.renderTable()}
-
-
             </div>
         );
     }

@@ -24,10 +24,7 @@ module.exports = app => {
     });
 
     app.post('/api/fetchCaseByApproach', async (req, res) => {
-        // console.log("something");
-        // const approaches = ['Breathlessness'];
-        const result = await Case.find({status:'Vetted', approach: { $all: req.body.values.approach}})
-        console.log(result);
+        const result = await Case.find({status:'Vetted', approach: { $all: req.body.values.approach}});
         res.send(result);
     });
 
@@ -36,7 +33,7 @@ module.exports = app => {
         const result = await Case.findOne({ _id: req.body.values }).select().populate({
             path: 'questions',
             model: 'questions'
-        })
+        });
         res.send(result);
     });
 

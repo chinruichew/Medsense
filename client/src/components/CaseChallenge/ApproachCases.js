@@ -13,7 +13,7 @@ class ApproachCases extends Component {
             approach:this.props.approach,
             // showGameView: false,
             // caseId: '',
-        }
+        };
 
         bindAll(this, 'renderApproachCases', 'tryCase', 'renderContent');
     }
@@ -23,18 +23,18 @@ class ApproachCases extends Component {
         // this.props.fetchCaseByApproach();
     }
 
-    componentWillReceiveProps(nextProps){
-        // this.setState(() => {
-        //     return{
-        //         approach:nextProps.approach,
-        //     }
-        // });
-        this.setState({
-            approach:nextProps.approach,
-        });
-        console.log(nextProps.approach);
-        this.props.fetchCaseByApproach(this.state);
-    }
+    // componentWillReceiveProps(nextProps){
+    //     // this.setState(() => {
+    //     //     return{
+    //     //         approach:nextProps.approach,
+    //     //     }
+    //     // });
+    //     this.setState({
+    //         approach:nextProps.approach,
+    //     });
+    //     console.log(nextProps.approach);
+    //     this.props.fetchCaseByApproach(this.state);
+    // }
 
     renderApproachCases() {
         // this.props.fetchCaseByApproach(this.state);
@@ -84,11 +84,7 @@ class ApproachCases extends Component {
         });
     }
 
-    tryCase(game){
-        // this.setState({
-        //     showGameView: true,
-        //     caseId: id
-        // });
+    tryCase(game) {
         this.props.handleReturnCase(game);
     }
 
@@ -97,7 +93,6 @@ class ApproachCases extends Component {
             case null:
                 return;
             default:
-
                 if(this.props.approachCases.length === 0){
                     return (
                         <div style={{ fontSize: "150%", fontWeight: "200" }}>
