@@ -57,7 +57,7 @@ s3.getObject(getParams, function(err, data) {
             chalkAnimation.rainbow("DB connection successful!");
             setTimeout(() => {
                 console.log(chalk.green.underline.bold('Initializing...'));
-            }, 300);
+            }, 500);
         });
 
     });
