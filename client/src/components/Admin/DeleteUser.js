@@ -150,7 +150,6 @@ class DeleteUser extends Component {
                 <FormGroup controlId="formControlsSpeciality" style={{ paddingBottom: "0" }}>
                     <ControlLabel style={{ fontSize: "100%" }}>Speciality</ControlLabel>
                     <FormControl componentClass="select" value={this.state.speciality} name="speciality" onChange={(e) => this.handleSpecialityChange(e)}>
-                        <option value="Select One">Select One</option>
                         <option value="Medicine">Medicine</option>
                         <option value="Surgery">Surgery</option>
                         <option value="Others">Others</option>

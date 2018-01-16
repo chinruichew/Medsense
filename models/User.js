@@ -10,7 +10,7 @@ const userSchema = new Schema({
     profilepicture: { type: String, default: "/userMD.png" },
     profilepictureVersion: {type: Number, default: 0},
     speciality: { type: String, default: "" },
-    subspeciality: { type: String, default: "" },
+    subspeciality: [{ type: String, default: "" }],
     usertype: { type: String, default: "" },
     cases: [{ type: Schema.Types.ObjectId, ref: 'cases' }]
 });

@@ -49,8 +49,8 @@ module.exports = app => {
             users = await User.find({
                 username: req.body.values.username,
                 usertype: "professor",
-                school: req.body.values.school,
-                speciality: req.body.values.speciality,
+                // school: req.body.values.school,
+                // speciality: req.body.values.speciality,
                 subspeciality: { "$in": subspecialityArray }
             }).select("-password");
         }
@@ -117,14 +117,19 @@ module.exports = app => {
 
     app.post('/api/addNewProfessor', function (req, res) {
         const values = req.body.values;
+        var subspecialityArray = []
+        for (var key in values.subspeciality) {
+            subspecialityArray.push(values.subspeciality[key])
+        }
         User.findOne({ username: values.username }, function (err, user) {
             if (!user) {
                 const newUser = new User();
                 newUser.username = values.username;
                 newUser.password = newUser.generateHash(values.password);
+                newUser.school = values.school;
                 newUser.usertype = "professor";
                 newUser.speciality = values.speciality;
-                newUser.subspeciality = values.subspeciality;
+                newUser.subspeciality = subspecialityArray;
                 newUser.save();
                 return res.send(newUser);
             } else {
