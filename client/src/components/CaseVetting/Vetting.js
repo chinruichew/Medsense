@@ -53,7 +53,7 @@ class Vetting extends Component {
                                 let timeArr = timeStamp[4].split(":");
                                 let time = timeArr[0]+":"+timeArr[1];
                                 let vetButton = <Button type="button" bsStyle="primary" disabled>Vet</Button>;
-                                if(vetCase.status === "Pending" || vetCase.vetter._id === this.state.currentUser._id) {
+                                if(vetCase.status === "Pending" || (vetCase.vetter !== undefined && vetCase.vetter._id === this.state.currentUser._id)) {
                                     vetButton = <Button type="button" bsStyle="primary" onClick={(e)=>this.vetCase(vetCase._id)}>Vet</Button>
                                 }
                                 return(
@@ -81,8 +81,7 @@ class Vetting extends Component {
                                 let timeArr = timeStamp[4].split(":");
                                 let time = timeArr[0]+":"+timeArr[1];
                                 let vetButton = <Button type="button" bsStyle="primary" disabled>Vet</Button>;
-                                console.log(vetCase);
-                                if(vetCase.status === "Pending" || vetCase.vetter._id === this.state.currentUser._id) {
+                                if(vetCase.status === "Pending" || (vetCase.vetter !== undefined && vetCase.vetter._id === this.state.currentUser._id)) {
                                     vetButton = <Button type="button" bsStyle="primary" onClick={(e)=>this.vetCase(vetCase._id)}>Vet</Button>
                                 }
                                 return(
