@@ -15,14 +15,43 @@ module.exports = app => {
         var users
         if (req.body.values.username == "") {
             users = await User.find({
+                usertype: "student",
                 school: req.body.values.school,
                 year: req.body.values.year
             }).select("-password");
         } else {
             users = await User.find({
                 username: req.body.values.username,
+                usertype: "student",
                 school: req.body.values.school,
                 year: req.body.values.year
+            }).select("-password");
+        }
+        res.send(users);
+    });
+
+    app.post('/api/fetchFilteredAdminProfessors', async (req, res) => {
+        var subspecialityArray = []
+        for (var key in req.body.values.subspeciality) {
+            subspecialityArray.push(req.body.values.subspeciality[key])
+        }
+
+        console.log(subspecialityArray)
+        var users
+        if (req.body.values.username == "") {
+            users = await User.find({
+                usertype: "professor",
+                school: req.body.values.school,
+                speciality: req.body.values.speciality,
+                subspeciality: { "$in": subspecialityArray }
+            }).select("-password");
+        } else {
+            users = await User.find({
+                username: req.body.values.username,
+                usertype: "professor",
+                school: req.body.values.school,
+                speciality: req.body.values.speciality,
+                subspeciality: { "$in": subspecialityArray }
             }).select("-password");
         }
         res.send(users);

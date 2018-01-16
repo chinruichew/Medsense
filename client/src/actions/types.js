@@ -16,3 +16,4 @@ export const FETCH_ADMIN_USERS = 'fetch_admin_users';
 export const ADD_NEW_STUDENT = 'add_new_student';
 export const ADD_NEW_PROFESSOR = 'add_new_professor';
 export const FETCH_FILTERED_ADMIN_STUDENTS = 'fetch_filtered_admin_students';
+export const FETCH_FILTERED_ADMIN_PROFESSORS = 'fetch_filtered_admin_professors';
