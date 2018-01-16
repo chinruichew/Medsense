@@ -110,7 +110,7 @@ export const addNewStudent = (values) => async dispatch => {
     const res = await axios.post('/api/addNewStudent', {
         values
     });
-    dispatch({ type: ADD_NEW_STUDENT, payload: res.data });
+    //dispatch({ type: ADD_NEW_STUDENT, payload: res.data });
     return res
 };
 
@@ -118,7 +118,7 @@ export const addNewProfessor = (values) => async dispatch => {
     const res = await axios.post('/api/addNewProfessor', {
         values
     });
-    dispatch({ type: ADD_NEW_PROFESSOR, payload: res.data });
+    //dispatch({ type: ADD_NEW_PROFESSOR, payload: res.data });
     return res
 };
 

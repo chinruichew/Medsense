@@ -17,7 +17,7 @@ class NewUser extends Component {
             username: '',
             password: '',
             school: 'Duke-NUS',
-            year: '1',
+            year: 'Year 1',
             speciality: 'Medicine',
             subspeciality: 'Cardiology',
             seniorStatus: '',
