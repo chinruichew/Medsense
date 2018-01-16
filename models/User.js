@@ -7,7 +7,7 @@ const userSchema = new Schema({
     password: { type: String, default: "" },
     school: { type: String, default: "" },
     year: { type: String, default: "" },
-    profilepicture: { type: String, default: "" },
+    profilepicture: { type: String, default: "/userMD.png" },
     profilepictureVersion: {type: Number, default: 0},
     speciality: { type: String, default: "" },
     subspeciality: { type: String, default: "" },

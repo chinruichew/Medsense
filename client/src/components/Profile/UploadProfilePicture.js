@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import {Image} from "react-bootstrap";
+import {connect} from "react-redux";
 
 class UploadProfilePicture extends Component {
     state = {
@@ -20,7 +22,6 @@ class UploadProfilePicture extends Component {
             }
         };
         axios.post('/api/uploadProfileImage', formData, config).then(res => {
-            console.log(res);
             axios.get('/api/updateSessionUser').then(res => {
                 window.location = '/profile';
             });
@@ -32,22 +33,38 @@ class UploadProfilePicture extends Component {
         this.setState({file:e.target.files[0]});
     };
 
+    renderContent = () => {
+        switch(this.props.auth) {
+            case null:
+                return;
+            default:
+                return(
+                    <div className="main-login main-center">
+                        <Image src={this.props.auth.profilepicture} style={{height: '200px', width:'100%'}} alt={this.props.auth.username} />
+                        <br/><br/>
+                        <form onSubmit={this.onFormSubmit} className="form-horizontal" method="post" action="/api/uploadProfileImage" encType="multipart/form-data">
+                            <div className="form-group">
+                                <label>Upload a profile picture:</label>
+                                <input id="profile_picture" type="file" name="upload" multiple="multiple" onChange={this.onFileUploadChange} />
+                            </div>
+                            <button type="submit" className="btn btn-primary btn-lg btn-block login-button">Submit</button>
+                        </form>
+                    </div>
+                );
+        }
+    };
+
     render() {
         return(
-            <div className="main-login main-center">
-                <img src="./medsense_logo.png" style={{height: '120px', width: '300px'}} alt="Medsense" />
-                {/*Note*/}
-                <form onSubmit={this.onFormSubmit} className="form-horizontal" method="post" action="/api/uploadProfileImage" encType="multipart/form-data">
-                    <div className="form-group">
-                        <label>Upload a profile picture:</label>
-                        {/*Note this?*/}
-                        <input id="profile_picture" type="file" name="upload" multiple="multiple" onChange={this.onFileUploadChange} />
-                    </div>
-                    <button type="submit" className="btn btn-primary btn-lg btn-block login-button">Submit</button>
-                </form>
+            <div>
+                {this.renderContent()}
             </div>
         );
     }
 }
 
-export default UploadProfilePicture;
+function mapStateToProps({ auth }) {
+    return { auth };
+}
+
+export default connect(mapStateToProps)(UploadProfilePicture);
