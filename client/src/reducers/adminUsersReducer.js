@@ -1,4 +1,4 @@
-import { FETCH_ADMIN_USERS, ADD_NEW_STUDENT, ADD_NEW_PROFESSOR, FETCH_FILTERED_ADMIN_STUDENTS, FETCH_FILTERED_ADMIN_PROFESSORS } from '../actions/types';
+import { FETCH_ADMIN_USERS, ADD_NEW_STUDENT, ADD_NEW_PROFESSOR, FETCH_FILTERED_ADMIN_STUDENTS, FETCH_FILTERED_ADMIN_PROFESSORS, DELETE_ADMIN_STUDENT, DELETE_ADMIN_PROFESSOR } from '../actions/types';
 
 export default function (state = null, action) {
     switch (action.type) {
@@ -12,6 +12,9 @@ export default function (state = null, action) {
             return action.payload || false;
         case FETCH_FILTERED_ADMIN_PROFESSORS:
             return action.payload || false;
+        case DELETE_ADMIN_STUDENT:
+            const id = action.payload
+            return state.filter((item) => item._id !== id)
         default:
             return state;
     }
