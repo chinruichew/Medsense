@@ -6,7 +6,7 @@ import { bindAll } from 'lodash';
 import Admin from './Admin';
 import CaseManager from './CaseManager';
 import './Admin.css';
-import { fetchFilteredAdminStudents, fetchFilteredAdminProfessors, deleteAdminStudent } from '../../actions';
+import { fetchFilteredAdminStudents, fetchFilteredAdminProfessors, deleteAdminStudent, deleteAdminProfessor } from '../../actions';
 
 class DeleteUser extends Component {
     constructor(props) {
@@ -267,6 +267,10 @@ class DeleteUser extends Component {
         this.props.deleteAdminStudent(e._id)
     }
 
+    deleteAdminProfessor(e) {
+        this.props.deleteAdminProfessor(e._id)
+    }
+
     renderStudents() {
         let allStudents = this.props.adminUsers.map(user => {
             if (user.usertype == "student") {
@@ -319,7 +323,7 @@ class DeleteUser extends Component {
                     <td><center>{user.speciality}</center></td>
                     <td><center>{user.subspeciality}</center></td>
                     <td><center>Contribution 1</center></td>
-                    <td> <Button type="button" bsStyle="primary">Delete</Button></td >
+                    <td><Button onClick={(e) => this.deleteAdminProfessor(user)}>Delete</Button></td >
                 </tr>
             }
         })
@@ -364,4 +368,4 @@ function mapStateToProps({ auth, adminUsers }) {
     return { auth, adminUsers };
 }
 
-export default connect(mapStateToProps, { fetchFilteredAdminStudents, fetchFilteredAdminProfessors, deleteAdminStudent })(DeleteUser);
+export default connect(mapStateToProps, { fetchFilteredAdminStudents, fetchFilteredAdminProfessors, deleteAdminStudent, deleteAdminProfessor })(DeleteUser);

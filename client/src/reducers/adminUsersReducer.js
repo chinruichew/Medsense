@@ -13,8 +13,11 @@ export default function (state = null, action) {
         case FETCH_FILTERED_ADMIN_PROFESSORS:
             return action.payload || false;
         case DELETE_ADMIN_STUDENT:
-            const id = action.payload
-            return state.filter((item) => item._id !== id)
+            const studentid = action.payload
+            return state.filter((item) => item._id !== studentid)
+        case DELETE_ADMIN_PROFESSOR:
+            const professorid = action.payload
+            return state.filter((item) => item._id !== professorid)
         default:
             return state;
     }
