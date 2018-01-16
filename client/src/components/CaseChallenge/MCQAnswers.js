@@ -1,14 +1,64 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
+import { bindAll } from 'lodash';
 
 class Answers extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            answerCount: 0,
+            authid: this.props.authid,
+            authname: this.props.authname
+        };
+
+        bindAll(this, 'renderContent', 'getMCQAnswer', 'renderNextQuestion');
+    }
+
+    getMCQAnswer(){
+        let answer = "";
+        let answerCount = 0;
+        if(this.props.question.check1){
+            answer += this.props.question.mcq1 + ", ";
+            answerCount += 1;
+        }
+
+        if(this.props.question.check2){
+            answer += this.props.question.mcq2 + ", ";
+            answerCount += 1;
+        }
+
+        if(this.props.question.check3){
+            answer += this.props.question.mcq3 + ", ";
+            answerCount += 1;
+        }
+
+        if(this.props.question.check4){
+            answer += this.props.question.mcq4 + ", ";
+            answerCount += 1;
+        }
+
+        if(this.props.question.check5){
+            answer += this.props.question.mcq5 + ", ";
+            answerCount += 1;
+        }
+
+        if(this.props.question.check6){
+            answer += this.props.question.mcq6 + ", ";
+            answerCount += 1;
+        }
+
+        this.setState({answerCount: answerCount});
+        return answer.slice(0, -1);
+    }
+
     renderContent(){
         return(
-            <div className='container'> 
+            <div className='container'>
+                <h3>You got __ / {this.state.answerCount} correct!</h3>
                 <h4> 
                     Answer <br /> 
-                    Hypercount <br /><br /><br />
+                    {this.getMCQAnswer()} <br /><br /><br />
 
                     PEARL <br /> 
                     This is the type of question that frustrates people in the exams. Most people 

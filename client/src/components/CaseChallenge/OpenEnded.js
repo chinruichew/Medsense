@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Form, FormControl, FormGroup, Col } from 'react-bootstrap';
 import { Button, Row } from 'react-bootstrap';
 import { bindAll } from 'lodash';
-import Answers from './Answers';
+import Answers from './MCQAnswers';
 import { Line } from 'rc-progress';
 import ImageMagnifier from './ImageMagnifier';
  
