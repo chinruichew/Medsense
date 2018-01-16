@@ -47,7 +47,7 @@ class MainProfile extends Component {
 
         return (
             <div>
-                <UploadProfilePicture />
+                <UploadProfilePicture/>
                 {this.renderContent()}
             </div>
         )

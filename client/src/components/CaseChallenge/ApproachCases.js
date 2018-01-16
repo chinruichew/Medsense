@@ -37,12 +37,8 @@ class ApproachCases extends Component {
     // }
 
     renderApproachCases() {
-        // this.props.fetchCaseByApproach(this.state);
         const approaches = this.state.approach;
-        //const approaches = ['Breathlessness'];
-        console.log(this.props.approachCases);
         return this.props.approachCases.map((approachCase, index) => {
-            console.log(approachCase);
             let additional = approachCase.approach;
             for (let i=0; i<approachCase.approach.length; i++){
                 for (let j=0; j<approaches.length; j++){
@@ -58,11 +54,6 @@ class ApproachCases extends Component {
             for (let k=0; k<additional.length-1; k++){
                 additionalApproach+=additional[k] + ", ";
             }
-            // additionalApproach+=additional[additional.length-1];
-            // let additionalApproach = "";
-            // for (let k=0; k<additional.length-1; k++){
-            //     additionalApproach+=additional[k] + ", ";
-            // }
             additionalApproach+=additional[additional.length-1];
             let timeStamp = approachCase.timestamp.split(" ");
             let date = timeStamp[2]+" "+timeStamp[1]+" "+timeStamp[3];
