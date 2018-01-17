@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import { bindAll } from 'lodash';
 
-class Answers extends Component {
+class MCQAnswers extends Component {
 
     constructor(props) {
         super(props);
@@ -13,7 +13,7 @@ class Answers extends Component {
             authname: this.props.authname
         };
 
-        bindAll(this, 'renderContent', 'getMCQAnswer', 'renderNextQuestion');
+        bindAll(this, 'renderContent', 'getMCQAnswer', 'renderNextQuestion', 'nextQuestion');
     }
 
     componentDidMount(){
@@ -86,6 +86,10 @@ class Answers extends Component {
         );
     }
 
+    nextQuestion(){
+        this.props.handleNextQuestion(parseFloat(this.props.question.id));
+    }
+
     render() {
         return(
             <div>
@@ -97,4 +101,4 @@ class Answers extends Component {
     }
 }
 
-export default Answers;
+export default MCQAnswers;

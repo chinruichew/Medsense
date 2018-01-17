@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 import {fetchGameById} from '../../actions';
 import MCQquestion from "./MCQquestion";
 import OpenEnded from "./OpenEnded";
+import OpenEndedQuestion from "./OpenEndedQuestion";
 
 class TimeLimit extends Component {
 
@@ -20,7 +21,8 @@ class TimeLimit extends Component {
             authname: this.props.authname
         };
 
-        bindAll(this, 'renderTimeLimitContent', 'redirect', 'renderGameContent', 'startGame', 'withTimeLimit', 'withoutTimeLimit');
+        bindAll(this, 'renderTimeLimitContent', 'redirect', 'renderGameContent', 'startGame',
+            'withTimeLimit', 'withoutTimeLimit', 'handleNextQuestion');
     }
 
     componentDidMount() {
@@ -135,17 +137,25 @@ class TimeLimit extends Component {
                     //console.log(totalQnNum);
                     if(obj.id === currentQn+""){
                         if(obj.type === "MCQ"){
-                            //console.log(totalQnNum);
+                            console.log(currentQn);
                             return <MCQquestion question={obj} scenario={scenario} timeLimit={timeLimit}
-                                                totalQnNum={totalQnNum} caseTitle={caseTitle}/>
+                                                totalQnNum={totalQnNum} caseTitle={caseTitle}
+                                                handleNextQuestion={this.handleNextQuestion}/>
+                        }else{
+                            return <OpenEndedQuestion question={obj} scenario={scenario} timeLimit={timeLimit}
+                                         caseTitle={caseTitle} handleNextQuestion={this.handleNextQuestion}/>
                         }
                     }else{
-                        return (<div>Hello!</div>);
+                        return (<div>After Last Qn</div>);
                     }
                 });
                 return questionNodes;
                 //return this.props.game.title;
         }
+    }
+
+    handleNextQuestion(prevQn){
+        this.setState({currentQn : prevQn + 1 });
     }
 
     render() {

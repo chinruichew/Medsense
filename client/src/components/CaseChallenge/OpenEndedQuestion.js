@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Form, FormGroup, Table, Col } from 'react-bootstrap';
-import { Checkbox, Button, Row } from 'react-bootstrap';
+import { Button, Row, ControlLabel, FormControl } from 'react-bootstrap';
 import { bindAll } from 'lodash';
-import MCQAnswers from './MCQAnswers';
 import { Line } from 'rc-progress';
+import OpenEndedAnswer from "./OpenEndedAnswer";
 
-class MCQquestion extends Component {
+class OpenEndedQuestion extends Component {
 
     constructor(props) {
         super(props);
@@ -14,13 +14,12 @@ class MCQquestion extends Component {
             showNextButton: true,
             authid: this.props.authid,
             authname: this.props.authname,
-            time: {}, 
+            time: {},
             seconds: parseFloat(this.props.question.time) * 60,
         };
         this.timer = 0;
         bindAll(this, 'selectDone', 'startTimer', 'countDown', 'secondsToTime', 'pauseTimer', 'renderTimer',
-            'renderShowNextButton', 'renderProgressBar', 'renderScenario', 'renderMCQ3', 'renderMCQ4', 'renderMCQ5',
-            'renderMCQ6', 'renderContent', 'handleNextQuestion');
+            'renderShowNextButton', 'renderProgressBar', 'renderScenario', 'renderContent', 'handleNextQuestion');
     }
 
     startTimer() {
@@ -65,7 +64,6 @@ class MCQquestion extends Component {
     componentDidMount() {
         let timeLeftVar = this.secondsToTime(this.state.seconds);
         this.setState({ time: timeLeftVar });
-        //console.log("MCQ QUESTION");
     }
 
     selectDone() {
@@ -102,18 +100,18 @@ class MCQquestion extends Component {
 
     renderProgressBar(){
         let progress = parseFloat(this.props.question.id)/parseFloat(this.props.totalQnNum)* 100;
-        console.log(progress)
+        //console.log(progress)
         return(
             <div >
-            <Col sm={6} align="center">
-                <Line
-                    percent= {progress}
-                    strokeWidth="3"
-                    trailWidth = "3"
-                    strokeColor="#3FC7FA"
-                />
-            </Col>
-            <Col sm={2} align="left"><h4> {this.props.question.id}/{this.props.totalQnNum} Questions</h4> </Col>
+                <Col sm={6} align="center">
+                    <Line
+                        percent= {progress}
+                        strokeWidth="3"
+                        trailWidth = "3"
+                        strokeColor="#3FC7FA"
+                    />
+                </Col>
+                <Col sm={2} align="left"><h4> {this.props.question.id}/{this.props.totalQnNum} Questions</h4> </Col>
             </div>
         );
     }
@@ -127,53 +125,16 @@ class MCQquestion extends Component {
     }
 
 
-    renderMCQ3(){
-        if(this.props.question.mcq3.length !== 0){
-            return(
-                <tr >
-                    <td data-align= 'left'> <Checkbox >{this.props.question.mcq3}</Checkbox>  </td>
-                </tr>
-            );
-        }
-    }
-
-    renderMCQ4(){
-        if(this.props.question.mcq4.length !== 0){
-            return(
-                <tr >
-                    <td data-align= 'left'> <Checkbox >{this.props.question.mcq4}</Checkbox>  </td>
-                </tr>
-            );
-        }
-    }
-
-
-    renderMCQ5(){
-        if(this.props.question.mcq5.length !== 0){
-            return(
-                <tr >
-                    <td data-align= 'left'> <Checkbox >{this.props.question.mcq5}</Checkbox>  </td>
-                </tr>
-            );
-        }
-    }
-
-    renderMCQ6(){
-        if(this.props.question.mcq6.length !== 0){
-            return(
-                <tr >
-                    <td data-align= 'left'> <Checkbox >{this.props.question.mcq6}</Checkbox>  </td>
-                </tr>
-            );
-        }
-    }
-
     handleNextQuestion(prevQn){
         this.props.handleNextQuestion(prevQn);
     }
 
-    renderContent(){
+    handleOpenEndedChange(){
 
+    }
+
+
+    renderContent(){
         return(
             <div className='container' align="justify">
                 <h1>
@@ -209,31 +170,22 @@ class MCQquestion extends Component {
 
                 <form> <h4>
                     <FormGroup>
-                        <div class="col-md-10 col-md-offset-3">
-                            <Table responsive>
-                                <tr >
-                                    <td data-align= 'left'> <Checkbox >{this.props.question.mcq1}</Checkbox>  </td>
-                                </tr>
-                                <tr >
-                                    <td data-align= 'left'> <Checkbox >{this.props.question.mcq2}</Checkbox>  </td>
-                                </tr>
-                                {this.renderMCQ3()}
-                                {this.renderMCQ4()}
-                                {this.renderMCQ5()}
-                                {this.renderMCQ6()}
 
-                            </Table>
-                        </div>
+                        <FormGroup controlId="formControlsOpenEnded">
+                            <ControlLabel>Your Answer</ControlLabel><br />
+                            <FormControl componentClass="textarea" style={{height:400}} placeholder="Enter your answer" value={this.state.openEnded} name="openEnded" onChange={(e)=>this.handleOpenEndedChange(e)}/>
+                        </FormGroup>
+
 
                         <br /><br /><br />
 
                         {this.renderShowNextButton()}
                     </FormGroup>
-                  </h4>
+                </h4>
                 </form>
 
 
-                {this.state.showAnswers && <MCQAnswers question={this.props.question} handleNextQuestion={this.handleNextQuestion}/>}
+                {this.state.showAnswers && <OpenEndedAnswer question={this.props.question} handleNextQuestion={this.handleNextQuestion}/>}
 
             </div>
         );
@@ -243,10 +195,10 @@ class MCQquestion extends Component {
         console.log(this.props.question);
         return (
             <Form horizontal>
-                {this.renderContent()}  
-            </Form> 
+                {this.renderContent()}
+            </Form>
         );
     }
 }
 
-export default MCQquestion;
+export default OpenEndedQuestion;
