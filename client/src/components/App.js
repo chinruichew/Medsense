@@ -3,6 +3,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 
+import './App.css';
 import Login from './LoginSignup/Login';
 import Home from './HomePage/Home';
 import Header from './Header/Header';
@@ -15,14 +16,8 @@ import CaseStart from './CaseUpload/CaseStart';
 import CaseChallenge from './CaseChallenge/Main';
 import Admin from './Admin/Admin';
 import OpenEnded from './CaseChallenge/OpenEnded';
-
-
-import './App.css';
 import TimeLimit from './CaseChallenge/TimeLimit';
 import MCQquestion from './CaseChallenge/MCQquestion';
-import Temp from "./CaseChallenge/Temp";
-import SpecialityCases from "./CaseChallenge/SpecialityCases";
-import ApproachCases from "./CaseChallenge/ApproachCases";
 
 class App extends Component {
     componentDidMount() {
@@ -43,9 +38,6 @@ class App extends Component {
                     <Route exact path="/profile" component={Profile} />
                     <Route exact path="/dashboard" component={Dashboard} />
                     <Route exact path="/case_challenge" component={CaseChallenge} />
-                    <Route exact path="/test" component={Temp} />
-                    <Route exact path="/testspec" component={SpecialityCases} />
-                    <Route exact path="/testapproach" component={ApproachCases} />
                     <Route exact path="/admin" component={Admin} />
                     <Route exact path="/Time_Limit" component={TimeLimit} />
                     <Route exact path="/MCQquestion" component={MCQquestion} />

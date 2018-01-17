@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { Button, FormGroup, FormControl, ControlLabel, Col, Row } from 'react-bootstrap';
+import {Button, FormGroup, FormControl, ControlLabel, Col, Row, Table} from 'react-bootstrap';
 import { bindAll } from 'lodash';
 import axios from 'axios';
-
-import ApproachCases from './ApproachCases';
 
 class SearchByApproach extends Component {
     constructor(props) {
@@ -42,15 +40,86 @@ class SearchByApproach extends Component {
         axios.post('/api/fetchCaseByApproach', {
             approach: this.state.approach
         }).then(res => {
-            console.log(res);
-            const approachCase = res.data.map(approachCase => {
-                return(
-                    <div>
-                        {approachCase._id}
+            if(res.data.length > 0) {
+                const approachCase = res.data.map(approachCase => {
+                    let additional = approachCase.approach;
+                    const approaches = this.state.approach;
+                    for (let i=0; i<approachCase.approach.length; i++){
+                        for (let j=0; j<approaches.length; j++){
+                            if (approachCase.approach[i]===approaches[j]){
+                                let index = additional.indexOf(approaches[j]);
+                                if (index !== -1) {
+                                    additional.splice(index, 1);
+                                }
+                            }
+                        }
+                    }
+                    let additionalApproach = "";
+                    for (let k=0; k<additional.length-1; k++){
+                        additionalApproach+=additional[k] + ", ";
+                    }
+                    additionalApproach+=additional[additional.length-1];
+                    let timeStamp = approachCase.timestamp.split(" ");
+                    let date = timeStamp[2]+" "+timeStamp[1]+" "+timeStamp[3];
+                    let timeArr = timeStamp[4].split(":");
+                    let time = timeArr[0]+":"+timeArr[1];
+                    return(
+                        <tr align="center" key={approachCase._id}>
+                            <td>{approachCase.title}</td>
+                            <td>{additionalApproach}</td>
+                            <td>{approachCase.speciality}</td>
+                            <td>{approachCase.subspeciality}</td>
+                            <td>{approachCase.difficulty}</td>
+                            <td>{approachCase.authorname}</td>
+                            <td>{date}<br/>{time}</td>
+                            <td><Button  type="button" bsStyle="primary" onClick={(e)=>this.tryCase(approachCase)}>Try</Button></td>
+                        </tr>
+                    );
+                });
+                const approachState = (
+                    <Table responsive>
+                        <thead>
+                        <tr style={{background: '#82C5D9', fontSize: "130%"}}>
+                            <th>
+                                <center>Case Title</center>
+                            </th>
+                            <th>
+                                <center>Additional Approaches</center>
+                            </th>
+                            <th>
+                                <center>Speciality</center>
+                            </th>
+                            <th>
+                                <center>Sub-speciality</center>
+                            </th>
+                            <th>
+                                <center>Difficulty Level</center>
+                            </th>
+                            <th>
+                                <center>Uploaded by</center>
+                            </th>
+                            <th>
+                                <center>Last Updated</center>
+                            </th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {approachCase}
+                        </tbody>
+                    </Table>
+                );
+                this.setState({approachCase: approachState});
+            } else {
+                const approachState = (
+                    <div style={{ fontSize: "150%", fontWeight: "200" }}>
+                        <br />
+                        <img src="./sad.png" hspace='5' alt="" style={{ height: "35px" }} />
+                        Sorry, no cases found.  Please try other approaches!
                     </div>
                 );
-            });
-            this.setState({approachCase: approachCase});
+                this.setState({approachCase: approachState});
+            }
         }).catch(err => {
             console.log(err);
         });
