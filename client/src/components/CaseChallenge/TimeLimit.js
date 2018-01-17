@@ -128,13 +128,16 @@ class TimeLimit extends Component {
                 let timeLimit = this.state.withTimeLimit;
                 let currentQn = this.state.currentQn;
                 let scenario = this.props.game.scenario;
+                let totalQnNum = this.props.game.questions.length;
+                let caseTitle = this.props.game.title;
                 let questionNodes = this.props.game.questions.map((obj, index) => {
-                    console.log(obj.type);
+                    //console.log(obj.type);
+                    //console.log(totalQnNum);
                     if(obj.id === currentQn+""){
                         if(obj.type === "MCQ"){
-
-                            return <MCQquestion question={obj} scenario={scenario} timeLimit={timeLimit}/>
-                            console.log("Success");
+                            //console.log(totalQnNum);
+                            return <MCQquestion question={obj} scenario={scenario} timeLimit={timeLimit}
+                                                totalQnNum={totalQnNum} caseTitle={caseTitle}/>
                         }
                     }else{
                         return (<div>Hello!</div>);

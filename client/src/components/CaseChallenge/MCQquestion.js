@@ -15,7 +15,7 @@ class MCQquestion extends Component {
             authid: this.props.authid,
             authname: this.props.authname,
             time: {}, 
-            seconds: 5
+            seconds: parseFloat(this.props.question.time) * 60,
         };
         this.timer = 0;
         bindAll(this, 'selectDone', 'startTimer', 'countDown', 'secondsToTime', 'pauseTimer', 'renderTimer',
@@ -65,7 +65,7 @@ class MCQquestion extends Component {
     componentDidMount() {
         let timeLeftVar = this.secondsToTime(this.state.seconds);
         this.setState({ time: timeLeftVar });
-        console.log("MCQ QUESTION");
+        //console.log("MCQ QUESTION");
     }
 
     selectDone() {
@@ -92,7 +92,7 @@ class MCQquestion extends Component {
         if(showNextButton){
             return(
                 <div>
-                    <Button onClick={this.selectDone} hspace = "20" bsStyle="primary" bsSize="large" className="pull-right">
+                    <Button onClick={(e) => this.selectDone()} hspace = "20" bsStyle="primary" bsSize="large" className="pull-right">
                         Done
                     </Button>
                 </div>
@@ -100,7 +100,9 @@ class MCQquestion extends Component {
         }
     }
 
-    renderProgressBar(progress){
+    renderProgressBar(){
+        let progress = parseFloat(this.props.question.id)/parseFloat(this.props.totalQnNum)* 100;
+        console.log(progress)
         return(
             <div >
             <Col sm={6} align="center">
@@ -111,7 +113,7 @@ class MCQquestion extends Component {
                     strokeColor="#3FC7FA"
                 />
             </Col>
-            <Col sm={2} align="left"><h4> 5/10 Questions</h4> </Col>
+            <Col sm={2} align="left"><h4> {this.props.question.id}/{this.props.totalQnNum} Questions</h4> </Col>
             </div>
         );
     }
@@ -157,7 +159,7 @@ class MCQquestion extends Component {
     }
 
     renderMCQ6(){
-        if(this.props.question.mcq5.length !== 0){
+        if(this.props.question.mcq6.length !== 0){
             return(
                 <tr >
                     <td data-align= 'left'> <Checkbox >{this.props.question.mcq6}</Checkbox>  </td>
@@ -172,8 +174,8 @@ class MCQquestion extends Component {
             <div className='container' align="justify">
                 <h1>
                     <Row>
-                        <Col sm={3}> Case Title </Col>
-                        {this.renderProgressBar(50)}
+                        <Col sm={3}> {this.props.caseTitle} </Col>
+                        {this.renderProgressBar()}
                     </Row>
                 </h1>
 
@@ -215,6 +217,7 @@ class MCQquestion extends Component {
                                 {this.renderMCQ4()}
                                 {this.renderMCQ5()}
                                 {this.renderMCQ6()}
+
                             </Table>
                         </div>
 
