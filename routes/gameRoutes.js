@@ -27,7 +27,7 @@ module.exports = app => {
         // if (req.body.values.approach===null){
         //     const result = await Case.find({status:'Vetted'});
         // } else {
-            const result = await Case.find({status: 'Vetted', approach: {$all: req.body.values.approach}});
+            const result = await Case.find({status: 'Vetted', approach: req.body.approach});
         // }
         res.send(result);
     });

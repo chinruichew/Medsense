@@ -90,6 +90,7 @@ class ApproachCases extends Component {
                             <br />
                             <img src="./sad.png" hspace='5' alt="" style={{ height: "35px" }} />
                             Sorry, no cases found.  Please try other approaches!
+                            {this.state.approach}
                         </div>
                     )
                 }else {

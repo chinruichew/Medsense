@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { Form, Button, FormGroup, FormControl, ControlLabel, Col, Row } from 'react-bootstrap';
+import { Button, FormGroup, FormControl, ControlLabel, Col, Row } from 'react-bootstrap';
 import { bindAll } from 'lodash';
+import axios from 'axios';
+
 import ApproachCases from './ApproachCases';
 
 class SearchByApproach extends Component {
@@ -10,8 +12,9 @@ class SearchByApproach extends Component {
             showApproachTable: false,
             approach: null,
             finalApproach: null,
+            approachCase: ''
         };
-        bindAll(this, 'handleApproachChange', 'renderTable', 'handleReturnCase');
+        bindAll(this, 'handleApproachChange', 'handleReturnCase');
     }
 
     handleReturnCase(game){
@@ -36,16 +39,26 @@ class SearchByApproach extends Component {
     }
 
     filterByApproach = () => {
-        this.setState({ showApproachTable: true, finalApproach:this.state.approach });
+        axios.post('/api/fetchCaseByApproach', {
+            approach: this.state.approach
+        }).then(res => {
+            console.log(res);
+            const approachCase = res.data.map(approachCase => {
+                return(
+                    <div>
+                        {approachCase._id}
+                    </div>
+                );
+            });
+            this.setState({approachCase: approachCase});
+        }).catch(err => {
+            console.log(err);
+        });
     };
 
-    renderTable(){
-        if(this.state.showApproachTable){
-            return <ApproachCases approach={this.state.finalApproach} handleReturnCase={this.handleReturnCase}/>
-            // this.setState({showApproachTable:false});
-        }
-
-    }
+    // renderTable(){
+    //
+    // }
     render(){
         return(
             <div>
@@ -87,7 +100,7 @@ class SearchByApproach extends Component {
                         </Col>
                     </Row>
                 </FormGroup>
-                {this.renderTable()}
+                {this.state.approachCase}
             </div>
         );
     }
