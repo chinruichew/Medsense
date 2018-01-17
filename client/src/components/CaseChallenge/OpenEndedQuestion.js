@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, FormGroup, Table, Col } from 'react-bootstrap';
+import { Form, FormGroup, Col } from 'react-bootstrap';
 import { Button, Row, ControlLabel, FormControl } from 'react-bootstrap';
 import { bindAll } from 'lodash';
 import { Line } from 'rc-progress';
@@ -23,7 +23,7 @@ class OpenEndedQuestion extends Component {
     }
 
     startTimer() {
-        if (this.timer == 0) {
+        if (this.timer === 0) {
             this.timer = setInterval(this.countDown, 1000);
         }
     }
@@ -37,7 +37,7 @@ class OpenEndedQuestion extends Component {
         });
 
         // Check if we're at zero.
-        if (seconds == 0) {
+        if (seconds === 0) {
             clearInterval(this.timer);
             {this.selectDone()}
         }

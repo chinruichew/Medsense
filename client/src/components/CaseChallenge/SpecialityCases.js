@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {fetchCaseBySpeciality} from '../../actions';
 import {Table, Button} from 'react-bootstrap';
-import Game from "./Game";
 
 class SpecialityCases extends Component {
     constructor(props){

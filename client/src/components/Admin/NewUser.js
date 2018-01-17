@@ -1,34 +1,27 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, ButtonToolbar, Tabs, Tab, ControlLabel, FormGroup, FormControl, Table } from 'react-bootstrap';
-import { Redirect } from 'react-router-dom';
-import { bindAll } from 'lodash';
-import Admin from './Admin';
-import CaseManager from './CaseManager';
+import { Button, ControlLabel, FormGroup, FormControl } from 'react-bootstrap';
+
 import './Admin.css';
 import { addNewStudent, addNewProfessor } from '../../actions';
 
 class NewUser extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            display: 'user',
-            usertype: 'Student',
-            username: '',
-            password: '',
-            school: 'Duke-NUS',
-            year: 'Year 1',
-            speciality: 'Medicine',
-            subspeciality: [],
-            seniorStatus: '',
-        };
-        bindAll(this, 'handleUsertypeChange');
-    }
+    state = {
+        display: 'user',
+        usertype: 'Student',
+        username: '',
+        password: '',
+        school: 'Duke-NUS',
+        year: 'Year 1',
+        speciality: 'Medicine',
+        subspeciality: [],
+        seniorStatus: '',
+    };
 
-    handleUsertypeChange(e) {
+    handleUsertypeChange = (e) => {
         const value = e.target.value;
         this.setState({ usertype: value });
-    }
+    };
 
     handleUsernameChange(e) {
         const value = e.target.value;
@@ -53,11 +46,11 @@ class NewUser extends Component {
 
     handleSpecialityChange(e) {
         const value = e.target.value;
-        if (value == "Surgery") {
+        if (value === "Surgery") {
             this.setState({ subspeciality: "Breast" })
         }
 
-        if (value == "Others") {
+        if (value === "Others") {
             this.setState({ subspeciality: "Anaesthesiology" })
         }
 
@@ -220,14 +213,14 @@ class NewUser extends Component {
     }
 
     createUser() {
-        if (this.state.username.trim() == '' || this.state.username == null) {
+        if (this.state.username.trim() === '' || this.state.username == null) {
             window.alert("Username not filled")
-        } else if (this.state.password.trim() == '' || this.state.password == null) {
+        } else if (this.state.password.trim() === '' || this.state.password == null) {
             window.alert("Password not filled")
         } else {
-            if (this.state.usertype == "Student") {
+            if (this.state.usertype === "Student") {
                 this.props.addNewStudent(this.state).then(function (response) {
-                    if (response.data == "User Exists") {
+                    if (response.data === "User Exists") {
                         window.alert("User Exists")
                     } else {
                         window.alert("User Created")
@@ -235,7 +228,7 @@ class NewUser extends Component {
                 })
             } else {
                 this.props.addNewProfessor(this.state).then(function (response) {
-                    if (response.data == "User Exists") {
+                    if (response.data === "User Exists") {
                         window.alert("User Exists")
                     } else {
                         window.alert("User Created")

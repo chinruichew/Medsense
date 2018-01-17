@@ -1,33 +1,26 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, ButtonToolbar, Tabs, Tab, ControlLabel, FormGroup, FormControl, Table } from 'react-bootstrap';
-import { Redirect } from 'react-router-dom';
-import { bindAll } from 'lodash';
-import Admin from './Admin';
-import CaseManager from './CaseManager';
-import './Admin.css';
+import { Button, ControlLabel, FormGroup, FormControl, Table } from 'react-bootstrap';
+
 import { fetchFilteredAdminStudents, fetchFilteredAdminProfessors, deleteAdminStudent, deleteAdminProfessor } from '../../actions';
+import './Admin.css';
 
 class DeleteUser extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            display: 'user',
-            usertype: 'Student',
-            username: '',
-            school: 'Duke-NUS',
-            year: 'Year 1',
-            speciality: 'Medicine',
-            subspeciality: [],
-            seniorStatus: '',
-        };
-        bindAll(this, 'handleUsertypeChange');
-    }
+    state = {
+        display: 'user',
+        usertype: 'Student',
+        username: '',
+        school: 'Duke-NUS',
+        year: 'Year 1',
+        speciality: 'Medicine',
+        subspeciality: [],
+        seniorStatus: '',
+    };
 
-    handleUsertypeChange(e) {
+    handleUsertypeChange = (e) => {
         const value = e.target.value;
         this.setState({ usertype: value });
-    }
+    };
 
     handleUsernameChange(e) {
         const value = e.target.value;
@@ -46,11 +39,11 @@ class DeleteUser extends Component {
 
     handleSpecialityChange(e) {
         const value = e.target.value;
-        if (value == "Surgery") {
+        if (value === "Surgery") {
             this.setState({ subspeciality: "Breast" })
         }
 
-        if (value == "Others") {
+        if (value === "Others") {
             this.setState({ subspeciality: "Anaesthesiology" })
         }
 
@@ -273,7 +266,7 @@ class DeleteUser extends Component {
 
     renderStudents() {
         let allStudents = this.props.adminUsers.map(user => {
-            if (user.usertype == "student") {
+            if (user.usertype === "student") {
                 return <tr>
                     <td><center>{user.username}</center></td>
                     <td><center>{user.school}</center></td>
@@ -283,7 +276,7 @@ class DeleteUser extends Component {
                     <td><Button onClick={(e) => this.deleteAdminStudent(user)}>Delete</Button></td >
                 </tr>
             }
-        })
+        });
         if (this.state.usertype === "Student") {
             return (
                 <tbody>
@@ -316,7 +309,7 @@ class DeleteUser extends Component {
 
     renderProfessors() {
         let allProfessors = this.props.adminUsers.map(user => {
-            if (user.usertype == "professor") {
+            if (user.usertype === "professor") {
                 return <tr>
                     <td><center>{user.username}</center></td>
                     <td><center>{user.school}</center></td>
@@ -326,7 +319,7 @@ class DeleteUser extends Component {
                     <td><Button onClick={(e) => this.deleteAdminProfessor(user)}>Delete</Button></td >
                 </tr>
             }
-        })
+        });
         if (this.state.usertype === "Professor") {
             return (
                 <tbody>
@@ -337,8 +330,7 @@ class DeleteUser extends Component {
     }
 
     searchUser() {
-        console.log(this.state)
-        if (this.state.usertype == "Student") {
+        if (this.state.usertype === "Student") {
             this.props.fetchFilteredAdminStudents(this.state);
         } else {
             this.props.fetchFilteredAdminProfessors(this.state);
@@ -352,7 +344,6 @@ class DeleteUser extends Component {
                 {this.setUsername()}
                 {this.setSchool()}
                 {this.setYear()}
-                {/*{this.setSeniorStatus()}*/}
                 {this.setSpeciality()}
                 {this.setSubspeciality()}
                 <Button bsStyle="primary" onClick={(e) => this.searchUser()}>Search</Button>
