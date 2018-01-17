@@ -31,18 +31,28 @@ module.exports = app => {
     });
 
     app.post('/api/fetchFilteredAdminProfessors', async (req, res) => {
+        console.log(req.body.values)
         var subspecialityArray = []
         for (var key in req.body.values.subspeciality) {
             subspecialityArray.push(req.body.values.subspeciality[key])
         }
+        console.log(subspecialityArray)
         var users
         if (req.body.values.username == "") {
-            users = await User.find({
-                usertype: "professor",
-                school: req.body.values.school,
-                speciality: req.body.values.speciality,
-                subspeciality: { "$in": subspecialityArray }
-            }).select("-password");
+            if (subspecialityArray.length == 0) {
+                users = await User.find({
+                    usertype: "professor",
+                    school: req.body.values.school,
+                    speciality: req.body.values.speciality
+                }).select("-password");
+            } else {
+                users = await User.find({
+                    usertype: "professor",
+                    school: req.body.values.school,
+                    speciality: req.body.values.speciality,
+                    subspeciality: { "$in": subspecialityArray }
+                }).select("-password");
+            }
         } else {
             users = await User.find({
                 username: req.body.values.username,
