@@ -16,15 +16,11 @@ class CaseManager extends Component {
         super(props);
         this.state = {
             display: 'case',
-            title: this.props.title,
-            difficulty: this.props.difficulty,
-            speciality: this.props.speciality,
-            subspeciality: this.props.subspeciality,
-            approach: this.props.approach,
-            scenario: this.props.scenario,
-            learning: this.props.learning,
-            casestatus: this.props.casestatus,
-            time: this.props.time,
+            title: ''   ,
+            difficulty: 'Beginner',
+            subspeciality: [],
+            approach: [],
+            casestatus: 'Pending',
             displayModal: false,
             case: null,
             oneCaseQuestions: [],
@@ -44,7 +40,7 @@ class CaseManager extends Component {
 
 
     searchCases(e) {
-
+        this.props.fetchFilteredAdminCases(this.state);
     }
 
     deleteCase(e) {
@@ -133,7 +129,7 @@ class CaseManager extends Component {
                     {/*<FormControl componentClass="select" value={this.state.approach} name="approach" onChange={(e) => this.handleApproachChange(e)}>*/}
                     <option value="Select All Relevant">Select All Relevant</option>
                     {/*<option value="Select One">Select One</option>*/}
-                    <option value="Abdominal Pain">Abdominal Pain</option>
+                    <option value="Abdominal Pain" selected>Abdominal Pain</option>
                     <option value="Breathlessness">Breathlessness</option>
                     <option value="Chest Pain">Chest Pain</option>
                     <option value="Confusion">Confusion</option>
@@ -342,7 +338,6 @@ class CaseManager extends Component {
             <FormGroup controlId="formControlsDifficulty">
                 <ControlLabel style={{ fontSize: "150%" }}>Difficulty Level</ControlLabel>
                 <FormControl componentClass="select" value={this.state.difficulty} name="difficulty" onChange={(e) => this.handleDifficultyChange(e)}>
-                    <option value="Select One">Select One</option>
                     <option value="Beginner">Beginner</option>
                     <option value="Advanced">Advanced</option>
                 </FormControl>
@@ -355,7 +350,6 @@ class CaseManager extends Component {
             <FormGroup controlId="formControlsDifficulty">
                 <ControlLabel style={{ fontSize: "150%" }}>Case Status</ControlLabel>
                 <FormControl componentClass="select" value={this.state.casestatus} name="casestatus" onChange={(e) => this.handleCaseStatusChange(e)}>
-                    <option value="Select One">Select One</option>
                     <option value="Pending">Pending</option>
                     <option value="Vetted">Vetted</option>
                 </FormControl>

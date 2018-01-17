@@ -64,7 +64,8 @@ module.exports = app => {
         res.send(cases);
     });
 
-    app.post('/api/fetchFilteredCases', async (req, res) => {
+    app.post('/api/fetchFilteredAdminCases', async (req, res) => {
+        var cases
         var approachArray = []
         var subspecialityArray = []
         for (var key in req.body.values.approach) {
@@ -74,13 +75,49 @@ module.exports = app => {
         for (var key in req.body.values.subspeciality) {
             subspecialityArray.push(req.body.values.subspeciality[key])
         }
-        const cases = await Case.find({
-            approach: { "$in": approachArray },
-            subspeciality: { "$in": subspecialityArray }
-        }).select().populate({
-            path: 'questions',
-            model: 'questions'
-        });
+        if (req.body.values.title == "") {
+            if (approachArray.length == 0 || subspecialityArray.length == 0) {
+                cases = await Case.find({
+                    difficulty: req.body.values.difficulty,
+                    status: req.body.values.casestatus
+                }).select().populate({
+                    path: 'questions',
+                    model: 'questions'
+                });
+            } else {
+                cases = await Case.find({
+                    difficulty: req.body.values.difficulty,
+                    status: req.body.values.casestatus,
+                    approach: { "$in": approachArray },
+                    subspeciality: { "$in": subspecialityArray }
+                }).select().populate({
+                    path: 'questions',
+                    model: 'questions'
+                });
+            }
+        } else {
+            if (approachArray.length == 0 || subspecialityArray.length == 0) {
+                cases = await Case.find({
+                    title: { "$regex": req.body.values.title, "$options": "i" },
+                    difficulty: req.body.values.difficulty,
+                    status: req.body.values.casestatus
+                }).select().populate({
+                    path: 'questions',
+                    model: 'questions'
+                });
+            } else {
+                cases = await Case.find({
+                    title: { "$regex": req.body.values.title, "$options": "i" },
+                    approach: { "$in": approachArray },
+                    subspeciality: { "$in": subspecialityArray },
+                    difficulty: req.body.values.difficulty,
+                    status: req.body.values.casestatus
+                }).select().populate({
+                    path: 'questions',
+                    model: 'questions'
+                });
+            }
+        }
         res.send(cases);
     });
 
