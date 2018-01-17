@@ -1,4 +1,4 @@
-import { FETCH_ADMIN_CASES, DELETE_ADMIN_CASE } from '../actions/types';
+import { FETCH_ADMIN_CASES, DELETE_ADMIN_CASE, FETCH_FILTERED_ADMIN_CASES } from '../actions/types';
 
 export default function(state = null, action) {
     switch (action.type) {
@@ -7,6 +7,8 @@ export default function(state = null, action) {
         case DELETE_ADMIN_CASE:
             const id = action.payload
             return state.filter((item) => item._id !== id)
+        case FETCH_FILTERED_ADMIN_CASES:
+            return action.payload || false;
         default:
             return state;
     }

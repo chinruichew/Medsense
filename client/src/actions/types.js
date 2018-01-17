@@ -19,3 +19,4 @@ export const FETCH_FILTERED_ADMIN_STUDENTS = 'fetch_filtered_admin_students';
 export const FETCH_FILTERED_ADMIN_PROFESSORS = 'fetch_filtered_admin_professors';
 export const DELETE_ADMIN_PROFESSOR = 'delete_admin_professor';
 export const DELETE_ADMIN_STUDENT = 'delete_admin_student';
+export const FETCH_FILTERED_ADMIN_CASES = 'fetch_filtered_admin_cases';

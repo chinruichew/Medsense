@@ -6,7 +6,7 @@ import { bindAll } from 'lodash';
 import Main from './Main';
 import Admin from './Admin';
 import UserManager from './UserManager';
-import { fetchAdminCases, deleteAdminCase } from '../../actions';
+import { fetchAdminCases, deleteAdminCase, fetchFilteredAdminCases } from '../../actions';
 
 
 import './Admin.css';
@@ -570,4 +570,4 @@ function mapStateToProps({ adminCases }) {
 
 
 
-export default connect(mapStateToProps, { deleteAdminCase })(CaseManager);
+export default connect(mapStateToProps, { deleteAdminCase, fetchFilteredAdminCases })(CaseManager);

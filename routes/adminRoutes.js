@@ -35,8 +35,6 @@ module.exports = app => {
         for (var key in req.body.values.subspeciality) {
             subspecialityArray.push(req.body.values.subspeciality[key])
         }
-
-        console.log(subspecialityArray)
         var users
         if (req.body.values.username == "") {
             users = await User.find({
@@ -49,8 +47,8 @@ module.exports = app => {
             users = await User.find({
                 username: req.body.values.username,
                 usertype: "professor",
-                // school: req.body.values.school,
-                // speciality: req.body.values.speciality,
+                school: req.body.values.school,
+                speciality: req.body.values.speciality,
                 subspeciality: { "$in": subspecialityArray }
             }).select("-password");
         }
@@ -77,9 +75,6 @@ module.exports = app => {
             subspecialityArray.push(req.body.values.subspeciality[key])
         }
         const cases = await Case.find({
-            title: { "$in": req.body.title },
-            speciality: req.body.speciality,
-            difficulty: req.body.difficulty,
             approach: { "$in": approachArray },
             subspeciality: { "$in": subspecialityArray }
         }).select().populate({
