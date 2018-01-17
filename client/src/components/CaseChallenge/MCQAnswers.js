@@ -8,11 +8,16 @@ class Answers extends Component {
         super(props);
         this.state = {
             answerCount: 0,
+            answer: "",
             authid: this.props.authid,
             authname: this.props.authname
         };
 
         bindAll(this, 'renderContent', 'getMCQAnswer', 'renderNextQuestion');
+    }
+
+    componentDidMount(){
+        this.getMCQAnswer();
     }
 
     getMCQAnswer(){
@@ -48,8 +53,8 @@ class Answers extends Component {
             answerCount += 1;
         }
 
-        this.setState({answerCount: answerCount});
-        return answer.slice(0, -1);
+        this.setState({answerCount: answerCount, answer: answer.slice(0, -1)});
+        
     }
 
     renderContent(){
@@ -58,7 +63,7 @@ class Answers extends Component {
                 <h3>You got __ / {this.state.answerCount} correct!</h3>
                 <h4> 
                     Answer <br /> 
-                    {this.getMCQAnswer()} <br /><br /><br />
+                    {this.state.answer} <br /><br /><br />
 
                     PEARL <br /> 
                     This is the type of question that frustrates people in the exams. Most people 

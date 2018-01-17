@@ -140,6 +140,7 @@ class TimeLimit extends Component {
                         return (<div>Hello!</div>);
                     }
                 });
+                return questionNodes;
                 //return this.props.game.title;
         }
     }
