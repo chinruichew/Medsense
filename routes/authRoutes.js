@@ -5,7 +5,7 @@ module.exports = app => {
     app.post('/api/login', (req, res) => {
         const values = req.body;
         User.findOne({ username: values.username }, function (err, user) {
-            if (user) {
+            if (user.validPassword(values.password)) {
                 req.session.user = user;
                 res.send('Authenticated');
             } else {
