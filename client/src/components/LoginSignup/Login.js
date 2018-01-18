@@ -13,12 +13,6 @@ class Login extends Component {
         authentication: false
     };
 
-    componentDidMount() {
-        // Dynamically set background image
-        document.body.style.backgroundImage = "url('./home_background.jpg')";
-        document.body.style.backgroundSize = "100% 1200px";
-    }
-
     handleUsernameChange = (e) => {
         this.setState({username: e.target.value});
     };

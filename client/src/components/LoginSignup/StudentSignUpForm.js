@@ -4,16 +4,13 @@ import BootstrapModal from '../UI/Modal/VettingBootstrapModal.js';
 import { Button, Popover, OverlayTrigger } from 'react-bootstrap';
 
 class StudentSignUpForm extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            username: this.props.username,
-            password: this.props.password,
-            confirm_password: this.props.confirm_password,
-            school: this.props.school,
-            year: this.props.year
-        };
-    }
+    state = {
+        username: this.props.username,
+        password: this.props.password,
+        confirm_password: this.props.confirm_password,
+        school: this.props.school,
+        year: this.props.year
+    };
 
     handleSchoolChange(e) {
         this.setState({ school: e.target.value });

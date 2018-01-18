@@ -14,12 +14,6 @@ class StudentSignup extends Component {
         year: "Year 1"
     };
 
-    componentDidMount() {
-        // Dynamically set background image
-        document.body.style.backgroundImage = "url('./home_background.jpg')";
-        document.body.style.backgroundSize = "100% 1200px";
-    }
-
     handleSchoolChange(e) {
         this.setState({ school: e.target.value });
     }
