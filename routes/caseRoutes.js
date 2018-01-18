@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const User = require('../models/User');
 const Case = require('../models/Case');
 const Question = require('../models/Question');
+const constants = require('../utility/constantTypes');
 
 function IsValidNRIC(theNric) {
     return new RegExp(/^[STFG]\d{7}[A-Z]$/).test(theNric);
@@ -18,6 +19,10 @@ module.exports = app => {
     });
 
     app.post('/api/uploadCase', function (req, res) {
+        let caseStatus = 'Pending';
+        if(req.session.user.usertype === constants.USER_TYPE_PROFESSOR) {
+            caseStatus = 'Vetted';
+        }
         const newCase = new Case({
             title: req.body.values.title,
             difficulty: req.body.values.difficulty,
@@ -26,7 +31,8 @@ module.exports = app => {
             learning: req.body.values.learning,
             timestamp: new Date(),
             authorid: mongoose.Types.ObjectId(req.body.values.authid),
-            authorname: req.body.values.authname
+            authorname: req.body.values.authname,
+            status: caseStatus
         });
 
         for (const key in req.body.values.approach) {

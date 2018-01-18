@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { Button, Accordion, Panel } from 'react-bootstrap';
 import { bindAll } from 'lodash';
+import axios from 'axios';
+
 import Question from './Question.js';
 import Overview from './Overview.js';
 import BootstrapModal from '../UI/Modal/UploadBootstrapModal.js';
 import './Upload.css';
-import { uploadCase } from '../../actions/index';
-import axios from 'axios';
 
 class Main extends Component {
     constructor(props) {
@@ -154,7 +153,7 @@ class Main extends Component {
         axios.post('/api/uploadCaseAttachment', formData, config).then(res => {
             console.log(res);
         });
-    }
+    };
 
     submitCase = (e) => {
         axios.post('/api/uploadCase', {
@@ -163,13 +162,12 @@ class Main extends Component {
             const caseID = res.data.data.case;
             let questions = res.data.data.question;
             let qnData = this.state.qnData;
-            console.log(res)
             this.setState({vm: true});
             // let questions = this.state.qnData;
 
             for (let i=0; i<questions.length; i++){
                 let question = questions[i];
-                let qn = qnData[i]
+                let qn = qnData[i];
                 this.uploadFile(qn.attachment, caseID, question.id, question._id);
             }
         });
@@ -428,4 +426,4 @@ class Main extends Component {
     }
 }
 
-export default connect(null, { uploadCase })(Main);
+export default Main;
