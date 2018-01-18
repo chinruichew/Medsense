@@ -188,6 +188,7 @@ class SearchByApproach extends Component {
                     </Row>
                     </Col>
                 </FormGroup>
+                <br/>
                 {this.state.approachCase}
             </div>
         );
