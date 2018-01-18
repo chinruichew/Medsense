@@ -24,7 +24,11 @@ module.exports = app => {
     });
 
     app.post('/api/fetchCaseByApproach', async (req, res) => {
-        const result = await Case.find({status: 'Vetted', approach: {$all: req.body.approach}});
+        const result = await Case.find({status: 'Vetted', approach: {$all: req.body.approach}}).select().populate({
+            path: 'authorid',
+            model: 'users'
+        });
+        console.log(result);
         res.send(result);
     });
 
