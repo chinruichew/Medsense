@@ -5,6 +5,7 @@ import { bindAll } from 'lodash';
 import { Line } from 'rc-progress';
 
 import OpenEndedAnswer from "./OpenEndedAnswer";
+import ImageMagnifier from "./ImageMagnifier";
 
 class OpenEndedQuestion extends Component {
 
@@ -142,6 +143,12 @@ class OpenEndedQuestion extends Component {
     }
 
     renderContent(){
+        let imageZoom = this.props.question.attachment!=="" ? (<div class="col-md-5 col-md-offset-2"  align="center">
+            <h5>
+                Mouse over image to zoom
+            </h5>
+        </div>): (<div></div>)
+
         return(
             <div className='container'>
                 <h1>
@@ -167,6 +174,12 @@ class OpenEndedQuestion extends Component {
                     <br />
 
                     <h4>{this.props.question.question}</h4>
+
+
+                    <div class="col-md-5 col-md-offset-2">{<ImageMagnifier url={this.props.question.attachment}/>}</div>
+                    {imageZoom}
+
+                    <br />
 
                     <br />
                     <div class="col-md-10 col-md-offset-1">

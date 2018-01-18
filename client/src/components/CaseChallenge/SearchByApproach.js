@@ -57,13 +57,15 @@ class SearchByApproach extends Component {
                         }
                         sameElementCount = 0;
                     }
-                    // let additionalApproach = "";
-                    // for (let k=0; k<additional.length-1; k++){
-                    //     additionalApproach+=additional[k] + ", ";
-                    // }
-                    // additionalApproach+=additional[additional.length-1];
+                    let additionalApproach = "";
+
                     if(additionalApproaches.length === 0){
-                        additionalApproaches = "-";
+                        additionalApproach = "-";
+                    } else {
+                        for (let k = 0; k < additionalApproaches.length - 1; k++) {
+                            additionalApproach += additionalApproaches[k] + ", ";
+                        }
+                        additionalApproach += additionalApproaches[additionalApproaches.length - 1];
                     }
 
                     const subspecialities = approachCase.subspeciality;
@@ -81,11 +83,11 @@ class SearchByApproach extends Component {
                     return(
                         <tr align="center" key={approachCase._id}>
                             <td>{approachCase.title}</td>
-                            <td>{additionalApproaches}</td>
+                            <td>{additionalApproach}</td>
                             <td>{approachCase.speciality}</td>
                             <td>{specialities}</td>
                             <td>{approachCase.difficulty}</td>
-                            <td>{approachCase.authorname}</td>
+                            {/*<td>{approachCase.authorid.username}</td>*/}
                             <td>{date}<br/>{time}</td>
                             <td><Button  type="button" bsStyle="primary" onClick={(e)=>this.handleReturnCase(approachCase)}>Try</Button></td>
                         </tr>
@@ -110,9 +112,9 @@ class SearchByApproach extends Component {
                             <th>
                                 <center>Difficulty Level</center>
                             </th>
-                            <th>
-                                <center>Uploaded by</center>
-                            </th>
+                            {/*<th>*/}
+                                {/*<center>Uploaded by</center>*/}
+                            {/*</th>*/}
                             <th>
                                 <center>Last Updated</center>
                             </th>

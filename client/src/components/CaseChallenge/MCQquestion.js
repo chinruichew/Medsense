@@ -6,6 +6,7 @@ import { bindAll } from 'lodash';
 
 import MCQAnswers from './MCQAnswers';
 import './Game.css';
+import ImageMagnifier from "./ImageMagnifier";
 
 class MCQquestion extends Component {
 
@@ -169,7 +170,11 @@ class MCQquestion extends Component {
     }
 
     renderContent(){
-
+        let imageZoom = this.props.question.attachment!=="" ? (<div class="col-md-5 col-md-offset-2"  align="center">
+            <h5>
+                Mouse over image to zoom
+            </h5>
+        </div>): (<div></div>)
         return(
             <div className='container'>
                 <h1>
@@ -198,11 +203,14 @@ class MCQquestion extends Component {
 
                     <h4>{this.props.question.question}</h4>
 
-                    <br />
+                    <div class="col-md-5 col-md-offset-2">{<ImageMagnifier url={this.props.question.attachment}/>}</div>
+                    {imageZoom}
+
+                    <br /><br/>
 
                     <Form><h4>
                         <FormGroup>
-                            <div class="col-md-10 col-md-offset-5">
+                            <div class="col-md-6 col-md-offset-2">
                                 <Checkbox >{this.props.question.mcq1}</Checkbox>
                                 <Checkbox >{this.props.question.mcq2}</Checkbox>
                                 {this.renderMCQ3()}

@@ -44,6 +44,9 @@ module.exports = app => {
             status: 'Vetted',
             speciality: req.body.speciality,
             subspeciality: {$all: req.body.subspeciality}
+        }).select().populate({
+            path: 'authorid',
+            model: 'users'
         });
         res.send(result);
     });

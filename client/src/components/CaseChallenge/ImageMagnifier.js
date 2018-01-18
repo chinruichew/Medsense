@@ -7,14 +7,14 @@ class ImageMagnifier extends Component {
         return(
             <ReactImageMagnify {...{
                 smallImage: {
-                    alt: 'Wristwatch by Ted Baker London',
+                    alt: '',
                     isFluidWidth: true,
-                    src: "./CTscan.png",
-                    sizes: ' (min-width: 90px)'
+                    src: this.props.url,
+                    sizes: '(min-width: 100px)'
                 },
                 largeImage: {
                     alt: '',
-                    src: "./CTscan.png",
+                    src: this.props.url,
                     width: 500,
                     height: 500
                 }

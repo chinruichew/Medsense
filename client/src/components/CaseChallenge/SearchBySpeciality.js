@@ -73,7 +73,7 @@ class SearchBySpeciality extends Component {
                             <td>{specialityCase.speciality}</td>
                             <td>{specialities}</td>
                             <td>{specialityCase.difficulty}</td>
-                            <td>{specialityCase.authorname}</td>
+                            {/*<td>{specialityCase.authorid.username}</td>*/}
                             <td>{date}<br/>{time}</td>
                             <td><Button  type="button" bsStyle="primary" onClick={(e)=>this.handleReturnCase(specialityCase)}>Try</Button></td>
                         </tr>
@@ -98,9 +98,9 @@ class SearchBySpeciality extends Component {
                             <th>
                                 <center>Difficulty Level</center>
                             </th>
-                            <th>
-                                <center>Uploaded by</center>
-                            </th>
+                            {/*<th>*/}
+                                {/*<center>Uploaded by</center>*/}
+                            {/*</th>*/}
                             <th>
                                 <center>Last Updated</center>
                             </th>
