@@ -39,14 +39,6 @@ class DeleteUser extends Component {
 
     handleSpecialityChange(e) {
         const value = e.target.value;
-        if (value === "Surgery") {
-            this.setState({ subspeciality: "Breast" })
-        }
-
-        if (value === "Others") {
-            this.setState({ subspeciality: "Anaesthesiology" })
-        }
-
         this.setState({ speciality: value });
     }
 
