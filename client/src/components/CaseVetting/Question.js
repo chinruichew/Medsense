@@ -346,7 +346,7 @@ class Question extends Component {
             return(
                 <FormGroup controlId="formControlsOpenEnded">
                     <ControlLabel>Answer<span style={{color:"red"}}>*</span></ControlLabel>
-                    <FormControl componentClass="textarea" style={{height:400}} placeholder="Enter an answer" value={this.state.openEnded} name="openEnded" onChange={(e)=>this.handleOpenEndedChange(e)}/>
+                    <FormControl componentClass="textarea" rows={5} style={{height:400}} placeholder="Enter an answer" value={this.state.openEnded} name="openEnded" onChange={(e)=>this.handleOpenEndedChange(e)}/>
                 </FormGroup>
             );
         }
@@ -360,7 +360,7 @@ class Question extends Component {
         return (
             <FormGroup controlId="formControlsSTEM">
                 <ControlLabel style={{ fontSize: "150%" }}>STEM</ControlLabel>
-                <FormControl componentClass="textarea" style={{height:'600px'}} placeholder="Enter a continuation of the scenario" value={this.state.stem} name="stem" onChange={(e)=>this.handleStemChange(e)} />
+                <FormControl componentClass="textarea" rows={3} style={{height:'600px'}} placeholder="Enter a continuation of the scenario" value={this.state.stem} name="stem" onChange={(e)=>this.handleStemChange(e)} />
             </FormGroup>
         );
     }
@@ -377,7 +377,7 @@ class Question extends Component {
 
                         <FormGroup controlId="formControlsQuestion">
                             <ControlLabel style={{ fontSize: "150%" }}>Question {this.props.id}<span style={{color:"red"}}>*</span></ControlLabel>
-                            <FormControl componentClass="textarea" placeholder="Enter a question" value={this.state.question} name="question" onChange={(e)=>this.handleQuestionChange(e)} />
+                            <FormControl componentClass="textarea" rows={5} placeholder="Enter a question" value={this.state.question} name="question" onChange={(e)=>this.handleQuestionChange(e)} />
                         </FormGroup>
 
                         <FormGroup controlId="formControlsAttachment">
@@ -400,7 +400,7 @@ class Question extends Component {
 
                         <FormGroup controlId="formControlsPEARL">
                             <ControlLabel style={{ fontSize: "150%" }}>PEARL<span style={{color:"red"}}>*</span></ControlLabel>
-                            <FormControl componentClass="textarea" placeholder="Enter an explanation for the answer(s)" value={this.state.pearl} name="pearl" onChange={(e)=>this.handlePearlChange(e)} />
+                            <FormControl componentClass="textarea" rows={5} placeholder="Enter an explanation for the answer(s)" value={this.state.pearl} name="pearl" onChange={(e)=>this.handlePearlChange(e)} />
                         </FormGroup>
 
                         <FormGroup controlId="formControlsTime">
@@ -422,7 +422,7 @@ class Question extends Component {
 
                         <FormGroup controlId="formControlsReferences">
                             <ControlLabel style={{ fontSize: "150%" }}>References</ControlLabel>
-                            <FormControl componentClass="textarea" placeholder="Enter your references" value={this.state.reference} name="reference" onChange={(e)=>this.handleReferenceChange(e)} />
+                            <FormControl componentClass="textarea" rows={3} placeholder="Enter your references" value={this.state.reference} name="reference" onChange={(e)=>this.handleReferenceChange(e)} />
                         </FormGroup>
                     </Panel>
                 </Accordion>

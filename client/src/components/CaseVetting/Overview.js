@@ -293,12 +293,12 @@ class Overview extends Component {
 
                 <FormGroup controlId="formControlsScenario">
                     <ControlLabel style={{ fontSize: "150%" }}>Case Scenario<span style={{color:"red"}}>*</span></ControlLabel>
-                    <FormControl componentClass="textarea" placeholder="Enter a brief description of the patient" value={this.state.scenario} name="scenario" onChange={(e) => this.handleScenarioChange(e)} />
+                    <FormControl componentClass="textarea" rows={3} placeholder="Enter a brief description of the patient" value={this.state.scenario} name="scenario" onChange={(e) => this.handleScenarioChange(e)} />
                 </FormGroup>
 
                 <FormGroup controlId="formControlsLearning">
                     <ControlLabel style={{ fontSize: "150%" }}>Key Learning Points<span style={{color:"red"}}>*</span></ControlLabel>
-                    <FormControl componentClass="textarea" placeholder="Enter the key learning points of this case" value={this.state.learning} name="learning" onChange={(e) => this.handleLearningChange(e)} />
+                    <FormControl componentClass="textarea" rows={3} placeholder="Enter the key learning points of this case" value={this.state.learning} name="learning" onChange={(e) => this.handleLearningChange(e)} />
                 </FormGroup>
 
             </div>
