@@ -1,25 +1,20 @@
 import React, { Component } from 'react';
 import {Button, FormGroup, FormControl, ControlLabel, Col, Row, Table} from 'react-bootstrap';
-import { bindAll } from 'lodash';
 import axios from 'axios';
 
 class SearchByApproach extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            showApproachTable: false,
-            approach: null,
-            finalApproach: null,
-            approachCase: ''
-        };
-        bindAll(this, 'handleApproachChange', 'handleReturnCase');
-    }
+    state = {
+        showApproachTable: false,
+        approach: null,
+        finalApproach: null,
+        approachCase: null
+    };
 
-    handleReturnCase(game){
+    handleReturnCase = (game) => {
         this.props.handleReturnCase(game);
-    }
+    };
 
-    handleApproachChange(e) {
+    handleApproachChange = (e) => {
         const options = e.target.options;
         let value = [];
         for (let i = 1, l = options.length; i < l; i++) {
@@ -29,12 +24,8 @@ class SearchByApproach extends Component {
         }
         if (value.length > 0) {
             this.setState({ approach: value });
-            //this.update(value, "approach");
         }
-        // const value = e.target.value;
-        // this.setState({ approach: value });
-        // this.update(value, "approach");
-    }
+    };
 
     filterByApproach = () => {
         axios.post('/api/fetchCaseByApproach', {
@@ -72,7 +63,7 @@ class SearchByApproach extends Component {
                             <td>{approachCase.difficulty}</td>
                             <td>{approachCase.authorname}</td>
                             <td>{date}<br/>{time}</td>
-                            <td><Button  type="button" bsStyle="primary" onClick={(e)=>this.tryCase(approachCase)}>Try</Button></td>
+                            <td><Button  type="button" bsStyle="primary" onClick={(e)=>this.handleReturnCase(approachCase)}>Try</Button></td>
                         </tr>
                     );
                 });
