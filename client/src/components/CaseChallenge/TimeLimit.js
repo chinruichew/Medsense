@@ -3,13 +3,12 @@ import { Form, FormGroup, ControlLabel, Col } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import { bindAll } from 'lodash';
 import {connect} from 'react-redux';
+
 import {fetchGameById} from '../../actions';
 import MCQquestion from "./MCQquestion";
-import OpenEnded from "./OpenEnded";
 import OpenEndedQuestion from "./OpenEndedQuestion";
 
 class TimeLimit extends Component {
-
     constructor(props) {
         super(props);
         this.state = {

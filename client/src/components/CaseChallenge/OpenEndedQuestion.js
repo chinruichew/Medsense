@@ -3,6 +3,7 @@ import { Form, FormGroup, Col } from 'react-bootstrap';
 import { Button, Row, ControlLabel, FormControl } from 'react-bootstrap';
 import { bindAll } from 'lodash';
 import { Line } from 'rc-progress';
+
 import OpenEndedAnswer from "./OpenEndedAnswer";
 
 class OpenEndedQuestion extends Component {
@@ -39,7 +40,7 @@ class OpenEndedQuestion extends Component {
         // Check if we're at zero.
         if (seconds === 0) {
             clearInterval(this.timer);
-            {this.selectDone()}
+            this.selectDone()
         }
     }
 
@@ -70,9 +71,9 @@ class OpenEndedQuestion extends Component {
         const {showAnswers} = this.state;
         const {showNextButton} = this.state;
         if(!showAnswers){
-            this.setState({showAnswers: !showAnswers})
-            this.setState({showNextButton: !showNextButton})
-            {this.pauseTimer()}
+            this.setState({showAnswers: !showAnswers});
+            this.setState({showNextButton: !showNextButton});
+            this.pauseTimer();
         }
     }
 

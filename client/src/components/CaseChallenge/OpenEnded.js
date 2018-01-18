@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Form, FormControl, FormGroup, Col } from 'react-bootstrap';
 import { Button, Row } from 'react-bootstrap';
-import { bindAll } from 'lodash';
-import Answers from './MCQAnswers';
 import { Line } from 'rc-progress';
+
+import Answers from './MCQAnswers';
 import ImageMagnifier from './ImageMagnifier';
  
 
@@ -22,17 +22,15 @@ class OpenEnded extends Component {
         this.timer = 0;
         this.startTimer = this.startTimer.bind(this);
         this.countDown = this.countDown.bind(this);
-        //this.chooseFind = this.chooseFind.bind(this);
-        bindAll(this, 'selectDone');
     }
 
-    startTimer() {
-        if (this.timer == 0) {
+    startTimer = () => {
+        if (this.timer === 0) {
             this.timer = setInterval(this.countDown, 1000);
         }
-    }
+    };
 
-    countDown() {
+    countDown = () => {
         // Remove one second, set state so a re-render happens.
         let seconds = this.state.seconds - 1;
         this.setState({
@@ -41,11 +39,11 @@ class OpenEnded extends Component {
         });
 
         // Check if we're at zero.
-        if (seconds == 0) {
+        if (seconds === 0) {
             clearInterval(this.timer);
-            {this.selectDone()}
+            this.selectDone();
         }
-    }
+    };
 
     secondsToTime(secs) {
         let divisor_for_minutes = secs % (60 * 60);
@@ -74,11 +72,11 @@ class OpenEnded extends Component {
         const {showAnswers} = this.state;
         const {showNextButton} = this.state;
         if(!showAnswers){
-            this.setState({showAnswers: !showAnswers})
-            this.setState({showNextButton: !showNextButton})
-            {this.pauseTimer()}
+            this.setState({showAnswers: !showAnswers});
+            this.setState({showNextButton: !showNextButton});
+            this.pauseTimer();
         }
-    }
+    };
 
     renderTimer(duration){ 
         return( 

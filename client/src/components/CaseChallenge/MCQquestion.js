@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Form, FormGroup, Table, Col } from 'react-bootstrap';
 import { Checkbox, Button, Row } from 'react-bootstrap';
-import { bindAll } from 'lodash';
-import MCQAnswers from './MCQAnswers';
 import { Line } from 'rc-progress';
+import { bindAll } from 'lodash';
+
+import MCQAnswers from './MCQAnswers';
 
 class MCQquestion extends Component {
 
@@ -24,7 +25,7 @@ class MCQquestion extends Component {
     }
 
     startTimer() {
-        if (this.timer == 0) {
+        if (this.timer === 0) {
             this.timer = setInterval(this.countDown, 1000);
         }
     }
@@ -38,9 +39,9 @@ class MCQquestion extends Component {
         });
 
         // Check if we're at zero.
-        if (seconds == 0) {
+        if (seconds === 0) {
             clearInterval(this.timer);
-            {this.selectDone()}
+            this.selectDone()
         }
     }
 
@@ -72,9 +73,9 @@ class MCQquestion extends Component {
         const {showAnswers} = this.state;
         const {showNextButton} = this.state;
         if(!showAnswers){
-            this.setState({showAnswers: !showAnswers})
-            this.setState({showNextButton: !showNextButton})
-            {this.pauseTimer()}
+            this.setState({showAnswers: !showAnswers});
+            this.setState({showNextButton: !showNextButton});
+            this.pauseTimer()
         }
     }
 

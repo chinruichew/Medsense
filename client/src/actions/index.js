@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FETCH_USER, FETCH_CASES, FETCH_VETTED_CASES, UPDATE_PROFESSOR, UPDATE_STUDENT, UPLOAD_CASE, FETCH_GAME_BY_ID, FETCH_CASE_BY_ID, UPDATE_CASE, FETCH_RANDOM_CASE, FETCH_ADMIN_CASES, FETCH_CASE_BY_APPROACH, FETCH_CASE_BY_SPECIALITY, DELETE_ADMIN_CASE, FETCH_ADMIN_USERS, ADD_NEW_STUDENT, ADD_NEW_PROFESSOR, FETCH_FILTERED_ADMIN_STUDENTS, FETCH_FILTERED_ADMIN_PROFESSORS, DELETE_ADMIN_PROFESSOR, DELETE_ADMIN_STUDENT, FETCH_FILTERED_ADMIN_CASES } from './types';
+import { FETCH_USER, FETCH_CASES, FETCH_VETTED_CASES, UPDATE_PROFESSOR, UPDATE_STUDENT, UPLOAD_CASE, FETCH_GAME_BY_ID, FETCH_CASE_BY_ID, UPDATE_CASE, FETCH_RANDOM_CASE, FETCH_ADMIN_CASES, FETCH_CASE_BY_APPROACH, FETCH_CASE_BY_SPECIALITY, DELETE_ADMIN_CASE, FETCH_ADMIN_USERS, FETCH_FILTERED_ADMIN_STUDENTS, FETCH_FILTERED_ADMIN_PROFESSORS, DELETE_ADMIN_PROFESSOR, DELETE_ADMIN_STUDENT, FETCH_FILTERED_ADMIN_CASES } from './types';
 
 export const fetchUser = () => async dispatch => {
     const res = await axios.get('/api/current_user');
@@ -100,21 +100,21 @@ export const fetchAdminUsers = () => async dispatch => {
 };
 
 export const deleteAdminCase = (values) => async dispatch => {
-    const res = axios.post('/api/deleteAdminCase', {
+    axios.post('/api/deleteAdminCase', {
         values
     });
     dispatch({ type: DELETE_ADMIN_CASE, payload: values });
 };
 
 export const deleteAdminStudent = (values) => async dispatch => {
-    const res = axios.post('/api/deleteAdminStudent', {
+    axios.post('/api/deleteAdminStudent', {
         values
     });
     dispatch({ type: DELETE_ADMIN_STUDENT, payload: values });
 };
 
 export const deleteAdminProfessor = (values) => async dispatch => {
-    const res = axios.post('/api/deleteAdminProfessor', {
+    axios.post('/api/deleteAdminProfessor', {
         values
     });
     dispatch({ type: DELETE_ADMIN_PROFESSOR, payload: values });

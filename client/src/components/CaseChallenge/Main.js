@@ -95,7 +95,7 @@ class Main extends Component {
                                 <td style={{width:"12em"}}>
                                     <Button style={{background: "white", color: 'black', width: "9em", height: "9em"}}
                                              bsSize="large" onClick={(e)=> this.getRandomCase()}>
-                                        <img src="./circle.png" width="10%" height="10%"/> <br />Random Case
+                                        <img src="./circle.png" alt="Random Case" width="10%" height="10%"/> <br />Random Case
                                     </Button>
 
                                 </td>

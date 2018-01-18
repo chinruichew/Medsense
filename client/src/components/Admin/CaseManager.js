@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import { Button, ButtonToolbar, FormGroup, ControlLabel, FormControl, Table, Modal } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import { bindAll } from 'lodash';
-import Main from './Main';
+
 import Admin from './Admin';
 import UserManager from './UserManager';
-import { fetchAdminCases, deleteAdminCase, fetchFilteredAdminCases } from '../../actions';
+import { deleteAdminCase, fetchFilteredAdminCases } from '../../actions';
 
 
 import './Admin.css';
@@ -497,7 +497,7 @@ class CaseManager extends Component {
 
     renderModal() {
         let allQuestions = this.state.oneCaseQuestions.map(question => {
-            if (question.type == "MCQ") {
+            if (question.type === "MCQ") {
                 return <div>
                     <p> Stem {question.stem} </p>
                     <p> MCQ 1: &nbsp; {question.mcq1} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Answer 1: {JSON.stringify(question.check1)} </p>
