@@ -66,7 +66,6 @@ class MCQquestion extends Component {
     componentDidMount() {
         let timeLeftVar = this.secondsToTime(this.state.seconds);
         this.setState({ time: timeLeftVar });
-        //console.log("MCQ QUESTION");
     }
 
     selectDone() {
@@ -127,7 +126,6 @@ class MCQquestion extends Component {
         }
     }
 
-
     renderMCQ3(){
         if(this.props.question.mcq3.length !== 0){
             return(
@@ -147,7 +145,6 @@ class MCQquestion extends Component {
             );
         }
     }
-
 
     renderMCQ5(){
         if(this.props.question.mcq5.length !== 0){
