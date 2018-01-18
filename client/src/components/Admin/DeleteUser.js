@@ -264,7 +264,9 @@ class DeleteUser extends Component {
                     <td><center>{user.school}</center></td>
                     <td><center>{user.year}</center></td>
                     <td><center>{user._id}</center></td>
-                    <td><center>Contribution 1</center></td>
+                    <td><center>Level</center></td>
+                    <td><center>XP</center></td>
+                    <td><center>Timestamp</center></td>
                     <td><Button onClick={(e) => this.deleteAdminStudent(user)}>Delete</Button></td >
                 </tr>
             }

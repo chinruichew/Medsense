@@ -291,7 +291,7 @@ class CaseManager extends Component {
                     <div style={{ fontSize: "70%", fontWeight: "200" }}>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.
                         </div>
                 </ControlLabel>
-                <FormControl componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)} multiple>
+                <FormControl  componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)} multiple>
                     <option value="Select One">Select All Relevant</option>
                     <optgroup label="--Medicine--"></optgroup>
                     <option value="Cardiology">Cardiology</option>
@@ -476,9 +476,9 @@ class CaseManager extends Component {
                                         <div className='col-sm-4'>
                                             {this.setCaseStatus()}
                                         </div>
-                                        <div className='col-sm-4'>
+                                        {/* <div className='col-sm-4'>
                                             {this.setTime()}
-                                        </div>
+                                        </div> */}
                                         <div className='col-sm-12' align='right'>
                                             <Button type="button" bsSize="lg" bsStyle="primary" onClick={(e) => this.searchCases()}> &nbsp; Search &nbsp;</Button>
                                         </div>
