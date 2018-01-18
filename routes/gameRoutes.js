@@ -10,7 +10,7 @@ module.exports = app => {
         Case.count({ status: 'Vetted' }).exec(function (err, count) {
 
             // Get a random entry
-            const random = Math.floor(Math.random() * count)
+            const random = Math.floor(Math.random() * count);
 
             // Again query all users but only fetch one offset by our random #
             Case.findOne({ status: 'Vetted' }).skip(random).exec(
@@ -28,7 +28,6 @@ module.exports = app => {
             path: 'authorid',
             model: 'users'
         });
-        console.log(result);
         res.send(result);
     });
 
