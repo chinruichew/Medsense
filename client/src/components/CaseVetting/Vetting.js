@@ -34,7 +34,7 @@ class Vetting extends Component {
                 return;
             default:
                 return this.props.cases.reverse().map((vetCase, index) => {
-                    const userSubSpecialities = this.state.currentUser.subspeciality.split(",");
+                    const userSubSpecialities = this.state.currentUser.subspeciality;
                     switch(this.state.filterPending) {
                         case 'All':
                             let toRenderAllCase = false;
