@@ -17,13 +17,13 @@ class OpenEndedAnswer extends Component {
     renderContent(){
         return(
             <div className='container'>
-                <h3>You got __  points!</h3><br />
+                <h3>You got __ points!</h3><br />
                 <h4>
                     <strong>Answer</strong> <br />
-                    {this.props.question.openEnded} <br /><br /><br />
+                    {this.props.question.openEnded} <br /><br />
 
                     <strong>PEARL</strong> <br />
-                    {this.props.question.pearl} <br /><br /><br />
+                    {this.props.question.pearl} <br /><br />
 
                     <strong>References</strong> <br />
                     {this.props.question.reference} <br /><br />
@@ -35,11 +35,26 @@ class OpenEndedAnswer extends Component {
     }
 
     renderNextQuestion(){
-        return(
-            <Button onClick={(e) => this.nextQuestion()} hspace = "20" bsStyle="primary" bsSize="large" className="pull-right">
-                Next Question
-            </Button>
-        );
+        if(this.props.question.id===this.props.totalQnNum+""){
+            return(
+                <div>
+                    <Button onClick={(e) => this.complete()} hspace = "20" bsStyle="primary" bsSize="large" className="pull-right">
+                        View Score
+                    </Button>
+                </div>
+            );
+        } else {
+            return (
+                <Button onClick={(e) => this.nextQuestion()} hspace="20" bsStyle="primary" bsSize="large"
+                        className="pull-right">
+                    Next Question
+                </Button>
+            );
+        }
+    }
+
+    complete(){
+
     }
 
     nextQuestion(){
@@ -50,7 +65,6 @@ class OpenEndedAnswer extends Component {
         return(
             <div>
                 {this.renderContent()}
-                <br /><br />
                 {this.renderNextQuestion()}
             </div>
         );
