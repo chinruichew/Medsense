@@ -38,6 +38,7 @@ class SearchByApproach extends Component {
                     let sameElementCount=0;
                     let additionalApproaches = [];
                     console.log(approachCase.approach);
+                    console.log(approaches)
                     for (let i=0; i<approachCase.approach.length; i++){
                         for (let j=0; j<approaches.length; j++){
                             if (approachCase.approach[i]===approaches[j]){
@@ -49,11 +50,12 @@ class SearchByApproach extends Component {
                                 //console.log(additional.splice(index, 1));
                                 //}
                             }
-
-                            if(sameElementCount === 0){
-                                additionalApproaches.push(approaches[j]);
-                            }
                         }
+                        if(sameElementCount === 0){
+                            additionalApproaches.push(approachCase.approach[i]);
+                            //console.log(additionalApproaches)
+                        }
+                        sameElementCount = 0;
                     }
                     // let additionalApproach = "";
                     // for (let k=0; k<additional.length-1; k++){
