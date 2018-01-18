@@ -53,7 +53,7 @@ module.exports = app => {
 
     app.get('/api/getSubSpeciality', function(req, res) {
         User.findById(req.session.user._id, function(err, user) {
-            res.send(user.subspeciality.split(","));
+            res.send(user.subspeciality);
         });
     });
 };
