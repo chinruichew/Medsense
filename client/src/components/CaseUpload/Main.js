@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Accordion, Panel } from 'react-bootstrap';
+import { Button, Accordion, Panel, FormGroup, Radio, ControlLabel, FormControl } from 'react-bootstrap';
 import { bindAll } from 'lodash';
 import axios from 'axios';
 
@@ -23,9 +23,15 @@ class Main extends Component {
             scenario: '',
             learning: '',
             authid: this.props.authid,
-            authname: this.props.authname
+            authname: this.props.authname,
+            author: "",
         };
         bindAll(this, 'addQuestion', 'saveChanges', 'handleUpdateOverview', 'handleUpdateQuestion', 'handleDeleteQuestion');
+    }
+
+    handleAuthorChange(e) {
+        const value = e.target.value;
+        this.setState({ author: value });
     }
 
     addQuestion() {
@@ -68,7 +74,7 @@ class Main extends Component {
             this.setState({ vmShow: true, error: "Case Overview: Please select a Difficulty Level!" });
         } else if (this.state.speciality === "Select One") {
             this.setState({ vmShow: true, error: "Case Overview: Please select a Speciality!" });
-        } else if (this.state.subspeciality === "Select One") {
+        } else if (this.state.subspeciality === null) {
             this.setState({ vmShow: true, error: "Case Overview: Please select a Sub-speciality!" });
         } else if (this.state.approach === null) {
         // } else if (this.state.approach === "Select One") {
@@ -270,6 +276,9 @@ class Main extends Component {
         const questionTitle = (
             <span style={{fontSize:'150%'}}><center>▽ Case Question</center></span>
         );
+        const PDPA = (
+            <span style={{fontSize:'150%'}}><center>▽ Tell Us Who You Are</center></span>
+        );
         let vmClose = () => this.setState({ vmShow: false });
         let vmConfirmClose = () => this.setState({ vmConfirm: false });
         let questionNodes = this.state.qnData.map((obj, index) => {
@@ -365,10 +374,46 @@ class Main extends Component {
                                 {questionNodes}
                             </div>
 
-
                             <div className="add-question-button">
                                 <Button type="button" bsStyle="primary" onClick={(e) => this.addQuestion()}>Add Question</Button><br />
                             </div>
+                        </Panel>
+                    </Accordion>
+
+                    <Accordion>
+                        <Panel header={PDPA} bsStyle="info">
+                            <FormGroup controlId="formControlsAuthor">
+                                <ControlLabel style={{ fontSize: "150%" }}>Author of case (Optional)</ControlLabel>
+                                <FormControl type="text" placeholder="Enter your name as registered in school" value={this.state.author} name="author" onChange={(e) => this.handleAuthorChange(e)} />
+                            </FormGroup>
+                            <h3>Note:</h3>
+                            <h4>
+                                <br/>
+                                Do leave your name if you would like to be contacted for credit in contributing this case if the event arises.
+
+                            By indicating your consent to provide your personal data in this form, you agree to be contacted for the purposes of  Medsense.
+                                <br/><br/>
+                            I hereby declare all information I have provided as accurate, and understand that my information may be passed to relevant committee members for the purposes of contacting me. All personal information will be kept confidential and used for the purpose(s) stated.
+                                <br/><br/>
+                            I hereby give my consent to the survey-taker to collect my personal information for dissemination to relevant parties and be contacted for issues pertaining to, or related to, this event.
+                                <br/><br/>
+                            PDPA Consent
+                                <br/><br/>
+                            </h4>
+                            <FormGroup controlId="formControlsPDPA">
+                                <Radio name="radioGroup" inline>
+                                    <h5>Yes</h5>
+                                </Radio>{'    '}
+                                <Radio name="radioGroup" inline>
+                                    <h5>No</h5>
+                                </Radio>
+                            </FormGroup>
+                            
+                            <h4>
+                            Should you wish to withdraw your consent for us to contact you for the purposes stated above, please notify us in writing to [email]. We will then remove your personal information from our database.
+                                <br/>
+                            Please allow at least 7 business days for your withdrawal of consent to take effect.
+                            </h4>
                         </Panel>
                     </Accordion>
 

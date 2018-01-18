@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Accordion, Panel } from 'react-bootstrap';
+import {Button, Accordion, Panel} from 'react-bootstrap';
 import { bindAll } from 'lodash';
 import Question from './Question.js';
 import Overview from './Overview.js';
@@ -23,7 +23,7 @@ class Main extends Component {
             scenario: this.props.scenario,
             learning: this.props.learning,
             authid: this.props.authorid,
-            authname: this.props.authorname
+            authname: this.props.authorname,
         };
         bindAll(this, 'addQuestion', 'saveChanges', 'handleUpdateOverview', 'handleUpdateQuestion', 'handleDeleteQuestion');
     }
@@ -68,7 +68,7 @@ class Main extends Component {
             this.setState({ vmShow: true, error: "Case Overview: Please select a Difficulty Level!" });
         } else if (this.state.speciality === "Select One") {
             this.setState({ vmShow: true, error: "Case Overview: Please select a Speciality!" });
-        } else if (this.state.subspeciality === "Select One") {
+        } else if (this.state.subspeciality === null) {
             this.setState({ vmShow: true, error: "Case Overview: Please select a Sub-speciality!" });
         } else if (this.state.approach === null) {
             this.setState({ vmShow: true, error: "Case Overview: Please select at least 1 Approach!" });
@@ -358,15 +358,16 @@ class Main extends Component {
                                 {questionNodes}
                             </div>
 
-
                             <div className="add-question-button">
                                 <Button type="button" bsStyle="primary" onClick={(e) => this.addQuestion()}>Add Question</Button><br />
                             </div>
                         </Panel>
                     </Accordion>
+
                     <div className="submit-case-button">
                         <Button type="submit" align="center" bsStyle="primary" onClick={(e) => this.saveChanges(e)}>Submit</Button>
                     </div>
+
                     <BootstrapModal
                         show={this.state.vmShow}
                         onHide={vmClose}
