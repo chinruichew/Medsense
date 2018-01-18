@@ -24,11 +24,7 @@ module.exports = app => {
     });
 
     app.post('/api/fetchCaseByApproach', async (req, res) => {
-        // if (req.body.values.approach===null){
-        //     const result = await Case.find({status:'Vetted'});
-        // } else {
-            const result = await Case.find({status: 'Vetted', approach: req.body.approach});
-        // }
+        const result = await Case.find({status: 'Vetted', approach: req.body.approach});
         res.send(result);
     });
 
@@ -41,19 +37,11 @@ module.exports = app => {
     });
 
     app.post('/api/fetchCaseBySpeciality', async (req, res) => {
-        // if (req.body.values.speciality==="Select One" && req.body.values.subspeciality===null){
-        //     const result = await Case.find({status:'Vetted'});
-        // } else if (req.body.values.subspeciality===null){
-        //     const result = await Case.find({status: 'Vetted', speciality: req.body.values.speciality});
-        // } else if (req.body.values.speciality==="Select One") {
-        //     const result = await Case.find({status: 'Vetted', subspeciality: {$all: req.body.values.subspeciality});
-        // } else {
-            const result = await Case.find({
-                status: 'Vetted',
-                speciality: req.body.values.speciality,
-                subspeciality: {$all: req.body.values.subspeciality}
-            });
-        // }
+        const result = await Case.find({
+            status: 'Vetted',
+            speciality: req.body.speciality,
+            subspeciality: {$all: req.body.subspeciality}
+        });
         res.send(result);
     });
 

@@ -8,9 +8,7 @@ class SpecialityCases extends Component {
         super(props);
         this.state = {
             speciality:this.props.speciality,
-            subspeciality:this.props.subspeciality,
-            // showGameView: false,
-            // caseId: '',
+            subspeciality:this.props.subspeciality
         }
     }
 
@@ -19,27 +17,10 @@ class SpecialityCases extends Component {
         // this.props.fetchCaseBySpeciality();
     }
 
-    componentWillReceiveProps(nextProps){
-        // this.setState(() => {
-        //     return{
-        //         approach:nextProps.approach,
-        //     }
-        // });
-        this.setState({
-            speciality:nextProps.speciality,
-            subspeciality:nextProps.subspeciality,
-        });
-
-        this.props.fetchCaseBySpeciality(this.state);
-    }
-
     renderSpecialityCases() {
         const subspecialities = this.state.subspeciality;
-        // const subspecialities = ['Rheumatology & Immunology'];
 
         return this.props.specialityCases.map((specialityCase, index) => {
-            console.log(specialityCase);
-
             let specialities = "";
             for (let i=0; i<subspecialities.length-1; i++){
                 specialities+=subspecialities[i] + ", ";
@@ -76,10 +57,6 @@ class SpecialityCases extends Component {
     }
 
     tryCase(game){
-        // this.setState({
-        //     showGameView: true,
-        //     caseId: id
-        // });
         this.props.handleReturnCase(game);
     }
 
@@ -139,9 +116,7 @@ class SpecialityCases extends Component {
     render() {
         return(
             <div>
-                {/*{this.state.speciality}*/}
                 {this.renderContent()}
-
             </div>
         );
     }

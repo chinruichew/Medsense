@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { Button, FormGroup, FormControl, ControlLabel, Col, Row } from 'react-bootstrap';
+import {Button, FormGroup, FormControl, ControlLabel, Col, Row, Table} from 'react-bootstrap';
 import { bindAll } from 'lodash';
-
-import SpecialityCases from './SpecialityCases';
-
+import axios from 'axios';
 
 class SearchBySpeciality extends Component {
     constructor(props) {
@@ -14,6 +12,7 @@ class SearchBySpeciality extends Component {
             subspeciality: null,
             finalSpeciality: "Select One",
             finalSubspeciality: null,
+            specialityCases: ''
         };
         bindAll(this, 'handleSpecialityChange', 'handleSubspecialityChange', 'setSubspeciality', 'filterBySpeciality', 'handleReturnCase');
     }
@@ -25,7 +24,6 @@ class SearchBySpeciality extends Component {
     handleSpecialityChange(e) {
         const value = e.target.value;
         this.setState({ speciality: value });
-        console.log(value);
     }
 
     handleSubspecialityChange(e) {
@@ -43,6 +41,91 @@ class SearchBySpeciality extends Component {
 
     filterBySpeciality(){
         this.setState({ showSpecialityTable: true, finalSpeciality: this.state.speciality, finalSubspeciality: this.state.subspeciality });
+        axios.post('/api/fetchCaseBySpeciality', {
+            speciality: this.state.finalSpeciality,
+            subspeciality: this.state.finalSubspeciality
+        }).then(res => {
+            console.log(res);
+            if(res.data.length > 0) {
+                const subspecialities = this.state.subspeciality;
+                const specialityCases = res.data.map((specialityCase, index) => {
+                    let specialities = "";
+                    for (let i=0; i<subspecialities.length-1; i++){
+                        specialities+=subspecialities[i] + ", ";
+                    }
+                    specialities+=subspecialities[subspecialities.length-1];
+
+                    let approaches = "";
+                    for (let k=0; k<specialityCase.approach.length-1; k++){
+                        approaches+=specialityCase.approach[k] + ", ";
+                    }
+                    approaches+=specialityCase.approach[specialityCase.approach.length-1];
+
+                    let timeStamp = specialityCase.timestamp.split(" ");
+                    let date = timeStamp[2]+" "+timeStamp[1]+" "+timeStamp[3];
+                    let timeArr = timeStamp[4].split(":");
+                    let time = timeArr[0]+":"+timeArr[1];
+
+                    return(
+                        <tr align="center" key={specialityCase._id}>
+                            <td>{specialityCase.title}</td>
+                            <td>{approaches}</td>
+                            <td>{specialityCase.speciality}</td>
+                            <td>{specialities}</td>
+                            <td>{specialityCase.difficulty}</td>
+                            <td>{specialityCase.authorname}</td>
+                            <td>{date}<br/>{time}</td>
+                            <td><Button  type="button" bsStyle="primary" onClick={(e)=>this.handleReturnCase(specialityCase)}>Try</Button></td>
+                        </tr>
+                    );
+                });
+                const specialityState = (
+                    <Table responsive>
+                        <thead>
+                        <tr style={{background: '#82C5D9', fontSize: "130%"}}>
+                            <th>
+                                <center>Case Title</center>
+                            </th>
+                            <th>
+                                <center>Approaches</center>
+                            </th>
+                            <th>
+                                <center>Speciality</center>
+                            </th>
+                            <th>
+                                <center>Sub-speciality</center>
+                            </th>
+                            <th>
+                                <center>Difficulty Level</center>
+                            </th>
+                            <th>
+                                <center>Uploaded by</center>
+                            </th>
+                            <th>
+                                <center>Last Updated</center>
+                            </th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {specialityCases}
+                        </tbody>
+                    </Table>
+                );
+                this.setState({specialityCases: specialityState});
+            } else {
+                const specialityState = (
+                    <div style={{ fontSize: "150%", fontWeight: "200" }}>
+                        <br />
+                        <img src="./sad.png" hspace='5' alt="No Subspeciality cases" style={{ height: "35px" }} />
+                        Sorry, no cases found.  Please try other specialities / sub-specialities!
+                    </div>
+                );
+                this.setState({specialityCases: specialityState});
+            }
+        }).catch(err => {
+            console.log(err);
+        });
     }
 
     setSubspeciality() {
@@ -197,8 +280,7 @@ class SearchBySpeciality extends Component {
                     {this.setSubspeciality()}
                 </Row>
                 <br />
-
-                {this.state.showSpecialityTable && <SpecialityCases speciality={this.state.finalSpeciality} subspeciality={this.state.finalSubspeciality} handleReturnCase={this.handleReturnCase}/>}
+                {this.state.specialityCases}
             </div>
         );
     }
