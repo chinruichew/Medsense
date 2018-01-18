@@ -42,8 +42,8 @@ class SearchBySpeciality extends Component {
     filterBySpeciality(){
         this.setState({ showSpecialityTable: true, finalSpeciality: this.state.speciality, finalSubspeciality: this.state.subspeciality });
         axios.post('/api/fetchCaseBySpeciality', {
-            speciality: this.state.finalSpeciality,
-            subspeciality: this.state.finalSubspeciality
+            speciality: this.state.speciality,
+            subspeciality: this.state.subspeciality
         }).then(res => {
             console.log(res);
             if(res.data.length > 0) {
