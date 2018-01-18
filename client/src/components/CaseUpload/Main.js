@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Accordion, Panel, FormGroup, Radio, ControlLabel, FormControl } from 'react-bootstrap';
+import { Button, Accordion, Panel, FormGroup, Radio, ControlLabel, FormControl, Col } from 'react-bootstrap';
 import { bindAll } from 'lodash';
 import axios from 'axios';
 
@@ -400,15 +400,19 @@ class Main extends Component {
                             PDPA Consent
                                 <br/><br/>
                             </h4>
-                            <FormGroup controlId="formControlsPDPA">
+                            <FormGroup controlId="formControlsPDPA" style={{paddingLeft: "30%", paddingTop: "0"}}>
+                                <Col sm={6}>
                                 <Radio name="radioGroup" inline>
                                     <h5>Yes</h5>
-                                </Radio>{'    '}
+                                </Radio>
+                                </Col>
+                                <Col sm={6}>
                                 <Radio name="radioGroup" inline>
                                     <h5>No</h5>
                                 </Radio>
+                                </Col>
                             </FormGroup>
-                            
+                            <br />
                             <h4>
                             Should you wish to withdraw your consent for us to contact you for the purposes stated above, please notify us in writing to [email]. We will then remove your personal information from our database.
                                 <br/>

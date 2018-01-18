@@ -34,31 +34,54 @@ class SearchByApproach extends Component {
                 const approachCase = res.data.map(approachCase => {
                     let additional = approachCase.approach;
                     const approaches = this.state.approach;
+                    //console.log(approaches);
+                    let sameElementCount=0;
+                    let additionalApproaches = [];
+                    console.log(approachCase.approach);
                     for (let i=0; i<approachCase.approach.length; i++){
                         for (let j=0; j<approaches.length; j++){
                             if (approachCase.approach[i]===approaches[j]){
-                                let index = additional.indexOf(approaches[j]);
-                                if (index !== -1) {
-                                    additional.splice(index, 1);
-                                }
+                                sameElementCount += 1;
+                                //let index = additional.indexOf(approaches[j]);
+                                //console.log(index);
+                                //if (index !== -1) {
+                                // additional.slice(index, 1);
+                                //console.log(additional.splice(index, 1));
+                                //}
+                            }
+
+                            if(sameElementCount === 0){
+                                additionalApproaches.push(approaches[j]);
                             }
                         }
                     }
-                    let additionalApproach = "";
-                    for (let k=0; k<additional.length-1; k++){
-                        additionalApproach+=additional[k] + ", ";
+                    // let additionalApproach = "";
+                    // for (let k=0; k<additional.length-1; k++){
+                    //     additionalApproach+=additional[k] + ", ";
+                    // }
+                    // additionalApproach+=additional[additional.length-1];
+                    if(additionalApproaches.length === 0){
+                        additionalApproaches = "-";
                     }
-                    additionalApproach+=additional[additional.length-1];
+
+                    const subspecialities = approachCase.subspeciality;
+                    let specialities = "";
+                    for (let i=0; i<subspecialities.length-1; i++){
+                        specialities+=subspecialities[i] + ", ";
+                    }
+                    specialities+=subspecialities[subspecialities.length-1];
+
                     let timeStamp = approachCase.timestamp.split(" ");
                     let date = timeStamp[2]+" "+timeStamp[1]+" "+timeStamp[3];
                     let timeArr = timeStamp[4].split(":");
                     let time = timeArr[0]+":"+timeArr[1];
+                    // console.log(additionalApproach);
                     return(
                         <tr align="center" key={approachCase._id}>
                             <td>{approachCase.title}</td>
-                            <td>{additionalApproach}</td>
+                            <td>{additionalApproaches}</td>
                             <td>{approachCase.speciality}</td>
-                            <td>{approachCase.subspeciality}</td>
+                            <td>{specialities}</td>
                             <td>{approachCase.difficulty}</td>
                             <td>{approachCase.authorname}</td>
                             <td>{date}<br/>{time}</td>
