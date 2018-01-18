@@ -131,9 +131,9 @@ class SearchBySpeciality extends Component {
     setSubspeciality() {
         if (this.state.speciality === "Medicine") {
             return (
-                <FormGroup controlId="formControlsSubspeciality">
+                <FormGroup controlId="formControlsSubspeciality" style={{ paddingTop: "0", paddingLeft: "7%" }}>
                     <Col componentClass={ControlLabel} sm={2}>
-                        <ControlLabel style={{ fontSize: "120%" }}>Sub-speciality</ControlLabel>
+                        <ControlLabel style={{ fontSize: "150%" }}>Sub-speciality</ControlLabel>
                     </Col>
                     <Col sm={8}>
                         <FormControl componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)}>
@@ -154,9 +154,9 @@ class SearchBySpeciality extends Component {
             );
         } else if (this.state.speciality === "Others") {
             return (
-                <FormGroup controlId="formControlsSubspeciality">
+                <FormGroup controlId="formControlsSubspeciality" style={{ paddingTop: "0", paddingLeft: "7%" }}>
                     <Col componentClass={ControlLabel} sm={2}>
-                        <ControlLabel style={{ fontSize: "120%" }}>Sub-speciality</ControlLabel>
+                        <ControlLabel style={{ fontSize: "150%" }}>Sub-speciality</ControlLabel>
                     </Col>
                     <Col sm={8}>
                         <FormControl componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)}>
@@ -178,9 +178,9 @@ class SearchBySpeciality extends Component {
             );
         } else if (this.state.speciality === "Surgery") {
             return (
-                <FormGroup controlId="formControlsSubspeciality">
+                <FormGroup controlId="formControlsSubspeciality" style={{ paddingTop: "0", paddingLeft: "7%" }}>
                     <Col componentClass={ControlLabel} sm={2}>
-                        <ControlLabel style={{ fontSize: "120%" }}>Sub-speciality</ControlLabel>
+                        <ControlLabel style={{ fontSize: "150%" }}>Sub-speciality</ControlLabel>
                     </Col>
                     <Col sm={8}>
                         <FormControl componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)}>
@@ -201,11 +201,10 @@ class SearchBySpeciality extends Component {
 
         } else if (this.state.speciality === "Clinical Practicum") {
             return (
-                <FormGroup controlId="formControlsSubspeciality">
+                <FormGroup controlId="formControlsSubspeciality" style={{ paddingTop: "0", paddingLeft: "7%" }}>
                     <Col componentClass={ControlLabel} sm={2}>
-                        <ControlLabel style={{ fontSize: "120%" }}>Sub-speciality</ControlLabel>
-                        <br />
-                        <div style={{ fontSize: "70%", fontWeight: "200" }}>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.
+                        <ControlLabel style={{ fontSize: "150%" }}>Sub-speciality</ControlLabel>
+                        <div style={{ fontSize: "90%", fontWeight: "200" }}>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.
                     </div>
                     </Col>
 
@@ -255,9 +254,9 @@ class SearchBySpeciality extends Component {
         return (
             <div>
                 <Row>
-                    <FormGroup controlId="formControlsSpeciality" style={{ paddingTop: "0", paddingLeft: "0" }}>
+                    <FormGroup controlId="formControlsSpeciality" style={{ paddingTop: "0", paddingLeft: "7%" }}>
                         <Col componentClass={ControlLabel} sm={2}>
-                            <ControlLabel style={{ fontSize: "120%", textAlign: "left" }}>Speciality</ControlLabel>
+                            <ControlLabel style={{ fontSize: "150%", textAlign: "right" }}>Speciality</ControlLabel>
                         </Col>
                         <Col sm={8}>
                             <FormControl componentClass="select" value={this.state.speciality} name="speciality" onChange={(e) => this.handleSpecialityChange(e)}>

@@ -121,9 +121,10 @@ class SearchByApproach extends Component {
     render(){
         return(
             <div>
-                <FormGroup controlId="formControlsApproach">
+                <FormGroup controlId="formControlsApproach" style={{ paddingTop: "0", paddingLeft: "7%" }}>
+                    <Col smOffset={0.5}>
                     <ControlLabel style={{ fontSize: "150%" }}>Approach(es)<br />
-                        <div style={{ fontSize: "70%", fontWeight:"200"}}>
+                        <div style={{ fontSize: "60%", fontWeight:"200"}}>
                             Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.
                         </div>
                     </ControlLabel>
@@ -158,6 +159,7 @@ class SearchByApproach extends Component {
                             </Button>
                         </Col>
                     </Row>
+                    </Col>
                 </FormGroup>
                 {this.state.approachCase}
             </div>

@@ -68,11 +68,11 @@ class SpecialityCases extends Component {
 
                 if(this.props.specialityCases.length === 0){
                     return (
-                        <div style={{ fontSize: "150%", fontWeight: "200" }}>
+                        <Col smOffset={1} style={{ fontSize: "150%", fontWeight: "200", paddingLeft: "7%"}}>
                             <br />
                             <img src="./sad.png" hspace='5' alt="" style={{ height: "35px" }} />
                             Sorry, no cases found.  Please try other specialities / sub-specialities!
-                        </div>
+                        </Col>
                     )
                 }else {
                     return (
