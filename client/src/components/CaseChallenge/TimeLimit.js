@@ -15,6 +15,7 @@ class TimeLimit extends Component {
             challenge: this.props.case,
             showGameView: false,
             withTimeLimit: false,
+            noTimeLimit: true,
             currentQn:1,
             authid: this.props.authid,
             authname: this.props.authname
@@ -37,36 +38,33 @@ class TimeLimit extends Component {
     }
 
     withTimeLimit () {
-        this.setState({withTimeLimit: true});
+        this.setState({withTimeLimit: true, noTimeLimit:false});
     }
 
     withoutTimeLimit(){
-        this.setState({withTimeLimit: false});
+        this.setState({withTimeLimit: false, noTimeLimit:true});
     }
 
     renderTimeLimitContent(){
         //return this.props.randomCase.title;
         if(!this.state.showGameView){
-            let timerBtnBgColor = this.state.timer ? "#82C5D9" : "#CDE0EB";
-            let noTimerBtnBgColor = this.state.noTimer ? "#82C5D9" : "#CDE0EB";
+            let timerBtnBgColor = this.state.withTimeLimit ? "#82C5D9" : "#CDE0EB";
+            let noTimerBtnBgColor = this.state.noTimeLimit ? "#82C5D9" : "#CDE0EB";
             return(
                 <div>
                     <h1>{this.state.challenge.title}</h1>
                     <h3>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Aenean euismod bibendum laoreet.
-                        Proin gravida dolor sit amet lacus accumsan et viverra justo commodo.
-                        Proin sodales pulvinar tempor. Cum sociis natoque
-                        (Instructions? Scoring system? + Random: more points）
+                        Cases in advanced mode gives you more points than beginner mode.
+                        <br/>Earn bonus points when you try a case with time limit!
                     </h3>
                     <br /><br />
                     <Form horizontal>
                         <Col smOffset={4}>
                         <FormGroup controlId="formHorizontalEmail">
-                            <Col componentClass={ControlLabel} sm={3}>
+                            <Col sm={3}>
                                 <h3>Difficulty </h3>
                             </Col>
-                            <Col componentClass={ControlLabel} sm={2}>
+                            <Col sm={2}>
                                 <h3>{this.state.challenge.difficulty}</h3>
                             </Col>
                         </FormGroup>
@@ -125,31 +123,26 @@ class TimeLimit extends Component {
             case null:
                 return;
             default:
-                // console.log(this.props.game.questions);
                 let timeLimit = this.state.withTimeLimit;
                 let currentQn = this.state.currentQn;
                 let scenario = this.props.game.scenario;
                 let totalQnNum = this.props.game.questions.length;
                 let caseTitle = this.props.game.title;
                 let questionNodes = this.props.game.questions.map((obj, index) => {
-                    //console.log(obj.type);
-                    //console.log(totalQnNum);
                     if(obj.id === currentQn+""){
                         if(obj.type === "MCQ"){
-                            console.log(currentQn);
                             return <MCQquestion question={obj} scenario={scenario} timeLimit={timeLimit}
                                                 totalQnNum={totalQnNum} caseTitle={caseTitle}
                                                 handleNextQuestion={this.handleNextQuestion}/>
                         }else{
-                            return <OpenEndedQuestion question={obj} scenario={scenario} timeLimit={timeLimit}
+                            return <OpenEndedQuestion question={obj} scenario={scenario} timeLimit={timeLimit} totalQnNum={totalQnNum}
                                          caseTitle={caseTitle} handleNextQuestion={this.handleNextQuestion}/>
                         }
                     }else{
-                        return (<div>After Last Qn</div>);
+                        return;
                     }
                 });
                 return questionNodes;
-                //return this.props.game.title;
         }
     }
 
@@ -160,9 +153,7 @@ class TimeLimit extends Component {
     render() {
         return (
             <div className="container">
-
                 {this.renderTimeLimitContent()}
-
             </div> 
         );
 

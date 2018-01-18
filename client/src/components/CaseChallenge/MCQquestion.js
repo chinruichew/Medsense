@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Form, FormGroup, Table, Col } from 'react-bootstrap';
-import { Checkbox, Button, Row } from 'react-bootstrap';
+import { Form, FormGroup, Table, Col} from 'react-bootstrap';
+import { Checkbox, Button, Row, Panel } from 'react-bootstrap';
 import { Line } from 'rc-progress';
 import { bindAll } from 'lodash';
 
 import MCQAnswers from './MCQAnswers';
+import './Game.css';
 
 class MCQquestion extends Component {
 
@@ -79,12 +80,17 @@ class MCQquestion extends Component {
     }
 
     renderTimer(duration){
-        return(
-            <div className='pull-right'>
-                {this.startTimer()}
-                Time Remaining: {this.state.time.m} mins {this.state.time.s} secs
-            </div>
-        );
+        console.log(this.props.timeLimit);
+        if (this.props.timeLimit) {
+            return (
+                <div className='pull-right'>
+                    {this.startTimer()}
+                    <img src="./timer.png" hspace='5' alt="" style={{height: "35px"}}/> {this.state.time.m}
+                    min {this.state.time.s} sec
+                </div>
+            );
+        }
+        return;
     }
 
     renderShowNextButton(){
@@ -102,24 +108,24 @@ class MCQquestion extends Component {
 
     renderProgressBar(){
         let progress = parseFloat(this.props.question.id)/parseFloat(this.props.totalQnNum)* 100;
-        console.log(progress)
         return(
             <div >
-            <Col sm={6} align="center">
+            <Col sm={10} align="left">
                 <Line
                     percent= {progress}
-                    strokeWidth="3"
-                    trailWidth = "3"
-                    strokeColor="#3FC7FA"
+                    strokeWidth="2"
+                    trailWidth = "1"
+                    strokeColor="#82C5D9"
+                    strokeLinecap="square"
                 />
             </Col>
-            <Col sm={2} align="left"><h4> {this.props.question.id}/{this.props.totalQnNum} Questions</h4> </Col>
+            <Col sm={2} align="left"><h4>{this.props.question.id}/{this.props.totalQnNum} Questions</h4> </Col>
             </div>
         );
     }
 
     renderScenario(){
-        if(this.props.question.id === 1){
+        if(this.props.question.id === 1+""){
             return this.props.scenario;
         }else{
             return this.props.question.stem;
@@ -129,9 +135,7 @@ class MCQquestion extends Component {
     renderMCQ3(){
         if(this.props.question.mcq3.length !== 0){
             return(
-                <tr >
-                    <td data-align= 'left'> <Checkbox >{this.props.question.mcq3}</Checkbox>  </td>
-                </tr>
+                <Checkbox >{this.props.question.mcq3}</Checkbox>
             );
         }
     }
@@ -139,9 +143,7 @@ class MCQquestion extends Component {
     renderMCQ4(){
         if(this.props.question.mcq4.length !== 0){
             return(
-                <tr >
-                    <td data-align= 'left'> <Checkbox >{this.props.question.mcq4}</Checkbox>  </td>
-                </tr>
+                <Checkbox >{this.props.question.mcq4}</Checkbox>
             );
         }
     }
@@ -149,9 +151,7 @@ class MCQquestion extends Component {
     renderMCQ5(){
         if(this.props.question.mcq5.length !== 0){
             return(
-                <tr >
-                    <td data-align= 'left'> <Checkbox >{this.props.question.mcq5}</Checkbox>  </td>
-                </tr>
+                <Checkbox >{this.props.question.mcq5}</Checkbox>
             );
         }
     }
@@ -159,9 +159,7 @@ class MCQquestion extends Component {
     renderMCQ6(){
         if(this.props.question.mcq6.length !== 0){
             return(
-                <tr >
-                    <td data-align= 'left'> <Checkbox >{this.props.question.mcq6}</Checkbox>  </td>
-                </tr>
+                <Checkbox >{this.props.question.mcq6}</Checkbox>
             );
         }
     }
@@ -173,11 +171,11 @@ class MCQquestion extends Component {
     renderContent(){
 
         return(
-            <div className='container' align="justify">
+            <div className='container'>
                 <h1>
                     <Row>
-                        <Col sm={3}> {this.props.caseTitle} </Col>
-                        {this.renderProgressBar()}
+                        <div>{this.props.caseTitle}</div>
+                        <br/>{this.renderProgressBar()}
                     </Row>
                 </h1>
 
@@ -185,7 +183,6 @@ class MCQquestion extends Component {
 
                 <h3>
                     <Row>
-
                         <Col sm={3}>Question {this.props.question.id}  </Col>
                         <Col sm={5} className='pull-right'>{this.renderTimer(0.2)}</Col>
                     </Row>
@@ -193,52 +190,39 @@ class MCQquestion extends Component {
 
                 <br />
 
-                <h4>
-                    {this.renderScenario()}
-                </h4>
+                <Panel bsStyle="info" id="panel">
 
-                <br />
+                    <h4>{this.renderScenario()}</h4>
 
-                <h4>
-                    {this.props.question.question}
-                </h4>
+                    <br />
 
-                <br />
+                    <h4>{this.props.question.question}</h4>
 
-                <form> <h4>
-                    <FormGroup>
-                        <div class="col-md-10 col-md-offset-3">
-                            <Table responsive>
-                                <tr >
-                                    <td data-align= 'left'> <Checkbox >{this.props.question.mcq1}</Checkbox>  </td>
-                                </tr>
-                                <tr >
-                                    <td data-align= 'left'> <Checkbox >{this.props.question.mcq2}</Checkbox>  </td>
-                                </tr>
+                    <br />
+
+                    <Form><h4>
+                        <FormGroup>
+                            <div class="col-md-10 col-md-offset-5">
+                                <Checkbox >{this.props.question.mcq1}</Checkbox>
+                                <Checkbox >{this.props.question.mcq2}</Checkbox>
                                 {this.renderMCQ3()}
                                 {this.renderMCQ4()}
                                 {this.renderMCQ5()}
                                 {this.renderMCQ6()}
-
-                            </Table>
-                        </div>
-
-                        <br /><br /><br />
-
-                        {this.renderShowNextButton()}
-                    </FormGroup>
-                  </h4>
-                </form>
+                            </div>
+                        </FormGroup>
+                    </h4></Form>
+                </Panel>
+                {this.renderShowNextButton()}
 
 
-                {this.state.showAnswers && <MCQAnswers question={this.props.question} handleNextQuestion={this.handleNextQuestion}/>}
+                {this.state.showAnswers && <MCQAnswers question={this.props.question} totalQnNum={this.props.totalQnNum} handleNextQuestion={this.handleNextQuestion}/>}
 
             </div>
         );
     }
 
     render() {
-        console.log(this.props.question);
         return (
             <Form horizontal>
                 {this.renderContent()}  

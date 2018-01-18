@@ -6,7 +6,6 @@ class SearchByApproach extends Component {
     state = {
         showApproachTable: false,
         approach: null,
-        finalApproach: null,
         approachCase: null
     };
 

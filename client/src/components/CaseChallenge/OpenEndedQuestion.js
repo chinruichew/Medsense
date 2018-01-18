@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Form, FormGroup, Col } from 'react-bootstrap';
-import { Button, Row, ControlLabel, FormControl } from 'react-bootstrap';
+import { Button, Row, ControlLabel, FormControl, Panel } from 'react-bootstrap';
 import { bindAll } from 'lodash';
 import { Line } from 'rc-progress';
 
@@ -12,6 +12,7 @@ class OpenEndedQuestion extends Component {
         super(props);
         this.state = {
             showAnswers: false,
+            openEnded: "",
             showNextButton: true,
             authid: this.props.authid,
             authname: this.props.authname,
@@ -20,7 +21,7 @@ class OpenEndedQuestion extends Component {
         };
         this.timer = 0;
         bindAll(this, 'selectDone', 'startTimer', 'countDown', 'secondsToTime', 'pauseTimer', 'renderTimer',
-            'renderShowNextButton', 'renderProgressBar', 'renderScenario', 'renderContent', 'handleNextQuestion');
+            'renderShowNextButton', 'renderProgressBar', 'renderScenario', 'renderContent', 'handleNextQuestion', 'handleOpenEndedChange');
     }
 
     startTimer() {
@@ -78,12 +79,17 @@ class OpenEndedQuestion extends Component {
     }
 
     renderTimer(duration){
-        return(
-            <div className='pull-right'>
-                {this.startTimer()}
-                Time Remaining: {this.state.time.m} mins {this.state.time.s} secs
-            </div>
-        );
+        console.log(this.props.timeLimit);
+        if (this.props.timeLimit) {
+            return (
+                <div className='pull-right'>
+                    {this.startTimer()}
+                    <img src="./timer.png" hspace='5' alt="" style={{height: "35px"}}/> {this.state.time.m}
+                    min {this.state.time.s} sec
+                </div>
+            );
+        }
+        return;
     }
 
     renderShowNextButton(){
@@ -101,24 +107,24 @@ class OpenEndedQuestion extends Component {
 
     renderProgressBar(){
         let progress = parseFloat(this.props.question.id)/parseFloat(this.props.totalQnNum)* 100;
-        //console.log(progress)
         return(
             <div >
-                <Col sm={6} align="center">
+                <Col sm={10} align="left">
                     <Line
                         percent= {progress}
-                        strokeWidth="3"
-                        trailWidth = "3"
-                        strokeColor="#3FC7FA"
+                        strokeWidth="2"
+                        trailWidth = "1"
+                        strokeColor="#82C5D9"
+                        strokeLinecap="square"
                     />
                 </Col>
-                <Col sm={2} align="left"><h4> {this.props.question.id}/{this.props.totalQnNum} Questions</h4> </Col>
+                <Col sm={2} align="left"><h4>{this.props.question.id}/{this.props.totalQnNum} Questions</h4> </Col>
             </div>
         );
     }
 
     renderScenario(){
-        if(this.props.question.id === 1){
+        if(this.props.question.id === 1+""){
             return this.props.scenario;
         }else{
             return this.props.question.stem;
@@ -130,18 +136,18 @@ class OpenEndedQuestion extends Component {
         this.props.handleNextQuestion(prevQn);
     }
 
-    handleOpenEndedChange(){
-
+    handleOpenEndedChange(e){
+        const value = e.target.value;
+        this.setState({ openEnded: value });
     }
-
 
     renderContent(){
         return(
-            <div className='container' align="justify">
+            <div className='container'>
                 <h1>
                     <Row>
-                        <Col sm={3}> {this.props.caseTitle} </Col>
-                        {this.renderProgressBar()}
+                        <div>{this.props.caseTitle}</div>
+                        <br/>{this.renderProgressBar()}
                     </Row>
                 </h1>
 
@@ -149,51 +155,43 @@ class OpenEndedQuestion extends Component {
 
                 <h3>
                     <Row>
-
                         <Col sm={3}>Question {this.props.question.id}  </Col>
                         <Col sm={5} className='pull-right'>{this.renderTimer(0.2)}</Col>
                     </Row>
                 </h3>
 
                 <br />
+                <Panel bsStyle="info" id="panel">
+                    <h4>{this.renderScenario()}</h4>
 
-                <h4>
-                    {this.renderScenario()}
-                </h4>
+                    <br />
 
-                <br />
+                    <h4>{this.props.question.question}</h4>
 
-                <h4>
-                    {this.props.question.question}
-                </h4>
+                    <br />
+                    <div class="col-md-10 col-md-offset-1">
+                    <Form><h4>
+                        <FormGroup>
+                            <FormGroup controlId="formControlsOpenEnded">
+                                <ControlLabel>Your Answer</ControlLabel><br />
 
-                <br />
+                                <FormControl componentClass="textarea" rows={6} placeholder="Enter your answer" value={this.state.openEnded} name="openEnded" onChange={(e)=>this.handleOpenEndedChange(e)}/>
 
-                <form> <h4>
-                    <FormGroup>
+                            </FormGroup>
 
-                        <FormGroup controlId="formControlsOpenEnded">
-                            <ControlLabel>Your Answer</ControlLabel><br />
-                            <FormControl componentClass="textarea" style={{height:400}} placeholder="Enter your answer" value={this.state.openEnded} name="openEnded" onChange={(e)=>this.handleOpenEndedChange(e)}/>
                         </FormGroup>
+                    </h4></Form>
+                    </div>
+                </Panel>
+                {this.renderShowNextButton()}
 
-
-                        <br /><br /><br />
-
-                        {this.renderShowNextButton()}
-                    </FormGroup>
-                </h4>
-                </form>
-
-
-                {this.state.showAnswers && <OpenEndedAnswer question={this.props.question} handleNextQuestion={this.handleNextQuestion}/>}
+                {this.state.showAnswers && <OpenEndedAnswer question={this.props.question} totalQnNum={this.props.totalQnNum} handleNextQuestion={this.handleNextQuestion}/>}
 
             </div>
         );
     }
 
     render() {
-        console.log(this.props.question);
         return (
             <Form horizontal>
                 {this.renderContent()}

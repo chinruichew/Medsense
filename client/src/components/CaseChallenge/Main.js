@@ -82,9 +82,12 @@ class Main extends Component {
                     </h1>
                     <h4>
                         <em>
-                            Try out beginner mode for more focuses on history and physical exam,
-                            <br />
-                            and advanced mode for management.
+                            <br/>Choose a case from a particular subspecialty,
+                            <br/>or choose a case according to an approach you want to practice (e.g. chest pain)!
+                            <br/><br/>Try out beginner mode for more focuses on history and physical exam,
+                            <br/>and advanced mode for management.
+                            <br/><br/>Better yet, if you're up for the challenge, why not try a completely random case? ;)
+                            {/*<br/><br/>Take a look at your strengths and weaknesses on the analytics page after!*/}
                         </em>
                     </h4>
                     <br />
@@ -93,24 +96,24 @@ class Main extends Component {
                         <Table responsive>
                             <tr align="center">
                                 <td style={{width:"12em"}}>
-                                    <Button style={{background: "white", color: 'black', width: "9em", height: "9em"}}
+                                    <Button style={{background: "white", color: 'black', width: "10em", height: "9em"}}
                                              bsSize="large" onClick={(e)=> this.getRandomCase()}>
-                                        <img src="./circle.png" alt="Random Case" width="10%" height="10%"/> <br />Random Case
+                                        <img src="./random.png" alt="" width="40%"/> <br />Random Case
                                     </Button>
 
                                 </td>
                                 <td style={{width:"12em"}}>
                                     <Button style={{background: approachBtnBgColor,
-                                        color: 'black', width: "9em", height: "9em"}}
+                                        color: 'black', width: "10em", height: "9em"}}
                                             onClick={(e)=> this.chooseApproachSearch ()} bsSize="large">
-                                        Sort by Approach
+                                        <img src="./search.png" alt="" width="40%"/> <br />Search by Approach
                                     </Button>
                                 </td>
                                 <td style={{width:"12em"}}>
                                     <Button style={{background: specialityBtnBgColor,
-                                        color: 'black', width: "9em", height: "9em"}}
+                                        color: 'black', width: "10em", height: "9em"}}
                                             onClick={(e)=> this.chooseSpecialitySearch()} bsSize="large">
-                                        Sort by Speciality
+                                        <img src="./search.png" alt="" width="40%"/> <br />Search by Speciality
                                     </Button>
                                 </td>
                             </tr>

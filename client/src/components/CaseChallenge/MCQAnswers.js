@@ -64,10 +64,10 @@ class MCQAnswers extends Component {
                 <h3>You got __ / {this.state.answerCount} correct!</h3><br />
                 <h4> 
                     <strong>Answer</strong> <br />
-                    {this.state.mcqAnswer} <br /><br /><br />
+                    {this.state.mcqAnswer} <br /><br />
 
                     <strong>PEARL</strong> <br />
-                    {this.props.question.pearl} <br /><br /><br />
+                    {this.props.question.pearl} <br /><br />
 
                     <strong>References</strong> <br />
                     {this.props.question.reference} <br /><br />
@@ -78,12 +78,27 @@ class MCQAnswers extends Component {
         );
     }
 
-    renderNextQuestion(){ 
-        return(
-            <Button onClick={(e) => this.nextQuestion()} hspace = "20" bsStyle="primary" bsSize="large" className="pull-right">
-                Next Question
-            </Button>
-        );
+    renderNextQuestion(){
+        if(this.props.question.id===this.props.totalQnNum+""){
+            return(
+                <div>
+                    <Button onClick={(e) => this.complete()} hspace = "20" bsStyle="primary" bsSize="large" className="pull-right">
+                        View Score
+                    </Button>
+                </div>
+            );
+        } else {
+            return (
+                <Button onClick={(e) => this.nextQuestion()} hspace="20" bsStyle="primary" bsSize="large"
+                        className="pull-right">
+                    Next Question
+                </Button>
+            );
+        }
+    }
+
+    complete(){
+
     }
 
     nextQuestion(){
@@ -94,7 +109,6 @@ class MCQAnswers extends Component {
         return(
             <div>
                 {this.renderContent()}
-                <br /><br />
                 {this.renderNextQuestion()}
             </div>
         );
