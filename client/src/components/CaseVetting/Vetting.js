@@ -59,7 +59,7 @@ class Vetting extends Component {
                                 return(
                                     <tr align="center" key={vetCase._id}>
                                         <td>{vetCase.title}</td>
-                                        <td>{vetCase.subspeciality}</td>
+                                        <td>{vetCase.subspeciality.join(', ')}</td>
                                         <td>{vetCase.authorname}</td>
                                         <td>{date}<br/>{time}</td>
                                         <td>{vetButton}</td>
@@ -87,7 +87,7 @@ class Vetting extends Component {
                                 return(
                                     <tr align="center" key={vetCase._id}>
                                         <td>{vetCase.title}</td>
-                                        <td>{vetCase.subspeciality}</td>
+                                        <td>{vetCase.subspeciality.join(', ')}</td>
                                         <td>{vetCase.authorname}</td>
                                         <td>{date}<br/>{time}</td>
                                         <td>{vetButton}</td>
