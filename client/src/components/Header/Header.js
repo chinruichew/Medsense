@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {Navbar, Nav, NavDropdown, MenuItem, NavItem, Image} from 'react-bootstrap';
 import {NavLink} from "react-router-dom";
+import constants from '../../utility/constantTypes';
 
 class Header extends Component {
     renderContent() {
@@ -21,7 +22,7 @@ class Header extends Component {
             default:
                 // Check for user type
                 switch (this.props.auth.usertype) {
-                    case 'Professor':
+                    case constants.USER_TYPE_PROFESSOR:
                         return(
                             <Nav pullRight>
                                 <NavItem className="navItem" eventKey={2} href="/upload">Case Upload</NavItem>
@@ -33,7 +34,7 @@ class Header extends Component {
                                 <a href="/profile"><Image src={this.props.auth.profilepicture} className="img-circle" style={{height: '45px', width: '45px'}} /></a>
                             </Nav>
                         );
-                    case 'Student':
+                    case constants.USER_TYPE_STUDENT:
                         return(
                             <Nav pullRight>
                                 <NavItem className="navItem" eventKey={2} href="/case_challenge">Case Challenge</NavItem>
@@ -46,7 +47,7 @@ class Header extends Component {
                             </Nav>
                         );
 
-                        case 'Admin':
+                        case constants.USER_TYPE_ADMIN:
                         return(
                             <Nav pullRight>
                                 <NavItem className="navItem" eventKey={2} href="/case_challenge">Case Challenge</NavItem>
