@@ -45,6 +45,20 @@ class Header extends Component {
                                 <a href="/profile"><Image src={this.props.auth.profilepicture} className="img-circle" style={{height: '45px', width: '45px'}} /></a>
                             </Nav>
                         );
+
+                        case 'admin':
+                        return(
+                            <Nav pullRight>
+                                <NavItem className="navItem" eventKey={2} href="/case_challenge">Case Challenge</NavItem>
+                                <NavItem className="navItem" eventKey={3} href="/upload">Case Upload</NavItem>
+                                <NavItem className="navItem" eventKey={4} href="/forum">Discussion Forum</NavItem>
+                                <NavItem className="navItem" eventKey={5} href="/dashboard">Dashboard</NavItem>
+                                <NavItem className="navItem" eventKey={6} href="/acknowledgements">Acknowledgements</NavItem>
+                                <NavItem className="navItem" eventKey={7} href="/admin">Admin Panel</NavItem>
+                                <NavItem className="navItem" eventKey={8} href="/api/logout">Logout</NavItem>
+                                <a href="/profile"><Image src={this.props.auth.profilepicture} className="img-circle" style={{height: '45px', width: '45px'}} /></a>
+                            </Nav>
+                        );
                     default:
                         return;
                 }

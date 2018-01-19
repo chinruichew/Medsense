@@ -14,7 +14,7 @@ class Home extends Component {
             case false:
                 return <Redirect to='/' />;
             default:
-                if (this.props.auth.usertype === "professor"){
+                if (this.props.auth.usertype === "professor" || this.props.auth.usertype === "admin" ){
                     return(
                         <div className="container-fluid">
                             <div className="row">
