@@ -3,6 +3,7 @@ const User = require('../models/User');
 const Case = require('../models/Case');
 const Question = require('../models/Question');
 const Approach = require('../models/Approach');
+const Answer = require('../models/Answer')
 const constants = require('../utility/constantTypes');
 
 module.exports = app => {
@@ -201,6 +202,16 @@ module.exports = app => {
         const approaches = await Approach.find({}).lean().distinct('approach');
         res.send(approaches);
     });
+
+    app.post('/api/storeCaseAnswer', function (req, res) {
+        console.log(req.body.values.authid)
+        const newCaseAnswer = new Answer({
+            attemptid: mongoose.Types.ObjectId(req.body.values.authid)
+        });
+        newCaseAnswer.save();
+        return res.send({ data: {}, message: "storeCaseAnswer success" });
+    })
+
 };
 
 

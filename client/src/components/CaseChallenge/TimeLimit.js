@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Form, FormGroup, ControlLabel, Col } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import { bindAll } from 'lodash';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
-import {fetchGameById} from '../../actions';
+import { fetchGameById, storeCaseAnswer } from '../../actions';
 import MCQquestion from "./MCQquestion";
 import OpenEndedQuestion from "./OpenEndedQuestion";
 
@@ -16,7 +16,7 @@ class TimeLimit extends Component {
             showGameView: false,
             withTimeLimit: false,
             noTimeLimit: true,
-            currentQn:1,
+            currentQn: 1,
             authid: this.props.authid,
             authname: this.props.authname
         };
@@ -29,45 +29,45 @@ class TimeLimit extends Component {
         this.props.fetchGameById(this.state.challenge._id);
     }
 
-    redirect(){
+    redirect() {
         window.location.reload();
     }
 
-    startGame(){
-        this.setState({showGameView:true});
+    startGame() {
+        this.setState({ showGameView: true });
     }
 
-    withTimeLimit () {
-        this.setState({withTimeLimit: true, noTimeLimit:false});
+    withTimeLimit() {
+        this.setState({ withTimeLimit: true, noTimeLimit: false });
     }
 
-    withoutTimeLimit(){
-        this.setState({withTimeLimit: false, noTimeLimit:true});
+    withoutTimeLimit() {
+        this.setState({ withTimeLimit: false, noTimeLimit: true });
     }
 
-    renderTimeLimitContent(){
+    renderTimeLimitContent() {
         //return this.props.randomCase.title;
-        if(!this.state.showGameView){
+        if (!this.state.showGameView) {
             let timerBtnBgColor = this.state.withTimeLimit ? "#82C5D9" : "#CDE0EB";
             let noTimerBtnBgColor = this.state.noTimeLimit ? "#82C5D9" : "#CDE0EB";
-            return(
+            return (
                 <div>
                     <h1>{this.state.challenge.title}</h1>
                     <h3>
                         Cases in advanced mode gives you more points than beginner mode.
-                        <br/>Earn bonus points when you try a case with time limit!
+                        <br />Earn bonus points when you try a case with time limit!
                     </h3>
                     <br /><br />
                     <Form horizontal>
                         <Col smOffset={4}>
-                        <FormGroup controlId="formHorizontalEmail">
-                            <Col sm={3}>
-                                <h3>Difficulty </h3>
-                            </Col>
-                            <Col sm={2}>
-                                <h3>{this.state.challenge.difficulty}</h3>
-                            </Col>
-                        </FormGroup>
+                            <FormGroup controlId="formHorizontalEmail">
+                                <Col sm={3}>
+                                    <h3>Difficulty </h3>
+                                </Col>
+                                <Col sm={2}>
+                                    <h3>{this.state.challenge.difficulty}</h3>
+                                </Col>
+                            </FormGroup>
                         </Col>
                         <Col smOffset={4}>
                             <FormGroup >
@@ -76,13 +76,13 @@ class TimeLimit extends Component {
                                 </Col>
                                 <Col sm={3} className='pull-left'>
                                     <Button style={{ background: timerBtnBgColor, color: 'black', border: 0, width: '60%' }}
-                                            onClick={(e)=> this.withTimeLimit()}>
+                                        onClick={(e) => this.withTimeLimit()}>
                                         <h3>Yes</h3>
                                     </Button>
                                 </Col>
                                 <Col sm={3}>
                                     <Button style={{ background: noTimerBtnBgColor, color: 'black', border: 0, width: '60%' }}
-                                            onClick={(e)=> this.withoutTimeLimit()}>
+                                        onClick={(e) => this.withoutTimeLimit()}>
                                         <h3 style={{ border: "50%" }}>No</h3>
                                     </Button>
                                 </Col>
@@ -92,53 +92,52 @@ class TimeLimit extends Component {
                         <FormGroup>
                             <Col sm={2} className='pull-left'>
                                 <Button bsStyle="primary" bsSize="large" onClick={(e) => this.redirect()}>
-                                    <img className="left-picture" hspace = "5" src="./backArrow.png"style={{height:"18px"}} alt=""/>
+                                    <img className="left-picture" hspace="5" src="./backArrow.png" style={{ height: "18px" }} alt="" />
                                     Find a case
                                 </Button>
                             </Col>
                             <Col sm={2} className='pull-right'>
                                 <Button bsStyle="primary" bsSize="large" onClick={(e) => this.startGame()}>
                                     Start Challenge
-                                    <img className="left-picture" hspace = "5" src="./nextarrow.png"style={{height:"18px"}} alt=""/>
+                                    <img className="left-picture" hspace="5" src="./nextarrow.png" style={{ height: "18px" }} alt="" />
                                 </Button>
                             </Col>
                         </FormGroup>
                     </Form>
                 </div>
             );
-        }else{
+        } else {
             return (
                 <div>
                     {this.renderGameContent()}
                 </div>
             );
         }
-
-
     }
 
 
     renderGameContent() {
-        switch(this.props.game) {
+        switch (this.props.game) {
             case null:
                 return;
             default:
+                this.props.storeCaseAnswer(this.state.challenge._id);
                 let timeLimit = this.state.withTimeLimit;
                 let currentQn = this.state.currentQn;
                 let scenario = this.props.game.scenario;
                 let totalQnNum = this.props.game.questions.length;
                 let caseTitle = this.props.game.title;
                 let questionNodes = this.props.game.questions.map((obj, index) => {
-                    if(obj.id === currentQn+""){
-                        if(obj.type === "MCQ"){
+                    if (obj.id === currentQn + "") {
+                        if (obj.type === "MCQ") {
                             return <MCQquestion question={obj} scenario={scenario} timeLimit={timeLimit}
-                                                totalQnNum={totalQnNum} caseTitle={caseTitle}
-                                                handleNextQuestion={this.handleNextQuestion}/>
-                        }else{
+                                totalQnNum={totalQnNum} caseTitle={caseTitle}
+                                handleNextQuestion={this.handleNextQuestion} />
+                        } else {
                             return <OpenEndedQuestion question={obj} scenario={scenario} timeLimit={timeLimit} totalQnNum={totalQnNum}
-                                         caseTitle={caseTitle} handleNextQuestion={this.handleNextQuestion}/>
+                                caseTitle={caseTitle} handleNextQuestion={this.handleNextQuestion} />
                         }
-                    }else{
+                    } else {
                         return;
                     }
                 });
@@ -146,25 +145,26 @@ class TimeLimit extends Component {
         }
     }
 
-    handleNextQuestion(prevQn){
-        this.setState({currentQn : prevQn + 1 });
+    handleNextQuestion(prevQn) {
+        this.setState({ currentQn: prevQn + 1 });
     }
 
     render() {
         return (
             <div className="container">
                 {this.renderTimeLimitContent()}
-            </div> 
+            </div>
         );
 
 
     }
 }
 
-function mapStateToProps2({game}) {
+function mapStateToProps2({game, auth}) {
     return {
-        game
+        game,
+        auth
     };
 }
 
-export default connect(mapStateToProps2, {fetchGameById})(TimeLimit);
+export default connect(mapStateToProps2, { fetchGameById, storeCaseAnswer })(TimeLimit);
