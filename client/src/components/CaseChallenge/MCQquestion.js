@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { Form, FormGroup, Table, Col} from 'react-bootstrap';
+import { Form, FormGroup, Table, Col } from 'react-bootstrap';
 import { Checkbox, Button, Row, Panel, InputGroup } from 'react-bootstrap';
 import { Line } from 'rc-progress';
 import { bindAll } from 'lodash';
+import { connect } from 'react-redux';
+import { storeCaseAnswerMCQ } from '../../actions';
 
 import MCQAnswers from './MCQAnswers';
 import './Game.css';
@@ -27,9 +29,10 @@ class MCQquestion extends Component {
             check4Stu: false,
             check5Stu: false,
             check6Stu: false,
+            answerid: this.props.answerid,
             authid: this.props.authid,
             authname: this.props.authname,
-            time: {}, 
+            time: {},
             seconds: parseFloat(this.props.question.time) * 60,
         };
         this.timer = 0;
@@ -83,22 +86,23 @@ class MCQquestion extends Component {
     }
 
     selectDone() {
-        const {showAnswers} = this.state;
-        const {showNextButton} = this.state;
-        if(!showAnswers){
-            this.setState({showAnswers: !showAnswers});
-            this.setState({showNextButton: !showNextButton});
+        this.props.storeCaseAnswerMCQ(this.state);
+        const { showAnswers } = this.state;
+        const { showNextButton } = this.state;
+        if (!showAnswers) {
+            this.setState({ showAnswers: !showAnswers });
+            this.setState({ showNextButton: !showNextButton });
             this.pauseTimer()
         }
     }
 
-    renderTimer(duration){
+    renderTimer(duration) {
         //console.log(this.props.timeLimit);
         if (this.props.timeLimit) {
             return (
                 <div className='pull-right'>
                     {this.startTimer()}
-                    <img src="./timer.png" hspace='5' alt="" style={{height: "35px"}}/> {this.state.time.m}
+                    <img src="./timer.png" hspace='5' alt="" style={{ height: "35px" }} /> {this.state.time.m}
                     min {this.state.time.s} sec
                 </div>
             );
@@ -106,12 +110,12 @@ class MCQquestion extends Component {
         return;
     }
 
-    renderShowNextButton(){
-        const {showNextButton} = this.state;
-        if(showNextButton){
-            return(
+    renderShowNextButton() {
+        const { showNextButton } = this.state;
+        if (showNextButton) {
+            return (
                 <div>
-                    <Button onClick={(e) => this.selectDone()} hspace = "20" bsStyle="primary" bsSize="large" className="pull-right">
+                    <Button onClick={(e) => this.selectDone()} hspace="20" bsStyle="primary" bsSize="large" className="pull-right">
                         Done
                     </Button>
                 </div>
@@ -119,112 +123,112 @@ class MCQquestion extends Component {
         }
     }
 
-    renderProgressBar(){
-        let progress = parseFloat(this.props.question.id)/parseFloat(this.props.totalQnNum)* 100;
-        return(
+    renderProgressBar() {
+        let progress = parseFloat(this.props.question.id) / parseFloat(this.props.totalQnNum) * 100;
+        return (
             <div >
-            <Col sm={10} align="left">
-                <Line
-                    percent= {progress}
-                    strokeWidth="2"
-                    trailWidth = "1"
-                    strokeColor="#82C5D9"
-                    strokeLinecap="square"
-                />
-            </Col>
-            <Col sm={2} align="left"><h4>{this.props.question.id}/{this.props.totalQnNum} Questions</h4> </Col>
+                <Col sm={10} align="left">
+                    <Line
+                        percent={progress}
+                        strokeWidth="2"
+                        trailWidth="1"
+                        strokeColor="#82C5D9"
+                        strokeLinecap="square"
+                    />
+                </Col>
+                <Col sm={2} align="left"><h4>{this.props.question.id}/{this.props.totalQnNum} Questions</h4> </Col>
             </div>
         );
     }
 
-    renderScenario(){
-        if(this.props.question.id === 1+""){
+    renderScenario() {
+        if (this.props.question.id === 1 + "") {
             return this.props.scenario;
-        }else{
+        } else {
             return this.props.question.stem;
         }
     }
 
-    handleCheck1Change(e){
+    handleCheck1Change(e) {
         const value = e.target.checked;
         this.setState({ check1Stu: value });
         // this.update(value, "check1");
     }
-    handleCheck2Change(e){
+    handleCheck2Change(e) {
         const value = e.target.checked;
         this.setState({ check2Stu: value });
         // this.update(value, "check2");
     }
-    handleCheck3Change(e){
+    handleCheck3Change(e) {
         const value = e.target.checked;
         this.setState({ check3Stu: value });
         console.log(e.target.checked);
         // this.update(value, "check3");
     }
-    handleCheck4Change(e){
+    handleCheck4Change(e) {
         const value = e.target.checked;
         this.setState({ check4Stu: value });
         // this.update(value, "check4");
     }
-    handleCheck5Change(e){
+    handleCheck5Change(e) {
         const value = e.target.checked;
         this.setState({ check5Stu: value });
         // this.update(value, "check5");
     }
-    handleCheck6Change(e){
+    handleCheck6Change(e) {
         const value = e.target.checked;
         this.setState({ check6Stu: value });
         // this.update(value, "check6");
     }
 
-    renderMCQ3(){
-        if(this.props.question.mcq3.length !== 0){
-            return(
-                <Checkbox onChange={(e)=>this.handleCheck3Change(e)}>{this.props.question.mcq3}</Checkbox>
+    renderMCQ3() {
+        if (this.props.question.mcq3.length !== 0) {
+            return (
+                <Checkbox onChange={(e) => this.handleCheck3Change(e)}>{this.props.question.mcq3}</Checkbox>
             );
         }
     }
 
-    renderMCQ4(){
-        if(this.props.question.mcq4.length !== 0){
-            return(
-                <Checkbox onChange={(e)=>this.handleCheck4Change(e)}>{this.props.question.mcq4}</Checkbox>
+    renderMCQ4() {
+        if (this.props.question.mcq4.length !== 0) {
+            return (
+                <Checkbox onChange={(e) => this.handleCheck4Change(e)}>{this.props.question.mcq4}</Checkbox>
             );
         }
     }
 
-    renderMCQ5(){
-        if(this.props.question.mcq5.length !== 0){
-            return(
-                <Checkbox onChange={(e)=>this.handleCheck5Change(e)}>{this.props.question.mcq5}</Checkbox>
+    renderMCQ5() {
+        if (this.props.question.mcq5.length !== 0) {
+            return (
+                <Checkbox onChange={(e) => this.handleCheck5Change(e)}>{this.props.question.mcq5}</Checkbox>
             );
         }
     }
 
-    renderMCQ6(){
-        if(this.props.question.mcq6.length !== 0){
-            return(
-                <Checkbox onChange={(e)=>this.handleCheck6Change(e)}>{this.props.question.mcq6}</Checkbox>
+    renderMCQ6() {
+        if (this.props.question.mcq6.length !== 0) {
+            return (
+                <Checkbox onChange={(e) => this.handleCheck6Change(e)}>{this.props.question.mcq6}</Checkbox>
             );
         }
     }
 
-    handleNextQuestion(prevQn){
+    handleNextQuestion(prevQn) {
         this.props.handleNextQuestion(prevQn);
     }
 
-    renderContent(){
-        let imageZoom = this.props.question.attachment!=="" ? (<div className="col-md-5 col-md-offset-2"  align="center">
+    renderContent() {
+        let imageZoom = this.props.question.attachment !== "" ? (<div className="col-md-5 col-md-offset-2" align="center">
             <h5>
                 Mouse over image to zoom
             </h5>
-        </div>): (<div></div>);
-        return(
+        </div>) : (<div></div>);
+        return (
             <div className='container'>
                 <h1>
                     <Row>
                         <div>{this.props.caseTitle}</div>
-                        <br/>{this.renderProgressBar()}
+                        <br />{this.renderProgressBar()}
                     </Row>
                 </h1>
 
@@ -247,16 +251,16 @@ class MCQquestion extends Component {
 
                     <h4>{this.props.question.question}</h4>
 
-                    <div className="col-md-5 col-md-offset-2">{<ImageMagnifier url={this.props.question.attachment}/>}</div>
+                    <div className="col-md-5 col-md-offset-2">{<ImageMagnifier url={this.props.question.attachment} />}</div>
                     {imageZoom}
 
-                    <br /><br/>
+                    <br /><br />
 
                     <Form><h4>
                         <FormGroup>
                             <div className="col-md-6 col-md-offset-2">
-                                <Checkbox onChange={(e)=>this.handleCheck1Change(e)}>{this.props.question.mcq1}</Checkbox>
-                                <Checkbox onChange={(e)=>this.handleCheck2Change(e)}>{this.props.question.mcq2}</Checkbox>
+                                <Checkbox onChange={(e) => this.handleCheck1Change(e)}>{this.props.question.mcq1}</Checkbox>
+                                <Checkbox onChange={(e) => this.handleCheck2Change(e)}>{this.props.question.mcq2}</Checkbox>
                                 {this.renderMCQ3()}
                                 {this.renderMCQ4()}
                                 {this.renderMCQ5()}
@@ -269,11 +273,11 @@ class MCQquestion extends Component {
 
 
                 {this.state.showAnswers && <MCQAnswers question={this.props.question}
-                                                       totalQnNum={this.props.totalQnNum}
-                                                       handleNextQuestion={this.handleNextQuestion}
-                                                       check1Stu={this.state.check1Stu} check2Stu={this.state.check2Stu}
-                                                       check3Stu={this.state.check3Stu} check4Stu={this.state.check4Stu}
-                                                       check5Stu={this.state.check5Stu} check6Stu={this.state.check6Stu}/>}
+                    totalQnNum={this.props.totalQnNum}
+                    handleNextQuestion={this.handleNextQuestion}
+                    check1Stu={this.state.check1Stu} check2Stu={this.state.check2Stu}
+                    check3Stu={this.state.check3Stu} check4Stu={this.state.check4Stu}
+                    check5Stu={this.state.check5Stu} check6Stu={this.state.check6Stu} />}
 
             </div>
         );
@@ -282,10 +286,17 @@ class MCQquestion extends Component {
     render() {
         return (
             <Form horizontal>
-                {this.renderContent()}  
-            </Form> 
+                {this.renderContent()}
+            </Form>
         );
     }
 }
 
-export default MCQquestion;
+function mapStateToProps2({ game, auth }) {
+    return {
+        game,
+        auth
+    };
+}
+
+export default connect(mapStateToProps2, { storeCaseAnswerMCQ })(MCQquestion);

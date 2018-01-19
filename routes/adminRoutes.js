@@ -204,20 +204,40 @@ module.exports = app => {
     });
 
     app.post('/api/storeCaseAnswer', function (req, res) {
+        console.log(req.body.values1)
         const newCaseAnswer = new Answer({
-            attemptid: mongoose.Types.ObjectId(req.body.values)
+            _id: mongoose.Types.ObjectId(req.body.values1),
+            userid: mongoose.Types.ObjectId(req.body.values)
         });
         newCaseAnswer.save();
-        return res.send({ data: {}, message: "storeCaseAnswer success" });
+        // return res.send({ data: {}, message: "storeCaseAnswer success" });
     })
 
-    app.post('/api/storeCaseMCQ', function (req, res) {
+    app.post('/api/storeCaseAnswerMCQ', function (req, res) {
         console.log(req.body.values)
-        // const newCaseAnswer = new Answer({
-        //     attemptid: mongoose.Types.ObjectId(req.body.values)
-        // });
-        // newCaseAnswer.save();
-        // return res.send({ data: {}, message: "storeCaseMCQ success" });
+        Answer.find({
+            _id: req.body.values.answerid,
+            userid: req.body.values.authid
+        }, function (err, answer) {
+            const newCaseQuestion = new Question({
+                mcq1: req.body.values.mcq1,
+                mcq2: req.body.values.mcq2,
+                mcq3: req.body.values.mcq3,
+                mcq4: req.body.values.mcq4,
+                mcq5: req.body.values.mcq5,
+                mcq6: req.body.values.mcq6,
+                check1: req.body.values.check1Stu,
+                check2: req.body.values.check2Stu,
+                check3: req.body.values.check3Stu,
+                check4: req.body.values.check4Stu,
+                check5: req.body.values.check5Stu,
+                check6: req.body.values.check6Stu
+            });
+            newCaseQuestion.save();
+            answer[0]['questions'].push(newCaseQuestion);
+            answer[0].save();
+        })
+        return res.send({ data: {}, message: "storeCaseMCQ success" });
     })
 
     app.post('/api/storeCaseOpenEnded', function (req, res) {
