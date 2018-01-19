@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Main from './Main';
 import { Redirect } from 'react-router-dom';
 import * as ReactGA from "react-ga";
+import constants from '../../utility/constantTypes';
 
 class CaseStart extends Component {
     renderContent() {
@@ -13,12 +14,12 @@ class CaseStart extends Component {
                 return <Redirect to='/' />;
             default:
                 switch (this.props.auth.usertype) {
-                    case 'professor':
+                    case constants.USER_TYPE_PROFESSOR:
                         return (
                             <Main authid={this.props.auth._id}
                                 authname={this.props.auth.username} />
                         );
-                    case 'student':
+                    case constants.USER_TYPE_STUDENT:
                         return (
                             <Main authid={this.props.auth._id}
                                 authname={this.props.auth.username} />
