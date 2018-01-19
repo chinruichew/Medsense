@@ -127,11 +127,11 @@ class TimeLimit extends Component {
                     case null:
                         return;
                     default:
+                        let caseid = this.state.caseid
                         if (this.state.caseid == "") {
-                            this.setState({ caseid: new ObjectID() })
-                        } else {
-
-                        }
+                            caseid = new ObjectID()
+                            this.setState({ caseid: caseid })
+                        } 
                         this.props.storeCaseAnswer(this.props.auth._id, this.state.caseid);
                         let timeLimit = this.state.withTimeLimit;
                         let currentQn = this.state.currentQn;
@@ -141,11 +141,11 @@ class TimeLimit extends Component {
                         let questionNodes = this.props.game.questions.map((obj, index) => {
                             if (obj.id === currentQn + "") {
                                 if (obj.type === "MCQ") {
-                                    return <MCQquestion answerid={this.state.caseid} authid={this.props.auth._id} question={obj} scenario={scenario} timeLimit={timeLimit}
+                                    return <MCQquestion answerid={caseid} authid={this.props.auth._id} question={obj} scenario={scenario} timeLimit={timeLimit}
                                         totalQnNum={totalQnNum} caseTitle={caseTitle}
                                         handleNextQuestion={this.handleNextQuestion} />
                                 } else {
-                                    return <OpenEndedQuestion answerid={this.state.caseid} authid={this.props.auth._id} question={obj} scenario={scenario} timeLimit={timeLimit} totalQnNum={totalQnNum}
+                                    return <OpenEndedQuestion answerid={caseid} authid={this.props.auth._id} question={obj} scenario={scenario} timeLimit={timeLimit} totalQnNum={totalQnNum}
                                         caseTitle={caseTitle} handleNextQuestion={this.handleNextQuestion} />
                                 }
                             } else {

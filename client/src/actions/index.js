@@ -177,3 +177,10 @@ export const storeCaseAnswerMCQ = (values) => async dispatch => {
     });
     //dispatch({ type: FETCH_GAME_BY_ID, payload: res.data });
 };
+
+export const storeCaseAnswerOpenEnded = (values) => async dispatch => {
+    const res = await axios.post('/api/storeCaseAnswerOpenEnded', {
+        values
+    });
+    //dispatch({ type: FETCH_GAME_BY_ID, payload: res.data });
+};

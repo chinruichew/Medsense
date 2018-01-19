@@ -214,7 +214,6 @@ module.exports = app => {
     })
 
     app.post('/api/storeCaseAnswerMCQ', function (req, res) {
-        console.log(req.body.values)
         Answer.find({
             _id: req.body.values.answerid,
             userid: req.body.values.authid
@@ -240,12 +239,19 @@ module.exports = app => {
         return res.send({ data: {}, message: "storeCaseMCQ success" });
     })
 
-    app.post('/api/storeCaseOpenEnded', function (req, res) {
-        // const newCaseAnswer = new Answer({
-        //     attemptid: mongoose.Types.ObjectId(req.body.values)
-        // });
-        //newCaseAnswer.save();
-        //return res.send({ data: {}, message: "storeCaseOpenEnded success" });
+    app.post('/api/storeCaseAnswerOpenEnded', function (req, res) {
+        Answer.find({
+            _id: req.body.values.answerid,
+            userid: req.body.values.authid
+        }, function (err, answer) {
+            const newCaseQuestion = new Question({
+                openEnded: req.body.values.openEnded
+            });
+            newCaseQuestion.save();
+            answer[0]['questions'].push(newCaseQuestion);
+            answer[0].save();
+        })
+        return res.send({ data: {}, message: "storeCaseOpenEnded success" });
     })
 };
 
