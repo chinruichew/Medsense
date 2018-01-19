@@ -401,7 +401,7 @@ class CaseManager extends Component {
         let allCases = this.props.adminCases.map(item => (
             <tr align="center">
                 <td>{item.title}</td>
-                <td>{item.approach}</td>
+                <td>{item.approach.join(", ")}</td>
                 <td>{item.speciality}</td>
                 <td>{item.subspeciality}</td>
                 <td>{item.difficulty}</td>

@@ -12,6 +12,7 @@ const userSchema = new Schema({
     speciality: { type: String, default: "" },
     subspeciality: [{ type: String, default: "" }],
     usertype: { type: String, default: "" },
+    timestamp: { type: Date, default: Date.now()},
     cases: [{ type: Schema.Types.ObjectId, ref: 'cases' }]
 });
 

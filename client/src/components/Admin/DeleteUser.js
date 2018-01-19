@@ -263,7 +263,8 @@ class DeleteUser extends Component {
                     <td><center>{user.username}</center></td>
                     <td><center>{user.school}</center></td>
                     <td><center>{user.year}</center></td>
-                    <td><center>{user._id}</center></td>
+                    <td><center>{user.year === "4" || user.year === "5"? "Yes" : "No"}</center></td>
+                    {/* <td><center>{user._id}</center></td> */}
                     <td><center>Level</center></td>
                     <td><center>XP</center></td>
                     <td><center>Timestamp</center></td>
@@ -308,7 +309,7 @@ class DeleteUser extends Component {
                     <td><center>{user.username}</center></td>
                     <td><center>{user.school}</center></td>
                     <td><center>{user.speciality}</center></td>
-                    <td><center>{user.subspeciality}</center></td>
+                    <td><center>{user.subspeciality.join(", ")}</center></td>
                     <td><center>Contribution 1</center></td>
                     <td><Button onClick={(e) => this.deleteAdminProfessor(user)}>Delete</Button></td >
                 </tr>
