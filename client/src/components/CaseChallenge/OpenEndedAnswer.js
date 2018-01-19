@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import { bindAll } from 'lodash';
+import GameResults from './GameResults';
 
 class OpenEndedAnswer extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            showResult: false,
             authid: this.props.authid,
             authname: this.props.authname
         };
@@ -14,31 +16,37 @@ class OpenEndedAnswer extends Component {
         bindAll(this, 'renderContent', 'renderNextQuestion', 'nextQuestion');
     }
 
-    renderContent(){
-        return(
-            <div className='container'>
-                <h3>You got __ points!</h3><br />
-                <h4>
-                    <strong>Answer</strong> <br />
-                    {this.props.question.openEnded} <br /><br />
+    renderContent() {
+        //if (!this.state.showResult) {
+            return (
+                <div className='container'>
+                    <h3>You got __ points!</h3><br />
+                    <h4>
+                        <strong>Answer</strong> <br />
+                        {this.props.question.openEnded} <br /><br />
 
-                    <strong>PEARL</strong> <br />
-                    {this.props.question.pearl} <br /><br />
+                        <strong>PEARL</strong> <br />
+                        {this.props.question.pearl} <br /><br />
 
-                    <strong>References</strong> <br />
-                    {this.props.question.reference} <br /><br />
+                        <strong>References</strong> <br />
+                        {this.props.question.reference} <br /><br />
 
-                </h4>
+                    </h4>
+                    {this.renderNextQuestion()}
 
-            </div>
-        );
+                </div>
+            );
+        //}else{
+            //return <GameResults />
+        //}
+
     }
 
-    renderNextQuestion(){
-        if(this.props.question.id===this.props.totalQnNum+""){
-            return(
+    renderNextQuestion() {
+        if (this.props.question.id === this.props.totalQnNum + "") {
+            return (
                 <div>
-                    <Button onClick={(e) => this.complete()} hspace = "20" bsStyle="primary" bsSize="large" className="pull-right">
+                    <Button onClick={(e) => this.complete()} hspace="20" bsStyle="primary" bsSize="large" className="pull-right">
                         View Score
                     </Button>
                 </div>
@@ -46,26 +54,28 @@ class OpenEndedAnswer extends Component {
         } else {
             return (
                 <Button onClick={(e) => this.nextQuestion()} hspace="20" bsStyle="primary" bsSize="large"
-                        className="pull-right">
+                    className="pull-right">
                     Next Question
                 </Button>
             );
         }
     }
 
-    complete(){
-
+    complete() {
+        // this.setState({
+        //     showResult: true
+        // });
+        window.location = '/result';
     }
 
-    nextQuestion(){
+    nextQuestion() {
         this.props.handleNextQuestion(parseFloat(this.props.question.id));
     }
 
     render() {
-        return(
+        return (
             <div>
                 {this.renderContent()}
-                {this.renderNextQuestion()}
             </div>
         );
     }
