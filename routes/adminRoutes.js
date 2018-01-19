@@ -211,6 +211,22 @@ module.exports = app => {
         return res.send({ data: {}, message: "storeCaseAnswer success" });
     })
 
+    app.post('/api/storeCaseMCQ', function (req, res) {
+        console.log(req.body.values)
+        // const newCaseAnswer = new Answer({
+        //     attemptid: mongoose.Types.ObjectId(req.body.values)
+        // });
+        // newCaseAnswer.save();
+        // return res.send({ data: {}, message: "storeCaseMCQ success" });
+    })
+
+    app.post('/api/storeCaseOpenEnded', function (req, res) {
+        // const newCaseAnswer = new Answer({
+        //     attemptid: mongoose.Types.ObjectId(req.body.values)
+        // });
+        //newCaseAnswer.save();
+        //return res.send({ data: {}, message: "storeCaseOpenEnded success" });
+    })
 };
 
 
