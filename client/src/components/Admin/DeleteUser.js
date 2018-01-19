@@ -258,7 +258,7 @@ class DeleteUser extends Component {
 
     renderStudents() {
         let allStudents = this.props.adminUsers.map(user => {
-            if (user.usertype === "student") {
+            if (user.usertype === "Student") {
                 return <tr>
                     <td><center>{user.username}</center></td>
                     <td><center>{user.school}</center></td>
@@ -304,7 +304,7 @@ class DeleteUser extends Component {
 
     renderProfessors() {
         let allProfessors = this.props.adminUsers.map(user => {
-            if (user.usertype === "professor") {
+            if (user.usertype === "Professor") {
                 return <tr>
                     <td><center>{user.username}</center></td>
                     <td><center>{user.school}</center></td>

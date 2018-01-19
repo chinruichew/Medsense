@@ -9,12 +9,13 @@ module.exports = app => {
 
     app.get('/api/fetchAdminUsers', async (req, res) => {
         const users = await User.find({}).select("-password");
+        console.log(users);
         res.send(users);
     });
 
     app.post('/api/fetchFilteredAdminStudents', async (req, res) => {
         var users
-        if (req.body.values.username == "") {
+        if (req.body.values.username === "") {
             users = await User.find({
                 usertype: constants.USER_TYPE_STUDENT,
                 school: req.body.values.school,
@@ -38,8 +39,8 @@ module.exports = app => {
             subspecialityArray.push(req.body.values.subspeciality[key])
         }
         var users
-        if (req.body.values.username == "") {
-            if (subspecialityArray.length == 0) {
+        if (req.body.values.username === "") {
+            if (subspecialityArray.length === 0) {
                 users = await User.find({
                     usertype: constants.USER_TYPE_PROFESSOR,
                     school: req.body.values.school,
@@ -70,7 +71,7 @@ module.exports = app => {
         const cases = await Case.find({}).select().populate({
             path: 'questions',
             model: 'questions'
-        })
+        });
         res.send(cases);
     });
 
@@ -85,8 +86,8 @@ module.exports = app => {
         for (var key in req.body.values.subspeciality) {
             subspecialityArray.push(req.body.values.subspeciality[key])
         }
-        if (req.body.values.title == "") {
-            if (approachArray.length == 0 || subspecialityArray.length == 0) {
+        if (req.body.values.title === "") {
+            if (approachArray.length === 0 || subspecialityArray.length === 0) {
                 cases = await Case.find({
                     difficulty: req.body.values.difficulty,
                     status: req.body.values.casestatus
@@ -106,7 +107,7 @@ module.exports = app => {
                 });
             }
         } else {
-            if (approachArray.length == 0 || subspecialityArray.length == 0) {
+            if (approachArray.length === 0 || subspecialityArray.length === 0) {
                 cases = await Case.find({
                     title: { "$regex": req.body.values.title, "$options": "i" },
                     difficulty: req.body.values.difficulty,
