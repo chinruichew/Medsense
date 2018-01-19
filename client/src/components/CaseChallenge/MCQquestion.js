@@ -15,6 +15,12 @@ class MCQquestion extends Component {
         this.state = {
             showAnswers: false,
             showNextButton: true,
+            mcq1: this.props.question.mcq1,
+            mcq2: this.props.question.mcq2,
+            mcq3: this.props.question.mcq3,
+            mcq4: this.props.question.mcq4,
+            mcq5: this.props.question.mcq5,
+            mcq6: this.props.question.mcq6,
             check1Stu: false,
             check2Stu: false,
             check3Stu: false,
