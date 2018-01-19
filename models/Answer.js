@@ -13,7 +13,7 @@ const answerSchema = new Schema({
     learning: { type: String, default: "learning" },
     status: { type: String, default: "Pending" },
     timestamp: {type: String, default: Date.now()},
-    attemptid: { type: Schema.Types.ObjectId, ref: 'users' }
+    userid: { type: Schema.Types.ObjectId, ref: 'users' }
 });
 
 const answerModel = mongoose.model('answers', answerSchema);
