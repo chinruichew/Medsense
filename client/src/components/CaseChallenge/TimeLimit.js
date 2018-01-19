@@ -117,7 +117,7 @@ class TimeLimit extends Component {
 
 
     renderGameContent() {
-        switch(this.props.auth) {
+        switch (this.props.auth) {
             case null:
                 return;
             default:
@@ -125,8 +125,7 @@ class TimeLimit extends Component {
                     case null:
                         return;
                     default:
-                        console.log(this.props.auth);
-                        this.props.storeCaseAnswer(this.state.challenge._id);
+                        this.props.storeCaseAnswer(this.props.auth._id);
                         let timeLimit = this.state.withTimeLimit;
                         let currentQn = this.state.currentQn;
                         let scenario = this.props.game.scenario;
@@ -135,12 +134,12 @@ class TimeLimit extends Component {
                         let questionNodes = this.props.game.questions.map((obj, index) => {
                             if (obj.id === currentQn + "") {
                                 if (obj.type === "MCQ") {
-                                    return <MCQquestion question={obj} scenario={scenario} timeLimit={timeLimit}
-                                                        totalQnNum={totalQnNum} caseTitle={caseTitle}
-                                                        handleNextQuestion={this.handleNextQuestion} />
+                                    return <MCQquestion authid={this.props.auth._id} question={obj} scenario={scenario} timeLimit={timeLimit}
+                                        totalQnNum={totalQnNum} caseTitle={caseTitle}
+                                        handleNextQuestion={this.handleNextQuestion} />
                                 } else {
-                                    return <OpenEndedQuestion question={obj} scenario={scenario} timeLimit={timeLimit} totalQnNum={totalQnNum}
-                                                              caseTitle={caseTitle} handleNextQuestion={this.handleNextQuestion} />
+                                    return <OpenEndedQuestion authid={this.props.auth._id} question={obj} scenario={scenario} timeLimit={timeLimit} totalQnNum={totalQnNum}
+                                        caseTitle={caseTitle} handleNextQuestion={this.handleNextQuestion} />
                                 }
                             } else {
                                 return;

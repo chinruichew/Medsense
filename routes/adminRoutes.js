@@ -204,9 +204,8 @@ module.exports = app => {
     });
 
     app.post('/api/storeCaseAnswer', function (req, res) {
-        console.log(req.body.values.authid)
         const newCaseAnswer = new Answer({
-            attemptid: mongoose.Types.ObjectId(req.body.values.authid)
+            attemptid: mongoose.Types.ObjectId(req.body.values)
         });
         newCaseAnswer.save();
         return res.send({ data: {}, message: "storeCaseAnswer success" });
