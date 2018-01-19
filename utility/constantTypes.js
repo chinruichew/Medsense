@@ -1,4 +1,5 @@
 module.exports = {
-    USER_TYPE_PROFESSOR: "professor",
-    USER_TYPE_STUDENT: "student"
+    USER_TYPE_PROFESSOR: "Professor",
+    USER_TYPE_STUDENT: "Student",
+    USER_TYPE_ADMIN: "Admin"
 };
