@@ -125,7 +125,7 @@ class CaseManager extends Component {
                     <div style={{ fontSize: "70%", fontWeight: "200" }}>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.
                 </div>
                 </ControlLabel>
-                <FormControl componentClass="select" value={this.state.approach} name="approach" onChange={(e) => this.handleApproachChange(e)} multiple>
+                <FormControl componentClass="select" size='6' value={this.state.approach} name="approach" onChange={(e) => this.handleApproachChange(e)} multiple>
                     {/*<FormControl componentClass="select" value={this.state.approach} name="approach" onChange={(e) => this.handleApproachChange(e)}>*/}
                     <option value="Select All Relevant">Select All Relevant</option>
                     {/*<option value="Select One">Select One</option>*/}
@@ -291,7 +291,7 @@ class CaseManager extends Component {
                     <div style={{ fontSize: "70%", fontWeight: "200" }}>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.
                         </div>
                 </ControlLabel>
-                <FormControl  componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)} multiple>
+                <FormControl  componentClass="select" size='6' value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)} multiple>
                     <option value="Select One">Select All Relevant</option>
                     <optgroup label="--Medicine--"></optgroup>
                     <option value="Cardiology">Cardiology</option>
