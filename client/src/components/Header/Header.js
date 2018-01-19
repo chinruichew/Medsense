@@ -21,7 +21,7 @@ class Header extends Component {
             default:
                 // Check for user type
                 switch (this.props.auth.usertype) {
-                    case 'professor':
+                    case 'Professor':
                         return(
                             <Nav pullRight>
                                 <NavItem className="navItem" eventKey={2} href="/upload">Case Upload</NavItem>
@@ -33,7 +33,7 @@ class Header extends Component {
                                 <a href="/profile"><Image src={this.props.auth.profilepicture} className="img-circle" style={{height: '45px', width: '45px'}} /></a>
                             </Nav>
                         );
-                    case 'student':
+                    case 'Student':
                         return(
                             <Nav pullRight>
                                 <NavItem className="navItem" eventKey={2} href="/case_challenge">Case Challenge</NavItem>
@@ -46,7 +46,7 @@ class Header extends Component {
                             </Nav>
                         );
 
-                        case 'admin':
+                        case 'Admin':
                         return(
                             <Nav pullRight>
                                 <NavItem className="navItem" eventKey={2} href="/case_challenge">Case Challenge</NavItem>

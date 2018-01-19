@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 const User = require('../models/User');
 const Case = require('../models/Case');
 const Question = require('../models/Question');
-const Approach = require('../models/Approach')
+const Approach = require('../models/Approach');
+const constants = require('../utility/constantTypes');
 
 module.exports = app => {
 
@@ -15,14 +16,14 @@ module.exports = app => {
         var users
         if (req.body.values.username == "") {
             users = await User.find({
-                usertype: "student",
+                usertype: constants.USER_TYPE_STUDENT,
                 school: req.body.values.school,
                 year: req.body.values.year
             }).select("-password");
         } else {
             users = await User.find({
                 username: req.body.values.username,
-                usertype: "student",
+                usertype: constants.USER_TYPE_STUDENT,
                 school: req.body.values.school,
                 year: req.body.values.year
             }).select("-password");
@@ -31,23 +32,22 @@ module.exports = app => {
     });
 
     app.post('/api/fetchFilteredAdminProfessors', async (req, res) => {
-        console.log(req.body.values)
-        var subspecialityArray = []
+        console.log(req.body.values);
+        var subspecialityArray = [];
         for (var key in req.body.values.subspeciality) {
             subspecialityArray.push(req.body.values.subspeciality[key])
         }
-        console.log(subspecialityArray)
         var users
         if (req.body.values.username == "") {
             if (subspecialityArray.length == 0) {
                 users = await User.find({
-                    usertype: "professor",
+                    usertype: constants.USER_TYPE_PROFESSOR,
                     school: req.body.values.school,
                     speciality: req.body.values.speciality
                 }).select("-password");
             } else {
                 users = await User.find({
-                    usertype: "professor",
+                    usertype: constants.USER_TYPE_PROFESSOR,
                     school: req.body.values.school,
                     speciality: req.body.values.speciality,
                     subspeciality: { "$in": subspecialityArray }
@@ -56,7 +56,7 @@ module.exports = app => {
         } else {
             users = await User.find({
                 username: req.body.values.username,
-                usertype: "professor",
+                usertype: constants.USER_TYPE_PROFESSOR,
                 school: req.body.values.school,
                 speciality: req.body.values.speciality,
                 subspeciality: { "$in": subspecialityArray }
@@ -146,7 +146,7 @@ module.exports = app => {
                 const newUser = new User();
                 newUser.username = values.username;
                 newUser.password = newUser.generateHash(values.password);
-                newUser.usertype = "student";
+                newUser.usertype = constants.USER_TYPE_STUDENT;
                 newUser.school = values.school;
                 newUser.year = values.year;
                 newUser.save();
@@ -169,7 +169,7 @@ module.exports = app => {
                 newUser.username = values.username;
                 newUser.password = newUser.generateHash(values.password);
                 newUser.school = values.school;
-                newUser.usertype = "professor";
+                newUser.usertype = constants.USER_TYPE_PROFESSOR;
                 newUser.speciality = values.speciality;
                 newUser.subspeciality = subspecialityArray;
                 newUser.save();
@@ -194,7 +194,7 @@ module.exports = app => {
         const newApproach = new Approach({
             approach: req.body.approach
         });
-        newApproach.save()
+        newApproach.save();
         return res.status(201).send({ data: null, message: "approach success" });
     });
 
