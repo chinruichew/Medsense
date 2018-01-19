@@ -117,31 +117,37 @@ class TimeLimit extends Component {
 
 
     renderGameContent() {
-        switch (this.props.game) {
+        switch(this.props.auth) {
             case null:
                 return;
             default:
-                this.props.storeCaseAnswer(this.state.challenge._id);
-                let timeLimit = this.state.withTimeLimit;
-                let currentQn = this.state.currentQn;
-                let scenario = this.props.game.scenario;
-                let totalQnNum = this.props.game.questions.length;
-                let caseTitle = this.props.game.title;
-                let questionNodes = this.props.game.questions.map((obj, index) => {
-                    if (obj.id === currentQn + "") {
-                        if (obj.type === "MCQ") {
-                            return <MCQquestion question={obj} scenario={scenario} timeLimit={timeLimit}
-                                totalQnNum={totalQnNum} caseTitle={caseTitle}
-                                handleNextQuestion={this.handleNextQuestion} />
-                        } else {
-                            return <OpenEndedQuestion question={obj} scenario={scenario} timeLimit={timeLimit} totalQnNum={totalQnNum}
-                                caseTitle={caseTitle} handleNextQuestion={this.handleNextQuestion} />
-                        }
-                    } else {
+                switch (this.props.game) {
+                    case null:
                         return;
-                    }
-                });
-                return questionNodes;
+                    default:
+                        console.log(this.props.auth);
+                        this.props.storeCaseAnswer(this.state.challenge._id);
+                        let timeLimit = this.state.withTimeLimit;
+                        let currentQn = this.state.currentQn;
+                        let scenario = this.props.game.scenario;
+                        let totalQnNum = this.props.game.questions.length;
+                        let caseTitle = this.props.game.title;
+                        let questionNodes = this.props.game.questions.map((obj, index) => {
+                            if (obj.id === currentQn + "") {
+                                if (obj.type === "MCQ") {
+                                    return <MCQquestion question={obj} scenario={scenario} timeLimit={timeLimit}
+                                                        totalQnNum={totalQnNum} caseTitle={caseTitle}
+                                                        handleNextQuestion={this.handleNextQuestion} />
+                                } else {
+                                    return <OpenEndedQuestion question={obj} scenario={scenario} timeLimit={timeLimit} totalQnNum={totalQnNum}
+                                                              caseTitle={caseTitle} handleNextQuestion={this.handleNextQuestion} />
+                                }
+                            } else {
+                                return;
+                            }
+                        });
+                        return questionNodes;
+                }
         }
     }
 

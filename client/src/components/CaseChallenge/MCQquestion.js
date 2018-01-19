@@ -208,11 +208,11 @@ class MCQquestion extends Component {
     }
 
     renderContent(){
-        let imageZoom = this.props.question.attachment!=="" ? (<div class="col-md-5 col-md-offset-2"  align="center">
+        let imageZoom = this.props.question.attachment!=="" ? (<div className="col-md-5 col-md-offset-2"  align="center">
             <h5>
                 Mouse over image to zoom
             </h5>
-        </div>): (<div></div>)
+        </div>): (<div></div>);
         return(
             <div className='container'>
                 <h1>
@@ -241,14 +241,14 @@ class MCQquestion extends Component {
 
                     <h4>{this.props.question.question}</h4>
 
-                    <div class="col-md-5 col-md-offset-2">{<ImageMagnifier url={this.props.question.attachment}/>}</div>
+                    <div className="col-md-5 col-md-offset-2">{<ImageMagnifier url={this.props.question.attachment}/>}</div>
                     {imageZoom}
 
                     <br /><br/>
 
                     <Form><h4>
                         <FormGroup>
-                            <div class="col-md-6 col-md-offset-2">
+                            <div className="col-md-6 col-md-offset-2">
                                 <Checkbox onChange={(e)=>this.handleCheck1Change(e)}>{this.props.question.mcq1}</Checkbox>
                                 <Checkbox onChange={(e)=>this.handleCheck2Change(e)}>{this.props.question.mcq2}</Checkbox>
                                 {this.renderMCQ3()}
