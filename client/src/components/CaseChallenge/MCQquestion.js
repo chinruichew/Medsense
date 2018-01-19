@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Form, FormGroup, Table, Col} from 'react-bootstrap';
-import { Checkbox, Button, Row, Panel } from 'react-bootstrap';
+import { Checkbox, Button, Row, Panel, InputGroup } from 'react-bootstrap';
 import { Line } from 'rc-progress';
 import { bindAll } from 'lodash';
 
@@ -15,6 +15,12 @@ class MCQquestion extends Component {
         this.state = {
             showAnswers: false,
             showNextButton: true,
+            check1Stu: false,
+            check2Stu: false,
+            check3Stu: false,
+            check4Stu: false,
+            check5Stu: false,
+            check6Stu: false,
             authid: this.props.authid,
             authname: this.props.authname,
             time: {}, 
@@ -81,7 +87,7 @@ class MCQquestion extends Component {
     }
 
     renderTimer(duration){
-        console.log(this.props.timeLimit);
+        //console.log(this.props.timeLimit);
         if (this.props.timeLimit) {
             return (
                 <div className='pull-right'>
@@ -133,10 +139,42 @@ class MCQquestion extends Component {
         }
     }
 
+    handleCheck1Change(e){
+        const value = e.target.checked;
+        this.setState({ check1Stu: value });
+        // this.update(value, "check1");
+    }
+    handleCheck2Change(e){
+        const value = e.target.checked;
+        this.setState({ check2Stu: value });
+        // this.update(value, "check2");
+    }
+    handleCheck3Change(e){
+        const value = e.target.checked;
+        this.setState({ check3Stu: value });
+        console.log(e.target.checked);
+        // this.update(value, "check3");
+    }
+    handleCheck4Change(e){
+        const value = e.target.checked;
+        this.setState({ check4Stu: value });
+        // this.update(value, "check4");
+    }
+    handleCheck5Change(e){
+        const value = e.target.checked;
+        this.setState({ check5Stu: value });
+        // this.update(value, "check5");
+    }
+    handleCheck6Change(e){
+        const value = e.target.checked;
+        this.setState({ check6Stu: value });
+        // this.update(value, "check6");
+    }
+
     renderMCQ3(){
         if(this.props.question.mcq3.length !== 0){
             return(
-                <Checkbox >{this.props.question.mcq3}</Checkbox>
+                <Checkbox onChange={(e)=>this.handleCheck3Change(e)}>{this.props.question.mcq3}</Checkbox>
             );
         }
     }
@@ -144,7 +182,7 @@ class MCQquestion extends Component {
     renderMCQ4(){
         if(this.props.question.mcq4.length !== 0){
             return(
-                <Checkbox >{this.props.question.mcq4}</Checkbox>
+                <Checkbox onChange={(e)=>this.handleCheck4Change(e)}>{this.props.question.mcq4}</Checkbox>
             );
         }
     }
@@ -152,7 +190,7 @@ class MCQquestion extends Component {
     renderMCQ5(){
         if(this.props.question.mcq5.length !== 0){
             return(
-                <Checkbox >{this.props.question.mcq5}</Checkbox>
+                <Checkbox onChange={(e)=>this.handleCheck5Change(e)}>{this.props.question.mcq5}</Checkbox>
             );
         }
     }
@@ -160,7 +198,7 @@ class MCQquestion extends Component {
     renderMCQ6(){
         if(this.props.question.mcq6.length !== 0){
             return(
-                <Checkbox >{this.props.question.mcq6}</Checkbox>
+                <Checkbox onChange={(e)=>this.handleCheck6Change(e)}>{this.props.question.mcq6}</Checkbox>
             );
         }
     }
@@ -211,8 +249,8 @@ class MCQquestion extends Component {
                     <Form><h4>
                         <FormGroup>
                             <div class="col-md-6 col-md-offset-2">
-                                <Checkbox >{this.props.question.mcq1}</Checkbox>
-                                <Checkbox >{this.props.question.mcq2}</Checkbox>
+                                <Checkbox onChange={(e)=>this.handleCheck1Change(e)}>{this.props.question.mcq1}</Checkbox>
+                                <Checkbox onChange={(e)=>this.handleCheck2Change(e)}>{this.props.question.mcq2}</Checkbox>
                                 {this.renderMCQ3()}
                                 {this.renderMCQ4()}
                                 {this.renderMCQ5()}
@@ -224,7 +262,12 @@ class MCQquestion extends Component {
                 {this.renderShowNextButton()}
 
 
-                {this.state.showAnswers && <MCQAnswers question={this.props.question} totalQnNum={this.props.totalQnNum} handleNextQuestion={this.handleNextQuestion}/>}
+                {this.state.showAnswers && <MCQAnswers question={this.props.question}
+                                                       totalQnNum={this.props.totalQnNum}
+                                                       handleNextQuestion={this.handleNextQuestion}
+                                                       check1Stu={this.state.check1Stu} check2Stu={this.state.check2Stu}
+                                                       check3Stu={this.state.check3Stu} check4Stu={this.state.check4Stu}
+                                                       check5Stu={this.state.check5Stu} check6Stu={this.state.check6Stu}/>}
 
             </div>
         );
