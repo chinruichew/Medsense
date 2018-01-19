@@ -9,12 +9,11 @@ module.exports = app => {
 
     app.get('/api/fetchAdminUsers', async (req, res) => {
         const users = await User.find({}).select("-password");
-        console.log(users);
         res.send(users);
     });
 
     app.post('/api/fetchFilteredAdminStudents', async (req, res) => {
-        var users
+        let users;
         if (req.body.values.username === "") {
             users = await User.find({
                 usertype: constants.USER_TYPE_STUDENT,
@@ -33,12 +32,11 @@ module.exports = app => {
     });
 
     app.post('/api/fetchFilteredAdminProfessors', async (req, res) => {
-        console.log(req.body.values);
-        var subspecialityArray = [];
-        for (var key in req.body.values.subspeciality) {
+        const subspecialityArray = [];
+        for (const key in req.body.values.subspeciality) {
             subspecialityArray.push(req.body.values.subspeciality[key])
         }
-        var users
+        let users;
         if (req.body.values.username === "") {
             if (subspecialityArray.length === 0) {
                 users = await User.find({
@@ -76,15 +74,15 @@ module.exports = app => {
     });
 
     app.post('/api/fetchFilteredAdminCases', async (req, res) => {
-        var cases
-        var approachArray = []
-        var subspecialityArray = []
-        for (var key in req.body.values.approach) {
-            approachArray.push(req.body.values.approach[key])
+        let cases;
+        let approachArray = [];
+        let subspecialityArray = [];
+        for (let key in req.body.values.approach) {
+            approachArray.push(req.body.values.approach[key]);
         }
 
-        for (var key in req.body.values.subspeciality) {
-            subspecialityArray.push(req.body.values.subspeciality[key])
+        for (let key in req.body.values.subspeciality) {
+            subspecialityArray.push(req.body.values.subspeciality[key]);
         }
         if (req.body.values.title === "") {
             if (approachArray.length === 0 || subspecialityArray.length === 0) {
@@ -160,9 +158,9 @@ module.exports = app => {
 
     app.post('/api/addNewProfessor', function (req, res) {
         const values = req.body.values;
-        var subspecialityArray = []
-        for (var key in values.subspeciality) {
-            subspecialityArray.push(values.subspeciality[key])
+        const subspecialityArray = [];
+        for (let key in values.subspeciality) {
+            subspecialityArray.push(values.subspeciality[key]);
         }
         User.findOne({ username: values.username }, function (err, user) {
             if (!user) {
