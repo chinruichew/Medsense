@@ -76,7 +76,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(
     cookieSession({
-        maxAge: 1000 * 60 * 30,
+        maxAge: 1000 * 60 * 10,
         keys: [keys.cookieKey]
     })
 );
