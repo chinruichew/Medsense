@@ -49,10 +49,10 @@ class Admin extends Component {
                                     <br />
                                     <div className="row">
                                         <div className="col-sm-6 text-center" style={{ fontSize: '150%' }}>
-                                            <a href="/admin_dashboard"><img src="./portal_statistics.png" alt="" style={{ height: "400px" }} /><br /><br />Portal Statistics</a>
+                                            <a href="/admin_dashboard"><img src="./portal_statistics.png" alt="Portal Statistics" style={{ height: "400px" }} /><br /><br />Portal Statistics</a>
                                         </div>
                                         <div className="col-sm-4 text-center" style={{ fontSize: '150%' }}>
-                                            <a href="/admin_dashboard"><img src="./user_statistics.png" alt="" style={{ height: "400px" }} /><br /><br />User Statistics</a>
+                                            <a href="/admin_dashboard"><img src="./user_statistics.png" alt="User Statistics" style={{ height: "400px" }} /><br /><br />User Statistics</a>
                                         </div>
 
                                     </div>
