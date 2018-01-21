@@ -246,6 +246,29 @@ class SearchBySpeciality extends Component {
                     </Col>
                 </FormGroup>
             );
+        } else if (this.state.speciality === "Orthopedics") {
+            return (
+                <FormGroup controlId="formControlsSubspeciality" style={{ paddingTop: "0", paddingLeft: "7%" }}>
+                    <Col componentClass={ControlLabel} sm={2}>
+                        <ControlLabel style={{ fontSize: "150%" }}>Sub-speciality</ControlLabel>
+                    </Col>
+                    <Col sm={8}>
+                        <FormControl componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)}>
+                            <option value="Select One">Select One</option>
+                            <option value="Foot and Ankle Surgery">Foot and Ankle Surgery</option>
+                            <option value="Hip and Knee Surgery">Hip and Knee Surgery</option>
+                            <option value="Musculoskeletal Oncology">Musculoskeletal Oncology</option>
+                            <option value="Musculoskeletal Trauma">Musculoskeletal Trauma</option>
+                            <option value="Paediatric Orthopaedics">Paediatric Orthopaedics</option>
+                            <option value="Shoulder & Elbow Surgery">Shoulder & Elbow Surgery</option>
+                            <option value="Spine Surgery">Spine Surgery</option>
+                            <option value="Sports medicine">Sports medicine</option>
+                            <option value="Department of Hand & Reconstructive Microsurgery Trauma">Department of Hand & Reconstructive Microsurgery Trauma</option>
+                        </FormControl>
+                    </Col>
+                </FormGroup>
+            );
+
         }
         return;
     }
@@ -264,6 +287,7 @@ class SearchBySpeciality extends Component {
                                 <option value="Clinical Practicum">Clinical Practicum</option>
                                 <option value="Medicine">Medicine</option>
                                 <option value="Surgery">Surgery</option>
+                                <option value="Orthopedics">Orthopedics</option>
                                 <option value="Others">Others</option>
                             </FormControl>
                         </Col>
