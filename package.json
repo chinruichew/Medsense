@@ -14,7 +14,7 @@
     "client": "npm run start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "deploy": "npm run build --prefix client --verbose && git add . --verbose && git commit -m \"aws deploy\" --verbose && git push origin master --verbose && eb deploy --verbose && eb open --verbose",
-    "update": "npm update --verbose && cd client && npm update --verbose"
+    "update": "npm install --verbose && npm update --verbose && cd client && npm install --verbose && npm update --verbose"
   },
   "repository": {
     "type": "git",
@@ -45,7 +45,7 @@
     "fs-extra": "^5.0.0",
     "gm": "^1.23.1",
     "helmet": "^3.9.0",
-    "jsdom": "^11.5.1",
+    "jsdom": "^11.6.0",
     "jwt-simple": "^0.5.1",
     "lodash": "^4.17.4",
     "mime-types": "^2.1.17",
