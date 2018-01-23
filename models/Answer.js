@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 
 const answerSchema = new Schema({
     title: { type: String, default: "title" },
-    questions: [{ type: Schema.Types.ObjectId, ref: 'questions' }],
+    questions: [{ type: Schema.Types.ObjectId, ref: 'questionanswers' }],
     difficulty: { type: String, default: "difficulty" },
     speciality: { type: String, default: "speciality" },
     subspeciality: [{ type: String, default: "subspeciality" }],
@@ -13,7 +13,8 @@ const answerSchema = new Schema({
     learning: { type: String, default: "learning" },
     status: { type: String, default: "Pending" },
     timestamp: {type: String, default: Date.now()},
-    userid: { type: Schema.Types.ObjectId, ref: 'users' }
+    userid: { type: Schema.Types.ObjectId, ref: 'users' },
+    date: { type: String, default: "" }
 });
 
 const answerModel = mongoose.model('answers', answerSchema);

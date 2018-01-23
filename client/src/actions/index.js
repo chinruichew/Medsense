@@ -164,9 +164,9 @@ export const fetchGameById = (values) => async dispatch => {
     dispatch({ type: FETCH_GAME_BY_ID, payload: res.data });
 };
 
-export const storeCaseAnswer = (values, values1) => async dispatch => {
+export const storeCaseAnswer = (values, values1, values2, values3) => async dispatch => {
     const res = await axios.post('/api/storeCaseAnswer', {
-        values, values1
+        values, values1, values2, values3
     });
     //dispatch({ type: FETCH_GAME_BY_ID, payload: res.data });
 };

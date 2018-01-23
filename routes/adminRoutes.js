@@ -4,6 +4,7 @@ const Case = require('../models/Case');
 const Question = require('../models/Question');
 const Approach = require('../models/Approach');
 const Answer = require('../models/Answer')
+const QuestionAnswer = require('../models/QuestionAnswer')
 const constants = require('../utility/constantTypes');
 
 module.exports = app => {
@@ -204,10 +205,19 @@ module.exports = app => {
     });
 
     app.post('/api/storeCaseAnswer', function (req, res) {
-        console.log(req.body.values1)
+        //console.log(req.body.values3)
         const newCaseAnswer = new Answer({
-            _id: mongoose.Types.ObjectId(req.body.values1),
-            userid: mongoose.Types.ObjectId(req.body.values)
+            //_id: mongoose.Types.ObjectId(req.body.values1),
+            userid: mongoose.Types.ObjectId(req.body.values),
+            date: req.body.values2,
+            title: req.body.values3.title,
+            difficulty: req.body.values3.difficulty,
+            speciality: req.body.values3.speciality,
+            approach: req.body.values3.approach,
+            subspeciality: req.body.values3.subspeciality,
+            scenario: req.body.values3.scenario,
+            learning: req.body.values3.learning,
+            status: req.body.values3.status
         });
         newCaseAnswer.save();
         // return res.send({ data: {}, message: "storeCaseAnswer success" });
@@ -215,10 +225,11 @@ module.exports = app => {
 
     app.post('/api/storeCaseAnswerMCQ', function (req, res) {
         Answer.find({
-            _id: req.body.values.answerid,
-            userid: req.body.values.authid
+            //_id: req.body.values.answerid,
+            userid: req.body.values.authid,
+            date: req.body.values.date
         }, function (err, answer) {
-            const newCaseQuestion = new Question({
+            const newCaseQuestion = new QuestionAnswer({
                 mcq1: req.body.values.mcq1,
                 mcq2: req.body.values.mcq2,
                 mcq3: req.body.values.mcq3,
@@ -239,12 +250,13 @@ module.exports = app => {
         return res.send({ data: {}, message: "storeCaseMCQ success" });
     })
 
-    app.post('/api/storeCaseAnswerOpenEnded', function (req, res) {
+    app.post('/api/storeCaseAnswerOpenEnded', function (req, res) { 
         Answer.find({
-            _id: req.body.values.answerid,
-            userid: req.body.values.authid
+            // _id: req.body.values.answerid,
+            userid: req.body.values.authid,
+            date: req.body.values.date
         }, function (err, answer) {
-            const newCaseQuestion = new Question({
+            const newCaseQuestion = new QuestionAnswer({
                 openEnded: req.body.values.openEnded
             });
             newCaseQuestion.save();

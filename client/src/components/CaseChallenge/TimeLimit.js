@@ -9,6 +9,17 @@ import MCQquestion from "./MCQquestion";
 import OpenEndedQuestion from "./OpenEndedQuestion";
 import { ObjectID } from 'bson';
 
+function makeUnique() {
+    var now = new Date().getTime();
+    var random = Math.floor(Math.random() * 100000);
+    // zero pad random
+    random = "" + random;
+    while (random.length < 5) {
+        random = "0" + random;
+    }
+    return String(now + random);
+}
+
 class TimeLimit extends Component {
     constructor(props) {
         super(props);
@@ -20,7 +31,8 @@ class TimeLimit extends Component {
             currentQn: 1,
             authid: this.props.authid,
             authname: this.props.authname,
-            caseid: ""
+            caseid: "",
+            date: ""
         };
 
         bindAll(this, 'renderTimeLimitContent', 'redirect', 'renderGameContent', 'startGame',
@@ -132,7 +144,12 @@ class TimeLimit extends Component {
                             caseid = new ObjectID()
                             this.setState({ caseid: caseid })
                         } 
-                        this.props.storeCaseAnswer(this.props.auth._id, this.state.caseid);
+                        let date = this.state.date
+                        if (this.state.date == "") {
+                            date = makeUnique();
+                            this.setState({ date: date})
+                            this.props.storeCaseAnswer(this.props.auth._id, this.state.caseid, date, this.state.challenge);
+                        } 
                         let timeLimit = this.state.withTimeLimit;
                         let currentQn = this.state.currentQn;
                         let scenario = this.props.game.scenario;
@@ -141,11 +158,11 @@ class TimeLimit extends Component {
                         let questionNodes = this.props.game.questions.map((obj, index) => {
                             if (obj.id === currentQn + "") {
                                 if (obj.type === "MCQ") {
-                                    return <MCQquestion answerid={caseid} authid={this.props.auth._id} question={obj} scenario={scenario} timeLimit={timeLimit}
+                                    return <MCQquestion date={date} answerid={caseid} authid={this.props.auth._id} question={obj} scenario={scenario} timeLimit={timeLimit}
                                         totalQnNum={totalQnNum} caseTitle={caseTitle}
                                         handleNextQuestion={this.handleNextQuestion} />
                                 } else {
-                                    return <OpenEndedQuestion answerid={caseid} authid={this.props.auth._id} question={obj} scenario={scenario} timeLimit={timeLimit} totalQnNum={totalQnNum}
+                                    return <OpenEndedQuestion date={date} answerid={caseid} authid={this.props.auth._id} question={obj} scenario={scenario} timeLimit={timeLimit} totalQnNum={totalQnNum}
                                         caseTitle={caseTitle} handleNextQuestion={this.handleNextQuestion} />
                                 }
                             } else {
