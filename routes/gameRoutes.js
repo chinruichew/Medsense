@@ -51,5 +51,22 @@ module.exports = app => {
         res.send(result);
     });
 
-
+    app.post('/api/storeCaseAnswer', function (req, res) {
+        //console.log(req.body.values3)
+        const newCaseAnswer = new Answer({
+            //_id: mongoose.Types.ObjectId(req.body.values1),
+            userid: mongoose.Types.ObjectId(req.body.values),
+            date: req.body.values2,
+            title: req.body.values3.title,
+            difficulty: req.body.values3.difficulty,
+            speciality: req.body.values3.speciality,
+            approach: req.body.values3.approach,
+            subspeciality: req.body.values3.subspeciality,
+            scenario: req.body.values3.scenario,
+            learning: req.body.values3.learning,
+            status: req.body.values3.status
+        });
+        newCaseAnswer.save();
+        // return res.send({ data: {}, message: "storeCaseAnswer success" });
+    });
 };

@@ -1,8 +1,8 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-var { Schema } = mongoose;
+const { Schema } = mongoose;
 
-var questionAnswerSchema = new Schema({
+const questionAnswerSchema = new Schema({
     id: { type: String, default: "" },
     stem: { type: String, default: "" },
     question: { type: String, default: "" },
@@ -29,7 +29,7 @@ var questionAnswerSchema = new Schema({
     check6: { type: Boolean, default: false }
 });
 
-var questionAnswerModel = mongoose.model('questionanswers', questionAnswerSchema);
+const questionAnswerModel = mongoose.model('questionanswers', questionAnswerSchema);
 
 module.exports = questionAnswerModel;
 
