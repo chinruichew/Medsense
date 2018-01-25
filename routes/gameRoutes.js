@@ -69,4 +69,47 @@ module.exports = app => {
         newCaseAnswer.save();
         // return res.send({ data: {}, message: "storeCaseAnswer success" });
     });
+
+    app.post('/api/storeCaseAnswerMCQ', function (req, res) {
+        Answer.find({
+            //_id: req.body.values.answerid,
+            userid: req.body.values.authid,
+            date: req.body.values.date
+        }, function (err, answer) {
+            const newCaseQuestion = new QuestionAnswer({
+                mcq1: req.body.values.mcq1,
+                mcq2: req.body.values.mcq2,
+                mcq3: req.body.values.mcq3,
+                mcq4: req.body.values.mcq4,
+                mcq5: req.body.values.mcq5,
+                mcq6: req.body.values.mcq6,
+                check1: req.body.values.check1Stu,
+                check2: req.body.values.check2Stu,
+                check3: req.body.values.check3Stu,
+                check4: req.body.values.check4Stu,
+                check5: req.body.values.check5Stu,
+                check6: req.body.values.check6Stu
+            });
+            newCaseQuestion.save();
+            answer[0]['questions'].push(newCaseQuestion);
+            answer[0].save();
+        });
+        return res.send({ data: {}, message: "storeCaseMCQ success" });
+    });
+
+    app.post('/api/storeCaseAnswerOpenEnded', function (req, res) {
+        Answer.find({
+            // _id: req.body.values.answerid,
+            userid: req.body.values.authid,
+            date: req.body.values.date
+        }, function (err, answer) {
+            const newCaseQuestion = new QuestionAnswer({
+                openEnded: req.body.values.openEnded
+            });
+            newCaseQuestion.save();
+            answer[0]['questions'].push(newCaseQuestion);
+            answer[0].save();
+        });
+        return res.send({ data: {}, message: "storeCaseOpenEnded success" });
+    });
 };
