@@ -3,8 +3,6 @@ const User = require('../models/User');
 const Case = require('../models/Case');
 const Question = require('../models/Question');
 const Approach = require('../models/Approach');
-const Answer = require('../models/Answer')
-const QuestionAnswer = require('../models/QuestionAnswer')
 const constants = require('../utility/constantTypes');
 
 module.exports = app => {

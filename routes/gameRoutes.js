@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const User = require('../models/User');
 const Case = require('../models/Case');
 const Question = require('../models/Question');
+const Answer = require('../models/Answer');
+const QuestionAnswer = require('../models/QuestionAnswer');
 
 module.exports = app => {
 
