@@ -119,6 +119,7 @@ require('./routes/userRoutes')(app);
 require('./routes/s3Routes')(app);
 require('./routes/adminRoutes')(app);
 require('./routes/gameRoutes')(app);
+require('./routes/utilityRoutes')(app);
 
 if (process.env.NODE_ENV === 'production') {
     // Express will serve up production assets

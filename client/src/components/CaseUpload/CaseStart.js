@@ -3,9 +3,21 @@ import { connect } from 'react-redux';
 import Main from './Main';
 import { Redirect } from 'react-router-dom';
 import * as ReactGA from "react-ga";
-import constants from '../../utility/constantTypes';
+import axios from 'axios';
 
 class CaseStart extends Component {
+    state = {
+        constants: null
+    };
+
+    componentDidMount() {
+        axios.get('/api/getConstantTypes').then(res => {
+            this.setState({constants: res.data});
+        }).catch(err => {
+            console.log(err);
+        });
+    }
+
     renderContent() {
         switch (this.props.auth) {
             case null:
@@ -14,12 +26,12 @@ class CaseStart extends Component {
                 return <Redirect to='/' />;
             default:
                 switch (this.props.auth.usertype) {
-                    case constants.USER_TYPE_PROFESSOR:
+                    case this.state.constants.USER_TYPE_PROFESSOR:
                         return (
                             <Main authid={this.props.auth._id}
                                 authname={this.props.auth.username} />
                         );
-                    case constants.USER_TYPE_STUDENT:
+                    case this.state.constants.USER_TYPE_STUDENT:
                         return (
                             <Main authid={this.props.auth._id}
                                 authname={this.props.auth.username} />

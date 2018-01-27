@@ -4,7 +4,7 @@ import { Button, ControlLabel, FormGroup, FormControl, Table } from 'react-boots
 
 import { fetchFilteredAdminStudents, fetchFilteredAdminProfessors, deleteAdminStudent, deleteAdminProfessor } from '../../actions';
 import './Admin.css';
-import constants from '../../utility/constantTypes';
+import axios from 'axios';
 
 class DeleteUser extends Component {
     state = {
@@ -16,7 +16,16 @@ class DeleteUser extends Component {
         speciality: 'Medicine',
         subspeciality: [],
         seniorStatus: '',
+        constants: null
     };
+
+    componentDidMount() {
+        axios.get('/api/getConstantTypes').then(res => {
+            this.setState({constants: res.data});
+        }).catch(err => {
+            console.log(err);
+        });
+    }
 
     handleUsertypeChange = (e) => {
         const value = e.target.value;
@@ -101,7 +110,7 @@ class DeleteUser extends Component {
     }
 
     setYear() {
-        if (this.state.usertype === "Student") {
+        if (this.state.usertype === this.state.constants.USER_TYPE_STUDENT) {
             return (
                 <FormGroup controlId="formControlsDifficulty">
                     <ControlLabel style={{ fontSize: "100%" }}>Select Year:</ControlLabel>
@@ -116,22 +125,9 @@ class DeleteUser extends Component {
             );
         }
     }
-    /*setSeniorStatus() {
-        if (this.state.usertype === "Student") {
-            return (
-                <FormGroup controlId="formControlsDifficulty">
-                    <ControlLabel style={{ fontSize: "100%" }}>Senior Team:</ControlLabel>
-                    <FormControl componentClass="select" value={this.state.year} name="seniorStatus" onChange={(e) => this.handleSeniorChange(e)}>
-                        <option value="yes">Yes</option>
-                        <option value="no">No</option>
-                    </FormControl>
-                </FormGroup>
-            );
-        }
-    }*/
 
     setSpeciality() {
-        if (this.state.usertype === constants.USER_TYPE_PROFESSOR) {
+        if (this.state.usertype === this.state.constants.USER_TYPE_PROFESSOR) {
             return (
                 <FormGroup controlId="formControlsSpeciality" style={{ paddingBottom: "0" }}>
                     <ControlLabel style={{ fontSize: "100%" }}>Speciality</ControlLabel>
@@ -146,7 +142,7 @@ class DeleteUser extends Component {
 
     }
     setSubspeciality() {
-        if (this.state.usertype === constants.USER_TYPE_PROFESSOR) {
+        if (this.state.usertype === this.state.constants.USER_TYPE_PROFESSOR) {
             if (this.state.speciality === "Medicine") {
                 return (
                     <FormGroup controlId="formControlsSubspeciality">
@@ -226,7 +222,7 @@ class DeleteUser extends Component {
     }
 
     renderTableStudent() {
-        if (this.state.usertype === constants.USER_TYPE_STUDENT) {
+        if (this.state.usertype === this.state.constants.USER_TYPE_STUDENT) {
             return (
                 <Table responsive>
                     <thead>
@@ -259,7 +255,7 @@ class DeleteUser extends Component {
 
     renderStudents() {
         let allStudents = this.props.adminUsers.map(user => {
-            if (user.usertype === constants.USER_TYPE_STUDENT) {
+            if (user.usertype === this.state.constants.USER_TYPE_STUDENT) {
                 return <tr>
                     <td><center>{user.username}</center></td>
                     <td><center>{user.school}</center></td>
@@ -273,7 +269,7 @@ class DeleteUser extends Component {
                 </tr>
             }
         });
-        if (this.state.usertype === constants.USER_TYPE_STUDENT) {
+        if (this.state.usertype === this.state.constants.USER_TYPE_STUDENT) {
             return (
                 <tbody>
                     {allStudents}
@@ -283,7 +279,7 @@ class DeleteUser extends Component {
     }
 
     renderTableProfessors() {
-        if (this.state.usertype === constants.USER_TYPE_PROFESSOR) {
+        if (this.state.usertype === this.state.constants.USER_TYPE_PROFESSOR) {
             return (
                 <Table responsive>
                     <thead>
@@ -305,7 +301,7 @@ class DeleteUser extends Component {
 
     renderProfessors() {
         let allProfessors = this.props.adminUsers.map(user => {
-            if (user.usertype === constants.USER_TYPE_PROFESSOR) {
+            if (user.usertype === this.state.constants.USER_TYPE_PROFESSOR) {
                 return <tr>
                     <td><center>{user.username}</center></td>
                     <td><center>{user.school}</center></td>
@@ -316,7 +312,7 @@ class DeleteUser extends Component {
                 </tr>
             }
         });
-        if (this.state.usertype === constants.USER_TYPE_PROFESSOR) {
+        if (this.state.usertype === this.state.constants.USER_TYPE_PROFESSOR) {
             return (
                 <tbody>
                     {allProfessors}
@@ -326,7 +322,7 @@ class DeleteUser extends Component {
     }
 
     searchUser() {
-        if (this.state.usertype === constants.USER_TYPE_STUDENT) {
+        if (this.state.usertype === this.state.constants.USER_TYPE_STUDENT) {
             this.props.fetchFilteredAdminStudents(this.state);
         } else {
             this.props.fetchFilteredAdminProfessors(this.state);

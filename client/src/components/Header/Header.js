@@ -2,9 +2,21 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {Navbar, Nav, NavDropdown, MenuItem, NavItem, Image} from 'react-bootstrap';
 import {NavLink} from "react-router-dom";
-import constants from '../../utility/constantTypes';
+import axios from 'axios';
 
 class Header extends Component {
+    state = {
+        constants: null
+    };
+
+    componentDidMount() {
+        axios.get('/api/getConstantTypes').then(res => {
+            this.setState({constants: res.data});
+        }).catch(err => {
+            console.log(err);
+        });
+    }
+
     renderContent() {
         switch (this.props.auth) {
             case null:
@@ -22,7 +34,7 @@ class Header extends Component {
             default:
                 // Check for user type
                 switch (this.props.auth.usertype) {
-                    case constants.USER_TYPE_PROFESSOR:
+                    case this.state.constants.USER_TYPE_PROFESSOR:
                         const spaces = "";
                         return(
                             <Nav pullRight>
@@ -37,7 +49,7 @@ class Header extends Component {
                                 <a href="/profile"><Image src={this.props.auth.profilepicture} className="img-circle" style={{height: '50px', width: '50px'}} /></a>
                             </Nav>
                         );
-                    case constants.USER_TYPE_STUDENT:
+                    case this.state.constants.USER_TYPE_STUDENT:
                         return(
                             <Nav pullRight>
                                 <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={2} href="/search">     Search     </NavItem>
@@ -49,7 +61,7 @@ class Header extends Component {
                                 <a href="/profile"><Image src={this.props.auth.profilepicture} className="img-circle" style={{height: '50px', width: '50px'}} /></a>
                             </Nav>
                         );
-                        case constants.USER_TYPE_ADMIN:
+                        case this.state.constants.USER_TYPE_ADMIN:
                             return(
                                 <Nav pullRight>
                                     {/*<NavItem className="navItem" eventKey={2} href="/search">Search</NavItem>*/}
