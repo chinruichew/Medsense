@@ -15,7 +15,7 @@ class MCQquestion extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            question: this.props.question,
+            question: this.props.question.question,
             showAnswers: false,
             showNextButton: true,
             mcq1: this.props.question.mcq1,
