@@ -7,5 +7,7 @@ module.exports = {
     mongoUser: process.env.MONGO_USER,
     mongoPort: process.env.MONGO_PORT,
     dstPort: process.env.DST_PORT,
-    localPort: process.env.LOCAL_PORT
+    localPort: process.env.LOCAL_PORT,
+    mongoConnectBucket: process.env.MONGO_CONNECT_BUCKET,
+    mongoConnectKey: process.env.MONGO_CONNECT_KEY
 };

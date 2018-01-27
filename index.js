@@ -25,15 +25,14 @@ aws.config.update({
 });
 const s3 = new aws.S3();
 const getParams = {
-    Bucket: 'medsense-credentials', // your bucket name,
-    Key: 'id_rsa' // path to the object you're looking for
+    Bucket: keys.mongoConnectBucket,
+    Key: keys.mongoConnectKey
 };
 s3.getObject(getParams, function(err, data) {
-    // Handle any error and exit
     if (err)
         return err;
 
-    const credentialData = data.Body.toString('utf-8'); // Use the encoding necessary
+    const credentialData = data.Body.toString('utf-8');
 
     const config = {
         username: keys.mongoUser,
