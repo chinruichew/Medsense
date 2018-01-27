@@ -35,7 +35,7 @@ class App extends Component {
                     <Route exact path="/vetting" component={CaseVetting} />
                     <Route exact path="/profile" component={Profile} />
                     <Route exact path="/dashboard" component={Dashboard} />
-                    <Route exact path="/case_challenge" component={CaseChallenge} />
+                    <Route exact path="/search" component={CaseChallenge} />
                     <Route exact path="/admin" component={Admin} />
                     <Route exact path="/result" component={Result} />
                     <Route exact path="/" component={About} />
