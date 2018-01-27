@@ -109,7 +109,7 @@ module.exports = app => {
                     if (oneQuestion) {
                         oneQuestion.id = jsonObject[prop]['id'];
                         oneQuestion.question = jsonObject[prop]['question'];
-                        oneQuestion.attachment = jsonObject[prop]['attachment'];
+                        oneQuestion.attachment = null;
                         oneQuestion.type = jsonObject[prop]['type'];
                         oneQuestion.openEnded = jsonObject[prop]['open'];
                         oneQuestion.pearl = jsonObject[prop]['pearl'];
@@ -135,7 +135,7 @@ module.exports = app => {
                             id: jsonObject[prop]['id'],
                             stem: jsonObject[prop]['stem'],
                             question: jsonObject[prop]['question'],
-                            attachment: jsonObject[prop]['attachment'],
+                            attachment: null,
                             type: jsonObject[prop]['type'],
                             openEnded: jsonObject[prop]['openEnded'],
                             pearl: jsonObject[prop]['pearl'],
@@ -228,7 +228,7 @@ module.exports = app => {
     app.post('/api/updateQuestion', function (req, res) {
         Question.findById(req.body.questionid, function (err, oneQuestion) {
             oneQuestion.questiontitle = req.body.title;
-            oneQuestion.attachment = req.body.attachment;
+            oneQuestion.attachment = null;
             oneQuestion.type = req.body.type;
             oneQuestion.openEnded = req.body.openEnded;
             oneQuestion.pearl = req.body.pearl;

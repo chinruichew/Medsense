@@ -75,30 +75,26 @@ module.exports = app => {
             const s3 = new aws.S3();
             if (files.file!==undefined && files.file!==null){
                 const file = files.file[0];
-                if(mime.lookup(file.path)) {
-                    fs.readFile(file.path, function (err, data) {
-                        const params = {
-                            Bucket: myBucket,
-                            Key: caseID + "/question" + qID + ".jpg",
-                            Body: data,
-                            ACL: 'public-read'
-                        };
-                        s3.putObject(params, function (err, data) {
-                            if (err) {
-                                console.log(err);
-                                res.send("done");
-                            } else {
-                                Question.update({_id: objID}, {attachment: "https://s3-ap-southeast-1.amazonaws.com/case-upload-attachments/" + caseID + "/question" + qID + ".jpg"}, function (err, response) {
-                                    console.log("Successfully uploaded data to case-upload-attachments/" + caseID + "/question" + qID + ".jpg");
-                                    res.send("done");
-                                });
-                            }
 
-                        });
+                fs.readFile(file.path, function (err, data) {
+                    const params = {
+                        Bucket: myBucket,
+                        Key: caseID + "/question" + qID + ".jpg",
+                        Body: data,
+                        ACL: 'public-read'
+                    };
+                    s3.putObject(params, function (err, data) {
+                        if (err) {
+                            console.log(err);
+                            res.send("done");
+                        } else {
+                            Question.update({_id: objID}, {attachment: "https://s3-ap-southeast-1.amazonaws.com/case-upload-attachments/" + caseID + "/question" + qID + ".jpg"}, function (err, response) {
+                                console.log("Successfully uploaded data to case-upload-attachments/" + caseID + "/question" + qID + ".jpg");
+                                res.send("done");
+                            });
+                        }
                     });
-                } else {
-                    res.send('Invalid file detected!');
-                }
+                });
             } else {
                 Question.update({_id: objID}, {attachment: ""}, function (err, response) {
                     console.log(response);
