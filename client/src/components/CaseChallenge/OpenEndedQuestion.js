@@ -14,6 +14,7 @@ class OpenEndedQuestion extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            question: this.props.question,
             showAnswers: false,
             openEnded: "",
             showNextButton: true,

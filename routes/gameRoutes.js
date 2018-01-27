@@ -26,7 +26,7 @@ module.exports = app => {
     });
 
     app.post('/api/fetchCaseByApproach', async (req, res) => {
-        const result = await Case.find({status: 'Vetted', approach: {$all: req.body.approach}}).select().populate({
+        const result = await Case.find({ status: 'Vetted', approach: { $all: req.body.approach } }).select().populate({
             path: 'authorid',
             model: 'users'
         });
@@ -45,7 +45,7 @@ module.exports = app => {
         const result = await Case.find({
             status: 'Vetted',
             speciality: req.body.speciality,
-            subspeciality: {$all: req.body.subspeciality}
+            subspeciality: { $all: req.body.subspeciality }
         }).select().populate({
             path: 'authorid',
             model: 'users'
@@ -79,6 +79,7 @@ module.exports = app => {
             date: req.body.values.date
         }, function (err, answer) {
             const newCaseQuestion = new QuestionAnswer({
+                question: req.body.values.question,
                 mcq1: req.body.values.mcq1,
                 mcq2: req.body.values.mcq2,
                 mcq3: req.body.values.mcq3,
@@ -106,6 +107,7 @@ module.exports = app => {
             date: req.body.values.date
         }, function (err, answer) {
             const newCaseQuestion = new QuestionAnswer({
+                question: req.body.values.question,
                 openEnded: req.body.values.openEnded
             });
             newCaseQuestion.save();
