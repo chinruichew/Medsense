@@ -268,6 +268,7 @@ class DeleteUser extends Component {
                     <td><Button onClick={(e) => this.deleteAdminStudent(user)}>Delete</Button></td >
                 </tr>
             }
+            return '';
         });
         if (this.state.usertype === this.state.constants.USER_TYPE_STUDENT) {
             return (
@@ -296,7 +297,6 @@ class DeleteUser extends Component {
                 </Table>
             );
         }
-
     }
 
     renderProfessors() {
@@ -311,6 +311,7 @@ class DeleteUser extends Component {
                     <td><Button onClick={(e) => this.deleteAdminProfessor(user)}>Delete</Button></td >
                 </tr>
             }
+            return '';
         });
         if (this.state.usertype === this.state.constants.USER_TYPE_PROFESSOR) {
             return (

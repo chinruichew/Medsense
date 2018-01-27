@@ -168,19 +168,19 @@ export const storeCaseAnswer = (values, values1, values2, values3) => async disp
     const res = await axios.post('/api/storeCaseAnswer', {
         values, values1, values2, values3
     });
-    //dispatch({ type: FETCH_GAME_BY_ID, payload: res.data });
+    dispatch({ type: FETCH_GAME_BY_ID, payload: res.data });
 };
 
 export const storeCaseAnswerMCQ = (values) => async dispatch => {
     const res = await axios.post('/api/storeCaseAnswerMCQ', {
         values
     });
-    //dispatch({ type: FETCH_GAME_BY_ID, payload: res.data });
+    dispatch({ type: FETCH_GAME_BY_ID, payload: res.data });
 };
 
 export const storeCaseAnswerOpenEnded = (values) => async dispatch => {
     const res = await axios.post('/api/storeCaseAnswerOpenEnded', {
         values
     });
-    //dispatch({ type: FETCH_GAME_BY_ID, payload: res.data });
+    dispatch({ type: FETCH_GAME_BY_ID, payload: res.data });
 };

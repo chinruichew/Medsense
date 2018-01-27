@@ -35,7 +35,6 @@ class Header extends Component {
                 // Check for user type
                 switch (this.props.auth.usertype) {
                     case this.state.constants.USER_TYPE_PROFESSOR:
-                        const spaces = "";
                         return(
                             <Nav pullRight>
 

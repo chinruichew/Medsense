@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Checkbox, Button, InputGroup, Row, Col, Table} from 'react-bootstrap';
+import { Button, Row } from 'react-bootstrap';
 
 class GameResults extends Component {
 

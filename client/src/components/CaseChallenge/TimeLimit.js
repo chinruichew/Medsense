@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, FormGroup, ControlLabel, Col } from 'react-bootstrap';
+import { Form, FormGroup, Col } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import { bindAll } from 'lodash';
 import { connect } from 'react-redux';
@@ -145,14 +145,14 @@ class TimeLimit extends Component {
                         return;
                     default:
                         let caseid = this.state.caseid
-                        if (this.state.caseid == "") {
-                            caseid = new ObjectID()
+                        if (this.state.caseid === "") {
+                            caseid = new ObjectID();
                             this.setState({ caseid: caseid })
                         } 
-                        let date = this.state.date
-                        if (this.state.date == "") {
+                        let date = this.state.date;
+                        if (this.state.date === "") {
                             date = makeUnique();
-                            this.setState({ date: date})
+                            this.setState({ date: date});
                             this.props.storeCaseAnswer(this.props.auth._id, this.state.caseid, date, this.state.challenge);
                         } 
                         let timeLimit = this.state.withTimeLimit;
@@ -171,7 +171,7 @@ class TimeLimit extends Component {
                                         caseTitle={caseTitle} handleNextQuestion={this.handleNextQuestion} />
                                 }
                             } else {
-                                return;
+                                return '';
                             }
                         });
                         return questionNodes;

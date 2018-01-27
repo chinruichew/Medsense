@@ -32,13 +32,10 @@ class SearchByApproach extends Component {
         }).then(res => {
             if(res.data.length > 0) {
                 const approachCase = res.data.map(approachCase => {
-                    let additional = approachCase.approach;
                     const approaches = this.state.approach;
                     //console.log(approaches);
                     let sameElementCount=0;
                     let additionalApproaches = [];
-                    console.log(approachCase.approach);
-                    console.log(approaches)
                     for (let i=0; i<approachCase.approach.length; i++){
                         for (let j=0; j<approaches.length; j++){
                             if (approachCase.approach[i]===approaches[j]){
@@ -142,9 +139,6 @@ class SearchByApproach extends Component {
         });
     };
 
-    // renderTable(){
-    //
-    // }
     render(){
         return(
             <div>

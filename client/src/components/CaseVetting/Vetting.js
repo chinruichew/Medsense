@@ -66,7 +66,7 @@ class Vetting extends Component {
                                     </tr>
                                 );
                             }
-                            return;
+                            return '';
                         default:
                             let toRenderCase = false;
                             for(let i = 0; i < vetCase.subspeciality.length; i++) {
@@ -95,6 +95,7 @@ class Vetting extends Component {
                                 );
                             }
                     }
+                    return '';
                 });
         }
     }

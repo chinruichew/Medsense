@@ -25,19 +25,24 @@ class CaseStart extends Component {
             case false:
                 return <Redirect to='/' />;
             default:
-                switch (this.props.auth.usertype) {
-                    case this.state.constants.USER_TYPE_PROFESSOR:
-                        return (
-                            <Main authid={this.props.auth._id}
-                                authname={this.props.auth.username} />
-                        );
-                    case this.state.constants.USER_TYPE_STUDENT:
-                        return (
-                            <Main authid={this.props.auth._id}
-                                authname={this.props.auth.username} />
-                        );
-                    default:
+                switch(this.state.constants) {
+                    case null:
                         return;
+                    default:
+                        switch (this.props.auth.usertype) {
+                            case this.state.constants.USER_TYPE_PROFESSOR:
+                                return (
+                                    <Main authid={this.props.auth._id}
+                                          authname={this.props.auth.username} />
+                                );
+                            case this.state.constants.USER_TYPE_STUDENT:
+                                return (
+                                    <Main authid={this.props.auth._id}
+                                          authname={this.props.auth.username} />
+                                );
+                            default:
+                                return;
+                        }
                 }
         }
     }

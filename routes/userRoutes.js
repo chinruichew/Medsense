@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const User = mongoose.model('users');
-const axios = require('axios');
 const constants = require('../utility/constantTypes');
 
 module.exports = app => {

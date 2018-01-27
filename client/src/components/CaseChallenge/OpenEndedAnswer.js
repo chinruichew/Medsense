@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import { bindAll } from 'lodash';
-import GameResults from './GameResults';
 
 class OpenEndedAnswer extends Component {
 

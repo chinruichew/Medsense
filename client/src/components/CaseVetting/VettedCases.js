@@ -46,7 +46,7 @@ class VettedCases extends Component {
                             </tr>
                         );
                     }
-                    return;
+                    return '';
             }
         });
     }
