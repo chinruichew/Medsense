@@ -174,9 +174,9 @@ class OpenEndedQuestion extends Component {
 
                 <br />
                 <Panel bsStyle="info" id="panel" style={{borderWidth: "thick"}}>
-                    <pre style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{this.renderScenario()}</pre>
+                    <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{this.renderScenario()}</h4>
                     <br />
-                    <pre style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{this.props.question.question}</pre>
+                    <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{this.props.question.question}</h4>
 
 
                     <div class="col-md-5 col-md-offset-2">{<ImageMagnifier url={this.props.question.attachment} />}</div>

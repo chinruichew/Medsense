@@ -91,13 +91,13 @@ class MCQAnswers extends Component {
                     <h3>You got {this.state.stuCorrectAnswerCount} / {this.state.answerCount} correct!</h3><br />
                     <h4>
                         <strong>Answer</strong> <br />
-                        <pre style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{this.state.mcqAnswer}</pre> <br /><br />
+                        <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{this.state.mcqAnswer}</h4> <br /><br />
 
                         <strong>PEARL</strong> <br />
-                        <pre style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{this.props.question.pearl} </pre><br /><br />
+                        <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{this.props.question.pearl} </h4><br /><br />
 
                         <strong>References</strong> <br />
-                        <pre style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{this.props.question.reference}</pre> <br /><br />
+                        <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{this.props.question.reference}</h4> <br /><br />
 
                     </h4>
                     {this.renderNextQuestion()}
