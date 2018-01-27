@@ -32,49 +32,54 @@ class Header extends Component {
                     </Nav>
                 );
             default:
-                // Check for user type
-                switch (this.props.auth.usertype) {
-                    case this.state.constants.USER_TYPE_PROFESSOR:
-                        return(
-                            <Nav pullRight>
-
-                                <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={2} href="/upload">     Upload     </NavItem>
-                                <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={3} href="/vetting">     Vet     </NavItem>
-                                <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={4} href="/forum">     Forum     </NavItem>
-                                <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={5} href="/dashboard">     Dashboard     </NavItem>
-                                <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={6} href="/about">     About     </NavItem>
-                                <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={7} href="/api/logout">     Logout               </NavItem>
-
-                                <a href="/profile"><Image src={this.props.auth.profilepicture} className="img-circle" style={{height: '50px', width: '50px'}} /></a>
-                            </Nav>
-                        );
-                    case this.state.constants.USER_TYPE_STUDENT:
-                        return(
-                            <Nav pullRight>
-                                <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={2} href="/search">     Search     </NavItem>
-                                <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={3} href="/upload">     Upload     </NavItem>
-                                <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={4} href="/forum">     Forum     </NavItem>
-                                <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={5} href="/dashboard">     Dashboard     </NavItem>
-                                <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={6} href="/about">     About     </NavItem>
-                                <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={7} href="/api/logout">     Logout               </NavItem>
-                                <a href="/profile"><Image src={this.props.auth.profilepicture} className="img-circle" style={{height: '50px', width: '50px'}} /></a>
-                            </Nav>
-                        );
-                        case this.state.constants.USER_TYPE_ADMIN:
-                            return(
-                                <Nav pullRight>
-                                    {/*<NavItem className="navItem" eventKey={2} href="/search">Search</NavItem>*/}
-                                    {/*<NavItem className="navItem" eventKey={3} href="/upload">Upload</NavItem>*/}
-                                    <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={4} href="/forum">     Forum     </NavItem>
-                                    <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={5} href="/dashboard">     Dashboard     </NavItem>
-                                    <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={6} href="/about">     About     </NavItem>
-                                    <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={7} href="/admin">     Admin     </NavItem>
-                                    <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={8} href="/api/logout">     Logout               </NavItem>
-                                    <a href="/profile"><Image src={this.props.auth.profilepicture} className="img-circle" style={{height: '50px', width: '50px'}} /></a>
-                                </Nav>
-                            );
-                    default:
+                switch(this.state.constants) {
+                    case null:
                         return;
+                    default:
+                        // Check for user type
+                        switch (this.props.auth.usertype) {
+                            case this.state.constants.USER_TYPE_PROFESSOR:
+                                return(
+                                    <Nav pullRight>
+
+                                        <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={2} href="/upload">     Upload     </NavItem>
+                                        <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={3} href="/vetting">     Vet     </NavItem>
+                                        <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={4} href="/forum">     Forum     </NavItem>
+                                        <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={5} href="/dashboard">     Dashboard     </NavItem>
+                                        <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={6} href="/about">     About     </NavItem>
+                                        <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={7} href="/api/logout">     Logout               </NavItem>
+
+                                        <a href="/profile"><Image src={this.props.auth.profilepicture} className="img-circle" style={{height: '50px', width: '50px'}} /></a>
+                                    </Nav>
+                                );
+                            case this.state.constants.USER_TYPE_STUDENT:
+                                return(
+                                    <Nav pullRight>
+                                        <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={2} href="/search">     Search     </NavItem>
+                                        <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={3} href="/upload">     Upload     </NavItem>
+                                        <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={4} href="/forum">     Forum     </NavItem>
+                                        <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={5} href="/dashboard">     Dashboard     </NavItem>
+                                        <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={6} href="/about">     About     </NavItem>
+                                        <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={7} href="/api/logout">     Logout               </NavItem>
+                                        <a href="/profile"><Image src={this.props.auth.profilepicture} className="img-circle" style={{height: '50px', width: '50px'}} /></a>
+                                    </Nav>
+                                );
+                            case this.state.constants.USER_TYPE_ADMIN:
+                                return(
+                                    <Nav pullRight>
+                                        {/*<NavItem className="navItem" eventKey={2} href="/search">Search</NavItem>*/}
+                                        {/*<NavItem className="navItem" eventKey={3} href="/upload">Upload</NavItem>*/}
+                                        <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={4} href="/forum">     Forum     </NavItem>
+                                        <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={5} href="/dashboard">     Dashboard     </NavItem>
+                                        <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={6} href="/about">     About     </NavItem>
+                                        <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={7} href="/admin">     Admin     </NavItem>
+                                        <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={8} href="/api/logout">     Logout               </NavItem>
+                                        <a href="/profile"><Image src={this.props.auth.profilepicture} className="img-circle" style={{height: '50px', width: '50px'}} /></a>
+                                    </Nav>
+                                );
+                            default:
+                                return;
+                        }
                 }
         }
     }
