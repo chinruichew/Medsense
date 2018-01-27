@@ -65,7 +65,7 @@ class TimeLimit extends Component {
             let timerBtnBgColor = this.state.withTimeLimit ? "#82C5D9" : "#CDE0EB";
             let noTimerBtnBgColor = this.state.noTimeLimit ? "#82C5D9" : "#CDE0EB";
             return (
-                <div className='container'>
+                <div className='container' style={{margin: "0"}}>
                     <div align="center">
                         <h1>{this.state.challenge.title}</h1><br />
                         <h4>
@@ -77,8 +77,8 @@ class TimeLimit extends Component {
                         </h4>
                     </div>
                     <br /><br />
-                    <Form horizontal>
-                        <Col smOffset={3} style={{marginLeft: "32%"}}>
+                    <Form horizontal style={{width: "95%"}}>
+                        <Col smOffset={3} style={{marginLeft: "35%"}}>
                             <FormGroup controlId="formHorizontalEmail">
                                 <Col sm={3}>
                                     <h3>Difficulty </h3>
@@ -88,7 +88,7 @@ class TimeLimit extends Component {
                                 </Col>
                             </FormGroup>
                         </Col>
-                        <Col smOffset={3} style={{marginLeft: "32%"}}>
+                        <Col smOffset={3} style={{marginLeft: "35%"}}>
                             <FormGroup >
                                 <Col sm={3}>
                                     <h3 style={{marginTop: "5%"}}>Time Limit </h3>
@@ -108,8 +108,8 @@ class TimeLimit extends Component {
                             </FormGroup>
                         </Col>
                         <br /><br />
-                        <FormGroup>
-                            <Col sm={2} className='pull-left'>
+                        <FormGroup style={{width: "95%"}}>
+                            <Col smOffset={1} sm={2} className='pull-left'>
                                 <Button bsStyle="primary" bsSize="large" onClick={(e) => this.redirect()}>
                                     <img className="left-picture" hspace="5" src="./backArrow.png" style={{ height: "18px" }} alt="" />
                                     Find a case

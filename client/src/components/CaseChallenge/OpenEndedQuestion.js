@@ -174,7 +174,7 @@ class OpenEndedQuestion extends Component {
                 </h3>
 
                 <br />
-                <Panel bsStyle="info" id="panel" style={{borderWidth: "thick"}}>
+                <Panel bsStyle="info" id="panel" style={{borderWidth: "thick", width: "93%"}}>
                     <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{this.renderScenario()}</h4>
                     <br />
                     <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{this.props.question.question}</h4>
