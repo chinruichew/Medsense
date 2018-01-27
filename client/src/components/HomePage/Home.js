@@ -87,7 +87,7 @@ class Home extends Component {
                                 <div className="container-fluid">
                                     <div className="row">
                                         <div className="col-sm-6 text-center" style={{fontSize:'150%'}}>
-                                            <NavLink to="/case_challenge"><img src="./stuChallenge.png" alt="" style={{height:"200px"}}/><br/><br/>Try a case.<br/>There are 26 new cases!</NavLink><br/>
+                                            <NavLink to="/search"><img src="./stuChallenge.png" alt="" style={{height:"200px"}}/><br/><br/>Try a case.<br/>There are 26 new cases!</NavLink><br/>
                                         </div>
                                         <div className="col-sm-6 text-center" style={{fontSize:'150%'}}>
                                             <NavLink to="/upload"><img src="./stuUpload.png" alt="" style={{height:"200px"}}/><br/><br/>Create a case.<br/>Share your experiences!</NavLink><br/>
