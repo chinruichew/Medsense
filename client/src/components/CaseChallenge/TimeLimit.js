@@ -65,15 +65,20 @@ class TimeLimit extends Component {
             let timerBtnBgColor = this.state.withTimeLimit ? "#82C5D9" : "#CDE0EB";
             let noTimerBtnBgColor = this.state.noTimeLimit ? "#82C5D9" : "#CDE0EB";
             return (
-                <div>
-                    <h1>{this.state.challenge.title}</h1>
-                    <h3>
-                        Cases in advanced mode gives you more points than beginner mode.
-                        <br />Earn bonus points when you try a case with time limit!
-                    </h3>
+                <div className='container'>
+                    <div align="center">
+                        <h1>{this.state.challenge.title}</h1><br />
+                        <h4>
+                            <em>
+                                Earn points when you try a case with time limit!
+                                <br />
+                                <br />Cases in advanced mode gives you more points than beginner mode.
+                            </em>
+                        </h4>
+                    </div>
                     <br /><br />
                     <Form horizontal>
-                        <Col smOffset={4}>
+                        <Col smOffset={3} style={{marginLeft: "32%"}}>
                             <FormGroup controlId="formHorizontalEmail">
                                 <Col sm={3}>
                                     <h3>Difficulty </h3>
@@ -83,21 +88,21 @@ class TimeLimit extends Component {
                                 </Col>
                             </FormGroup>
                         </Col>
-                        <Col smOffset={4}>
+                        <Col smOffset={3} style={{marginLeft: "32%"}}>
                             <FormGroup >
                                 <Col sm={3}>
-                                    <h3>Time Limit </h3>
+                                    <h3 style={{marginTop: "5%"}}>Time Limit </h3>
                                 </Col>
-                                <Col sm={3} className='pull-left'>
-                                    <Button style={{ background: timerBtnBgColor, color: 'black', border: 0, width: '60%' }}
+                                <Col sm={2} className='pull-left'>
+                                    <Button style={{ background: timerBtnBgColor, color: 'black', border: 0, width: '60%'}}
                                         onClick={(e) => this.withTimeLimit()}>
-                                        <h3>Yes</h3>
+                                        <h3 style={{margin: "0"}}>Yes</h3>
                                     </Button>
                                 </Col>
-                                <Col sm={3}>
+                                <Col sm={2}>
                                     <Button style={{ background: noTimerBtnBgColor, color: 'black', border: 0, width: '60%' }}
                                         onClick={(e) => this.withoutTimeLimit()}>
-                                        <h3 style={{ border: "50%" }}>No</h3>
+                                        <h3 style={{ margin: "0" }}>No</h3>
                                     </Button>
                                 </Col>
                             </FormGroup>
