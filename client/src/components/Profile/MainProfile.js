@@ -7,6 +7,7 @@ import axios from 'axios';
 
 import UploadProfilePicture from './UploadProfilePicture';
 import * as ReactGA from "react-ga";
+import {Col} from "react-bootstrap";
 
 class MainProfile extends Component {
     state = {
@@ -65,8 +66,10 @@ class MainProfile extends Component {
 
         return (
             <div>
-                <UploadProfilePicture/>
-                {this.renderContent()}
+                <Col sm={6}>
+                    <UploadProfilePicture/></Col>
+                <Col smOffset={6}>
+                    {this.renderContent()}</Col>
             </div>
         )
     }

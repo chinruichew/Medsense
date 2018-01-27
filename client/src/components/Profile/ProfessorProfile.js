@@ -43,13 +43,13 @@ class ProfessorProfile extends Component {
             <div>
                 <div className="col-sm-5 col-sm-offset-2">
                     <form >
-                        <div className="row" style={{ marginRight: "200px", marginLeft: "0px" }}>
-                            <h3> <b>{this.state.username}</b> </h3>
+                        <div className="row" style={{paddingTop: "32%"}}>
+                            <h3> <b>{this.state.username}</b> </h3><br/>
                         </div>
 
                         <div className="row">
-                            <div className="form-group col-lg-5">
-                                <div className="cols-sm-5">
+                            <div className="form-group">
+
                                     <div className="input-group">
                                         <span className="input-group-addon"><i className="fa fa-heartbeat fa-lg" aria-hidden="true"></i></span>
                                         <select className="form-control" value={this.state.speciality} onChange={(e) => this.handleSpecialityChange(e)}>
@@ -58,24 +58,24 @@ class ProfessorProfile extends Component {
                                             <option value="Others">Others</option>
                                         </select>
                                     </div>
-                                </div>
+
                             </div>
                         </div>
 
                         <div className="row">
-                            <div className="form-group col-lg-5">
-                                <div className="cols-sm-5">
+                            <div className="form-group">
+
                                     <div className="input-group">
                                         <span className="input-group-addon"><i className="fa fa-plus-square fa-lg" aria-hidden="true"></i></span>
                                         {this.setSubspeciality()}
                                     </div>
-                                </div>
+
                             </div>
                         </div>
 
                         <div className="row">
-                            <div className="form-group col-lg-5">
-                                <div className="cols-sm-5">
+                            <div className="form-group">
+
                                     <div className="input-group">
                                         <span className="input-group-addon"><i className="fa fa-university fa-lg" aria-hidden="true"></i></span>
                                         <select className="form-control" value={this.state.school} onChange={(e) => this.handleSchoolChange(e)}>
@@ -84,14 +84,15 @@ class ProfessorProfile extends Component {
                                             <option value="NUS">NUS</option>
                                         </select>
                                     </div>
-                                </div>
+
                             </div>
                         </div>
+                        <div className="row">
 
-                        <div className="form-group col-lg-8" style={{ marginRight: "200px", marginLeft: "190px", marginBottom: "150px" }}>
-                            <button type="submit" onClick={(e) => this.handleSaveChange(e)} className="btn btn-primary">Save</button>
+                        <div className="form-group">
+                            <button type="submit" onClick={(e) => this.handleSaveChange(e)} className="btn btn-primary btn-lg btn-block login-button">Save</button>
                         </div>
-
+                        </div>
                     </form>
                 </div>
 

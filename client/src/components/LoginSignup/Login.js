@@ -46,9 +46,9 @@ class Login extends Component {
                     <div className="container-fluid">
                         <div className="row">
                             <div className="main-center">
-
+                                <img src="./medsense_logo.png" style={{height: '110px', width: '290px'}} alt="Medsense" />
+                                <br/><br/><br/>
                                 <form className="form-horizontal" method="post" onSubmit={this.onLogin}>
-                                    <img src="./medsense_logo.png" style={{height: '120px', width: '300px'}} alt="Medsense" />
                                     <div className="form-group">
                                         <label for="username" className="cols-sm-2 control-label">Username</label>
                                         <div className="cols-sm-10">
@@ -67,7 +67,7 @@ class Login extends Component {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="form-group ">
+                                    <div className="form-group">
                                         <button type="submit" className="btn btn-primary btn-lg btn-block login-button">Login</button>
                                     </div>
                                 </form>

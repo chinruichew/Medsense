@@ -70,8 +70,9 @@ class StudentSignUpForm extends Component {
         );
         let vmClose = () => this.setState({ vmShow: false });
         return(
-            <div className="main-login main-center">
-                <img src="./medsense_logo.png" style={{height: '120px', width: '300px'}} alt="Medsense" />
+            <div className="main-center">
+                <img src="./medsense_logo.png" style={{height: '110px', width: '290px'}} alt="Medsense" />
+                <br/><br/><br/>
                 <form className="form-horizontal">
                     <div className="form-group">
                         <label for="username" className="cols-sm-2 control-label">Username</label>

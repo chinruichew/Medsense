@@ -86,11 +86,11 @@ class Header extends Component {
                 return;
             case false:
                 return(
-                    <NavLink to="/" style={{padding: '0px'}}><Image src="./medsense_logo.png" style={{height: '50px', width: '180px', padding: '0px'}}/></NavLink>
+                    <NavLink to="/" style={{padding: '0px'}}><Image src="./medsense_logo.png" style={{height: '50px', width: '160px', padding: '0px'}}/></NavLink>
                 );
             default:
                 return(
-                    <NavLink to="/home" style={{padding: '0px'}}><Image src="./medsense_logo.png" style={{height: '50px', width: '180px', padding: '0px'}}/></NavLink>
+                    <NavLink to="/home" style={{padding: '0px'}}><Image src="./medsense_logo.png" style={{height: '50px', width: '160px', padding: '0px'}}/></NavLink>
                 );
         }
     }
