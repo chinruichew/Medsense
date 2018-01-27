@@ -25,9 +25,9 @@ class Header extends Component {
                 return(
                     <Nav pullRight>
                         <NavItem className="navItem" eventKey={1} href="/about">About</NavItem>
-                        <NavDropdown className="navItem" eventKey={2} title="Login/Sign Up" id="login-dropdown">
+                        <NavDropdown className="navItem" eventKey={2} title="Login/Register" id="login-dropdown">
                             <MenuItem eventKey={2.1} href="/login">Login</MenuItem>
-                            <MenuItem eventKey={2.2} href="/signup">Sign Up</MenuItem>
+                            <MenuItem eventKey={2.2} href="/register">Register</MenuItem>
                         </NavDropdown>
                     </Nav>
                 );

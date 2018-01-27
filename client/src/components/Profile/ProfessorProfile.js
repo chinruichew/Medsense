@@ -22,7 +22,16 @@ class ProfessorProfile extends Component {
     }
 
     handleSubSpecialityChange(e) {
-        this.setState({ subspeciality: e.target.value });
+        const options = e.target.options;
+        let value = [];
+        for (let i = 1, l = options.length; i < l; i++) {
+            if (options[i].selected) {
+                value.push(options[i].value);
+            }
+        }
+        if (value.length > 0) {
+            this.setState({ subspeciality: value });
+        }
     }
 
     handleSchoolChange(e) {
@@ -43,7 +52,7 @@ class ProfessorProfile extends Component {
             <div>
                 <div className="col-sm-5 col-sm-offset-2">
                     <form >
-                        <div className="row" style={{paddingTop: "32%"}}>
+                        <div className="row" style={{paddingTop: "20%"}}>
                             <h3> <b>{this.state.username}</b> </h3><br/>
                         </div>
 
@@ -55,6 +64,7 @@ class ProfessorProfile extends Component {
                                         <select className="form-control" value={this.state.speciality} onChange={(e) => this.handleSpecialityChange(e)}>
                                             <option value="Medicine">Medicine</option>
                                             <option value="Surgery">Surgery</option>
+                                            <option value="Orthopedics">Orthopedics</option>
                                             <option value="Others">Others</option>
                                         </select>
                                     </div>
@@ -104,8 +114,8 @@ class ProfessorProfile extends Component {
     setSubspeciality() {
         if (this.state.speciality === "Medicine") {
             return (
-                <select className="form-control" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubSpecialityChange(e)}>
-                    <option value="Select One">Select One</option>
+                <select className="form-control" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubSpecialityChange(e)} multiple>
+                    {/*<option value="Select One">Select One</option>*/}
                     <option value="Cardiology">Cardiology</option>
                     <option value="Endocrinology">Endocrinology</option>
                     <option value="Gastroenterology & Hepatology">Gastroenterology & Hepatology</option>
@@ -120,8 +130,8 @@ class ProfessorProfile extends Component {
             );
         } else if (this.state.speciality === "Others") {
             return (
-                <select className="form-control" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubSpecialityChange(e)}>
-                    <option value="Select One">Select One</option>
+                <select className="form-control" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubSpecialityChange(e)} multiple>
+                    {/*<option value="Select One">Select One</option>*/}
                     <option value="Anaesthesiology">Anaesthesiology</option>
                     <option value="Ear Nose & Throat">Ear Nose & Throat</option>
                     <option value="Emergency Medicine">Emergency Medicine</option>
@@ -137,8 +147,8 @@ class ProfessorProfile extends Component {
             );
         } else if (this.state.speciality === "Surgery") {
             return (
-                <select className="form-control" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubSpecialityChange(e)}>
-                    <option value="Select One">Select One</option>
+                <select className="form-control" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubSpecialityChange(e)} multiple>
+                    {/*<option value="Select One">Select One</option>*/}
                     <option value="Breast">Breast</option>
                     <option value="Colorectal">Colorectal</option>
                     <option value="General Surgery">General Surgery</option>
@@ -148,6 +158,21 @@ class ProfessorProfile extends Component {
                     <option value="Upper Gastrointestinal & Bariatric Surgery">Upper Gastrointestinal & Bariatric Surgery</option>
                     <option value="Urology">Urology</option>
                     <option value="Vascular Surgery">Vascular Surgery</option>
+                </select>
+            );
+        } else if (this.state.speciality === "Orthopedics") {
+            return (
+                <select className="form-control" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubSpecialityChange(e)} multiple>
+                        {/*<option value="Select One">Select One</option>*/}
+                        <option value="Foot and Ankle Surgery">Foot and Ankle Surgery</option>
+                        <option value="Hip and Knee Surgery">Hip and Knee Surgery</option>
+                        <option value="Musculoskeletal Oncology">Musculoskeletal Oncology</option>
+                        <option value="Musculoskeletal Trauma">Musculoskeletal Trauma</option>
+                        <option value="Paediatric Orthopaedics">Paediatric Orthopaedics</option>
+                        <option value="Shoulder & Elbow Surgery">Shoulder & Elbow Surgery</option>
+                        <option value="Spine Surgery">Spine Surgery</option>
+                        <option value="Sports medicine">Sports medicine</option>
+                        <option value="Department of Hand & Reconstructive Microsurgery Trauma">Department of Hand & Reconstructive Microsurgery Trauma</option>
                 </select>
             );
         }

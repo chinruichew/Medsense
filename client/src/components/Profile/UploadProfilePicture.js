@@ -42,7 +42,7 @@ class UploadProfilePicture extends Component {
                     <div className="main-center">
 
                         <form onSubmit={this.onFormSubmit} className="form-horizontal" method="post" action="/api/uploadProfileImage" encType="multipart/form-data">
-                            <Image src={this.props.auth.profilepicture} style={{width: '200px', paddingLeft:'18%', paddingTop:'15%'}} alt={this.props.auth.username} />
+                            <Image src={this.props.auth.profilepicture} style={{width: '200px', paddingLeft:'18%', paddingTop:'24%'}} alt={this.props.auth.username} />
                             <br/><br/>
                             <div className="form-group">
                                 <label>Upload a profile picture:</label>
