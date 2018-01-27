@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const User = mongoose.model('users');
 const axios = require('axios');
+const constants = require('../utility/constantTypes');
 
 module.exports = app => {
     app.post('/api/signup', function (req, res) {
@@ -10,7 +11,7 @@ module.exports = app => {
                 const newUser = new User();
                 newUser.username = values.username;
                 newUser.password = newUser.generateHash(values.password);
-                newUser.usertype = "student";
+                newUser.usertype = constants.USER_TYPE_STUDENT;
                 newUser.school = values.school;
                 newUser.year = values.year;
                 newUser.save();
