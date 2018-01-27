@@ -1,6 +1,11 @@
 module.exports = {
     cookieKey: process.env.COOKIE_KEY,
-    mongoURI: process.env.MONGO_URI,
+    mongoHost: process.env.MONGO_HOST,
     awsAccessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    awsSecretKey: process.env.AWS_SECRET_KEY
+    awsSecretKey: process.env.AWS_SECRET_KEY,
+    mongoURI: process.env.MONGO_URI,
+    mongoUser: process.env.MONGO_USER,
+    mongoPort: process.env.MONGO_PORT,
+    dstPort: process.env.DST_PORT,
+    localPort: process.env.LOCAL_PORT
 };

@@ -36,11 +36,11 @@ s3.getObject(getParams, function(err, data) {
     const credentialData = data.Body.toString('utf-8'); // Use the encoding necessary
 
     const config = {
-        username:'ec2-user',
-        host: keys.mongoURI,
-        port: 22,
-        dstPort:27017,
-        localPort: 2000,
+        username: keys.mongoUser,
+        host: keys.mongoHost,
+        port: keys.mongoPort,
+        dstPort: keys.dstPort,
+        localPort: keys.localPort,
         privateKey: credentialData
     };
     tunnel(config, function (error, server) {
@@ -49,7 +49,7 @@ s3.getObject(getParams, function(err, data) {
             chalkAnimation.rainbow("SSH connection error: " + error);
         }
 
-        mongoose.connect('mongodb://127.0.0.1:2000/Medsense');
+        mongoose.connect(keys.mongoURI);
 
         const db = mongoose.connection;
         db.on('error', console.error.bind(console, 'DB connection error:'));
