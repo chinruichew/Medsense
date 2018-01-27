@@ -91,13 +91,13 @@ class MCQAnswers extends Component {
                     <h3>You got {this.state.stuCorrectAnswerCount} / {this.state.answerCount} correct!</h3><br />
                     <h4>
                         <strong>Answer</strong> <br />
-                        {this.state.mcqAnswer} <br /><br />
+                        <pre style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{this.state.mcqAnswer}</pre> <br /><br />
 
                         <strong>PEARL</strong> <br />
-                        {this.props.question.pearl} <br /><br />
+                        <pre style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{this.props.question.pearl} </pre><br /><br />
 
                         <strong>References</strong> <br />
-                        {this.props.question.reference} <br /><br />
+                        <pre style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{this.props.question.reference}</pre> <br /><br />
 
                     </h4>
                     {this.renderNextQuestion()}

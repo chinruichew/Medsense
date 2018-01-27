@@ -85,7 +85,7 @@ class OpenEndedQuestion extends Component {
     }
 
     renderTimer(duration) {
-        console.log(this.props.timeLimit);
+        //console.log(this.props.timeLimit);
         if (this.props.timeLimit) {
             return (
                 <div className='pull-right'>
@@ -148,7 +148,7 @@ class OpenEndedQuestion extends Component {
     }
 
     renderContent() {
-        let imageZoom = this.props.question.attachment !== "" ? (<div class="col-md-5 col-md-offset-2" align="center">
+        let imageZoom = this.props.question.attachment !== ("" || null) ? (<div class="col-md-5 col-md-offset-2" align="center">
             <h5>
                 Mouse over image to zoom
             </h5>
@@ -173,12 +173,10 @@ class OpenEndedQuestion extends Component {
                 </h3>
 
                 <br />
-                <Panel bsStyle="info" id="panel">
-                    <h4>{this.renderScenario()}</h4>
-
+                <Panel bsStyle="info" id="panel" style={{borderWidth: "thick"}}>
+                    <pre style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{this.renderScenario()}</pre>
                     <br />
-
-                    <h4>{this.props.question.question}</h4>
+                    <pre style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{this.props.question.question}</pre>
 
 
                     <div class="col-md-5 col-md-offset-2">{<ImageMagnifier url={this.props.question.attachment} />}</div>
@@ -187,8 +185,9 @@ class OpenEndedQuestion extends Component {
                     <br />
 
                     <br />
-                    <div class="col-md-10 col-md-offset-1">
-                        <Form><h4>
+                    <div>
+                        <Col smOffset={1}>
+                        <Form style={{margin: "0", width: "95%"}}><h4>
                             <FormGroup>
                                 <FormGroup controlId="formControlsOpenEnded">
                                     <ControlLabel>Your Answer</ControlLabel><br />
@@ -198,7 +197,7 @@ class OpenEndedQuestion extends Component {
                                 </FormGroup>
 
                             </FormGroup>
-                        </h4></Form>
+                        </h4></Form></Col>
                     </div>
                 </Panel>
                 {this.renderShowNextButton()}

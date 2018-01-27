@@ -23,13 +23,13 @@ class OpenEndedAnswer extends Component {
                     <h3>You got __ points!</h3><br />
                     <h4>
                         <strong>Answer</strong> <br />
-                        {this.props.question.openEnded} <br /><br />
+                        <pre style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{this.props.question.openEnded}</pre> <br /><br />
 
                         <strong>PEARL</strong> <br />
-                        {this.props.question.pearl} <br /><br />
+                        <pre style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{this.props.question.pearl} </pre><br /><br />
 
                         <strong>References</strong> <br />
-                        {this.props.question.reference} <br /><br />
+                        <pre style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{this.props.question.reference} </pre><br /><br />
 
                     </h4>
                     {this.renderNextQuestion()}

@@ -220,10 +220,12 @@ class MCQquestion extends Component {
 
     renderContent() {
         let imageZoom = this.props.question.attachment !== "" ? (<div className="col-md-5 col-md-offset-2" align="center">
+
             <h5>
                 Mouse over image to zoom
             </h5>
         </div>) : (<div></div>);
+
         return (
             <div className='container'>
                 <h1>
@@ -244,13 +246,13 @@ class MCQquestion extends Component {
 
                 <br />
 
-                <Panel bsStyle="info" id="panel">
+                <Panel bsStyle="info" id="panel" style={{borderWidth: "thick"}}>
 
-                    <h4>{this.renderScenario()}</h4>
+                    <pre style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{this.renderScenario()}</pre>
 
                     <br />
 
-                    <h4>{this.props.question.question}</h4>
+                    <pre style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{this.props.question.question}</pre>
 
                     <div className="col-md-5 col-md-offset-2">{<ImageMagnifier url={this.props.question.attachment} />}</div>
                     {imageZoom}
