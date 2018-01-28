@@ -130,6 +130,7 @@ if (process.env.NODE_ENV === 'production') {
     // if it doesn't recognize the route
     const path = require('path');
     app.get('*', (req, res) => {
+        res.redirect('https://' + req.headers.host + req.url);
         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
     });
 }
