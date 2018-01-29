@@ -20,6 +20,18 @@ class Home extends Component {
         });
     }
 
+    startChallenge(){
+        window.location='/search';
+    }
+
+    uploadCase(){
+        window.location='/upload';
+    }
+
+    vetCase(){
+        window.location='/vetting';
+    }
+
     renderContent() {
         switch(this.props.auth) {
             case null:
@@ -34,20 +46,33 @@ class Home extends Component {
                         if (this.props.auth.usertype === this.state.constants.USER_TYPE_PROFESSOR || this.props.auth.usertype === this.state.constants.USER_TYPE_ADMIN ){
                             return(
                                 <div className="container-fluid">
+                                    <div className="text-center">
+                                        <h2>Welcome back to Medsense</h2>
+                                    </div><br/><br/>
                                     <div className="row">
-                                        <div className="col-sm-6 text-center" style={{fontSize:'150%'}}>
-                                            <NavLink to="/upload"><img className="left-picture" src="./profUpload.png" alt="" style={{height:"200px"}}/><br/><br/>Create a case.<br/>Share your knowledge!</NavLink>
+                                        <div className="col-sm-offset-3 col-sm-3 text-center" style={{fontSize:'150%'}}>
+                                            <Button style={{background: "white", color: 'black', width: "15em", height: "11em"}}
+                                                    bsSize="large" onClick={(e)=> this.uploadCase()}>
+                                                <img className="left-picture" src="./upload.png" alt="" style={{height:"5em", marginBottom: "3%"}}/>
+                                                <br/>Upload a case <br/>
+                                                <p style={{color:"#1aa3ff", marginTop:"2%", fontWeight:"bold"}}>Share your knowledge</p>
+                                            </Button>
                                         </div>
-                                        <div className="col-sm-6 text-center" style={{fontSize:'150%'}}>
-                                            <NavLink to="/vetting"><img src="./profVet.png" alt="" style={{height:"200px"}}/><br/><br/>Vet a case.<br/>You have pending cases!</NavLink>
+                                        <div className="col-sm-3 text-center" style={{fontSize:'150%'}}>
+                                            <Button style={{background: "white", color: 'black', width: "15em", height: "11em"}}
+                                                    bsSize="large" onClick={(e)=> this.vetCase()}>
+                                                <img src="./vet.png" alt="" style={{height:"5em", marginBottom: "3%"}}/>
+                                                <br/>Vet a case<br/>
+                                                <p style={{color:"#1aa3ff", marginTop:"2%", fontWeight:"bold"}}> <em>You have 4 pending cases</em></p>
+                                            </Button>
                                         </div>
                                     </div>
                                     <br/>
                                     <div className="row">
-                                        <strong><h3>Latest Discussion Posts</h3></strong><br/>
+                                        <strong><h3 style={{fontStyle:"italic", marginBottom:"1%"}}>Latest Discussion Posts</h3></strong>
                                         <Table responsive>
                                             <thead >
-                                            <tr style={{background: '#D9EDF7', fontSize:'130%'}}>
+                                            <tr style={{background: '#82C5D9', fontSize:'130%'}}>
                                                 <th><center>Discussion Post</center></th>
                                                 <th><center>Authored by</center></th>
                                                 <th><center>Sub-speciality</center></th>
@@ -85,20 +110,34 @@ class Home extends Component {
                         } else {
                             return(
                                 <div className="container-fluid">
+                                    <div className="text-center">
+                                        <h2>Welcome back to Medsense</h2>
+                                    </div><br/><br/>
                                     <div className="row">
-                                        <div className="col-sm-6 text-center" style={{fontSize:'150%'}}>
-                                            <NavLink to="/search"><img src="./stuChallenge.png" alt="" style={{height:"200px"}}/><br/><br/>Try a case.<br/>There are 26 new cases!</NavLink><br/>
+                                        <div className="col-sm-offset-3 col-sm-3 text-center" style={{fontSize:'150%'}}>
+                                            <Button style={{background: "white", color: 'black', width: "15em", height: "11em"}}
+                                                    bsSize="large" onClick={(e)=> this.uploadCase()}>
+                                                <img src="./upload.png" alt="" style={{height:"5em", marginBottom: "3%"}}/>
+                                                <br/>Upload a case<br/>
+                                                <p style={{color:"#1aa3ff", marginTop:"2%", fontWeight:"bold"}}>Share your experiences</p>
+                                            </Button>
                                         </div>
-                                        <div className="col-sm-6 text-center" style={{fontSize:'150%'}}>
-                                            <NavLink to="/upload"><img src="./stuUpload.png" alt="" style={{height:"200px"}}/><br/><br/>Create a case.<br/>Share your experiences!</NavLink><br/>
+                                        <div className="col-sm-3  text-center" style={{fontSize:'150%'}}>
+                                            <Button style={{background: "white", color: 'black', width: "15em", height: "11em"}}
+                                                    bsSize="large" onClick={(e)=> this.startChallenge()}>
+                                                {/*<NavLink to="/search">*/}
+                                                <img src="./challenge.png" alt="" style={{height:"5em", marginBottom: "3%"}}/>
+                                                <br/>Start doing a case<br/>
+                                                <p style={{color:"#1aa3ff", marginTop:"2%", fontWeight:"bold"}}> <em>There are 26 new cases</em></p>
+                                            </Button>
                                         </div>
                                     </div>
                                     <br/>
                                     <div className="row">
-                                        <strong><h3>Latest Discussion Replies</h3></strong><br/>
+                                        <strong><h3 style={{fontStyle:"italic", marginBottom:"1%"}}>Latest Discussion Replies</h3></strong>
                                         <Table responsive>
                                             <thead>
-                                            <tr style={{background: '#D9EDF7', fontSize:'130%'}}>
+                                            <tr style={{background: '#82C5D9', fontSize:'130%'}}>
                                                 <th><center>Your Post</center></th>
                                                 <th><center>Case Title</center></th>
                                                 <th><center>Reply</center></th>
@@ -148,7 +187,7 @@ class Home extends Component {
         ReactGA.pageview(window.location.pathname + window.location.search);
 
         return(
-            <div style={{padding:'5%'}}>
+            <div style={{padding:'2%'}}>
                 {this.renderContent()}
             </div>
         );
