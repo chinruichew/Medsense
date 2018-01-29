@@ -114,7 +114,9 @@ class About extends Component {
                             and check out your strength and weaknesses at your dashboard.<br/><br/>
                             Come make sense of medicine
                         </h4><br/><br/>
-                        <Button onClick={this.signup} className="btn btn-primary btn-lg" style={{whiteSpace:"pre-wrap"}}>       REGISTER      </Button>
+                        <Button onClick={this.signup} className="btn btn-primary btn-lg" style={{whiteSpace:"pre-wrap", background: "#483D8B", color:"white", width: "25%"}}>
+                            <p style={{marginTop: "7%"}}>REGISTER</p>
+                        </Button>
                     </div>
                 </div>
                 {/*<div className="row">*/}
