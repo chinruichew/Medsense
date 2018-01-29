@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import { Button } from 'react-bootstrap';
+import BootstrapModal from '../UI/Modal/VettingBootstrapModal.js';
 import { bindAll } from 'lodash';
 import { updateStudent } from '../../actions/index';
+import { Button } from 'react-bootstrap';
 
 class StudentProfile extends Component {
     constructor(props) {
@@ -28,23 +29,24 @@ class StudentProfile extends Component {
         this.props.updateStudent(this.state).then((response) => {
             if (response) {
                 console.log(response)
-                window.alert("Successfully Updated")
+                this.setState({ vmShow: true });
             }
         }).catch(() => { })
     }
 
     render() {
+        let vmClose = () => this.setState({ vmShow: false });
         return (
             <div>
                 <div className="col-sm-5 col-sm-offset-2">
 
-                    <div className="row" style={{ marginRight: "200px", marginLeft: "0px" }}>
+                    <div className="row" style={{paddingTop: "60%"}}>
                         <h3> <b>{this.state.username}</b> </h3>
                     </div>
 
                     <div className="row">
-                        <div className="form-group col-lg-5">
-                            <div className="cols-sm-5">
+                        <div className="form-group">
+
                                 <div className="input-group">
                                     <span className="input-group-addon"><i className="fa fa-graduation-cap fa-lg" aria-hidden="true"></i></span>
                                     <select className="form-control" value={this.state.year} onChange={(e) => this.handleYearChange(e)}>
@@ -55,13 +57,13 @@ class StudentProfile extends Component {
                                         <option value="5">Year 5</option>
                                     </select>
                                 </div>
-                            </div>
+
                         </div>
                     </div>
 
                     <div className="row">
-                        <div className="form-group col-lg-5">
-                            <div className="cols-sm-5">
+                        <div className="form-group">
+
                                 <div className="input-group">
                                     <span className="input-group-addon"><i className="fa fa-university fa-lg" aria-hidden="true"></i></span>
                                     <select className="form-control" value={this.state.school} onChange={(e) => this.handleSchoolChange(e)}>
@@ -70,16 +72,31 @@ class StudentProfile extends Component {
                                         <option value="NUS">NUS</option>
                                     </select>
                                 </div>
-                            </div>
+
                         </div>
                     </div>
 
                     {/*<input type="hidden" value={this.props.student.id} name="studentid" />*/}
-
-                    <div className="form-group col-lg-8" style={{ marginRight: "200px", marginLeft: "190px", marginBottom: "150px" }}>
-                        <button type="submit" onClick={(e) => this.handleSaveChange(e)} className="btn btn-primary">Save</button>
+                    <div className="row">
+                    <div className="form-group">
+                        <button type="submit" onClick={(e) => this.handleSaveChange(e)} className="btn btn-primary btn-lg btn-block login-button">Save</button>
+                    </div>
                     </div>
                 </div>
+                <BootstrapModal
+                    show={this.state.vmShow}
+                    onHide={vmClose}
+                    aria-labelledby="error-modal">
+                    <BootstrapModal.Header closeButton>
+                        <BootstrapModal.Title id="error-modal-">Profile Update</BootstrapModal.Title>
+                    </BootstrapModal.Header>
+                    <BootstrapModal.Body>
+                        <p>Your profile has been successfully updated.</p>
+                    </BootstrapModal.Body>
+                    <BootstrapModal.Footer>
+                        <Button onClick={vmClose}>Close</Button>
+                    </BootstrapModal.Footer>
+                </BootstrapModal>
             </div>
         )
     }
