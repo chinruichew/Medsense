@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import { Button } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
+import BootstrapModal from '../UI/Modal/VettingBootstrapModal.js';
 import { bindAll } from 'lodash';
 import { updateProfessor } from '../../actions/index';
 
@@ -42,12 +43,13 @@ class ProfessorProfile extends Component {
         this.props.updateProfessor(this.state).then((response) => {
             if (response) {
                 console.log(response)
-                window.alert("Successfully Updated")
+                this.setState({ vmShow: true });
             }
         }).catch(() => { })
     }
 
     render() {
+        let vmClose = () => this.setState({ vmShow: false });
         return (
             <div>
                 <div className="col-sm-5 col-sm-offset-2">
@@ -105,7 +107,20 @@ class ProfessorProfile extends Component {
                         </div>
                     </form>
                 </div>
-
+                <BootstrapModal
+                    show={this.state.vmShow}
+                    onHide={vmClose}
+                    aria-labelledby="error-modal">
+                    <BootstrapModal.Header closeButton>
+                        <BootstrapModal.Title id="error-modal-">Profile Update</BootstrapModal.Title>
+                    </BootstrapModal.Header>
+                    <BootstrapModal.Body>
+                        <p>Your profile has been successfully updated.</p>
+                    </BootstrapModal.Body>
+                    <BootstrapModal.Footer>
+                        <Button onClick={vmClose}>Close</Button>
+                    </BootstrapModal.Footer>
+                </BootstrapModal>
             </div>
         )
     }

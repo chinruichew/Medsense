@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import * as ReactGA from "react-ga";
+import { Button } from 'react-bootstrap';
 
 class About extends Component {
     state = {
@@ -66,6 +67,10 @@ class About extends Component {
         );
     }
 
+    signup(){
+        window.location='/register';
+    }
+
     render() {
         // React GA
         ReactGA.initialize('UA-112382826-1');
@@ -90,17 +95,33 @@ class About extends Component {
                     {/*</div>*/}
                 {/*</div>*/}
                 <div className="row">
-                    <div className="col-md-offset-2 col-md-8 text-center">
-                        <img src="./medsense_logo.png" style={{height: '200px', width: '550px'}} alt="Medsense" />
+                    <div className="col-md-offset-2 col-md-9 text-center">
+                        <img src="./medsense_logo.png" style={{width: '70%'}} alt="Medsense" />
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-md-offset-2 col-md-8 text-center main-login" style={{backgroundColor: 'rgba(255,255,255,0.4)', padding: '20px'}}>
-                        <h3>
-                            Medsense is a gamified learning platform for medical students in Singapore. It was developed as a collaboration between NUS Yong Loo Lin School of Medicine, and Singapore Management University. This platform is a web application that simulates interaction with "patients", facilitates peer learning via a discussion board, and allow Professors to track the performance of students anonymously.
-                        </h3>
+                        <h1>
+                            Welcome to Medsense
+                        </h1><br/>
+                        <h4>
+                            {/*Medsense is a gamified learning platform for medical students in Singapore. It was developed as a collaboration between NUS Yong Loo Lin School of Medicine, and Singapore Management University. This platform is a web application that simulates interaction with "patients", facilitates peer learning via a discussion board, and allow Professors to track the performance of students anonymously.*/}
+                            Ever felt like getting a bit more practice?<br/>
+                            This is the place for you.<br/><br/>
+                            Medsense is a case-based simulation website for medical trainees, <br/>
+                            with faculty-vetted cases <em>from you, for you</em>.<br/><br/>
+                            <strong>Upload</strong> an interesting case or <strong>try out</strong> a case<br/>
+                            and check out your strength and weaknesses at your dashboard.<br/><br/>
+                            Come make sense of medicine
+                        </h4><br/><br/>
+                        <Button onClick={this.signup} className="btn btn-primary btn-lg" style={{whiteSpace:"pre-wrap"}}>       REGISTER      </Button>
                     </div>
                 </div>
+                {/*<div className="row">*/}
+                    {/*<div className="col-md-offset-2 col-md-8">*/}
+                    {/*<button type="submit" className="btn btn-primary btn-lg">REGISTER</button>*/}
+                    {/*</div>*/}
+                {/*</div>*/}
             </div>
         );
     }

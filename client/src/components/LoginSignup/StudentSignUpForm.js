@@ -133,7 +133,7 @@ class StudentSignUpForm extends Component {
                         </div>
                     </div>
                     <div className="form-group">
-                        <button onClick={this.handleUserSignUp} type="button" className="btn btn-primary btn-lg btn-block login-button">Sign Up</button>
+                        <button onClick={this.handleUserSignUp} type="button" className="btn btn-primary btn-lg btn-block login-button">Register</button>
                     </div>
                 </form>
                 <BootstrapModal
@@ -141,7 +141,7 @@ class StudentSignUpForm extends Component {
                     onHide={vmClose}
                     aria-labelledby="username-modal">
                     <BootstrapModal.Header closeButton>
-                        <BootstrapModal.Title id="username-modal">Unable to Sign Up</BootstrapModal.Title>
+                        <BootstrapModal.Title id="username-modal">Unable to Register</BootstrapModal.Title>
                     </BootstrapModal.Header>
                     <BootstrapModal.Body>
                         <p>{this.state.error}</p>
