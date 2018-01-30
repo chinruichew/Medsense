@@ -11,6 +11,7 @@ const chalk = require('chalk');
 const chalkAnimation = require('chalk-animation');
 const helmet = require('helmet');
 const csurf = require('csurf');
+const GPU = require('gpu.js');
 
 const keys = require('./config/keys');
 require('./models/User');
@@ -28,39 +29,43 @@ const getParams = {
     Bucket: keys.mongoConnectBucket,
     Key: keys.mongoConnectKey
 };
-s3.getObject(getParams, function(err, data) {
-    if (err)
-        return err;
 
-    const credentialData = data.Body.toString('utf-8');
+const gpu = new GPU();
+gpu.createKernel(function() {
+    s3.getObject(getParams, function (err, data) {
+        if (err)
+            return err;
 
-    const config = {
-        username: keys.mongoUser,
-        host: keys.mongoHost,
-        port: keys.mongoPort,
-        dstPort: keys.dstPort,
-        localPort: keys.localPort,
-        privateKey: credentialData
-    };
-    tunnel(config, function (error, server) {
+        const credentialData = data.Body.toString('utf-8');
 
-        if(error){
-            chalkAnimation.rainbow("SSH connection error: " + error);
-        }
+        const config = {
+            username: keys.mongoUser,
+            host: keys.mongoHost,
+            port: keys.mongoPort,
+            dstPort: keys.dstPort,
+            localPort: keys.localPort,
+            privateKey: credentialData
+        };
+        tunnel(config, function (error, server) {
 
-        mongoose.connect(keys.mongoURI);
+            if (error) {
+                chalkAnimation.rainbow("SSH connection error: " + error);
+            }
 
-        const db = mongoose.connection;
-        db.on('error', console.error.bind(console, 'DB connection error:'));
-        db.once('open', function() {
-            chalkAnimation.rainbow("DB connection successful!");
-            setTimeout(() => {
-                console.log(chalk.green.underline.bold('Initializing...'));
-            }, 300);
+            mongoose.connect(keys.mongoURI);
+
+            const db = mongoose.connection;
+            db.on('error', console.error.bind(console, 'DB connection error:'));
+            db.once('open', function () {
+                chalkAnimation.rainbow("DB connection successful!");
+                setTimeout(() => {
+                    console.log(chalk.green.underline.bold('Initializing...'));
+                }, 300);
+            });
+
         });
-
     });
-});
+}).setOutput([100]);
 /* End of MongoDB Connection */
 
 /* Start of Middleware configuration */
