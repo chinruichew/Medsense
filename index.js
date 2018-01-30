@@ -130,21 +130,11 @@ if (process.env.NODE_ENV === 'production') {
     // if it doesn't recognize the route
     const path = require('path');
     app.get('*', (req, res) => {
-        res.redirect('https://' + req.headers.host + req.url);
         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
     });
 }
 
 const PORT = process.env.PORT || 5000;
 console.log(chalk.blue.underline.bold('Listening to PORT:', PORT));
-
-// set up a route to redirect http to https
-app.get('*', function(req, res) {
-    console.log(req);
-    res.redirect('https://' + req.headers.host + req.url);
-
-    // Or, if you don't want to automatically detect the domain name from the request header, you can hard code it:
-    // res.redirect('https://example.com' + req.url);
-});
 
 app.listen(PORT);
