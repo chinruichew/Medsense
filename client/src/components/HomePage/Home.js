@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {Button, Table} from 'react-bootstrap';
-import {NavLink, Redirect} from 'react-router-dom';
+import { Redirect} from 'react-router-dom';
 import axios from 'axios';
 
 import './Home.css';
