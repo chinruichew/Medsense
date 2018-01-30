@@ -30,42 +30,39 @@ const getParams = {
     Key: keys.mongoConnectKey
 };
 
-const gpu = new GPU();
-gpu.createKernel(function() {
-    s3.getObject(getParams, function (err, data) {
-        if (err)
-            return err;
+s3.getObject(getParams, function (err, data) {
+    if (err)
+        return err;
 
-        const credentialData = data.Body.toString('utf-8');
+    const credentialData = data.Body.toString('utf-8');
 
-        const config = {
-            username: keys.mongoUser,
-            host: keys.mongoHost,
-            port: keys.mongoPort,
-            dstPort: keys.dstPort,
-            localPort: keys.localPort,
-            privateKey: credentialData
-        };
-        tunnel(config, function (error, server) {
+    const config = {
+        username: keys.mongoUser,
+        host: keys.mongoHost,
+        port: keys.mongoPort,
+        dstPort: keys.dstPort,
+        localPort: keys.localPort,
+        privateKey: credentialData
+    };
+    tunnel(config, function (error, server) {
 
-            if (error) {
-                chalkAnimation.rainbow("SSH connection error: " + error);
-            }
+        if (error) {
+            chalkAnimation.rainbow("SSH connection error: " + error);
+        }
 
-            mongoose.connect(keys.mongoURI);
+        mongoose.connect(keys.mongoURI);
 
-            const db = mongoose.connection;
-            db.on('error', console.error.bind(console, 'DB connection error:'));
-            db.once('open', function () {
-                chalkAnimation.rainbow("DB connection successful!");
-                setTimeout(() => {
-                    console.log(chalk.green.underline.bold('Initializing...'));
-                }, 300);
-            });
-
+        const db = mongoose.connection;
+        db.on('error', console.error.bind(console, 'DB connection error:'));
+        db.once('open', function () {
+            chalkAnimation.rainbow("DB connection successful!");
+            setTimeout(() => {
+                console.log(chalk.green.underline.bold('Initializing...'));
+            }, 300);
         });
+
     });
-}).setOutput([100]);
+});
 /* End of MongoDB Connection */
 
 /* Start of Middleware configuration */
