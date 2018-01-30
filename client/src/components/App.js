@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
+import HttpsRedirect from 'react-https-redirect';
 
 import './App.css';
 import Login from './LoginSignup/Login';
@@ -26,7 +27,7 @@ class App extends Component {
         //need to store session
         return (
             <BrowserRouter>
-                <div>
+                <HttpsRedirect>
                     <Header />
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/home" component={Home} />
@@ -39,7 +40,7 @@ class App extends Component {
                     <Route exact path="/admin" component={Admin} />
                     <Route exact path="/result" component={Result} />
                     <Route exact path="/" component={About} />
-                </div>
+                </HttpsRedirect>
             </BrowserRouter>
         );
     }
