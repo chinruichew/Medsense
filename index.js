@@ -115,6 +115,7 @@ slug.defaults.modes['pretty'] = {
 };
 /* End of Slug URL String configuration */
 
+/* Start of REST API Configurations */
 require('./routes/authRoutes')(app);
 require('./routes/caseRoutes')(app);
 require('./routes/userRoutes')(app);
@@ -122,6 +123,15 @@ require('./routes/s3Routes')(app);
 require('./routes/adminRoutes')(app);
 require('./routes/gameRoutes')(app);
 require('./routes/utilityRoutes')(app);
+/* End of REST API Configurations */
+
+/* Start of GraphQL Configurations */
+import {graphiqlExpress, graphqlExpress} from 'apollo-server-express';
+
+app.use('/graphiql', graphiqlExpress({
+    endpointURL: "/graphql"
+}));
+/* End of GraphQL Configurations */
 
 if (process.env.NODE_ENV === 'production') {
     // Express will serve up production assets
