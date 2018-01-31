@@ -45,7 +45,6 @@ class MainProfile extends Component {
 
                                 );
                             case this.state.constants.USER_TYPE_STUDENT:
-                                console.log(this.props.auth);
                                 return (
                                     <StudentProfile
                                         id={this.props.auth._id}

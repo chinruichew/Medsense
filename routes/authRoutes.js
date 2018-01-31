@@ -31,4 +31,9 @@ module.exports = app => {
     app.get('/api/current_user', (req, res) => {
         res.send(req.session.user);
     });
+
+    app.post('/api/renewSessionUser', (req, res) => {
+        req.session.user = req.body.user;
+        res.send('Done');
+    });
 };

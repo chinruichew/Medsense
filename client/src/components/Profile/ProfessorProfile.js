@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import BootstrapModal from '../UI/Modal/VettingBootstrapModal.js';
 import { bindAll } from 'lodash';
+import axios from 'axios';
+
 import { updateProfessor } from '../../actions/index';
 
 class ProfessorProfile extends Component {
@@ -41,11 +43,19 @@ class ProfessorProfile extends Component {
 
     handleSaveChange(e) {
         this.props.updateProfessor(this.state).then((response) => {
-            if (response) {
-                console.log(response)
-                this.setState({ vmShow: true });
+            console.log(response);
+            if (response !== null) {
+                this.setState({vmShow: true});
+
+                axios.post('/api/renewSessionUser', {
+                    user: response
+                }).then(res => {
+                    console.log(res);
+                }).catch(err => {
+                    console.log(err);
+                });
             }
-        }).catch(() => { })
+        }).catch((err) => { })
     }
 
     render() {

@@ -28,7 +28,6 @@ module.exports = app => {
                 user.year = req.body.values.year;
                 user.school = req.body.values.school;
                 user.save();
-                console.log(user);
             }
 
         });
@@ -39,7 +38,6 @@ module.exports = app => {
         User.findById(req.body.values.id, function (err, user) {
             // console.log(req.body.values)
             if (err) { return res.send(err) }
-            console.log(user);
             if (user) {
                 user.school = req.body.values.school;
                 user.speciality = req.body.values.speciality;
@@ -49,10 +47,11 @@ module.exports = app => {
                 //     user.subspeciality.push(jsonObjectSS[prop]);
                 // }
                 user.save();
-                console.log(user);
+                res.send(user);
+            } else {
+                res.send(null);
             }
         });
-        return res.status(201).send({ data: null, message: "updated" });
     });
 
     app.get('/api/getSubSpeciality', function(req, res) {
