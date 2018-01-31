@@ -112,18 +112,14 @@ class About extends Component {
                             with faculty-vetted cases <em>from you, for you</em>.<br/><br/>
                             <strong>Upload</strong> an interesting case or <strong>try out</strong> a case<br/>
                             and check out your strength and weaknesses at your dashboard.<br/><br/>
-                            Come make sense of medicine
+                            Come make sense of medicine.
                         </h4><br/><br/>
                         <Button onClick={this.signup} className="btn btn-primary btn-lg" style={{whiteSpace:"pre-wrap", background: "#483D8B", color:"white", width: "25%"}}>
                             <p style={{marginTop: "7%"}}>REGISTER</p>
                         </Button>
                     </div>
                 </div>
-                {/*<div className="row">*/}
-                    {/*<div className="col-md-offset-2 col-md-8">*/}
-                    {/*<button type="submit" className="btn btn-primary btn-lg">REGISTER</button>*/}
-                    {/*</div>*/}
-                {/*</div>*/}
+
             </div>
         );
     }

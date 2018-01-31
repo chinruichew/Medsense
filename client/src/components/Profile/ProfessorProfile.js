@@ -25,7 +25,7 @@ class ProfessorProfile extends Component {
     handleSubSpecialityChange(e) {
         const options = e.target.options;
         let value = [];
-        for (let i = 1, l = options.length; i < l; i++) {
+        for (let i = 0, l = options.length; i < l; i++) {
             if (options[i].selected) {
                 value.push(options[i].value);
             }
