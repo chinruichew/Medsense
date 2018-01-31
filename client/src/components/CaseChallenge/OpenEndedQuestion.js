@@ -15,6 +15,13 @@ class OpenEndedQuestion extends Component {
         super(props);
         this.state = {
             question: this.props.question.question,
+            stem: this.props.question.stem,
+            type: this.props.question.type,
+            attachment: this.props.question.attachment,
+            filename: this.props.question.filename,
+            filetype: this.props.question.filetype,
+            pearl: this.props.question.pearl,
+            reference: this.props.question.reference,
             showAnswers: false,
             openEnded: "",
             showNextButton: true,

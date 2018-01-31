@@ -16,6 +16,13 @@ class MCQquestion extends Component {
         super(props);
         this.state = {
             question: this.props.question.question,
+            stem: this.props.question.stem,
+            type: this.props.question.type,
+            attachment: this.props.question.attachment,
+            filename: this.props.question.filename,
+            filetype: this.props.question.filetype,
+            pearl: this.props.question.pearl,
+            reference: this.props.question.reference,
             showAnswers: false,
             showNextButton: true,
             mcq1: this.props.question.mcq1,
@@ -247,13 +254,13 @@ class MCQquestion extends Component {
 
                 <br />
 
-                <Panel bsStyle="info" id="panel" style={{borderWidth: "thick"}}>
+                <Panel bsStyle="info" id="panel" style={{ borderWidth: "thick" }}>
 
-                    <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{this.renderScenario()}</h4>
+                    <h4 style={{ border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace: "pre-wrap", wordBreak: "keep-all" }}>{this.renderScenario()}</h4>
 
                     <br />
 
-                    <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{this.props.question.question}</h4>
+                    <h4 style={{ border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace: "pre-wrap", wordBreak: "keep-all" }}>{this.props.question.question}</h4>
 
                     <div className="col-md-5 col-md-offset-2">{<ImageMagnifier url={this.props.question.attachment} />}</div>
                     {imageZoom}

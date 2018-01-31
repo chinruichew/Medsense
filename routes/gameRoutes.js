@@ -80,6 +80,13 @@ module.exports = app => {
         }, function (err, answer) {
             const newCaseQuestion = new QuestionAnswer({
                 question: req.body.values.question,
+                stem: req.body.values.stem,
+                type: req.body.values.type,
+                attachment: req.body.values.attachment,
+                filename: req.body.values.filename,
+                filetype: req.body.values.filetype,
+                pearl: req.body.values.pearl,
+                reference: req.body.values.reference,
                 mcq1: req.body.values.mcq1,
                 mcq2: req.body.values.mcq2,
                 mcq3: req.body.values.mcq3,
@@ -108,7 +115,14 @@ module.exports = app => {
         }, function (err, answer) {
             const newCaseQuestion = new QuestionAnswer({
                 question: req.body.values.question,
-                openEnded: req.body.values.openEnded
+                openEnded: req.body.values.openEnded,
+                stem: req.body.values.stem,
+                type: req.body.values.type,
+                attachment: req.body.values.attachment,
+                filename: req.body.values.filename,
+                filetype: req.body.values.filetype,
+                pearl: req.body.values.pearl,
+                reference: req.body.values.reference
             });
             newCaseQuestion.save();
             answer[0]['questions'].push(newCaseQuestion);
