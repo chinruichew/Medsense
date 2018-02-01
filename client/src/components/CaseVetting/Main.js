@@ -25,7 +25,7 @@ class Main extends Component {
             authid: this.props.authorid,
             authname: this.props.authorname,
         };
-        bindAll(this, 'addQuestion', 'saveChanges', 'handleUpdateOverview', 'handleUpdateQuestion', 'handleDeleteQuestion');
+        bindAll(this, 'validFileType', 'addQuestion', 'saveChanges', 'handleUpdateOverview', 'handleUpdateQuestion', 'handleDeleteQuestion');
     }
 
     addQuestion() {
@@ -60,6 +60,20 @@ class Main extends Component {
 
     }
 
+    validFileType(file) {
+        const fileTypes = [
+            'image/jpeg',
+            'image/pjpeg',
+            'image/png'
+        ]
+        for(let i = 0; i < fileTypes.length; i++) {
+            if(file.type === fileTypes[i]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     saveChanges(e) {
         e.preventDefault();
         if (this.state.title === '') {
@@ -89,9 +103,13 @@ class Main extends Component {
                 let error = '';
                 let BreakException = {};
                 try {
-                    questions.forEach(function (obj) {
+                    for (let i=0; i<questions.length; i++) {
+                        let obj = questions[i];
                         if (obj.question === '') {
                             error = "Question #" + obj.id + ": Please fill in the Question!";
+                            throw BreakException;
+                        } else if (obj.attachment && !this.validFileType(obj.attachment)){
+                            error = "Question #" + obj.id + ": Please make sure your attachment is an image of type .jpg, .jpeg, or .png!";
                             throw BreakException;
                         } else if (obj.type === "Select One") {
                             error = "Question #" + obj.id + ": Please select a Question Type!";
@@ -126,7 +144,7 @@ class Main extends Component {
                             error = "Question #" + obj.id + ": Please select a Time Limit!";
                             throw BreakException;
                         }
-                    });
+                    }
                     this.setState({vmConfirm: true});
 
                 } catch (e) {
@@ -137,11 +155,12 @@ class Main extends Component {
         }
     }
 
-    uploadFile = (file, caseID, qID) => {
+    uploadFile = (file, caseID, qID, objID) => {
         const formData = new FormData();
         formData.append('file',file);
         formData.append('caseID',caseID);
         formData.append('qID',qID);
+        formData.append('objID',objID);
         const config = {
             headers: {
                 'content-type': 'multipart/form-data'
@@ -155,13 +174,15 @@ class Main extends Component {
         axios.post('/api/updateCase', {
             values: this.state
         }).then(res => {
-            const caseID = res.data.data;
+            const caseID = res.data.data.case;
+            let questions = res.data.data.question;
+            let qnData = this.state.qnData;
             this.setState({vm: true});
-            let questions = this.state.qnData;
 
             for (let i=0; i<questions.length; i++){
                 let question = questions[i];
-                this.uploadFile(question.attachment, caseID, question.id);
+                let qn = qnData[i];
+                this.uploadFile(question.attachment, caseID, question.id, question._id);
             }
         });
 
@@ -239,7 +260,6 @@ class Main extends Component {
     }
 
     handleUpdateOverview(details) {
-        console.log(this.state.qnData);
         this.setState({
             title: details.title,
             difficulty: details.difficulty,
@@ -329,10 +349,10 @@ class Main extends Component {
 
                     <p className="story-title">Story So Far</p>
                     <p>Case Scenario</p>
-                    <div className="row">{this.state.scenario}</div>
+                    <div className="row" style={{whiteSpace:"pre-wrap"}}>{this.state.scenario}</div>
                     <br /><br />
                     <p>Case Continuation</p>
-                    <div className="row">{stems}</div>
+                    <div className="row" style={{whiteSpace:"pre-wrap"}}>{stems}</div>
                     <br /><br />
 
                 </div>

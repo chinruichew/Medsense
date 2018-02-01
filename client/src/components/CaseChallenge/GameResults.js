@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Row } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 class GameResults extends Component {
     componentDidMount() {
@@ -9,9 +9,7 @@ class GameResults extends Component {
     renderContent(){
         let questions = this.props.case.questions.map((obj, index) => {
             let answer="";
-            if (obj.type==="Open"){
-                answer = obj.openEnded;
-            } else {
+            if (obj.type==="MCQ"){
                 if (obj.check1) {
                     answer += obj.mcq1 + ", ";
                 }
@@ -31,18 +29,21 @@ class GameResults extends Component {
                     answer += obj.mcq6 + ", ";
                 }
                 answer = answer.substring(0, answer.length - 2);
+            } else {
+                console.log(obj.openEnded);
+                answer = obj.openEnded;
             }
             return (
                 <div>
                     <h3>Question {obj.id}</h3>
-                    <h4>
+                    <h4 style={{whiteSpace: "pre-wrap", wordBreak: "keep-all"}}>
                         {obj.stem}
                         <br/>
                         {obj.question}
                     </h4>
                     <br/>
                     <h3>Answer</h3>
-                    <h4>
+                    <h4 style={{whiteSpace: "pre-wrap", wordBreak: "keep-all"}}>
                         {answer}
                         <br/>
                         {obj.pearl}

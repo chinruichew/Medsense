@@ -158,7 +158,8 @@ class OpenEndedQuestion extends Component {
     }
 
     renderContent() {
-        let imageZoom = this.props.question.attachment !== ("" || null) ? (<div class="col-md-5 col-md-offset-2" align="center">
+        console.log(this.props.question.attachment);
+        let imageZoom = this.props.question.attachment !== "" ? (<div class="col-md-5 col-md-offset-2" align="center">
             <h5>
                 Mouse over image to zoom
             </h5>

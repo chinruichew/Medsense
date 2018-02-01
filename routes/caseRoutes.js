@@ -104,6 +104,7 @@ module.exports = app => {
 
             const jsonObject = req.body.values.qnData;
 
+            let questions=[];
             for (const prop in jsonObject) {
                 Question.findById(jsonObject[prop]['_id'], function (err, oneQuestion) {
                     if (oneQuestion) {
@@ -158,10 +159,12 @@ module.exports = app => {
                         newQuestion.save();
                         oneCase.questions.push(newQuestion._id);
                         oneCase.save();
+                        questions.push(newQuestion);
                     }
                 })
             }
-            return res.send({ data: jsonObject, message: "updateCase success" });
+            // return res.send({ data: jsonObject, message: "updateCase success" });
+            return res.send({ data: {case:oneCase._id, question:questions}, message: "updateCase success" });
         });
     });
 

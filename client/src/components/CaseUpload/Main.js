@@ -95,14 +95,17 @@ class Main extends Component {
                 let error = '';
                 let BreakException = {};
                 try {
-                    questions.forEach(function (obj) {
+                    for (let i=0; i<questions.length; i++) {
+                        let obj = questions[i];
                         if (obj.question === '') {
                             error = "Question #" + obj.id + ": Please fill in the Question!";
+                            throw BreakException;
+                        } else if (obj.attachment && !this.validFileType(obj.attachment)) {
+                            error = "Question #" + obj.id + ": Please make sure your attachment is an image of type .jpg, .jpeg, or .png!";
                             throw BreakException;
                         } else if (obj.type === "Select One") {
                             error = "Question #" + obj.id + ": Please select a Question Type!";
                             throw BreakException;
-
                         } else if (obj.type === "MCQ") {
                             if (obj.mcq1 === '' || obj.mcq2 === '') {
                                 error = "Question #" + obj.id + ": Please fill in Answer 1 and Answer 2!";
@@ -133,7 +136,8 @@ class Main extends Component {
                             error = "Question #" + obj.id + ": Please select a Time Limit!";
                             throw BreakException;
                         }
-                    });
+                        // });
+                    }
                     this.setState({vmConfirm: true});
 
 
@@ -160,6 +164,20 @@ class Main extends Component {
             console.log(res);
         });
     };
+
+    validFileType(file) {
+        const fileTypes = [
+            'image/jpeg',
+            'image/pjpeg',
+            'image/png'
+        ]
+        for(let i = 0; i < fileTypes.length; i++) {
+            if(file.type === fileTypes[i]) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     submitCase = (e) => {
         axios.post('/api/uploadCase', {
@@ -343,10 +361,10 @@ class Main extends Component {
 
                     <p className="story-title">Story So Far</p>
                     <p>Case Scenario</p>
-                    <div className="row">{this.state.scenario}</div>
+                    <div className="row" style={{whiteSpace:"pre-wrap"}}>{this.state.scenario}</div>
                     <br/><br/>
                     <p>Case Continuation</p>
-                    <div className="row">{stems}</div>
+                    <div className="row" style={{whiteSpace:"pre-wrap"}}>{stems}</div>
                     <br/><br/>
 
                 </div>

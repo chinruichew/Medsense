@@ -169,6 +169,10 @@ class Question extends Component {
                 details.reference = value;
                 this.props.handleUpdateQuestion(details,this.state.id);
                 return;
+            case "attachment":
+                details.attachment = value;
+                this.props.handleUpdateQuestion(details,this.state.id);
+                return;
             default:
                 this.props.handleUpdateQuestion(details,this.state.id);
                 return;
@@ -179,6 +183,7 @@ class Question extends Component {
         const value = e.target.files[0];
         this.setState({ file: value });
         this.update(value, "attachment");
+        // console.log(value);
     }
 
     handleStemChange(e){
@@ -382,7 +387,7 @@ class Question extends Component {
 
                         <FormGroup controlId="formControlsAttachment">
                             <ControlLabel style={{ fontSize: "150%" }}>Add Attachment</ControlLabel>
-                            <FormControl type="file" onChange={(e)=>this.handleFile(e)} />
+                            <FormControl type="file" onChange={(e)=>this.handleFile(e)} accept=".jpg, .jpeg, .png"/>
                         </FormGroup>
 
                         <img src={this.state.attachment} style={{width: '600px'}} alt="No attachment was added."/>
