@@ -35,21 +35,13 @@ module.exports = app => {
     });
 
     app.post('/api/updateProfessor', function (req, res) {
-        // User.update({ _id: req.body.values.id }, { $set: { subspeciality: [] } }, function (err, response) { });
         User.findById(req.body.values.id, function (err, user) {
-            // console.log(req.body.values)
             if (err) { return res.send(err) }
-            console.log(user);
             if (user) {
                 user.school = req.body.values.school;
                 user.speciality = req.body.values.speciality;
                 user.subspeciality = req.body.values.subspeciality;
-                // const jsonObjectSS = JSON.parse(req.body.subspeciality);
-                // for (const prop in jsonObjectSS) {
-                //     user.subspeciality.push(jsonObjectSS[prop]);
-                // }
                 user.save();
-                console.log(user);
             }
         });
         return res.status(201).send({ data: null, message: "updated" });
@@ -58,6 +50,18 @@ module.exports = app => {
     app.get('/api/getSubSpeciality', function(req, res) {
         User.findById(req.session.user._id, function(err, user) {
             res.send(user.subspeciality);
+        });
+    });
+
+    // Update post of User
+    app.post('/api/updateUserPoints', function(req, res) {
+        User.findById(req.session.user._id, function (err, user) {
+            if (err) { return res.send(err) }
+
+            if (user) {
+                user.points = req.body.points;
+                user.save();
+            }
         });
     });
 };
