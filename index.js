@@ -131,7 +131,7 @@ require('./routes/utilityRoutes')(app);
 /* End of REST API Configurations */
 
 /* Start of GraphQL Configurations */
-app.use('/graphiql', graphiqlExpress({
+app.use('/graphiql', apolloServerExpress.graphiqlExpress({
     endpointURL: "/graphql"
 }));
 /* End of GraphQL Configurations */
