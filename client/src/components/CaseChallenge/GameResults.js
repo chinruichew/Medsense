@@ -2,40 +2,68 @@ import React, { Component } from 'react';
 import { Button, Row } from 'react-bootstrap';
 
 class GameResults extends Component {
+    componentDidMount() {
+        window.scrollTo(0, 0)
+    }
 
-    renderContent(){ 
-        return(
-            <div >
-
-                {/* <h1> Bloody Episode </h1> 
-
-                <br /><br />
-
-                <div align="center">
-                    <h1> You have earned 200 / 350 XP! </h1>
+    renderContent(){
+        let questions = this.props.case.questions.map((obj, index) => {
+            let answer="";
+            if (obj.type==="Open"){
+                answer = obj.openEnded;
+            } else {
+                if (obj.check1) {
+                    answer += obj.mcq1 + ", ";
+                }
+                if (obj.check2) {
+                    answer += obj.mcq2 + ", ";
+                }
+                if (obj.check3) {
+                    answer += obj.mcq3 + ", ";
+                }
+                if (obj.check4) {
+                    answer += obj.mcq4 + ", ";
+                }
+                if (obj.check5) {
+                    answer += obj.mcq5 + ", ";
+                }
+                if (obj.check6) {
+                    answer += obj.mcq6 + ", ";
+                }
+                answer = answer.substring(0, answer.length - 2);
+            }
+            return (
+                <div>
+                    <h3>Question {obj.id}</h3>
+                    <h4>
+                        {obj.stem}
+                        <br/>
+                        {obj.question}
+                    </h4>
+                    <br/>
+                    <h3>Answer</h3>
+                    <h4>
+                        {answer}
+                        <br/>
+                        {obj.pearl}
+                    </h4>
+                    <br/>
                 </div>
-
+            );
+        });
+        return(
+            <div>
+                <div align="center">
+                <h1>{this.props.case.title}</h1>
+                <h1> You have earned {this.props.score} XP! </h1>
                 <br /><br />
 
-                <h3>
-                    <img src="./ThumbsUp.png" hspace='5' alt="" style={{ height: "30px" }} />
-                    Learning Points
-                </h3><br />
-                <h4> Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                    when an unknown printer took a galley of type and scrambled it to make a type 
-                    specimen book. It has survived not only five centuries, but also the leap into 
-                    electronic typesetting, remaining essentially unchanged.
-                </h4> 
+                </div>
+                <h3><img src="./checklist.png" hspace='5' alt="" style={{ width: "5%" }} />Learning Points</h3>
+                <h4>{this.props.case.learning}</h4>
+                <br/>
+                {questions}
 
-                <br /><br />
-
-                <h3>
-                    Question 1
-                </h3> */}
-                <Row className="text-center"><h1> Thank you for completing the case. </h1> </Row>
-                
-                    
             </div>
         );
     }
@@ -54,7 +82,6 @@ class GameResults extends Component {
     render() {
         return(
             <div className='container'>
-                <br /><br /><br /><br />
                 {this.renderContent()}
                 
                 {/* {this.renderDiscussionForum()} */}

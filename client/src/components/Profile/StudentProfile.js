@@ -26,6 +26,7 @@ class StudentProfile extends Component {
     }
 
     handleSaveChange(e) {
+        e.preventDefault();
         this.props.updateStudent(this.state).then((response) => {
             if (response) {
                 console.log(response)

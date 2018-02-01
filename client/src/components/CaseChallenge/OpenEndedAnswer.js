@@ -15,11 +15,15 @@ class OpenEndedAnswer extends Component {
         bindAll(this, 'renderContent', 'renderNextQuestion', 'nextQuestion');
     }
 
+    componentDidMount() {
+        window.scrollTo(0, 0)
+    }
+
     renderContent() {
         //if (!this.state.showResult) {
             return (
                 <div className='container'>
-                    <h3>You got __ points!</h3><br />
+                    <h3>You got 20 points!</h3><br />
                     <h4>
                         <strong>Answer</strong> <br />
                         <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{this.props.question.openEnded}</h4> <br /><br />
@@ -61,13 +65,12 @@ class OpenEndedAnswer extends Component {
     }
 
     complete() {
-        // this.setState({
-        //     showResult: true
-        // });
-        window.location = '/result';
+        this.props.updateScore(20);
+        this.props.handleViewScore();
     }
 
     nextQuestion() {
+        this.props.updateScore(20);
         this.props.handleNextQuestion(parseFloat(this.props.question.id));
     }
 

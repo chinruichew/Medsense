@@ -40,6 +40,7 @@ class ProfessorProfile extends Component {
     }
 
     handleSaveChange(e) {
+        e.preventDefault();
         this.props.updateProfessor(this.state).then((response) => {
             if (response) {
                 console.log(response)

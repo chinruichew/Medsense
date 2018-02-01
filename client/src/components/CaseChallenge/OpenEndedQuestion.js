@@ -79,6 +79,7 @@ class OpenEndedQuestion extends Component {
     componentDidMount() {
         let timeLeftVar = this.secondsToTime(this.state.seconds);
         this.setState({ time: timeLeftVar });
+        window.scrollTo(0, 0)
     }
 
     selectDone() {
@@ -148,6 +149,7 @@ class OpenEndedQuestion extends Component {
 
     handleNextQuestion(prevQn) {
         this.props.handleNextQuestion(prevQn);
+        this.props.updateScore(20);
     }
 
     handleOpenEndedChange(e) {
@@ -210,7 +212,11 @@ class OpenEndedQuestion extends Component {
                 </Panel>
                 {this.renderShowNextButton()}
 
-                {this.state.showAnswers && <OpenEndedAnswer question={this.props.question} totalQnNum={this.props.totalQnNum} handleNextQuestion={this.handleNextQuestion} />}
+                {this.state.showAnswers && <OpenEndedAnswer updateScore={this.props.updateScore}
+                                                            question={this.props.question}
+                                                            totalQnNum={this.props.totalQnNum}
+                                                            handleViewScore={this.props.handleViewScore}
+                                                            handleNextQuestion={this.props.handleNextQuestion} />}
 
             </div>
         );

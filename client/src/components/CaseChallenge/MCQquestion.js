@@ -92,6 +92,7 @@ class MCQquestion extends Component {
     componentDidMount() {
         let timeLeftVar = this.secondsToTime(this.state.seconds);
         this.setState({ time: timeLeftVar });
+        window.scrollTo(0, 0)
     }
 
     selectDone() {
@@ -285,7 +286,8 @@ class MCQquestion extends Component {
 
                 {this.state.showAnswers && <MCQAnswers question={this.props.question}
                     totalQnNum={this.props.totalQnNum}
-                    handleNextQuestion={this.handleNextQuestion}
+                    updateScore={this.props.updateScore} handleViewScore={this.props.handleViewScore}
+                    handleNextQuestion={this.props.handleNextQuestion}
                     check1Stu={this.state.check1Stu} check2Stu={this.state.check2Stu}
                     check3Stu={this.state.check3Stu} check4Stu={this.state.check4Stu}
                     check5Stu={this.state.check5Stu} check6Stu={this.state.check6Stu} />}

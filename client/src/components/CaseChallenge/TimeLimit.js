@@ -8,6 +8,7 @@ import { fetchGameById, storeCaseAnswer } from '../../actions';
 import MCQquestion from "./MCQquestion";
 import OpenEndedQuestion from "./OpenEndedQuestion";
 import { ObjectID } from 'bson';
+import GameResults from "./GameResults";
 
 function makeUnique() {
     var now = new Date().getTime();
@@ -32,15 +33,18 @@ class TimeLimit extends Component {
             authid: this.props.authid,
             authname: this.props.authname,
             caseid: "",
-            date: ""
+            date: "",
+            showResult:false,
+            score: 0,
         };
 
         bindAll(this, 'renderTimeLimitContent', 'redirect', 'renderGameContent', 'startGame',
-            'withTimeLimit', 'withoutTimeLimit', 'handleNextQuestion');
+            'withTimeLimit', 'withoutTimeLimit', 'handleNextQuestion', 'updateScore', 'handleViewScore');
     }
 
     componentDidMount() {
         this.props.fetchGameById(this.state.challenge._id);
+        window.scrollTo(0, 0)
     }
 
     redirect() {
@@ -59,8 +63,22 @@ class TimeLimit extends Component {
         this.setState({ withTimeLimit: false, noTimeLimit: true });
     }
 
+    handleNextQuestion(prevQn) {
+        this.setState({ currentQn: prevQn + 1 });
+    }
+
+    updateScore(points){
+        console.log(points);
+        this.setState(function(prevState, props){
+            return {score: prevState.score+=points}
+        });
+    }
+
+    handleViewScore(){
+        this.setState({showResult: true});
+    }
+
     renderTimeLimitContent() {
-        //return this.props.randomCase.title;
         if (!this.state.showGameView) {
             let timerBtnBgColor = this.state.withTimeLimit ? "#82C5D9" : "#CDE0EB";
             let noTimerBtnBgColor = this.state.noTimeLimit ? "#82C5D9" : "#CDE0EB";
@@ -125,12 +143,14 @@ class TimeLimit extends Component {
                     </Form>
                 </div>
             );
-        } else {
+        } else if(!this.state.showResult){
             return (
                 <div>
                     {this.renderGameContent()}
                 </div>
             );
+        } else {
+            return <GameResults case={this.props.game} score={this.state.score}/>;
         }
     }
 
@@ -164,11 +184,11 @@ class TimeLimit extends Component {
                             if (obj.id === currentQn + "") {
                                 if (obj.type === "MCQ") {
                                     return <MCQquestion date={date} answerid={caseid} authid={this.props.auth._id} question={obj} scenario={scenario} timeLimit={timeLimit}
-                                        totalQnNum={totalQnNum} caseTitle={caseTitle}
-                                        handleNextQuestion={this.handleNextQuestion} />
+                                        totalQnNum={totalQnNum} caseTitle={caseTitle} handleViewScore={this.handleViewScore}
+                                        handleNextQuestion={this.handleNextQuestion} updateScore={this.updateScore}/>
                                 } else {
                                     return <OpenEndedQuestion date={date} answerid={caseid} authid={this.props.auth._id} question={obj} scenario={scenario} timeLimit={timeLimit} totalQnNum={totalQnNum}
-                                        caseTitle={caseTitle} handleNextQuestion={this.handleNextQuestion} />
+                                        caseTitle={caseTitle} handleViewScore={this.handleViewScore} handleNextQuestion={this.handleNextQuestion} updateScore={this.updateScore}/>
                                 }
                             } else {
                                 return '';
@@ -177,10 +197,6 @@ class TimeLimit extends Component {
                         return questionNodes;
                 }
         }
-    }
-
-    handleNextQuestion(prevQn) {
-        this.setState({ currentQn: prevQn + 1 });
     }
 
     render() {

@@ -22,6 +22,7 @@ class MCQAnswers extends Component {
 
     componentDidMount() {
         this.getMCQAnswer();
+        window.scrollTo(0, 0)
     }
 
     getMCQAnswer() {
@@ -29,14 +30,12 @@ class MCQAnswers extends Component {
         let answerCount = 0;
         let stuCorrectCount = 0;
         let stuWrongCount = 0;
+
         if (this.props.question.check1) {
             answer += this.props.question.mcq1 + ", ";
             answerCount += 1;
             if (this.props.question.check1 === this.props.check1Stu) {
                 stuCorrectCount += 1;
-                //console.log(stuCorrectCount);
-            }else{
-                stuWrongCount += 1;
             }
         }else{
             if(this.props.check1Stu) {
@@ -49,8 +48,6 @@ class MCQAnswers extends Component {
             answerCount += 1;
             if (this.props.question.check2 === this.props.check2Stu) {
                 stuCorrectCount += 1;
-            }else{
-                stuWrongCount += 1;
             }
         }else{
             if(this.props.check2Stu){
@@ -58,72 +55,54 @@ class MCQAnswers extends Component {
             }
         }
 
-        if (this.props.question.mcq3.length !== 0){
-            if (this.props.question.check3) {
-                answer += this.props.question.mcq3 + ", ";
-                answerCount += 1;
-                if (this.props.question.check3 === this.props.check3Stu) {
-                    stuCorrectCount += 1;
-                }else{
-                    stuWrongCount += 1;
-                }
-            }else {
-                if (this.props.check3Stu) {
-                    stuWrongCount += 1;
-                }
+        if (this.props.question.check3) {
+            answer += this.props.question.mcq3 + ", ";
+            answerCount += 1;
+            if (this.props.question.check3 === this.props.check3Stu) {
+                stuCorrectCount += 1;
             }
-        }
-
-        if (this.props.question.mcq4.length !== 0){
-            if (this.props.question.check4) {
-                answer += this.props.question.mcq4 + ", ";
-                answerCount += 1;
-                if (this.props.question.check4 === this.props.check4Stu) {
-                    stuCorrectCount += 1;
-                }else{
-                    stuWrongCount += 1;
-                }
-            }else {
-                if (this.props.check4Stu) {
-                    stuWrongCount += 1;
-                }
+        }else {
+            if (this.props.check3Stu) {
+                stuWrongCount += 1;
             }
         }
 
 
-        if (this.props.question.mcq5.length !== 0){
-            if (this.props.question.check5) {
-                answer += this.props.question.mcq5 + ", ";
-                answerCount += 1;
-                if (this.props.question.check5 === this.props.check5Stu) {
-                    stuCorrectCount += 1;
-                }else{
-                    stuWrongCount += 1;
-                }
-            }else {
-                if (this.props.check5Stu) {
-                    stuWrongCount += 1;
-                }
+        if (this.props.question.check4) {
+            answer += this.props.question.mcq4 + ", ";
+            answerCount += 1;
+            if (this.props.question.check4 === this.props.check4Stu) {
+                stuCorrectCount += 1;
+            }
+        }else {
+            if (this.props.check4Stu) {
+                stuWrongCount += 1;
             }
         }
 
-
-        if (this.props.question.mcq6.length !== 0){
-            if (this.props.question.check6) {
-                answer += this.props.question.mcq6 + ", ";
-                answerCount += 1;
-                if (this.props.question.check6 === this.props.check6Stu) {
-                    stuCorrectCount += 1;
-                }else{
-                    stuWrongCount += 1;
-                }
-            }else {
-                if (this.props.check6Stu) {
-                    stuWrongCount += 1;
-                }
+        if (this.props.question.check5) {
+            answer += this.props.question.mcq5 + ", ";
+            answerCount += 1;
+            if (this.props.question.check5 === this.props.check5Stu) {
+                stuCorrectCount += 1;
+            }
+        }else {
+            if (this.props.check5Stu) {
+                stuWrongCount += 1;
             }
         }
 
+        if (this.props.question.check6) {
+            answer += this.props.question.mcq6 + ", ";
+            answerCount += 1;
+            if (this.props.question.check6 === this.props.check6Stu) {
+                stuCorrectCount += 1;
+            }
+        }else {
+            if (this.props.check6Stu) {
+                stuWrongCount += 1;
+            }
+        }
 
         answer = answer.substring(0, answer.length - 2);
         this.setState({ answerCount: answerCount, mcqAnswer: answer });
@@ -188,13 +167,12 @@ class MCQAnswers extends Component {
     }
 
     complete() {
-        // this.setState({
-        //     showResult: true
-        // });
-        window.location = '/result';
+        this.props.updateScore(this.state.questionActualScore);
+        this.props.handleViewScore();
     }
 
     nextQuestion() {
+        this.props.updateScore(this.state.questionActualScore);
         this.props.handleNextQuestion(parseFloat(this.props.question.id));
     }
 
