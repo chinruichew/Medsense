@@ -12,7 +12,9 @@ const chalkAnimation = require('chalk-animation');
 const helmet = require('helmet');
 const csurf = require('csurf');
 const GPU = require('gpu.js');
-const apolloServerExpress = require('apollo-server-express');
+
+// const apolloServerExpress = require('apollo-server-express');
+import {graphiqlExpress, graphqlExpress} from 'apollo-server-express';
 
 const keys = require('./config/keys');
 require('./models/User');
@@ -129,7 +131,7 @@ require('./routes/utilityRoutes')(app);
 /* End of REST API Configurations */
 
 /* Start of GraphQL Configurations */
-app.use('/graphiql', apolloServerExpress.graphiqlExpress({
+app.use('/graphiql', graphiqlExpress({
     endpointURL: "/graphql"
 }));
 /* End of GraphQL Configurations */

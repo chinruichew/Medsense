@@ -9,10 +9,11 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js --verbose",
+    "start": "babel-watch index.js --verbose",
     "server": "nodemon index.js --verbose",
     "client": "npm run start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "babel": "babel-node index.js --verbose",
+    "dev": "concurrently \"npm run babel\" \"npm run server\" \"npm run client\"",
     "deploy": "npm run build --prefix client --verbose && git add . --verbose && git commit -m \"aws deploy\" --verbose && git push origin master --verbose && eb deploy --verbose && eb open --verbose",
     "update": "npm install --verbose && npm update --verbose && cd client && npm install --verbose && npm update --verbose"
   },
@@ -31,6 +32,7 @@
     "app-module-path": "^2.2.0",
     "aws-sdk": "^2.188.0",
     "axios": "^0.17.1",
+    "babel-watch": "^2.0.7",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.2",
     "chai": "^4.1.2",
@@ -68,5 +70,9 @@
     "sticky-session": "^1.1.2",
     "supertest-as-promised": "^4.0.2",
     "tunnel-ssh": "^4.1.3"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1"
   }
 }
