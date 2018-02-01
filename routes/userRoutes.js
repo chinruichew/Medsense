@@ -53,7 +53,7 @@ module.exports = app => {
         });
     });
 
-    // Update post of User
+    // Update points of User
     app.post('/api/updateUserPoints', function(req, res) {
         User.findById(req.session.user._id, function (err, user) {
             if (err) { return res.send(err) }
