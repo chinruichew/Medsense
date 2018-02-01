@@ -14,7 +14,6 @@ const csurf = require('csurf');
 const GPU = require('gpu.js');
 
 const apolloServerExpress = require('apollo-server-express');
-// import {graphiqlExpress, graphqlExpress} from 'apollo-server-express';
 
 const keys = require('./config/keys');
 require('./models/User');
