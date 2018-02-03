@@ -24,13 +24,11 @@ module.exports = app => {
     });
 
     app.get('/api/logout', (req, res) => {
-        const before = req.session.user;
         req.session.user = '';
-        res.send(before);
-        // res.redirect('/');
+        res.redirect('/');
     });
 
     app.get('/api/current_user', (req, res) => {
-        res.send(req);
+        res.send(req.session.user);
     });
 };
