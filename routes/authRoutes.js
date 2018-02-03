@@ -30,6 +30,6 @@ module.exports = app => {
 
     app.get('/api/current_user', (req, res) => {
         console.log(req.session);
-        res.send(req.session);
+        res.send(req.session.user);
     });
 };
