@@ -27,7 +27,7 @@ module.exports = app => {
         const before = req.session.user;
         req.session.user = '';
         const after = req.session.user;
-        res.send(after);
+        res.send(before);
         // res.redirect('/');
     });
 
