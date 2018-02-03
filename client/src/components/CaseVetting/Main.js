@@ -181,7 +181,8 @@ class Main extends Component {
 
             for (let i=0; i<questions.length; i++){
                 let question = questions[i];
-                this.uploadFile(question.attachment, caseID, question.id, question._id);
+                let qn = qnData[i];
+                this.uploadFile(qn.attachment, caseID, question.id, question._id);
             }
         });
 

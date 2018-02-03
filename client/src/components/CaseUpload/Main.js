@@ -26,7 +26,7 @@ class Main extends Component {
             authname: this.props.authname,
             author: "",
         };
-        bindAll(this, 'addQuestion', 'saveChanges', 'handleUpdateOverview', 'handleUpdateQuestion', 'handleDeleteQuestion');
+        bindAll(this, 'validFileType', 'addQuestion', 'saveChanges', 'handleUpdateOverview', 'handleUpdateQuestion', 'handleDeleteQuestion');
     }
 
     handleAuthorChange(e) {
@@ -187,7 +187,6 @@ class Main extends Component {
             let questions = res.data.data.question;
             let qnData = this.state.qnData;
             this.setState({vm: true});
-            // let questions = this.state.qnData;
 
             for (let i=0; i<questions.length; i++){
                 let question = questions[i];
