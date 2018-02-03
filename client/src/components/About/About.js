@@ -22,9 +22,9 @@ class About extends Component {
         this.setState({
             motivationalQuote: this.getMotivationalQuote()
         });
-        // axios.get('/api/current_user').then(res => {
-        //     console.log(res);
-        // });
+        axios.get('/api/current_user').then(res => {
+            console.log(res);
+        });
     }
 
     componentWillUnmount(){
