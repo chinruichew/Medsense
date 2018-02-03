@@ -167,6 +167,7 @@ class Main extends Component {
             }
         };
         axios.post('/api/uploadCaseAttachment', formData, config).then(res => {
+            console.log(res);
         });
     };
 
