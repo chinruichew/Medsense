@@ -32,9 +32,8 @@ const getParams = {
 };
 
 s3.getObject(getParams, function (err, data) {
-    if (err) {
+    if (err)
         return err;
-    }
 
     const credentialData = data.Body.toString('utf-8');
 
