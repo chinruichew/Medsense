@@ -156,6 +156,7 @@ class Main extends Component {
     }
 
     uploadFile = (file, caseID, qID, objID) => {
+        console.log("what's happening!");
         const formData = new FormData();
         formData.append('file',file);
         formData.append('caseID',caseID);
@@ -174,11 +175,13 @@ class Main extends Component {
         axios.post('/api/updateCase', {
             values: this.state
         }).then(res => {
+            console.log(res.data.data.case);
+            console.log(res.data.data.question);
             const caseID = res.data.data.case;
             let questions = res.data.data.question;
             let qnData = this.state.qnData;
             this.setState({vm: true});
-
+            console.log(questions.length);
             for (let i=0; i<questions.length; i++){
                 let question = questions[i];
                 let qn = qnData[i];

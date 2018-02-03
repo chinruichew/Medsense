@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { bindAll } from 'lodash';
-import { Button, FormGroup, ControlLabel, FormControl, InputGroup, Accordion, Panel } from 'react-bootstrap';
+import {Button, FormGroup, ControlLabel, FormControl, InputGroup, Accordion, Panel, Row} from 'react-bootstrap';
 
 import '../CaseUpload/Upload.css';
+import ImageMagnifier from "./ImageMagnifier";
 
 class Question extends Component {
     constructor(props){
@@ -30,11 +31,12 @@ class Question extends Component {
             time: this.props.time,
             reference: this.props.reference,
             open: false,
+            changefile:false,
         };
         bindAll(this, 'handleFile', 'handleStemChange', 'handleQuestionChange', 'handleTypeChange', 'handleOpenEndedChange',
-            'handleMCQ1Change', 'handleMCQ2Change', 'handleMCQ3Change', 'handleMCQ4Change', 'handleMCQ5Change', 'handleMCQ6Change',
-            'handleCheck1Change', 'handleCheck2Change', 'handleCheck3Change', 'handleCheck4Change', 'handleCheck5Change',
-            'handleCheck6Change', 'handlePearlChange', 'handleTimeChange', 'handleReferenceChange','answer', 'update', 'deleteQuestion');
+            'handleMCQ1Change', 'handleMCQ2Change', 'handleMCQ3Change', 'handleMCQ4Change', 'handleMCQ5Change', 'handleMCQ6Change', 'showUpload',
+            'handleCheck1Change', 'handleCheck2Change', 'handleCheck3Change', 'handleCheck4Change', 'handleCheck5Change', 'handleShowUpload',
+            'handleCheck6Change', 'handlePearlChange', 'handleTimeChange', 'handleReferenceChange','answer', 'update', 'deleteQuestion', 'showAttachment');
     }
 
     componentWillReceiveProps(nextProps){
@@ -181,7 +183,7 @@ class Question extends Component {
 
     handleFile(e){
         const value = e.target.files[0];
-        this.setState({ file: value });
+        this.setState({ attachment: value });
         this.update(value, "attachment");
         // console.log(value);
     }
@@ -370,7 +372,42 @@ class Question extends Component {
         );
     }
 
+    showAttachment(){
+        if (this.state.attachment) {
+            let source;
+            if (typeof(this.state.attachment)==="string"){
+                console.log(this.state.attachment);
+                source = this.state.attachment;
+            } else {
+                source = window.URL.createObjectURL(this.state.attachment);
+            }
+            return (
+                <Row>
+                    <div className="col-md-5 col-md-offset-1">
+                        <ImageMagnifier url={source}/></div>
+                </Row>
+            );
+        }
+    }
+
+    showUpload(){
+        if (this.state.changefile){
+            return <FormControl type="file" onChange={(e)=>this.handleFile(e)} accept=".jpg, .jpeg, .png"/>;
+        }
+    }
+
+    handleShowUpload(){
+        this.setState({ changefile: true });
+    }
+
     render(){
+        let button;
+        if (typeof(this.state.attachment)==="string" && this.state.attachment!==""){
+            button = <Button onClick={(e) => this.handleShowUpload()}>Change Attachment</Button>;
+        } else if (!this.state.changefile) {
+            button = <FormControl type="file" onChange={(e)=>this.handleFile(e)} accept=".jpg, .jpeg, .png"/>;
+        }
+
         return(
             <div id="question">
                 <Accordion>
@@ -387,10 +424,10 @@ class Question extends Component {
 
                         <FormGroup controlId="formControlsAttachment">
                             <ControlLabel style={{ fontSize: "150%" }}>Add Attachment</ControlLabel>
-                            <FormControl type="file" onChange={(e)=>this.handleFile(e)} accept=".jpg, .jpeg, .png"/>
+                            {this.showAttachment()}
+                            {button}
+                            {this.showUpload()}
                         </FormGroup>
-
-                        <img src={this.state.attachment} style={{width: '600px'}} alt="No attachment was added."/>
 
                         <FormGroup controlId="formControlsType">
                             <ControlLabel style={{ fontSize: "150%" }}>Question Type<span style={{color:"red"}}>*</span></ControlLabel>
