@@ -26,7 +26,6 @@ module.exports = app => {
     app.get('/api/logout', (req, res) => {
         const before = req.session.user;
         req.session.user = '';
-        const after = req.session.user;
         res.send(before);
         // res.redirect('/');
     });

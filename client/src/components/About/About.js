@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import * as ReactGA from "react-ga";
 import { Button } from 'react-bootstrap';
+import axios from 'axios';
 
 class About extends Component {
     state = {
@@ -20,6 +21,9 @@ class About extends Component {
         this.intervalId = setInterval(this.timer.bind(this), 1000);
         this.setState({
             motivationalQuote: this.getMotivationalQuote()
+        });
+        axios.get('/api/current_user').then(res => {
+            console.log(res);
         });
     }
 
