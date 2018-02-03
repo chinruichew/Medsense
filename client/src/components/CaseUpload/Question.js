@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { bindAll } from 'lodash';
-import { Button, FormGroup, ControlLabel, FormControl, InputGroup, Accordion, Panel } from 'react-bootstrap';
+import {Button, FormGroup, ControlLabel, FormControl, InputGroup, Accordion, Panel, Row} from 'react-bootstrap';
 
 import './Upload.css';
+import ImageMagnifier from "./ImageMagnifier";
 
 class Question extends Component {
     constructor(props){
@@ -30,11 +31,12 @@ class Question extends Component {
             time: this.props.time,
             reference: this.props.reference,
             open: false,
+            showfile: false,
         };
         bindAll(this, 'handleFile', 'handleStemChange', 'handleQuestionChange', 'handleTypeChange', 'handleOpenEndedChange',
             'handleMCQ1Change', 'handleMCQ2Change', 'handleMCQ3Change', 'handleMCQ4Change', 'handleMCQ5Change', 'handleMCQ6Change',
-            'handleCheck1Change', 'handleCheck2Change', 'handleCheck3Change', 'handleCheck4Change', 'handleCheck5Change',
-            'handleCheck6Change', 'handlePearlChange', 'handleTimeChange', 'handleReferenceChange','answer', 'update', 'deleteQuestion');
+            'handleCheck1Change', 'handleCheck2Change', 'handleCheck3Change', 'handleCheck4Change', 'handleCheck5Change', 'showAttachment',
+            'handleCheck6Change', 'handlePearlChange', 'handleTimeChange', 'handleReferenceChange','answer', 'update', 'deleteQuestion', 'isValidNRIC');
     }
 
     componentWillReceiveProps(nextProps){
@@ -181,12 +183,8 @@ class Question extends Component {
 
     handleFile(e){
         const value = e.target.files[0];
-        this.setState({ file: value });
+        this.setState({ attachment: value });
         this.update(value, "attachment");
-        console.log(value);
-        if (value){
-            console.log("hi");
-        }
     }
 
     handleStemChange(e){
@@ -373,6 +371,21 @@ class Question extends Component {
         );
     }
 
+    showAttachment(){
+        if (this.state.attachment) {
+            let source = window.URL.createObjectURL(this.state.attachment);
+            return (
+                <Row>
+                <div className="col-md-5 col-md-offset-1">
+                    <ImageMagnifier url={source} /></div></Row>
+            );
+        }
+    }
+
+    isValidNRIC(theNric) {
+        return new RegExp(/^[STFG]\d{7}[A-Z]$/).test(theNric);
+    }
+
     render(){
         return(
             <div id="question">
@@ -390,6 +403,7 @@ class Question extends Component {
 
                         <FormGroup controlId="formControlsAttachment">
                             <ControlLabel style={{ fontSize: "150%" }}>Add Attachment</ControlLabel>
+                            {this.showAttachment()}
                             <FormControl type="file" onChange={(e)=>this.handleFile(e)} accept=".jpg, .jpeg, .png"/>
                         </FormGroup>
 

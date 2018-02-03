@@ -4,19 +4,7 @@ const Case = require('../models/Case');
 const Question = require('../models/Question');
 const constants = require('../utility/constantTypes');
 
-function IsValidNRIC(theNric) {
-    return new RegExp(/^[STFG]\d{7}[A-Z]$/).test(theNric);
-}
-
 module.exports = app => {
-
-    app.post('/api/validate', function (req, res) {
-        if (IsValidNRIC(req.body.nric)) {
-            return res.status(201).send({ data: null, message: "validate" });
-        } else {
-            return res.status(404).send({ data: null, message: "validatewrong" });
-        }
-    });
 
     app.post('/api/uploadCase', function (req, res) {
         let caseStatus = 'Pending';
