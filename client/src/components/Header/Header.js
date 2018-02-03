@@ -67,8 +67,6 @@ class Header extends Component {
                             case this.state.constants.USER_TYPE_ADMIN:
                                 return(
                                     <Nav pullRight>
-                                        {/*<NavItem className="navItem" eventKey={2} href="/search">Search</NavItem>*/}
-                                        {/*<NavItem className="navItem" eventKey={3} href="/upload">Upload</NavItem>*/}
                                         <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={4} href="/forum">     Forum     </NavItem>
                                         <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={5} href="/dashboard">     Dashboard     </NavItem>
                                         <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={6} href="/about">     About     </NavItem>

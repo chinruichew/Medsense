@@ -12,7 +12,6 @@ const chalkAnimation = require('chalk-animation');
 const helmet = require('helmet');
 const csurf = require('csurf');
 const GPU = require('gpu.js');
-
 const apolloServerExpress = require('apollo-server-express');
 
 const keys = require('./config/keys');
