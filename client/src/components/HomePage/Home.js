@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {Button, Table} from 'react-bootstrap';
-import { Redirect} from 'react-router-dom';
+import {NavLink, Redirect} from 'react-router-dom';
 import axios from 'axios';
+import * as ReactGA from "react-ga";
 
 import './Home.css';
-import * as ReactGA from "react-ga";
 
 class Home extends Component {
     state = {
@@ -18,18 +18,6 @@ class Home extends Component {
         }).catch(err => {
             console.log(err);
         });
-    }
-
-    startChallenge(){
-        window.location='/search';
-    }
-
-    uploadCase(){
-        window.location='/upload';
-    }
-
-    vetCase(){
-        window.location='/vetting';
     }
 
     renderContent() {
@@ -51,20 +39,22 @@ class Home extends Component {
                                     </div><br/><br/>
                                     <div className="row">
                                         <div className="col-sm-offset-3 col-sm-3 text-center" style={{fontSize:'150%'}}>
-                                            <Button style={{background: "white", color: 'black', width: "15em", height: "11em"}}
-                                                    bsSize="large" onClick={(e)=> this.uploadCase()}>
-                                                <img className="left-picture" src="./upload.png" alt="" style={{height:"5em", marginBottom: "3%"}}/>
-                                                <br/>Upload a case <br/>
-                                                <p style={{color:"#1aa3ff", marginTop:"2%", fontWeight:"bold"}}>Share your knowledge</p>
-                                            </Button>
+                                            <NavLink to='/upload'>
+                                                <Button style={{background: "white", color: 'black', width: "15em", height: "11em"}} bsSize="large">
+                                                    <img className="left-picture" src="./upload.png" alt="" style={{height:"5em", marginBottom: "3%"}}/>
+                                                    <br/>Upload a case <br/>
+                                                    <p style={{color:"#1aa3ff", marginTop:"2%", fontWeight:"bold"}}>Share your knowledge</p>
+                                                </Button>
+                                            </NavLink>
                                         </div>
                                         <div className="col-sm-3 text-center" style={{fontSize:'150%'}}>
-                                            <Button style={{background: "white", color: 'black', width: "15em", height: "11em"}}
-                                                    bsSize="large" onClick={(e)=> this.vetCase()}>
-                                                <img src="./vet.png" alt="" style={{height:"5em", marginBottom: "3%"}}/>
-                                                <br/>Vet a case<br/>
-                                                <p style={{color:"#1aa3ff", marginTop:"2%", fontWeight:"bold"}}> <em>You have 4 pending cases</em></p>
-                                            </Button>
+                                            <NavLink to='/vetting'>
+                                                <Button style={{background: "white", color: 'black', width: "15em", height: "11em"}} bsSize="large">
+                                                    <img src="./vet.png" alt="" style={{height:"5em", marginBottom: "3%"}}/>
+                                                    <br/>Vet a case<br/>
+                                                    <p style={{color:"#1aa3ff", marginTop:"2%", fontWeight:"bold"}}> <em>You have 4 pending cases</em></p>
+                                                </Button>
+                                            </NavLink>
                                         </div>
                                     </div>
                                     <br/>
@@ -115,21 +105,22 @@ class Home extends Component {
                                     </div><br/><br/>
                                     <div className="row">
                                         <div className="col-sm-offset-3 col-sm-3 text-center" style={{fontSize:'150%'}}>
-                                            <Button style={{background: "white", color: 'black', width: "15em", height: "11em"}}
-                                                    bsSize="large" onClick={(e)=> this.uploadCase()}>
-                                                <img src="./upload.png" alt="" style={{height:"5em", marginBottom: "3%"}}/>
-                                                <br/>Upload a case<br/>
-                                                <p style={{color:"#1aa3ff", marginTop:"2%", fontWeight:"bold"}}>Share your experiences</p>
-                                            </Button>
+                                            <NavLink to='/upload'>
+                                                <Button style={{background: "white", color: 'black', width: "15em", height: "11em"}} bsSize="large">
+                                                    <img src="./upload.png" alt="" style={{height:"5em", marginBottom: "3%"}}/>
+                                                    <br/>Upload a case<br/>
+                                                    <p style={{color:"#1aa3ff", marginTop:"2%", fontWeight:"bold"}}>Share your experiences</p>
+                                                </Button>
+                                            </NavLink>
                                         </div>
                                         <div className="col-sm-3  text-center" style={{fontSize:'150%'}}>
-                                            <Button style={{background: "white", color: 'black', width: "15em", height: "11em"}}
-                                                    bsSize="large" onClick={(e)=> this.startChallenge()}>
-                                                {/*<NavLink to="/search">*/}
-                                                <img src="./challenge.png" alt="" style={{height:"5em", marginBottom: "3%"}}/>
-                                                <br/>Start doing a case<br/>
-                                                <p style={{color:"#1aa3ff", marginTop:"2%", fontWeight:"bold"}}> <em>There are 26 new cases</em></p>
-                                            </Button>
+                                            <NavLink to='/search'>
+                                                <Button style={{background: "white", color: 'black', width: "15em", height: "11em"}} bsSize="large">
+                                                    <img src="./challenge.png" alt="" style={{height:"5em", marginBottom: "3%"}}/>
+                                                    <br/>Start doing a case<br/>
+                                                    <p style={{color:"#1aa3ff", marginTop:"2%", fontWeight:"bold"}}> <em>There are 26 new cases</em></p>
+                                                </Button>
+                                            </NavLink>
                                         </div>
                                     </div>
                                     <br/>
