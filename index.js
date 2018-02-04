@@ -13,6 +13,7 @@ const helmet = require('helmet');
 const csurf = require('csurf');
 const GPU = require('gpu.js');
 const apolloServerExpress = require('apollo-server-express');
+const session = require('express-session');
 
 const keys = require('./config/keys');
 require('./models/User');
@@ -79,9 +80,12 @@ app.use(morgan('combined'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(
-    cookieSession({
-        maxAge: 1000 * 60 * 60 * 24 * 7,
-        keys: [keys.cookieKey]
+    session({
+        secret: 'Medsense Nyan cat',
+        cookie: {
+            maxAge: 1000 * 60 * 60 * 24 * 7,
+            keys: [keys.cookieKey]
+        }
     })
 );
 app.use(flash());
