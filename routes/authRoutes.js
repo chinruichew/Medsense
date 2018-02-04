@@ -25,11 +25,12 @@ module.exports = app => {
 
     app.get('/api/logout', function(req, res) {
         req.session.destroy(function(err) {
+            res.clearCookie("AWSELB");
             res.redirect('/');
         });
     });
 
     app.get('/api/current_user', (req, res) => {
-        res.send(req.session);
+        res.send(req.session.user);
     });
 };
