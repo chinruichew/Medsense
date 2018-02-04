@@ -84,7 +84,9 @@ const sessionConfig = {
     cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 7,
         keys: [keys.cookieKey]
-    }
+    },
+    resave: true,
+    saveUninitialized: false
 };
 if (process.env.NODE_ENV === 'production') {
     app.set('trust proxy', 1);
