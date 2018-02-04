@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import * as ReactGA from "react-ga";
 import { Button } from 'react-bootstrap';
-import axios from 'axios';
 
 class About extends Component {
     state = {
@@ -68,10 +67,6 @@ class About extends Component {
         );
     }
 
-    signup(){
-        window.location='/register';
-    }
-
     render() {
         // React GA
         ReactGA.initialize('UA-112382826-1');
@@ -115,7 +110,7 @@ class About extends Component {
                             and check out your strength and weaknesses at your dashboard.<br/><br/>
                             Come make sense of medicine.
                         </h4><br/><br/>
-                        <Button onClick={this.signup} className="btn btn-primary btn-lg" style={{whiteSpace:"pre-wrap", background: "#483D8B", color:"white", width: "25%"}}>
+                        <Button onClick={(e) => window.location='/register'} className="btn btn-primary btn-lg" style={{whiteSpace:"pre-wrap", background: "#483D8B", color:"white", width: "25%"}}>
                             <p style={{marginTop: "7%"}}>REGISTER</p>
                         </Button>
                     </div>
