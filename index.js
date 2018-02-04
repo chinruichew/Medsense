@@ -79,15 +79,18 @@ app.use(helmet());
 app.use(morgan('combined'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(
-    session({
-        secret: 'Medsense Nyan cat',
-        cookie: {
-            maxAge: 1000 * 60 * 60 * 24 * 7,
-            keys: [keys.cookieKey]
-        }
-    })
-);
+const sessionConfig = {
+    secret: 'Medsense Nyan cat',
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 24 * 7,
+        keys: [keys.cookieKey]
+    }
+};
+if (process.env.NODE_ENV === 'production') {
+    app.set('trust proxy', 1);
+    sessionConfig.cookie.secure = true;
+}
+app.use(session(sessionConfig));
 app.use(flash());
 
 function shouldCompress(req, res) {

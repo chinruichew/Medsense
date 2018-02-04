@@ -25,7 +25,6 @@ module.exports = app => {
 
     app.get('/api/logout', function(req, res) {
         req.session.destroy(function(err) {
-            // cannot access session here
             res.redirect('/');
         });
     });
