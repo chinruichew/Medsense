@@ -163,4 +163,6 @@ if (process.env.NODE_ENV === 'production') {
 const PORT = process.env.PORT || 5000;
 console.log(chalk.blue.underline.bold('Listening to PORT:', PORT));
 
-app.listen(PORT);
+const server = app.listen(PORT, function () {
+    console.log('Server running at http://127.0.0.1:' + PORT + '/');
+});
