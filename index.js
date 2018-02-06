@@ -139,6 +139,7 @@ require('./routes/s3Routes')(app);
 require('./routes/adminRoutes')(app);
 require('./routes/gameRoutes')(app);
 require('./routes/utilityRoutes')(app);
+require('./routes/nlpRoutes')(app);
 /* End of REST API Configurations */
 
 /* Start of GraphQL Configurations */
