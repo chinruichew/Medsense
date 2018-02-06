@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const User = require('../models/User');
 const Case = require('../models/Case');
 const Question = require('../models/Question');
+
 const constants = require('../utility/constantTypes');
 
 module.exports = app => {
@@ -67,6 +68,71 @@ module.exports = app => {
         return res.send({ data: {case:newCase._id, question:questions}, message: "uploadCase success" });
     });
 
+    function putQuestions(prop, oneCase, questions) {
+        return new Promise(resolve => {
+            Question.findById(prop['_id'], function (err, oneQuestion) {
+                if (oneQuestion) {
+                    oneQuestion.id = prop['id'];
+                    oneQuestion.question = prop['question'];
+                    oneQuestion.attachment = null;
+                    oneQuestion.type = prop['type'];
+                    oneQuestion.openEnded = prop['openEnded'];
+                    oneQuestion.pearl = prop['pearl'];
+                    oneQuestion.time = prop['time'];
+                    oneQuestion.reference = prop['reference'];
+                    oneQuestion.stem = prop['stem'];
+                    oneQuestion.mcq1 = prop['mcq1'];
+                    oneQuestion.mcq2 = prop['mcq2'];
+                    oneQuestion.mcq3 = prop['mcq3'];
+                    oneQuestion.mcq4 = prop['mcq4'];
+                    oneQuestion.mcq5 = prop['mcq5'];
+                    oneQuestion.mcq6 = prop['mcq6'];
+                    oneQuestion.check1 = prop['check1'];
+                    oneQuestion.check2 = prop['check2'];
+                    oneQuestion.check3 = prop['check3'];
+                    oneQuestion.check4 = prop['check4'];
+                    oneQuestion.check5 = prop['check5'];
+                    oneQuestion.check6 = prop['check6'];
+                    oneQuestion.save();
+                    questions.push(oneQuestion);
+                }
+                if (!oneQuestion) {
+                    const newQuestion = new Question({
+                        id: prop['id'],
+                        stem: prop['stem'],
+                        question: prop['question'],
+                        attachment: null,
+                        type: prop['type'],
+                        openEnded: prop['openEnded'],
+                        pearl: prop['pearl'],
+                        time: prop['time'],
+                        reference: prop['reference'],
+                        mcq1: prop['mcq1'],
+                        mcq2: prop['mcq2'],
+                        mcq3: prop['mcq3'],
+                        mcq4: prop['mcq4'],
+                        mcq5: prop['mcq5'],
+                        mcq6: prop['mcq6'],
+                        check1: prop['check1'],
+                        check2: prop['check2'],
+                        check3: prop['check3'],
+                        check4: prop['check4'],
+                        check5: prop['check5'],
+                        check6: prop['check6'],
+                        case: oneCase._id
+                        //Ricky to fix should store qid in case
+                    });
+                    newQuestion.save();
+                    oneCase.questions.push(newQuestion._id);
+                    oneCase.save();
+                    questions.push(newQuestion);
+                }
+                console.log(questions);
+                resolve("Done");
+            });
+        });
+    }
+
     app.post('/api/updateCase', function (req, res) {
         Case.findById(req.body.values.id, function (err, oneCase) {
             oneCase.title = req.body.values.title;
@@ -93,71 +159,20 @@ module.exports = app => {
             const jsonObject = req.body.values.qnData;
 
             let questions=[];
-            jsonObject.forEach(function (prop) {
-            // for (const prop in jsonObject) {
-                Question.findById(prop['_id'], function (err, oneQuestion) {
-                    if (oneQuestion) {
-                        oneQuestion.id = prop['id'];
-                        oneQuestion.question = prop['question'];
-                        oneQuestion.attachment = null;
-                        oneQuestion.type = prop['type'];
-                        oneQuestion.openEnded = prop['openEnded'];
-                        oneQuestion.pearl = prop['pearl'];
-                        oneQuestion.time = prop['time'];
-                        oneQuestion.reference = prop['reference'];
-                        oneQuestion.stem = prop['stem'];
-                        oneQuestion.mcq1 = prop['mcq1'];
-                        oneQuestion.mcq2 = prop['mcq2'];
-                        oneQuestion.mcq3 = prop['mcq3'];
-                        oneQuestion.mcq4 = prop['mcq4'];
-                        oneQuestion.mcq5 = prop['mcq5'];
-                        oneQuestion.mcq6 = prop['mcq6'];
-                        oneQuestion.check1 = prop['check1'];
-                        oneQuestion.check2 = prop['check2'];
-                        oneQuestion.check3 = prop['check3'];
-                        oneQuestion.check4 = prop['check4'];
-                        oneQuestion.check5 = prop['check5'];
-                        oneQuestion.check6 = prop['check6'];
-                        oneQuestion.save();
-                        questions.push(oneQuestion);
-                    }
-                    if (!oneQuestion) {
-                        const newQuestion = new Question({
-                            id: prop['id'],
-                            stem: prop['stem'],
-                            question: prop['question'],
-                            attachment: null,
-                            type: prop['type'],
-                            openEnded: prop['openEnded'],
-                            pearl: prop['pearl'],
-                            time: prop['time'],
-                            reference: prop['reference'],
-                            mcq1: prop['mcq1'],
-                            mcq2: prop['mcq2'],
-                            mcq3: prop['mcq3'],
-                            mcq4: prop['mcq4'],
-                            mcq5: prop['mcq5'],
-                            mcq6: prop['mcq6'],
-                            check1: prop['check1'],
-                            check2: prop['check2'],
-                            check3: prop['check3'],
-                            check4: prop['check4'],
-                            check5: prop['check5'],
-                            check6: prop['check6'],
-                            case: oneCase._id
-                            //Ricky to fix should store qid in case
-                        });
-                        newQuestion.save();
-                        oneCase.questions.push(newQuestion._id);
-                        oneCase.save();
-                        questions.push(newQuestion);
-                    }
-                })
-                console.log(questions);
+            const Promise = require("bluebird");
+            const p = Promise.resolve();
+            jsonObject.forEach(function(prop, index, arr) {
+                p.then(new Promise(function(resolve, reject) {
+                    putQuestions(prop, oneCase, questions).then(response => {
+                        console.log(questions);
+                        res.send(questions);
+                        resolve();
+                    });
+                }));
             });
-
-            // return res.send({ data: jsonObject, message: "updateCase success" });
-            return res.send({ data: {case:oneCase._id, question:questions}, message: "updateCase success" });
+            p.then(function(){
+                console.log('Final: ', questions);
+            });
         });
     });
 
