@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FETCH_USER, FETCH_CASES, FETCH_VETTED_CASES, UPDATE_PROFESSOR, UPDATE_STUDENT, UPLOAD_CASE, FETCH_GAME_BY_ID, FETCH_CASE_BY_ID, UPDATE_CASE, FETCH_RANDOM_CASE, FETCH_ADMIN_CASES, FETCH_CASE_BY_APPROACH, FETCH_CASE_BY_SPECIALITY, DELETE_ADMIN_CASE, FETCH_ADMIN_USERS, FETCH_FILTERED_ADMIN_STUDENTS, FETCH_FILTERED_ADMIN_PROFESSORS, DELETE_ADMIN_PROFESSOR, DELETE_ADMIN_STUDENT, FETCH_FILTERED_ADMIN_CASES } from './types';
+import { FETCH_USER, FETCH_CASES, FETCH_VETTED_CASES, UPDATE_PROFESSOR, UPDATE_STUDENT, UPLOAD_CASE, FETCH_GAME_BY_ID, FETCH_CASE_BY_ID, UPDATE_CASE, FETCH_RANDOM_CASE, FETCH_ADMIN_CASES, FETCH_CASE_BY_APPROACH, FETCH_CASE_BY_SPECIALITY, DELETE_ADMIN_CASE, FETCH_ADMIN_USERS, FETCH_FILTERED_ADMIN_STUDENTS, FETCH_FILTERED_ADMIN_PROFESSORS, DELETE_ADMIN_PROFESSOR, DELETE_ADMIN_STUDENT, FETCH_FILTERED_ADMIN_CASES, STORE_CASE_ANSWER } from './types';
 
 export const fetchUser = () => async dispatch => {
     const res = await axios.get('/api/current_user');
@@ -164,11 +164,11 @@ export const fetchGameById = (values) => async dispatch => {
     dispatch({ type: FETCH_GAME_BY_ID, payload: res.data });
 };
 
-export const storeCaseAnswer = (values, values1, values2, values3) => async dispatch => {
-    await axios.post('/api/storeCaseAnswer', {
-        values, values1, values2, values3
+export const storeCaseAnswer = (values, values1, values2, values3, values4) => async dispatch => {
+    const res = await axios.post('/api/storeCaseAnswer', {
+        values, values1, values2, values3, values4
     });
-    // dispatch({ type: FETCH_GAME_BY_ID, payload: res.data });
+    dispatch({ type: STORE_CASE_ANSWER, payload: res.data });
 };
 
 export const storeCaseAnswerMCQ = (values) => async dispatch => {

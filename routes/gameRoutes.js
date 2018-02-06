@@ -53,8 +53,22 @@ module.exports = app => {
         res.send(result);
     });
 
+    app.post('/api/storeCaseScore', function (req, res) {
+        Answer.find({
+            //_id: req.body.values.answerid,
+            userid: req.body.values.authid,
+            date: req.body.values.date
+        }, function (err, answer) {
+            answer[0]['attempt']=req.body.values.attempt;
+            answer[0]['score']=req.body.values.score;
+            answer[0].save();
+        });
+        return res.send({ data: {}, message: "storeCaseScore success" });
+    });
+
     app.post('/api/storeCaseAnswer', function (req, res) {
-        //console.log(req.body.values3)
+        //need to get the latest attempt first!!
+        const attempt = 0;
         const newCaseAnswer = new Answer({
             //_id: mongoose.Types.ObjectId(req.body.values1),
             userid: mongoose.Types.ObjectId(req.body.values),
@@ -66,10 +80,11 @@ module.exports = app => {
             subspeciality: req.body.values3.subspeciality,
             scenario: req.body.values3.scenario,
             learning: req.body.values3.learning,
-            status: req.body.values3.status
+            status: req.body.values3.status,
+            attempt: attempt+1,
         });
         newCaseAnswer.save();
-        // return res.send({ data: {}, message: "storeCaseAnswer success" });
+        return res.send({ data: {attempt: attempt+1}, message: "storeCaseAnswer success" });
     });
 
     app.post('/api/storeCaseAnswerMCQ', function (req, res) {
@@ -78,13 +93,12 @@ module.exports = app => {
             userid: req.body.values.authid,
             date: req.body.values.date
         }, function (err, answer) {
+            const timeTaken = req.body.values.timeLimit-req.body.values.seconds;
             const newCaseQuestion = new QuestionAnswer({
                 question: req.body.values.question,
                 stem: req.body.values.stem,
                 type: req.body.values.type,
                 attachment: req.body.values.attachment,
-                filename: req.body.values.filename,
-                filetype: req.body.values.filetype,
                 pearl: req.body.values.pearl,
                 reference: req.body.values.reference,
                 mcq1: req.body.values.mcq1,
@@ -98,7 +112,8 @@ module.exports = app => {
                 check3: req.body.values.check3Stu,
                 check4: req.body.values.check4Stu,
                 check5: req.body.values.check5Stu,
-                check6: req.body.values.check6Stu
+                check6: req.body.values.check6Stu,
+                timeTaken: timeTaken,
             });
             newCaseQuestion.save();
             answer[0]['questions'].push(newCaseQuestion);
@@ -113,16 +128,16 @@ module.exports = app => {
             userid: req.body.values.authid,
             date: req.body.values.date
         }, function (err, answer) {
+            const timeTaken = req.body.values.timeLimit-req.body.values.seconds;
             const newCaseQuestion = new QuestionAnswer({
                 question: req.body.values.question,
                 openEnded: req.body.values.openEnded,
                 stem: req.body.values.stem,
                 type: req.body.values.type,
                 attachment: req.body.values.attachment,
-                filename: req.body.values.filename,
-                filetype: req.body.values.filetype,
                 pearl: req.body.values.pearl,
-                reference: req.body.values.reference
+                reference: req.body.values.reference,
+                timeTaken: timeTaken,
             });
             newCaseQuestion.save();
             answer[0]['questions'].push(newCaseQuestion);

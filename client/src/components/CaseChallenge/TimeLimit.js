@@ -150,7 +150,16 @@ class TimeLimit extends Component {
                 </div>
             );
         } else {
-            return <GameResults case={this.props.game} score={this.state.score}/>;
+            //need to get the attempt when storeCaseAnswer
+            let attempt = this.state.attempt;
+            const base = this.props.game.difficulty==="Beginner" ? 0.5^(attempt)*100 : 0.5^(attempt)*200
+            let total = 0;
+            for (let i=0; i<=this.props.game.questions.length;i++){
+                total += this.props.game.questions[i].score;
+            }
+            const score = this.state.score/total*base;
+            const final = Math.round(this.state.withTimeLimit ? score*1.5 : score);
+            return <GameResults date={this.state.date} answerid={this.state.caseid} authid={this.props.auth._id} case={this.props.game} score={final}/>;
         }
     }
 
@@ -173,7 +182,7 @@ class TimeLimit extends Component {
                         if (this.state.date === "") {
                             date = makeUnique();
                             this.setState({ date: date});
-                            this.props.storeCaseAnswer(this.props.auth._id, this.state.caseid, date, this.state.challenge);
+                            this.setState({ attempt: this.props.storeCaseAnswer(this.props.auth._id, this.state.caseid, date, this.state.challenge, this.state.score).data.attempt});
                         } 
                         let timeLimit = this.state.withTimeLimit;
                         let currentQn = this.state.currentQn;

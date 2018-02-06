@@ -29,6 +29,7 @@ class OpenEndedQuestion extends Component {
             authid: this.props.authid,
             authname: this.props.authname,
             time: {},
+            timeLimit: parseFloat(this.props.question.time) * 60,
             date: this.props.date,
             seconds: parseFloat(this.props.question.time) * 60
         };

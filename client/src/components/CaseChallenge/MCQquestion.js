@@ -40,6 +40,7 @@ class MCQquestion extends Component {
             answerid: this.props.answerid,
             authid: this.props.authid,
             authname: this.props.authname,
+            timeLimit: parseFloat(this.props.question.time) * 60,
             time: {},
             date: this.props.date,
             seconds: parseFloat(this.props.question.time) * 60,

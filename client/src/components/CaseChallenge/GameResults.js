@@ -1,9 +1,24 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
+import axios from 'axios';
+import BootstrapModal from '../UI/Modal/VettingBootstrapModal.js';
 
 class GameResults extends Component {
+    constructor(props){
+        super(props);
+        this.state={
+            vmShow:false,
+        };
+    }
+
     componentDidMount() {
-        window.scrollTo(0, 0)
+        window.scrollTo(0, 0);
+        axios.post('/api/updateUserPoints', {
+            score: this.props.score
+        }).then(res => {
+            this.setState({points: res.data.points})
+        });
+        this.checkLevel();
     }
 
     renderContent(){
@@ -80,12 +95,37 @@ class GameResults extends Component {
         );
     }
 
+    checkLevel(){
+        const prev = this.state.points-this.props.score;
+        const prevLevel = Math.floor((prev-100)/50+1);
+        const currLevel = Math.floor((this.state.points-100)/50+1);
+        if (prevLevel!==currLevel){
+            this.setState({vmShow:true, level:currLevel});
+        }
+    }
+
     render() {
+        let vmClose = () => this.setState({ vmShow: false });
         return(
             <div className='container'>
                 {this.renderContent()}
-                
                 {/* {this.renderDiscussionForum()} */}
+                <BootstrapModal
+                    show={this.state.vmShow}
+                    onHide={vmClose}
+                    aria-labelledby="levelup-modal">
+                    <BootstrapModal.Header closeButton>
+                        <center><BootstrapModal.Title id="levelup-modal">LEVEL UP</BootstrapModal.Title></center>
+                    </BootstrapModal.Header>
+                    <BootstrapModal.Body>
+                        <center><p>{this.state.points} XP</p>
+                        <p>Level {this.state.level}</p>
+                            <p>Your level increased</p></center>
+                    </BootstrapModal.Body>
+                    <BootstrapModal.Footer>
+                        <center><Button onClick={vmClose}>OKAY</Button></center>
+                    </BootstrapModal.Footer>
+                </BootstrapModal>
             </div>
         );
     }
