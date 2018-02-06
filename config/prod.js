@@ -9,5 +9,6 @@ module.exports = {
     dstPort: process.env.DST_PORT,
     localPort: process.env.LOCAL_PORT,
     mongoConnectBucket: process.env.MONGO_CONNECT_BUCKET,
-    mongoConnectKey: process.env.MONGO_CONNECT_KEY
+    mongoConnectKey: process.env.MONGO_CONNECT_KEY,
+    cookieKeySecret: process.env.COOKIE_KEY_SECRET
 };

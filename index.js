@@ -96,7 +96,7 @@ app.use(bodyParser.json());
 
 /* Start of Session Configurations */
 const sessionConfig = {
-    secret: 'Medsense Nyan cat',
+    secret: keys.cookieKeySecret,
     cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 7,
         keys: [keys.cookieKey]
