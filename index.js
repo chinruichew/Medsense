@@ -76,6 +76,10 @@ router.use(function (req, res, next) {
 });
 app.use(router);
 app.use(helmet());
+morgan.token('date', function() {
+    const p = new Date().toString().replace(/[A-Z]{3}\+/,'+').split(/ /);
+    return( p[2]+'/'+p[1]+'/'+p[3]+':'+p[4]+' '+p[5] );
+});
 app.use(morgan('combined'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
