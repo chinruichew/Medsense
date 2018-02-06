@@ -14,6 +14,7 @@ const csurf = require('csurf');
 const GPU = require('gpu.js');
 const apolloServerExpress = require('apollo-server-express');
 const session = require('express-session');
+const connect = require("connect");
 
 const keys = require('./config/keys');
 require('./models/User');
@@ -83,6 +84,8 @@ morgan.token('date', function() {
 app.use(morgan('combined'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+/* Start of Session Configurations */
 const sessionConfig = {
     secret: 'Medsense Nyan cat',
     cookie: {
@@ -98,6 +101,8 @@ if (process.env.NODE_ENV === 'production') {
     sessionConfig.cookie.secure = true;
 }
 app.use(cookieSession(sessionConfig));
+/* End of Session Configurations */
+
 app.use(flash());
 
 function shouldCompress(req, res) {
