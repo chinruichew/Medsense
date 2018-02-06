@@ -90,7 +90,8 @@ const sessionConfig = {
         keys: [keys.cookieKey]
     },
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
+    httpOnly: false
 };
 if (process.env.NODE_ENV === 'production') {
     app.set('trust proxy', 1);
