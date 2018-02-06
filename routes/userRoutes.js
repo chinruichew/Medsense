@@ -59,8 +59,9 @@ module.exports = app => {
             if (err) { return res.send(err) }
 
             if (user) {
-                user.points = req.body.points;
+                user.points += req.body.score;
                 user.save();
+                return res.send({points: user.points});
             }
         });
     });
