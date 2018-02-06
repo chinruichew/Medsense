@@ -15,6 +15,11 @@ const GPU = require('gpu.js');
 const apolloServerExpress = require('apollo-server-express');
 const session = require('express-session');
 const connect = require("connect");
+const errorhandler = require('errorhandler');
+const notifier = require('node-notifier');
+const MerrorModule = require('express-merror');
+const Merror = MerrorModule.Merror;
+const MerrorMiddleware = MerrorModule.MerrorMiddleware;
 
 const keys = require('./config/keys');
 require('./models/User');
@@ -119,6 +124,20 @@ function shouldCompress(req, res) {
 app.use(compression({filter: shouldCompress}));
 
 const csurfProtection = csurf({ cookie: true });
+
+app.use(MerrorMiddleware());
+
+function errorNotification (err, str, req) {
+    const title = 'Error in ' + req.method + ' ' + req.url;
+
+    notifier.notify({
+        title: title,
+        message: str
+    })
+}
+if (process.env.NODE_ENV !== 'production') {
+    app.use(errorhandler({log: errorNotification}))
+}
 /* End of Middleware configuration */
 
 /* Start of Slug URL String configuration */
