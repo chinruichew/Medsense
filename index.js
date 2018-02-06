@@ -96,7 +96,7 @@ if (process.env.NODE_ENV === 'production') {
     app.set('trust proxy', 1);
     sessionConfig.cookie.secure = true;
 }
-app.use(session(sessionConfig));
+app.use(cookieSession(sessionConfig));
 app.use(flash());
 
 function shouldCompress(req, res) {

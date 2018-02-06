@@ -24,10 +24,9 @@ module.exports = app => {
     });
 
     app.get('/api/logout', function(req, res) {
-        req.session.destroy(function(err) {
-            res.clearCookie("AWSELB");
-            res.redirect('/');
-        });
+        req.session = null;
+        res.clearCookie("AWSELB");
+        res.redirect('/');
     });
 
     app.get('/api/current_user', (req, res) => {
