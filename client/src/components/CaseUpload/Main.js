@@ -60,6 +60,7 @@ class Main extends Component {
                     "pearl": '',
                     "time": "Select One",
                     "reference": '',
+                    "mark":'0',
                 }
             ),
         });
@@ -97,6 +98,7 @@ class Main extends Component {
                 try {
                     for (let i=0; i<questions.length; i++) {
                         let obj = questions[i];
+                        console.log(obj.mark);
                         if (obj.question === '') {
                             error = "Question #" + obj.id + ": Please fill in the Question!";
                             throw BreakException;
@@ -134,6 +136,12 @@ class Main extends Component {
                             throw BreakException;
                         } else if (obj.time === "Select One") {
                             error = "Question #" + obj.id + ": Please select a Time Limit!";
+                            throw BreakException;
+                        } else if(obj.mark === '0'){
+                            error = "Question #" + obj.id + ": Please enter a mark (whole number)!";
+                            throw BreakException;
+                        } else if (!new RegExp(/^\d+$/).test(obj.mark)){
+                            error = "Question #" + obj.id + ": Please enter a whole number for mark!";
                             throw BreakException;
                         }
                         // });
@@ -227,6 +235,7 @@ class Main extends Component {
                         "pearl": obj.pearl,
                         "time": obj.time,
                         "reference": obj.reference,
+                        "mark": obj.mark,
                     }
                 );
 
@@ -263,6 +272,7 @@ class Main extends Component {
                 obj.pearl = details.pearl;
                 obj.time = details.time;
                 obj.reference = details.reference;
+                obj.mark=details.mark;
             }
         });
         this.setState({ qnData: questions });
@@ -322,6 +332,7 @@ class Main extends Component {
                     pearl={obj.pearl}
                     time={obj.time}
                     reference={obj.reference}
+                    mark={obj.mark}
                     handleUpdateQuestion={this.handleUpdateQuestion}
                     handleDeleteQuestion={this.handleDeleteQuestion} />
             );
