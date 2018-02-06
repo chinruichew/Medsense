@@ -66,25 +66,36 @@ module.exports = app => {
         return res.send({ data: {}, message: "storeCaseScore success" });
     });
 
-    app.post('/api/storeCaseAnswer', function (req, res) {
+    app.post('/api/storeCaseAnswer', async (req, res)=> {
         //need to get the latest attempt first!!
         const attempt = 0;
         const newCaseAnswer = new Answer({
             //_id: mongoose.Types.ObjectId(req.body.values1),
-            userid: mongoose.Types.ObjectId(req.body.values),
-            date: req.body.values2,
-            title: req.body.values3.title,
-            difficulty: req.body.values3.difficulty,
-            speciality: req.body.values3.speciality,
-            approach: req.body.values3.approach,
-            subspeciality: req.body.values3.subspeciality,
-            scenario: req.body.values3.scenario,
-            learning: req.body.values3.learning,
-            status: req.body.values3.status,
+            // userid: mongoose.Types.ObjectId(req.body.values),
+            // date: req.body.values2,
+            // title: req.body.values3.title,
+            // difficulty: req.body.values3.difficulty,
+            // speciality: req.body.values3.speciality,
+            // approach: req.body.values3.approach,
+            // subspeciality: req.body.values3.subspeciality,
+            // scenario: req.body.values3.scenario,
+            // learning: req.body.values3.learning,
+            // status: req.body.values3.status,
             attempt: attempt+1,
+            userid: mongoose.Types.ObjectId(req.body.authid),
+            date: req.body.date,
+            title: req.body.case.title,
+            difficulty: req.body.case.difficulty,
+            speciality: req.body.case.speciality,
+            approach: req.body.case.approach,
+            subspeciality: req.body.case.subspeciality,
+            scenario: req.body.case.scenario,
+            learning: req.body.case.learning,
+            status: req.body.case.status,
         });
-        newCaseAnswer.save();
-        return res.send({ data: {attempt: attempt+1}, message: "storeCaseAnswer success" });
+        const result=await newCaseAnswer.save();
+        console.log(attempt);
+        return res.send(result);
     });
 
     app.post('/api/storeCaseAnswerMCQ', function (req, res) {

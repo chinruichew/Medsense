@@ -22,8 +22,8 @@ class Main extends Component {
             showSpecialitySearch: false,
             showTimeLimit: false,
             //approach: null,
-            authid: this.props.authid,
-            authname: this.props.authname,
+            // authid: this.props.authid,
+            // authname: this.props.authname,
             random: false,
         };
 
@@ -129,7 +129,7 @@ class Main extends Component {
                     if (this.state.random){
                         return <TimeLimit case={this.props.randomCase}/>
                     } else {
-                        //this.setState({showApproachSearch:false, showSpecialitySearch:false})
+                        console.log(this.state.game);
                         return <TimeLimit case={this.state.game}/>
                     }
 

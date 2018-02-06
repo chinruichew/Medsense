@@ -3,7 +3,7 @@ import { Form, FormGroup, Col } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import { bindAll } from 'lodash';
 import { connect } from 'react-redux';
-
+import axios from 'axios';
 import { fetchGameById, storeCaseAnswer } from '../../actions';
 import MCQquestion from "./MCQquestion";
 import OpenEndedQuestion from "./OpenEndedQuestion";
@@ -30,8 +30,8 @@ class TimeLimit extends Component {
             withTimeLimit: false,
             noTimeLimit: true,
             currentQn: 1,
-            authid: this.props.authid,
-            authname: this.props.authname,
+            // authid: this.props.authid,
+            // authname: this.props.authname,
             caseid: "",
             date: "",
             showResult:false,
@@ -52,7 +52,32 @@ class TimeLimit extends Component {
     }
 
     startGame() {
-        this.setState({ showGameView: true });
+        switch (this.props.auth) {
+            case null:
+                return;
+            default:
+                let caseid = this.state.caseid;
+                if (this.state.caseid === "") {
+                    caseid = new ObjectID();
+                    this.setState({caseid: caseid})
+                }
+                let date = this.state.date;
+                if (this.state.date === "") {
+                    date = makeUnique();
+                    this.setState({date: date});
+                    // this.props.storeCaseAnswer(this.props.auth._id, this.state.caseid, date, this.state.challenge, this.state.score);
+                }
+                axios.post('/api/storeCaseAnswer', {
+                    authid: this.props.auth._id,
+                    caseid: this.props.caseid,
+                    date: date,
+                    case: this.state.challenge,
+                    score: this.state.score,
+                }).then(res => {
+                    this.setState({attempt: res.data.attempt, authid: this.props.auth._id, showGameView:true});
+                });
+        }
+        // this.setState({ showGameView: true });
     }
 
     withTimeLimit() {
@@ -68,7 +93,6 @@ class TimeLimit extends Component {
     }
 
     updateScore(points){
-        console.log(points);
         this.setState(function(prevState, props){
             return {score: prevState.score+=points}
         });
@@ -150,62 +174,62 @@ class TimeLimit extends Component {
                 </div>
             );
         } else {
-            //need to get the attempt when storeCaseAnswer
-            let attempt = this.state.attempt;
-            const base = this.props.game.difficulty==="Beginner" ? 0.5^(attempt)*100 : 0.5^(attempt)*200
-            let total = 0;
-            for (let i=0; i<=this.props.game.questions.length;i++){
-                total += this.props.game.questions[i].score;
+            switch (this.props.game) {
+                case null:
+                    return;
+                default:
+                    //need to get the attempt when storeCaseAnswer
+                    let attempt = this.state.attempt;
+                    const base = this.props.game.difficulty === "Beginner" ? 0.5 ^ (attempt) * 100 : 0.5 ^ (attempt) * 200
+                    let total = 0;
+                    for (let i = 0; i <= this.props.game.questions.length; i++) {
+                        // total += this.props.game.questions[i].score;
+                        console.log(this.props.game.questions[i]);
+                        total += 20;
+                        if (this.props.game.questions[i].type === "MCQ") {
+                            total += 6;
+                        } else {
+                            total += 20;
+                        }
+                    }
+                    const score = this.state.score / total * base;
+                    const final = Math.round(this.state.withTimeLimit ? score * 1.5 : score);
+                    return <GameResults date={this.state.date} answerid={this.state.caseid} authid={this.props.auth._id}
+                                        case={this.props.game} score={final}/>;
             }
-            const score = this.state.score/total*base;
-            const final = Math.round(this.state.withTimeLimit ? score*1.5 : score);
-            return <GameResults date={this.state.date} answerid={this.state.caseid} authid={this.props.auth._id} case={this.props.game} score={final}/>;
         }
     }
 
 
     renderGameContent() {
-        switch (this.props.auth) {
+
+        switch (this.props.game) {
             case null:
                 return;
             default:
-                switch (this.props.game) {
-                    case null:
-                        return;
-                    default:
-                        let caseid = this.state.caseid
-                        if (this.state.caseid === "") {
-                            caseid = new ObjectID();
-                            this.setState({ caseid: caseid })
-                        } 
-                        let date = this.state.date;
-                        if (this.state.date === "") {
-                            date = makeUnique();
-                            this.setState({ date: date});
-                            this.setState({ attempt: this.props.storeCaseAnswer(this.props.auth._id, this.state.caseid, date, this.state.challenge, this.state.score).data.attempt});
-                        } 
-                        let timeLimit = this.state.withTimeLimit;
-                        let currentQn = this.state.currentQn;
-                        let scenario = this.props.game.scenario;
-                        let totalQnNum = this.props.game.questions.length;
-                        let caseTitle = this.props.game.title;
-                        let questionNodes = this.props.game.questions.map((obj, index) => {
-                            if (obj.id === currentQn + "") {
-                                if (obj.type === "MCQ") {
-                                    return <MCQquestion date={date} answerid={caseid} authid={this.props.auth._id} question={obj} scenario={scenario} timeLimit={timeLimit}
-                                        totalQnNum={totalQnNum} caseTitle={caseTitle} handleViewScore={this.handleViewScore}
-                                        handleNextQuestion={this.handleNextQuestion} updateScore={this.updateScore}/>
-                                } else {
-                                    return <OpenEndedQuestion date={date} answerid={caseid} authid={this.props.auth._id} question={obj} scenario={scenario} timeLimit={timeLimit} totalQnNum={totalQnNum}
-                                        caseTitle={caseTitle} handleViewScore={this.handleViewScore} handleNextQuestion={this.handleNextQuestion} updateScore={this.updateScore}/>
-                                }
-                            } else {
-                                return '';
-                            }
-                        });
-                        return questionNodes;
-                }
+
+                let timeLimit = this.state.withTimeLimit;
+                let currentQn = this.state.currentQn;
+                let scenario = this.props.game.scenario;
+                let totalQnNum = this.props.game.questions.length;
+                let caseTitle = this.props.game.title;
+                let questionNodes = this.props.game.questions.map((obj, index) => {
+                    if (obj.id === currentQn + "") {
+                        if (obj.type === "MCQ") {
+                            return <MCQquestion date={this.state.date} answerid={this.state.caseid} authid={this.state.authid} question={obj} scenario={scenario} timeLimit={timeLimit}
+                                                totalQnNum={totalQnNum} caseTitle={caseTitle} handleViewScore={this.handleViewScore}
+                                                handleNextQuestion={this.handleNextQuestion} updateScore={this.updateScore}/>
+                        } else {
+                            return <OpenEndedQuestion date={this.state.date} answerid={this.state.caseid} authid={this.state.authid} question={obj} scenario={scenario} timeLimit={timeLimit} totalQnNum={totalQnNum}
+                                                      caseTitle={caseTitle} handleViewScore={this.handleViewScore} handleNextQuestion={this.handleNextQuestion} updateScore={this.updateScore}/>
+                        }
+                    } else {
+                        return '';
+                    }
+                });
+                return questionNodes;
         }
+
     }
 
     render() {
@@ -219,10 +243,9 @@ class TimeLimit extends Component {
     }
 }
 
-function mapStateToProps2({ game, auth }) {
+function mapStateToProps2({ game, auth}) {
     return {
-        game,
-        auth
+        game, auth
     };
 }
 

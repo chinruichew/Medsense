@@ -7,8 +7,6 @@ const questionSchema = new Schema({
     stem: { type: String, default: "" },
     question: { type: String, default: "" },
     attachment: { type: String, default: "" },
-    filename: { type: String, default: "" },
-    filetype: { type: String, default: "" },
     type: { type: String, default: "" },
     openEnded: { type: String, default: "" },
     pearl: { type: String, default: "" },
@@ -26,7 +24,8 @@ const questionSchema = new Schema({
     check3: { type: Boolean, default: false },
     check4: { type: Boolean, default: false },
     check5: { type: Boolean, default: false },
-    check6: { type: Boolean, default: false }
+    check6: { type: Boolean, default: false },
+    score: {type: Number, deault: 0},
 });
 
 const questionModel = mongoose.model('questions', questionSchema);

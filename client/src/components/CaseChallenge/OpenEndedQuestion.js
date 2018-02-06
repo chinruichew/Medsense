@@ -84,7 +84,7 @@ class OpenEndedQuestion extends Component {
     }
 
     selectDone() {
-        this.props.storeCaseAnswerOpenEnded(this.state)
+        this.props.storeCaseAnswerOpenEnded(this.state);
         const {showAnswers} = this.state;
         const {showNextButton} = this.state;
         if (!showAnswers) {
@@ -95,7 +95,6 @@ class OpenEndedQuestion extends Component {
     }
 
     renderTimer(duration) {
-        //console.log(this.props.timeLimit);
         if (this.props.timeLimit) {
             return (
                 <div className='pull-right'>
@@ -159,7 +158,6 @@ class OpenEndedQuestion extends Component {
     }
 
     renderContent() {
-        console.log(this.props.question.attachment);
         let imageZoom = this.props.question.attachment !== "" ? (<div class="col-md-5 col-md-offset-2" align="center">
             <h5>
                 Mouse over image to zoom
