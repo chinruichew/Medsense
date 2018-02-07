@@ -10,5 +10,8 @@ module.exports = {
     localPort: process.env.LOCAL_PORT,
     mongoConnectBucket: process.env.MONGO_CONNECT_BUCKET,
     mongoConnectKey: process.env.MONGO_CONNECT_KEY,
-    cookieKeySecret: process.env.COOKIE_KEY_SECRET
+    cookieKeySecret: process.env.COOKIE_KEY_SECRET,
+    httpsBucket: process.env.HTTPS_BUCKET,
+    httpsPrivateKey: process.env.HTTPS_PRIVATE_KEY,
+    httpsCertificate: process.env.HTTPS_CERTIFICATE
 };

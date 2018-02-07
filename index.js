@@ -205,31 +205,39 @@ const PORT = process.env.PORT || 5000;
 console.log(chalk.blue.underline.bold('Listening to PORT:', PORT));
 
 if (process.env.NODE_ENV === 'production') {
-    const aws = require('aws-sdk');
-    aws.config.update({
-        accessKeyId: keys.awsAccessKeyId,
-        secretAccessKey: keys.awsSecretKey
-    });
-    const s3 = new aws.S3();
     const getParams = {
-        Bucket: keys.mongoConnectBucket,
-        Key: keys.mongoConnectKey
+        Bucket: keys.httpsBucket,
+        Key: keys.httpsPrivateKey
     };
 
     s3.getObject(getParams, function (err, data) {
         if (err)
             return err;
 
-        const credentialData = data.Body.toString('utf-8');
-    });
+        const privateKey = data.Body.toString('utf-8');
 
-    const credentials = {
-        key: fs.readFileSync("./private.key", "utf8"),
-        cert: fs.readFileSync("./certificate.crt", "utf8")
-    };
-    console.log(credentials);
-    https.createServer(credentials, app).listen(PORT, function () {
-        console.log(chalk.green.underline.bold('Server running at http://127.0.0.1:' + PORT + '/'));
+        const getParams = {
+            Bucket: keys.httpsBucket,
+            Key: keys.httpsCertificate
+        };
+
+        s3.getObject(getParams, function (err, data) {
+            if (err)
+                return err;
+
+            const certificate = data.Body.toString('utf-8');
+
+            const credentials = {
+                key: privateKey,
+                cert: certificate
+            };
+
+            console.log(credentials);
+
+            https.createServer(credentials, app).listen(PORT, function () {
+                console.log(chalk.green.underline.bold('Server running at http://127.0.0.1:' + PORT + '/'));
+            });
+        });
     });
 } else {
     const server = app.listen(PORT, function () {
