@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { bindAll } from 'lodash';
 import { FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
+import RichEditor from './RichEditor';
 
 import './Upload.css';
 
@@ -115,6 +116,7 @@ class Overview extends Component {
     }
     handleScenarioChange(e) {
         const value = e.target.value;
+        console.log(value);
         this.setState({ scenario: value });
         this.update(value, "scenario");
     }
@@ -312,6 +314,8 @@ class Overview extends Component {
                         <option value="Weakness">Weakness</option>
                     </FormControl>
                 </FormGroup>
+
+                <RichEditor placeholder="Enter a brief description of the patient" onChange={(e) => this.handleScenarioChange(e)} value={this.state.scenario}/>
 
                 <FormGroup controlId="formControlsScenario">
                     <ControlLabel style={{ fontSize: "150%" }}>Case Scenario<span style={{color:"red"}}>*</span></ControlLabel>

@@ -26,7 +26,11 @@ class Main extends Component {
             authname: this.props.authname,
             author: "",
         };
-        bindAll(this, 'validFileType', 'addQuestion', 'saveChanges', 'handleUpdateOverview', 'handleUpdateQuestion', 'handleDeleteQuestion');
+        bindAll(this, 'validFileType', 'addQuestion', 'saveChanges', 'handleUpdateOverview', 'handleUpdateQuestion', 'handleDeleteQuestion', 'isValidNRIC');
+    }
+
+    isValidNRIC(theNric) {
+        return new RegExp(/^.*[STFG]\d{7}[A-Z].*$/).test(theNric);
     }
 
     handleAuthorChange(e) {
@@ -71,6 +75,8 @@ class Main extends Component {
         e.preventDefault();
         if (this.state.title === '') {
             this.setState({ vmShow: true, error: "Case Overview: Please fill in the Case Title!" });
+        } else if (this.isValidNRIC(this.state.title)){
+            this.setState({ vmShow: true, error: "Case Overview: Please do NOT contain NRIC in title!" });
         } else if (this.state.difficulty === "Select One") {
             this.setState({ vmShow: true, error: "Case Overview: Please select a Difficulty Level!" });
         } else if (this.state.speciality === "Select One") {
@@ -83,8 +89,12 @@ class Main extends Component {
             this.setState({ vmShow: true, error: "Case Overview: Please select at least 1 Approach!" });
         } else if (this.state.scenario === '') {
             this.setState({ vmShow: true, error: "Case Overview: Please fill in the Case Scenario!" });
+        } else if (this.isValidNRIC(this.state.scenario)){
+            this.setState({ vmShow: true, error: "Case Overview: Please do NOT contain NRIC in Case Scenario!" });
         } else if (this.state.learning === '') {
             this.setState({ vmShow: true, error: "Case Overview: Please fill in the Key Learning Points!" });
+        } else if (this.isValidNRIC(this.state.learning)){
+            this.setState({ vmShow: true, error: "Case Overview: Please do NOT contain NRIC in Key Learning Points!" });
         } else {
 
             let questions = this.state.qnData;
@@ -102,6 +112,9 @@ class Main extends Component {
                         if (obj.question === '') {
                             error = "Question #" + obj.id + ": Please fill in the Question!";
                             throw BreakException;
+                        } else if (this.isValidNRIC(obj.question)){
+                            error = "Question #" + obj.id + ": Please do NOT contain NRIC in the Question!";
+                            throw BreakException;
                         } else if (obj.attachment && !this.validFileType(obj.attachment)) {
                             error = "Question #" + obj.id + ": Please make sure your attachment is an image of type .jpg, .jpeg, or .png!";
                             throw BreakException;
@@ -112,17 +125,35 @@ class Main extends Component {
                             if (obj.mcq1 === '' || obj.mcq2 === '') {
                                 error = "Question #" + obj.id + ": Please fill in Answer 1 and Answer 2!";
                                 throw BreakException;
+                            } else if (this.isValidNRIC(obj.mcq1)) {
+                                error = "Question #" + obj.id + ": Please do NOT contain NRIC in Answer 1!";
+                                throw BreakException;
+                            } else if (this.isValidNRIC(obj.mcq2)) {
+                                error = "Question #" + obj.id + ": Please do NOT contain NRIC in Answer 2!";
+                                throw BreakException;
                             } else if (obj.mcq3 === '' && obj.check3) {
                                 error = "Question #" + obj.id + ": Please fill in Answer 3 or uncheck the answer!";
+                                throw BreakException;
+                            } else if (obj.mcq3 !== '' && this.isValidNRIC(obj.mcq3)) {
+                                error = "Question #" + obj.id + ": Please do NOT contain NRIC in Answer 3!";
                                 throw BreakException;
                             } else if (obj.mcq4 === '' && obj.check4) {
                                 error = "Question #" + obj.id + ": Please fill in Answer 4 or uncheck the answer!";
                                 throw BreakException;
+                            } else if (obj.mcq4 !== '' && this.isValidNRIC(obj.mcq4)) {
+                                error = "Question #" + obj.id + ": Please do NOT contain NRIC in Answer 4!";
+                                throw BreakException;
                             } else if (obj.mcq5 === '' && obj.check5) {
                                 error = "Question #" + obj.id + ": Please fill in Answer 5 or uncheck the answer!";
                                 throw BreakException;
+                            } else if (obj.mcq5 !== '' && this.isValidNRIC(obj.mcq5)) {
+                                error = "Question #" + obj.id + ": Please do NOT contain NRIC in Answer 5!";
+                                throw BreakException;
                             } else if (obj.mcq6 === '' && obj.check6) {
                                 error = "Question #" + obj.id + ": Please fill in Answer 6 or uncheck the answer!";
+                                throw BreakException;
+                            } else if (obj.mcq6 !== '' && this.isValidNRIC(obj.mcq6)) {
+                                error = "Question #" + obj.id + ": Please do NOT contain NRIC in Answer 6!";
                                 throw BreakException;
                             } else if (!obj.check1 && !obj.check2 && !obj.check3 && !obj.check4 && !obj.check5 && !obj.check6) {
                                 error = "Question #" + obj.id + ": Please check at least 1 correct answer!";
@@ -131,17 +162,26 @@ class Main extends Component {
                         } else if (obj.type === "Open-ended" && obj.openEnded === '') {
                             error = "Question #" + obj.id + ": Please fill in the Answer!";
                             throw BreakException;
+                        } else if(obj.type === "Open-ended" && obj.openEnded !== '' && this.isValidNRIC(obj.type)){
+                            error = "Question #" + obj.id + ": Please do NOT contain NRIC in Answer!";
+                            throw BreakException;
                         } else if (obj.pearl === '') {
                             error = "Question #" + obj.id + ": Please fill in the PEARL!";
+                            throw BreakException;
+                        } else if(this.isValidNRIC(obj.pearl)){
+                            error = "Question #" + obj.id + ": Please do NOT contain NRIC in PEARL!";
                             throw BreakException;
                         } else if (obj.time === "Select One") {
                             error = "Question #" + obj.id + ": Please select a Time Limit!";
                             throw BreakException;
                         } else if(obj.mark === '0'){
-                            error = "Question #" + obj.id + ": Please enter a mark (whole number)!";
+                            error = "Question #" + obj.id + ": Please enter a mark (positive whole number)!";
                             throw BreakException;
                         } else if (!new RegExp(/^\d+$/).test(obj.mark)){
-                            error = "Question #" + obj.id + ": Please enter a whole number for mark!";
+                            error = "Question #" + obj.id + ": Please enter a positive whole number for mark!";
+                            throw BreakException;
+                        } else if(this.isValidNRIC(obj.reference)){
+                            error = "Question #" + obj.id + ": Please do NOT contain NRIC in Reference!";
                             throw BreakException;
                         }
                         // });

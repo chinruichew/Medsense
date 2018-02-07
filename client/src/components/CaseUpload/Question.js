@@ -38,7 +38,7 @@ class Question extends Component {
             'handleMCQ1Change', 'handleMCQ2Change', 'handleMCQ3Change', 'handleMCQ4Change', 'handleMCQ5Change', 'handleMCQ6Change',
             'handleCheck1Change', 'handleCheck2Change', 'handleCheck3Change', 'handleCheck4Change', 'handleCheck5Change', 'showAttachment',
             'handleCheck6Change', 'handlePearlChange', 'handleTimeChange', 'handleMarkChange', 'handleReferenceChange','answer', 'update',
-            'deleteQuestion', 'isValidNRIC');
+            'deleteQuestion');
     }
 
     componentWillReceiveProps(nextProps){
@@ -286,10 +286,6 @@ class Question extends Component {
         this.update(value, "time");
     }
     handleMarkChange(e){
-        // const re = /^[0-9\b]+$/;
-        // if (e.target.value == '' || re.test(e.target.value)) {
-        //     this.setState({mark: e.target.value})
-        // }
         const value = e.target.value;
         console.log(this.state.mark);
         this.setState({ mark: value });
@@ -400,10 +396,6 @@ class Question extends Component {
         }
     }
 
-    isValidNRIC(theNric) {
-        return new RegExp(/^[STFG]\d{7}[A-Z]$/).test(theNric);
-    }
-
     render(){
         return(
             <div id="question">
@@ -453,7 +445,7 @@ class Question extends Component {
                                     <option value="8">8</option>
                                     <option value="10">10</option>
                                     <option value="12">12</option>
-                                    <option value="12">15</option>
+                                    <option value="15">15</option>
                                 </FormControl>
                                 <InputGroup.Addon>Minute(s)</InputGroup.Addon>
                             </InputGroup>

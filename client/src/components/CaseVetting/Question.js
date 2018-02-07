@@ -29,6 +29,7 @@ class Question extends Component {
             check6: this.props.check6,
             pearl: this.props.pearl,
             time: this.props.time,
+            mark: this.props.mark,
             reference: this.props.reference,
             open: false,
             changefile:false,
@@ -36,7 +37,8 @@ class Question extends Component {
         bindAll(this, 'handleFile', 'handleStemChange', 'handleQuestionChange', 'handleTypeChange', 'handleOpenEndedChange',
             'handleMCQ1Change', 'handleMCQ2Change', 'handleMCQ3Change', 'handleMCQ4Change', 'handleMCQ5Change', 'handleMCQ6Change', 'showUpload',
             'handleCheck1Change', 'handleCheck2Change', 'handleCheck3Change', 'handleCheck4Change', 'handleCheck5Change', 'handleShowUpload',
-            'handleCheck6Change', 'handlePearlChange', 'handleTimeChange', 'handleReferenceChange','answer', 'update', 'deleteQuestion', 'showAttachment');
+            'handleCheck6Change', 'handlePearlChange', 'handleTimeChange', 'handleReferenceChange','answer', 'update',
+            'handleMarkChange', 'deleteQuestion', 'showAttachment');
     }
 
     componentWillReceiveProps(nextProps){
@@ -61,6 +63,7 @@ class Question extends Component {
             check6: nextProps.check6,
             pearl: nextProps.pearl,
             time: nextProps.time,
+            mark: nextProps.mark,
             reference: nextProps.reference,
         });
     }
@@ -91,6 +94,7 @@ class Question extends Component {
             check6: this.state.check6,
             pearl: this.state.pearl,
             time: this.state.time,
+            mark: this.state.mark,
             reference: this.state.reference,
         };
 
@@ -165,6 +169,10 @@ class Question extends Component {
                 return;
             case "time":
                 details.time = value;
+                this.props.handleUpdateQuestion(details,this.state.id);
+                return;
+            case "mark":
+                details.mark = value;
                 this.props.handleUpdateQuestion(details,this.state.id);
                 return;
             case "reference":
@@ -277,6 +285,12 @@ class Question extends Component {
         const value = e.target.value;
         this.setState({ time: value });
         this.update(value, "time");
+    }
+    handleMarkChange(e){
+        const value = e.target.value;
+        //console.log(this.state.mark);
+        this.setState({ mark: value });
+        this.update(value, "mark");
     }
     handleReferenceChange(e){
         const value = e.target.value;
@@ -457,8 +471,18 @@ class Question extends Component {
                                     <option value="8">8</option>
                                     <option value="10">10</option>
                                     <option value="12">12</option>
+                                    <option value="15">15</option>
                                 </FormControl>
                                 <InputGroup.Addon>Minute(s)</InputGroup.Addon>
+                            </InputGroup>
+                        </FormGroup>
+
+                        <FormGroup>
+                            <ControlLabel style={{ fontSize: "150%" }}>Marks Allocated<span style={{color:"red"}}>*</span></ControlLabel>
+                            <InputGroup>
+                                <FormControl type="text" placeholder="Enter a whole number" value={this.state.mark}
+                                             onChange={(e)=>this.handleMarkChange(e)} name="mark" />
+                                <InputGroup.Addon>Mark(s)</InputGroup.Addon>
                             </InputGroup>
                         </FormGroup>
 
