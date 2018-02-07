@@ -92,6 +92,14 @@ class OpenEndedQuestion extends Component {
             this.setState({ showNextButton: !showNextButton });
             this.pauseTimer();
         }
+        //  var score = "toBeFilled"
+        // axios.post('/api/matchNLP', {
+        //     id: this.props.question._id,
+        //     values: this.state
+        // }).then(res => {
+        //     score = res['data']['data']
+        // })
+        // setTimeout(function () { this.setState({ score: score }); }.bind(this), 500);
     }
 
     renderTimer(duration) {

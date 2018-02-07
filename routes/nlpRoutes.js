@@ -9,6 +9,11 @@ var natural = require('natural');
 
 module.exports = app => {
     app.post('/api/matchNLP', async (req, res) => {
+        var studentAnswer = req.body.values.openEnded;
+        var originalAnswer = "";
+        Question.find({"_id": req.body.id}, function(req, res) {
+            originalAnswer = res[0]['openEnded'];
+        })
         sw = require('stopword')
         const answerString = 'UECr - check renal function for yearly scans'.split(' ')
         const answerString1 = sw.removeStopwords(answerString)
@@ -52,6 +57,7 @@ module.exports = app => {
         }
 
         console.log(counter);
+        res.send({"data": "data"})
 
     });
 
