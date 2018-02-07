@@ -215,6 +215,7 @@ if (process.env.NODE_ENV === 'production') {
             return err;
 
         const privateKey = data.Body.toString('utf-8');
+        console.log(privateKey);
 
         const getParams = {
             Bucket: keys.httpsBucket,
@@ -226,6 +227,7 @@ if (process.env.NODE_ENV === 'production') {
                 return err;
 
             const certificate = data.Body.toString('utf-8');
+            console.log(certificate);
 
             const credentials = {
                 key: privateKey,
