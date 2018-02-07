@@ -35,7 +35,7 @@ aws.config.update({
     secretAccessKey: keys.awsSecretKey
 });
 const s3 = new aws.S3();
-const getParams = {
+let getParams = {
     Bucket: keys.mongoConnectBucket,
     Key: keys.mongoConnectKey
 };
@@ -204,49 +204,82 @@ if (process.env.NODE_ENV === 'production') {
 const PORT = process.env.PORT || 5000;
 console.log(chalk.blue.underline.bold('Listening to PORT:', PORT));
 
-// if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
+    getParams = {
+        Bucket: keys.httpsBucket,
+        Key: keys.httpsPrivateKey
+    };
+
+    s3.getObject(getParams, function (err, data) {
+        if (err)
+            console.log(err);
+
+        const privateKey = data.Body.toString('utf-8');
+        console.log(privateKey);
+
+        const getParams = {
+            Bucket: keys.httpsBucket,
+            Key: keys.httpsCertificate
+        };
+
+        s3.getObject(getParams, function (err, data) {
+            if (err)
+                console.log(err);
+
+            const certificate = data.Body.toString('utf-8');
+            console.log(certificate);
+
+            const credentials = {
+                key: privateKey,
+                cert: certificate
+            };
+
+            console.log(credentials);
+
+            https.createServer(credentials, app).listen(PORT, function () {
+                console.log(chalk.green.underline.bold('Server running at http://127.0.0.1:' + PORT + '/'));
+            });
+        });
+    });
+} else {
+    const server = app.listen(PORT, function () {
+        console.log(chalk.green.underline.bold('Server running at http://127.0.0.1:' + PORT + '/'));
+    });
+}
+
+// getParams = {
+//     Bucket: keys.httpsBucket,
+//     Key: keys.httpsPrivateKey
+// };
+//
+// s3.getObject(getParams, function (err, data) {
+//     if (err)
+//         console.log(err);
+//
+//     const privateKey = data.Body.toString('utf-8');
+//     console.log(privateKey);
+//
 //     const getParams = {
 //         Bucket: keys.httpsBucket,
-//         Key: keys.httpsPrivateKey
+//         Key: keys.httpsCertificate
 //     };
 //
 //     s3.getObject(getParams, function (err, data) {
 //         if (err)
-//             return err;
+//             console.log(err);
 //
-//         const privateKey = data.Body.toString('utf-8');
-//         console.log(privateKey);
+//         const certificate = data.Body.toString('utf-8');
+//         console.log(certificate);
 //
-//         const getParams = {
-//             Bucket: keys.httpsBucket,
-//             Key: keys.httpsCertificate
+//         const credentials = {
+//             key: privateKey,
+//             cert: certificate
 //         };
 //
-//         s3.getObject(getParams, function (err, data) {
-//             if (err)
-//                 return err;
+//         console.log(credentials);
 //
-//             const certificate = data.Body.toString('utf-8');
-//             console.log(certificate);
-//
-//             const credentials = {
-//                 key: privateKey,
-//                 cert: certificate
-//             };
-//
-//             console.log(credentials);
-//
-//             https.createServer(credentials, app).listen(PORT, function () {
-//                 console.log(chalk.green.underline.bold('Server running at http://127.0.0.1:' + PORT + '/'));
-//             });
+//         const server = app.listen(PORT, function () {
+//             console.log(chalk.green.underline.bold('Server running at http://127.0.0.1:' + PORT + '/'));
 //         });
 //     });
-// } else {
-//     const server = app.listen(PORT, function () {
-//         console.log(chalk.green.underline.bold('Server running at http://127.0.0.1:' + PORT + '/'));
-//     });
-// }
-
-const server = app.listen(PORT, function () {
-    console.log(chalk.green.underline.bold('Server running at http://127.0.0.1:' + PORT + '/'));
-});
+// });
