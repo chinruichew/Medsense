@@ -182,7 +182,7 @@ class TimeLimit extends Component {
                     let attempt = this.state.attempt;
                     const base = this.props.game.difficulty === "Beginner" ? 0.5 ^ (attempt) * 100 : 0.5 ^ (attempt) * 200
                     let total = 0;
-                    for (let i = 0; i <= this.props.game.questions.length; i++) {
+                    for (let i = 0; i < this.props.game.questions.length; i++) {
                         // total += this.props.game.questions[i].score;
                         console.log(this.props.game.questions[i]);
                         total += 20;
