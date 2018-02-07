@@ -236,7 +236,11 @@ if (process.env.NODE_ENV === 'production') {
 
             console.log(credentials);
 
-            https.createServer(credentials, app).listen(PORT, function () {
+            const server = https.createServer(credentials, app);
+            server.on('error', (e) => {
+                console.error(e);
+            });
+            server.listen(PORT, function () {
                 console.log(chalk.green.underline.bold('Server running at http://127.0.0.1:' + PORT + '/'));
             });
         });
@@ -278,7 +282,11 @@ if (process.env.NODE_ENV === 'production') {
 //
 //         console.log(credentials);
 //
-//         const server = app.listen(PORT, function () {
+//         const server = https.createServer(credentials, app);
+//         server.on('error', (e) => {
+//             console.error(e);
+//         });
+//         server.listen(PORT, function () {
 //             console.log(chalk.green.underline.bold('Server running at http://127.0.0.1:' + PORT + '/'));
 //         });
 //     });
