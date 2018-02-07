@@ -18,8 +18,10 @@ const connect = require("connect");
 const errorhandler = require('errorhandler');
 const notifier = require('node-notifier');
 const MerrorModule = require('express-merror');
-const Merror = MerrorModule.Merror;
-const MerrorMiddleware = MerrorModule.MerrorMiddleware;
+const cors = require("cors");
+const cluster = require("cluster");
+const https = require('https');
+const fs = require('fs-extra');
 
 const keys = require('./config/keys');
 require('./models/User');
@@ -125,6 +127,8 @@ app.use(compression({filter: shouldCompress}));
 
 const csurfProtection = csurf({ cookie: true });
 
+const Merror = MerrorModule.Merror;
+const MerrorMiddleware = MerrorModule.MerrorMiddleware;
 app.use(MerrorMiddleware());
 
 function errorNotification (err, str, req) {
@@ -138,6 +142,13 @@ function errorNotification (err, str, req) {
 if (process.env.NODE_ENV !== 'production') {
     app.use(errorhandler({log: errorNotification}))
 }
+
+// CORS Requests Configurations
+app.use(cors({
+    origin: ["http://localhost:3000"],
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type", "Authorization"]
+}));
 /* End of Middleware configuration */
 
 /* Start of Slug URL String configuration */
@@ -193,6 +204,35 @@ if (process.env.NODE_ENV === 'production') {
 const PORT = process.env.PORT || 5000;
 console.log(chalk.blue.underline.bold('Listening to PORT:', PORT));
 
-const server = app.listen(PORT, function () {
-    console.log('Server running at http://127.0.0.1:' + PORT + '/');
-});
+if (process.env.NODE_ENV === 'production') {
+    const aws = require('aws-sdk');
+    aws.config.update({
+        accessKeyId: keys.awsAccessKeyId,
+        secretAccessKey: keys.awsSecretKey
+    });
+    const s3 = new aws.S3();
+    const getParams = {
+        Bucket: keys.mongoConnectBucket,
+        Key: keys.mongoConnectKey
+    };
+
+    s3.getObject(getParams, function (err, data) {
+        if (err)
+            return err;
+
+        const credentialData = data.Body.toString('utf-8');
+    });
+
+    const credentials = {
+        key: fs.readFileSync("./private.key", "utf8"),
+        cert: fs.readFileSync("./certificate.crt", "utf8")
+    };
+    console.log(credentials);
+    https.createServer(credentials, app).listen(PORT, function () {
+        console.log(chalk.green.underline.bold('Server running at http://127.0.0.1:' + PORT + '/'));
+    });
+} else {
+    const server = app.listen(PORT, function () {
+        console.log(chalk.green.underline.bold('Server running at http://127.0.0.1:' + PORT + '/'));
+    });
+}
