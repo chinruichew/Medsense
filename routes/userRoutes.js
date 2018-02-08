@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const User = mongoose.model('users');
+
 const constants = require('../utility/constantTypes');
 
 module.exports = app => {
@@ -28,7 +29,6 @@ module.exports = app => {
                 user.year = req.body.values.year;
                 user.school = req.body.values.school;
                 user.save();
-                console.log(user);
             }
 
         });

@@ -1,5 +1,5 @@
 import './Editor.css';
-import {Editor, EditorState, RichUtils, convertToRaw, convertFromRaw, ContentState} from 'draft-js';
+import {Editor, EditorState, RichUtils, convertToRaw, ContentState} from 'draft-js';
 import React, { Component } from 'react';
 
 //const {Editor, EditorState, RichUtils} = Draft;
@@ -61,7 +61,6 @@ class RichEditor extends Component {
                 className += ' RichEditor-hidePlaceholder';
             }
         }
-        const raw = convertToRaw(this.state.editorState.getCurrentContent());
         //console.log(this.state.editorState.getCurrentContent());
         return (
             <div className="RichEditor-root">
