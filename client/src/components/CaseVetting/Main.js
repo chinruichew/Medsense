@@ -25,12 +25,12 @@ class Main extends Component {
             authid: this.props.authorid,
             authname: this.props.authorname,
         };
-        bindAll(this, 'validFileType', 'addQuestion', 'saveChanges', 'handleUpdateOverview', 'handleUpdateQuestion', 'handleDeleteQuestion', 'isValidNRIC');
+        bindAll(this, 'validFileType', 'addQuestion', 'saveChanges', 'handleUpdateOverview', 'handleUpdateQuestion', 'handleDeleteQuestion');
     }
 
-    isValidNRIC(theNric) {
+    isValidNRIC = (theNric) => {
         return new RegExp(/^.*[STFG]\d{7}[A-Z].*$/).test(theNric);
-    }
+    };
 
     addQuestion() {
         let len = this.state.qnData.length;
