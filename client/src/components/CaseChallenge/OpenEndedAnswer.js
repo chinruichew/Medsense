@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import { bindAll } from 'lodash';
+import { connect } from 'react-redux';
+import { storeCaseAnswerOpenEnded } from '../../actions';
 
 class OpenEndedAnswer extends Component {
 
@@ -9,14 +11,27 @@ class OpenEndedAnswer extends Component {
         this.state = {
             showResult: false,
             authid: this.props.authid,
-            authname: this.props.authname
+            questionActualScore: 0,
+            timeLimit: this.props.timeLimit,
+            date: this.props.date,
+            seconds: this.props.seconds,
+            mark: this.props.question.mark,
+            question: this.props.question.question,
+            stem: this.props.question.stem,
+            type: this.props.question.type,
+            attachment: this.props.question.attachment,
+            pearl: this.props.question.pearl,
+            reference: this.props.question.reference,
+            openEnded: this.props.openEnded,
+            score: this.props.score,
         };
 
         bindAll(this, 'renderContent', 'renderNextQuestion', 'nextQuestion');
     }
 
     componentDidMount() {
-        window.scrollTo(0, 0)
+        this.props.storeCaseAnswerOpenEnded(this.state);
+        window.scrollTo(0, 0);
     }
 
     renderContent() {
@@ -83,4 +98,10 @@ class OpenEndedAnswer extends Component {
     }
 }
 
-export default OpenEndedAnswer;
+function mapStateToProps2({ game}) {
+    return {
+        game
+    };
+}
+
+export default connect(mapStateToProps2, { storeCaseAnswerOpenEnded })(OpenEndedAnswer);

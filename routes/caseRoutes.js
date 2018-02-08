@@ -58,6 +58,7 @@ module.exports = app => {
                 check4: jsonObject[prop]['check4'],
                 check5: jsonObject[prop]['check5'],
                 check6: jsonObject[prop]['check6'],
+                mark: jsonObject[prop]['mark'],
                 case: newCase._id
             });
             newQuestion.save();
@@ -93,6 +94,7 @@ module.exports = app => {
                     oneQuestion.check4 = prop['check4'];
                     oneQuestion.check5 = prop['check5'];
                     oneQuestion.check6 = prop['check6'];
+                    oneQuestion.mark = [prop]['mark'];
                     oneQuestion.save();
                     questions.push(oneQuestion);
                 }
@@ -119,6 +121,7 @@ module.exports = app => {
                         check4: prop['check4'],
                         check5: prop['check5'],
                         check6: prop['check6'],
+                        mark: prop['mark'],
                         case: oneCase._id
                         //Ricky to fix should store qid in case
                     });

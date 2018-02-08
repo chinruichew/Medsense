@@ -53,34 +53,11 @@ module.exports = app => {
         res.send(result);
     });
 
-    app.post('/api/storeCaseScore', function (req, res) {
-        Answer.find({
-            //_id: req.body.values.answerid,
-            userid: req.body.values.authid,
-            date: req.body.values.date
-        }, function (err, answer) {
-            answer[0]['attempt']=req.body.values.attempt;
-            answer[0]['score']=req.body.values.score;
-            answer[0].save();
-        });
-        return res.send({ data: {}, message: "storeCaseScore success" });
-    });
 
     app.post('/api/storeCaseAnswer', async (req, res)=> {
         //need to get the latest attempt first!!
         const attempt = 0;
         const newCaseAnswer = new Answer({
-            //_id: mongoose.Types.ObjectId(req.body.values1),
-            // userid: mongoose.Types.ObjectId(req.body.values),
-            // date: req.body.values2,
-            // title: req.body.values3.title,
-            // difficulty: req.body.values3.difficulty,
-            // speciality: req.body.values3.speciality,
-            // approach: req.body.values3.approach,
-            // subspeciality: req.body.values3.subspeciality,
-            // scenario: req.body.values3.scenario,
-            // learning: req.body.values3.learning,
-            // status: req.body.values3.status,
             attempt: attempt+1,
             userid: mongoose.Types.ObjectId(req.body.authid),
             date: req.body.date,
@@ -125,6 +102,8 @@ module.exports = app => {
                 check5: req.body.values.check5Stu,
                 check6: req.body.values.check6Stu,
                 timeTaken: timeTaken,
+                mark: req.body.values.mark,
+                score: req.body.values.questionActualScore,
             });
             newCaseQuestion.save();
             answer[0]['questions'].push(newCaseQuestion);
@@ -149,11 +128,20 @@ module.exports = app => {
                 pearl: req.body.values.pearl,
                 reference: req.body.values.reference,
                 timeTaken: timeTaken,
+                mark: req.body.values.mark,
+                score: req.body.values.questionActualScore,
             });
             newCaseQuestion.save();
             answer[0]['questions'].push(newCaseQuestion);
             answer[0].save();
         });
         return res.send({ data: {}, message: "storeCaseOpenEnded success" });
+    });
+
+    app.post('/api/gameCompleted', async (req, res) => {
+        Answer.update({userid: req.body.authid, date: req.body.date}, {completionStatus: true, score: req.body.score}, function (err, response) {
+            console.log(response);
+        });
+        res.send("completion status updated");
     });
 };

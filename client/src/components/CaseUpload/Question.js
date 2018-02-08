@@ -452,7 +452,7 @@ class Question extends Component {
                         </FormGroup>
 
                         <FormGroup>
-                            <ControlLabel style={{ fontSize: "150%" }}>Marks Allocated<span style={{color:"red"}}>*</span></ControlLabel>
+                            <ControlLabel style={{ fontSize: "150%" }}>Allocate Marks<span style={{color:"red"}}>*</span></ControlLabel>
                             <InputGroup>
                                 <FormControl type="text" placeholder="Enter a whole number" value={this.state.mark}
                                              onChange={(e)=>this.handleMarkChange(e)} name="mark" />

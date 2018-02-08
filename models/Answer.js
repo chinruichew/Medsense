@@ -16,6 +16,8 @@ const answerSchema = new Schema({
     userid: { type: Schema.Types.ObjectId, ref: 'users' },
     date: { type: String, default: "" },
     attempt: {type: Number, default: 0},
+    completionStatus: { type: Boolean, default: false },
+    score: {type: Number, default: 0},
 });
 
 const answerModel = mongoose.model('answers', answerSchema);

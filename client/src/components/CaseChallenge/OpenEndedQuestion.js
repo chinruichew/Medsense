@@ -3,8 +3,8 @@ import { Form, FormGroup, Col } from 'react-bootstrap';
 import { Button, Row, ControlLabel, FormControl, Panel } from 'react-bootstrap';
 import { bindAll } from 'lodash';
 import { Line } from 'rc-progress';
-import { connect } from 'react-redux';
-import { storeCaseAnswerOpenEnded } from '../../actions';
+// import { connect } from 'react-redux';
+// import { storeCaseAnswerOpenEnded } from '../../actions';
 
 import OpenEndedAnswer from "./OpenEndedAnswer";
 import ImageMagnifier from "./ImageMagnifier";
@@ -19,8 +19,6 @@ class OpenEndedQuestion extends Component {
             stem: this.props.question.stem,
             type: this.props.question.type,
             attachment: this.props.question.attachment,
-            filename: this.props.question.filename,
-            filetype: this.props.question.filetype,
             pearl: this.props.question.pearl,
             reference: this.props.question.reference,
             showAnswers: false,
@@ -28,16 +26,15 @@ class OpenEndedQuestion extends Component {
             showNextButton: true,
             answerid: this.props.answerid,
             authid: this.props.authid,
-            authname: this.props.authname,
             time: {},
             timeLimit: parseFloat(this.props.question.time) * 60,
             date: this.props.date,
             seconds: parseFloat(this.props.question.time) * 60,
-            score: ""
+            score: "",
         };
         this.timer = 0;
         bindAll(this, 'selectDone', 'startTimer', 'countDown', 'secondsToTime', 'pauseTimer', 'renderTimer',
-            'renderShowNextButton', 'renderProgressBar', 'renderScenario', 'renderContent', 'handleNextQuestion', 'handleOpenEndedChange');
+            'renderShowNextButton', 'renderProgressBar', 'renderScenario', 'renderContent', 'handleOpenEndedChange');
     }
 
     startTimer() {
@@ -86,7 +83,7 @@ class OpenEndedQuestion extends Component {
     }
 
     selectDone() {
-        this.props.storeCaseAnswerOpenEnded(this.state);
+        // this.props.storeCaseAnswerOpenEnded(this.state);
         const {showAnswers} = this.state;
         const {showNextButton} = this.state;
         if (!showAnswers) {
@@ -156,12 +153,6 @@ class OpenEndedQuestion extends Component {
         }
     }
 
-
-    handleNextQuestion(prevQn) {
-        this.props.handleNextQuestion(prevQn);
-        this.props.updateScore(20);
-    }
-
     handleOpenEndedChange(e) {
         const value = e.target.value;
         this.setState({ openEnded: value });
@@ -224,7 +215,14 @@ class OpenEndedQuestion extends Component {
 
                  {this.state.showAnswers && <h3>You got {(parseFloat(this.state.score)*100).toFixed(2)} % </h3>}
 
-                {this.state.showAnswers && <OpenEndedAnswer updateScore={this.props.updateScore}
+                {this.state.showAnswers && <OpenEndedAnswer
+                    score={this.state.score}
+                    authid={this.props.authid}
+                    timeLimit={this.state.timeLimit}
+                    seconds={this.state.seconds}
+                    date={this.props.date}
+                    openEnded={this.state.openEnded}
+                    updateScore={this.props.updateScore}
                     question={this.props.question}
                     totalQnNum={this.props.totalQnNum}
                     handleViewScore={this.props.handleViewScore}
@@ -243,11 +241,12 @@ class OpenEndedQuestion extends Component {
     }
 }
 
-function mapStateToProps2({ game, auth }) {
-    return {
-        game,
-        auth
-    };
-}
-
-export default connect(mapStateToProps2, { storeCaseAnswerOpenEnded })(OpenEndedQuestion);
+// function mapStateToProps2({ game, auth }) {
+//     return {
+//         game,
+//         auth
+//     };
+// }
+//
+// export default connect(mapStateToProps2, { storeCaseAnswerOpenEnded })(OpenEndedQuestion);
+export default OpenEndedQuestion;

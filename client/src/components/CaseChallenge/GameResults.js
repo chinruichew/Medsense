@@ -8,6 +8,7 @@ class GameResults extends Component {
         super(props);
         this.state={
             vmShow:false,
+            points:0,
         };
     }
 
@@ -17,8 +18,16 @@ class GameResults extends Component {
             score: this.props.score
         }).then(res => {
             this.setState({points: res.data.points})
+            this.checkLevel();
         });
-        this.checkLevel();
+        axios.post('/api/gameCompleted', {
+            authid: this.props.authid,
+            date: this.props.date,
+            score: this.props.score,
+        }).then(res => {
+            console.log("status updated");
+        });
+
     }
 
     renderContent(){
@@ -45,7 +54,6 @@ class GameResults extends Component {
                 }
                 answer = answer.substring(0, answer.length - 2);
             } else {
-                console.log(obj.openEnded);
                 answer = obj.openEnded;
             }
             return (
@@ -97,8 +105,9 @@ class GameResults extends Component {
 
     checkLevel(){
         const prev = this.state.points-this.props.score;
-        const prevLevel = Math.floor((prev-100)/50+1);
-        const currLevel = Math.floor((this.state.points-100)/50+1);
+        console.log(this.state.points);
+        const prevLevel = Math.floor((50+Math.sqrt(400*prev-37500))/100);
+        const currLevel = Math.floor((50+Math.sqrt(400*this.state.points-37500))/100);
         if (prevLevel!==currLevel){
             this.setState({vmShow:true, level:currLevel});
         }
@@ -118,7 +127,8 @@ class GameResults extends Component {
                         <center><BootstrapModal.Title id="levelup-modal">LEVEL UP</BootstrapModal.Title></center>
                     </BootstrapModal.Header>
                     <BootstrapModal.Body>
-                        <center><p>{this.state.points} XP</p>
+                        <center><img hspace="5" src="./congrats.png" style={{ height: "50%" }} alt="" />
+                            <p>{this.state.points} XP</p>
                         <p>Level {this.state.level}</p>
                             <p>Your level increased</p></center>
                     </BootstrapModal.Body>

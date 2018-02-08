@@ -3,8 +3,8 @@ import { Form, FormGroup, Col } from 'react-bootstrap';
 import { Checkbox, Button, Row, Panel } from 'react-bootstrap';
 import { Line } from 'rc-progress';
 import { bindAll } from 'lodash';
-import { connect } from 'react-redux';
-import { storeCaseAnswerMCQ } from '../../actions';
+// import { connect } from 'react-redux';
+// import { storeCaseAnswerMCQ } from '../../actions';
 
 import MCQAnswers from './MCQAnswers';
 import './Game.css';
@@ -15,12 +15,11 @@ class MCQquestion extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            mark: this.props.question.mark,
             question: this.props.question.question,
             stem: this.props.question.stem,
             type: this.props.question.type,
             attachment: this.props.question.attachment,
-            filename: this.props.question.filename,
-            filetype: this.props.question.filetype,
             pearl: this.props.question.pearl,
             reference: this.props.question.reference,
             showAnswers: false,
@@ -39,7 +38,6 @@ class MCQquestion extends Component {
             check6Stu: false,
             answerid: this.props.answerid,
             authid: this.props.authid,
-            authname: this.props.authname,
             timeLimit: parseFloat(this.props.question.time) * 60,
             time: {},
             date: this.props.date,
@@ -48,7 +46,7 @@ class MCQquestion extends Component {
         this.timer = 0;
         bindAll(this, 'selectDone', 'startTimer', 'countDown', 'secondsToTime', 'pauseTimer', 'renderTimer',
             'renderShowNextButton', 'renderProgressBar', 'renderScenario', 'renderMCQ3', 'renderMCQ4', 'renderMCQ5',
-            'renderMCQ6', 'renderContent', 'handleNextQuestion');
+            'renderMCQ6', 'renderContent');
     }
 
     startTimer() {
@@ -97,7 +95,7 @@ class MCQquestion extends Component {
     }
 
     selectDone() {
-        this.props.storeCaseAnswerMCQ(this.state);
+        // this.props.storeCaseAnswerMCQ(this.state);
         const { showAnswers } = this.state;
         const { showNextButton } = this.state;
         if (!showAnswers) {
@@ -224,9 +222,6 @@ class MCQquestion extends Component {
         }
     }
 
-    handleNextQuestion(prevQn) {
-        this.props.handleNextQuestion(prevQn);
-    }
 
     renderContent() {
         console.log(this.props.question.attachment);
@@ -285,9 +280,15 @@ class MCQquestion extends Component {
                 {this.renderShowNextButton()}
 
 
-                {this.state.showAnswers && <MCQAnswers question={this.props.question}
+                {this.state.showAnswers && <MCQAnswers
+                    authid={this.props.authid}
+                    timeLimit={this.state.timeLimit}
+                    seconds={this.state.seconds}
+                    date={this.props.date}
+                    question={this.props.question}
                     totalQnNum={this.props.totalQnNum}
-                    updateScore={this.props.updateScore} handleViewScore={this.props.handleViewScore}
+                    updateScore={this.props.updateScore}
+                    handleViewScore={this.props.handleViewScore}
                     handleNextQuestion={this.props.handleNextQuestion}
                     check1Stu={this.state.check1Stu} check2Stu={this.state.check2Stu}
                     check3Stu={this.state.check3Stu} check4Stu={this.state.check4Stu}
@@ -306,11 +307,11 @@ class MCQquestion extends Component {
     }
 }
 
-function mapStateToProps2({ game, auth }) {
-    return {
-        game,
-        auth
-    };
-}
+// function mapStateToProps2({ game}) {
+//     return {
+//         game
+//     };
+// }
 
-export default connect(mapStateToProps2, { storeCaseAnswerMCQ })(MCQquestion);
+// export default connect(mapStateToProps2, { storeCaseAnswerMCQ })(MCQquestion);
+export default MCQquestion;

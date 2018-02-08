@@ -25,7 +25,9 @@ const questionAnswerSchema = new Schema({
     check3: { type: Boolean, default: false },
     check4: { type: Boolean, default: false },
     check5: { type: Boolean, default: false },
-    check6: { type: Boolean, default: false }
+    check6: { type: Boolean, default: false },
+    mark: { type: String, default: "" },
+    score: { type: Number, default: 0 },
 });
 
 const questionAnswerModel = mongoose.model('questionanswers', questionAnswerSchema);

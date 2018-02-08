@@ -25,7 +25,7 @@ const questionSchema = new Schema({
     check4: { type: Boolean, default: false },
     check5: { type: Boolean, default: false },
     check6: { type: Boolean, default: false },
-    score: {type: Number, deault: 0},
+    mark: {type: String, default: ""},
 });
 
 const questionModel = mongoose.model('questions', questionSchema);

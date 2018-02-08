@@ -183,15 +183,14 @@ class TimeLimit extends Component {
                     const base = this.props.game.difficulty === "Beginner" ? 0.5 ^ (attempt) * 100 : 0.5 ^ (attempt) * 200
                     let total = 0;
                     for (let i = 0; i < this.props.game.questions.length; i++) {
-                        // total += this.props.game.questions[i].score;
-                        console.log(this.props.game.questions[i]);
-                        total += 20;
-                        if (this.props.game.questions[i].type === "MCQ") {
-                            total += 6;
-                        } else {
-                            total += 20;
-                        }
+                        total += this.props.game.questions[i].mark;
+                        // if (this.props.game.questions[i].type === "MCQ") {
+                        //     total += 6;
+                        // } else {
+                        //     total += 20;
+                        // }
                     }
+                    console.log(total);
                     const score = this.state.score / total * base;
                     const final = Math.round(this.state.withTimeLimit ? score * 1.5 : score);
                     return <GameResults date={this.state.date} answerid={this.state.caseid} authid={this.props.auth._id}
