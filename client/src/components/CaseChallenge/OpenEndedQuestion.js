@@ -8,6 +8,7 @@ import { storeCaseAnswerOpenEnded } from '../../actions';
 
 import OpenEndedAnswer from "./OpenEndedAnswer";
 import ImageMagnifier from "./ImageMagnifier";
+import axios from 'axios'
 
 class OpenEndedQuestion extends Component {
 
@@ -31,7 +32,8 @@ class OpenEndedQuestion extends Component {
             time: {},
             timeLimit: parseFloat(this.props.question.time) * 60,
             date: this.props.date,
-            seconds: parseFloat(this.props.question.time) * 60
+            seconds: parseFloat(this.props.question.time) * 60,
+            score: ""
         };
         this.timer = 0;
         bindAll(this, 'selectDone', 'startTimer', 'countDown', 'secondsToTime', 'pauseTimer', 'renderTimer',
@@ -92,14 +94,14 @@ class OpenEndedQuestion extends Component {
             this.setState({ showNextButton: !showNextButton });
             this.pauseTimer();
         }
-        //  var score = "toBeFilled"
-        // axios.post('/api/matchNLP', {
-        //     id: this.props.question._id,
-        //     values: this.state
-        // }).then(res => {
-        //     score = res['data']['data']
-        // })
-        // setTimeout(function () { this.setState({ score: score }); }.bind(this), 500);
+        var score = "toBeFilled"
+        axios.post('/api/matchNLP', {
+            id: this.props.question._id,
+            values: this.state
+        }).then(res => {
+            score = res['data']['data']
+            setTimeout(function () { this.setState({ score: score }); }.bind(this), 1);
+        })
     }
 
     renderTimer(duration) {
@@ -185,16 +187,16 @@ class OpenEndedQuestion extends Component {
 
                 <h3>
                     <Row>
-                        <Col sm={3}>Question {this.props.question.id}  </Col>
+                        <Col sm={3}>Question {this.props.question.id} </Col>
                         <Col sm={5} className='pull-right'>{this.renderTimer(0.2)}</Col>
                     </Row>
                 </h3>
 
                 <br />
-                <Panel bsStyle="info" id="panel" style={{borderWidth: "thick", width: "93%"}}>
-                    <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{this.renderScenario()}</h4>
+                <Panel bsStyle="info" id="panel" style={{ borderWidth: "thick", width: "93%" }}>
+                    <h4 style={{ border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace: "pre-wrap", wordBreak: "keep-all" }}>{this.renderScenario()}</h4>
                     <br />
-                    <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{this.props.question.question}</h4>
+                    <h4 style={{ border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace: "pre-wrap", wordBreak: "keep-all" }}>{this.props.question.question}</h4>
 
 
                     <div class="col-md-5 col-md-offset-2">{<ImageMagnifier url={this.props.question.attachment} />}</div>
@@ -205,26 +207,28 @@ class OpenEndedQuestion extends Component {
                     <br />
                     <div>
                         <Col smOffset={1}>
-                        <Form style={{margin: "0", width: "95%"}}><h4>
-                            <FormGroup>
-                                <FormGroup controlId="formControlsOpenEnded">
-                                    <ControlLabel>Your Answer</ControlLabel><br />
+                            <Form style={{ margin: "0", width: "95%" }}><h4>
+                                <FormGroup>
+                                    <FormGroup controlId="formControlsOpenEnded">
+                                        <ControlLabel>Your Answer</ControlLabel><br />
 
-                                    <FormControl componentClass="textarea" rows={6} placeholder="Enter your answer" value={this.state.openEnded} name="openEnded" onChange={(e) => this.handleOpenEndedChange(e)} />
+                                        <FormControl componentClass="textarea" rows={6} placeholder="Enter your answer" value={this.state.openEnded} name="openEnded" onChange={(e) => this.handleOpenEndedChange(e)} />
+
+                                    </FormGroup>
 
                                 </FormGroup>
-
-                            </FormGroup>
-                        </h4></Form></Col>
+                            </h4></Form></Col>
                     </div>
                 </Panel>
                 {this.renderShowNextButton()}
 
+                 {this.state.showAnswers && <h3>You got {(parseFloat(this.state.score)*100).toFixed(2)} % </h3>}
+
                 {this.state.showAnswers && <OpenEndedAnswer updateScore={this.props.updateScore}
-                                                            question={this.props.question}
-                                                            totalQnNum={this.props.totalQnNum}
-                                                            handleViewScore={this.props.handleViewScore}
-                                                            handleNextQuestion={this.props.handleNextQuestion} />}
+                    question={this.props.question}
+                    totalQnNum={this.props.totalQnNum}
+                    handleViewScore={this.props.handleViewScore}
+                    handleNextQuestion={this.props.handleNextQuestion} />}
 
             </div>
         );
@@ -247,4 +251,3 @@ function mapStateToProps2({ game, auth }) {
 }
 
 export default connect(mapStateToProps2, { storeCaseAnswerOpenEnded })(OpenEndedQuestion);
-

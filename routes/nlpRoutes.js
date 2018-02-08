@@ -6,58 +6,62 @@ const Question = require('../models/Question');
 const constants = require('../utility/constantTypes');
 
 var natural = require('natural');
+var unique = require('array-unique');
 
 module.exports = app => {
     app.post('/api/matchNLP', async (req, res) => {
+        var counter = ""
         var studentAnswer = req.body.values.openEnded;
         var originalAnswer = "";
-        Question.find({"_id": req.body.id}, function(req, res) {
+        Question.find({ "_id": req.body.id }, function (req, res) {
             originalAnswer = res[0]['openEnded'];
+            console.log(res[0]['openEnded'])
         })
-        sw = require('stopword')
-        const answerString = 'UECr - check renal function for yearly scans'.split(' ')
-        const answerString1 = sw.removeStopwords(answerString)
+        setTimeout(function () {
+            var tokenizer = new natural.WordTokenizer();
 
-        //remove unwanted words
-        const oldString = 'check function renal in scans years'.split(' ')
-        const studentString = sw.removeStopwords(oldString)
+            sw = require('stopword')
+            const studentAnswerStop = sw.removeStopwords(tokenizer.tokenize(studentAnswer))
+            const originalAnswerStop = sw.removeStopwords(tokenizer.tokenize(originalAnswer))
+            console.log(studentAnswerStop);
+            console.log(originalAnswerStop)
 
-        // root word
-        natural.PorterStemmer.attach();
-        var stuarr = []
-        for (var i in studentString) {
-            stuarr.push(studentString[i].stem())
-        }
-        console.log("stuarr " + stuarr)
+            // root word
+            natural.PorterStemmer.attach();
+            var studentAnswerArray = []
+            for (var i in studentAnswerStop) {
+                studentAnswerArray.push(studentAnswerStop[i].stem())
+            }
+            console.log(studentAnswerArray)
 
-        var ansarr =[]
-        for (var i in answerString1) {
-            ansarr.push(answerString1[i].stem())
-        }
-        console.log("ansarr " + ansarr)
+            var originalAnswerArray = []
+            for (var i in originalAnswerStop) {
+                originalAnswerArray.push(originalAnswerStop[i].stem())
+            }
+            console.log(originalAnswerArray)
 
-        //build up dictionary trie
-        var Trie = natural.Trie;
-        var trie = new Trie();
-        trie.addStrings(stuarr)
+            //build up dictionary trie
+            var Trie = natural.Trie;
+            var trie = new Trie();
+            trie.addStrings(unique(studentAnswerArray))
 
-        var counter = 0;
+            var counter = 0;
 
-        for(var i in ansarr) {
-            if(trie.contains(ansarr[i])) {
-                //console.log(ansarr[i])
-                counter++;
-            } else {
-                console.log(ansarr[i])
-                console.log(trie.findPrefix(ansarr[i]))
-                if(trie.findPrefix(ansarr[i])[0] != null) {
+            for (var i in unique(originalAnswerArray)) {
+                if (trie.contains(unique(originalAnswerArray)[i])) {
                     counter++;
+                } else {
+                    // if (trie.findPrefix(originalAnswerArray[i])[0] != null) {
+                    //     counter++;
+                    // }
                 }
             }
-        }
-
-        console.log(counter);
-        res.send({"data": "data"})
+            console.log(counter)
+            console.log(originalAnswerArray.length)
+            console.log(counter / originalAnswerArray.length);
+            counter = counter / originalAnswerArray.length
+             res.send({ "data": counter })
+        }.bind(this), 500);
 
     });
 

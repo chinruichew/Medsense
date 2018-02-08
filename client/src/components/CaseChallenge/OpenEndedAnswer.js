@@ -23,7 +23,7 @@ class OpenEndedAnswer extends Component {
         //if (!this.state.showResult) {
             return (
                 <div className='container'>
-                    <h3>You got 20 points!</h3><br />
+                    {/*<h3>You got 20 points!</h3><br />*/}
                     <h4>
                         <strong>Answer</strong> <br />
                         <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{this.props.question.openEnded}</h4> <br /><br />
