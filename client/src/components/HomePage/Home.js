@@ -36,7 +36,7 @@ class Home extends Component {
                     default:
                         if (this.props.auth.usertype === this.state.constants.USER_TYPE_PROFESSOR || this.props.auth.usertype === this.state.constants.USER_TYPE_ADMIN ){
                             return(
-                                <ProfessorHome unvetCases={this.props.cases}/>
+                                <ProfessorHome user={this.props.auth} unvetCases={this.props.cases}/>
                             );
                         } else {
                             return(
