@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {Button, Accordion, Panel} from 'react-bootstrap';
-import { bindAll } from 'lodash';
 import Question from './Question.js';
 import Overview from './Overview.js';
 import BootstrapModal from '../UI/Modal/VettingBootstrapModal.js';
@@ -10,29 +9,25 @@ import { updateCase } from '../../actions/index';
 import axios from 'axios';
 
 class Main extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            id: this.props.id,
-            qnData: this.props.questions,
-            title: this.props.title,
-            difficulty: this.props.difficulty,
-            speciality: this.props.speciality,
-            subspeciality: this.props.subspeciality,
-            approach: this.props.approach,
-            scenario: this.props.scenario,
-            learning: this.props.learning,
-            authid: this.props.authorid,
-            authname: this.props.authorname,
-        };
-        bindAll(this, 'validFileType', 'addQuestion', 'saveChanges', 'handleUpdateOverview', 'handleUpdateQuestion', 'handleDeleteQuestion');
-    }
+    state = {
+        id: this.props.id,
+        qnData: this.props.questions,
+        title: this.props.title,
+        difficulty: this.props.difficulty,
+        speciality: this.props.speciality,
+        subspeciality: this.props.subspeciality,
+        approach: this.props.approach,
+        scenario: this.props.scenario,
+        learning: this.props.learning,
+        authid: this.props.authorid,
+        authname: this.props.authorname,
+    };
 
     isValidNRIC = (theNric) => {
         return new RegExp(/^.*[STFG]\d{7}[A-Z].*$/).test(theNric);
     };
 
-    addQuestion() {
+    addQuestion = () => {
         let len = this.state.qnData.length;
         this.setState({
             qnData: this.state.qnData.concat(
@@ -62,24 +57,23 @@ class Main extends Component {
                 }
             ),
         });
+    };
 
-    }
-
-    validFileType(file) {
+    validFileType = (file) => {
         const fileTypes = [
             'image/jpeg',
             'image/pjpeg',
             'image/png'
-        ]
+        ];
         for(let i = 0; i < fileTypes.length; i++) {
             if(file.type === fileTypes[i]) {
                 return true;
             }
         }
         return false;
-    }
+    };
 
-    saveChanges(e) {
+    saveChanges = (e) => {
         e.preventDefault();
         if (this.state.title === '') {
             this.setState({ vmShow: true, error: "Case Overview: Please fill in the Case Title!" });
@@ -200,10 +194,9 @@ class Main extends Component {
                 }
             }
         }
-    }
+    };
 
     uploadFile = (file, caseID, qID, objID) => {
-        console.log("what's happening!");
         const formData = new FormData();
         formData.append('file',file);
         formData.append('caseID',caseID);
@@ -222,11 +215,11 @@ class Main extends Component {
         axios.post('/api/updateCase', {
             values: this.state
         }).then(res => {
-            const caseID = res.data.data.case;
-            let questions = res.data.data.question;
+            console.log(res.data);
+            const caseID = res.data.case;
+            let questions = res.data.question;
             let qnData = this.state.qnData;
             this.setState({vm: true});
-            console.log(questions.length);
             for (let i=0; i<questions.length; i++){
                 let question = questions[i];
                 let qn = qnData[i];
@@ -236,7 +229,7 @@ class Main extends Component {
 
     };
 
-    handleDeleteQuestion(id) {
+    handleDeleteQuestion = (id) => {
         let questions = this.state.qnData;
         let newQuestions = [];
         let offset = 1;
@@ -277,9 +270,9 @@ class Main extends Component {
 
         this.setState({ qnData: newQuestions });
 
-    }
+    };
 
-    handleUpdateQuestion(details, id) {
+    handleUpdateQuestion= (details, id) => {
         let questions = this.state.qnData;
         questions.forEach(function (obj) {
             if (obj.id === id) {
@@ -307,9 +300,9 @@ class Main extends Component {
             }
         });
         this.setState({ qnData: questions });
-    }
+    };
 
-    handleUpdateOverview(details) {
+    handleUpdateOverview = (details) => {
         this.setState({
             title: details.title,
             difficulty: details.difficulty,
@@ -319,12 +312,7 @@ class Main extends Component {
             scenario: details.scenario,
             learning: details.learning,
         });
-    }
-
-    redirect() {
-        window.location = '/home';
-    }
-
+    };
 
     render() {
         const overviewTitle = (
@@ -337,7 +325,6 @@ class Main extends Component {
         let vmClose = () => this.setState({ vmShow: false });
         let vmConfirmClose = () => this.setState({ vmConfirm: false });
         let questionNodes = this.state.qnData.map((obj, index) => {
-            console.log(obj.mark);
 
             return (
                 <Question
@@ -480,7 +467,7 @@ class Main extends Component {
                             <p>Your case has been released successfully! You will be redirected to the Homepage.</p>
                         </BootstrapModal.Body>
                         <BootstrapModal.Footer>
-                            <Button onClick={this.redirect}>OK</Button>
+                            <Button onClick={(e) => window.location = '/home'}>OK</Button>
                         </BootstrapModal.Footer>
                     </BootstrapModal>
                 </form>

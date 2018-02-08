@@ -164,14 +164,14 @@ module.exports = app => {
             jsonObject.forEach(function(prop, index, arr) {
                 p.then(new Promise(function(resolve, reject) {
                     putQuestions(prop, oneCase, questions).then(response => {
-                        console.log(questions);
+                        // console.log(questions);
                         res.send(questions);
                         resolve();
                     });
                 }));
             });
             p.then(function(){
-                console.log('Final: ', questions);
+                // console.log('Final: ', questions);
             });
         });
     });
