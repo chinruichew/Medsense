@@ -55,24 +55,26 @@ module.exports = app => {
 
 
     app.post('/api/storeCaseAnswer', async (req, res)=> {
-        //need to get the latest attempt first!!
-        const attempt = 0;
-        const newCaseAnswer = new Answer({
-            attempt: attempt+1,
-            userid: mongoose.Types.ObjectId(req.body.authid),
-            date: req.body.date,
-            title: req.body.case.title,
-            difficulty: req.body.case.difficulty,
-            speciality: req.body.case.speciality,
-            approach: req.body.case.approach,
-            subspeciality: req.body.case.subspeciality,
-            scenario: req.body.case.scenario,
-            learning: req.body.case.learning,
-            status: req.body.case.status,
+        Case.findOne({ _id: req.body.caseId }).sort('attempt').exec(function (err, vettedCase) {
+            console.log(vettedCase);
+
+            // const newCaseAnswer = new Answer({
+            //     attempt: attempt+1,
+            //     userid: mongoose.Types.ObjectId(req.body.authid),
+            //     date: req.body.date,
+            //     title: req.body.case.title,
+            //     difficulty: req.body.case.difficulty,
+            //     speciality: req.body.case.speciality,
+            //     approach: req.body.case.approach,
+            //     subspeciality: req.body.case.subspeciality,
+            //     scenario: req.body.case.scenario,
+            //     learning: req.body.case.learning,
+            //     status: req.body.case.status,
+            // });
+            // const result= await newCaseAnswer.save();
+            // console.log(result);
+            // return res.send(result);
         });
-        const result=await newCaseAnswer.save();
-        console.log(attempt);
-        return res.send(result);
     });
 
     app.post('/api/storeCaseAnswerMCQ', function (req, res) {
