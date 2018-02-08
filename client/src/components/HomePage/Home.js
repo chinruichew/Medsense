@@ -17,7 +17,7 @@ class Home extends Component {
     componentDidMount() {
         this.props.fetchUnvetCases();
         axios.get('/api/getConstantTypes').then(res => {
-             setTimeout(function () { this.setState({constants: res.data}); }.bind(this), 1);
+            this.setState({constants: res.data});
         }).catch(err => {
             console.log(err);
         });
