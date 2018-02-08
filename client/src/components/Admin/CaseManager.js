@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Button, ButtonToolbar, FormGroup, ControlLabel, FormControl, Table, Modal } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import { bindAll } from 'lodash';
-
+import { Row } from 'react-bootstrap';
 import Admin from './Admin';
 import UserManager from './UserManager';
 import { deleteAdminCase, fetchFilteredAdminCases } from '../../actions';
@@ -111,7 +111,7 @@ class CaseManager extends Component {
         return (
             <FormGroup controlId="formControlsTitle">
                 <ControlLabel style={{ fontSize: "150%" }}>Case Title</ControlLabel>
-                <FormControl type="text" placeholder="Enter a title" value={this.state.title} name="title" onChange={(e) => this.handleTitleChange(e)} />
+                <FormControl style={{ fontSize: "125%" }} type="text" placeholder="Enter a title" value={this.state.title} name="title" onChange={(e) => this.handleTitleChange(e)} />
             </FormGroup>
         );
     }
@@ -119,13 +119,13 @@ class CaseManager extends Component {
     setApproach() {
         return (
             <FormGroup controlId="formControlsApproach">
-                <ControlLabel style={{ fontSize: "150%" }}>Approach(es)
+                <ControlLabel style={{ fontSize: "150%" }}>Approaches
                     {/*<ControlLabel style={{ fontSize: "150%" }}>Approach<span style={{color:"red"}}>*</span>*/}
                     <br />
                     <div style={{ fontSize: "70%", fontWeight: "200" }}>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.
                 </div>
                 </ControlLabel>
-                <FormControl componentClass="select" size='6' value={this.state.approach} name="approach" onChange={(e) => this.handleApproachChange(e)} multiple>
+                <FormControl componentClass="select" size='10' value={this.state.approach} name="approach" onChange={(e) => this.handleApproachChange(e)} multiple>
                     {/*<FormControl componentClass="select" value={this.state.approach} name="approach" onChange={(e) => this.handleApproachChange(e)}>*/}
                     <option value="Select All Relevant">Select All Relevant</option>
                     {/*<option value="Select One">Select One</option>*/}
@@ -162,137 +162,26 @@ class CaseManager extends Component {
                     <option value="Clinical Practicum">Clinical Practicum</option>
                     <option value="Medicine">Medicine</option>
                     <option value="Surgery">Surgery</option>
+                    <option value="Orthopedics">Orthopedics</option>
                     <option value="Others">Others</option>
                 </FormControl>
             </FormGroup>
         );
     }
 
+    
+
     setSubspeciality() {
-        if (this.state.speciality === "Medicine") {
-            return (
-                <FormGroup controlId="formControlsSubspeciality">
-                    <ControlLabel style={{ fontSize: "150%" }}>Sub-speciality</ControlLabel>
-                    <FormControl componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)}>
-                        <option value="Select One">Select One</option>
-                        <option value="Cardiology">Cardiology</option>
-                        <option value="Endocrinology">Endocrinology</option>
-                        <option value="Gastroenterology & Hepatology">Gastroenterology & Hepatology</option>
-                        <option value="Haematology">Haematology</option>
-                        <option value="Internal Medicine">Internal Medicine</option>
-                        <option value="Medical Oncology">Medical Oncology</option>
-                        <option value="Neurology">Neurology</option>
-                        <option value="Renal Medicine">Renal Medicine</option>
-                        <option value="Respiratory & Critical Care Medicine">Respiratory & Critical Care Medicine</option>
-                        <option value="Rheumatology & Immunology">Rheumatology & Immunology</option>
-                    </FormControl>
-                </FormGroup>
-            );
-        } else if (this.state.speciality === "Others") {
-            return (
-                <FormGroup controlId="formControlsSubspeciality">
-                    <ControlLabel style={{ fontSize: "150%" }}>Sub-speciality</ControlLabel>
-                    <FormControl componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)}>
-                        <option value="Select One">Select One</option>
-                        <option value="Anaesthesiology">Anaesthesiology</option>
-                        <option value="Ear Nose & Throat">Ear Nose & Throat</option>
-                        <option value="Emergency Medicine">Emergency Medicine</option>
-                        <option value="Geriatric Medicine">Geriatric Medicine</option>
-                        <option value="Infectious Diseases">Infectious Diseases</option>
-                        <option value="Neonatal">Neonatal</option>
-                        <option value="Obstetrics & Gynaecology">Obstetrics & Gynaecology</option>
-                        <option value="Ophthalmology">Ophthalmology</option>
-                        <option value="Palliative Medicine">Palliative Medicine</option>
-                        <option value="Psychiatry">Psychiatry</option>
-                        <option value="Rehabilitation Medicine">Rehabilitation Medicine</option>
-                    </FormControl>
-                </FormGroup>
-            );
-        } else if (this.state.speciality === "Surgery") {
-            return (
-                <FormGroup controlId="formControlsSubspeciality">
-                    <ControlLabel style={{ fontSize: "150%" }}>Sub-speciality</ControlLabel>
-                    <FormControl componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)}>
-                        <option value="Select One">Select One</option>
-                        <option value="Breast">Breast</option>
-                        <option value="Colorectal">Colorectal</option>
-                        <option value="General Surgery">General Surgery</option>
-                        <option value="Head & Neck">Head & Neck</option>
-                        <option value="Hepato-pancreato-biliary">Hepato-pancreato-biliary</option>
-                        <option value="Surgical Oncology">Surgical Oncology</option>
-                        <option value="Upper Gastrointestinal & Bariatric Surgery">Upper Gastrointestinal & Bariatric Surgery</option>
-                        <option value="Urology">Urology</option>
-                        <option value="Vascular Surgery">Vascular Surgery</option>
-                    </FormControl>
-                </FormGroup>
-            );
-
-        } else if (this.state.speciality === "Clinical Practicum") {
-            return (
-                <FormGroup controlId="formControlsSubspeciality">
-                    <ControlLabel style={{ fontSize: "150%" }}>Sub-speciality
-                        <br />
-                        <div style={{ fontSize: "70%", fontWeight: "200" }}>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.
-                        </div>
-                    </ControlLabel>
-                    <FormControl componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)} multiple>
-                        <option value="Select One">Select All Relevant</option>
-                        <option value="Anaesthesiology">Anaesthesiology</option>
-                        <option value="Breast">Breast</option>
-                        <option value="Cardiology">Cardiology</option>
-                        <option value="Colorectal">Colorectal</option>
-                        <option value="Ear Nose & Throat">Ear Nose & Throat</option>
-                        <option value="Emergency Medicine">Emergency Medicine</option>
-                        <option value="Endocrinology">Endocrinology</option>
-                        <option value="Gastroenterology & Hepatology">Gastroenterology & Hepatology</option>
-                        <option value="General Surgery">General Surgery</option>
-                        <option value="Geriatric Medicine">Geriatric Medicine</option>
-                        <option value="Haematology">Haematology</option>
-                        <option value="Head & Neck">Head & Neck</option>
-                        <option value="Hepato-pancreato-biliary">Hepato-pancreato-biliary</option>
-                        <option value="Infectious Diseases">Infectious Diseases</option>
-                        <option value="Internal Medicine">Internal Medicine</option>
-                        <option value="Medical Oncology">Medical Oncology</option>
-                        <option value="Neonatal">Neonatal</option>
-                        <option value="Neurology">Neurology</option>
-                        <option value="Obstetrics & Gynaecology">Obstetrics & Gynaecology</option>
-                        <option value="Ophthalmology">Ophthalmology</option>
-                        <option value="Palliative Medicine">Palliative Medicine</option>
-                        <option value="Psychiatry">Psychiatry</option>
-                        <option value="Rehabilitation Medicine">Rehabilitation Medicine</option>
-                        <option value="Renal Medicine">Renal Medicine</option>
-                        <option value="Respiratory & Critical Care Medicine">Respiratory & Critical Care Medicine</option>
-                        <option value="Rheumatology & Immunology">Rheumatology & Immunology</option>
-                        <option value="Surgical Oncology">Surgical Oncology</option>
-                        <option value="Upper Gastrointestinal & Bariatric Surgery">Upper Gastrointestinal & Bariatric Surgery</option>
-                        <option value="Urology">Urology</option>
-                        <option value="Vascular Surgery">Vascular Surgery</option>
-                    </FormControl>
-                </FormGroup>
-            );
-        } else {
-            return (
-                <FormGroup controlId="formControlsSubspeciality">
-                    <ControlLabel style={{ fontSize: "150%" }}>Sub-speciality</ControlLabel>
-                    <FormControl componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)}>
-                        <option value="Select One">Please select a Speciality first</option>
-                    </FormControl>
-                </FormGroup>
-            );
-        }
-
-    }
-
-    setSubspeciality2() {
         return (
             <FormGroup controlId="formControlsSubspeciality">
-                <ControlLabel style={{ fontSize: "150%" }}>Sub-speciality
+                <ControlLabel style={{ fontSize: "150%" }}>Sub-specialties
                         <br />
                     <div style={{ fontSize: "70%", fontWeight: "200" }}>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.
                         </div>
                 </ControlLabel>
-                <FormControl  componentClass="select" size='6' value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)} multiple>
+                <FormControl  componentClass="select" size='10' value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)} multiple>
                     <option value="Select One">Select All Relevant</option>
+
                     <optgroup label="--Medicine--"></optgroup>
                     <option value="Cardiology">Cardiology</option>
                     <option value="Endocrinology">Endocrinology</option>
@@ -304,6 +193,7 @@ class CaseManager extends Component {
                     <option value="Renal Medicine">Renal Medicine</option>
                     <option value="Respiratory & Critical Care Medicine">Respiratory & Critical Care Medicine</option>
                     <option value="Rheumatology & Immunology">Rheumatology & Immunology</option>
+
                     <optgroup label="--Surgery--"></optgroup>
                     <option value="Breast">Breast</option>
                     <option value="Colorectal">Colorectal</option>
@@ -314,6 +204,18 @@ class CaseManager extends Component {
                     <option value="Upper Gastrointestinal & Bariatric Surgery">Upper Gastrointestinal & Bariatric Surgery</option>
                     <option value="Urology">Urology</option>
                     <option value="Vascular Surgery">Vascular Surgery</option>
+
+                    <optgroup label="--Orthopedics--"></optgroup>
+                    <option value="Foot and Ankle Surgery">Foot and Ankle Surgery</option>
+                    <option value="Hip and Knee Surgery">Hip and Knee Surgery</option>
+                    <option value="Musculoskeletal Oncology">Musculoskeletal Oncology</option>
+                    <option value="Musculoskeletal Trauma">Musculoskeletal Trauma</option>
+                    <option value="Paediatric Orthopaedics">Paediatric Orthopaedics</option>
+                    <option value="Shoulder & Elbow Surgery">Shoulder & Elbow Surgery</option>
+                    <option value="Spine Surgery">Spine Surgery</option>
+                    <option value="Sports medicine">Sports medicine</option>
+                    <option value="Department of Hand & Reconstructive Microsurgery Trauma">Department of Hand & Reconstructive Microsurgery Trauma</option>
+
                     <optgroup label="--Others--"></optgroup>
                     <option value="Anaesthesiology">Anaesthesiology</option>
                     <option value="Ear Nose & Throat">Ear Nose & Throat</option>
@@ -442,16 +344,12 @@ class CaseManager extends Component {
                             return (
                                 <div className="container-fluid">
                                     <div className="row">
-                                        <div className="col-sm-4 text-center" style={{ fontSize: '150%' }}>
-                                            <strong> <h3>Case Manager</h3> </strong>
-                                        </div>
-                                        <div className="col-sm-6 left">
+                                        <div className="col-sm-6 center">
                                             <ButtonToolbar>
                                                 <Button bsStyle="primary" onClick={(e) => this.goToAdmin()}>Admin HomePage</Button>
                                                 <Button bsStyle="primary" onClick={(e) => this.goToCaseManager()}>Case Management</Button>
                                                 <Button bsStyle="primary" onClick={(e) => this.goToUserManager()}>User Management</Button>
                                                 <Button bsStyle="primary">Discussion Board</Button>
-
                                             </ButtonToolbar>
                                         </div>
                                     </div>
@@ -465,17 +363,17 @@ class CaseManager extends Component {
                                             {this.setSpeciality()}
                                         </div> */}
                                         <div className='col-sm-6'>
-                                            {this.setSubspeciality2()}
+                                            {this.setSubspeciality()}
                                         </div>
                                         <div className='col-sm-6'>
                                             {this.setApproach()}
-                                        </div>
-                                        <div className='col-sm-4'>
+                                        </div> 
+                                        <div className='col-sm-6'>
                                             {this.setDifficulty()}
                                         </div>
-                                        <div className='col-sm-4'>
+                                        <div className='col-sm-6'>
                                             {this.setCaseStatus()}
-                                        </div>
+                                        </div> 
                                         {/* <div className='col-sm-4'>
                                             {this.setTime()}
                                         </div> */}
@@ -483,7 +381,7 @@ class CaseManager extends Component {
                                             <Button type="button" bsSize="lg" bsStyle="primary" onClick={(e) => this.searchCases()}> &nbsp; Search &nbsp;</Button>
                                         </div>
                                     </div>
-                                    <br />
+                                    <br /><br />
                                     <div className='col-sm-12'>
                                         {this.renderTable()}
                                     </div>

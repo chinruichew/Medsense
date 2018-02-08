@@ -134,6 +134,7 @@ class DeleteUser extends Component {
                     <FormControl componentClass="select" value={this.state.speciality} name="speciality" onChange={(e) => this.handleSpecialityChange(e)}>
                         <option value="Medicine">Medicine</option>
                         <option value="Surgery">Surgery</option>
+                        <option value="Orthopedics">Orthopedics</option>
                         <option value="Others">Others</option>
                     </FormControl>
                 </FormGroup>
@@ -197,6 +198,25 @@ class DeleteUser extends Component {
                             <option value="Upper Gastrointestinal & Bariatric Surgery">Upper Gastrointestinal & Bariatric Surgery</option>
                             <option value="Urology">Urology</option>
                             <option value="Vascular Surgery">Vascular Surgery</option>
+                        </FormControl>
+                    </FormGroup>
+                );
+
+            } else if (this.state.speciality === "Orthopedics") {
+                return (
+                    <FormGroup controlId="formControlsSubspeciality">
+                        <ControlLabel style={{ fontSize: "150%" }}>Sub-speciality<span style={{ color: "red" }}>*</span></ControlLabel>
+                        <FormControl componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)} multiple>
+                        <option value="Select One">Select One</option>
+                        <option value="Foot and Ankle Surgery">Foot and Ankle Surgery</option>
+                        <option value="Hip and Knee Surgery">Hip and Knee Surgery</option>
+                        <option value="Musculoskeletal Oncology">Musculoskeletal Oncology</option>
+                        <option value="Musculoskeletal Trauma">Musculoskeletal Trauma</option>
+                        <option value="Paediatric Orthopaedics">Paediatric Orthopaedics</option>
+                        <option value="Shoulder & Elbow Surgery">Shoulder & Elbow Surgery</option>
+                        <option value="Spine Surgery">Spine Surgery</option>
+                        <option value="Sports medicine">Sports medicine</option>
+                        <option value="Department of Hand & Reconstructive Microsurgery Trauma">Department of Hand & Reconstructive Microsurgery Trauma</option>
                         </FormControl>
                     </FormGroup>
                 );

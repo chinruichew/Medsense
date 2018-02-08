@@ -33,9 +33,7 @@ class Admin extends Component {
                             return (
                                 <div className="container-fluid">
                                     <div className="row">
-                                        <div className="col-sm-4 text-center" style={{ fontSize: '150%' }}>
-                                            <strong> <h3>Admin Home Page</h3> </strong>
-                                        </div>
+                                        
                                         <div className="col-sm-6 left">
                                             <ButtonToolbar>
                                                 <Button bsStyle="primary" onClick={(e) => this.goToAdmin()}>Admin HomePage</Button>
