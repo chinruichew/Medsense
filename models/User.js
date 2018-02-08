@@ -14,7 +14,8 @@ const userSchema = new Schema({
     usertype: { type: String, default: "" },
     timestamp: { type: Date, default: Date.now()},
     cases: [{ type: Schema.Types.ObjectId, ref: 'cases' }],
-    points: { type: Number, default: 0}
+    points: { type: Number, default: 0},
+    lastLogin: { type: Date, default: ""}
 });
 
 // generating a hash

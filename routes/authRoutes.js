@@ -6,8 +6,10 @@ module.exports = app => {
         const values = req.body;
         User.findOne({ username: values.username }, function (err, user) {
             if (user !== null && user.validPassword(values.password)) {
-                req.session.user = user;
-                res.send('Authenticated');
+                User.findByIdAndUpdate(user._id, { $set: { lastLogin: new Date() }}, { new: true }, function(err, user) {
+                    req.session.user = user;
+                    res.send('Authenticated');
+                });
             } else {
                 res.send('Invalid Username/Password!');
             }
