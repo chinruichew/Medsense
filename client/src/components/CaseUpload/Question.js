@@ -368,8 +368,7 @@ class Question extends Component {
                     <ReactQuill value={this.state.openEnded}
                                 onChange={this.handleOpenEndedChange}
                                 placeholder="Enter an answer"
-                                style={{height:'100px'}}
-                    />
+                                style={{height:'100px'}}/>
                     {/*<FormControl componentClass="textarea" rows={5} style={{height:400}} placeholder="Enter an answer" value={this.state.openEnded} name="openEnded" onChange={(e)=>this.handleOpenEndedChange(e)}/>*/}
                 </FormGroup>
             );
@@ -387,8 +386,7 @@ class Question extends Component {
                 <ReactQuill value={this.state.stem}
                             onChange={this.handleStemChange}
                             placeholder="Enter a continuation of the scenario"
-                            style={{height:'100px'}}
-                />
+                            style={{height:'100px'}}/>
                 {/*<FormControl componentClass="textarea" rows={3} style={{height:'600px'}} placeholder="Enter a continuation of the scenario" value={this.state.stem} name="stem" onChange={(e)=>this.handleStemChange(e)} />*/}
             </FormGroup>
         );
@@ -420,8 +418,7 @@ class Question extends Component {
                             <ReactQuill value={this.state.question}
                                         onChange={this.handleQuestionChange}
                                         placeholder="Enter a question"
-                                        style={{height:'100px'}}
-                            />
+                                        style={{height:'100px'}}/>
                             {/*<FormControl componentClass="textarea" rows={5} placeholder="Enter a question" value={this.state.question} name="question" onChange={(e)=>this.handleQuestionChange(e)} />*/}
                         </FormGroup>
 
@@ -447,8 +444,7 @@ class Question extends Component {
                             <ReactQuill value={this.state.pearl}
                                         onChange={this.handlePearlChange}
                                         placeholder="Enter an explanation for the answer(s)"
-                                        style={{height:'100px'}}
-                            />
+                                        style={{height:'100px'}}/>
                             {/*<FormControl componentClass="textarea" rows={5} placeholder="Enter an explanation for the answer(s)" value={this.state.pearl} name="pearl" onChange={(e)=>this.handlePearlChange(e)} />*/}
                         </FormGroup>
 
@@ -484,8 +480,7 @@ class Question extends Component {
                             <ReactQuill value={this.state.reference}
                                         onChange={this.handleReferenceChange}
                                         placeholder="Enter your references"
-                                        style={{height:'100px'}}
-                            />
+                                        style={{height:'100px'}}/>
                             {/*<FormControl componentClass="textarea" rows={3} placeholder="Enter your references" value={this.state.reference} name="reference" onChange={(e)=>this.handleReferenceChange(e)} />*/}
                         </FormGroup>
                     </Panel>

@@ -318,8 +318,7 @@ class Overview extends Component {
                     <ReactQuill value={this.state.scenario}
                                 onChange={this.handleScenarioChange}
                                 placeholder="Enter a brief description of the patient"
-                                style={{height:'100px'}}
-                    />
+                                style={{height:'100px'}}/>
 
                 </FormGroup>
 
@@ -328,8 +327,7 @@ class Overview extends Component {
                     <ReactQuill value={this.state.learning}
                                 onChange={this.handleLearningChange}
                                 placeholder="Enter the key learning points of this case"
-                                style={{height:'100px'}}
-                    />
+                                style={{height:'100px'}}/>
                     {/*<FormControl componentClass="textarea" rows={3} placeholder="Enter the key learning points of this case" value={this.state.learning} name="learning" onChange={(e) => this.handleLearningChange(e)} />*/}
                 </FormGroup>
 

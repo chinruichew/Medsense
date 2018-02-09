@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { bindAll } from 'lodash';
 import { FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
+import ReactQuill, {Toolbar, Mixin} from 'react-quill';
 
 import '../CaseUpload/Upload.css';
+import 'react-quill/dist/quill.snow.css';
 
 class Overview extends Component {
     constructor(props) {
@@ -110,13 +112,11 @@ class Overview extends Component {
             this.update(value, "approach");
         }
     }
-    handleScenarioChange(e) {
-        const value = e.target.value;
+    handleScenarioChange(value) {
         this.setState({ scenario: value });
         this.update(value, "scenario");
     }
-    handleLearningChange(e) {
-        const value = e.target.value;
+    handleLearningChange(value) {
         this.setState({ learning: value });
         this.update(value, "learning");
     }
@@ -310,14 +310,22 @@ class Overview extends Component {
                     </FormControl>
                 </FormGroup>
 
-                <FormGroup controlId="formControlsScenario">
+                <FormGroup controlId="formControlsScenario" style={{height:'200px'}}>
                     <ControlLabel style={{ fontSize: "150%" }}>Case Scenario<span style={{color:"red"}}>*</span></ControlLabel>
-                    <FormControl componentClass="textarea" rows={3} placeholder="Enter a brief description of the patient" value={this.state.scenario} name="scenario" onChange={(e) => this.handleScenarioChange(e)} />
+                    <ReactQuill value={this.state.scenario}
+                                onChange={this.handleScenarioChange}
+                                placeholder="Enter a brief description of the patient"
+                                style={{height:'100px'}}/>
+                    {/*<FormControl componentClass="textarea" rows={3} placeholder="Enter a brief description of the patient" value={this.state.scenario} name="scenario" onChange={(e) => this.handleScenarioChange(e)} />*/}
                 </FormGroup>
 
-                <FormGroup controlId="formControlsLearning">
+                <FormGroup controlId="formControlsLearning" style={{height:'200px'}}>
                     <ControlLabel style={{ fontSize: "150%" }}>Key Learning Points<span style={{color:"red"}}>*</span></ControlLabel>
-                    <FormControl componentClass="textarea" rows={3} placeholder="Enter the key learning points of this case" value={this.state.learning} name="learning" onChange={(e) => this.handleLearningChange(e)} />
+                    {/*<FormControl componentClass="textarea" rows={3} placeholder="Enter the key learning points of this case" value={this.state.learning} name="learning" onChange={(e) => this.handleLearningChange(e)} />*/}
+                    <ReactQuill value={this.state.learning}
+                                onChange={this.handleLearningChange}
+                                placeholder="Enter the key learning points of this case"
+                                style={{height:'100px'}}/>
                 </FormGroup>
 
             </div>
