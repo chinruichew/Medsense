@@ -7,7 +7,7 @@ import BootstrapModal from '../UI/Modal/VettingBootstrapModal.js';
 import '../CaseUpload/Upload.css';
 import { updateCase } from '../../actions/index';
 import axios from 'axios';
-import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+import ReactHtmlParser from 'react-html-parser';
 
 class Main extends Component {
     state = {

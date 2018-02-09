@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindAll } from 'lodash';
 import { FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
-import ReactQuill, {Toolbar, Mixin} from 'react-quill';
+import ReactQuill from 'react-quill';
 
 import '../CaseUpload/Upload.css';
 import 'react-quill/dist/quill.snow.css';

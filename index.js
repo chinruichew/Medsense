@@ -214,7 +214,7 @@ s3.getObject(getParams, function (err, data) {
         console.log(err);
 
     const privateKey = data.Body.toString('utf-8');
-    console.log(privateKey);
+    console.trace(privateKey);
 
     const getParams = {
         Bucket: keys.httpsBucket,
@@ -226,14 +226,14 @@ s3.getObject(getParams, function (err, data) {
             console.log(err);
 
         const certificate = data.Body.toString('utf-8');
-        console.log(certificate);
+        console.trace(certificate);
 
         const credentials = {
             key: privateKey,
             cert: certificate
         };
 
-        console.log(credentials);
+        console.trace(credentials);
 
         // const server = https.createServer(credentials, app);
         // server.on('error', (e) => {

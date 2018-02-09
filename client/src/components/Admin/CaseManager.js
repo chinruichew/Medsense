@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { Button, ButtonToolbar, FormGroup, ControlLabel, FormControl, Table, Modal } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import { bindAll } from 'lodash';
-import { Row } from 'react-bootstrap';
 import Admin from './Admin';
 import UserManager from './UserManager';
 import { deleteAdminCase, fetchFilteredAdminCases } from '../../actions';

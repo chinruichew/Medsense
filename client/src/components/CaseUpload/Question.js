@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindAll } from 'lodash';
 import {Button, FormGroup, ControlLabel, FormControl, InputGroup, Accordion, Panel, Row} from 'react-bootstrap';
-import ReactQuill, {Toolbar, Mixin} from 'react-quill';
+import ReactQuill from 'react-quill';
 import ImageMagnifier from "./ImageMagnifier";
 
 import './Upload.css';

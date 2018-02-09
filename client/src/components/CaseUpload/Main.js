@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, Accordion, Panel, FormGroup, Radio, ControlLabel, FormControl, Col } from 'react-bootstrap';
 import { bindAll } from 'lodash';
 import axios from 'axios';
-import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+import ReactHtmlParser from 'react-html-parser';
 
 import Question from './Question.js';
 import Overview from './Overview.js';
