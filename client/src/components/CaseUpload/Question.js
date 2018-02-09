@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { bindAll } from 'lodash';
 import {Button, FormGroup, ControlLabel, FormControl, InputGroup, Accordion, Panel, Row} from 'react-bootstrap';
+import ReactQuill, {Toolbar, Mixin} from 'react-quill';
+import ImageMagnifier from "./ImageMagnifier";
 
 import './Upload.css';
-import ImageMagnifier from "./ImageMagnifier";
+import 'react-quill/dist/quill.snow.css';
 
 class Question extends Component {
     constructor(props){
@@ -195,14 +197,14 @@ class Question extends Component {
         this.update(value, "attachment");
     }
 
-    handleStemChange(e){
-        const value = e.target.value;
+    handleStemChange(value){
         this.setState({ stem: value });
+        console.log(value);
         this.update(value, "stem");
     }
-    handleQuestionChange(e){
-        const value = e.target.value;
+    handleQuestionChange(value){
         this.setState({ question: value });
+        console.log(this.state.question);
         this.update(value, "question");
     }
     handleTypeChange(e){
@@ -210,8 +212,7 @@ class Question extends Component {
         this.setState({ type: value });
         this.update(value, "type");
     }
-    handleOpenEndedChange(e){
-        const value = e.target.value;
+    handleOpenEndedChange(value){
         this.setState({ openEnded: value });
         this.update(value, "openEnded");
     }
@@ -275,8 +276,7 @@ class Question extends Component {
         this.setState({ check6: value });
         this.update(value, "check6");
     }
-    handlePearlChange(e){
-        const value = e.target.value;
+    handlePearlChange(value){
         this.setState({ pearl: value });
         this.update(value, "pearl");
     }
@@ -291,8 +291,7 @@ class Question extends Component {
         this.setState({ mark: value });
         this.update(value, "mark");
     }
-    handleReferenceChange(e){
-        const value = e.target.value;
+    handleReferenceChange(value){
         this.setState({ reference: value });
         this.update(value, "reference");
     }
@@ -364,9 +363,14 @@ class Question extends Component {
             );
         } else if(this.state.type==="Open-ended"){
             return(
-                <FormGroup controlId="formControlsOpenEnded">
+                <FormGroup controlId="formControlsOpenEnded" style={{height:'200px'}}>
                     <ControlLabel>Answer<span style={{color:"red"}}>*</span></ControlLabel>
-                    <FormControl componentClass="textarea" rows={5} style={{height:400}} placeholder="Enter an answer" value={this.state.openEnded} name="openEnded" onChange={(e)=>this.handleOpenEndedChange(e)}/>
+                    <ReactQuill value={this.state.openEnded}
+                                onChange={this.handleOpenEndedChange}
+                                placeholder="Enter an answer"
+                                style={{height:'100px'}}
+                    />
+                    {/*<FormControl componentClass="textarea" rows={5} style={{height:400}} placeholder="Enter an answer" value={this.state.openEnded} name="openEnded" onChange={(e)=>this.handleOpenEndedChange(e)}/>*/}
                 </FormGroup>
             );
         }
@@ -378,9 +382,14 @@ class Question extends Component {
             return;
         }
         return (
-            <FormGroup controlId="formControlsSTEM">
+            <FormGroup controlId="formControlsSTEM" style={{height:'200px'}}>
                 <ControlLabel style={{ fontSize: "150%" }}>STEM</ControlLabel>
-                <FormControl componentClass="textarea" rows={3} style={{height:'600px'}} placeholder="Enter a continuation of the scenario" value={this.state.stem} name="stem" onChange={(e)=>this.handleStemChange(e)} />
+                <ReactQuill value={this.state.stem}
+                            onChange={this.handleStemChange}
+                            placeholder="Enter a continuation of the scenario"
+                            style={{height:'100px'}}
+                />
+                {/*<FormControl componentClass="textarea" rows={3} style={{height:'600px'}} placeholder="Enter a continuation of the scenario" value={this.state.stem} name="stem" onChange={(e)=>this.handleStemChange(e)} />*/}
             </FormGroup>
         );
     }
@@ -406,9 +415,14 @@ class Question extends Component {
                         </div>
                         {this.checkQ1()}
 
-                        <FormGroup controlId="formControlsQuestion">
+                        <FormGroup controlId="formControlsQuestion" style={{height:'200px'}}>
                             <ControlLabel style={{ fontSize: "150%" }}>Question {this.state.id}<span style={{color:"red"}}>*</span></ControlLabel>
-                            <FormControl componentClass="textarea" rows={5} placeholder="Enter a question" value={this.state.question} name="question" onChange={(e)=>this.handleQuestionChange(e)} />
+                            <ReactQuill value={this.state.question}
+                                        onChange={this.handleQuestionChange}
+                                        placeholder="Enter a question"
+                                        style={{height:'100px'}}
+                            />
+                            {/*<FormControl componentClass="textarea" rows={5} placeholder="Enter a question" value={this.state.question} name="question" onChange={(e)=>this.handleQuestionChange(e)} />*/}
                         </FormGroup>
 
                         <FormGroup controlId="formControlsAttachment">
@@ -428,9 +442,14 @@ class Question extends Component {
 
                         {this.answer()}
 
-                        <FormGroup controlId="formControlsPEARL">
+                        <FormGroup controlId="formControlsPEARL" style={{height:'200px'}}>
                             <ControlLabel style={{ fontSize: "150%" }}>PEARL<span style={{color:"red"}}>*</span></ControlLabel>
-                            <FormControl componentClass="textarea" rows={5} placeholder="Enter an explanation for the answer(s)" value={this.state.pearl} name="pearl" onChange={(e)=>this.handlePearlChange(e)} />
+                            <ReactQuill value={this.state.pearl}
+                                        onChange={this.handlePearlChange}
+                                        placeholder="Enter an explanation for the answer(s)"
+                                        style={{height:'100px'}}
+                            />
+                            {/*<FormControl componentClass="textarea" rows={5} placeholder="Enter an explanation for the answer(s)" value={this.state.pearl} name="pearl" onChange={(e)=>this.handlePearlChange(e)} />*/}
                         </FormGroup>
 
                         <FormGroup controlId="formControlsTime">
@@ -460,9 +479,14 @@ class Question extends Component {
                             </InputGroup>
                         </FormGroup>
 
-                        <FormGroup controlId="formControlsReferences">
+                        <FormGroup controlId="formControlsReferences" style={{height:'200px'}}>
                             <ControlLabel style={{ fontSize: "150%" }}>References</ControlLabel>
-                            <FormControl componentClass="textarea" rows={3} placeholder="Enter your references" value={this.state.reference} name="reference" onChange={(e)=>this.handleReferenceChange(e)} />
+                            <ReactQuill value={this.state.reference}
+                                        onChange={this.handleReferenceChange}
+                                        placeholder="Enter your references"
+                                        style={{height:'100px'}}
+                            />
+                            {/*<FormControl componentClass="textarea" rows={3} placeholder="Enter your references" value={this.state.reference} name="reference" onChange={(e)=>this.handleReferenceChange(e)} />*/}
                         </FormGroup>
                     </Panel>
                 </Accordion>
