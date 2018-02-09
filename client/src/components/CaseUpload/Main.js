@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, Accordion, Panel, FormGroup, Radio, ControlLabel, FormControl, Col } from 'react-bootstrap';
 import { bindAll } from 'lodash';
 import axios from 'axios';
+import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 
 import Question from './Question.js';
 import Overview from './Overview.js';
@@ -87,11 +88,11 @@ class Main extends Component {
         // } else if (this.state.approach === "Select One") {
         //     this.setState({ vmShow: true, error: "Case Overview: Please select an Approach!" });
             this.setState({ vmShow: true, error: "Case Overview: Please select at least 1 Approach!" });
-        } else if (this.state.scenario === '') {
+        } else if (this.state.scenario === '' || this.state.scenario === '<p><br></p>') {
             this.setState({ vmShow: true, error: "Case Overview: Please fill in the Case Scenario!" });
         } else if (this.isValidNRIC(this.state.scenario)){
             this.setState({ vmShow: true, error: "Case Overview: Case Scenario should NOT contain NRIC!" });
-        } else if (this.state.learning === '') {
+        } else if (this.state.learning === '' || this.state.learning === '<p><br></p>') {
             this.setState({ vmShow: true, error: "Case Overview: Please fill in the Key Learning Points!" });
         } else if (this.isValidNRIC(this.state.learning)){
             this.setState({ vmShow: true, error: "Case Overview: Key Learning Points should NOT contain NRIC!" });
@@ -109,7 +110,7 @@ class Main extends Component {
                     for (let i=0; i<questions.length; i++) {
                         let obj = questions[i];
                         console.log(obj.mark);
-                        if (obj.question === '') {
+                        if (obj.question === '' || obj.question === '<p><br></p>') {
                             error = "Question #" + obj.id + ": Please fill in the Question!";
                             throw BreakException;
                         } else if (this.isValidNRIC(obj.question)){
@@ -159,13 +160,13 @@ class Main extends Component {
                                 error = "Question #" + obj.id + ": Please check at least 1 correct answer!";
                                 throw BreakException;
                             }
-                        } else if (obj.type === "Open-ended" && obj.openEnded === '') {
+                        } else if (obj.type === "Open-ended" && (obj.openEnded === '' || obj.openEnded === '<p><br></p>' )) {
                             error = "Question #" + obj.id + ": Please fill in the Answer!";
                             throw BreakException;
-                        } else if(obj.type === "Open-ended" && obj.openEnded !== '' && this.isValidNRIC(obj.type)){
+                        } else if(obj.type === "Open-ended" && obj.openEnded !== '' && obj.openEnded !== '<p><br></p>' && this.isValidNRIC(obj.type)){
                             error = "Question #" + obj.id + ": Answer should NOT contain NRIC!";
                             throw BreakException;
-                        } else if (obj.pearl === '') {
+                        } else if (obj.pearl === '' || obj.pearl === '<p><br></p>') {
                             error = "Question #" + obj.id + ": Please fill in the PEARL!";
                             throw BreakException;
                         } else if(this.isValidNRIC(obj.pearl)){
@@ -387,10 +388,10 @@ class Main extends Component {
             }
             return (
                 <div className="stem">
-                    <div className="stem-label">
+                    <div className="stem-label" style={{fontSize: "180%"}}>
                         Question {obj.id}
                     </div>
-                        {stem}
+                    <div style={{fontSize: "120%"}}>{ReactHtmlParser(stem)}</div>
                 </div>
             );
         });
@@ -410,19 +411,19 @@ class Main extends Component {
                 <div className="story">
 
                     <p className="story-title">Story So Far</p>
-                    <p>Case Scenario</p>
-                    <div className="row" style={{whiteSpace:"pre-wrap"}}>{this.state.scenario}</div>
+                    <p style={{textDecorationLine: "underline", margin: "0", fontSize: "200%"}}>Case Scenario</p>
+                    <div className="row" style={{whiteSpace:"pre-wrap", paddingLeft: "5%", fontSize:"120%"}}>
+                        {ReactHtmlParser(this.state.scenario)}
+                    </div>
                     <br/><br/>
-                    <p>Case Continuation</p>
-                    <div className="row" style={{whiteSpace:"pre-wrap"}}>{stems}</div>
+                    <p style={{textDecorationLine: "underline", margin: "0", fontSize: "200%"}}>Case Continuation</p>
+                    <div className="row" style={{whiteSpace:"pre-wrap", paddingLeft: "5%"}}>{stems}</div>
                     <br/><br/>
 
                 </div>
 
                 <form action="/api/uploadCase" method="post" className="case-area">
-
-                    <br/>
-                    <Accordion>
+                    <Accordion style={{marginTop: "2%"}}>
                         <Panel header={overviewTitle} eventKey="1" bsStyle="info">
                             <Overview
                                 title={this.state.title}

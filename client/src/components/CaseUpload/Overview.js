@@ -118,11 +118,11 @@ class Overview extends Component {
     }
     handleScenarioChange(value) {
         this.setState({ scenario: value })
-        console.log(value);
         this.update(value, "scenario");
     }
     handleLearningChange(value) {
         this.setState({ learning: value });
+        //console.log(this.state.learning);
         this.update(value, "learning");
     }
 
