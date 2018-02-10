@@ -25,7 +25,8 @@ class Main extends Component {
     };
 
     isValidNRIC = (theNric) => {
-        return new RegExp(/^.*[STFG]\d{7}[A-Z].*$/).test(theNric);
+        const upperCaseNric = theNric.toUpperCase();
+        return new RegExp(/^.*[STFG]\d{7}[A-Z].*$/).test(upperCaseNric);
     };
 
     addQuestion = () => {
