@@ -103,14 +103,10 @@ class GameResults extends Component {
     }
 
     checkLevel(){
-        console.log(this.props.score);
         const prev = this.state.points-this.props.score;
-        console.log(this.state.points);
-        const prevLevel = Math.floor((50+Math.sqrt(400*prev-37500))/100);
+        const prevLevel = Math.floor((50+Math.sqrt(400*prev-37500))/100) ;
         const currLevel = Math.floor((50+Math.sqrt(400*this.state.points-37500))/100);
-        console.log(prevLevel);
-        console.log(currLevel);
-        if (prevLevel!==currLevel){
+        if (!isNaN(prevLevel) && prevLevel!==currLevel){
             this.setState({vmShow:true, level:currLevel});
         }
     }
