@@ -3,6 +3,7 @@ import { Form, FormGroup, Col } from 'react-bootstrap';
 import { Button, Row, ControlLabel, FormControl, Panel } from 'react-bootstrap';
 import { bindAll } from 'lodash';
 import { Line } from 'rc-progress';
+import ReactHtmlParser from 'react-html-parser';
 // import { connect } from 'react-redux';
 // import { storeCaseAnswerOpenEnded } from '../../actions';
 
@@ -148,9 +149,9 @@ class OpenEndedQuestion extends Component {
 
     renderScenario() {
         if (this.props.question.id === 1 + "") {
-            return this.props.scenario;
+            return ReactHtmlParser(this.props.scenario);
         } else {
-            return this.props.question.stem;
+            return ReactHtmlParser(this.props.question.stem);
         }
     }
 
@@ -188,7 +189,7 @@ class OpenEndedQuestion extends Component {
                 <Panel bsStyle="info" id="panel" style={{ borderWidth: "thick", width: "93%" }}>
                     <h4 style={{ border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace: "pre-wrap", wordBreak: "keep-all" }}>{this.renderScenario()}</h4>
                     <br />
-                    <h4 style={{ border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace: "pre-wrap", wordBreak: "keep-all" }}>{this.props.question.question}</h4>
+                    <h4 style={{ border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace: "pre-wrap", wordBreak: "keep-all" }}>{ReactHtmlParser(this.props.question.question)}</h4>
 
 
                     <div class="col-md-5 col-md-offset-2">{<ImageMagnifier url={this.props.question.attachment} />}</div>
@@ -214,7 +215,7 @@ class OpenEndedQuestion extends Component {
                 </Panel>
                 {this.renderShowNextButton()}
 
-                {this.state.showAnswers && <h3>You got {this.state.score.toFixed(2)} % </h3>}
+                {this.state.showAnswers && <h3>You got {(this.state.score*100).toFixed(2)} % correct! <br/>Your score for this question: {this.state.score.toFixed(2)} / {this.state.mark}</h3>}
 
                 {this.state.showAnswers && <OpenEndedAnswer
                     caseid={this.props.caseid}

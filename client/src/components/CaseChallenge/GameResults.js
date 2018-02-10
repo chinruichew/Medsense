@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
 import BootstrapModal from '../UI/Modal/VettingBootstrapModal.js';
+import ReactHtmlParser from 'react-html-parser';
 
 class GameResults extends Component {
     constructor(props){
@@ -58,16 +59,16 @@ class GameResults extends Component {
                 <div>
                     <h3>Question {obj.id}</h3>
                     <h4 style={{whiteSpace: "pre-wrap", wordBreak: "keep-all"}}>
-                        {obj.stem}
+                        {ReactHtmlParser(obj.stem)}
                         <br/>
-                        {obj.question}
+                        {ReactHtmlParser(obj.question)}
                     </h4>
                     <br/>
                     <h3>Answer</h3>
                     <h4 style={{whiteSpace: "pre-wrap", wordBreak: "keep-all"}}>
-                        {answer}
+                        {ReactHtmlParser(answer)}
                         <br/>
-                        {obj.pearl}
+                        {ReactHtmlParser(obj.pearl)}
                     </h4>
                     <br/>
                 </div>
@@ -82,7 +83,7 @@ class GameResults extends Component {
 
                 </div>
                 <h3><img src="./checklist.png" hspace='5' alt="" style={{ width: "5%" }} />Learning Points</h3>
-                <h4>{this.props.case.learning}</h4>
+                <h4>{ReactHtmlParser(this.props.case.learning)}</h4>
                 <br/>
                 {questions}
 

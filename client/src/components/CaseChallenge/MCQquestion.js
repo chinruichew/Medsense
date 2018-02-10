@@ -3,6 +3,7 @@ import { Form, FormGroup, Col } from 'react-bootstrap';
 import { Checkbox, Button, Row, Panel } from 'react-bootstrap';
 import { Line } from 'rc-progress';
 import { bindAll } from 'lodash';
+import ReactHtmlParser from 'react-html-parser';
 // import { connect } from 'react-redux';
 // import { storeCaseAnswerMCQ } from '../../actions';
 
@@ -152,9 +153,9 @@ class MCQquestion extends Component {
 
     renderScenario() {
         if (this.props.question.id === 1 + "") {
-            return this.props.scenario;
+            return ReactHtmlParser(this.props.scenario);
         } else {
-            return this.props.question.stem;
+            return ReactHtmlParser(this.props.question.stem);
         }
     }
 
@@ -257,7 +258,9 @@ class MCQquestion extends Component {
 
                     <br />
 
-                    <h4 style={{ border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace: "pre-wrap", wordBreak: "keep-all" }}>{this.props.question.question}</h4>
+                    <h4 style={{ border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace: "pre-wrap", wordBreak: "keep-all" }}>
+                        {ReactHtmlParser(this.props.question.question)}
+                    </h4>
 
                     <div className="col-md-5 col-md-offset-2">{<ImageMagnifier url={this.props.question.attachment} />}</div>
                     {imageZoom}
