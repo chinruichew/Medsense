@@ -7,6 +7,14 @@ import ImageMagnifier from "./ImageMagnifier";
 import './Upload.css';
 import 'react-quill/dist/quill.snow.css';
 
+var toolbarOptions = [
+    [{ 'header': [1, 2, 3, false] }],
+    ['bold', 'italic', 'underline'],        // toggled buttons
+    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+    ['clean']                                         // remove formatting button
+];
+
+
 class Question extends Component {
     constructor(props){
         super(props);
@@ -366,6 +374,7 @@ class Question extends Component {
                 <FormGroup controlId="formControlsOpenEnded" style={{height:'200px'}}>
                     <ControlLabel>Answer<span style={{color:"red"}}>*</span></ControlLabel>
                     <ReactQuill value={this.state.openEnded}
+                                modules={{toolbar: toolbarOptions}}
                                 onChange={this.handleOpenEndedChange}
                                 placeholder="Enter an answer"
                                 style={{height:'100px'}}/>
@@ -384,6 +393,7 @@ class Question extends Component {
             <FormGroup controlId="formControlsSTEM" style={{height:'200px'}}>
                 <ControlLabel style={{ fontSize: "150%" }}>STEM</ControlLabel>
                 <ReactQuill value={this.state.stem}
+                            modules={{toolbar: toolbarOptions}}
                             onChange={this.handleStemChange}
                             placeholder="Enter a continuation of the scenario"
                             style={{height:'100px'}}/>
@@ -416,6 +426,7 @@ class Question extends Component {
                         <FormGroup controlId="formControlsQuestion" style={{height:'200px'}}>
                             <ControlLabel style={{ fontSize: "150%" }}>Question {this.state.id}<span style={{color:"red"}}>*</span></ControlLabel>
                             <ReactQuill value={this.state.question}
+                                        modules={{toolbar: toolbarOptions}}
                                         onChange={this.handleQuestionChange}
                                         placeholder="Enter a question"
                                         style={{height:'100px'}}/>
@@ -442,6 +453,7 @@ class Question extends Component {
                         <FormGroup controlId="formControlsPEARL" style={{height:'200px'}}>
                             <ControlLabel style={{ fontSize: "150%" }}>PEARL<span style={{color:"red"}}>*</span></ControlLabel>
                             <ReactQuill value={this.state.pearl}
+                                        modules={{toolbar: toolbarOptions}}
                                         onChange={this.handlePearlChange}
                                         placeholder="Enter an explanation for the answer(s)"
                                         style={{height:'100px'}}/>
@@ -478,6 +490,7 @@ class Question extends Component {
                         <FormGroup controlId="formControlsReferences" style={{height:'200px'}}>
                             <ControlLabel style={{ fontSize: "150%" }}>References</ControlLabel>
                             <ReactQuill value={this.state.reference}
+                                        modules={{toolbar: toolbarOptions}}
                                         onChange={this.handleReferenceChange}
                                         placeholder="Enter your references"
                                         style={{height:'100px'}}/>

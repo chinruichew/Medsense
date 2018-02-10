@@ -6,6 +6,13 @@ import ReactQuill from 'react-quill';
 import './Upload.css';
 import 'react-quill/dist/quill.snow.css';
 
+var toolbarOptions = [
+    [{ 'header': [1, 2, 3, false] }],
+    ['bold', 'italic', 'underline'],        // toggled buttons
+    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+    ['clean']                                         // remove formatting button
+];
+
 class Overview extends Component {
     constructor(props) {
         super(props);
@@ -316,6 +323,7 @@ class Overview extends Component {
                     {/*<FormControl componentClass="textarea" rows={3} placeholder="Enter a brief description of the patient"*/}
                                  {/*value={this.state.scenario} name="scenario" onChange={(e) => this.handleScenarioChange(e)} />*/}
                     <ReactQuill value={this.state.scenario}
+                                modules={{toolbar: toolbarOptions}}
                                 onChange={this.handleScenarioChange}
                                 placeholder="Enter a brief description of the patient"
                                 style={{height:'100px'}}/>
@@ -325,6 +333,7 @@ class Overview extends Component {
                 <FormGroup controlId="formControlsLearning" style={{height:'200px'}}>
                     <ControlLabel style={{ fontSize: "150%" }}>Key Learning Points<span style={{color:"red"}}>*</span></ControlLabel>
                     <ReactQuill value={this.state.learning}
+                                modules={{toolbar: toolbarOptions}}
                                 onChange={this.handleLearningChange}
                                 placeholder="Enter the key learning points of this case"
                                 style={{height:'100px'}}/>
