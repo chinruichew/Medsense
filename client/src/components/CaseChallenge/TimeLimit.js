@@ -43,7 +43,7 @@ class TimeLimit extends Component {
     }
 
     componentDidMount() {
-        this.props.fetchGameById(this.state.challenge._id);
+        this.props.fetchGameById(this.props.case);
         window.scrollTo(0, 0)
     }
 
@@ -59,23 +59,25 @@ class TimeLimit extends Component {
                 let caseid = this.state.caseid;
                 if (this.state.caseid === "") {
                     caseid = new ObjectID();
-                    this.setState({caseid: caseid})
+                    this.setState({ caseid: caseid })
                 }
                 let date = this.state.date;
                 if (this.state.date === "") {
                     date = makeUnique();
-                    this.setState({date: date});
+                    this.setState({ date: date });
                     // this.props.storeCaseAnswer(this.props.auth._id, this.state.caseid, date, this.state.challenge, this.state.score);
+                    axios.post('/api/storeCaseAnswer', {
+                        authid: this.props.auth._id,
+                        caseid: this.props.caseid,
+                        date: date,
+                        case: this.state.challenge,
+                        score: this.state.score,
+                    }).then(res => {
+                        console.log(res)
+                        this.setState({ attempt: res.data.attempt, authid: this.props.auth._id, showGameView: true });
+                    });
                 }
-                axios.post('/api/storeCaseAnswer', {
-                    authid: this.props.auth._id,
-                    caseid: this.props.caseid,
-                    date: date,
-                    case: this.state.challenge,
-                    score: this.state.score,
-                }).then(res => {
-                    this.setState({attempt: res.data.attempt, authid: this.props.auth._id, showGameView:true});
-                });
+
         }
         // this.setState({ showGameView: true });
     }
@@ -92,14 +94,14 @@ class TimeLimit extends Component {
         this.setState({ currentQn: prevQn + 1 });
     }
 
-    updateScore(points){
-        this.setState(function(prevState, props){
-            return {score: prevState.score+=points}
+    updateScore(points) {
+        this.setState(function (prevState, props) {
+            return { score: prevState.score += points }
         });
     }
 
-    handleViewScore(){
-        this.setState({showResult: true});
+    handleViewScore() {
+        this.setState({ showResult: true });
     }
 
     renderTimeLimitContent() {
@@ -107,7 +109,7 @@ class TimeLimit extends Component {
             let timerBtnBgColor = this.state.withTimeLimit ? "#82C5D9" : "#CDE0EB";
             let noTimerBtnBgColor = this.state.noTimeLimit ? "#82C5D9" : "#CDE0EB";
             return (
-                <div className='container' style={{margin: "0"}}>
+                <div className='container' style={{ margin: "0" }}>
                     <div align="center">
                         <h1>{this.state.challenge.title}</h1><br />
                         <h4>
@@ -119,8 +121,8 @@ class TimeLimit extends Component {
                         </h4>
                     </div>
                     <br /><br />
-                    <Form horizontal style={{width: "95%"}}>
-                        <Col smOffset={3} style={{marginLeft: "35%"}}>
+                    <Form horizontal style={{ width: "95%" }}>
+                        <Col smOffset={3} style={{ marginLeft: "35%" }}>
                             <FormGroup controlId="formHorizontalEmail">
                                 <Col sm={3}>
                                     <h3>Difficulty </h3>
@@ -130,15 +132,15 @@ class TimeLimit extends Component {
                                 </Col>
                             </FormGroup>
                         </Col>
-                        <Col smOffset={3} style={{marginLeft: "35%"}}>
+                        <Col smOffset={3} style={{ marginLeft: "35%" }}>
                             <FormGroup >
                                 <Col sm={3}>
-                                    <h3 style={{marginTop: "5%"}}>Time Limit </h3>
+                                    <h3 style={{ marginTop: "5%" }}>Time Limit </h3>
                                 </Col>
                                 <Col sm={2} className='pull-left'>
-                                    <Button style={{ background: timerBtnBgColor, color: 'black', border: 0, width: '60%'}}
+                                    <Button style={{ background: timerBtnBgColor, color: 'black', border: 0, width: '60%' }}
                                         onClick={(e) => this.withTimeLimit()}>
-                                        <h3 style={{margin: "0"}}>Yes</h3>
+                                        <h3 style={{ margin: "0" }}>Yes</h3>
                                     </Button>
                                 </Col>
                                 <Col sm={2}>
@@ -150,7 +152,7 @@ class TimeLimit extends Component {
                             </FormGroup>
                         </Col>
                         <br /><br />
-                        <FormGroup style={{width: "95%"}}>
+                        <FormGroup style={{ width: "95%" }}>
                             <Col smOffset={1} sm={2} className='pull-left'>
                                 <Button bsStyle="primary" bsSize="large" onClick={(e) => this.redirect()}>
                                     <img className="left-picture" hspace="5" src="./backArrow.png" style={{ height: "18px" }} alt="" />
@@ -167,7 +169,7 @@ class TimeLimit extends Component {
                     </Form>
                 </div>
             );
-        } else if(!this.state.showResult){
+        } else if (!this.state.showResult) {
             return (
                 <div>
                     {this.renderGameContent()}
@@ -194,7 +196,7 @@ class TimeLimit extends Component {
                     const score = this.state.score / total * base;
                     const final = Math.round(this.state.withTimeLimit ? score * 1.5 : score);
                     return <GameResults date={this.state.date} answerid={this.state.caseid} authid={this.props.auth._id}
-                                        case={this.props.game} score={final}/>;
+                        case={this.props.game} score={final} />;
             }
         }
     }
@@ -216,11 +218,11 @@ class TimeLimit extends Component {
                     if (obj.id === currentQn + "") {
                         if (obj.type === "MCQ") {
                             return <MCQquestion date={this.state.date} answerid={this.state.caseid} authid={this.state.authid} question={obj} scenario={scenario} timeLimit={timeLimit}
-                                                totalQnNum={totalQnNum} caseTitle={caseTitle} handleViewScore={this.handleViewScore}
-                                                handleNextQuestion={this.handleNextQuestion} updateScore={this.updateScore}/>
+                                totalQnNum={totalQnNum} caseTitle={caseTitle} handleViewScore={this.handleViewScore}
+                                handleNextQuestion={this.handleNextQuestion} updateScore={this.updateScore} />
                         } else {
                             return <OpenEndedQuestion date={this.state.date} answerid={this.state.caseid} authid={this.state.authid} question={obj} scenario={scenario} timeLimit={timeLimit} totalQnNum={totalQnNum}
-                                                      caseTitle={caseTitle} handleViewScore={this.handleViewScore} handleNextQuestion={this.handleNextQuestion} updateScore={this.updateScore}/>
+                                caseTitle={caseTitle} handleViewScore={this.handleViewScore} handleNextQuestion={this.handleNextQuestion} updateScore={this.updateScore} />
                         }
                     } else {
                         return '';
