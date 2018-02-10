@@ -3,6 +3,7 @@ import { Button } from 'react-bootstrap';
 import { bindAll } from 'lodash';
 import { connect } from 'react-redux';
 import { storeCaseAnswerOpenEnded } from '../../actions';
+import ReactHtmlParser from 'react-html-parser';
 
 class OpenEndedAnswer extends Component {
 
@@ -40,13 +41,13 @@ class OpenEndedAnswer extends Component {
                     {/*<h3>You got 20 points!</h3><br />*/}
                     <h4>
                         <strong>Answer</strong> <br />
-                        <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{this.props.question.openEnded}</h4> <br /><br />
+                        <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{ReactHtmlParser(this.props.question.openEnded)}</h4> <br /><br />
 
                         <strong>PEARL</strong> <br />
-                        <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{this.props.question.pearl} </h4><br /><br />
+                        <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{ReactHtmlParser(this.props.question.pearl)} </h4><br /><br />
 
                         <strong>References</strong> <br />
-                        <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{this.props.question.reference} </h4><br /><br />
+                        <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{ReactHtmlParser(this.props.question.reference)} </h4><br /><br />
 
                     </h4>
                     {this.renderNextQuestion()}

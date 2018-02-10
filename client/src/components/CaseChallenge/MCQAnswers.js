@@ -3,6 +3,7 @@ import { Button } from 'react-bootstrap';
 import { bindAll } from 'lodash';
 import { connect } from 'react-redux';
 import { storeCaseAnswerMCQ } from '../../actions';
+import ReactHtmlParser from 'react-html-parser';
 
 class MCQAnswers extends Component {
 
@@ -146,16 +147,16 @@ class MCQAnswers extends Component {
             return (
                 <div className='container'>
                     <h3>You got {this.state.stuCorrectAnswerCount} / {this.state.answerCount} correct!</h3><br />
-                    <h3>You score for this question: {this.state.score}</h3>
+                    <h3>Your score for this question: {this.state.score}</h3>
                     <h4>
                         <strong>Answer</strong> <br />
-                        <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{this.state.mcqAnswer}</h4> <br /><br />
+                        <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{ReactHtmlParser(this.state.mcqAnswer)}</h4> <br /><br />
 
                         <strong>PEARL</strong> <br />
-                        <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{this.props.question.pearl} </h4><br /><br />
+                        <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{ReactHtmlParser(this.props.question.pearl)} </h4><br /><br />
 
                         <strong>References</strong> <br />
-                        <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{this.props.question.reference}</h4> <br /><br />
+                        <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{ReactHtmlParser(this.props.question.reference)}</h4> <br /><br />
 
                     </h4>
                     {this.renderNextQuestion()}
