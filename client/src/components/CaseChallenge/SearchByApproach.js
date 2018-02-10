@@ -151,7 +151,7 @@ class SearchByApproach extends Component {
                     </ControlLabel>
                     <Row>
                         <Col sm={10}>
-                            <FormControl componentClass="select" value={this.state.approach} name="approach" onChange={(e) => this.handleApproachChange(e)} multiple>
+                            <FormControl componentClass="select" size='10' value={this.state.approach} name="approach" onChange={(e) => this.handleApproachChange(e)} multiple>
                                 <option value="Select All Relevant">Select All Relevant</option>
                                 <option value="Abdominal Pain">Abdominal Pain</option>
                                 <option value="Breathlessness">Breathlessness</option>

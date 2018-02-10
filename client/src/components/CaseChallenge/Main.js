@@ -86,7 +86,7 @@ class Main extends Component {
                             <br/>or choose a case according to an approach you want to practice (e.g. chest pain)!
                             <br/><br/>Try out beginner mode for more focuses on history and physical exam,
                             <br/>and advanced mode for management.
-                            <br/><br/>Better yet, if you're up for the challenge, why not try a completely random case? ;)
+                            <br/><br/>Better yet, if you're up for the challenge, why not try a completely random case? :)
                             {/*<br/><br/>Take a look at your strengths and weaknesses on the analytics page after!*/}
                         </em>
                     </h4>

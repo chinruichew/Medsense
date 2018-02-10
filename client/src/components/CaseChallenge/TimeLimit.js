@@ -111,9 +111,9 @@ class TimeLimit extends Component {
                         <h1>{this.state.challenge.title}</h1><br />
                         <h4>
                             <em>
-                                Earn points when you try a case with time limit!
+                                Earn extra points when you try a case with time limit!
                                 <br />
-                                <br />Cases in advanced mode gives you more points than beginner mode.
+                                
                             </em>
                         </h4>
                     </div>

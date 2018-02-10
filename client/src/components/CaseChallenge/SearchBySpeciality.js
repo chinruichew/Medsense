@@ -136,7 +136,7 @@ class SearchBySpeciality extends Component {
                         <ControlLabel style={{ fontSize: "150%" }}>Sub-speciality</ControlLabel>
                     </Col>
                     <Col sm={8}>
-                        <FormControl componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)}>
+                        <FormControl componentClass="select"  value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)}>
                             <option value="Select One">Select One</option>
                             <option value="Cardiology">Cardiology</option>
                             <option value="Endocrinology">Endocrinology</option>
@@ -210,34 +210,43 @@ class SearchBySpeciality extends Component {
 
 
                     <Col sm={8}>
-                        <FormControl componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)} multiple>
+                        <FormControl componentClass="select" size='10' value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)} multiple>
                             <option value="Select One">Select All Relevant</option>
                             <option value="Anaesthesiology">Anaesthesiology</option>
                             <option value="Breast">Breast</option>
                             <option value="Cardiology">Cardiology</option>
                             <option value="Colorectal">Colorectal</option>
+                            <option value="Department of Hand & Reconstructive Microsurgery Trauma">Department of Hand & Reconstructive Microsurgery Trauma</option>
                             <option value="Ear Nose & Throat">Ear Nose & Throat</option>
                             <option value="Emergency Medicine">Emergency Medicine</option>
                             <option value="Endocrinology">Endocrinology</option>
+                            <option value="Foot and Ankle Surgery">Foot and Ankle Surgery</option>
                             <option value="Gastroenterology & Hepatology">Gastroenterology & Hepatology</option>
                             <option value="General Surgery">General Surgery</option>
                             <option value="Geriatric Medicine">Geriatric Medicine</option>
                             <option value="Haematology">Haematology</option>
                             <option value="Head & Neck">Head & Neck</option>
                             <option value="Hepato-pancreato-biliary">Hepato-pancreato-biliary</option>
+                            <option value="Hip and Knee Surgery">Hip and Knee Surgery</option>
                             <option value="Infectious Diseases">Infectious Diseases</option>
                             <option value="Internal Medicine">Internal Medicine</option>
                             <option value="Medical Oncology">Medical Oncology</option>
+                            <option value="Musculoskeletal Oncology">Musculoskeletal Oncology</option>
+                            <option value="Musculoskeletal Trauma">Musculoskeletal Trauma</option>
                             <option value="Neonatal">Neonatal</option>
                             <option value="Neurology">Neurology</option>
                             <option value="Obstetrics & Gynaecology">Obstetrics & Gynaecology</option>
                             <option value="Ophthalmology">Ophthalmology</option>
+                            <option value="Paediatric Orthopaedics">Paediatric Orthopaedics</option>
                             <option value="Palliative Medicine">Palliative Medicine</option>
                             <option value="Psychiatry">Psychiatry</option>
                             <option value="Rehabilitation Medicine">Rehabilitation Medicine</option>
                             <option value="Renal Medicine">Renal Medicine</option>
                             <option value="Respiratory & Critical Care Medicine">Respiratory & Critical Care Medicine</option>
                             <option value="Rheumatology & Immunology">Rheumatology & Immunology</option>
+                            <option value="Shoulder & Elbow Surgery">Shoulder & Elbow Surgery</option>
+                            <option value="Spine Surgery">Spine Surgery</option>
+                            <option value="Sports medicine">Sports medicine</option>
                             <option value="Surgical Oncology">Surgical Oncology</option>
                             <option value="Upper Gastrointestinal & Bariatric Surgery">Upper Gastrointestinal & Bariatric Surgery</option>
                             <option value="Urology">Urology</option>
