@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import HttpsRedirect from 'react-https-redirect';
@@ -30,18 +30,20 @@ class App extends Component {
             <BrowserRouter>
                 <HttpsRedirect>
                     <Header />
-                    <Route path="*" component={NotFound} />
-                    <Route exact path="/login" component={Login} />
-                    <Route exact path="/home" component={Home} />
-                    <Route exact path="/register" component={StudentSignup} />
-                    <Route exact path="/upload" component={CaseStart} />
-                    <Route exact path="/vetting" component={CaseVetting} />
-                    <Route exact path="/profile" component={Profile} />
-                    <Route exact path="/dashboard" component={Dashboard} />
-                    <Route exact path="/search" component={CaseChallenge} />
-                    <Route exact path="/admin" component={Admin} />
-                    <Route exact path="/result" component={Result} />
-                    <Route exact path="/" component={About}/>
+                    <Switch>
+                        <Route path="/" component={NotFound} />
+                        <Route exact path="/login" component={Login} />
+                        <Route exact path="/home" component={Home} />
+                        <Route exact path="/register" component={StudentSignup} />
+                        <Route exact path="/upload" component={CaseStart} />
+                        <Route exact path="/vetting" component={CaseVetting} />
+                        <Route exact path="/profile" component={Profile} />
+                        <Route exact path="/dashboard" component={Dashboard} />
+                        <Route exact path="/search" component={CaseChallenge} />
+                        <Route exact path="/admin" component={Admin} />
+                        <Route exact path="/result" component={Result} />
+                        <Route exact path="/" component={About}/>
+                    </Switch>
                 </HttpsRedirect>
             </BrowserRouter>
         );
