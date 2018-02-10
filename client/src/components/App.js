@@ -17,30 +17,63 @@ import CaseStart from './CaseUpload/CaseStart';
 import CaseChallenge from './CaseChallenge/Main';
 import Admin from './Admin/Admin';
 import Result from './CaseChallenge/GameResults';
+import axios from 'axios';
 
 class App extends Component {
+    state = {
+        user: null
+    };
+
     componentDidMount() {
         this.props.fetchUser();
+        axios.get('/api/current_user').then(res => {
+            this.setState({user: res.data});
+        });
     }
 
+    renderContent = () => {
+        switch(this.state.user) {
+            case false:
+                return(
+                    <HttpsRedirect>
+                        <Header />
+                        <Route exact path="/login" component={Login} />
+                        <Route exact path="/home" component={Home} />
+                        <Route exact path="/register" component={StudentSignup} />
+                        <Route exact path="/upload" component={CaseStart} />
+                        <Route exact path="/vetting" component={CaseVetting} />
+                        <Route exact path="/profile" component={Profile} />
+                        <Route exact path="/dashboard" component={Dashboard} />
+                        <Route exact path="/search" component={CaseChallenge} />
+                        <Route exact path="/admin" component={Admin} />
+                        <Route exact path="/result" component={Result} />
+                        <Route exact path="/" component={About} />
+                    </HttpsRedirect>
+                );
+            default:
+                return(
+                    <HttpsRedirect>
+                        <Header />
+                        <Route exact path="/login" component={Login} />
+                        <Route exact path="/home" component={Home} />
+                        <Route exact path="/register" component={StudentSignup} />
+                        <Route exact path="/upload" component={CaseStart} />
+                        <Route exact path="/vetting" component={CaseVetting} />
+                        <Route exact path="/profile" component={Profile} />
+                        <Route exact path="/dashboard" component={Dashboard} />
+                        <Route exact path="/search" component={CaseChallenge} />
+                        <Route exact path="/admin" component={Admin} />
+                        <Route exact path="/result" component={Result} />
+                        <Route exact path="/" component={Home} />
+                    </HttpsRedirect>
+                );
+        }
+    };
+
     render() {
-        //need to store session
         return (
             <BrowserRouter>
-                <HttpsRedirect>
-                    <Header />
-                    <Route exact path="/login" component={Login} />
-                    <Route exact path="/home" component={Home} />
-                    <Route exact path="/register" component={StudentSignup} />
-                    <Route exact path="/upload" component={CaseStart} />
-                    <Route exact path="/vetting" component={CaseVetting} />
-                    <Route exact path="/profile" component={Profile} />
-                    <Route exact path="/dashboard" component={Dashboard} />
-                    <Route exact path="/search" component={CaseChallenge} />
-                    <Route exact path="/admin" component={Admin} />
-                    <Route exact path="/result" component={Result} />
-                    <Route exact path="/" component={About} />
-                </HttpsRedirect>
+                {this.renderContent()}
             </BrowserRouter>
         );
     }
