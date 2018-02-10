@@ -55,25 +55,28 @@ module.exports = app => {
 
 
     app.post('/api/storeCaseAnswer', async (req, res)=> {
-        Case.findOne({ _id: req.body.caseId }).sort('attempt').exec(function (err, vettedCase) {
-            console.log(vettedCase);
+        let attempt=0;
+        Answer.findOne({ caseid: req.body.case._id, completionStatus: true, userid: req.body.authid}).sort('attempt').exec(function (err, completedCase) {
+            if (completedCase){
+                attempt = completedCase.attempt;
+            }
 
-            // const newCaseAnswer = new Answer({
-            //     attempt: attempt+1,
-            //     userid: mongoose.Types.ObjectId(req.body.authid),
-            //     date: req.body.date,
-            //     title: req.body.case.title,
-            //     difficulty: req.body.case.difficulty,
-            //     speciality: req.body.case.speciality,
-            //     approach: req.body.case.approach,
-            //     subspeciality: req.body.case.subspeciality,
-            //     scenario: req.body.case.scenario,
-            //     learning: req.body.case.learning,
-            //     status: req.body.case.status,
-            // });
-            // const result= await newCaseAnswer.save();
-            // console.log(result);
-            // return res.send(result);
+            const newCaseAnswer = new Answer({
+                attempt: attempt+1,
+                userid: mongoose.Types.ObjectId(req.body.authid),
+                date: req.body.date,
+                title: req.body.case.title,
+                difficulty: req.body.case.difficulty,
+                speciality: req.body.case.speciality,
+                approach: req.body.case.approach,
+                subspeciality: req.body.case.subspeciality,
+                scenario: req.body.case.scenario,
+                learning: req.body.case.learning,
+                status: req.body.case.status,
+                caseid: req.body.case._id,
+            });
+            newCaseAnswer.save();
+            res.send("storeCaseAnswer completed");
         });
     });
 

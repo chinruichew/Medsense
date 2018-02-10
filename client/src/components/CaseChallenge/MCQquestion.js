@@ -281,6 +281,7 @@ class MCQquestion extends Component {
 
 
                 {this.state.showAnswers && <MCQAnswers
+                    caseid={this.props.caseid}
                     authid={this.props.authid}
                     timeLimit={this.state.timeLimit}
                     seconds={this.state.seconds}

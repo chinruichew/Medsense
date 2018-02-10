@@ -11,7 +11,6 @@ class OpenEndedAnswer extends Component {
         this.state = {
             showResult: false,
             authid: this.props.authid,
-            questionActualScore: 0,
             timeLimit: this.props.timeLimit,
             date: this.props.date,
             seconds: this.props.seconds,
@@ -80,12 +79,12 @@ class OpenEndedAnswer extends Component {
     }
 
     complete() {
-        this.props.updateScore(20);
+        this.props.updateScore(this.props.score);
         this.props.handleViewScore();
     }
 
     nextQuestion() {
-        this.props.updateScore(20);
+        this.props.updateScore(this.props.score);
         this.props.handleNextQuestion(parseFloat(this.props.question.id));
     }
 

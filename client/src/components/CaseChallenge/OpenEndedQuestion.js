@@ -15,6 +15,7 @@ class OpenEndedQuestion extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            mark: this.props.question.mark,
             question: this.props.question.question,
             stem: this.props.question.stem,
             type: this.props.question.type,
@@ -30,7 +31,7 @@ class OpenEndedQuestion extends Component {
             timeLimit: parseFloat(this.props.question.time) * 60,
             date: this.props.date,
             seconds: parseFloat(this.props.question.time) * 60,
-            score: "",
+            score: 0,
         };
         this.timer = 0;
         bindAll(this, 'selectDone', 'startTimer', 'countDown', 'secondsToTime', 'pauseTimer', 'renderTimer',
@@ -91,13 +92,13 @@ class OpenEndedQuestion extends Component {
             this.setState({ showNextButton: !showNextButton });
             this.pauseTimer();
         }
-        var score = "toBeFilled"
+        var score = "toBeFilled";
         axios.post('/api/matchNLP', {
             id: this.props.question._id,
             values: this.state
         }).then(res => {
-            score = res['data']['data']
-            setTimeout(function () { this.setState({ score: score }); }.bind(this), 1);
+            score = res['data']['data'];
+            setTimeout(function () { this.setState({ score: score*this.state.mark }); }.bind(this), 1);
         })
     }
 
@@ -213,9 +214,10 @@ class OpenEndedQuestion extends Component {
                 </Panel>
                 {this.renderShowNextButton()}
 
-                 {this.state.showAnswers && <h3>You got {(parseFloat(this.state.score)*100).toFixed(2)} % </h3>}
+                {this.state.showAnswers && <h3>You got {this.state.score.toFixed(2)} % </h3>}
 
                 {this.state.showAnswers && <OpenEndedAnswer
+                    caseid={this.props.caseid}
                     score={this.state.score}
                     authid={this.props.authid}
                     timeLimit={this.state.timeLimit}

@@ -4,10 +4,10 @@ import { Button } from 'react-bootstrap';
 import { bindAll } from 'lodash';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { fetchGameById, storeCaseAnswer } from '../../actions';
+import { fetchGameById } from '../../actions';
 import MCQquestion from "./MCQquestion";
 import OpenEndedQuestion from "./OpenEndedQuestion";
-import { ObjectID } from 'bson';
+// import { ObjectID } from 'bson';
 import GameResults from "./GameResults";
 
 function makeUnique() {
@@ -56,11 +56,11 @@ class TimeLimit extends Component {
             case null:
                 return;
             default:
-                let caseid = this.state.caseid;
-                if (this.state.caseid === "") {
-                    caseid = new ObjectID();
-                    this.setState({caseid: caseid})
-                }
+                // let caseid = this.state.caseid;
+                // if (this.state.caseid === "") {
+                //     caseid = new ObjectID();
+                //     this.setState({caseid: caseid})
+                // }
                 let date = this.state.date;
                 if (this.state.date === "") {
                     date = makeUnique();
@@ -69,7 +69,6 @@ class TimeLimit extends Component {
                 }
                 axios.post('/api/storeCaseAnswer', {
                     authid: this.props.auth._id,
-                    caseid: this.props.caseid,
                     date: date,
                     case: this.state.challenge,
                     score: this.state.score,
@@ -184,16 +183,11 @@ class TimeLimit extends Component {
                     let total = 0;
                     for (let i = 0; i < this.props.game.questions.length; i++) {
                         total += this.props.game.questions[i].mark;
-                        // if (this.props.game.questions[i].type === "MCQ") {
-                        //     total += 6;
-                        // } else {
-                        //     total += 20;
-                        // }
                     }
                     console.log(total);
                     const score = this.state.score / total * base;
                     const final = Math.round(this.state.withTimeLimit ? score * 1.5 : score);
-                    return <GameResults date={this.state.date} answerid={this.state.caseid} authid={this.props.auth._id}
+                    return <GameResults date={this.state.date} caseid={this.state.caseid} authid={this.props.auth._id}
                                         case={this.props.game} score={final}/>;
             }
         }
@@ -215,11 +209,11 @@ class TimeLimit extends Component {
                 let questionNodes = this.props.game.questions.map((obj, index) => {
                     if (obj.id === currentQn + "") {
                         if (obj.type === "MCQ") {
-                            return <MCQquestion date={this.state.date} answerid={this.state.caseid} authid={this.state.authid} question={obj} scenario={scenario} timeLimit={timeLimit}
+                            return <MCQquestion date={this.state.date} caseid={this.props.game._id} authid={this.state.authid} question={obj} scenario={scenario} timeLimit={timeLimit}
                                                 totalQnNum={totalQnNum} caseTitle={caseTitle} handleViewScore={this.handleViewScore}
                                                 handleNextQuestion={this.handleNextQuestion} updateScore={this.updateScore}/>
                         } else {
-                            return <OpenEndedQuestion date={this.state.date} answerid={this.state.caseid} authid={this.state.authid} question={obj} scenario={scenario} timeLimit={timeLimit} totalQnNum={totalQnNum}
+                            return <OpenEndedQuestion date={this.state.date} caseid={this.props.game._id} authid={this.state.authid} question={obj} scenario={scenario} timeLimit={timeLimit} totalQnNum={totalQnNum}
                                                       caseTitle={caseTitle} handleViewScore={this.handleViewScore} handleNextQuestion={this.handleNextQuestion} updateScore={this.updateScore}/>
                         }
                     } else {
@@ -248,4 +242,4 @@ function mapStateToProps2({ game, auth}) {
     };
 }
 
-export default connect(mapStateToProps2, { fetchGameById, storeCaseAnswer })(TimeLimit);
+export default connect(mapStateToProps2, {fetchGameById})(TimeLimit);

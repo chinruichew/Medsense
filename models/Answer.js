@@ -11,13 +11,13 @@ const answerSchema = new Schema({
     approach: [{ type: String, default: "approach" }],
     scenario: { type: String, default: "scenario" },
     learning: { type: String, default: "learning" },
-    status: { type: String, default: "Pending" },
     timestamp: {type: String, default: Date.now()},
-    userid: { type: Schema.Types.ObjectId, ref: 'users' },
-    date: { type: String, default: "" },
+    userid: { type: Schema.Types.ObjectId, ref: 'users'},
+    date: { type: String, default: ""},
     attempt: {type: Number, default: 0},
-    completionStatus: { type: Boolean, default: false },
+    completionStatus: { type: Boolean, default: false},
     score: {type: Number, default: 0},
+    caseid: {type: String, default: ""},
 });
 
 const answerModel = mongoose.model('answers', answerSchema);
