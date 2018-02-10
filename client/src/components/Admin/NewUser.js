@@ -73,7 +73,7 @@ class NewUser extends Component {
     setUserType() {
         return (
             <FormGroup controlId="formControlsDifficulty">
-                <ControlLabel style={{ fontSize: "100%" }}>Select User Type:</ControlLabel>
+                <ControlLabel style={{ fontSize: "150%" }}>Select User Type:</ControlLabel>
                 <FormControl componentClass="select" value={this.state.usertype} name="usertype" onChange={(e) => this.handleUsertypeChange(e)}>
                     <option value="Student">Student</option>
                     <option value="Professor">Professor</option>
@@ -85,7 +85,7 @@ class NewUser extends Component {
     setUsername() {
         return (
             <FormGroup controlId="formControlsTitle">
-                <ControlLabel style={{ fontSize: "100%" }}>Username:</ControlLabel>
+                <ControlLabel style={{ fontSize: "150%" }}>Username:</ControlLabel>
                 <FormControl type="text" value={this.state.title} name="username" onChange={(e) => this.handleUsernameChange(e)} />
             </FormGroup>
         );
@@ -94,7 +94,7 @@ class NewUser extends Component {
     setPassword() {
         return (
             <FormGroup controlId="formControlsTitle">
-                <ControlLabel style={{ fontSize: "100%" }}>Password:</ControlLabel>
+                <ControlLabel style={{ fontSize: "150%" }}>Password:</ControlLabel>
                 <FormControl type="password" value={this.state.title} name="password" onChange={(e) => this.handlePasswordChange(e)} />
             </FormGroup>
         );
@@ -103,7 +103,7 @@ class NewUser extends Component {
     setSchool() {
         return (
             <FormGroup controlId="formControlsDifficulty">
-                <ControlLabel style={{ fontSize: "100%" }}>Select School:</ControlLabel>
+                <ControlLabel style={{ fontSize: "150%" }}>Select School:</ControlLabel>
                 <FormControl componentClass="select" value={this.state.school} name="school" onChange={(e) => this.handleSchoolChange(e)}>
                     <option value="Duke-NUS" default>Duke-NUS</option>
                     <option value="NTU">NTU</option>
@@ -118,7 +118,7 @@ class NewUser extends Component {
         if (this.state.usertype === "Student") {
             return (
                 <FormGroup controlId="formControlsDifficulty">
-                    <ControlLabel style={{ fontSize: "100%" }}>Select Year:</ControlLabel>
+                    <ControlLabel style={{ fontSize: "150%" }}>Select Year:</ControlLabel>
                     <FormControl componentClass="select" value={this.state.year} name="year" onChange={(e) => this.handleYearChange(e)}>
                         <option value="Year 1" default>Year 1</option>
                         <option value="Year 2">Year 2</option>
@@ -135,7 +135,7 @@ class NewUser extends Component {
         if (this.state.usertype === "Professor") {
             return (
                 <FormGroup controlId="formControlsSpeciality" style={{ paddingBottom: "0" }}>
-                    <ControlLabel style={{ fontSize: "100%" }}>Speciality</ControlLabel>
+                    <ControlLabel style={{ fontSize: "150%" }}>Speciality</ControlLabel>
                     <FormControl componentClass="select" value={this.state.speciality} name="speciality" onChange={(e) => this.handleSpecialityChange(e)}>
                         <option value="Medicine" default>Medicine</option>
                         <option value="Surgery">Surgery</option>
@@ -152,9 +152,13 @@ class NewUser extends Component {
             if (this.state.speciality === "Medicine") {
                 return (
                     <FormGroup controlId="formControlsSubspeciality">
-                        <ControlLabel style={{ fontSize: "100%" }}>Sub-speciality</ControlLabel>
-                        <FormControl componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)} multiple>
-                            <option value="Select One">Select One</option>
+                        <ControlLabel style={{ fontSize: "150%" }}>Sub-speciality
+                            <br />
+                            <div style={{ fontSize: "70%", fontWeight:"200"}}>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.
+                            </div>
+                        </ControlLabel>
+                        <FormControl size='8' componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)} multiple>
+                            <option value="Select One">Select All Relevant</option>
                             <option value="Cardiology" default>Cardiology</option>
                             <option value="Endocrinology">Endocrinology</option>
                             <option value="Gastroenterology & Hepatology">Gastroenterology & Hepatology</option>
@@ -171,9 +175,13 @@ class NewUser extends Component {
             } else if (this.state.speciality === "Others") {
                 return (
                     <FormGroup controlId="formControlsSubspeciality">
-                        <ControlLabel style={{ fontSize: "150%" }}>Sub-speciality<span style={{ color: "red" }}>*</span></ControlLabel>
-                        <FormControl componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)} multiple>
-                            <option value="Select One">Select One</option>
+                        <ControlLabel style={{ fontSize: "150%" }}>Sub-speciality
+                            <br />
+                            <div style={{ fontSize: "70%", fontWeight:"200"}}>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.
+                            </div>
+                        </ControlLabel>
+                        <FormControl size='8' componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)} multiple>
+                            <option value="Select One">Select All Relevant</option>
                             <option value="Anaesthesiology" default >Anaesthesiology</option>
                             <option value="Ear Nose & Throat">Ear Nose & Throat</option>
                             <option value="Emergency Medicine">Emergency Medicine</option>
@@ -191,9 +199,13 @@ class NewUser extends Component {
             } else if (this.state.speciality === "Surgery") { 
                 return (
                     <FormGroup controlId="formControlsSubspeciality">
-                        <ControlLabel style={{ fontSize: "150%" }}>Sub-speciality<span style={{ color: "red" }}>*</span></ControlLabel>
-                        <FormControl componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)} multiple>
-                            <option value="Select One">Select One</option>
+                        <ControlLabel style={{ fontSize: "150%" }}>Sub-speciality
+                            <br />
+                            <div style={{ fontSize: "70%", fontWeight:"200"}}>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.
+                            </div>
+                        </ControlLabel>
+                        <FormControl size='8' componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)} multiple>
+                            <option value="Select One">Select All Relevant</option>
                             <option value="Breast" default>Breast</option>
                             <option value="Colorectal">Colorectal</option>
                             <option value="General Surgery">General Surgery</option>
@@ -210,9 +222,13 @@ class NewUser extends Component {
             } else if (this.state.speciality === "Orthopedics") {
                 return (
                     <FormGroup controlId="formControlsSubspeciality">
-                        <ControlLabel style={{ fontSize: "150%" }}>Sub-speciality<span style={{ color: "red" }}>*</span></ControlLabel>
-                        <FormControl componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)} multiple>
-                        <option value="Select One">Select One</option>
+                        <ControlLabel style={{ fontSize: "150%" }}>Sub-speciality
+                            <br />
+                            <div style={{ fontSize: "70%", fontWeight:"200"}}>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.
+                            </div>
+                        </ControlLabel>
+                        <FormControl size='8' componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)} multiple>
+                        <option value="Select One">Select All Relevant</option>
                         <option value="Foot and Ankle Surgery">Foot and Ankle Surgery</option>
                         <option value="Hip and Knee Surgery">Hip and Knee Surgery</option>
                         <option value="Musculoskeletal Oncology">Musculoskeletal Oncology</option>
@@ -260,7 +276,7 @@ class NewUser extends Component {
 
     render() {
         return (
-            <div style={{ fontSize: "150%" }}>
+            <div>
                 {this.setUserType()}
                 {this.setUsername()}
                 {this.setPassword()}
@@ -268,7 +284,8 @@ class NewUser extends Component {
                 {this.setYear()}
                 {this.setSpeciality()}
                 {this.setSubspeciality()}
-                <Button bsStyle="primary" onClick={(e) => this.createUser()}>Create User</Button>
+                <br />
+                <Button style={{ fontSize: "125%" }} bsStyle="primary" onClick={(e) => this.createUser()}>Create User</Button>
             </div>
         );
     }
