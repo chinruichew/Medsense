@@ -260,7 +260,7 @@ class NewUser extends Component {
 
     render() {
         return (
-            <div>
+            <div style={{ fontSize: "150%" }}>
                 {this.setUserType()}
                 {this.setUsername()}
                 {this.setPassword()}

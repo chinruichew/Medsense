@@ -246,7 +246,7 @@ class DeleteUser extends Component {
             return (
                 <Table responsive>
                     <thead>
-                        <tr style={{ background: '#D9EDF7', fontSize: "130%" }}>
+                        <tr style={{ background: '#D9EDF7', fontSize: "100%" }}>
                             <th><center>Username</center></th>
                             <th><center>School</center></th>
                             <th><center>Year</center></th>
@@ -304,7 +304,7 @@ class DeleteUser extends Component {
             return (
                 <Table responsive>
                     <thead>
-                        <tr style={{ background: '#D9EDF7', fontSize: "130%" }}>
+                        <tr style={{ background: '#D9EDF7', fontSize: "100%" }}>
                             <th><center>Username</center></th>
                             <th><center>School</center></th>
                             <th><center>Speciality</center></th>
@@ -352,7 +352,7 @@ class DeleteUser extends Component {
 
     render() {
         return (
-            <div>
+            <div style={{ fontSize: "150%" }}>
                 {this.setUserType()}
                 {this.setUsername()}
                 {this.setSchool()}

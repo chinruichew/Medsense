@@ -341,7 +341,7 @@ class CaseManager extends Component {
                             );
                         } else {
                             return (
-                                <div className="container-fluid">
+                                <div className="container-fluid" >
                                     <div className='container-fluid'>
                                         <div className='col-sm-12'>
                                             {this.setName()}
