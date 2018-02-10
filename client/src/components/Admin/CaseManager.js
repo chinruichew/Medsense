@@ -342,17 +342,6 @@ class CaseManager extends Component {
                         } else {
                             return (
                                 <div className="container-fluid">
-                                    <div className="row">
-                                        <div className="col-sm-6 center">
-                                            <ButtonToolbar>
-                                                <Button bsStyle="primary" onClick={(e) => this.goToAdmin()}>Admin HomePage</Button>
-                                                <Button bsStyle="primary" onClick={(e) => this.goToCaseManager()}>Case Management</Button>
-                                                <Button bsStyle="primary" onClick={(e) => this.goToUserManager()}>User Management</Button>
-                                                <Button bsStyle="primary">Discussion Board</Button>
-                                            </ButtonToolbar>
-                                        </div>
-                                    </div>
-                                    <br />
                                     <div className='container-fluid'>
                                         <div className='col-sm-12'>
                                             {this.setName()}

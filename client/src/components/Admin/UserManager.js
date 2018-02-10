@@ -39,15 +39,7 @@ class UserManager extends Component {
                                 <div className="container-fluid">
                                     <div className="row">
                                         
-                                        <div className="col-sm-6">
-                                            <ButtonToolbar>
-                                                <Button bsStyle="primary" onClick={(e) => this.goToAdmin()}>Admin HomePage</Button>
-                                                <Button bsStyle="primary" onClick={(e) => this.goToCaseManager()}>Case Management</Button>
-                                                <Button bsStyle="primary" onClick={(e) => this.goToUserManager()}>User Management</Button>
-                                                <Button bsStyle="primary">Discussion Board</Button>
-
-                                            </ButtonToolbar>
-                                        </div>
+                                        
                                         <div className='col-sm-9 col-sm-offset-1'>
                                             <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
                                                 <Tab eventKey={1} title="Add New User">

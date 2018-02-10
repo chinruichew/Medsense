@@ -21,7 +21,7 @@ class Admin extends Component {
     renderContent() {
         switch (this.props.auth) {
             case null:
-            return;
+                return;
             case false:
                 return <Redirect to='/' />;
             default:
@@ -32,18 +32,6 @@ class Admin extends Component {
                         if (this.state.display === '') {
                             return (
                                 <div className="container-fluid">
-                                    <div className="row">
-                                        
-                                        <div className="col-sm-6 left">
-                                            <ButtonToolbar>
-                                                <Button bsStyle="primary" onClick={(e) => this.goToAdmin()}>Admin HomePage</Button>
-                                                <Button bsStyle="primary" onClick={(e) => this.goToCaseManager()}>Case Management</Button>
-                                                <Button bsStyle="primary" onClick={(e) => this.goToUserManager()}>User Management</Button>
-                                                <Button bsStyle="primary">Discussion Board</Button>
-
-                                            </ButtonToolbar>
-                                        </div>
-                                    </div>
                                     <br />
                                     <div className="row">
                                         <div className="col-sm-6 text-center" style={{ fontSize: '150%' }}>
@@ -57,16 +45,16 @@ class Admin extends Component {
                                     <br />
                                 </div>
                             );
-                        } else if(this.state.display === 'case') {
+                        } else if (this.state.display === 'case') {
                             return (
                                 <div>
                                     <CaseManager />
                                 </div>
                             );
-                        } else if (this.state.display === 'user'){
+                        } else if (this.state.display === 'user') {
                             return (
                                 <div>
-                                    <UserManager/>
+                                    <UserManager />
                                 </div>
                             );
                         }
@@ -81,6 +69,15 @@ class Admin extends Component {
 
         return (
             <div>
+                <div className='col-sm-9 col-sm-offset-1'>
+                    <ButtonToolbar>
+                        <Button bsStyle="default" onClick={(e) => this.goToAdmin()}>Admin HomePage</Button>
+                        <Button bsStyle="default" onClick={(e) => this.goToCaseManager()}>Case Management</Button>
+                        <Button bsStyle="default" onClick={(e) => this.goToUserManager()}>User Management</Button>
+                    </ButtonToolbar>
+                </div>
+                <br />
+                <br />
                 {this.renderContent()}
             </div>
         );
@@ -104,7 +101,7 @@ class Admin extends Component {
 }
 
 function mapStateToProps({ auth, adminCases, adminUsers }) {
-    return { auth, adminCases, adminUsers};
+    return { auth, adminCases, adminUsers };
 }
 
 

@@ -67,10 +67,12 @@ class Header extends Component {
                             case this.state.constants.USER_TYPE_ADMIN:
                                 return(
                                     <Nav pullRight>
+                                        <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={2} href="/search">     Search     </NavItem>
+                                        <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={3} href="/upload">     Upload     </NavItem>
                                         <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={4} href="/forum">     Forum     </NavItem>
                                         <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={5} href="/dashboard">     Dashboard     </NavItem>
                                         <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={6} href="/about">     About     </NavItem>
-                                        <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={7} href="/admin">     Admin     </NavItem>
+                                        <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={7} href="/admin">     Admin Panel    </NavItem>
                                         <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={8} href="/api/logout">     Logout               </NavItem>
                                         <a href="/profile"><Image src={this.props.auth.profilepicture} className="img-circle" style={{height: '50px', width: '50px'}} /></a>
                                     </Nav>

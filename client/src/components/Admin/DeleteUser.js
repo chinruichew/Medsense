@@ -16,7 +16,7 @@ class DeleteUser extends Component {
         speciality: 'Medicine',
         subspeciality: [],
         seniorStatus: '',
-        constants: null
+        constants: ''
     };
 
     componentDidMount() {
