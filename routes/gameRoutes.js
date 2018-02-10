@@ -34,8 +34,7 @@ module.exports = app => {
     });
 
     app.post('/api/fetchGameById', async (req, res) => {
-        //console.log(req.body.values._id)
-        const result = await Case.findOne({ _id: req.body.values._id }).select().populate({
+        const result = await Case.findOne({ _id: req.body.values }).select().populate({
             path: 'questions',
             model: 'questions'
         });
@@ -55,9 +54,9 @@ module.exports = app => {
     });
 
 
-    app.post('/api/storeCaseAnswer', function (req, res) {
+    app.post('/api/storeCaseAnswer', async (req, res)=> {
         Case.findOne({ _id: req.body.caseId }).sort('attempt').exec(function (err, vettedCase) {
-            console.log(req.body.authid)
+            console.log(vettedCase);
 
             // const newCaseAnswer = new Answer({
             //     attempt: attempt+1,
@@ -73,8 +72,8 @@ module.exports = app => {
             //     status: req.body.case.status,
             // });
             // const result= await newCaseAnswer.save();
-            
-            res.send("test");
+            // console.log(result);
+            // return res.send(result);
         });
     });
 
