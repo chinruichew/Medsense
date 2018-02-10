@@ -64,6 +64,7 @@ s3.getObject(getParams, function (err, data) {
             useMongoClient: true
         });
 
+        mongoose.Promise = global.Promise;
         const db = mongoose.connection;
         db.on('error', console.error.bind(console, 'DB connection error:'));
         db.once('open', function () {
@@ -214,7 +215,6 @@ s3.getObject(getParams, function (err, data) {
         console.log(err);
 
     const privateKey = data.Body.toString('utf-8');
-    console.trace(privateKey);
 
     const getParams = {
         Bucket: keys.httpsBucket,
@@ -226,14 +226,11 @@ s3.getObject(getParams, function (err, data) {
             console.log(err);
 
         const certificate = data.Body.toString('utf-8');
-        console.trace(certificate);
 
         const credentials = {
             key: privateKey,
             cert: certificate
         };
-
-        console.trace(credentials);
 
         // const server = https.createServer(credentials, app);
         // server.on('error', (e) => {

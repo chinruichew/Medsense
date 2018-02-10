@@ -18,9 +18,12 @@ class ProfessorHome extends Component {
                 let toVet = false;
                 for(let i = 0; i < userSubSpeciality.length; i++) {
                     for(let j = 0; j < unvetCases.length; j++) {
-                        if(unvetCases[j] === userSubSpeciality[i]) {
-                            toVet = true;
-                            break;
+                        const caseSubspecialities = unvetCases[j].subspeciality;
+                        for(let k =0; k < caseSubspecialities.length; k++) {
+                            if(caseSubspecialities[k] === userSubSpeciality[i]) {
+                                toVet = true;
+                                break;
+                            }
                         }
                     }
                 }
