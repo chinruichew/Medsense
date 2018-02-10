@@ -34,6 +34,12 @@ module.exports = app => {
     });
 
     app.get('/api/current_user', (req, res) => {
-        res.send(req.session.user);
+        if(req.session.user !== undefined) {
+            User.findByIdAndUpdate(req.session.user._id, { $set: { lastLogin: new Date() }}, { new: true }, function(err, user) {
+                res.send(req.session.user);
+            });
+        } else {
+            res.send(req.session.user);
+        }
     });
 };
