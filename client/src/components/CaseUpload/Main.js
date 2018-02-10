@@ -66,7 +66,7 @@ class Main extends Component {
                     "pearl": '',
                     "time": "Select One",
                     "reference": '',
-                    "mark":'0',
+                    "mark":'',
                 }
             ),
         });
@@ -176,7 +176,7 @@ class Main extends Component {
                         } else if (obj.time === "Select One") {
                             error = "Question #" + obj.id + ": Please select a Time Limit!";
                             throw BreakException;
-                        } else if(obj.mark === '0'){
+                        } else if(obj.mark === ''){
                             error = "Question #" + obj.id + ": Please fill in the Marks (positive whole number)!";
                             throw BreakException;
                         } else if (!new RegExp(/^\d+$/).test(obj.mark)){
