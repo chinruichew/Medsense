@@ -17,6 +17,7 @@ import CaseStart from './CaseUpload/CaseStart';
 import CaseChallenge from './CaseChallenge/Main';
 import Admin from './Admin/Admin';
 import Result from './CaseChallenge/GameResults';
+import NotFound from "./NotFound/NotFound";
 
 class App extends Component {
     componentDidMount() {
@@ -29,6 +30,7 @@ class App extends Component {
             <BrowserRouter>
                 <HttpsRedirect>
                     <Header />
+                    <Route path="*" component={NotFound} />
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/home" component={Home} />
                     <Route exact path="/register" component={StudentSignup} />
@@ -39,7 +41,7 @@ class App extends Component {
                     <Route exact path="/search" component={CaseChallenge} />
                     <Route exact path="/admin" component={Admin} />
                     <Route exact path="/result" component={Result} />
-                    <Route exact path="/" component={About} />
+                    <Route exact path="/" component={About}/>
                 </HttpsRedirect>
             </BrowserRouter>
         );
