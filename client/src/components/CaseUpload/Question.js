@@ -372,7 +372,9 @@ class Question extends Component {
         } else if(this.state.type==="Open-ended"){
             return(
                 <FormGroup controlId="formControlsOpenEnded" style={{height:'200px'}}>
-                    <ControlLabel>Answer<span style={{color:"red"}}>*</span></ControlLabel>
+                    <ControlLabel style={{ fontSize: "150%" }}>Answer<span style={{color:"red"}}>*</span>
+                        <br />
+                    </ControlLabel>
                     <ReactQuill value={this.state.openEnded}
                                 modules={{toolbar: toolbarOptions}}
                                 onChange={this.handleOpenEndedChange}
