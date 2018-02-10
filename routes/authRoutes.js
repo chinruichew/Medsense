@@ -6,7 +6,7 @@ module.exports = app => {
         const values = req.body;
         User.findOne({ username: values.username }, function (err, user) {
             if (user !== null && user.validPassword(values.password)) {
-                User.findByIdAndUpdate(user._id, { $set: { lastLogin: new Date() }}, { new: true }, function(err, user) {
+                User.findByIdAndUpdate(user._id, { $set: { lastLogin: new Date(), loginCount: user.loginCount+1 }}, { new: true }, function(err, user) {
                     req.session.user = user;
                     res.send('Authenticated');
                 });
