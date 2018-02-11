@@ -215,7 +215,7 @@ class OpenEndedQuestion extends Component {
                 </Panel>
                 {this.renderShowNextButton()}
 
-                {this.state.showAnswers && <h3>You got {(this.state.score*100).toFixed(2)} % correct! <br/>Your score for this question: {this.state.score.toFixed(2)} / {this.state.mark}</h3>}
+                {this.state.showAnswers && <h3>You got {(this.state.score/this.state.mark*100).toFixed(2)} % correct! <br/>Your score for this question: {this.state.score.toFixed(2)} / {this.state.mark}</h3>}
 
                 {this.state.showAnswers && <OpenEndedAnswer
                     caseid={this.props.caseid}

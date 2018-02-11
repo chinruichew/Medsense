@@ -15,6 +15,7 @@ module.exports = app => {
         var originalAnswer = "";
         Question.find({ "_id": req.body.id }, function (req, res) {
             originalAnswer = res[0]['openEnded'];
+            originalAnswer = originalAnswer.replace(/<[^>]*>/g, '');
             console.log(res[0]['openEnded'])
         })
         setTimeout(function () {
