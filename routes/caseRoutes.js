@@ -94,7 +94,7 @@ module.exports = app => {
                     oneQuestion.check4 = prop['check4'];
                     oneQuestion.check5 = prop['check5'];
                     oneQuestion.check6 = prop['check6'];
-                    oneQuestion.mark = [prop]['mark'];
+                    oneQuestion.mark = prop['mark'];
                     oneQuestion.save();
                     questions.push(oneQuestion);
                 }
@@ -123,7 +123,6 @@ module.exports = app => {
                         check6: prop['check6'],
                         mark: prop['mark'],
                         case: oneCase._id
-                        //Ricky to fix should store qid in case
                     });
                     newQuestion.save();
                     oneCase.questions.push(newQuestion._id);
@@ -168,7 +167,7 @@ module.exports = app => {
                 p.then(new Promise(function(resolve, reject) {
                     putQuestions(prop, oneCase, questions).then(response => {
                         // console.log(questions);
-                        res.send(questions);
+                        res.send({data: {case:oneCase._id, question:questions}, message: "uploadCase success"});
                         resolve();
                     });
                 }));

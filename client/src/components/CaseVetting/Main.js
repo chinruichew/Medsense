@@ -217,14 +217,16 @@ class Main extends Component {
         axios.post('/api/updateCase', {
             values: this.state
         }).then(res => {
-            const vettedCase = res.data[0];
-            const caseID = vettedCase.case;
-            let questions = vettedCase.question;
+            const caseID = res.data.data.case;
+            let questions = res.data.data.question;
             let qnData = this.state.qnData;
             this.setState({vm: true});
-            let question = questions[0];
-            let qn = qnData[0];
-            this.uploadFile(qn.attachment, caseID, question.id, question._id);
+            for (let i=0; i<questions.length; i++){
+                let question = questions[i];
+                let qn = qnData[i];
+                console.log(question.id, question._id);
+                this.uploadFile(qn.attachment, caseID, question.id, question._id);
+            }
         });
     };
 

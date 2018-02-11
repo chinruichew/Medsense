@@ -43,8 +43,10 @@ class ProfessorProfile extends Component {
         e.preventDefault();
         this.props.updateProfessor(this.state).then((response) => {
             if (response) {
-                console.log(response)
+                console.log(response);
                 this.setState({ vmShow: true });
+                this.props.reRenderMain();
+                console.log(this.props.refresh);
             }
         }).catch(() => { })
     }

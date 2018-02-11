@@ -32,6 +32,8 @@ class StudentProfile extends Component {
                 console.log(response)
                 this.setState({ vmShow: true });
             }
+            this.props.reRenderMain();
+            console.log(this.props.refresh);
         }).catch(() => { })
     }
 

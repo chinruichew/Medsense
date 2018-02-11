@@ -244,8 +244,6 @@ class Main extends Component {
                 this.uploadFile(qn.attachment, caseID, question.id, question._id);
             }
         });
-
-
     };
 
     handleDeleteQuestion(id) {

@@ -386,20 +386,23 @@ class Question extends Component {
     }
 
     checkQ1(){
-        if (this.props.id===1){
+        console.log(this.props.id);
+        if (this.props.id==1){
+            console.log("entered here");
             return;
         }
         return (
-            <FormGroup controlId="formControlsSTEM" style={{height:'200px'}}>
-                <ControlLabel style={{ fontSize: "150%" }}>STEM</ControlLabel>
+            <FormGroup controlId="formControlsSTEM" style={{height: '200px'}}>
+                <ControlLabel style={{fontSize: "150%"}}>STEM</ControlLabel>
                 <ReactQuill value={this.state.stem}
                             modules={{toolbar: toolbarOptions}}
                             onChange={this.handleStemChange}
                             placeholder="Enter a continuation of the scenario"
-                            style={{height:'100px'}}/>
+                            style={{height: '100px'}}/>
                 {/*<FormControl componentClass="textarea" rows={3} style={{height:'600px'}} placeholder="Enter a continuation of the scenario" value={this.state.stem} name="stem" onChange={(e)=>this.handleStemChange(e)} />*/}
             </FormGroup>
         );
+
     }
 
     showAttachment(){
