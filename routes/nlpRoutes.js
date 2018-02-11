@@ -7,6 +7,7 @@ const constants = require('../utility/constantTypes');
 
 var natural = require('natural');
 var unique = require('array-unique');
+var sw = require('stopword');
 
 module.exports = app => {
     app.post('/api/matchNLP', async (req, res) => {
@@ -21,7 +22,6 @@ module.exports = app => {
         setTimeout(function () {
             var tokenizer = new natural.WordTokenizer();
 
-            sw = require('stopword')
             const studentAnswerStop = sw.removeStopwords(tokenizer.tokenize(studentAnswer))
             const originalAnswerStop = sw.removeStopwords(tokenizer.tokenize(originalAnswer))
             console.log(studentAnswerStop);
