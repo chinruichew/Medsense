@@ -281,6 +281,23 @@ module.exports = app => {
         res.send(cases);
     });
 
+    app.get('/api/getVettedCasesSinceUserLogin', async(req, res) => {
+        const cases = await Case.find({ status: 'Vetted' }).select().populate({
+            path: 'questions',
+            model: 'questions'
+        });
+        const user = req.session.user;
+        const lastLogin = new Date(user.lastLogin);
+        const pendingCases = [];
+        for(let i = 0; i < cases.length; i++) {
+            const vettedCase = cases[i];
+            const caseDate = new Date(vettedCase.timestamp);
+            if(caseDate > lastLogin) {
+                pendingCases.push(vettedCase);
+            }
+        }
+        res.send(pendingCases);
+    });
 };
 
 
