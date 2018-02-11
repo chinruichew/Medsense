@@ -42,9 +42,15 @@ module.exports = app => {
                 user.speciality = req.body.values.speciality;
                 user.subspeciality = req.body.values.subspeciality;
                 user.save();
+
+                // Set session user profile
+                req.session.user.school = req.body.values.school;
+                req.session.user.speciality = req.body.values.speciality;
+                req.session.user.subspeciality = req.body.values.subspeciality;
+
+                res.send(user);
             }
         });
-        return res.status(201).send({ data: null, message: "updated" });
     });
 
     app.get('/api/getSubSpeciality', function(req, res) {
