@@ -29,6 +29,12 @@ module.exports = app => {
                 user.year = req.body.values.year;
                 user.school = req.body.values.school;
                 user.save();
+
+                // Set session user profile
+                req.session.user.school = req.body.values.school;
+                req.session.user.year = req.body.values.year;
+
+                res.send(user);
             }
 
         });
