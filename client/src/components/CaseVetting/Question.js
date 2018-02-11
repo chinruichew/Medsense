@@ -307,7 +307,7 @@ class Question extends Component {
             return(
                 <div>
                     <FormGroup>
-                        <ControlLabel>Answer 1<span style={{color:"red"}}>*</span></ControlLabel>
+                        <ControlLabel>Option 1<span style={{color:"red"}}>*</span></ControlLabel>
                         <InputGroup>
                             <InputGroup.Addon>
                                 <input type="checkbox" aria-label="..." checked={this.state.check1} name="check1" onChange={(e)=>this.handleCheck1Change(e)}/>
@@ -317,7 +317,7 @@ class Question extends Component {
                     </FormGroup>
 
                     <FormGroup>
-                        <ControlLabel>Answer 2<span style={{color:"red"}}>*</span></ControlLabel>
+                        <ControlLabel>Option 2<span style={{color:"red"}}>*</span></ControlLabel>
                         <InputGroup>
                             <InputGroup.Addon>
                                 <input type="checkbox" aria-label="..." checked={this.state.check2} name="check2" onChange={(e)=>this.handleCheck2Change(e)}/>
@@ -327,7 +327,7 @@ class Question extends Component {
                     </FormGroup>
 
                     <FormGroup>
-                        <ControlLabel>Answer 3</ControlLabel>
+                        <ControlLabel>Option 3</ControlLabel>
                         <InputGroup>
                             <InputGroup.Addon>
                                 <input type="checkbox" aria-label="..." checked={this.state.check3} name="check3" onChange={(e)=>this.handleCheck3Change(e)}/>
@@ -337,7 +337,7 @@ class Question extends Component {
                     </FormGroup>
 
                     <FormGroup>
-                        <ControlLabel>Answer 4</ControlLabel>
+                        <ControlLabel>Option 4</ControlLabel>
                         <InputGroup>
                             <InputGroup.Addon>
                                 <input type="checkbox" aria-label="..." checked={this.state.check4} name="check4" onChange={(e)=>this.handleCheck4Change(e)}/>
@@ -347,7 +347,7 @@ class Question extends Component {
                     </FormGroup>
 
                     <FormGroup>
-                        <ControlLabel>Answer 5</ControlLabel>
+                        <ControlLabel>Option 5</ControlLabel>
                         <InputGroup>
                             <InputGroup.Addon>
                                 <input type="checkbox" aria-label="..." checked={this.state.check5} name="check5" onChange={(e)=>this.handleCheck5Change(e)}/>
@@ -357,7 +357,7 @@ class Question extends Component {
                     </FormGroup>
 
                     <FormGroup>
-                        <ControlLabel>Answer 6</ControlLabel>
+                        <ControlLabel>Option 6</ControlLabel>
                         <InputGroup>
                             <InputGroup.Addon>
                                 <input type="checkbox" aria-label="..." checked={this.state.check6} name="check6" onChange={(e)=>this.handleCheck6Change(e)}/>

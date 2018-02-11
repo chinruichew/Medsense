@@ -4,9 +4,6 @@ import { Button, Row, ControlLabel, FormControl, Panel } from 'react-bootstrap';
 import { bindAll } from 'lodash';
 import { Line } from 'rc-progress';
 import ReactHtmlParser from 'react-html-parser';
-// import { connect } from 'react-redux';
-// import { storeCaseAnswerOpenEnded } from '../../actions';
-
 import OpenEndedAnswer from "./OpenEndedAnswer";
 import ImageMagnifier from "./ImageMagnifier";
 import axios from 'axios'
@@ -85,7 +82,6 @@ class OpenEndedQuestion extends Component {
     }
 
     selectDone() {
-        this.props.storeCaseAnswerOpenEnded(this.state);
         const {showAnswers} = this.state;
         const {showNextButton} = this.state;
         if (!showAnswers) {
@@ -161,12 +157,6 @@ class OpenEndedQuestion extends Component {
     }
 
     renderContent() {
-        let imageZoom = this.props.question.attachment !== "" ? (<div class="col-md-5 col-md-offset-2" align="center">
-            <h5>
-                Mouse over image to zoom
-            </h5>
-        </div>) : (<div></div>)
-
         return (
             <div className='container'>
                 <h1>
@@ -190,13 +180,10 @@ class OpenEndedQuestion extends Component {
                     <h4 style={{ border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace: "pre-wrap", wordBreak: "keep-all" }}>{this.renderScenario()}</h4>
                     <br />
                     <h4 style={{ border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace: "pre-wrap", wordBreak: "keep-all" }}>{ReactHtmlParser(this.props.question.question)}</h4>
-
-
+                    <br/>
+                    <Row>
                     <div class="col-md-5 col-md-offset-2">{<ImageMagnifier url={this.props.question.attachment} />}</div>
-                    {imageZoom}
-
-                    <br />
-
+                    </Row>
                     <br />
                     <div>
                         <Col smOffset={1}>
@@ -244,12 +231,4 @@ class OpenEndedQuestion extends Component {
     }
 }
 
-// function mapStateToProps2({ game, auth }) {
-//     return {
-//         game,
-//         auth
-//     };
-// }
-//
-// export default connect(mapStateToProps2, { storeCaseAnswerOpenEnded })(OpenEndedQuestion);
 export default OpenEndedQuestion;
