@@ -136,7 +136,7 @@ class MCQAnswers extends Component {
         let finalScore = (stuCorrectCount-stuWrongCount) * (this.state.mark / answerCount);
 
         if(stuWrongCount < stuCorrectCount){
-            this.setState({score: finalScore});
+            this.setState({score: Math.round(finalScore)});
         }
 
     }

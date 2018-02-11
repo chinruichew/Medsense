@@ -76,7 +76,7 @@ module.exports = app => {
                 caseid: req.body.case._id,
             });
             newCaseAnswer.save();
-            res.send("storeCaseAnswer completed");
+            return res.send({attempt: attempt+1});
         });
     });
 

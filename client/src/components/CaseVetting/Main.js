@@ -118,7 +118,7 @@ class Main extends Component {
                         } else if (this.isValidNRIC(obj.question)){
                             error = "Question #" + obj.id + ": Question should NOT contain NRIC!";
                             throw BreakException;
-                        } else if (obj.attachment && !this.validFileType(obj.attachment)){
+                        } else if (obj.attachment && typeof(obj.attachment)!=="string" && !this.validFileType(obj.attachment)){
                             error = "Question #" + obj.id + ": Please make sure your Attachment is an image of type .jpg, .jpeg, or .png!";
                             throw BreakException;
                         } else if (obj.type === "Select One") {

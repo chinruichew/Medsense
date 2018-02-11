@@ -80,12 +80,12 @@ class OpenEndedAnswer extends Component {
     }
 
     complete() {
-        this.props.updateScore(this.props.score);
+        this.props.updateScore(Math.round(this.props.score));
         this.props.handleViewScore();
     }
 
     nextQuestion() {
-        this.props.updateScore(this.props.score);
+        this.props.updateScore(Math.round(this.props.score));
         this.props.handleNextQuestion(parseFloat(this.props.question.id));
     }
 
