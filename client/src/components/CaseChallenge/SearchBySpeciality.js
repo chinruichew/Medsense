@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Button, FormGroup, FormControl, ControlLabel, Col, Row, Table} from 'react-bootstrap';
 import { bindAll } from 'lodash';
 import axios from 'axios';
+import moment from "moment";
 
 class SearchBySpeciality extends Component {
     constructor(props) {
@@ -45,7 +46,6 @@ class SearchBySpeciality extends Component {
             speciality: this.state.speciality,
             subspeciality: this.state.subspeciality
         }).then(res => {
-            console.log(res);
             if(res.data.length > 0) {
                 const subspecialities = this.state.subspeciality;
                 const specialityCases = res.data.map((specialityCase, index) => {
@@ -61,10 +61,7 @@ class SearchBySpeciality extends Component {
                     }
                     approaches+=specialityCase.approach[specialityCase.approach.length-1];
 
-                    let timeStamp = specialityCase.timestamp.split(" ");
-                    let date = timeStamp[2]+" "+timeStamp[1]+" "+timeStamp[3];
-                    let timeArr = timeStamp[4].split(":");
-                    let time = timeArr[0]+":"+timeArr[1];
+                    let dateTime = moment(specialityCase.uploadTime).format('MMMM Do YYYY, h:mm:ss a');
 
                     return(
                         <tr align="center" key={specialityCase._id}>
@@ -74,7 +71,7 @@ class SearchBySpeciality extends Component {
                             <td>{specialities}</td>
                             <td>{specialityCase.difficulty}</td>
                             {/*<td>{specialityCase.authorid.username}</td>*/}
-                            <td>{date}<br/>{time}</td>
+                            <td>{dateTime}</td>
                             <td><Button  type="button" bsStyle="primary" onClick={(e)=>this.handleReturnCase(specialityCase)}>Try</Button></td>
                         </tr>
                     );

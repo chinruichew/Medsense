@@ -4,6 +4,7 @@ const Case = require('../models/Case');
 const Question = require('../models/Question');
 const Answer = require('../models/Answer');
 const QuestionAnswer = require('../models/QuestionAnswer');
+const constants = require('../utility/constantTypes');
 
 module.exports = app => {
 
@@ -43,7 +44,7 @@ module.exports = app => {
 
     app.post('/api/fetchCaseBySpeciality', async (req, res) => {
         const result = await Case.find({
-            status: 'Vetted',
+            status: constants.CASE_STATUS_VETTED,
             speciality: req.body.speciality,
             subspeciality: { $all: req.body.subspeciality }
         }).select().populate({

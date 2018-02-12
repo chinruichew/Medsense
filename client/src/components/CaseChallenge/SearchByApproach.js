@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Button, FormGroup, FormControl, ControlLabel, Col, Row, Table} from 'react-bootstrap';
 import axios from 'axios';
+import moment from "moment";
 
 class SearchByApproach extends Component {
     state = {
@@ -72,10 +73,7 @@ class SearchByApproach extends Component {
                     }
                     specialities+=subspecialities[subspecialities.length-1];
 
-                    let timeStamp = approachCase.timestamp.split(" ");
-                    let date = timeStamp[2]+" "+timeStamp[1]+" "+timeStamp[3];
-                    let timeArr = timeStamp[4].split(":");
-                    let time = timeArr[0]+":"+timeArr[1];
+                    let dateTime = moment(approachCase.uploadTime).format('MMMM Do YYYY, h:mm:ss a');
                     // console.log(additionalApproach);
                     return(
                         <tr align="center" key={approachCase._id}>
@@ -85,7 +83,7 @@ class SearchByApproach extends Component {
                             <td>{specialities}</td>
                             <td>{approachCase.difficulty}</td>
                             {/*<td>{approachCase.authorid.username}</td>*/}
-                            <td>{date}<br/>{time}</td>
+                            <td>{dateTime}</td>
                             <td><Button  type="button" bsStyle="primary" onClick={(e)=>this.handleReturnCase(approachCase)}>Try</Button></td>
                         </tr>
                     );

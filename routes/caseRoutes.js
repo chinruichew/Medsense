@@ -10,9 +10,9 @@ const commonMethods = require('../utility/commonMethods');
 module.exports = app => {
 
     app.post('/api/uploadCase', function (req, res) {
-        let caseStatus = 'Pending';
+        let caseStatus = constants.CASE_STATUS_PENDING;
         if(req.session.user.usertype === constants.USER_TYPE_PROFESSOR) {
-            caseStatus = 'Vetted';
+            caseStatus = constants.CASE_STATUS_VETTED;
         }
         const newCase = new Case({
             title: req.body.values.title,
@@ -157,7 +157,7 @@ module.exports = app => {
             oneCase.scenario = req.body.values.scenario;
             oneCase.learning = req.body.values.learning;
             oneCase.vetter = req.body.values.authid;
-            oneCase.status = "Vetted";
+            oneCase.status = constants.CASE_STATUS_VETTED;
             oneCase.vetTime = new Date();
             oneCase.save();
 
@@ -285,7 +285,7 @@ module.exports = app => {
     });
 
     app.get('/api/getVettedCasesSinceUserLogin', async(req, res) => {
-        const cases = await Case.find({ status: 'Vetted' }).select().populate({
+        const cases = await Case.find({ status: constants.CASE_STATUS_VETTED }).select().populate({
             path: 'questions',
             model: 'questions'
         });
@@ -296,7 +296,7 @@ module.exports = app => {
             for(let i = 0; i < cases.length; i++) {
                 const vettedCase = cases[i];
                 if(vettedCase.vetTime !== null) {
-                    const caseDate = commonMethods.ISO_DATE_FORMATTER(vettedCase.vetTime + '');
+                    const caseDate = commonMethods.UTC_DATE_FORMATTER(vettedCase.vetTime + '');
                     console.log(caseDate, lastLogin);
                     if(caseDate > lastLogin) {
                         pendingCases.push(vettedCase);

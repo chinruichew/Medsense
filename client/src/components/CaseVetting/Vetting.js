@@ -19,13 +19,17 @@ class Vetting extends Component {
         filterVetted:"All",
         renderedCases: '',
         auth: '',
-        currentUser: null
+        currentUser: null,
+        constants: null
     };
 
     componentDidMount() {
         this.props.fetchUnvetCases();
         axios.get('/api/current_user').then(res => {
             this.setState({auth: res.data!=='', currentUser: res.data});
+        });
+        axios.get('/api/getConstantTypes').then(res => {
+            this.setState({constants: res.data});
         });
     }
 
@@ -34,64 +38,69 @@ class Vetting extends Component {
             case null:
                 return;
             default:
-                return this.props.cases.reverse().map((vetCase, index) => {
-                    const userSubSpecialities = this.state.currentUser.subspeciality;
-                    switch(this.state.filterPending) {
-                        case 'All':
-                            let toRenderAllCase = false;
-                            for(let i = 0; i < userSubSpecialities.length; i++) {
-                                const userSubSpeciality = userSubSpecialities[i];
-                                for(let j = 0; j < vetCase.subspeciality.length; j++) {
-                                    if(vetCase.subspeciality[j] === userSubSpeciality) {
-                                        toRenderAllCase = true;
-                                        break;
+                switch(this.state.constants) {
+                    case null:
+                        return;
+                    default:
+                        return this.props.cases.reverse().map((vetCase, index) => {
+                            const userSubSpecialities = this.state.currentUser.subspeciality;
+                            switch(this.state.filterPending) {
+                                case 'All':
+                                    let toRenderAllCase = false;
+                                    for(let i = 0; i < userSubSpecialities.length; i++) {
+                                        const userSubSpeciality = userSubSpecialities[i];
+                                        for(let j = 0; j < vetCase.subspeciality.length; j++) {
+                                            if(vetCase.subspeciality[j] === userSubSpeciality) {
+                                                toRenderAllCase = true;
+                                                break;
+                                            }
+                                        }
                                     }
-                                }
-                            }
-                            if(toRenderAllCase) {
-                                let dateTime = moment(vetCase.uploadTime).format('MMMM Do YYYY, h:mm:ss a');
-                                let vetButton = <Button type="button" bsStyle="primary" disabled>Vet</Button>;
-                                if(vetCase.status === "Pending" || (vetCase.vetter !== undefined && vetCase.vetter._id === this.state.currentUser._id)) {
-                                    vetButton = <Button type="button" bsStyle="primary" onClick={(e)=>this.vetCase(vetCase._id)}>Vet</Button>
-                                }
-                                return(
-                                    <tr align="center" key={vetCase._id}>
-                                        <td>{vetCase.title}</td>
-                                        <td>{vetCase.subspeciality.join(', ')}</td>
-                                        <td>{vetCase.authorname}</td>
-                                        <td>{dateTime}</td>
-                                        <td>{vetButton}</td>
-                                    </tr>
-                                );
+                                    if(toRenderAllCase) {
+                                        let dateTime = moment(vetCase.uploadTime).format('MMMM Do YYYY, h:mm:ss a');
+                                        let vetButton = <Button type="button" bsStyle="primary" disabled>Vet</Button>;
+                                        if(vetCase.status === this.state.constants.CASE_STATUS_PENDING || (vetCase.vetter !== undefined && vetCase.vetter._id === this.state.currentUser._id)) {
+                                            vetButton = <Button type="button" bsStyle="primary" onClick={(e)=>this.vetCase(vetCase._id)}>Vet</Button>
+                                        }
+                                        return(
+                                            <tr align="center" key={vetCase._id}>
+                                                <td>{vetCase.title}</td>
+                                                <td>{vetCase.subspeciality.join(', ')}</td>
+                                                <td>{vetCase.authorname}</td>
+                                                <td>{dateTime}</td>
+                                                <td>{vetButton}</td>
+                                            </tr>
+                                        );
+                                    }
+                                    return '';
+                                default:
+                                    let toRenderCase = false;
+                                    for(let i = 0; i < vetCase.subspeciality.length; i++) {
+                                        const vetcaseSubspeciality = vetCase.subspeciality[i];
+                                        if(vetcaseSubspeciality === this.state.filterPending) {
+                                            toRenderCase = true;
+                                        }
+                                    }
+                                    if(toRenderCase) {
+                                        let dateTime = moment(vetCase.uploadTime).format('MMMM Do YYYY, h:mm:ss a');
+                                        let vetButton = <Button type="button" bsStyle="primary" disabled>Vet</Button>;
+                                        if(vetCase.status === this.state.constants.CASE_STATUS_PENDING || (vetCase.vetter !== undefined && vetCase.vetter._id === this.state.currentUser._id)) {
+                                            vetButton = <Button type="button" bsStyle="primary" onClick={(e)=>this.vetCase(vetCase._id)}>Vet</Button>
+                                        }
+                                        return(
+                                            <tr align="center" key={vetCase._id}>
+                                                <td>{vetCase.title}</td>
+                                                <td>{vetCase.subspeciality.join(', ')}</td>
+                                                <td>{vetCase.authorname}</td>
+                                                <td>{dateTime}</td>
+                                                <td>{vetButton}</td>
+                                            </tr>
+                                        );
+                                    }
                             }
                             return '';
-                        default:
-                            let toRenderCase = false;
-                            for(let i = 0; i < vetCase.subspeciality.length; i++) {
-                                const vetcaseSubspeciality = vetCase.subspeciality[i];
-                                if(vetcaseSubspeciality === this.state.filterPending) {
-                                    toRenderCase = true;
-                                }
-                            }
-                            if(toRenderCase) {
-                                let dateTime = moment(vetCase.uploadTime).format('MMMM Do YYYY, h:mm:ss a');
-                                let vetButton = <Button type="button" bsStyle="primary" disabled>Vet</Button>;
-                                if(vetCase.status === "Pending" || (vetCase.vetter !== undefined && vetCase.vetter._id === this.state.currentUser._id)) {
-                                    vetButton = <Button type="button" bsStyle="primary" onClick={(e)=>this.vetCase(vetCase._id)}>Vet</Button>
-                                }
-                                return(
-                                    <tr align="center" key={vetCase._id}>
-                                        <td>{vetCase.title}</td>
-                                        <td>{vetCase.subspeciality.join(', ')}</td>
-                                        <td>{vetCase.authorname}</td>
-                                        <td>{dateTime}</td>
-                                        <td>{vetButton}</td>
-                                    </tr>
-                                );
-                            }
-                    }
-                    return '';
-                });
+                        });
+                }
         }
     }
 
