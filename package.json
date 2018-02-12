@@ -41,7 +41,7 @@
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
     "chai": "^4.1.2",
-    "chalk": "^2.3.0",
+    "chalk": "^2.3.1",
     "chalk-animation": "^1.4.0",
     "cluster": "^0.7.7",
     "colors": "^1.1.2",
