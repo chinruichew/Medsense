@@ -290,17 +290,15 @@ module.exports = app => {
             model: 'questions'
         });
         const user = req.session.user;
+        const lastLogin = commonMethods.ISO_DATE_FORMATTER(user.previousLogin);
         const pendingCases = [];
-        if(user.previousLogin !== null) {
-            const lastLogin = commonMethods.ISO_DATE_FORMATTER(user.previousLogin);
-            for(let i = 0; i < cases.length; i++) {
-                const vettedCase = cases[i];
-                if(vettedCase.vetTime !== null) {
-                    const caseDate = commonMethods.ISO_DATE_FORMATTER(vettedCase.vetTime + '');
-                    console.log(caseDate, lastLogin);
-                    if(caseDate > lastLogin) {
-                        pendingCases.push(vettedCase);
-                    }
+        for(let i = 0; i < cases.length; i++) {
+            const vettedCase = cases[i];
+            if(vettedCase.vetTime !== null) {
+                const caseDate = commonMethods.ISO_DATE_FORMATTER(vettedCase.vetTime + '');
+                console.log(caseDate, lastLogin);
+                if(caseDate > lastLogin) {
+                    pendingCases.push(vettedCase);
                 }
             }
         }
