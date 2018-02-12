@@ -7,7 +7,7 @@ import ImageMagnifier from "./ImageMagnifier";
 import './Upload.css';
 import 'react-quill/dist/quill.snow.css';
 
-var toolbarOptions = [
+const toolbarOptions = [
     [{ 'header': [1, 2, 3, false] }],
     ['bold', 'italic', 'underline'],        // toggled buttons
     [{ 'list': 'ordered'}, { 'list': 'bullet' }],

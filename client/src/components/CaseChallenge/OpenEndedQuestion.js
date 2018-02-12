@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Form, FormGroup, Col } from 'react-bootstrap';
-import { Button, Row, ControlLabel, FormControl, Panel } from 'react-bootstrap';
+import { Button, Row, ControlLabel, Panel } from 'react-bootstrap';
 import { bindAll } from 'lodash';
 import { Line } from 'rc-progress';
 import ReactHtmlParser from 'react-html-parser';
@@ -11,7 +11,7 @@ import axios from 'axios';
 
 import 'react-quill/dist/quill.snow.css';
 
-var toolbarOptions = [
+const toolbarOptions = [
     [{ 'header': [1, 2, 3, false] }],
     ['bold', 'italic', 'underline'],        // toggled buttons
     [{ 'list': 'ordered'}, { 'list': 'bullet' }],
