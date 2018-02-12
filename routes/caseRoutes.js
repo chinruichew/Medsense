@@ -18,7 +18,7 @@ module.exports = app => {
             speciality: req.body.values.speciality,
             scenario: req.body.values.scenario,
             learning: req.body.values.learning,
-            uploadTime: new Date(),
+            timestamp: new Date(),
             authorid: mongoose.Types.ObjectId(req.body.values.authid),
             authorname: req.body.values.authname,
             status: caseStatus
@@ -129,7 +129,7 @@ module.exports = app => {
                     oneCase.save();
                     questions.push(newQuestion);
                 }
-                // console.log(questions);
+                console.log(questions);
                 resolve("Done");
             });
         });
@@ -156,7 +156,6 @@ module.exports = app => {
             oneCase.learning = req.body.values.learning;
             oneCase.vetter = req.body.values.authid;
             oneCase.status = "Vetted";
-            oneCase.vetTime = new Date();
             oneCase.save();
 
             const jsonObject = req.body.values.qnData;
@@ -292,7 +291,7 @@ module.exports = app => {
         const pendingCases = [];
         for(let i = 0; i < cases.length; i++) {
             const vettedCase = cases[i];
-            const caseDate = new Date(vettedCase.vetTime);
+            const caseDate = new Date(vettedCase.timestamp);
             if(caseDate > lastLogin) {
                 pendingCases.push(vettedCase);
             }

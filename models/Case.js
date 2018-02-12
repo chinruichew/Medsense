@@ -12,10 +12,9 @@ const caseSchema = new Schema({
     scenario: { type: String, default: "" },
     learning: { type: String, default: "" },
     status: { type: String, default: "Pending" },
-    uploadTime: {type: Date, default: null},
+    timestamp: {type: String, default: ""},
     authorid: { type: Schema.Types.ObjectId, ref: 'users' },
-    vetter: { type: Schema.Types.ObjectId, ref: 'users' },
-    vetTime: {type: Date, default: null}
+    vetter: { type: Schema.Types.ObjectId, ref: 'users' }
 });
 
 const caseModel = mongoose.model('cases', caseSchema);

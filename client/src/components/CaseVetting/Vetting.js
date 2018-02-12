@@ -6,7 +6,6 @@ import VettedCases from './VettedCases';
 import VettingEditing from './VettingEditing';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
-import moment from 'moment';
 
 import FilterSubSpecialityOptions from "./FilterSubSpecialityOptions";
 import * as ReactGA from "react-ga";
@@ -49,7 +48,10 @@ class Vetting extends Component {
                                 }
                             }
                             if(toRenderAllCase) {
-                                let dateTime = moment(vetCase.uploadTime).format('MMMM Do YYYY, h:mm:ss a');
+                                let timeStamp = vetCase.timestamp.split(" ");
+                                let date = timeStamp[2]+" "+timeStamp[1]+" "+timeStamp[3];
+                                let timeArr = timeStamp[4].split(":");
+                                let time = timeArr[0]+":"+timeArr[1];
                                 let vetButton = <Button type="button" bsStyle="primary" disabled>Vet</Button>;
                                 if(vetCase.status === "Pending" || (vetCase.vetter !== undefined && vetCase.vetter._id === this.state.currentUser._id)) {
                                     vetButton = <Button type="button" bsStyle="primary" onClick={(e)=>this.vetCase(vetCase._id)}>Vet</Button>
@@ -59,7 +61,7 @@ class Vetting extends Component {
                                         <td>{vetCase.title}</td>
                                         <td>{vetCase.subspeciality.join(', ')}</td>
                                         <td>{vetCase.authorname}</td>
-                                        <td>{dateTime}</td>
+                                        <td>{date}<br/>{time}</td>
                                         <td>{vetButton}</td>
                                     </tr>
                                 );
@@ -74,7 +76,10 @@ class Vetting extends Component {
                                 }
                             }
                             if(toRenderCase) {
-                                let dateTime = moment(vetCase.uploadTime).format('MMMM Do YYYY, h:mm:ss a');
+                                let timeStamp = vetCase.timestamp.split(" ");
+                                let date = timeStamp[2]+" "+timeStamp[1]+" "+timeStamp[3];
+                                let timeArr = timeStamp[4].split(":");
+                                let time = timeArr[0]+":"+timeArr[1];
                                 let vetButton = <Button type="button" bsStyle="primary" disabled>Vet</Button>;
                                 if(vetCase.status === "Pending" || (vetCase.vetter !== undefined && vetCase.vetter._id === this.state.currentUser._id)) {
                                     vetButton = <Button type="button" bsStyle="primary" onClick={(e)=>this.vetCase(vetCase._id)}>Vet</Button>
@@ -84,7 +89,7 @@ class Vetting extends Component {
                                         <td>{vetCase.title}</td>
                                         <td>{vetCase.subspeciality.join(', ')}</td>
                                         <td>{vetCase.authorname}</td>
-                                        <td>{dateTime}</td>
+                                        <td>{date}<br/>{time}</td>
                                         <td>{vetButton}</td>
                                     </tr>
                                 );
