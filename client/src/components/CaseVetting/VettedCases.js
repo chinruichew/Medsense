@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {fetchVettedCases} from '../../actions';
 import {Table} from 'react-bootstrap';
-import moment from 'moment';
 
 class VettedCases extends Component {
     componentDidMount() {
@@ -13,13 +12,16 @@ class VettedCases extends Component {
         return this.props.vettedCases.reverse().map((vettedCase, index) => {
             switch(this.props.filterVetted) {
                 case 'All':
-                    let dateTime = moment(vettedCase.uploadTime).format('MMMM Do YYYY, h:mm:ss a');
+                    let timeStamp = vettedCase.timestamp.split(" ");
+                    let date = timeStamp[2]+" "+timeStamp[1]+" "+timeStamp[3];
+                    let timeArr = timeStamp[4].split(":");
+                    let time = timeArr[0]+":"+timeArr[1];
                     return(
                         <tr align="center" key={vettedCase._id}>
                             <td>{vettedCase.title}</td>
                             <td>{vettedCase.subspeciality}</td>
                             <td>{vettedCase.authorname}</td>
-                            <td>{dateTime}</td>
+                            <td>{date}<br/>{time}</td>
                         </tr>
                     );
                 default:
@@ -31,13 +33,16 @@ class VettedCases extends Component {
                         }
                     }
                     if(toRenderCase) {
-                        let dateTime = moment(vettedCase.uploadTime).format('MMMM Do YYYY, h:mm:ss a');
+                        let timeStamp = vettedCase.timestamp.split(" ");
+                        let date = timeStamp[2]+" "+timeStamp[1]+" "+timeStamp[3];
+                        let timeArr = timeStamp[4].split(":");
+                        let time = timeArr[0]+":"+timeArr[1];
                         return(
                             <tr align="center" key={vettedCase._id}>
                                 <td>{vettedCase.title}</td>
                                 <td>{vettedCase.subspeciality}</td>
                                 <td>{vettedCase.authorname}</td>
-                                <td>{dateTime}</td>
+                                <td>{date}<br/>{time}</td>
                             </tr>
                         );
                     }
