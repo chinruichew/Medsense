@@ -15,8 +15,7 @@ const userSchema = new Schema({
     timestamp: { type: Date, default: Date.now()},
     cases: [{ type: Schema.Types.ObjectId, ref: 'cases' }],
     points: { type: Number, default: 0},
-    previousLogin: { type: Date, default: ""},
-    currentLogin: { type: Date, default: ""},
+    lastLogin: { type: Date, default: ""},
     loginCount: { type: Number, default: 0}
 });
 

@@ -2,10 +2,8 @@ const mongoose = require('mongoose');
 const User = require('../models/User');
 const Case = require('../models/Case');
 const Question = require('../models/Question');
-const moment = require('moment-timezone');
 
 const constants = require('../utility/constantTypes');
-const commonMethods = require('../utility/commonMethods');
 
 module.exports = app => {
 
@@ -290,7 +288,7 @@ module.exports = app => {
             model: 'questions'
         });
         const user = req.session.user;
-        const lastLogin = commonMethods.DATE_FORMATTER(user.previousLogin);
+        const lastLogin = new Date(user.lastLogin);
         const pendingCases = [];
         for(let i = 0; i < cases.length; i++) {
             const vettedCase = cases[i];
