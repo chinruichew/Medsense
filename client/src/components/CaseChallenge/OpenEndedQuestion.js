@@ -6,17 +6,7 @@ import { Line } from 'rc-progress';
 import ReactHtmlParser from 'react-html-parser';
 import OpenEndedAnswer from "./OpenEndedAnswer";
 import ImageMagnifier from "./ImageMagnifier";
-import ReactQuill from 'react-quill';
-import axios from 'axios';
-
-import 'react-quill/dist/quill.snow.css';
-
-var toolbarOptions = [
-    [{ 'header': [1, 2, 3, false] }],
-    ['bold', 'italic', 'underline'],        // toggled buttons
-    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-    ['clean']                                         // remove formatting button
-];
+import axios from 'axios'
 
 class OpenEndedQuestion extends Component {
 
@@ -161,9 +151,9 @@ class OpenEndedQuestion extends Component {
         }
     }
 
-    handleOpenEndedChange(value){
+    handleOpenEndedChange(e) {
+        const value = e.target.value;
         this.setState({ openEnded: value });
-        // console.log(this.state.openEnded);
     }
 
     renderContent() {
@@ -194,25 +184,21 @@ class OpenEndedQuestion extends Component {
                     <Row>
                     <div class="col-md-5 col-md-offset-2">{<ImageMagnifier url={this.props.question.attachment} />}</div>
                     </Row>
-                    <Row>
+                    <br />
+                    <div>
                         <Col smOffset={1}>
-                            <Form style={{ margin: "0", width: "90%"}}><h4>
-                                <FormGroup style={{height:'300px'}}>
+                            <Form style={{ margin: "0", width: "95%" }}><h4>
+                                <FormGroup>
                                     <FormGroup controlId="formControlsOpenEnded">
-                                        <ControlLabel style={{padding: "0", margin: "0"}}>Your Answer</ControlLabel><br /><br/>
+                                        <ControlLabel>Your Answer</ControlLabel><br />
 
-                                        {/*<FormControl componentClass="textarea" rows={6} placeholder="Enter your answer" value={this.state.openEnded} name="openEnded" onChange={(e) => this.handleOpenEndedChange(e)} />*/}
+                                        <FormControl componentClass="textarea" rows={6} placeholder="Enter your answer" value={this.state.openEnded} name="openEnded" onChange={(e) => this.handleOpenEndedChange(e)} />
 
-                                        <ReactQuill value={this.state.openEnded}
-                                                    modules={{toolbar: toolbarOptions}}
-                                                    onChange={this.handleOpenEndedChange}
-                                                    placeholder="Enter your answer"
-                                                    style={{height:'200px'}}/>
                                     </FormGroup>
 
                                 </FormGroup>
                             </h4></Form></Col>
-                    </Row>
+                    </div>
                 </Panel>
                 {this.renderShowNextButton()}
 
