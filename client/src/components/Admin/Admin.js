@@ -71,7 +71,7 @@ class Admin extends Component {
             <div>
                 <div className='col-sm-9 col-sm-offset-1'>
                     <ButtonToolbar>
-                        <Button bsStyle="default" onClick={(e) => this.goToAdmin()}>Admin HomePage</Button>
+                        {/* <Button bsStyle="default" onClick={(e) => this.goToAdmin()}>Admin HomePage</Button> */}
                         <Button bsStyle="default" onClick={(e) => this.goToCaseManager()}>Case Management</Button>
                         <Button bsStyle="default" onClick={(e) => this.goToUserManager()}>User Management</Button>
                     </ButtonToolbar>

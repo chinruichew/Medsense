@@ -13,6 +13,7 @@ module.exports = app => {
     app.post('/api/matchNLP', async (req, res) => {
         var counter = ""
         var studentAnswer = req.body.values.openEnded;
+        studentAnswer = studentAnswer.replace(/<[^>]*>/g, '');
         var originalAnswer = "";
         Question.find({ "_id": req.body.id }, function (req, res) {
             originalAnswer = res[0]['openEnded'];

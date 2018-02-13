@@ -307,7 +307,8 @@ class CaseManager extends Component {
                 <td>{item.subspeciality}</td>
                 <td>{item.difficulty}</td>
                 <td>{item.authorname}</td>
-                <td>{item.timestamp.split(" ")[2] + " " + item.timestamp.split(" ")[1] + " " + item.timestamp.split(" ")[3]}<br />{item.timestamp.split(" ")[4].split(":")[0] + ":" + item.timestamp.split(" ")[4].split(":")[1]}</td>
+                {/* <td>{item.timestamp.split(" ")[2] + " " + item.timestamp.split(" ")[1] + " " + item.timestamp.split(" ")[3]}<br />{item.timestamp.split(" ")[4].split(":")[0] + ":" + item.timestamp.split(" ")[4].split(":")[1]}</td> */}
+                <td>{item.timestamp}</td>
                 <td> <Button type="button" bsStyle="primary" onClick={(e) => this.handleOpenModal(item)}>View</Button></td >
             </tr>
 
