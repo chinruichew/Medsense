@@ -34,8 +34,9 @@ module.exports = app => {
     });
 
     app.get('/api/current_user', (req, res) => {
-        if(req.session.user !== undefined) {
+        if(req.session.user !== undefined && req.session.user !== '' && req.session.user) {
             User.findByIdAndUpdate(req.session.user._id, { $set: { currentLogin: new Date() }}, { new: true }, function(err, user) {
+                console.log('Current User Id:', user._id, ', Current User Username:', user.username);
                 res.send(req.session.user);
             });
         } else {

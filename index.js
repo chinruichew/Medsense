@@ -28,6 +28,14 @@ require('./models/User');
 
 const app = express();
 
+/* Start of Console Log configuration */
+const log = console.log;
+console.log = function(){
+    log.call(console, 'Logging -> [' + new Date().toString() + ']');
+    log.apply(console, arguments);
+};
+/* End of Console Log configuration */
+
 /* Start of MongoDB Connection */
 const aws = require('aws-sdk');
 aws.config.update({
