@@ -5,52 +5,86 @@ const Question = require('../models/Question');
 
 const constants = require('../utility/constantTypes');
 
-const natural = require('natural');
-const unique = require('array-unique');
-const sw = require('stopword');
+var natural = require('natural');
+var unique = require('array-unique');
+var stopword = require('stopword');
+
+String.prototype.cleanup = function () {
+    return this.toLowerCase().replace(/[^a-zA-Z0-9]+/g, " ");
+}
+
+function toArray(answerArray) {
+    var returnArray = [];
+    for (var i in answerArray) {
+        if (typeof (answerArray[i].stem() === 'object')) {
+            returnArray.push(answerArray[i]);
+        } else {
+            returnArray.push(answerArray[i].stem())
+        }
+    }
+    return returnArray;
+}
+
+function remove(array, element) {
+    return array.filter(e => e !== element);
+}
 
 module.exports = app => {
     app.post('/api/matchNLP', async (req, res) => {
-        let counter = "";
-        let studentAnswer = req.body.values.openEnded;
-        studentAnswer = studentAnswer.replace(/<[^>]*>/g, '');
-        let originalAnswer = "";
-        Question.find({ "_id": req.body.id }, function (req, res) {
+        var counter = ""
+        var studentAnswer = req.body.values.openEnded;
+        studentAnswer = studentAnswer.replace(/<[^>]*>/g, " "); //remove html tags
+        var originalAnswer = "";
+        Question.find({"_id": req.body.id}, function (req, res) {
             originalAnswer = res[0]['openEnded'];
-            originalAnswer = originalAnswer.replace(/<[^>]*>/g, '');
-            console.log(res[0]['openEnded'])
-        });
+            originalAnswer = originalAnswer.replace(/<[^>]*>/g, " "); //remove html tags
+            originalAnswer = originalAnswer.cleanup(); //cleanup original answer
+        })
+
         setTimeout(function () {
-            const tokenizer = new natural.WordTokenizer();
-
-            const studentAnswerStop = sw.removeStopwords(tokenizer.tokenize(studentAnswer));
-            const originalAnswerStop = sw.removeStopwords(tokenizer.tokenize(originalAnswer));
-            console.log(studentAnswerStop);
-            console.log(originalAnswerStop);
-
-            // root word
+            //student answer
+            var tokenizer = new natural.WordTokenizer();
+            var cleanStudentAnswer = studentAnswer.cleanup(); //cleanup student answer
+            var cleanStudentAnswerToken = tokenizer.tokenize(cleanStudentAnswer); //tokenize student answer
+            var cleanStudentAnswerTokenStopword = stopword.removeStopwords(cleanStudentAnswerToken); //remove stopwords
             natural.PorterStemmer.attach();
-            const studentAnswerArray = [];
-            for (let i in studentAnswerStop) {
-                studentAnswerArray.push(studentAnswerStop[i].stem());
+            var studentAnswerArray = [];
+            for (var i in cleanStudentAnswerTokenStopword) {
+                if (typeof(cleanStudentAnswerTokenStopword[i].stem()) === 'object') {
+                    studentAnswerArray.push(cleanStudentAnswerTokenStopword[i]);
+                } else {
+                    studentAnswerArray.push(cleanStudentAnswerTokenStopword[i])
+                }
             }
-            console.log(studentAnswerArray);
+            studentAnswerArray = remove(studentAnswerArray, "nbsp");
+            studentAnswerArray = unique(studentAnswerArray);
+            console.log(studentAnswerArray)
 
-            const originalAnswerArray = [];
-            for (let i in originalAnswerStop) {
-                originalAnswerArray.push(originalAnswerStop[i].stem());
+            //original answer
+            var cleanOriginalAnswerToken = tokenizer.tokenize(originalAnswer); //tokenize student answer
+            var cleanOriginalAnswerTokenStopword = stopword.removeStopwords(cleanOriginalAnswerToken); //remove stopwords
+            var originalAnswerArray = []
+            for (var i in cleanOriginalAnswerTokenStopword) {
+                if (typeof (cleanOriginalAnswerTokenStopword[i].stem()) === 'object') {
+                    originalAnswerArray.push(cleanOriginalAnswerTokenStopword[i]);
+                } else {
+                    originalAnswerArray.push(cleanOriginalAnswerTokenStopword[i])
+                }
             }
+            originalAnswerArray = remove(originalAnswerArray, "nbsp");
+            originalAnswerArray = unique(originalAnswerArray);
             console.log(originalAnswerArray);
 
             //build up dictionary trie
-            const Trie = natural.Trie;
-            const trie = new Trie();
-            trie.addStrings(unique(studentAnswerArray));
+            var Trie = natural.Trie;
+            var trie = new Trie(false);
+            trie.addStrings(studentAnswerArray)
 
-            let counter = 0;
+            //check studentAnswer vs originalAnswer
+            var counter = 0;
 
-            for (let i in unique(originalAnswerArray)) {
-                if (trie.contains(unique(originalAnswerArray)[i])) {
+            for (var i in originalAnswerArray) {
+                if (trie.contains(originalAnswerArray[i])) {
                     counter++;
                 } else {
                     // if (trie.findPrefix(originalAnswerArray[i])[0] != null) {
@@ -58,11 +92,9 @@ module.exports = app => {
                     // }
                 }
             }
+            counter = counter / originalAnswerArray.length
             console.log(counter);
-            console.log(originalAnswerArray.length);
-            console.log(counter / originalAnswerArray.length);
-            counter = counter / originalAnswerArray.length;
-             res.send({ "data": counter })
+            res.send({ "data": counter })
         }.bind(this), 500);
 
     });
