@@ -14,12 +14,13 @@ String.prototype.cleanup = function () {
 }
 
 function toArray(answerArray) {
+    var nounInflector = new natural.NounInflector();
     var returnArray = [];
     for (var i in answerArray) {
-        if (typeof (answerArray[i].stem() === 'object')) {
-            returnArray.push(answerArray[i]);
+        if (typeof (answerArray[i].stem()) === 'object') {
+            returnArray.push(nounInflector.singularize(answerArray[i]));
         } else {
-            returnArray.push(answerArray[i].stem())
+            returnArray.push(nounInflector.singularize(answerArray[i]));
         }
     }
     return returnArray;
@@ -49,13 +50,7 @@ module.exports = app => {
             var cleanStudentAnswerTokenStopword = stopword.removeStopwords(cleanStudentAnswerToken); //remove stopwords
             natural.PorterStemmer.attach();
             var studentAnswerArray = [];
-            for (var i in cleanStudentAnswerTokenStopword) {
-                if (typeof(cleanStudentAnswerTokenStopword[i].stem()) === 'object') {
-                    studentAnswerArray.push(cleanStudentAnswerTokenStopword[i]);
-                } else {
-                    studentAnswerArray.push(cleanStudentAnswerTokenStopword[i])
-                }
-            }
+            studentAnswerArray = toArray(cleanStudentAnswerTokenStopword);
             studentAnswerArray = remove(studentAnswerArray, "nbsp");
             studentAnswerArray = unique(studentAnswerArray);
             console.log(studentAnswerArray)
@@ -64,13 +59,7 @@ module.exports = app => {
             var cleanOriginalAnswerToken = tokenizer.tokenize(originalAnswer); //tokenize student answer
             var cleanOriginalAnswerTokenStopword = stopword.removeStopwords(cleanOriginalAnswerToken); //remove stopwords
             var originalAnswerArray = []
-            for (var i in cleanOriginalAnswerTokenStopword) {
-                if (typeof (cleanOriginalAnswerTokenStopword[i].stem()) === 'object') {
-                    originalAnswerArray.push(cleanOriginalAnswerTokenStopword[i]);
-                } else {
-                    originalAnswerArray.push(cleanOriginalAnswerTokenStopword[i])
-                }
-            }
+            originalAnswerArray = toArray(cleanOriginalAnswerTokenStopword);
             originalAnswerArray = remove(originalAnswerArray, "nbsp");
             originalAnswerArray = unique(originalAnswerArray);
             console.log(originalAnswerArray);
@@ -78,7 +67,7 @@ module.exports = app => {
             //build up dictionary trie
             var Trie = natural.Trie;
             var trie = new Trie(false);
-            trie.addStrings(studentAnswerArray)
+            trie.addStrings(studentAnswerArray);
 
             //check studentAnswer vs originalAnswer
             var counter = 0;
