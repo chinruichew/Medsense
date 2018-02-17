@@ -296,7 +296,8 @@ module.exports = app => {
             for(let i = 0; i < cases.length; i++) {
                 const vettedCase = cases[i];
                 if(vettedCase.vetTime !== null) {
-                    const caseDate = commonMethods.UTC_DATE_FORMATTER(vettedCase.vetTime + '');
+                    // const caseDate = commonMethods.UTC_DATE_FORMATTER(vettedCase.vetTime + '');
+                    const caseDate = new Date(vettedCase.vetTime.toLocaleTimeString());
                     console.log(caseDate, lastLogin);
                     if(caseDate > lastLogin) {
                         pendingCases.push(vettedCase);
