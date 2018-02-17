@@ -10,6 +10,7 @@ import caseByApproachReducer from './caseByApproachReducer';
 import caseBySpecialityReducer from './caseBySpecialityReducer';
 import adminReducer from './adminReducer';
 import adminUsersReducer from './adminUsersReducer';
+import constantsReducer from './constantsReducer';
 
 export default combineReducers({
     auth: authReducer,
@@ -22,5 +23,6 @@ export default combineReducers({
     specialityCases: caseBySpecialityReducer,
     adminCases: adminReducer,
     adminUsers: adminUsersReducer,
+    constants: constantsReducer,
     form: reduxForm
 });

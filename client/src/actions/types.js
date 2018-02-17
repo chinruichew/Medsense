@@ -21,3 +21,4 @@ export const DELETE_ADMIN_PROFESSOR = 'delete_admin_professor';
 export const DELETE_ADMIN_STUDENT = 'delete_admin_student';
 export const FETCH_FILTERED_ADMIN_CASES = 'fetch_filtered_admin_cases';
 export const STORE_CASE_ANSWER = 'store_case_answer';
+export const FETCH_CONSTANT_TYPES = 'fetch_constant_types';
