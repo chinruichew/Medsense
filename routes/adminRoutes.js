@@ -15,18 +15,53 @@ module.exports = app => {
     app.post('/api/fetchFilteredAdminStudents', async (req, res) => {
         let users;
         if (req.body.values.username === "") {
-            users = await User.find({
-                usertype: constants.USER_TYPE_STUDENT,
-                school: req.body.values.school,
-                year: req.body.values.year
-            }).select("-password");
+            if(req.body.values.school === "" && req.body.values.year === ""){
+                users = await User.find({
+                    usertype: constants.USER_TYPE_STUDENT
+                }).select("-password");
+            } else if(req.body.values.school === "") {
+                users = await User.find({
+                    usertype: constants.USER_TYPE_STUDENT,
+                    year: req.body.values.year
+                }).select("-password");
+            } else if(req.body.values.year === "") {
+                users = await User.find({
+                    usertype: constants.USER_TYPE_STUDENT,
+                    school: req.body.values.school
+                }).select("-password");
+            } else {
+                users = await User.find({
+                    usertype: constants.USER_TYPE_STUDENT,
+                    school: req.body.values.school,
+                    year: req.body.values.year
+                }).select("-password");
+            }
         } else {
-            users = await User.find({
-                username: req.body.values.username,
-                usertype: constants.USER_TYPE_STUDENT,
-                school: req.body.values.school,
-                year: req.body.values.year
-            }).select("-password");
+            if(req.body.values.school === "" && req.body.values.year === ""){
+                users = await User.find({
+                    username: { "$regex": req.body.values.username, "$options": "i" },
+                    usertype: constants.USER_TYPE_STUDENT
+                }).select("-password");
+            } else if(req.body.values.school === "") {
+                users = await User.find({
+                    username: { "$regex": req.body.values.username, "$options": "i" },
+                    usertype: constants.USER_TYPE_STUDENT,
+                    year: req.body.values.year
+                }).select("-password");
+            } else if(req.body.values.year === "") {
+                users = await User.find({
+                    username: { "$regex": req.body.values.username, "$options": "i" },
+                    usertype: constants.USER_TYPE_STUDENT,
+                    school: req.body.values.school
+                }).select("-password");
+            } else {
+                users = await User.find({
+                    username: { "$regex": req.body.values.username, "$options": "i" },
+                    usertype: constants.USER_TYPE_STUDENT,
+                    school: req.body.values.school,
+                    year: req.body.values.year
+                }).select("-password");
+            }
         }
         res.send(users);
     });

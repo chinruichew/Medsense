@@ -11,8 +11,8 @@ class DeleteUser extends Component {
         display: 'user',
         usertype: 'Student',
         username: '',
-        school: 'Duke-NUS',
-        year: '1',
+        school: '',
+        year: '',
         speciality: 'Medicine',
         subspeciality: [],
         seniorStatus: '',
@@ -100,6 +100,7 @@ class DeleteUser extends Component {
             <FormGroup controlId="formControlsDifficulty">
                 <ControlLabel style={{ fontSize: "150%" }}>Select School:</ControlLabel>
                 <FormControl componentClass="select" value={this.state.school} name="usertype" onChange={(e) => this.handleSchoolChange(e)}>
+                    <option value="">Select School</option>
                     <option value="Duke-NUS">Duke-NUS</option>
                     <option value="NTU">NTU</option>
                     <option value="NUS">NUS</option>
@@ -115,6 +116,7 @@ class DeleteUser extends Component {
                 <FormGroup controlId="formControlsDifficulty">
                     <ControlLabel style={{ fontSize: "150%" }}>Select Year:</ControlLabel>
                     <FormControl componentClass="select" value={this.state.year} name="year" onChange={(e) => this.handleYearChange(e)}>
+                        <option value="">Select Year</option>
                         <option value="1">Year 1</option>
                         <option value="2">Year 2</option>
                         <option value="3">Year 3</option>
