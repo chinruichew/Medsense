@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, FormGroup, Col } from 'react-bootstrap';
+import { Form, FormGroup, Col, Alert } from 'react-bootstrap';
 import { Checkbox, Button, Row, Panel } from 'react-bootstrap';
 import { Line } from 'rc-progress';
 import { bindAll } from 'lodash';
@@ -47,7 +47,7 @@ class MCQquestion extends Component {
         this.timer = 0;
         bindAll(this, 'selectDone', 'startTimer', 'countDown', 'secondsToTime', 'pauseTimer', 'renderTimer',
             'renderShowNextButton', 'renderProgressBar', 'renderScenario', 'renderMCQ3', 'renderMCQ4', 'renderMCQ5',
-            'renderMCQ6', 'renderContent');
+            'renderMCQ6', 'renderContent', 'renderStorySoFar');
     }
 
     startTimer() {
@@ -110,11 +110,11 @@ class MCQquestion extends Component {
         //console.log(this.props.timeLimit);
         if (this.props.timeLimit) {
             return (
-                <div className='pull-right'>
+                <Col>
                     {this.startTimer()}
                     <img src="./timer.png" hspace='5' alt="" style={{ height: "35px" }} /> {this.state.time.m}
                     min {this.state.time.s} sec
-                </div>
+                </Col>
             );
         }
         return;
@@ -124,11 +124,11 @@ class MCQquestion extends Component {
         const { showNextButton } = this.state;
         if (showNextButton) {
             return (
-                <div>
-                    <Button onClick={(e) => this.selectDone()} hspace="20" bsStyle="primary" bsSize="large" className="pull-right">
+                <Col smOffset={10}>
+                    <Button onClick={(e) => this.selectDone()} hspace="20" bsStyle="primary" bsSize="large">
                         Done
                     </Button>
-                </div>
+                </Col>
             );
         }
     }
@@ -223,6 +223,43 @@ class MCQquestion extends Component {
         }
     }
 
+    renderStorySoFar(){
+        let stems = this.props.case.questions.map((obj, index) => {
+            console.log(this.props.question.id);
+            if (parseFloat(obj.id) < parseFloat(this.props.question.id)) {
+                let stem = '';
+                if (obj.id !== 1) {
+                    stem = obj.stem;
+                }
+
+                return (
+                    <div className="stem">
+                        <div className="stem-label" style={{fontSize: "180%"}}>
+                            Question {obj.id}
+                        </div>
+                        <div style={{color: "black"}}>{ReactHtmlParser(stem)}</div>
+                        <br />
+                    </div>
+                );
+            }
+        });
+
+        if (this.props.question.id > "1") {
+            return (
+                <Alert bsStyle="info" style={{borderWidth: "thick", width: "93%", background: "white", borderColor: "#bce8f1"}}>
+                    <p style={{fontFamily: "Great Vibes, cursive", fontWeight: "bold", fontSize: "300%", textAlign: "center"}}>Story So Far</p>
+                    <p style={{textDecorationLine: "underline", margin: "0", fontSize: "200%"}}>Case Scenario</p>
+                    <div className="row" style={{whiteSpace: "pre-wrap", paddingLeft: "2%", color: "black"}}>
+                        {ReactHtmlParser(this.props.scenario)}
+                    </div>
+                    <p style={{textDecorationLine: "underline", margin: "0", fontSize: "200%"}}>Case Continuation</p>
+                    <div className="row" style={{whiteSpace: "pre-wrap", paddingLeft: "2%"}}>{stems}</div>
+                    {/*<br/><br/>*/}
+                </Alert>
+            );
+        }
+    }
+
 
     renderContent() {
         return (
@@ -237,59 +274,64 @@ class MCQquestion extends Component {
                 <br />
 
                 <h3>
-                    <Row>
-                        <Col sm={3}>Question {this.props.question.id}  </Col>
-                        <Col sm={5} className='pull-right'>{this.renderTimer(0.2)}</Col>
+                    <Row style={{width: "95%"}}>
+                        <Col sm={3} style={{paddingLeft: "0", fontWeight: "bold"}}>Question {this.props.question.id}  </Col>
+                        <Col className='pull-right'>{this.renderTimer(0.2)}</Col>
                     </Row>
                 </h3>
 
                 <br />
 
-                <Panel bsStyle="info" id="panel" style={{ borderWidth: "thick" }}>
+                <Row style={{paddingLeft: "0"}}>
+                    {this.renderStorySoFar()}
+                </Row>
 
-                    <h4 style={{ border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace: "pre-wrap", wordBreak: "keep-all" }}>{this.renderScenario()}</h4>
+                <Row>
+                    <Panel bsStyle="info" id="panel" style={{ borderWidth: "thick", width: "93%" }}>
 
-                    <br />
+                        <h4 style={{ border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace: "pre-wrap", wordBreak: "keep-all" }}>{this.renderScenario()}</h4>
 
-                    <h4 style={{ border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace: "pre-wrap", wordBreak: "keep-all" }}>
-                        {ReactHtmlParser(this.props.question.question)}
-                    </h4>
+                        <br />
 
-                    <div className="col-md-5 col-md-offset-2">{<ImageMagnifier url={this.props.question.attachment} />}</div>
+                        <h4 style={{ border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace: "pre-wrap", wordBreak: "keep-all" }}>
+                            {ReactHtmlParser(this.props.question.question)}
+                        </h4>
 
-                    <br /><br />
+                        <div className="col-md-5 col-md-offset-2">{<ImageMagnifier url={this.props.question.attachment} />}</div>
 
-                    <Form><h4>
-                        <FormGroup>
-                            <div className="col-md-6 col-md-offset-2">
-                                <Checkbox onChange={(e) => this.handleCheck1Change(e)}>{this.props.question.mcq1}</Checkbox>
-                                <Checkbox onChange={(e) => this.handleCheck2Change(e)}>{this.props.question.mcq2}</Checkbox>
-                                {this.renderMCQ3()}
-                                {this.renderMCQ4()}
-                                {this.renderMCQ5()}
-                                {this.renderMCQ6()}
-                            </div>
-                        </FormGroup>
-                    </h4></Form>
-                </Panel>
-                {this.renderShowNextButton()}
+                        <br /><br />
+
+                        <Form><h4>
+                            <FormGroup>
+                                <div className="col-md-6 col-md-offset-2">
+                                    <Checkbox onChange={(e) => this.handleCheck1Change(e)}>{this.props.question.mcq1}</Checkbox>
+                                    <Checkbox onChange={(e) => this.handleCheck2Change(e)}>{this.props.question.mcq2}</Checkbox>
+                                    {this.renderMCQ3()}
+                                    {this.renderMCQ4()}
+                                    {this.renderMCQ5()}
+                                    {this.renderMCQ6()}
+                                </div>
+                            </FormGroup>
+                        </h4></Form>
+                    </Panel>
+                    {this.renderShowNextButton()}
 
 
-                {this.state.showAnswers && <MCQAnswers
-                    caseid={this.props.caseid}
-                    authid={this.props.authid}
-                    timeLimit={this.state.timeLimit}
-                    seconds={this.state.seconds}
-                    date={this.props.date}
-                    question={this.props.question}
-                    totalQnNum={this.props.totalQnNum}
-                    updateScore={this.props.updateScore}
-                    handleViewScore={this.props.handleViewScore}
-                    handleNextQuestion={this.props.handleNextQuestion}
-                    check1Stu={this.state.check1Stu} check2Stu={this.state.check2Stu}
-                    check3Stu={this.state.check3Stu} check4Stu={this.state.check4Stu}
-                    check5Stu={this.state.check5Stu} check6Stu={this.state.check6Stu} />}
-
+                    {this.state.showAnswers && <MCQAnswers
+                        caseid={this.props.caseid}
+                        authid={this.props.authid}
+                        timeLimit={this.state.timeLimit}
+                        seconds={this.state.seconds}
+                        date={this.props.date}
+                        question={this.props.question}
+                        totalQnNum={this.props.totalQnNum}
+                        updateScore={this.props.updateScore}
+                        handleViewScore={this.props.handleViewScore}
+                        handleNextQuestion={this.props.handleNextQuestion}
+                        check1Stu={this.state.check1Stu} check2Stu={this.state.check2Stu}
+                        check3Stu={this.state.check3Stu} check4Stu={this.state.check4Stu}
+                        check5Stu={this.state.check5Stu} check6Stu={this.state.check6Stu} />}
+                </Row>
             </div>
         );
     }

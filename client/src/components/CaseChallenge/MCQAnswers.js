@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Col } from 'react-bootstrap';
 import { bindAll } from 'lodash';
 import { connect } from 'react-redux';
 import { storeCaseAnswerMCQ } from '../../actions';
@@ -145,7 +145,7 @@ class MCQAnswers extends Component {
     renderContent() {
         //if (!this.state.showResult) {
             return (
-                <div className='container'>
+                <Col sm={11}>
                     <h3>You got {this.state.stuCorrectAnswerCount} / {this.state.answerCount} correct!</h3><br />
                     <h3>Your score for this question: {this.state.score}</h3>
                     <h4>
@@ -160,7 +160,7 @@ class MCQAnswers extends Component {
 
                     </h4>
                     {this.renderNextQuestion()}
-                </div>
+                </Col>
             );
         // }else{
         //     return <GameResults />
@@ -171,18 +171,20 @@ class MCQAnswers extends Component {
     renderNextQuestion() {
         if (this.props.question.id === this.props.totalQnNum + "") {
             return (
-                <div>
+                <Col smOffset={10}>
                     <Button onClick={(e) => this.complete()} hspace="20" bsStyle="primary" bsSize="large" className="pull-right">
                         View Score
                     </Button>
-                </div>
+                </Col>
             );
         } else {
             return (
-                <Button onClick={(e) => this.nextQuestion()} hspace="20" bsStyle="primary" bsSize="large"
-                    className="pull-right">
-                    Next Question
-                </Button>
+                <Col smOffset={10}>
+                    <Button onClick={(e) => this.nextQuestion()} hspace="20" bsStyle="primary" bsSize="large"
+                        className="pull-right">
+                        Next Question
+                    </Button>
+                </Col>
             );
         }
     }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, FormGroup, Col } from 'react-bootstrap';
+import { Form, FormGroup, Col, Alert } from 'react-bootstrap';
 import { Button, Row, ControlLabel, Panel } from 'react-bootstrap';
 import { bindAll } from 'lodash';
 import { Line } from 'rc-progress';
@@ -15,6 +15,7 @@ const toolbarOptions = [
     [{ 'header': [1, 2, 3, false] }],
     ['bold', 'italic', 'underline'],        // toggled buttons
     [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+    [{ 'indent': '-1'}, { 'indent': '+1' }],
     ['clean']                                         // remove formatting button
 ];
 
@@ -43,7 +44,8 @@ class OpenEndedQuestion extends Component {
         };
         this.timer = 0;
         bindAll(this, 'selectDone', 'startTimer', 'countDown', 'secondsToTime', 'pauseTimer', 'renderTimer',
-            'renderShowNextButton', 'renderProgressBar', 'renderScenario', 'renderContent', 'handleOpenEndedChange');
+            'renderShowNextButton', 'renderProgressBar', 'renderScenario', 'renderContent', 'handleOpenEndedChange',
+            'renderStorySoFar');
     }
 
     startTimer() {
@@ -112,25 +114,62 @@ class OpenEndedQuestion extends Component {
     renderTimer(duration) {
         if (this.props.timeLimit) {
             return (
-                <div className='pull-right'>
+                <Col>
                     {this.startTimer()}
                     <img src="./timer.png" hspace='5' alt="" style={{ height: "35px" }} /> {this.state.time.m}
                     min {this.state.time.s} sec
-                </div>
+                </Col>
             );
         }
         return;
+    }
+
+    renderStorySoFar(){
+        let stems = this.props.case.questions.map((obj, index) => {
+            console.log(this.props.question.id);
+            if (parseFloat(obj.id) < parseFloat(this.props.question.id)) {
+                let stem = '';
+                if (obj.id !== 1) {
+                    stem = obj.stem;
+                }
+
+                return (
+                    <div className="stem">
+                        <div className="stem-label" style={{fontSize: "180%"}}>
+                            Question {obj.id}
+                        </div>
+                        <div style={{color: "black"}}>{ReactHtmlParser(stem)}</div>
+                        <br />
+                    </div>
+                );
+            }
+        });
+
+        if (this.props.question.id > "1") {
+            return (
+                <Alert bsStyle="info" style={{borderWidth: "thick", width: "93%", background: "white", borderColor: "#bce8f1"}}>
+                    <p style={{fontFamily: "Great Vibes, cursive", fontWeight: "bold", fontSize: "300%", textAlign: "center"}}>Story So Far</p>
+                    <p style={{textDecorationLine: "underline", margin: "0", fontSize: "200%"}}>Case Scenario</p>
+                    <div className="row" style={{whiteSpace: "pre-wrap", paddingLeft: "2%", color: "black"}}>
+                        {ReactHtmlParser(this.props.scenario)}
+                    </div>
+                    <p style={{textDecorationLine: "underline", margin: "0", fontSize: "200%"}}>Case Continuation</p>
+                    <div className="row" style={{whiteSpace: "pre-wrap", paddingLeft: "2%"}}>{stems}</div>
+                    {/*<br/><br/>*/}
+                </Alert>
+            );
+        }
     }
 
     renderShowNextButton() {
         const {showNextButton} = this.state;
         if (showNextButton) {
             return (
-                <div>
-                    <Button onClick={(e) => this.selectDone()} hspace="20" bsStyle="primary" bsSize="large" className="pull-right">
+                <Col smOffset={10}>
+                    <Button onClick={(e) => this.selectDone()} hspace="20" bsStyle="primary" bsSize="large">
                         Done
                     </Button>
-                </div>
+                </Col>
             );
         }
     }
@@ -179,60 +218,66 @@ class OpenEndedQuestion extends Component {
                 <br />
 
                 <h3>
-                    <Row>
-                        <Col sm={3}>Question {this.props.question.id} </Col>
-                        <Col sm={5} className='pull-right'>{this.renderTimer(0.2)}</Col>
+                    <Row style={{width: "95%"}}>
+                        <Col sm={3} style={{paddingLeft: "0", fontWeight: "bold"}}>Question {this.props.question.id} </Col>
+                        <Col className='pull-right'>{this.renderTimer(0.2)}</Col>
                     </Row>
                 </h3>
 
                 <br />
-                <Panel bsStyle="info" id="panel" style={{ borderWidth: "thick", width: "93%" }}>
-                    <h4 style={{ border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace: "pre-wrap", wordBreak: "keep-all" }}>{this.renderScenario()}</h4>
-                    <br />
-                    <h4 style={{ border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace: "pre-wrap", wordBreak: "keep-all" }}>{ReactHtmlParser(this.props.question.question)}</h4>
-                    <br/>
-                    <Row>
-                    <div class="col-md-5 col-md-offset-2">{<ImageMagnifier url={this.props.question.attachment} />}</div>
-                    </Row>
-                    <Row>
-                        <Col smOffset={1}>
-                            <Form style={{ margin: "0", width: "90%"}}><h4>
-                                <FormGroup style={{height:'300px'}}>
-                                    <FormGroup controlId="formControlsOpenEnded">
-                                        <ControlLabel style={{padding: "0", margin: "0"}}>Your Answer</ControlLabel><br /><br/>
+                <Row style={{paddingLeft: "0"}}>
+                    {this.renderStorySoFar()}
+                </Row>
 
-                                        {/*<FormControl componentClass="textarea" rows={6} placeholder="Enter your answer" value={this.state.openEnded} name="openEnded" onChange={(e) => this.handleOpenEndedChange(e)} />*/}
+                <Row>
+                    <Panel bsStyle="info" id="panel" style={{ borderWidth: "thick", width: "93%" }}>
+                        <h4 style={{ border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace: "pre-wrap", wordBreak: "keep-all" }}>{this.renderScenario()}</h4>
+                        <br />
+                        <h4 style={{ border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace: "pre-wrap", wordBreak: "keep-all" }}>{ReactHtmlParser(this.props.question.question)}</h4>
+                        <br/>
+                        <Row style={{margin: "0", padding:"0"}}>
+                        <div class="col-md-5 col-md-offset-2">{<ImageMagnifier url={this.props.question.attachment} />}</div>
+                        </Row>
+                        <Row>
+                            <Col smOffset={1}>
+                                <Form style={{ margin: "0", width: "90%"}}><h4>
+                                    <FormGroup style={{height:'300px'}}>
+                                        <FormGroup controlId="formControlsOpenEnded">
+                                            <ControlLabel style={{padding: "0", margin: "0"}}>Your Answer</ControlLabel><br /><br/>
 
-                                        <ReactQuill value={this.state.openEnded}
-                                                    modules={{toolbar: toolbarOptions}}
-                                                    onChange={this.handleOpenEndedChange}
-                                                    placeholder="Enter your answer"
-                                                    style={{height:'200px'}}/>
+                                            {/*<FormControl componentClass="textarea" rows={6} placeholder="Enter your answer" value={this.state.openEnded} name="openEnded" onChange={(e) => this.handleOpenEndedChange(e)} />*/}
+
+                                            <ReactQuill value={this.state.openEnded}
+                                                        modules={{toolbar: toolbarOptions}}
+                                                        onChange={this.handleOpenEndedChange}
+                                                        placeholder="Enter your answer"
+                                                        style={{height:'200px'}}/>
+                                        </FormGroup>
+
                                     </FormGroup>
+                                </h4></Form></Col>
+                        </Row>
+                    </Panel>
+                    {this.renderShowNextButton()}
 
-                                </FormGroup>
-                            </h4></Form></Col>
-                    </Row>
-                </Panel>
-                {this.renderShowNextButton()}
+                    {this.state.showAnswers && <h3>You got {(this.state.score/this.state.mark*100).toFixed(2)} % correct! <br/>Your score for this question: {Math.round(this.state.score)} / {this.state.mark}</h3>}
 
-                {this.state.showAnswers && <h3>You got {(this.state.score/this.state.mark*100).toFixed(2)} % correct! <br/>Your score for this question: {Math.round(this.state.score)} / {this.state.mark}</h3>}
-
-                {this.state.showAnswers && <OpenEndedAnswer
-                    caseid={this.props.caseid}
-                    score={this.state.score}
-                    authid={this.props.authid}
-                    timeLimit={this.state.timeLimit}
-                    seconds={this.state.seconds}
-                    date={this.props.date}
-                    openEnded={this.state.openEnded}
-                    updateScore={this.props.updateScore}
-                    question={this.props.question}
-                    totalQnNum={this.props.totalQnNum}
-                    handleViewScore={this.props.handleViewScore}
-                    handleNextQuestion={this.props.handleNextQuestion} />}
-
+                    {this.state.showAnswers && <OpenEndedAnswer
+                        caseid={this.props.caseid}
+                        score={this.state.score}
+                        authid={this.props.authid}
+                        timeLimit={this.state.timeLimit}
+                        seconds={this.state.seconds}
+                        date={this.props.date}
+                        openEnded={this.state.openEnded}
+                        updateScore={this.props.updateScore}
+                        question={this.props.question}
+                        totalQnNum={this.props.totalQnNum}
+                        handleViewScore={this.props.handleViewScore}
+                        handleNextQuestion={this.props.handleNextQuestion} />}
+                </Row>
             </div>
+
         );
     }
 

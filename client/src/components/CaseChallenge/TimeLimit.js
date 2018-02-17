@@ -211,11 +211,11 @@ class TimeLimit extends Component {
                     if (obj.id === currentQn + "") {
                         if (obj.type === "MCQ") {
                             return <MCQquestion date={this.state.date} caseid={this.props.game._id} authid={this.state.authid} question={obj} scenario={scenario} timeLimit={timeLimit}
-                                                totalQnNum={totalQnNum} caseTitle={caseTitle} handleViewScore={this.handleViewScore}
+                                                totalQnNum={totalQnNum} caseTitle={caseTitle} case={this.props.game} handleViewScore={this.handleViewScore}
                                                 handleNextQuestion={this.handleNextQuestion} updateScore={this.updateScore}/>
                         } else {
                             return <OpenEndedQuestion date={this.state.date} caseid={this.props.game._id} authid={this.state.authid} question={obj} scenario={scenario} timeLimit={timeLimit} totalQnNum={totalQnNum}
-                                                      caseTitle={caseTitle} handleViewScore={this.handleViewScore} handleNextQuestion={this.handleNextQuestion} updateScore={this.updateScore}/>
+                                                      case={this.props.game} caseTitle={caseTitle} handleViewScore={this.handleViewScore} handleNextQuestion={this.handleNextQuestion} updateScore={this.updateScore}/>
                         }
                     } else {
                         return '';
