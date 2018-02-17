@@ -292,16 +292,13 @@ module.exports = app => {
         const user = req.session.user;
         const pendingCases = [];
         if(user.previousLogin !== null) {
-            const lastLogin = commonMethods.ISO_DATE_FORMATTER(user.previousLogin);
+            const lastLogin = new Date(user.previousLogin);
             for(let i = 0; i < cases.length; i++) {
                 const vettedCase = cases[i];
-                if(vettedCase.vetTime !== null) {
-                    // const caseDate = commonMethods.UTC_DATE_FORMATTER(vettedCase.vetTime + '');
-                    const caseDate = new Date(vettedCase.vetTime.toLocaleTimeString());
+                const caseDate = new Date(vettedCase.vetTime.toLocaleString());
+                if(caseDate > lastLogin) {
                     console.log(caseDate, lastLogin);
-                    if(caseDate > lastLogin) {
-                        pendingCases.push(vettedCase);
-                    }
+                    pendingCases.push(vettedCase);
                 }
             }
         }
