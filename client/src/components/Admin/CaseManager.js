@@ -23,10 +23,12 @@ class CaseManager extends Component {
             displayModal: false,
             case: null,
             oneCaseQuestions: [],
-            oneCaseId: ''
+            oneCaseId: '',
+            showConfirmDelete: false,
         };
         bindAll(this, 'handleTitleChange', 'handleDifficultyChange', 'handleSpecialityChange', 'handleSubspecialityChange',
-            'handleApproachChange', 'handleScenarioChange', 'setSubspeciality', 'setName', 'setSpeciality', 'setApproach', 'setDifficulty', 'handleOpenModal', 'handleCloseModal');
+            'handleApproachChange', 'handleScenarioChange', 'setSubspeciality', 'setName', 'setSpeciality', 'setApproach',
+            'setDifficulty', 'handleOpenModal', 'handleCloseModal', 'handleOpenConfirmDelete', 'handleCloseConfirmDelete');
     }
 
     handleOpenModal(oneCase) {
@@ -37,6 +39,14 @@ class CaseManager extends Component {
         this.setState({ displayModal: false });
     }
 
+    handleOpenConfirmDelete(){
+        this.setState({showConfirmDelete: true});
+    }
+
+    handleCloseConfirmDelete(){
+        this.setState({showConfirmDelete: false});
+    }
+
 
     searchCases(e) {
         this.props.fetchFilteredAdminCases(this.state);
@@ -45,7 +55,7 @@ class CaseManager extends Component {
     deleteCase(e) {
         var oneCaseId = this.state.oneCaseId
         this.props.deleteAdminCase(oneCaseId)
-        this.setState({ displayModal: false });
+        this.setState({ displayModal: false, showConfirmDelete: false });
     }
 
     handleTitleChange(e) {
@@ -403,17 +413,34 @@ class CaseManager extends Component {
         })
 
         return (
-            <Modal show={this.state.displayModal} onHide={this.handleCloseModal}>
-                <Modal.Header closeButton>
-                    <Modal.Title></Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    {allQuestions}
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button onClick={(e) => this.deleteCase()}>Delete</Button>
-                </Modal.Footer>
-            </Modal>
+            <div>
+                <Modal show={this.state.displayModal} onHide={this.handleCloseModal}>
+                    <Modal.Header closeButton>
+                        <Modal.Title></Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        {allQuestions}
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button onClick={(e) => this.handleOpenConfirmDelete()}>Delete</Button>
+                    </Modal.Footer>
+                </Modal>
+
+                <Modal show={this.state.showConfirmDelete} onHide={this.handleCloseConfirmDelete}>
+                    <Modal.Header closeButton>
+                        <Modal.Title id="contained-modal-title">
+                            Deletion Confirmation
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        Are you sure you want to delete the case?
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button onClick={(e) => this.deleteCase()}>Yes</Button>
+                        <Button onClick={(e) => this.handleCloseConfirmDelete()}>No</Button>
+                    </Modal.Footer>
+                </Modal>
+            </div>
         );
 
     }
