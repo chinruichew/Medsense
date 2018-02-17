@@ -84,8 +84,9 @@ module.exports = app => {
         for (let key in req.body.values.subspeciality) {
             subspecialityArray.push(req.body.values.subspeciality[key]);
         }
+
         if (req.body.values.title === "") {
-            if (approachArray.length === 0 || subspecialityArray.length === 0) {
+            if (approachArray.length === 0 && subspecialityArray.length === 0) {
                 cases = await Case.find({
                     difficulty: req.body.values.difficulty,
                     status: req.body.values.casestatus
@@ -94,18 +95,38 @@ module.exports = app => {
                     model: 'questions'
                 });
             } else {
-                cases = await Case.find({
-                    difficulty: req.body.values.difficulty,
-                    status: req.body.values.casestatus,
-                    approach: { "$in": approachArray },
-                    subspeciality: { "$in": subspecialityArray }
-                }).select().populate({
-                    path: 'questions',
-                    model: 'questions'
-                });
+                if(approachArray.length === 0) {
+                    cases = await Case.find({
+                        difficulty: req.body.values.difficulty,
+                        status: req.body.values.casestatus,
+                        subspeciality: { "$in": subspecialityArray }
+                    }).select().populate({
+                        path: 'questions',
+                        model: 'questions'
+                    });
+                } else if(subspecialityArray.length === 0) {
+                    cases = await Case.find({
+                        difficulty: req.body.values.difficulty,
+                        status: req.body.values.casestatus,
+                        approach: { "$in": approachArray },
+                    }).select().populate({
+                        path: 'questions',
+                        model: 'questions'
+                    });
+                } else {
+                    cases = await Case.find({
+                        difficulty: req.body.values.difficulty,
+                        status: req.body.values.casestatus,
+                        approach: { "$in": approachArray },
+                        subspeciality: { "$in": subspecialityArray }
+                    }).select().populate({
+                        path: 'questions',
+                        model: 'questions'
+                    });
+                }
             }
         } else {
-            if (approachArray.length === 0 || subspecialityArray.length === 0) {
+            if (approachArray.length === 0 && subspecialityArray.length === 0) {
                 cases = await Case.find({
                     title: { "$regex": req.body.values.title, "$options": "i" },
                     difficulty: req.body.values.difficulty,
@@ -115,16 +136,38 @@ module.exports = app => {
                     model: 'questions'
                 });
             } else {
-                cases = await Case.find({
-                    title: { "$regex": req.body.values.title, "$options": "i" },
-                    approach: { "$in": approachArray },
-                    subspeciality: { "$in": subspecialityArray },
-                    difficulty: req.body.values.difficulty,
-                    status: req.body.values.casestatus
-                }).select().populate({
-                    path: 'questions',
-                    model: 'questions'
-                });
+                if(approachArray.length === 0) {
+                    cases = await Case.find({
+                        title: { "$regex": req.body.values.title, "$options": "i" },
+                        subspeciality: { "$in": subspecialityArray },
+                        difficulty: req.body.values.difficulty,
+                        status: req.body.values.casestatus
+                    }).select().populate({
+                        path: 'questions',
+                        model: 'questions'
+                    });
+                } else if(subspecialityArray.length === 0) {
+                    cases = await Case.find({
+                        title: { "$regex": req.body.values.title, "$options": "i" },
+                        approach: { "$in": approachArray },
+                        difficulty: req.body.values.difficulty,
+                        status: req.body.values.casestatus
+                    }).select().populate({
+                        path: 'questions',
+                        model: 'questions'
+                    });
+                } else {
+                    cases = await Case.find({
+                        title: { "$regex": req.body.values.title, "$options": "i" },
+                        subspeciality: { "$in": subspecialityArray },
+                        approach: { "$in": approachArray },
+                        difficulty: req.body.values.difficulty,
+                        status: req.body.values.casestatus
+                    }).select().populate({
+                        path: 'questions',
+                        model: 'questions'
+                    });
+                }
             }
         }
         res.send(cases);
