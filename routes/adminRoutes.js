@@ -73,7 +73,28 @@ module.exports = app => {
         }
         let users;
         if (req.body.values.username === "") {
-            if (subspecialityArray.length === 0) {
+            if(req.body.values.school === "" && req.body.values.speciality === "") {
+                users = await User.find({
+                    usertype: constants.USER_TYPE_PROFESSOR
+                }).select("-password");
+            } else if(req.body.values.speciality === "") {
+                users = await User.find({
+                    usertype: constants.USER_TYPE_PROFESSOR,
+                    school: req.body.values.school
+                }).select("-password");
+            } else if(req.body.values.school === "" && subspecialityArray.length === 0) {
+                console.log("in")
+                users = await User.find({
+                    usertype: constants.USER_TYPE_PROFESSOR,
+                    speciality: req.body.values.speciality
+                }).select("-password");
+            } else if(req.body.values.school === "" && subspecialityArray.length !== 0) {
+                users = await User.find({
+                    usertype: constants.USER_TYPE_PROFESSOR,
+                    speciality: req.body.values.speciality,
+                    subspeciality: { "$in": subspecialityArray }
+                }).select("-password");
+            } else if(req.body.values.school !== "" && req.body.values.speciality !== "" && subspecialityArray.length === 0) {
                 users = await User.find({
                     usertype: constants.USER_TYPE_PROFESSOR,
                     school: req.body.values.school,
@@ -88,13 +109,46 @@ module.exports = app => {
                 }).select("-password");
             }
         } else {
-            users = await User.find({
-                username: req.body.values.username,
-                usertype: constants.USER_TYPE_PROFESSOR,
-                school: req.body.values.school,
-                speciality: req.body.values.speciality,
-                subspeciality: { "$in": subspecialityArray }
-            }).select("-password");
+            if(req.body.values.school === "" && req.body.values.speciality === "") {
+                users = await User.find({
+                    usertype: constants.USER_TYPE_PROFESSOR,
+                    username: { "$regex": req.body.values.username, "$options": "i" }
+                }).select("-password");
+            } else if(req.body.values.speciality === "") {
+                users = await User.find({
+                    usertype: constants.USER_TYPE_PROFESSOR,
+                    school: req.body.values.school,
+                    username: { "$regex": req.body.values.username, "$options": "i" }
+                }).select("-password");
+            } else if(req.body.values.school === "" && subspecialityArray.length == 0) {
+                users = await User.find({
+                    usertype: constants.USER_TYPE_PROFESSOR,
+                    speciality: req.body.values.speciality,
+                    username: { "$regex": req.body.values.username, "$options": "i" }
+                }).select("-password");
+            } else if(req.body.values.school === "" && subspecialityArray.length !== 0) {
+                users = await User.find({
+                    usertype: constants.USER_TYPE_PROFESSOR,
+                    speciality: req.body.values.speciality,
+                    subspeciality: { "$in": subspecialityArray },
+                    username: { "$regex": req.body.values.username, "$options": "i" }
+                }).select("-password");
+            } else if(req.body.values.school !== "" && req.body.values.speciality !== "" && subspecialityArray.length === 0) {
+                users = await User.find({
+                    usertype: constants.USER_TYPE_PROFESSOR,
+                    school: req.body.values.school,
+                    speciality: req.body.values.speciality,
+                    username: { "$regex": req.body.values.username, "$options": "i" }
+                }).select("-password");
+            } else {
+                users = await User.find({
+                    usertype: constants.USER_TYPE_PROFESSOR,
+                    school: req.body.values.school,
+                    speciality: req.body.values.speciality,
+                    subspeciality: { "$in": subspecialityArray },
+                    username: { "$regex": req.body.values.username, "$options": "i" }
+                }).select("-password");
+            }
         }
         res.send(users);
     });

@@ -13,7 +13,7 @@ class DeleteUser extends Component {
         username: '',
         school: '',
         year: '',
-        speciality: 'Medicine',
+        speciality: '',
         subspeciality: [],
         seniorStatus: '',
         constants: ''
@@ -48,6 +48,7 @@ class DeleteUser extends Component {
     }
 
     handleSpecialityChange(e) {
+        this.state.subspeciality = [];
         const value = e.target.value;
         this.setState({ speciality: value });
     }
@@ -134,6 +135,7 @@ class DeleteUser extends Component {
                 <FormGroup controlId="formControlsSpeciality" style={{ paddingBottom: "0" }}>
                     <ControlLabel style={{ fontSize: "150%" }}>Speciality</ControlLabel>
                     <FormControl componentClass="select" value={this.state.speciality} name="speciality" onChange={(e) => this.handleSpecialityChange(e)}>
+                        <option value="">Select Speciality</option>
                         <option value="Medicine">Medicine</option>
                         <option value="Surgery">Surgery</option>
                         <option value="Orthopedics">Orthopedics</option>
