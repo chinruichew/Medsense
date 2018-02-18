@@ -8,19 +8,21 @@ const constants = require('../utility/constantTypes');
 var natural = require('natural');
 var unique = require('array-unique');
 var stopword = require('stopword');
+// var nlp = require('compromise');
 
 String.prototype.cleanup = function () {
     return this.toLowerCase().replace(/[^a-zA-Z0-9]+/g, " ");
-}
+}   
 
 function toArray(answerArray) {
     var nounInflector = new natural.NounInflector();
+    natural.PorterStemmer.attach();
     var returnArray = [];
     for (var i in answerArray) {
         if (typeof (answerArray[i].stem()) === 'object') {
             returnArray.push(nounInflector.singularize(answerArray[i]));
         } else {
-            returnArray.push(nounInflector.singularize(answerArray[i]));
+            returnArray.push(nounInflector.singularize(answerArray[i]).stem());
         }
     }
     return returnArray;
@@ -40,6 +42,7 @@ module.exports = app => {
             originalAnswer = res[0]['openEnded'];
             originalAnswer = originalAnswer.replace(/<[^>]*>/g, " "); //remove html tags
             originalAnswer = originalAnswer.cleanup(); //cleanup original answer
+            // originalAnswer = nlp(originalAnswer).normalize().out('text'); //normalize
         })
 
         setTimeout(function () {
@@ -48,10 +51,13 @@ module.exports = app => {
             var cleanStudentAnswer = studentAnswer.cleanup(); //cleanup student answer
             var cleanStudentAnswerToken = tokenizer.tokenize(cleanStudentAnswer); //tokenize student answer
             var cleanStudentAnswerTokenStopword = stopword.removeStopwords(cleanStudentAnswerToken); //remove stopwords
-            natural.PorterStemmer.attach();
             var studentAnswerArray = [];
             studentAnswerArray = toArray(cleanStudentAnswerTokenStopword);
             studentAnswerArray = remove(studentAnswerArray, "nbsp");
+            studentAnswerArray = remove(studentAnswerArray, "amp");
+            studentAnswerArray = remove(studentAnswerArray, "quot");
+            studentAnswerArray = remove(studentAnswerArray, "lt");
+            studentAnswerArray = remove(studentAnswerArray, "gt");
             studentAnswerArray = unique(studentAnswerArray);
             console.log(studentAnswerArray)
 
@@ -61,6 +67,10 @@ module.exports = app => {
             var originalAnswerArray = []
             originalAnswerArray = toArray(cleanOriginalAnswerTokenStopword);
             originalAnswerArray = remove(originalAnswerArray, "nbsp");
+            originalAnswerArray = remove(originalAnswerArray, "amp");
+            originalAnswerArray = remove(originalAnswerArray, "quot");
+            originalAnswerArray = remove(originalAnswerArray, "lt");
+            originalAnswerArray = remove(originalAnswerArray, "gt");
             originalAnswerArray = unique(originalAnswerArray);
             console.log(originalAnswerArray);
 
