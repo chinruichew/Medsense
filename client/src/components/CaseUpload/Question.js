@@ -34,12 +34,20 @@ class Question extends Component {
             mcq4: this.props.mcq4,
             mcq5: this.props.mcq5,
             mcq6: this.props.mcq6,
+            mcq7: this.props.mcq7,
+            mcq8: this.props.mcq8,
+            mcq9: this.props.mcq9,
+            mcq10: this.props.mcq10,
             check1: this.props.check1,
             check2: this.props.check2,
             check3: this.props.check3,
             check4: this.props.check4,
             check5: this.props.check5,
             check6: this.props.check6,
+            check7: this.props.check7,
+            check8: this.props.check8,
+            check9: this.props.check9,
+            check10: this.props.check10,
             pearl: this.props.pearl,
             time: this.props.time,
             mark: this.props.mark,
@@ -49,9 +57,10 @@ class Question extends Component {
         };
         bindAll(this, 'handleFile', 'handleStemChange', 'handleQuestionChange', 'handleTypeChange', 'handleOpenEndedChange',
             'handleMCQ1Change', 'handleMCQ2Change', 'handleMCQ3Change', 'handleMCQ4Change', 'handleMCQ5Change', 'handleMCQ6Change',
+            'handleMCQ7Change', 'handleMCQ8Change', 'handleMCQ9Change', 'handleMCQ10Change', 'handleCheck7Change', 'handleCheck8Change', 'handleCheck9Change', 'handleCheck10Change',
             'handleCheck1Change', 'handleCheck2Change', 'handleCheck3Change', 'handleCheck4Change', 'handleCheck5Change', 'showAttachment',
             'handleCheck6Change', 'handlePearlChange', 'handleTimeChange', 'handleMarkChange', 'handleReferenceChange','answer', 'update',
-            'deleteQuestion');
+            'showPearlAttachment', 'handlePearlFile', 'deleteQuestion');
     }
 
     componentWillReceiveProps(nextProps){
@@ -60,6 +69,7 @@ class Question extends Component {
             stem: nextProps.stem,
             question: nextProps.question,
             attachment: nextProps.attachment,
+            pearlAttachment: nextProps.pearlAttachment,
             type: nextProps.type,
             openEnded: nextProps.openEnded,
             mcq1: nextProps.mcq1,
@@ -68,12 +78,20 @@ class Question extends Component {
             mcq4: nextProps.mcq4,
             mcq5: nextProps.mcq5,
             mcq6: nextProps.mcq6,
+            mcq7: nextProps.mcq7,
+            mcq8: nextProps.mcq8,
+            mcq9: nextProps.mcq9,
+            mcq10: nextProps.mcq10,
             check1: nextProps.check1,
             check2: nextProps.check2,
             check3: nextProps.check3,
             check4: nextProps.check4,
             check5: nextProps.check5,
             check6: nextProps.check6,
+            check7: nextProps.check7,
+            check8: nextProps.check8,
+            check9: nextProps.check9,
+            check10: nextProps.check10,
             pearl: nextProps.pearl,
             time: nextProps.time,
             mark: nextProps.mark,
@@ -91,6 +109,7 @@ class Question extends Component {
             stem: this.state.stem,
             question: this.state.question,
             attachment: this.state.attachment,
+            pearlAttachment: this.state.pearlAttachment,
             type: this.state.type,
             openEnded: this.state.openEnded,
             mcq1: this.state.mcq1,
@@ -99,12 +118,20 @@ class Question extends Component {
             mcq4: this.state.mcq4,
             mcq5: this.state.mcq5,
             mcq6: this.state.mcq6,
+            mcq7: this.state.mcq7,
+            mcq8: this.state.mcq8,
+            mcq9: this.state.mcq9,
+            mcq10: this.state.mcq10,
             check1: this.state.check1,
             check2: this.state.check2,
             check3: this.state.check3,
             check4: this.state.check4,
             check5: this.state.check5,
             check6: this.state.check6,
+            check7: this.state.check7,
+            check8: this.state.check8,
+            check9: this.state.check9,
+            check10: this.state.check10,
             pearl: this.state.pearl,
             time: this.state.time,
             mark: this.state.mark,
@@ -152,6 +179,22 @@ class Question extends Component {
                 details.mcq6 = value;
                 this.props.handleUpdateQuestion(details,this.state.id);
                 return;
+            case "mcq7":
+                details.mcq7 = value;
+                this.props.handleUpdateQuestion(details,this.state.id);
+                return;
+            case "mcq8":
+                details.mcq8 = value;
+                this.props.handleUpdateQuestion(details,this.state.id);
+                return;
+            case "mcq9":
+                details.mcq9 = value;
+                this.props.handleUpdateQuestion(details,this.state.id);
+                return;
+            case "mcq10":
+                details.mcq10 = value;
+                this.props.handleUpdateQuestion(details,this.state.id);
+                return;
             case "check1":
                 details.check1 = value;
                 this.props.handleUpdateQuestion(details,this.state.id);
@@ -176,6 +219,22 @@ class Question extends Component {
                 details.check6 = value;
                 this.props.handleUpdateQuestion(details,this.state.id);
                 return;
+            case "check7":
+                details.check7 = value;
+                this.props.handleUpdateQuestion(details,this.state.id);
+                return;
+            case "check8":
+                details.check8 = value;
+                this.props.handleUpdateQuestion(details,this.state.id);
+                return;
+            case "check9":
+                details.check9 = value;
+                this.props.handleUpdateQuestion(details,this.state.id);
+                return;
+            case "check10":
+                details.check10 = value;
+                this.props.handleUpdateQuestion(details,this.state.id);
+                return;
             case "pearl":
                 details.pearl = value;
                 this.props.handleUpdateQuestion(details,this.state.id);
@@ -196,6 +255,10 @@ class Question extends Component {
                 details.attachment = value;
                 this.props.handleUpdateQuestion(details,this.state.id);
                 return;
+            case "pearlAttachment":
+                details.pearlAttachment = value;
+                this.props.handleUpdateQuestion(details,this.state.id);
+                return;
             default:
                 this.props.handleUpdateQuestion(details,this.state.id);
                 return;
@@ -206,6 +269,12 @@ class Question extends Component {
         const value = e.target.files[0];
         this.setState({ attachment: value });
         this.update(value, "attachment");
+    }
+
+    handlePearlFile(e){
+        const value = e.target.files[0];
+        this.setState({ pearlAttachment: value });
+        this.update(value, "pearlAttachment");
     }
 
     handleStemChange(value){
@@ -257,6 +326,26 @@ class Question extends Component {
         this.setState({ mcq6: value });
         this.update(value, "mcq6");
     }
+    handleMCQ7Change(e){
+        const value = e.target.value;
+        this.setState({ mcq7: value });
+        this.update(value, "mcq7");
+    }
+    handleMCQ8Change(e){
+        const value = e.target.value;
+        this.setState({ mcq8: value });
+        this.update(value, "mcq8");
+    }
+    handleMCQ9Change(e){
+        const value = e.target.value;
+        this.setState({ mcq9: value });
+        this.update(value, "mcq9");
+    }
+    handleMCQ10Change(e){
+        const value = e.target.value;
+        this.setState({ mcq10: value });
+        this.update(value, "mcq10");
+    }
     handleCheck1Change(e){
         const value = e.target.checked;
         this.setState({ check1: value });
@@ -286,6 +375,26 @@ class Question extends Component {
         const value = e.target.checked;
         this.setState({ check6: value });
         this.update(value, "check6");
+    }
+    handleCheck7Change(e){
+        const value = e.target.checked;
+        this.setState({ check7: value });
+        this.update(value, "check7");
+    }
+    handleCheck8Change(e){
+        const value = e.target.checked;
+        this.setState({ check8: value });
+        this.update(value, "check8");
+    }
+    handleCheck9Change(e){
+        const value = e.target.checked;
+        this.setState({ check9: value });
+        this.update(value, "check9");
+    }
+    handleCheck10Change(e){
+        const value = e.target.checked;
+        this.setState({ check10: value });
+        this.update(value, "check10");
     }
     handlePearlChange(value){
         this.setState({ pearl: value });
@@ -370,6 +479,43 @@ class Question extends Component {
                             <FormControl type="text" placeholder="Optional" value={this.state.mcq6} name="mcq6" onChange={(e)=>this.handleMCQ6Change(e)}/>
                         </InputGroup>
                     </FormGroup>
+
+                    <FormGroup>
+                        <ControlLabel>Option 7</ControlLabel>
+                        <InputGroup>
+                            <InputGroup.Addon>
+                                <input type="checkbox" aria-label="..." checked={this.state.check7} name="check7" onChange={(e)=>this.handleCheck7Change(e)}/>
+                            </InputGroup.Addon>
+                            <FormControl type="text" placeholder="Optional" value={this.state.mcq7} name="mcq7" onChange={(e)=>this.handleMCQ7Change(e)}/>
+                        </InputGroup>
+                    </FormGroup>
+                    <FormGroup>
+                        <ControlLabel>Option 8</ControlLabel>
+                        <InputGroup>
+                            <InputGroup.Addon>
+                                <input type="checkbox" aria-label="..." checked={this.state.check8} name="check8" onChange={(e)=>this.handleCheck8Change(e)}/>
+                            </InputGroup.Addon>
+                            <FormControl type="text" placeholder="Optional" value={this.state.mcq8} name="mcq8" onChange={(e)=>this.handleMCQ8Change(e)}/>
+                        </InputGroup>
+                    </FormGroup>
+                    <FormGroup>
+                        <ControlLabel>Option 9</ControlLabel>
+                        <InputGroup>
+                            <InputGroup.Addon>
+                                <input type="checkbox" aria-label="..." checked={this.state.check9} name="check9" onChange={(e)=>this.handleCheck9Change(e)}/>
+                            </InputGroup.Addon>
+                            <FormControl type="text" placeholder="Optional" value={this.state.mcq9} name="mcq9" onChange={(e)=>this.handleMCQ9Change(e)}/>
+                        </InputGroup>
+                    </FormGroup>
+                    <FormGroup>
+                        <ControlLabel>Option 10</ControlLabel>
+                        <InputGroup>
+                            <InputGroup.Addon>
+                                <input type="checkbox" aria-label="..." checked={this.state.check10} name="check10" onChange={(e)=>this.handleCheck10Change(e)}/>
+                            </InputGroup.Addon>
+                            <FormControl type="text" placeholder="Optional" value={this.state.mcq10} name="mcq10" onChange={(e)=>this.handleMCQ10Change(e)}/>
+                        </InputGroup>
+                    </FormGroup>
                 </div>
             );
         } else if(this.state.type==="Open-ended"){
@@ -418,6 +564,17 @@ class Question extends Component {
         }
     }
 
+    showPearlAttachment(){
+        if (this.state.pearlAttachment) {
+            let source = window.URL.createObjectURL(this.state.pearlAttachment);
+            return (
+                <Row>
+                    <div className="col-md-5 col-md-offset-1">
+                        <ImageMagnifier url={source} /></div></Row>
+            );
+        }
+    }
+
     render(){
         return(
             <div id="question">
@@ -441,7 +598,7 @@ class Question extends Component {
                         </FormGroup>
 
                         <FormGroup controlId="formControlsAttachment">
-                            <ControlLabel style={{ fontSize: "150%" }}>Add Attachment</ControlLabel>
+                            <ControlLabel style={{ fontSize: "150%" }}>Question Attachment</ControlLabel>
                             {this.showAttachment()}
                             <FormControl type="file" onChange={(e)=>this.handleFile(e)} accept=".jpg, .jpeg, .png"/>
                         </FormGroup>
@@ -468,6 +625,12 @@ class Question extends Component {
                                         placeholder="Enter an explanation for the answer(s)"
                                         style={{height:'100px'}}/>
                             {/*<FormControl componentClass="textarea" rows={5} placeholder="Enter an explanation for the answer(s)" value={this.state.pearl} name="pearl" onChange={(e)=>this.handlePearlChange(e)} />*/}
+                        </FormGroup>
+
+                        <FormGroup controlId="formControlsPearlAttachment">
+                            <ControlLabel style={{ fontSize: "150%" }}>Clinical Pearls Attachment</ControlLabel>
+                            {this.showPearlAttachment()}
+                            <FormControl type="file" onChange={(e)=>this.handlePearlFile(e)} accept=".jpg, .jpeg, .png"/>
                         </FormGroup>
 
                         <FormGroup controlId="formControlsTime">
