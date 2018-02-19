@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {Button, Accordion, Panel} from 'react-bootstrap';
+import {Button, Panel, PanelGroup} from 'react-bootstrap';
 import Question from './Question.js';
 import Overview from './Overview.js';
 import BootstrapModal from '../UI/Modal/VettingBootstrapModal.js';
@@ -404,8 +404,12 @@ class Main extends Component {
                 <form action="/api/updateCase" method="post" className="case-area">
                     <center>*Expand/collapse the headers to view/hide case details*</center>
                     <center><a href="./MedSense Workplan.pdf" target="_blank">Click here for CASE TEMPLATE</a></center>
-                    <Accordion style={{marginTop: "2%"}}>
-                        <Panel header={overviewTitle} bsStyle="info">
+                    <PanelGroup accordion style={{marginTop: "2%"}}>
+                        <Panel bsStyle="info">
+                            <Panel.Heading>
+                                <Panel.Title toggle>{overviewTitle}</Panel.Title>
+                            </Panel.Heading>
+                            <Panel.Body collapsible>
                             <Overview
                                 title={this.state.title}
                                 difficulty={this.state.difficulty}
@@ -415,11 +419,16 @@ class Main extends Component {
                                 scenario={this.state.scenario}
                                 learning={this.state.learning}
                                 handleUpdateOverview={this.handleUpdateOverview} />
+                            </Panel.Body>
                         </Panel>
-                    </Accordion>
+                    </PanelGroup>
 
-                    <Accordion>
-                        <Panel header={questionTitle} eventKey="1" bsStyle="info">
+                    <PanelGroup accordion>
+                        <Panel bsStyle="info">
+                            <Panel.Heading>
+                                <Panel.Title toggle>{questionTitle}</Panel.Title>
+                            </Panel.Heading>
+                            <Panel.Body collapsible>
                             <div className="question-area">
                                 {questionNodes}
                             </div>
@@ -427,8 +436,9 @@ class Main extends Component {
                             <div className="add-question-button">
                                 <Button type="button" bsStyle="primary" onClick={(e) => this.addQuestion()}>Add Question</Button><br />
                             </div>
+                            </Panel.Body>
                         </Panel>
-                    </Accordion>
+                    </PanelGroup>
 
                     <div className="submit-case-button">
                         <Button type="submit" align="center" bsStyle="primary" onClick={(e) => this.saveChanges(e)}>Submit</Button>

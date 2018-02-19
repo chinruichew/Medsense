@@ -4,9 +4,6 @@ import { Checkbox, Button, Row, Panel } from 'react-bootstrap';
 import { Line } from 'rc-progress';
 import { bindAll } from 'lodash';
 import ReactHtmlParser from 'react-html-parser';
-// import { connect } from 'react-redux';
-// import { storeCaseAnswerMCQ } from '../../actions';
-
 import MCQAnswers from './MCQAnswers';
 import './Game.css';
 import ImageMagnifier from "./ImageMagnifier";

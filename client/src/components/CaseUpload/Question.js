@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { bindAll } from 'lodash';
-import {Button, FormGroup, ControlLabel, FormControl, InputGroup, Accordion, Panel, Row} from 'react-bootstrap';
+import {
+    Button, FormGroup, ControlLabel, FormControl, InputGroup, Panel, Row,
+    PanelGroup
+} from 'react-bootstrap';
 import ReactQuill from 'react-quill';
 import ImageMagnifier from "./ImageMagnifier";
-
 import './Upload.css';
 import 'react-quill/dist/quill.snow.css';
 
@@ -419,8 +421,10 @@ class Question extends Component {
     render(){
         return(
             <div id="question">
-                <Accordion>
-                    <Panel header={"▽ Question #"+this.state.id} eventKey="1">
+                <PanelGroup accordion>
+                    <Panel>
+                        <Panel.Heading><Panel.Title toggle>{"▽ Question #"+this.state.id}</Panel.Title></Panel.Heading>
+                        <Panel.Body collapsible>
                         <div className="delete-question-button">
                         <Button  type="button" bsStyle="primary" onClick={(e)=>this.deleteQuestion()}>Delete Question</Button><br/>
                         </div>
@@ -454,7 +458,10 @@ class Question extends Component {
                         {this.answer()}
 
                         <FormGroup controlId="formControlsPEARL" style={{height:'200px'}}>
-                            <ControlLabel style={{ fontSize: "150%" }}>Clinical Pearls<span style={{color:"red"}}>*</span><img src='./info.png' hspace="5" alt="" style={{height:"1.3em", marginBottom:"1em"}}/></ControlLabel>
+                            <ControlLabel style={{ fontSize: "150%" }}>Clinical Pearls<span style={{color:"red"}}>*</span>
+                                <div style={{ fontSize: "70%", fontWeight:"200"}}>Clinical Pearls are the ... </div>
+                            </ControlLabel>
+
                             <ReactQuill value={this.state.pearl}
                                         modules={{toolbar: toolbarOptions}}
                                         onChange={this.handlePearlChange}
@@ -499,8 +506,9 @@ class Question extends Component {
                                         style={{height:'100px'}}/>
                             {/*<FormControl componentClass="textarea" rows={3} placeholder="Enter your references" value={this.state.reference} name="reference" onChange={(e)=>this.handleReferenceChange(e)} />*/}
                         </FormGroup>
+                        </Panel.Body>
                     </Panel>
-                </Accordion>
+                </PanelGroup>
             </div>
         );
     }

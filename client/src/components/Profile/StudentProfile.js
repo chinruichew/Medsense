@@ -4,6 +4,7 @@ import BootstrapModal from '../UI/Modal/VettingBootstrapModal.js';
 import { bindAll } from 'lodash';
 import { updateStudent } from '../../actions/index';
 import { Button } from 'react-bootstrap';
+import { Line } from 'rc-progress';
 
 class StudentProfile extends Component {
     constructor(props) {
@@ -12,9 +13,10 @@ class StudentProfile extends Component {
             id: this.props.id,
             username: this.props.username,
             school: this.props.school,
-            year: this.props.year
+            year: this.props.year,
+            level: Math.floor((50+Math.sqrt(400*this.props.xp-37500))/100),
         };
-        bindAll(this, 'handleSchoolChange', 'handleYearChange', 'handleSaveChange');
+        bindAll(this, 'handleSchoolChange', 'handleYearChange', 'handleSaveChange', 'renderProgressBar');
     }
 
     handleSchoolChange(e) {
@@ -37,16 +39,28 @@ class StudentProfile extends Component {
         }).catch(() => { })
     }
 
+    renderProgressBar() {
+        let nextLvlPoints = 100+this.state.level*(this.state.level+1)/2*50;
+        console.log(nextLvlPoints);
+        let progress = this.props.xp / nextLvlPoints * 100;
+        return <Line    percent={progress}
+                        strokeWidth="8"
+                        trailWidth="8"
+                        strokeColor="#82C5D9"
+                        strokeLinecap="round"/>
+    }
+
     render() {
         let vmClose = () => this.setState({ vmShow: false });
         return (
             <div>
                 <div className="col-sm-5 col-sm-offset-2">
 
-                    <div className="row" style={{paddingTop: "60%"}}>
-                        <h3> <b>{this.state.username}</b> </h3>
+                    <div className="row" style={{paddingTop: "31%"}}>
+                        <h1> <b>{this.state.username}</b> </h1>
+                        <h4> <b>Level {this.state.level}</b> </h4>
+                    <h5 style={{textAlign:"right", marginBottom:"1em"}}>{this.renderProgressBar()}<b>{this.props.xp}/{100+this.state.level*(this.state.level+1)/2*50} XP</b></h5>
                     </div>
-
                     <div className="row">
                         <div className="form-group">
 

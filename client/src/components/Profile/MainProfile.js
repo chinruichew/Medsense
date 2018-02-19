@@ -63,6 +63,7 @@ class MainProfile extends Component {
                                         refresh={this.state.refresh}
                                         reRenderMain={this.reRenderMain}
                                         id={this.props.auth._id}
+                                        xp={this.props.auth.points}
                                         username={this.props.auth.username}
                                         year={this.props.auth.year}
                                         school={this.props.auth.school} />
