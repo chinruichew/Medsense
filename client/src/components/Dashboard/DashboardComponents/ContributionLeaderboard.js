@@ -19,7 +19,7 @@ class ContributionLeaderboard extends Component {
                                     <p className="leader_text_font">{key}</p>
                                 </div>
                                 <div className="col-md-6 text-right leader_text_div">
-                                    <p className="leader_text_font">{leadersToMap[key]}</p>
+                                    <p className="leader_text_font">{leadersToMap[key] + ' cases'}</p>
                                 </div>
                             </div>
                             <div className="col-md-2"></div>
@@ -27,29 +27,6 @@ class ContributionLeaderboard extends Component {
                     );
                 });
                 return leaders;
-
-                // const leaders = this.props.leaders.map(leader => {
-                //     let elements = '';
-                //     for(const key in leader) {
-                //         elements += <div className="col-md-12">
-                            {/*<div className="col-md-offset-2 col-md-8">*/}
-                                {/*<div className="col-md-6 text-left leader_text_div">*/}
-                                    {/*<p className="leader_text_font">{key}</p>*/}
-                                {/*</div>*/}
-                                {/*<div className="col-md-6 text-right leader_text_div">*/}
-                                    {/*<p className="leader_text_font">{leader[key]}</p>*/}
-                                {/*</div>*/}
-                            {/*</div>*/}
-                            {/*<div className="col-md-2"></div>*/}
-                        {/*</div>*/}
-                //     }
-                //     return(
-                //         <div className="col-md-12">
-                //             {elements}
-                //         </div>
-                //     );
-                // });
-                // return leaders;
         }
     };
 
@@ -57,7 +34,7 @@ class ContributionLeaderboard extends Component {
         return(
             <div className="col-md-12 text-center leaderboard_container">
                 <h2>Contribution Leaderboard</h2>
-                <Image src="./Contribution Leaderboard.png" alt="Contribution Leaderboard" style={{height: '150px', width: '200px'}}/>
+                <Image className="leaderboard_image" src="./Contribution Leaderboard.png" alt="Contribution Leaderboard" />
                 {this.renderLeaderboard()}
             </div>
         );

@@ -32,7 +32,7 @@ class StudentLeaderboard extends Component {
         return(
             <div className="col-md-12 text-center leaderboard_container">
                 <h2>Student Case Challenge Leaderboard</h2>
-                <Image src="./Student Case Challenge Leaderboard.png" alt="Student Case Challenge Leaderboard" style={{height: '150px', width: '200px'}}/>
+                <Image className="leaderboard_image" src="./Student Case Challenge Leaderboard.png" alt="Student Case Challenge Leaderboard" />
                 {this.renderLeaderboard()}
             </div>
         );

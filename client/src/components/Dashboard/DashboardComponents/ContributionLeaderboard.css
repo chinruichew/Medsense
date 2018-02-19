@@ -12,3 +12,10 @@
     border-radius: 10px;
     height: 500px;
 }
+
+.leaderboard_image {
+    height: 150px;
+    width: 200px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
