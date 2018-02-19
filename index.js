@@ -68,9 +68,7 @@ s3.getObject(getParams, function (err, data) {
             chalkAnimation.rainbow("SSH connection error: " + error);
         }
 
-        mongoose.connect(keys.mongoURI, {
-            useMongoClient: true
-        });
+        mongoose.connect(keys.mongoURI);
 
         mongoose.Promise = global.Promise;
         const db = mongoose.connection;
