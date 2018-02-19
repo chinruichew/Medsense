@@ -26,7 +26,7 @@ class Dashboard extends Component {
                             case this.props.constants.USER_TYPE_PROFESSOR:
                                 return(
                                     <div>
-                                        {DashboardProfessor}
+                                        <DashboardProfessor/>
                                     </div>
                                 );
                         }

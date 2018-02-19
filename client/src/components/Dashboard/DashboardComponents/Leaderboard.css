@@ -1,0 +1,12 @@
+.leader_text_font {
+    font-size: 20px;
+}
+
+.leader_text_div {
+    margin-top: 10px;
+}
+
+.leaderboard_container {
+    border-style: groove;
+    border-width: 1px;
+}

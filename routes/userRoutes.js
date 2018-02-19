@@ -77,4 +77,10 @@ module.exports = app => {
             }
         });
     });
+
+    app.get('/api/getLeadersWithHighestScores', function(req, res) {
+        User.find().sort('-points').limit(5).exec(function (err, users) {
+            res.send(users);
+        });
+    });
 };

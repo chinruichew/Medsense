@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {Image} from "react-bootstrap";
 
+import './Leaderboard.css';
+
 class Leaderboard extends Component {
     renderLeaderboard = () => {
         switch(this.props.leaders) {
@@ -11,14 +13,11 @@ class Leaderboard extends Component {
                     return(
                         <div className="col-md-12">
                             <div className="col-md-offset-2 col-md-8">
-                                <div className="col-md-4">
-                                    {leader.leftColumn}
+                                <div className="col-md-6 text-left leader_text_div">
+                                    <p className="leader_text_font">{leader.username}</p>
                                 </div>
-                                <div className="col-md-4">
-                                    {leader.midColumn}
-                                </div>
-                                <div className="col-md-4">
-                                    {leader.rightColumn}
+                                <div className="col-md-6 text-right leader_text_div">
+                                    <p className="leader_text_font">{leader.points + ' XP'}</p>
                                 </div>
                             </div>
                             <div className="col-md-2"></div>
@@ -31,9 +30,9 @@ class Leaderboard extends Component {
 
     render() {
         return(
-            <div className="col-md-12">
-                <h1>{this.props.title}</h1>
-                <Image src={this.props.imageURL} alt={this.props.imageTitle} style={{height: '100px', width: '100%'}}/>
+            <div className="col-md-12 text-center leaderboard_container">
+                <h2>Student Case Challenge Leaderboard</h2>
+                <Image src="./Student Case Challenge Leaderboard.png" alt="Student Case Challenge Leaderboard" style={{height: '150px', width: '200px'}}/>
                 {this.renderLeaderboard()}
             </div>
         );
