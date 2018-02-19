@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bindAll } from 'lodash';
 import {
     Button, FormGroup, ControlLabel, FormControl, InputGroup, Panel, Row,
-    PanelGroup
+    PanelGroup, Popover, OverlayTrigger
 } from 'react-bootstrap';
 import ReactQuill from 'react-quill';
 import ImageMagnifier from "./ImageMagnifier";
@@ -576,6 +576,11 @@ class Question extends Component {
     }
 
     render(){
+        const popoverHover = (
+            <Popover id="popover-trigger-hover" title="Clinical Pearls">
+                Notes on how to approach the question, add-on explanations to the answers provided or simply useful tips on how to survive in the wards.
+            </Popover>
+        );
         return(
             <div id="question">
                 <PanelGroup accordion>
@@ -616,7 +621,7 @@ class Question extends Component {
 
                         <FormGroup controlId="formControlsPEARL" style={{height:'200px'}}>
                             <ControlLabel style={{ fontSize: "150%" }}>Clinical Pearls<span style={{color:"red"}}>*</span>
-                                <div style={{ fontSize: "70%", fontWeight:"200"}}>Clinical Pearls are the ... </div>
+                                <OverlayTrigger trigger={['hover']} placement="bottom" overlay={popoverHover}><img src='./info.png' hspace="5" alt="" style={{height:"1em", marginBottom:"1em"}}/></OverlayTrigger>
                             </ControlLabel>
 
                             <ReactQuill value={this.state.pearl}

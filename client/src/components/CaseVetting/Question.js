@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bindAll } from 'lodash';
 import {
     Button, FormGroup, ControlLabel, FormControl, InputGroup, Panel, Row,
-    PanelGroup
+    PanelGroup, OverlayTrigger, Popover
 } from 'react-bootstrap';
 import ReactQuill from 'react-quill';
 import ImageMagnifier from "./ImageMagnifier";
@@ -627,6 +627,11 @@ class Question extends Component {
             pearlButton = <FormControl type="file" onChange={(e)=>this.handlePearlFile(e)} accept=".jpg, .jpeg, .png"/>;
         }
 
+        const popoverHover = (
+            <Popover id="popover-trigger-hover" title="Clinical Pearls">
+                Notes on how to approach the question, add-on explanations to the answers provided or simply useful tips on how to survive in the wards.
+            </Popover>
+        );
         return(
             <div id="question">
                 <PanelGroup>
@@ -667,7 +672,9 @@ class Question extends Component {
                         {this.answer()}
 
                         <FormGroup controlId="formControlsPEARL" style={{height:'200px'}}>
-                            <ControlLabel style={{ fontSize: "150%" }}>Clinical Pearls<span style={{color:"red"}}>*</span></ControlLabel>
+                            <ControlLabel style={{ fontSize: "150%" }}>Clinical Pearls<span style={{color:"red"}}>*</span>
+                                <OverlayTrigger trigger={['hover']} placement="bottom" overlay={popoverHover}><img src='./info.png' hspace="5" alt="" style={{height:"1em", marginBottom:"1em"}}/></OverlayTrigger>
+                            </ControlLabel>
                             <ReactQuill value={this.state.pearl}
                                         modules={{toolbar: toolbarOptions}}
                                         onChange={this.handlePearlChange}
