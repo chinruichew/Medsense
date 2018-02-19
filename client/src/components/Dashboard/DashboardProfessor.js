@@ -3,11 +3,13 @@ import axios from 'axios';
 
 import StudentLeaderboard from "./DashboardComponents/StudentLeaderboard";
 import ContributionLeaderboard from "./DashboardComponents/ContributionLeaderboard";
+import CaseStatistics from "./DashboardComponents/CaseStatistics";
 
 class DashboardProfessor extends Component {
     state = {
         studentLeaders: null,
-        contributionLeaders: null
+        contributionLeaders: null,
+        cases: null
     };
 
     componentDidMount() {
@@ -24,6 +26,13 @@ class DashboardProfessor extends Component {
         }).catch(err => {
             console.log(err);
         });
+
+        // Get all Cases
+        axios.get('/api/fetchAllCases').then(res => {
+            this.setState({cases: res.data});
+        }).catch(err => {
+            console.log(err);
+        });
     };
 
     renderContent = () => {
@@ -35,18 +44,26 @@ class DashboardProfessor extends Component {
                     case null:
                         return;
                     default:
-                        return(
-                            <div className="container">
-                                <div className="row">
-                                    <div className="col-md-6">
-                                        <StudentLeaderboard leaders={this.state.studentLeaders} />
+                        switch(this.state.cases) {
+                            case null:
+                                return;
+                            default:
+                                return(
+                                    <div className="container">
+                                        <div className="row">
+                                            <div className="col-md-6">
+                                                <StudentLeaderboard leaders={this.state.studentLeaders} />
+                                            </div>
+                                            <div className="col-md-6">
+                                                <ContributionLeaderboard leaders={this.state.contributionLeaders} />
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <CaseStatistics cases={this.state.cases} />
+                                        </div>
                                     </div>
-                                    <div className="col-md-6">
-                                        <ContributionLeaderboard leaders={this.state.contributionLeaders} />
-                                    </div>
-                                </div>
-                            </div>
-                        );
+                                );
+                        }
                 }
         }
     };

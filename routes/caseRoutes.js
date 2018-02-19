@@ -202,8 +202,7 @@ module.exports = app => {
     });
 
     app.get('/api/fetchAllCases', async (req, res) => {
-        const id = req.body.id;
-        const cases = await Case.findOne({ _id: id }).select();
+        const cases = await Case.find().select();
         res.send(cases);
     });
 
