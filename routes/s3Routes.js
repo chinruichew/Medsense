@@ -119,6 +119,62 @@ module.exports = app => {
 
         });
     });
+
+    app.post('/api/uploadPearlAttachment', (req, res) => {
+        const form = new multiparty.Form();
+        form.parse(req, function(err, fields, files) {
+
+            const caseID = fields.caseID;
+            const qID = fields.qID;
+            const objID = fields.objID;
+            const myBucket = 'case-upload-attachments';
+            const s3 = new aws.S3();
+            if (files.file!==undefined && files.file!==null){
+                const file = files.file[0];
+
+                fs.readFile(file.path, function (err, data) {
+                    const params = {
+                        Bucket: myBucket,
+                        Key: caseID + "/question" + qID + "/pearls.jpg",
+                        Body: data,
+                        ACL: 'public-read'
+                    };
+                    s3.putObject(params, function (err, data) {
+                        if (err) {
+                            console.log(err);
+                            res.send("done");
+                        } else {
+                            Question.update({_id: objID}, {pearlAttachment: "https://s3-ap-southeast-1.amazonaws.com/case-upload-attachments/" + caseID + "/question" + qID + "/pearls.jpg"}, function (err, response) {
+                                console.log("Successfully uploaded data to case-upload-attachments/" + caseID + "/question" + qID + "/pearls.jpg");
+                                res.send("done");
+                            });
+                        }
+                    });
+                });
+            } else {
+                Question.update({_id: objID}, {pearlAttachment: ""}, function (err, response) {
+                    console.log(response);
+                });
+                const params = {Bucket: myBucket, Key: caseID + "/question" + qID + "/pearls.jpg"};
+                s3.getObject(params, function(err, data) {
+                    // Handle any error and exit
+                    if (err) {
+                        // console.log(err);
+                    } else {
+                        const params = {Bucket: myBucket, Delete: {Objects:[{Key:caseID + "/question" + qID + "/pearls.jpg"}]}};
+                        s3.deleteObjects(params, function(err, data) {
+                            if (err) {
+                                // console.log(err);
+                            }
+                        });
+                    }
+
+                    res.send("done");
+                })
+            }
+
+        });
+    });
 };
 
 

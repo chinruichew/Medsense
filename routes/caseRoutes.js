@@ -54,12 +54,20 @@ module.exports = app => {
                 mcq4: jsonObject[prop]['mcq4'],
                 mcq5: jsonObject[prop]['mcq5'],
                 mcq6: jsonObject[prop]['mcq6'],
+                mcq7: jsonObject[prop]['mcq7'],
+                mcq8: jsonObject[prop]['mcq8'],
+                mcq9: jsonObject[prop]['mcq9'],
+                mcq10: jsonObject[prop]['mcq10'],
                 check1: jsonObject[prop]['check1'],
                 check2: jsonObject[prop]['check2'],
                 check3: jsonObject[prop]['check3'],
                 check4: jsonObject[prop]['check4'],
                 check5: jsonObject[prop]['check5'],
                 check6: jsonObject[prop]['check6'],
+                check7: jsonObject[prop]['check7'],
+                check8: jsonObject[prop]['check8'],
+                check9: jsonObject[prop]['check9'],
+                check10: jsonObject[prop]['check10'],
                 mark: jsonObject[prop]['mark'],
                 case: newCase._id
             });
@@ -90,12 +98,20 @@ module.exports = app => {
                     oneQuestion.mcq4 = prop['mcq4'];
                     oneQuestion.mcq5 = prop['mcq5'];
                     oneQuestion.mcq6 = prop['mcq6'];
+                    oneQuestion.mcq7 = prop['mcq7'];
+                    oneQuestion.mcq8 = prop['mcq8'];
+                    oneQuestion.mcq9 = prop['mcq9'];
+                    oneQuestion.mcq10 = prop['mcq10'];
                     oneQuestion.check1 = prop['check1'];
                     oneQuestion.check2 = prop['check2'];
                     oneQuestion.check3 = prop['check3'];
                     oneQuestion.check4 = prop['check4'];
                     oneQuestion.check5 = prop['check5'];
                     oneQuestion.check6 = prop['check6'];
+                    oneQuestion.check7 = prop['check7'];
+                    oneQuestion.check8 = prop['check8'];
+                    oneQuestion.check9 = prop['check9'];
+                    oneQuestion.check10 = prop['check10'];
                     oneQuestion.mark = prop['mark'];
                     oneQuestion.save();
                     questions.push(oneQuestion);
@@ -117,12 +133,20 @@ module.exports = app => {
                         mcq4: prop['mcq4'],
                         mcq5: prop['mcq5'],
                         mcq6: prop['mcq6'],
+                        mcq7: prop['mcq7'],
+                        mcq8: prop['mcq8'],
+                        mcq9: prop['mcq9'],
+                        mcq10: prop['mcq10'],
                         check1: prop['check1'],
                         check2: prop['check2'],
                         check3: prop['check3'],
                         check4: prop['check4'],
                         check5: prop['check5'],
                         check6: prop['check6'],
+                        check7: prop['check7'],
+                        check8: prop['check8'],
+                        check9: prop['check9'],
+                        check10: prop['check10'],
                         mark: prop['mark'],
                         case: oneCase._id
                     });

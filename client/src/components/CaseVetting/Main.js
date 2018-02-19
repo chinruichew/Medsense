@@ -38,6 +38,7 @@ class Main extends Component {
                     "stem": '',
                     "question": '',
                     "attachment": null,
+                    "pearlAttachment": null,
                     "type": "Select One",
                     "openEnded": '',
                     "mcq1": '',
@@ -46,12 +47,20 @@ class Main extends Component {
                     "mcq4": '',
                     "mcq5": '',
                     "mcq6": '',
+                    "mcq7": '',
+                    "mcq8": '',
+                    "mcq9": '',
+                    "mcq10": '',
                     "check1": false,
                     "check2": false,
                     "check3": false,
                     "check4": false,
                     "check5": false,
                     "check6": false,
+                    "check7": false,
+                    "check8": false,
+                    "check9": false,
+                    "check10": false,
                     "pearl": '',
                     "time": "Select One",
                     "reference": '',
@@ -119,47 +128,71 @@ class Main extends Component {
                             error = "Question #" + obj.id + ": Question should NOT contain NRIC!";
                             throw BreakException;
                         } else if (obj.attachment && typeof(obj.attachment)!=="string" && !this.validFileType(obj.attachment)){
-                            error = "Question #" + obj.id + ": Please make sure your Attachment is an image of type .jpg, .jpeg, or .png!";
+                            error = "Question #" + obj.id + ": Please make sure your Question attachment is an image of type .jpg, .jpeg, or .png!";
                             throw BreakException;
                         } else if (obj.type === "Select One") {
                             error = "Question #" + obj.id + ": Please select a Question Type!";
                             throw BreakException;
                         } else if (obj.type === "MCQ") {
                             if (obj.mcq1 === '' || obj.mcq2 === '') {
-                                error = "Question #" + obj.id + ": Please fill in Answer 1 and Answer 2!";
+                                error = "Question #" + obj.id + ": Please fill in Option 1 and Option 2!";
                                 throw BreakException;
                             } else if (this.isValidNRIC(obj.mcq1)) {
-                                error = "Question #" + obj.id + ": Answer 1 should NOT contain NRIC!";
+                                error = "Question #" + obj.id + ": Option 1 should NOT contain NRIC!";
                                 throw BreakException;
                             } else if (this.isValidNRIC(obj.mcq2)) {
-                                error = "Question #" + obj.id + ": Answer 2 should NOT contain NRIC!";
+                                error = "Question #" + obj.id + ": Option 2 should NOT contain NRIC!";
                                 throw BreakException;
                             } else if (obj.mcq3 === '' && obj.check3) {
-                                error = "Question #" + obj.id + ": Please fill in Answer 3 or uncheck the answer!";
+                                error = "Question #" + obj.id + ": Please fill in Option 3 or uncheck the option!";
                                 throw BreakException;
                             } else if (obj.mcq3 !== '' && this.isValidNRIC(obj.mcq3)) {
-                                error = "Question #" + obj.id + ": Answer 3 should NOT contain NRIC!";
+                                error = "Question #" + obj.id + ": Option 3 should NOT contain NRIC!";
                                 throw BreakException;
                             } else if (obj.mcq4 === '' && obj.check4) {
-                                error = "Question #" + obj.id + ": Please fill in Answer 4 or uncheck the answer!";
+                                error = "Question #" + obj.id + ": Please fill in Option 4 or uncheck the option!";
                                 throw BreakException;
                             } else if (obj.mcq4 !== '' && this.isValidNRIC(obj.mcq4)) {
-                                error = "Question #" + obj.id + ": Answer 4 should NOT contain NRIC!";
+                                error = "Question #" + obj.id + ": Option 4 should NOT contain NRIC!";
                                 throw BreakException;
                             } else if (obj.mcq5 === '' && obj.check5) {
-                                error = "Question #" + obj.id + ": Please fill in Answer 5 or uncheck the answer!";
+                                error = "Question #" + obj.id + ": Please fill in Option 5 or uncheck the option!";
                                 throw BreakException;
                             } else if (obj.mcq5 !== '' && this.isValidNRIC(obj.mcq5)) {
-                                error = "Question #" + obj.id + ": Answer 5 should NOT contain NRIC!";
+                                error = "Question #" + obj.id + ": Option 5 should NOT contain NRIC!";
                                 throw BreakException;
                             } else if (obj.mcq6 === '' && obj.check6) {
-                                error = "Question #" + obj.id + ": Please fill in Answer 6 or uncheck the answer!";
+                                error = "Question #" + obj.id + ": Please fill in Option 6 or uncheck the option!";
                                 throw BreakException;
                             } else if (obj.mcq6 !== '' && this.isValidNRIC(obj.mcq6)) {
-                                error = "Question #" + obj.id + ": Answer 6 should NOT contain NRIC!";
+                                error = "Question #" + obj.id + ": Option 6 should NOT contain NRIC!";
+                                throw BreakException;
+                            } else if (obj.mcq7 === '' && obj.check7) {
+                                error = "Question #" + obj.id + ": Please fill in Option 7 or uncheck the option!";
+                                throw BreakException;
+                            } else if (obj.mcq7 !== '' && this.isValidNRIC(obj.mcq7)) {
+                                error = "Question #" + obj.id + ": Option 7 should NOT contain NRIC!";
+                                throw BreakException;
+                            } else if (obj.mcq8 === '' && obj.check8) {
+                                error = "Question #" + obj.id + ": Please fill in Option 8 or uncheck the option!";
+                                throw BreakException;
+                            } else if (obj.mcq8 !== '' && this.isValidNRIC(obj.mcq8)) {
+                                error = "Question #" + obj.id + ": Option 8 should NOT contain NRIC!";
+                                throw BreakException;
+                            } else if (obj.mcq9 === '' && obj.check9) {
+                                error = "Question #" + obj.id + ": Please fill in Option 9 or uncheck the option!";
+                                throw BreakException;
+                            } else if (obj.mcq9 !== '' && this.isValidNRIC(obj.mcq9)) {
+                                error = "Question #" + obj.id + ": Option 9 should NOT contain NRIC!";
+                                throw BreakException;
+                            } else if (obj.mcq10 === '' && obj.check10) {
+                                error = "Question #" + obj.id + ": Please fill in Option 10 or uncheck the option!";
+                                throw BreakException;
+                            } else if (obj.mcq10 !== '' && this.isValidNRIC(obj.mcq10)) {
+                                error = "Question #" + obj.id + ": Option 10 should NOT contain NRIC!";
                                 throw BreakException;
                             } else if (!obj.check1 && !obj.check2 && !obj.check3 && !obj.check4 && !obj.check5 && !obj.check6) {
-                                error = "Question #" + obj.id + ": Please check at least 1 correct answer!";
+                                error = "Question #" + obj.id + ": Please check at least 1 correct option!";
                                 throw BreakException;
                             }
                         } else if (obj.type === "Open-ended" && (obj.openEnded === '' || obj.openEnded === '<p><br></p>' )) {
@@ -173,6 +206,9 @@ class Main extends Component {
                             throw BreakException;
                         } else if(this.isValidNRIC(obj.pearl)){
                             error = "Question #" + obj.id + ": Clinical Pearls should NOT contain NRIC!";
+                            throw BreakException;
+                        } else if (obj.pearlAttachment && typeof(obj.pearlAttachment)!=="string" && !this.validFileType(obj.pearlAttachment)){
+                            error = "Question #" + obj.id + ": Please make sure your Clinical Pearls attachment is an image of type .jpg, .jpeg, or .png!";
                             throw BreakException;
                         } else if (obj.time === "Select One") {
                             error = "Question #" + obj.id + ": Please select a Time Limit!";
@@ -213,6 +249,21 @@ class Main extends Component {
         });
     };
 
+    uploadPearlFile = (file, caseID, qID, objID) => {
+        const formData = new FormData();
+        formData.append('file',file);
+        formData.append('caseID',caseID);
+        formData.append('qID',qID);
+        formData.append('objID',objID);
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        };
+        axios.post('/api/uploadPearlAttachment', formData, config).then(res => {
+        });
+    };
+
     submitCase = (e) => {
         axios.post('/api/updateCase', {
             values: this.state
@@ -226,6 +277,7 @@ class Main extends Component {
                 let qn = qnData[i];
                 console.log(question.id, question._id);
                 this.uploadFile(qn.attachment, caseID, question.id, question._id);
+                this.uploadPearlFile(qn.pearlAttachment, caseID, question.id, question._id);
             }
         });
     };
@@ -243,6 +295,7 @@ class Main extends Component {
                         "stem": obj.stem,
                         "question": obj.question,
                         "attachment": obj.attachment,
+                        "pearlAttachment": obj.pearlAttachment,
                         "type": obj.type,
                         "openEnded": obj.openEnded,
                         "mcq1": obj.mcq1,
@@ -251,12 +304,20 @@ class Main extends Component {
                         "mcq4": obj.mcq4,
                         "mcq5": obj.mcq5,
                         "mcq6": obj.mcq6,
+                        "mcq7": obj.mcq7,
+                        "mcq8": obj.mcq8,
+                        "mcq9": obj.mcq9,
+                        "mcq10": obj.mcq10,
                         "check1": obj.check1,
                         "check2": obj.check2,
                         "check3": obj.check3,
                         "check4": obj.check4,
                         "check5": obj.check5,
                         "check6": obj.check6,
+                        "check7": obj.check7,
+                        "check8": obj.check8,
+                        "check9": obj.check9,
+                        "check10": obj.check10,
                         "pearl": obj.pearl,
                         "time": obj.time,
                         "reference": obj.reference,
@@ -280,6 +341,7 @@ class Main extends Component {
                 obj.stem = details.stem;
                 obj.question = details.question;
                 obj.attachment = details.attachment;
+                obj.pearlAttachment = details.pearlAttachment;
                 obj.type = details.type;
                 obj.openEnded = details.openEnded;
                 obj.mcq1 = details.mcq1;
@@ -288,12 +350,20 @@ class Main extends Component {
                 obj.mcq4 = details.mcq4;
                 obj.mcq5 = details.mcq5;
                 obj.mcq6 = details.mcq6;
+                obj.mcq7 = details.mcq7;
+                obj.mcq8 = details.mcq8;
+                obj.mcq9 = details.mcq9;
+                obj.mcq10 = details.mcq10;
                 obj.check1 = details.check1;
                 obj.check2 = details.check2;
                 obj.check3 = details.check3;
                 obj.check4 = details.check4;
                 obj.check5 = details.check5;
                 obj.check6 = details.check6;
+                obj.check7 = details.check7;
+                obj.check8 = details.check8;
+                obj.check9 = details.check9;
+                obj.check10 = details.check10;
                 obj.pearl = details.pearl;
                 obj.time = details.time;
                 obj.reference = details.reference;
@@ -333,6 +403,7 @@ class Main extends Component {
                     stem={obj.stem}
                     question={obj.question}
                     attachment={obj.attachment}
+                    pearlAttachment={obj.pearlAttachment}
                     type={obj.type}
                     openEnded={obj.openEnded}
                     mcq1={obj.mcq1}
@@ -341,12 +412,20 @@ class Main extends Component {
                     mcq4={obj.mcq4}
                     mcq5={obj.mcq5}
                     mcq6={obj.mcq6}
+                    mcq7={obj.mcq7}
+                    mcq8={obj.mcq8}
+                    mcq9={obj.mcq9}
+                    mcq10={obj.mcq10}
                     check1={obj.check1}
                     check2={obj.check2}
                     check3={obj.check3}
                     check4={obj.check4}
                     check5={obj.check5}
                     check6={obj.check6}
+                    check7={obj.check7}
+                    check8={obj.check8}
+                    check9={obj.check9}
+                    check10={obj.check10}
                     pearl={obj.pearl}
                     time={obj.time}
                     mark={obj.mark}
