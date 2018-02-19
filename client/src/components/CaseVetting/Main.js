@@ -96,9 +96,9 @@ class Main extends Component {
         } else if (this.isValidNRIC(this.state.scenario)){
             this.setState({ vmShow: true, error: "Case Overview: Case Scenario should NOT contain NRIC!" });
         } else if (this.state.learning === '' || this.state.learning === '<p><br></p>') {
-            this.setState({ vmShow: true, error: "Case Overview: Please fill in the Key Learning Points!" });
+            this.setState({ vmShow: true, error: "Case Overview: Please fill in the Key Learning Objectives!" });
         } else if (this.isValidNRIC(this.state.learning)){
-            this.setState({ vmShow: true, error: "Case Overview: Key Learning Points should NOT contain NRIC!" });
+            this.setState({ vmShow: true, error: "Case Overview: Key Learning Objectives should NOT contain NRIC!" });
         } else {
 
             let questions = this.state.qnData;
@@ -169,10 +169,10 @@ class Main extends Component {
                             error = "Question #" + obj.id + ": Answer should NOT contain NRIC!";
                             throw BreakException;
                         } else if (obj.pearl === '' || obj.pearl === '<p><br></p>') {
-                            error = "Question #" + obj.id + ": Please fill in the PEARL!";
+                            error = "Question #" + obj.id + ": Please fill in the Clinical Pearls!";
                             throw BreakException;
                         } else if(this.isValidNRIC(obj.pearl)){
-                            error = "Question #" + obj.id + ": PEARL should NOT contain NRIC!";
+                            error = "Question #" + obj.id + ": Clinical Pearls should NOT contain NRIC!";
                             throw BreakException;
                         } else if (obj.time === "Select One") {
                             error = "Question #" + obj.id + ": Please select a Time Limit!";
@@ -363,12 +363,14 @@ class Main extends Component {
             } else {
                 stem=obj.stem;
             }
+            let qn = obj.question;
             return (
                 <div className="stem">
                     <div className="stem-label" style={{fontSize: "180%"}}>
                         Question {obj.id}
                     </div>
                     <div style={{fontSize: "120%"}}>{ReactHtmlParser(stem)}</div>
+                    <div style={{fontSize: "120%"}}>{ReactHtmlParser(qn)}</div>
                 </div>
             );
         });
@@ -399,9 +401,11 @@ class Main extends Component {
 
                 </div>
 
-                <form action="/api/uploadCase" method="post" className="case-area">
+                <form action="/api/updateCase" method="post" className="case-area">
+                    <center>*Expand/collapse the headers to view/hide case details*</center>
+                    <center><a href="./MedSense Workplan.pdf" target="_blank">Click here for CASE TEMPLATE</a></center>
                     <Accordion style={{marginTop: "2%"}}>
-                        <Panel header={overviewTitle} eventKey="1" bsStyle="info">
+                        <Panel header={overviewTitle} bsStyle="info">
                             <Overview
                                 title={this.state.title}
                                 difficulty={this.state.difficulty}

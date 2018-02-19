@@ -50,7 +50,7 @@ class Login extends Component {
                                 <br/><br/><br/>
                                 <form className="form-horizontal" method="post" onSubmit={this.onLogin}>
                                     <div className="form-group">
-                                        <label for="username" className="cols-sm-2 control-label">Username</label>
+                                        <label for="username" className="cols-sm-2 control-label"><span style={{fontSize:'120%'}}>Username</span></label>
                                         <div className="cols-sm-10">
                                             <div className="input-group">
                                                 <span className="input-group-addon"><i className="fa fa-user fa" aria-hidden="true"></i></span>
@@ -59,7 +59,7 @@ class Login extends Component {
                                         </div>
                                     </div>
                                     <div className="form-group">
-                                        <label for="password" className="cols-sm-2 control-label">Password</label>
+                                        <label for="password" className="cols-sm-2 control-label"><span style={{fontSize:'120%'}}>Password</span></label>
                                         <div className="cols-sm-10">
                                             <div className="input-group">
                                                 <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>

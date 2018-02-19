@@ -6,7 +6,7 @@ const constants = require('../utility/constantTypes');
 module.exports = app => {
     app.post('/api/signup', function (req, res) {
         const values = req.body;
-        User.findOne({ username: values.username }, function (err, user) {
+        User.findOne({ username: values.username}, null, {collation: {locale: 'en', strength: 2 }}, function (err, user) {
             if (!user) {
                 const newUser = new User();
                 newUser.username = values.username;

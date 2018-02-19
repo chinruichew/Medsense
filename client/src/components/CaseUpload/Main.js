@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Accordion, Panel, FormGroup, Radio, ControlLabel, FormControl, Col } from 'react-bootstrap';
+import { Button, Accordion, PanelGroup, Panel, FormGroup, Radio, ControlLabel, FormControl, Col } from 'react-bootstrap';
 import { bindAll } from 'lodash';
 import axios from 'axios';
 import ReactHtmlParser from 'react-html-parser';
@@ -94,9 +94,9 @@ class Main extends Component {
         } else if (this.isValidNRIC(this.state.scenario)){
             this.setState({ vmShow: true, error: "Case Overview: Case Scenario should NOT contain NRIC!" });
         } else if (this.state.learning === '' || this.state.learning === '<p><br></p>') {
-            this.setState({ vmShow: true, error: "Case Overview: Please fill in the Key Learning Points!" });
+            this.setState({ vmShow: true, error: "Case Overview: Please fill in the Key Learning Objectives!" });
         } else if (this.isValidNRIC(this.state.learning)){
-            this.setState({ vmShow: true, error: "Case Overview: Key Learning Points should NOT contain NRIC!" });
+            this.setState({ vmShow: true, error: "Case Overview: Key Learning Objectives should NOT contain NRIC!" });
         } else {
 
             let questions = this.state.qnData;
@@ -168,10 +168,10 @@ class Main extends Component {
                             error = "Question #" + obj.id + ": Answer should NOT contain NRIC!";
                             throw BreakException;
                         } else if (obj.pearl === '' || obj.pearl === '<p><br></p>') {
-                            error = "Question #" + obj.id + ": Please fill in the PEARL!";
+                            error = "Question #" + obj.id + ": Please fill in the Clinical Pearls!";
                             throw BreakException;
                         } else if(this.isValidNRIC(obj.pearl)){
-                            error = "Question #" + obj.id + ": PEARL should NOT contain NRIC!";
+                            error = "Question #" + obj.id + ": Clinical Pearls should NOT contain NRIC!";
                             throw BreakException;
                         } else if (obj.time === "Select One") {
                             error = "Question #" + obj.id + ": Please select a Time Limit!";
@@ -385,12 +385,14 @@ class Main extends Component {
             } else {
                 stem=obj.stem;
             }
+            let qn=obj.question;
             return (
                 <div className="stem">
                     <div className="stem-label" style={{fontSize: "180%"}}>
                         Question {obj.id}
                     </div>
                     <div style={{fontSize: "120%"}}>{ReactHtmlParser(stem)}</div>
+                    <div style={{fontSize: "120%"}}>{ReactHtmlParser(qn)}</div>
                 </div>
             );
         });
@@ -422,8 +424,17 @@ class Main extends Component {
                 </div>
 
                 <form action="/api/uploadCase" method="post" className="case-area">
+                    <center>*Expand/collapse the headers to view/hide case details*</center>
+                    <center><a href="./MedSense Workplan.pdf" target="_blank">Click here for CASE TEMPLATE</a></center>
+
                     <Accordion style={{marginTop: "2%"}}>
-                        <Panel header={overviewTitle} eventKey="1" bsStyle="info">
+                    {/*<PanelGroup accordion>*/}
+                        <Panel header={overviewTitle} bsStyle="info">
+                        {/*<Panel bsStyle="info">*/}
+                            {/*<Panel.Heading>*/}
+                            {/*<Panel.Title toggle>{overviewTitle}</Panel.Title>*/}
+                            {/*</Panel.Heading>*/}
+                            {/*<Panel.Body collapsible>*/}
                             <Overview
                                 title={this.state.title}
                                 difficulty={this.state.difficulty}
@@ -433,9 +444,10 @@ class Main extends Component {
                                 scenario={this.state.scenario}
                                 learning={this.state.learning}
                                 handleUpdateOverview={this.handleUpdateOverview} />
+                            {/*</Panel.Body>*/}
                         </Panel>
                     </Accordion>
-
+                    {/*</PanelGroup>*/}
                     <Accordion>
                         <Panel header={questionTitle} eventKey="1" bsStyle="info">
                             <div className="question-area">
@@ -449,7 +461,7 @@ class Main extends Component {
                     </Accordion>
 
                     <Accordion>
-                        <Panel header={PDPA} bsStyle="info">
+                        <Panel header={PDPA} eventKey="1" bsStyle="info">
                             <FormGroup controlId="formControlsAuthor">
                                 <ControlLabel style={{ fontSize: "150%" }}>Author of case (Optional)</ControlLabel>
                                 <FormControl type="text" placeholder="Enter your name as registered in school" value={this.state.author} name="author" onChange={(e) => this.handleAuthorChange(e)} />

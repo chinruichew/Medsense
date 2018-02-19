@@ -33,7 +33,7 @@ class StudentSignUpForm extends Component {
     }
 
     handleUserSignUp = () => {
-        let regex = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/;
+        let regex = /^.*(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+).*$/;
         if (this.state.password===null){
             this.setState({vmShow: true, error: "The password should contain at least 8 characters.", password: "", confirm_password: ""});
         }
@@ -75,7 +75,7 @@ class StudentSignUpForm extends Component {
                 <br/><br/><br/>
                 <form className="form-horizontal">
                     <div className="form-group">
-                        <label for="username" className="cols-sm-2 control-label">Username</label>
+                        <label for="username" className="cols-sm-2 control-label"><span style={{fontSize:'120%'}}>Username</span></label>
                         <div className="cols-sm-10">
                             <div className="input-group">
                                 <span className="input-group-addon"><i className="fa fa-user fa" aria-hidden="true"></i></span>
@@ -85,8 +85,8 @@ class StudentSignUpForm extends Component {
                     </div>
                     <div className="form-group">
 
-                        <label for="password" className="cols-sm-2 control-label">Password
-                        <OverlayTrigger trigger={['hover']} placement="bottom" overlay={popoverHover}><img src='./info2.png' hspace="5" alt="" style={{height:"1.5em"}}/></OverlayTrigger>
+                        <label for="password" className="cols-sm-2 control-label"><span style={{fontSize:'120%'}}>Password</span>
+                        <OverlayTrigger trigger={['hover']} placement="bottom" overlay={popoverHover}><img src='./info.png' hspace="5" alt="" style={{height:"1.3em", marginBottom:"1em"}}/></OverlayTrigger>
                         </label>
                         <div className="cols-sm-10">
                             <div className="input-group">
@@ -96,7 +96,7 @@ class StudentSignUpForm extends Component {
                         </div>
                     </div>
                     <div className="form-group">
-                        <label for="confirm_password" className="cols-sm-2 control-label">Confirm Password</label>
+                        <label for="confirm_password" className="cols-sm-2 control-label"><span style={{fontSize:'120%'}}>Confirm Password</span></label>
                         <div className="cols-sm-10">
                             <div className="input-group">
                                 <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
@@ -105,7 +105,7 @@ class StudentSignUpForm extends Component {
                         </div>
                     </div>
                     <div className="form-group">
-                        <label className="cols-sm-2 control-label">School</label>
+                        <label className="cols-sm-2 control-label"><span style={{fontSize:'120%'}}>School</span></label>
                         <div className="cols-sm-10">
                             <div className="input-group">
                                 <span className="input-group-addon"><i className="fa fa-university fa-lg" aria-hidden="true"></i></span>
@@ -118,7 +118,7 @@ class StudentSignUpForm extends Component {
                         </div>
                     </div>
                     <div className="form-group">
-                        <label className="cols-sm-2 control-label">Year of Study</label>
+                        <label className="cols-sm-2 control-label"><span style={{fontSize:'120%'}}>Year of Study</span></label>
                         <div className="cols-sm-10">
                             <div className="input-group">
                                 <span className="input-group-addon"><i className="fa fa-graduation-cap fa-lg" aria-hidden="true"></i></span>

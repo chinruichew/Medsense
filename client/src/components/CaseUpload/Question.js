@@ -454,7 +454,7 @@ class Question extends Component {
                         {this.answer()}
 
                         <FormGroup controlId="formControlsPEARL" style={{height:'200px'}}>
-                            <ControlLabel style={{ fontSize: "150%" }}>PEARL<span style={{color:"red"}}>*</span></ControlLabel>
+                            <ControlLabel style={{ fontSize: "150%" }}>Clinical Pearls<span style={{color:"red"}}>*</span><img src='./info.png' hspace="5" alt="" style={{height:"1.3em", marginBottom:"1em"}}/></ControlLabel>
                             <ReactQuill value={this.state.pearl}
                                         modules={{toolbar: toolbarOptions}}
                                         onChange={this.handlePearlChange}

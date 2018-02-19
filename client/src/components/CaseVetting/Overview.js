@@ -346,12 +346,12 @@ class Overview extends Component {
                 </FormGroup>
 
                 <FormGroup controlId="formControlsLearning" style={{height:'200px'}}>
-                    <ControlLabel style={{ fontSize: "150%" }}>Key Learning Points<span style={{color:"red"}}>*</span></ControlLabel>
+                    <ControlLabel style={{ fontSize: "150%" }}>Key Learning Objectives<span style={{color:"red"}}>*</span></ControlLabel>
                     {/*<FormControl componentClass="textarea" rows={3} placeholder="Enter the key learning points of this case" value={this.state.learning} name="learning" onChange={(e) => this.handleLearningChange(e)} />*/}
                     <ReactQuill value={this.state.learning}
                                 modules={{toolbar: toolbarOptions}}
                                 onChange={this.handleLearningChange}
-                                placeholder="Enter the key learning points of this case"
+                                placeholder="Enter the key learning objectives of this case"
                                 style={{height:'100px'}}/>
                 </FormGroup>
 
