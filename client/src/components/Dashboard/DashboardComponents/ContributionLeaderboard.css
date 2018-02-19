@@ -9,4 +9,6 @@
 .leaderboard_container {
     border-style: groove;
     border-width: 1px;
+    border-radius: 10px;
+    height: 500px;
 }

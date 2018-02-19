@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {Image} from "react-bootstrap";
 
-import './Leaderboard.css';
+import './StudentLeaderboard.css';
 
-class Leaderboard extends Component {
+class StudentLeaderboard extends Component {
     renderLeaderboard = () => {
         switch(this.props.leaders) {
             case null:
@@ -39,4 +39,4 @@ class Leaderboard extends Component {
     }
 }
 
-export default Leaderboard;
+export default StudentLeaderboard;
