@@ -219,13 +219,21 @@ module.exports = app => {
     });
 
     app.get('/api/fetchUnvetCases', async (req, res) => {
-        const cases = await Case.find({ $or: [{status: 'Pending'}, {status: 'Vetting'}] }).select();
-        res.send(cases);
+        Case.find({ $or: [{status: 'Pending'}, {status: 'Vetting'}] }).populate({
+            path: 'authorid',
+            model: 'users'
+        }).exec(function(error, cases) {
+            res.send(cases);
+        });
     });
 
     app.get('/api/fetchVettedCases', async (req, res) => {
-        const cases = await Case.find({ status: 'Vetted' }).select();
-        res.send(cases);
+        Case.find({ status: 'Vetted' }).populate({
+            path: 'authorid',
+            model: 'users'
+        }).exec(function(error, cases) {
+            res.send(cases);
+        });
     });
 
     app.get('/api/fetchAllCases', async (req, res) => {
