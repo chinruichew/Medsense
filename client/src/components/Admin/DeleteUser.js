@@ -48,7 +48,7 @@ class DeleteUser extends Component {
     }
 
     handleSpecialityChange(e) {
-        this.state.subspeciality = [];
+        this.setState({ subspeciality: [] });
         const value = e.target.value;
         this.setState({ speciality: value });
     }

@@ -143,6 +143,7 @@ class OpenEndedQuestion extends Component {
                     </div>
                 );
             }
+            return '';
         });
 
         if (this.props.question.id > "1") {

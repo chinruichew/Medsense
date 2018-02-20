@@ -29,6 +29,8 @@ class Dashboard extends Component {
                                         <DashboardProfessor/>
                                     </div>
                                 );
+                            default:
+                                return;
                         }
                 }
         }

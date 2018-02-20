@@ -239,6 +239,7 @@ class MCQquestion extends Component {
                     </div>
                 );
             }
+            return '';
         });
 
         if (this.props.question.id > "1") {

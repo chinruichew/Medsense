@@ -31,11 +31,9 @@ class StudentProfile extends Component {
         e.preventDefault();
         this.props.updateStudent(this.state).then((response) => {
             if (response) {
-                console.log(response)
                 this.setState({ vmShow: true });
             }
             this.props.reRenderMain();
-            console.log(this.props.refresh);
         }).catch(() => { })
     }
 
@@ -93,7 +91,6 @@ class StudentProfile extends Component {
                         </div>
                     </div>
 
-                    {/*<input type="hidden" value={this.props.student.id} name="studentid" />*/}
                     <div className="row">
                     <div className="form-group">
                         <button type="submit" onClick={(e) => this.handleSaveChange(e)} className="btn btn-primary btn-lg btn-block login-button">Save</button>
