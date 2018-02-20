@@ -43,6 +43,7 @@ module.exports = app => {
                 stem: jsonObject[prop]['stem'],
                 question: jsonObject[prop]['question'],
                 attachment: null,
+                pearlAttachment: null,
                 type: jsonObject[prop]['type'],
                 openEnded: jsonObject[prop]['openEnded'],
                 pearl: jsonObject[prop]['pearl'],
@@ -86,6 +87,7 @@ module.exports = app => {
                     oneQuestion.id = prop['id'];
                     oneQuestion.question = prop['question'];
                     oneQuestion.attachment = null;
+                    oneQuestion.pearlAttachment = null;
                     oneQuestion.type = prop['type'];
                     oneQuestion.openEnded = prop['openEnded'];
                     oneQuestion.pearl = prop['pearl'];
@@ -122,6 +124,7 @@ module.exports = app => {
                         stem: prop['stem'],
                         question: prop['question'],
                         attachment: null,
+                        pearlAttachment: null,
                         type: prop['type'],
                         openEnded: prop['openEnded'],
                         pearl: prop['pearl'],

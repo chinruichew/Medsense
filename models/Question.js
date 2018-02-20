@@ -7,6 +7,7 @@ const questionSchema = new Schema({
     stem: { type: String, default: "" },
     question: { type: String, default: "" },
     attachment: { type: String, default: "" },
+    pearlAttachment: { type: String, default: "" },
     type: { type: String, default: "" },
     openEnded: { type: String, default: "" },
     pearl: { type: String, default: "" },
