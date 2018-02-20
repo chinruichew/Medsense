@@ -179,7 +179,7 @@ class TimeLimit extends Component {
                 default:
                     //need to get the attempt when storeCaseAnswer
                     let attempt = this.state.attempt;
-                    const base = this.props.game.difficulty === "Beginner" ? 0.5 ^ (attempt) * 100 : 0.5 ^ (attempt) * 200
+                    const base = this.props.game.difficulty === "Beginner" ? (0.5**(attempt-1)) * 100 : (0.5**(attempt-1)) * 200
                     let total = 0;
                     for (let i = 0; i < this.props.game.questions.length; i++) {
                         total += parseFloat(this.props.game.questions[i].mark);

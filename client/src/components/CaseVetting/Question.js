@@ -270,14 +270,12 @@ class Question extends Component {
         const value = e.target.files[0];
         this.setState({ attachment: value });
         this.update(value, "attachment");
-        // console.log(value);
     }
 
     handlePearlFile(e){
         const value = e.target.files[0];
         this.setState({ pearlAttachment: value });
         this.update(value, "pearlAttachment");
-        // console.log(value);
     }
 
     handleStemChange(value){
@@ -408,7 +406,6 @@ class Question extends Component {
     }
     handleMarkChange(e){
         const value = e.target.value;
-        //console.log(this.state.mark);
         this.setState({ mark: value });
         this.update(value, "mark");
     }

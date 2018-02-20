@@ -57,7 +57,7 @@ module.exports = app => {
 
     app.post('/api/storeCaseAnswer', async (req, res)=> {
         let attempt=0;
-        Answer.findOne({ caseid: req.body.case._id, completionStatus: true, userid: req.body.authid}).sort('attempt').exec(function (err, completedCase) {
+        Answer.findOne({ caseid: req.body.case._id, completionStatus: true, userid: req.body.authid}).sort({attempt:-1}).exec(function (err, completedCase) {
             if (completedCase){
                 attempt = completedCase.attempt;
             }
@@ -74,7 +74,7 @@ module.exports = app => {
                 scenario: req.body.case.scenario,
                 learning: req.body.case.learning,
                 status: req.body.case.status,
-                caseid: req.body.case._id,
+                caseid: mongoose.Types.ObjectId(req.body.case._id),
             });
             newCaseAnswer.save();
             return res.send({attempt: attempt+1});

@@ -119,7 +119,6 @@ class Main extends Component {
                 try {
                     for (let i=0; i<questions.length; i++) {
                         let obj = questions[i];
-                        console.log(obj.mark);
                         if (obj.question === '' || obj.question === '<p><br></p>') {
                             error = "Question #" + obj.id + ": Please fill in the Question!";
                             throw BreakException;
@@ -289,12 +288,15 @@ class Main extends Component {
             let questions = res.data.data.question;
             let qnData = this.state.qnData;
             this.setState({vm: true});
-
-            for (let i=0; i<questions.length; i++){
-                let question = questions[i];
-                let qn = qnData[i];
-                this.uploadFile(qn.attachment, caseID, question.id, question._id);
-                this.uploadPearlFile(qn.pearlAttachment, caseID, question.id, question._id);
+            for (let j=0;j<qnData.length;j++) {
+                let qn = qnData[j];
+                for (let i = 0; i < questions.length; i++) {
+                    let question = questions[i];
+                    if (question.id==qn.id) {
+                        this.uploadFile(qn.attachment, caseID, question.id, question._id);
+                        this.uploadPearlFile(qn.pearlAttachment, caseID, question.id, question._id);
+                    }
+                }
             }
         });
     };

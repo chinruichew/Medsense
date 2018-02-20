@@ -279,12 +279,10 @@ class Question extends Component {
 
     handleStemChange(value){
         this.setState({ stem: value });
-        console.log(value);
         this.update(value, "stem");
     }
     handleQuestionChange(value){
         this.setState({ question: value });
-        console.log(this.state.question);
         this.update(value, "question");
     }
     handleTypeChange(e){
@@ -407,7 +405,6 @@ class Question extends Component {
     }
     handleMarkChange(e){
         const value = e.target.value;
-        console.log(this.state.mark);
         this.setState({ mark: value });
         this.update(value, "mark");
     }
