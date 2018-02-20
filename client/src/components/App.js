@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
-import HttpsRedirect from 'react-https-redirect';
+// import HttpsRedirect from 'react-https-redirect';
 
 import './App.css';
 import Login from './LoginSignup/Login';
@@ -28,7 +28,7 @@ class App extends Component {
         //need to store session
         return (
             <BrowserRouter>
-                <HttpsRedirect>
+                <div>
                     <Header />
                     <Switch>
                         <Route exact path="/login" component={Login} />
@@ -44,7 +44,7 @@ class App extends Component {
                         <Route exact path="/" component={About}/>
                         <Route path="/" component={NotFound} />
                     </Switch>
-                </HttpsRedirect>
+                </div>
             </BrowserRouter>
         );
     }
