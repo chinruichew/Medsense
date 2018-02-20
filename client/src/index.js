@@ -9,6 +9,7 @@ import 'bootstrap/dist/css/bootstrap-theme.css';
 import './index.css';
 import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
+import { unregister } from './registerServiceWorker';
 
 import reducers from './reducers/index'
 
@@ -32,4 +33,4 @@ ReactDOM.render(
     document.querySelector('#root')
 );
 
-registerServiceWorker();
+unregister();
