@@ -16,19 +16,20 @@ class ProfessorHome extends Component {
                 const userSubSpeciality = this.props.user.subspeciality;
                 let numCasesPending = 0;
                 let toVet = false;
-                for(let i = 0; i < userSubSpeciality.length; i++) {
-                    for(let j = 0; j < unvetCases.length; j++) {
-                        const caseSubspecialities = unvetCases[j].subspeciality;
-                        for(let k =0; k < caseSubspecialities.length; k++) {
-                            if(caseSubspecialities[k] === userSubSpeciality[i]) {
+                for(let i = 0; i < unvetCases.length; i++) {
+                    const caseSubspecialities = unvetCases[i].subspeciality;
+                    for(let j = 0; j < caseSubspecialities.length; j++) {
+                        const caseSubspeciality = caseSubspecialities[j];
+                        for(let k = 0; k < userSubSpeciality.length; k++) {
+                            if(caseSubspeciality === userSubSpeciality[k]) {
                                 toVet = true;
-                                break;
                             }
                         }
                     }
-                }
-                if(toVet) {
-                    numCasesPending += 1;
+                    if(toVet) {
+                        numCasesPending += 1;
+                    }
+                    toVet = false;
                 }
                 return(
                     <div className="container-fluid">
