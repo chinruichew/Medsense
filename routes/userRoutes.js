@@ -69,12 +69,15 @@ module.exports = app => {
     // Update points of User
     app.post('/api/updateUserPoints', function(req, res) {
         User.findById(req.session.user._id, function (err, user) {
-            if (err) { return res.send(err) }
+            if (err) {
+                res.send(err);
+            }
 
             if (user) {
                 user.points += req.body.score;
                 user.save();
-                return res.send({points: user.points});
+                req.session.user.points = user.points;
+                res.send({points: user.points});
             }
         });
     });
