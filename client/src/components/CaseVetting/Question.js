@@ -538,9 +538,7 @@ class Question extends Component {
     }
 
     checkQ1(){
-        console.log(this.props.id);
         if (this.props.id==1){
-            console.log("entered here");
             return;
         }
         return (

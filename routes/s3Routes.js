@@ -73,6 +73,7 @@ module.exports = app => {
             const objID = fields.objID;
             const myBucket = 'case-upload-attachments';
             const s3 = new aws.S3();
+            console.log(files.file);
             if (files.file!==undefined && files.file!==null){
                 const file = files.file[0];
 
@@ -129,6 +130,8 @@ module.exports = app => {
             const objID = fields.objID;
             const myBucket = 'case-upload-attachments';
             const s3 = new aws.S3();
+            console.log("pearl");
+            console.log(files.file);
             if (files.file!==undefined && files.file!==null){
                 const file = files.file[0];
 
