@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
-// import HttpsRedirect from 'react-https-redirect';
+import HttpsRedirect from 'react-https-redirect';
 
 import './App.css';
 import Login from './LoginSignup/Login';
@@ -28,21 +28,23 @@ class App extends Component {
         //need to store session
         return (
             <BrowserRouter>
-                <Header />
-                <Switch>
-                    <Route exact path="/login" component={Login} />
-                    <Route exact path="/home" component={Home} />
-                    <Route exact path="/register" component={StudentSignup} />
-                    <Route exact path="/upload" component={CaseStart} />
-                    <Route exact path="/vetting" component={CaseVetting} />
-                    <Route exact path="/profile" component={Profile} />
-                    <Route exact path="/dashboard" component={Dashboard} />
-                    <Route exact path="/search" component={CaseChallenge} />
-                    <Route exact path="/admin" component={Admin} />
-                    <Route exact path="/result" component={Result} />
-                    <Route exact path="/" component={About}/>
-                    <Route path="/" component={NotFound} />
-                </Switch>
+                <HttpsRedirect>
+                    <Header />
+                    <Switch>
+                        <Route exact path="/login" component={Login} />
+                        <Route exact path="/home" component={Home} />
+                        <Route exact path="/register" component={StudentSignup} />
+                        <Route exact path="/upload" component={CaseStart} />
+                        <Route exact path="/vetting" component={CaseVetting} />
+                        <Route exact path="/profile" component={Profile} />
+                        <Route exact path="/dashboard" component={Dashboard} />
+                        <Route exact path="/search" component={CaseChallenge} />
+                        <Route exact path="/admin" component={Admin} />
+                        <Route exact path="/result" component={Result} />
+                        <Route exact path="/" component={About}/>
+                        <Route path="/" component={NotFound} />
+                    </Switch>
+                </HttpsRedirect>
             </BrowserRouter>
         );
     }
