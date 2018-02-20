@@ -150,4 +150,9 @@ module.exports = app => {
         });
         res.send("completion status updated");
     });
+
+    app.get('/api/fetchAllAnswers', async(req, res) => {
+        const answers = await Answer.find().select();
+        res.send(answers);
+    });
 };

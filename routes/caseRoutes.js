@@ -230,15 +230,22 @@ module.exports = app => {
     app.get('/api/fetchVettedCases', async (req, res) => {
         Case.find({ status: 'Vetted' }).populate({
             path: 'authorid',
-            model: 'users'
+            model: 'users',
+        }).populate({
+            path: 'questions',
+            model: 'questions',
         }).exec(function(error, cases) {
             res.send(cases);
         });
     });
 
     app.get('/api/fetchAllCases', async (req, res) => {
-        const cases = await Case.find().select();
-        res.send(cases);
+        Case.find().populate({
+            path: 'questions',
+            model: 'questions',
+        }).exec(function(error, cases) {
+            res.send(cases);
+        });
     });
 
     app.post('/api/fetchAllCasesByAuthor', function (req, res) {
@@ -246,7 +253,7 @@ module.exports = app => {
             path: 'questions',
             model: 'questions',
         }).exec(function (error, cases) {
-            return res.status(201).send({ data: cases, message: "fetchAllByAuthor success" });
+            res.send('fetchAllByAuthor success');
         })
     });
 

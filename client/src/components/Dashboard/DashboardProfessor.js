@@ -9,7 +9,8 @@ class DashboardProfessor extends Component {
     state = {
         studentLeaders: null,
         contributionLeaders: null,
-        cases: null
+        cases: null,
+        answers: null
     };
 
     componentDidMount() {
@@ -28,8 +29,15 @@ class DashboardProfessor extends Component {
         });
 
         // Get all Cases
-        axios.get('/api/fetchAllCases').then(res => {
+        axios.get('/api/fetchVettedCases').then(res => {
             this.setState({cases: res.data});
+        }).catch(err => {
+            console.log(err);
+        });
+
+        // Get all Question Answers
+        axios.get('/api/fetchAnswers').then(res => {
+            this.setState({answers: res.data});
         }).catch(err => {
             console.log(err);
         });
