@@ -155,4 +155,24 @@ module.exports = app => {
         const answers = await Answer.find().select();
         res.send(answers);
     });
+
+    app.get('/api/getIndividualAnswers', async(req, res) => {
+        Answer.find({completionStatus: true}).populate({
+            path: 'caseid',
+            model: 'cases'
+        }).populate({
+            path: 'userid',
+            model: 'users'
+        }).populate({
+            path: 'answers',
+            model: 'answers',
+            populate: {
+                path: 'questions',
+                model: 'questionanswers'
+            }
+        }).exec(function(error, answers) {
+            console.log(answers);
+            res.send(answers);
+        });
+    });
 };

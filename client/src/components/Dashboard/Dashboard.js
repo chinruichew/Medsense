@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import * as ReactGA from "react-ga";
 import {fetchConstantTypes} from "../../actions";
-
-import DashboardProfessor from "./DashboardProfessor";
 import {Redirect} from "react-router-dom";
+
+import DashboardProfessor from "./Professor/DashboardProfessor";
+import DashboardStudent from "./Student/DashboardStudent";
 
 class Dashboard extends Component {
     componentDidMount() {
@@ -26,7 +27,13 @@ class Dashboard extends Component {
                             case this.props.constants.USER_TYPE_PROFESSOR:
                                 return(
                                     <div>
-                                        <DashboardProfessor/>
+                                        <DashboardProfessor />
+                                    </div>
+                                );
+                            case this.props.constants.USER_TYPE_STUDENT:
+                                return(
+                                    <div>
+                                        <DashboardStudent />
                                     </div>
                                 );
                             default:

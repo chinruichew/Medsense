@@ -13,7 +13,6 @@ const userSchema = new Schema({
     subspeciality: [{ type: String, default: "" }],
     usertype: { type: String, default: "" },
     timestamp: { type: Date, default: Date.now()},
-    cases: [{ type: Schema.Types.ObjectId, ref: 'cases' }],
     points: { type: Number, default: 0},
     previousLogin: { type: Date, default: ""},
     currentLogin: { type: Date, default: ""},
