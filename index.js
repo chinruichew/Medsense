@@ -82,6 +82,8 @@ s3.getObject(getParams, function (err, data) {
 
     });
 });
+
+const deepPopulate = require('mongoose-deep-populate')(mongoose);
 /* End of MongoDB Connection */
 
 /* Start of Middleware configuration */

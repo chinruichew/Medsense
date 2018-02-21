@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {ControlLabel, FormControl, FormGroup, Table} from "react-bootstrap";
+import ReactHtmlParser from 'react-html-parser';
 
 class IndividualCaseStatistics extends Component {
     state = {
@@ -12,20 +13,49 @@ class IndividualCaseStatistics extends Component {
         const answers = this.state.answers;
         for(let i = 0; i < answers.length; i++) {
             const answer = answers[i];
+            console.log(answer);
             if(answer._id === answerId) {
+                const questions = answer.caseid.questions;
                 const caseStatsDisplay = answer.questions.map((question, index) => {
-                    console.log(question);
+                    let answers = '';
+                    if(question.type === this.props.constants.QUESTION_TYPE_OPEN_ENDED) {
+                        answers = ReactHtmlParser(question.openEnded);
+                    } else if(question.type === this.props.constants.QUESTION_TYPE_MCQ) {
+                        for(let i = 1; i <= 6; i++) {
+                            if(question['check' + i]) {
+                                answers = question['mcq' + i] + '\n';
+                            }
+                        }
+                    }
+                    let modelAnswers = '';
+                    for(let i = 0; i < questions.length; i++) {
+                        const realQuestion = questions[i];
+                        if(realQuestion.question === question.question) {
+                            if(realQuestion.type === this.props.constants.QUESTION_TYPE_OPEN_ENDED) {
+                                modelAnswers = ReactHtmlParser(realQuestion.openEnded);
+                            } else if(realQuestion.type === this.props.constants.QUESTION_TYPE_MCQ) {
+                                for(let i = 1; i <= 6; i++) {
+                                    if(realQuestion['check' + i]) {
+                                        modelAnswers = realQuestion['mcq' + i] + '\n';
+                                    }
+                                }
+                            }
+                            break;
+                        }
+                    }
                     return(
                         <tr key={index}>
                             <td>{index + 1}</td>
-                            <td>{question.question}</td>
-                            <td>{question.openEnded}</td>
+                            <td>{ReactHtmlParser(question.question)}</td>
+                            <td>{answers}</td>
+                            <td>{modelAnswers}</td>
                             <td>{question.score + ' / ' + question.mark}</td>
                             <td>{question.timeTaken + ' seconds'}</td>
                         </tr>
                     );
                 });
                 this.setState({caseStatsDisplay: caseStatsDisplay});
+                break;
             }
         }
     };
@@ -62,6 +92,7 @@ class IndividualCaseStatistics extends Component {
                                     <td>S/N</td>
                                     <td>Question</td>
                                     <td>Your Answer</td>
+                                    <td>Model Answer</td>
                                     <td>Score</td>
                                     <td>Time Taken</td>
                                 </tr>

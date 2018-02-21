@@ -5,7 +5,8 @@ import IndividualCaseStatistics from "./DashboardComponents/IndividualCaseStatis
 
 class DashboardStudent extends Component {
     state = {
-        answers: null
+        answers: null,
+        constants: null
     };
 
     componentDidMount() {
@@ -15,20 +16,32 @@ class DashboardStudent extends Component {
         }).catch(err => {
             console.log(err);
         });
+
+        // Get Constant Types
+        axios.get('/api/getConstantTypes').then(res => {
+            this.setState({constants: res.data});
+        }).catch(err => {
+            console.log(err);
+        });
     }
 
     renderContent = () => {
-        switch(this.state.answers) {
+        switch(this.state.constants) {
             case null:
                 return;
             default:
-                return(
-                    <div className="container">
-                        <div className="row">
-                            <IndividualCaseStatistics answers={this.state.answers} />
-                        </div>
-                    </div>
-                );
+                switch(this.state.answers) {
+                    case null:
+                        return;
+                    default:
+                        return(
+                            <div className="container">
+                                <div className="row">
+                                    <IndividualCaseStatistics answers={this.state.answers} constants={this.state.constants} />
+                                </div>
+                            </div>
+                        );
+                }
         }
     };
 

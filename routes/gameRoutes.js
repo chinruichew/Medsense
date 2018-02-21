@@ -159,7 +159,11 @@ module.exports = app => {
     app.get('/api/getIndividualAnswers', function(req, res) {
         Answer.find({completionStatus: true}).populate({
             path: 'caseid',
-            model: 'cases'
+            model: 'cases',
+            populate: {
+                path: 'questions',
+                model: 'questions'
+            }
         }).populate({
             path: 'userid',
             model: 'users'
