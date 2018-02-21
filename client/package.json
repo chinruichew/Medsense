@@ -62,7 +62,7 @@
     "react-ga": "^2.4.1",
     "react-html-parser": "^2.0.2",
     "react-https-redirect": "^1.0.10",
-    "react-image-magnify": "^2.4.1",
+    "react-image-magnify": "^2.5.0",
     "react-overlays": "^0.8.3",
     "react-quill": "^1.2.4",
     "react-redux": "^5.0.7",
