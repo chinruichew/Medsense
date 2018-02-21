@@ -13,7 +13,6 @@ class IndividualCaseStatistics extends Component {
         const answers = this.state.answers;
         for(let i = 0; i < answers.length; i++) {
             const answer = answers[i];
-            console.log(answer);
             if(answer._id === answerId) {
                 const questions = answer.caseid.questions;
                 const caseStatsDisplay = answer.questions.map((question, index) => {
