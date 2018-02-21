@@ -14,10 +14,12 @@ class IndividualCaseStatistics extends Component {
             const answer = answers[i];
             if(answer._id === answerId) {
                 const caseStatsDisplay = answer.questions.map((question, index) => {
+                    console.log(question);
                     return(
                         <tr key={index}>
                             <td>{index + 1}</td>
                             <td>{question.question}</td>
+                            <td>{question.openEnded}</td>
                             <td>{question.score + ' / ' + question.mark}</td>
                             <td>{question.timeTaken + ' seconds'}</td>
                         </tr>
@@ -59,6 +61,7 @@ class IndividualCaseStatistics extends Component {
                                 <tr style={{background: '#82C5D9', fontSize:'130%'}}>
                                     <td>S/N</td>
                                     <td>Question</td>
+                                    <td>Your Answer</td>
                                     <td>Score</td>
                                     <td>Time Taken</td>
                                 </tr>
