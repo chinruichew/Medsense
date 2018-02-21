@@ -1,3 +1,5 @@
+const keyManagement = require('../utility/keyManagement');
+
 module.exports = {
     cookieKey: process.env.COOKIE_KEY,
     mongoHost: process.env.MONGO_HOST,

@@ -24,7 +24,6 @@ const https = require('https');
 const fs = require('fs-extra');
 
 const keys = require('./config/keys');
-const keyManagement = require('./utility/keyManagement');
 require('./models/User');
 
 const app = express();
