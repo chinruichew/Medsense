@@ -66,7 +66,7 @@ class IndividualCaseStatistics extends Component {
             default:
                 const selectOptions = this.state.answers.map(answer => {
                     return(
-                        <option value={answer._id}>{answer.title}</option>
+                        <option value={answer._id}>{answer.title + ' (Attempt ' + answer.attempt + ')'}</option>
                     );
                 });
                 return(
