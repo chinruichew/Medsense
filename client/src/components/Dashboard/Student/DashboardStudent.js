@@ -9,6 +9,7 @@ class DashboardStudent extends Component {
     };
 
     componentDidMount() {
+        // Get all individual answers
         axios.get('/api/getIndividualAnswers').then(res => {
             this.setState({answers: res.data});
         }).catch(err => {
@@ -17,13 +18,18 @@ class DashboardStudent extends Component {
     }
 
     renderContent = () => {
-        return(
-            <div className="container">
-                <div className="row">
-                    <IndividualCaseStatistics/>
-                </div>
-            </div>
-        );
+        switch(this.state.answers) {
+            case null:
+                return;
+            default:
+                return(
+                    <div className="container">
+                        <div className="row">
+                            <IndividualCaseStatistics answers={this.state.answers} />
+                        </div>
+                    </div>
+                );
+        }
     };
 
     render() {

@@ -156,7 +156,7 @@ module.exports = app => {
         res.send(answers);
     });
 
-    app.get('/api/getIndividualAnswers', async(req, res) => {
+    app.get('/api/getIndividualAnswers', function(req, res) {
         Answer.find({completionStatus: true}).populate({
             path: 'caseid',
             model: 'cases'
@@ -164,15 +164,17 @@ module.exports = app => {
             path: 'userid',
             model: 'users'
         }).populate({
-            path: 'answers',
-            model: 'answers',
-            populate: {
-                path: 'questions',
-                model: 'questionanswers'
-            }
+            path: 'questions',
+            model: 'questionanswers'
         }).exec(function(error, answers) {
-            console.log(answers);
-            res.send(answers);
+            let filteredAnswers = [];
+            for(let i = 0; i < answers.length; i++) {
+                const answer = answers[i];
+                if(String(answer.userid._id) === req.session.user._id) {
+                    filteredAnswers.push(answer);
+                }
+            }
+            res.send(filteredAnswers);
         });
     });
 };

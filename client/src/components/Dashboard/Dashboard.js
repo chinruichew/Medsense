@@ -4,6 +4,7 @@ import * as ReactGA from "react-ga";
 import {fetchConstantTypes} from "../../actions";
 import {Redirect} from "react-router-dom";
 
+import './Dashboard.css';
 import DashboardProfessor from "./Professor/DashboardProfessor";
 import DashboardStudent from "./Student/DashboardStudent";
 

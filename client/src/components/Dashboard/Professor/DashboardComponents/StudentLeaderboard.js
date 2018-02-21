@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import {Image} from "react-bootstrap";
 
-import './StudentLeaderboard.css';
-
 class StudentLeaderboard extends Component {
     renderLeaderboard = () => {
         switch(this.props.leaders) {

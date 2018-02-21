@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import {Image} from "react-bootstrap";
 
-import './ContributionLeaderboard.css';
-
 class ContributionLeaderboard extends Component {
     renderLeaderboard = () => {
         switch(this.props.leaders) {
