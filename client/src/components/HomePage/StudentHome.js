@@ -37,7 +37,7 @@ class StudentHome extends Component {
                                 </NavLink>
                             </div>
                             <div className="col-sm-3  text-center" style={{fontSize:'150%'}}>
-                                <NavLink to='/search'>
+                                <NavLink to='/game'>
                                     <Button style={{background: "white", color: 'black', width: "15em", height: "11em"}} bsSize="large">
                                         <img src="./challenge.png" alt="" style={{height:"5em", marginBottom: "3%"}}/>
                                         <br/>Start doing a case<br/>
