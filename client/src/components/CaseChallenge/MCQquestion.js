@@ -244,13 +244,13 @@ class MCQquestion extends Component {
 
         if (this.props.question.id > "1") {
             return (
-                <Alert bsStyle="info" style={{borderWidth: "thick", width: "93%", background: "white", borderColor: "#bce8f1"}}>
+                <Alert bsStyle="info" style={{border: "0", width: "93%", background: "white", borderColor: "#bce8f1"}}>
                     <p style={{fontFamily: "Great Vibes, cursive", fontWeight: "bold", fontSize: "300%", textAlign: "center"}}>Story So Far</p>
                     <p style={{textDecorationLine: "underline", margin: "0", fontSize: "200%"}}>Case Scenario</p>
                     <div className="row" style={{whiteSpace: "pre-wrap", paddingLeft: "2%", color: "black"}}>
                         {ReactHtmlParser(this.props.scenario)}
                     </div>
-                    <p style={{textDecorationLine: "underline", margin: "0", fontSize: "200%"}}>Case Continuation</p>
+                    {/*<p style={{textDecorationLine: "underline", margin: "0", fontSize: "200%"}}>Case Question</p>*/}
                     <div className="row" style={{whiteSpace: "pre-wrap", paddingLeft: "2%"}}>{stems}</div>
                     {/*<br/><br/>*/}
                 </Alert>

@@ -113,7 +113,7 @@ class Main extends Component {
             let questions = this.state.qnData;
 
             if (questions.length === 0) {
-                this.setState({ vmShow: true, error: "Case Question: Please add at least 1 Question!" });
+                this.setState({ vmShow: true, error: "Case Questions: Please add at least 1 Question!" });
 
             } else {
                 let error = '';
@@ -391,7 +391,7 @@ class Main extends Component {
         );
 
         const questionTitle = (
-            <span style={{ fontSize: '150%' }}><center>▽ Case Question</center></span>
+            <span style={{ fontSize: '150%' }}><center>▽ Case Questions</center></span>
         );
         let vmClose = () => this.setState({ vmShow: false });
         let vmConfirmClose = () => this.setState({ vmConfirm: false });
@@ -474,7 +474,7 @@ class Main extends Component {
                         {ReactHtmlParser(this.state.scenario)}
                     </div>
                     <br /><br />
-                    <p style={{textDecorationLine: "underline", margin: "0", fontSize: "200%"}}>Case Continuation</p>
+                    <p style={{textDecorationLine: "underline", margin: "0", fontSize: "200%"}}>Case Questions</p>
                     <div className="row" style={{whiteSpace:"pre-wrap", paddingLeft: "5%"}}>{stems}</div>
                     <br /><br />
 

@@ -109,7 +109,7 @@ module.exports = app => {
                 check6: req.body.values.check6Stu,
                 timeTaken: timeTaken,
                 mark: req.body.values.mark,
-                score: req.body.values.questionActualScore,
+                score: req.body.values.score,
             });
             newCaseQuestion.save();
             answer[0]['questions'].push(newCaseQuestion);
@@ -135,7 +135,7 @@ module.exports = app => {
                 reference: req.body.values.reference,
                 timeTaken: timeTaken,
                 mark: req.body.values.mark,
-                score: req.body.values.questionActualScore,
+                score: req.body.values.score,
             });
             newCaseQuestion.save();
             answer[0]['questions'].push(newCaseQuestion);
