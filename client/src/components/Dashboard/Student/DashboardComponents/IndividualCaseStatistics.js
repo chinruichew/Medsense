@@ -5,7 +5,8 @@ import ReactHtmlParser from 'react-html-parser';
 class IndividualCaseStatistics extends Component {
     state = {
         answers: this.props.answers,
-        caseStatsDisplay: ''
+        caseStatsDisplay: '',
+        scorePercentage: 0
     };
 
     changeCase = (e) => {
@@ -14,6 +15,8 @@ class IndividualCaseStatistics extends Component {
         for(let i = 0; i < answers.length; i++) {
             const answer = answers[i];
             if(answer._id === answerId) {
+                let totalScore = 0;
+                let totalMark = 0;
                 const questions = answer.caseid.questions;
                 const caseStatsDisplay = answer.questions.map((question, index) => {
                     let answers = '';
@@ -42,6 +45,8 @@ class IndividualCaseStatistics extends Component {
                             break;
                         }
                     }
+                    totalScore += question.score;
+                    totalMark += question.mark;
                     return(
                         <tr key={index}>
                             <td>{index + 1}</td>
@@ -53,7 +58,7 @@ class IndividualCaseStatistics extends Component {
                         </tr>
                     );
                 });
-                this.setState({caseStatsDisplay: caseStatsDisplay});
+                this.setState({caseStatsDisplay: caseStatsDisplay, scorePercentage: (totalScore/totalMark*100)});
                 break;
             }
         }
@@ -82,6 +87,9 @@ class IndividualCaseStatistics extends Component {
                                         </FormControl>
                                     </FormGroup>
                                 </form>
+                            </div>
+                            <div className="col-md-offset-4 col-md-4 text-center">
+                                <h3>{this.state.caseStatsDisplay !== '' ? 'Total Score Accuracy: ' + this.state.scorePercentage + '%': ''}</h3>
                             </div>
                         </div>
                         <div className="col-md-12" style={{padding: '0px'}}>
