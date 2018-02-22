@@ -3,29 +3,49 @@ import {connect} from 'react-redux';
 import {fetchVettedCases} from '../../actions';
 import {Table} from 'react-bootstrap';
 import moment from 'moment';
+import axios from 'axios';
 
 class VettedCases extends Component {
+    state = {
+        currentUser: null
+    };
+
     componentDidMount() {
+        // Get current user
+        axios.get('/api/currentUser').then(res => {
+            this.setState({currentUser: res.data});
+        });
         this.props.fetchVettedCases();
     }
 
     renderVettedCases() {
         return this.props.vettedCases.reverse().map((vettedCase, index) => {
+            let toRenderCase = false;
             switch(this.props.filterVetted) {
                 case 'All':
-                    let dateTime = moment(vettedCase.uploadTime).format('MMMM Do YYYY, h:mm:ss a');
-                    let vettedDate = moment(vettedCase.vetTime).format('MMMM Do YYYY, h:mm:ss a');
-                    return(
-                        <tr align="center" key={vettedCase._id}>
-                            <td>{vettedCase.title}</td>
-                            <td>{vettedCase.subspeciality}</td>
-                            <td>{vettedCase.authorid.username}</td>
-                            <td>{dateTime}</td>
-                            <td>{vettedDate}</td>
-                        </tr>
-                    );
+                    for(let i = 0; i < vettedCase.subspeciality.length; i++) {
+                        const vettedCaseSubspeciality = vettedCase.subspeciality[i];
+                        for(let j = 0; j < this.state.currentUser.subspeciality.length; j++) {
+                            if(vettedCaseSubspeciality === this.state.currentUser.subspeciality[j]) {
+                                toRenderCase = true;
+                            }
+                        }
+                    }
+                    if(toRenderCase) {
+                        let dateTime = moment(vettedCase.uploadTime).format('MMMM Do YYYY, h:mm:ss a');
+                        let vettedDate = moment(vettedCase.vetTime).format('MMMM Do YYYY, h:mm:ss a');
+                        return(
+                            <tr align="center" key={vettedCase._id}>
+                                <td>{vettedCase.title}</td>
+                                <td>{vettedCase.subspeciality}</td>
+                                <td>{vettedCase.authorid.username}</td>
+                                <td>{dateTime}</td>
+                                <td>{vettedDate}</td>
+                            </tr>
+                        );
+                    }
+                    return '';
                 default:
-                    let toRenderCase = false;
                     for(let i = 0; i < vettedCase.subspeciality.length; i++) {
                         const vettedCaseSubspeciality = vettedCase.subspeciality[i];
                         if(vettedCaseSubspeciality === this.props.filterVetted) {
@@ -34,12 +54,14 @@ class VettedCases extends Component {
                     }
                     if(toRenderCase) {
                         let dateTime = moment(vettedCase.uploadTime).format('MMMM Do YYYY, h:mm:ss a');
+                        let vettedDate = moment(vettedCase.vetTime).format('MMMM Do YYYY, h:mm:ss a');
                         return(
                             <tr align="center" key={vettedCase._id}>
                                 <td>{vettedCase.title}</td>
                                 <td>{vettedCase.subspeciality}</td>
                                 <td>{vettedCase.authorname}</td>
                                 <td>{dateTime}</td>
+                                <td>{vettedDate}</td>
                             </tr>
                         );
                     }
@@ -53,11 +75,16 @@ class VettedCases extends Component {
             case null:
                 return;
             default:
-                return(
-                    <tbody>
-                        {this.renderVettedCases()}
-                    </tbody>
-                );
+                switch(this.state.currentUser) {
+                    case null:
+                        return;
+                    default:
+                        return(
+                            <tbody>
+                                {this.renderVettedCases()}
+                            </tbody>
+                        );
+                }
         }
     }
 
