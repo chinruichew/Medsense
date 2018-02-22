@@ -49,7 +49,7 @@ class IndividualCaseStatistics extends Component {
                     totalMark += parseInt(question.mark);
                     let timeTaken = 'NIL';
                     if(question.timeTaken !== 0) {
-                        timeTaken = question.timeTaken + ' seconds'
+                        timeTaken = question.timeTaken + ' seconds';
                     }
                     return(
                         <tr key={index}>
