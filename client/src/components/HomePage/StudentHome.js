@@ -47,47 +47,51 @@ class StudentHome extends Component {
                             </div>
                         </div>
                         <br/>
-                        {/*<div className="row">*/}
-                            {/*<strong><h3 style={{fontStyle:"italic", marginBottom:"1%"}}>Latest Discussion Replies</h3></strong>*/}
-                            {/*<Table responsive>*/}
-                                {/*<thead>*/}
-                                {/*<tr style={{background: '#82C5D9', fontSize:'130%'}}>*/}
-                                    {/*<th><center>Your Post</center></th>*/}
-                                    {/*<th><center>Case Title</center></th>*/}
-                                    {/*<th><center>Reply</center></th>*/}
-                                    {/*<th><center>Replied by</center></th>*/}
-                                    {/*<th><center>Date Replied</center></th>*/}
-                                    {/*<th></th>*/}
-                                {/*</tr>*/}
-                                {/*</thead>*/}
-                                {/*<tbody>*/}
-                                {/*<tr align="center">*/}
-                                    {/*<td>Can someone explain Qn1?</td>*/}
-                                    {/*<td>Case 1</td>*/}
-                                    {/*<td>xxxxx...xxxx</td>*/}
-                                    {/*<td>Prof. Chong</td>*/}
-                                    {/*<td>05 Nov 2017<br/>16:51</td>*/}
-                                    {/*<td><Button  type="button" bsStyle="primary">View</Button></td>*/}
-                                {/*</tr>*/}
-                                {/*<tr align="center">*/}
-                                    {/*<td>Key learning points of case 2</td>*/}
-                                    {/*<td>Case 2</td>*/}
-                                    {/*<td>xxx....xxxxxxx</td>*/}
-                                    {/*<td>Kimberly_Yay</td>*/}
-                                    {/*<td>04 Nov 2017<br/>22:41</td>*/}
-                                    {/*<td><Button  type="button" bsStyle="primary">View</Button></td>*/}
-                                {/*</tr>*/}
-                                {/*<tr align="center">*/}
-                                    {/*<td>Why should we ask for "Fever chills rigor"???</td>*/}
-                                    {/*<td>Case 10</td>*/}
-                                    {/*<td>xxx....xxxx</td>*/}
-                                    {/*<td>Cici2</td>*/}
-                                    {/*<td>01 Nov 2017<br/>22:41</td>*/}
-                                    {/*<td><Button  type="button" bsStyle="primary">View</Button></td>*/}
-                                {/*</tr>*/}
-                                {/*</tbody>*/}
-                            {/*</Table>*/}
-                        {/*</div>*/}
+                        <div className="row">
+                            <strong><h3 style={{fontStyle:"italic", marginBottom:"1%"}}>Game Recommendations</h3></strong>
+                            <Table responsive>
+                                <thead>
+                                <tr style={{background: '#82C5D9', fontSize:'130%'}}>
+                                    <th><center>Case Title</center></th>
+                                    <th><center>Approaches</center></th>
+                                    <th><center>Speciality</center></th>
+                                    <th><center>Sub-speciality</center></th>
+                                    <th><center>Difficulty</center></th>
+                                    <th><center>Last Updated</center></th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr align="center">
+                                    <td>Approach to Abdominal Pain</td>
+                                    <td>Abdominal Pain</td>
+                                    <td>Medicine</td>
+                                    <td>Endocrinology</td>
+                                    <td>Beginner</td>
+                                    <td>05 Jan 2018<br/>4:51pm</td>
+                                    <td><Button  type="button" bsStyle="primary">Try</Button></td>
+                                </tr>
+                                <tr align="center">
+                                    <td>Severe Migraine</td>
+                                    <td>Headache</td>
+                                    <td>Medicine</td>
+                                    <td>Neurology</td>
+                                    <td>Beginner</td>
+                                    <td>04 Feb 2018<br/>10:41pm</td>
+                                    <td><Button  type="button" bsStyle="primary">Try</Button></td>
+                                </tr>
+                                <tr align="center">
+                                    <td>Blood in Stools</td>
+                                    <td>Gastrointestinal Bleed</td>
+                                    <td>Surgery</td>
+                                    <td>Colorectal</td>
+                                    <td>Beginner</td>
+                                    <td>01 Feb 2018<br/>9:41pm</td>
+                                    <td><Button  type="button" bsStyle="primary">Try</Button></td>
+                                </tr>
+                                </tbody>
+                            </Table>
+                        </div>
                     </div>
                 );
         }
