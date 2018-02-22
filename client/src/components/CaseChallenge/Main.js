@@ -7,6 +7,7 @@ import TimeLimit from "./TimeLimit";
 import {connect} from "react-redux";
 import {fetchRandomCase} from "../../actions";
 import SearchByApproach from './SearchByApproach';
+import {Redirect} from "react-router-dom";
 
 
 class Main extends Component {
@@ -148,16 +149,31 @@ class Main extends Component {
         }
     }
 
+    renderContent = () => {
+        switch(this.props.auth) {
+            case null:
+                return;
+            case false:
+                return(<Redirect to="/" />);
+            default:
+                return(
+                    <div className="container">
+                        {this.renderMainContent()}
+                        <br /><br />
+                        {this.renderSearch()}
+                    </div>
+                );
+        }
+    };
+
     render() {
         // React GA
         ReactGA.initialize('UA-112382826-1');
         ReactGA.pageview(window.location.pathname + window.location.search);
 
         return (
-            <div className="container">
-                {this.renderMainContent()}
-                <br /><br />
-                {this.renderSearch()}
+            <div>
+                {this.renderContent()}
             </div>
         );
 
@@ -165,9 +181,10 @@ class Main extends Component {
     }
 }
 
-function mapStateToProps({randomCase}) {
+function mapStateToProps({randomCase, auth}) {
     return {
-        randomCase
+        randomCase,
+        auth
     };
 }
 
