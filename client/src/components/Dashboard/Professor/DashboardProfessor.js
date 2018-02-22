@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 
-import StudentLeaderboard from "./DashboardComponents/StudentLeaderboard";
-import ContributionLeaderboard from "./DashboardComponents/ContributionLeaderboard";
-import CaseStatistics from "./DashboardComponents/CaseStatistics";
+import StudentLeaderboard from "../DashboardComponents/StudentLeaderboard";
+import ContributionLeaderboard from "../DashboardComponents/ContributionLeaderboard";
+import CaseStatistics from "../DashboardComponents/CaseStatistics";
 
 class DashboardProfessor extends Component {
     state = {

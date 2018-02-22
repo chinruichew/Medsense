@@ -118,7 +118,7 @@ module.exports = app => {
                         if(leaders[key] === max) {
                             sortedLeaders[key] = leaders[key];
                             counter += 1;
-                            delete leaders.key;
+                            delete leaders[key];
                         }
                     } else {
                         break;

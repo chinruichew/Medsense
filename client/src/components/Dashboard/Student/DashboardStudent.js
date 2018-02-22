@@ -1,15 +1,33 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 
-import IndividualCaseStatistics from "./DashboardComponents/IndividualCaseStatistics";
+import StudentLeaderboard from "../DashboardComponents/StudentLeaderboard";
+import ContributionLeaderboard from "../DashboardComponents/ContributionLeaderboard";
+import IndividualCaseStatistics from "../DashboardComponents/IndividualCaseStatistics";
 
 class DashboardStudent extends Component {
     state = {
+        studentLeaders: null,
+        contributionLeaders: null,
         answers: null,
         constants: null
     };
 
     componentDidMount() {
+        // Get leaders with highest scores
+        axios.get('/api/getLeadersWithHighestScores').then(res => {
+            this.setState({studentLeaders: res.data});
+        }).catch(err => {
+            console.log(err);
+        });
+
+        // Get leaders with highest contributions
+        axios.get('/api/getLeadersWithHighestContributions').then(res => {
+            this.setState({contributionLeaders: res.data});
+        }).catch(err => {
+            console.log(err);
+        });
+
         // Get all individual answers
         axios.get('/api/getIndividualAnswers').then(res => {
             this.setState({answers: res.data});
@@ -36,6 +54,14 @@ class DashboardStudent extends Component {
                     default:
                         return(
                             <div className="container">
+                                <div className="row">
+                                    <div className="col-md-6">
+                                        <StudentLeaderboard leaders={this.state.studentLeaders} />
+                                    </div>
+                                    <div className="col-md-6">
+                                        <ContributionLeaderboard leaders={this.state.contributionLeaders} />
+                                    </div>
+                                </div>
                                 <div className="row">
                                     <IndividualCaseStatistics answers={this.state.answers} constants={this.state.constants} />
                                 </div>
