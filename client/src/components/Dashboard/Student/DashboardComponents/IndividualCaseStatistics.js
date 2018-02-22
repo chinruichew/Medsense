@@ -47,6 +47,10 @@ class IndividualCaseStatistics extends Component {
                     }
                     totalScore += parseInt(question.score);
                     totalMark += parseInt(question.mark);
+                    let timeTaken = 'NIL';
+                    if(question.timeTaken !== 0) {
+                        timeTaken = question.timeTaken + ' seconds';
+                    }
                     return(
                         <tr key={index}>
                             <td>{index + 1}</td>
@@ -54,7 +58,7 @@ class IndividualCaseStatistics extends Component {
                             <td>{answers}</td>
                             <td>{modelAnswers}</td>
                             <td>{question.score + ' / ' + question.mark}</td>
-                            <td>{question.timeTaken + ' seconds'}</td>
+                            <td>{timeTaken}</td>
                         </tr>
                     );
                 });
