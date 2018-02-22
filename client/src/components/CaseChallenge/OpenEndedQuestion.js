@@ -265,7 +265,7 @@ class OpenEndedQuestion extends Component {
 
                     {this.state.showAnswers && <OpenEndedAnswer
                         caseid={this.props.caseid}
-                        score={this.state.score}
+                        score={Math.round(this.state.score)}
                         authid={this.props.authid}
                         timeLimit={this.state.timeLimit}
                         seconds={this.state.seconds}
