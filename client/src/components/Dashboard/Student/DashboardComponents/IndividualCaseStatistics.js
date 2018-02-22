@@ -69,9 +69,9 @@ class IndividualCaseStatistics extends Component {
             case null:
                 return;
             default:
-                const selectOptions = this.state.answers.map(answer => {
+                const selectOptions = this.state.answers.map((answer, index) => {
                     return(
-                        <option value={answer._id}>{answer.title + ' (Attempt ' + answer.attempt + ')'}</option>
+                        <option key={answer._id} value={answer._id}>{answer.title + ' (Attempt ' + answer.attempt + ')'}</option>
                     );
                 });
                 return(

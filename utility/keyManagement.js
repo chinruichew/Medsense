@@ -1,12 +1,12 @@
 const CryptoJS = require("crypto-js");
 
-const SECRET = 'FYP Zenith';
+const constants = require('./constantTypes');
 
 module.exports = {
     encryptKey: function(plainText) {
-        return CryptoJS.AES.encrypt(plainText, SECRET);
+        return CryptoJS.AES.encrypt(plainText, constants.SECRET);
     },
     decryptKey: function(cipherText) {
-        return CryptoJS.AES.decrypt(cipherText.toString(), SECRET).toString(CryptoJS.enc.Utf8);
+        return CryptoJS.AES.decrypt(cipherText.toString(), constants.SECRET).toString(CryptoJS.enc.Utf8);
     }
 };
