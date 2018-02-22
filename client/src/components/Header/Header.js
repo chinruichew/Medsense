@@ -44,7 +44,7 @@ class Header extends Component {
 
                                         <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={2} href="/upload">     Upload     </NavItem>
                                         <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={3} href="/vetting">     Vet     </NavItem>
-                                        <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={4} href="/forum">     Forum     </NavItem>
+                                        {/*<NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={4} href="/forum">     Forum     </NavItem>*/}
                                         <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={5} href="/dashboard">     Dashboard     </NavItem>
                                         <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={6} href="/about">     About     </NavItem>
                                         <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={7} href="/api/logout">     Logout               </NavItem>
@@ -55,9 +55,9 @@ class Header extends Component {
                             case this.state.constants.USER_TYPE_STUDENT:
                                 return(
                                     <Nav pullRight>
-                                        <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={2} href="/search">     Search     </NavItem>
+                                        <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={2} href="/search">     Game     </NavItem>
                                         <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={3} href="/upload">     Upload     </NavItem>
-                                        <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={4} href="/forum">     Forum     </NavItem>
+                                        {/*<NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={4} href="/forum">     Forum     </NavItem>*/}
                                         <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={5} href="/dashboard">     Dashboard     </NavItem>
                                         <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={6} href="/about">     About     </NavItem>
                                         <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={7} href="/api/logout">     Logout               </NavItem>
@@ -67,9 +67,9 @@ class Header extends Component {
                             case this.state.constants.USER_TYPE_ADMIN:
                                 return(
                                     <Nav pullRight>
-                                        <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={2} href="/search">     Search     </NavItem>
+                                        <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={2} href="/search">     Game     </NavItem>
                                         <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={3} href="/upload">     Upload     </NavItem>
-                                        <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={4} href="/forum">     Forum     </NavItem>
+                                        {/*<NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={4} href="/forum">     Forum     </NavItem>*/}
                                         <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={5} href="/dashboard">     Dashboard     </NavItem>
                                         <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={6} href="/about">     About     </NavItem>
                                         <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={7} href="/admin">     Admin Panel    </NavItem>
