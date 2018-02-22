@@ -9,17 +9,15 @@ const constants = require('../utility/constantTypes');
 module.exports = app => {
 
     app.get('/api/fetchRandomCase', async (req, res) => {
-        // Get the count of all users
+        // Get the count of all cases
         Case.count({ status: 'Vetted' }).exec(function (err, count) {
 
             // Get a random entry
             const random = Math.floor(Math.random() * count);
 
-            // Again query all users but only fetch one offset by our random #
+            // Again query all cases but only fetch one offset by our random #
             Case.findOne({ status: 'Vetted' }).skip(random).exec(
                 function (err, result) {
-                    // Tada! random user
-                    // console.log(result);
                     res.send(result);
                 })
         })
@@ -119,6 +117,8 @@ module.exports = app => {
     });
 
     app.post('/api/storeCaseAnswerOpenEnded', function (req, res) {
+        console.log(req.body.values.score);
+        console.log(req.body.values.timeLimit,req.body.values.seconds);
         Answer.find({
             // _id: req.body.values.answerid,
             userid: req.body.values.authid,
@@ -146,7 +146,6 @@ module.exports = app => {
 
     app.post('/api/gameCompleted', async (req, res) => {
         Answer.update({userid: req.body.authid, date: req.body.date}, {completionStatus: true, score: req.body.score}, function (err, response) {
-            console.log(response);
         });
         res.send("completion status updated");
     });
