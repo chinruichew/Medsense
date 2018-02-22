@@ -45,8 +45,8 @@ class IndividualCaseStatistics extends Component {
                             break;
                         }
                     }
-                    totalScore += question.score;
-                    totalMark += question.mark;
+                    totalScore += parseInt(question.score);
+                    totalMark += parseInt(question.mark);
                     return(
                         <tr key={index}>
                             <td>{index + 1}</td>
@@ -58,7 +58,7 @@ class IndividualCaseStatistics extends Component {
                         </tr>
                     );
                 });
-                this.setState({caseStatsDisplay: caseStatsDisplay, scorePercentage: (totalScore/totalMark*100)});
+                this.setState({caseStatsDisplay: caseStatsDisplay, scorePercentage: Math.round(totalScore/totalMark*100)});
                 break;
             }
         }
