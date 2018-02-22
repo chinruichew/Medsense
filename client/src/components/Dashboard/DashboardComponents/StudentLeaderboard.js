@@ -15,7 +15,7 @@ class StudentLeaderboard extends Component {
                                     <p className="leader_text_font">{leader.username}</p>
                                 </div>
                                 <div className="col-md-6 text-right leader_text_div">
-                                    <p className="leader_text_font">{leader.points + ' XP'}</p>
+                                    <p className="leader_text_font">Level {Math.floor((50+Math.sqrt(400*leader.points-37500))/100)}</p>
                                 </div>
                             </div>
                             <div className="col-md-2"></div>

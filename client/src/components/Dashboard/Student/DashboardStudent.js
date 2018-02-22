@@ -54,6 +54,9 @@ class DashboardStudent extends Component {
                     default:
                         return(
                             <div className="container">
+                                <div className="row" style={{minHeight: '500px'}}>
+                                    <IndividualCaseStatistics answers={this.state.answers} constants={this.state.constants} />
+                                </div>
                                 <div className="row">
                                     <div className="col-md-6">
                                         <StudentLeaderboard leaders={this.state.studentLeaders} />
@@ -61,9 +64,6 @@ class DashboardStudent extends Component {
                                     <div className="col-md-6">
                                         <ContributionLeaderboard leaders={this.state.contributionLeaders} />
                                     </div>
-                                </div>
-                                <div className="row">
-                                    <IndividualCaseStatistics answers={this.state.answers} constants={this.state.constants} />
                                 </div>
                             </div>
                         );
