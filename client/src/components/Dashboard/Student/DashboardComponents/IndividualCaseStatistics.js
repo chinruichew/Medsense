@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ControlLabel, FormControl, FormGroup, Table} from "react-bootstrap";
+import {FormControl, FormGroup, Table} from "react-bootstrap";
 import ReactHtmlParser from 'react-html-parser';
 
 class IndividualCaseStatistics extends Component {
