@@ -507,7 +507,7 @@ class Main extends Component {
 
                 <form action="/api/uploadCase" method="post" className="case-area">
                     <center>*Expand/collapse the headers to view/hide case details*</center>
-                    <center><a href="./MedSense Workplan.pdf" target="_blank">Click here for CASE TEMPLATE</a></center>
+                    <center><a href="./MedSense WorkPlan.pdf" target="_blank">Click here for CASE TEMPLATE</a></center>
 
                     <PanelGroup accordion style={{marginTop: "2%"}}>
                         <Panel bsStyle="info">

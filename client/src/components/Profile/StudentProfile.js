@@ -14,7 +14,7 @@ class StudentProfile extends Component {
             username: this.props.username,
             school: this.props.school,
             year: this.props.year,
-            level: Math.floor((50+Math.sqrt(400*this.props.xp-37500))/100),
+            level: isNaN(Math.floor((50+Math.sqrt(400*this.props.xp-37500))/100))?0:Math.floor((50+Math.sqrt(400*this.props.xp-37500))/100),
         };
         bindAll(this, 'handleSchoolChange', 'handleYearChange', 'handleSaveChange', 'renderProgressBar');
     }

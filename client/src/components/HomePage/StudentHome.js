@@ -47,47 +47,47 @@ class StudentHome extends Component {
                             </div>
                         </div>
                         <br/>
-                        <div className="row">
-                            <strong><h3 style={{fontStyle:"italic", marginBottom:"1%"}}>Latest Discussion Replies</h3></strong>
-                            <Table responsive>
-                                <thead>
-                                <tr style={{background: '#82C5D9', fontSize:'130%'}}>
-                                    <th><center>Your Post</center></th>
-                                    <th><center>Case Title</center></th>
-                                    <th><center>Reply</center></th>
-                                    <th><center>Replied by</center></th>
-                                    <th><center>Date Replied</center></th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr align="center">
-                                    <td>Can someone explain Qn1?</td>
-                                    <td>Case 1</td>
-                                    <td>xxxxx...xxxx</td>
-                                    <td>Prof. Chong</td>
-                                    <td>05 Nov 2017<br/>16:51</td>
-                                    <td><Button  type="button" bsStyle="primary">View</Button></td>
-                                </tr>
-                                <tr align="center">
-                                    <td>Key learning points of case 2</td>
-                                    <td>Case 2</td>
-                                    <td>xxx....xxxxxxx</td>
-                                    <td>Kimberly_Yay</td>
-                                    <td>04 Nov 2017<br/>22:41</td>
-                                    <td><Button  type="button" bsStyle="primary">View</Button></td>
-                                </tr>
-                                <tr align="center">
-                                    <td>Why should we ask for "Fever chills rigor"???</td>
-                                    <td>Case 10</td>
-                                    <td>xxx....xxxx</td>
-                                    <td>Cici2</td>
-                                    <td>01 Nov 2017<br/>22:41</td>
-                                    <td><Button  type="button" bsStyle="primary">View</Button></td>
-                                </tr>
-                                </tbody>
-                            </Table>
-                        </div>
+                        {/*<div className="row">*/}
+                            {/*<strong><h3 style={{fontStyle:"italic", marginBottom:"1%"}}>Latest Discussion Replies</h3></strong>*/}
+                            {/*<Table responsive>*/}
+                                {/*<thead>*/}
+                                {/*<tr style={{background: '#82C5D9', fontSize:'130%'}}>*/}
+                                    {/*<th><center>Your Post</center></th>*/}
+                                    {/*<th><center>Case Title</center></th>*/}
+                                    {/*<th><center>Reply</center></th>*/}
+                                    {/*<th><center>Replied by</center></th>*/}
+                                    {/*<th><center>Date Replied</center></th>*/}
+                                    {/*<th></th>*/}
+                                {/*</tr>*/}
+                                {/*</thead>*/}
+                                {/*<tbody>*/}
+                                {/*<tr align="center">*/}
+                                    {/*<td>Can someone explain Qn1?</td>*/}
+                                    {/*<td>Case 1</td>*/}
+                                    {/*<td>xxxxx...xxxx</td>*/}
+                                    {/*<td>Prof. Chong</td>*/}
+                                    {/*<td>05 Nov 2017<br/>16:51</td>*/}
+                                    {/*<td><Button  type="button" bsStyle="primary">View</Button></td>*/}
+                                {/*</tr>*/}
+                                {/*<tr align="center">*/}
+                                    {/*<td>Key learning points of case 2</td>*/}
+                                    {/*<td>Case 2</td>*/}
+                                    {/*<td>xxx....xxxxxxx</td>*/}
+                                    {/*<td>Kimberly_Yay</td>*/}
+                                    {/*<td>04 Nov 2017<br/>22:41</td>*/}
+                                    {/*<td><Button  type="button" bsStyle="primary">View</Button></td>*/}
+                                {/*</tr>*/}
+                                {/*<tr align="center">*/}
+                                    {/*<td>Why should we ask for "Fever chills rigor"???</td>*/}
+                                    {/*<td>Case 10</td>*/}
+                                    {/*<td>xxx....xxxx</td>*/}
+                                    {/*<td>Cici2</td>*/}
+                                    {/*<td>01 Nov 2017<br/>22:41</td>*/}
+                                    {/*<td><Button  type="button" bsStyle="primary">View</Button></td>*/}
+                                {/*</tr>*/}
+                                {/*</tbody>*/}
+                            {/*</Table>*/}
+                        {/*</div>*/}
                     </div>
                 );
         }
