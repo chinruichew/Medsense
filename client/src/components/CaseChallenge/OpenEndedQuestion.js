@@ -126,7 +126,6 @@ class OpenEndedQuestion extends Component {
 
     renderStorySoFar(){
         let stems = this.props.case.questions.map((obj, index) => {
-            console.log(this.props.question.id);
             if (parseFloat(obj.id) < parseFloat(this.props.question.id)) {
                 let stem = '';
                 if (obj.id !== 1) {
@@ -237,7 +236,7 @@ class OpenEndedQuestion extends Component {
                         <h4 style={{ border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace: "pre-wrap", wordBreak: "keep-all" }}>{ReactHtmlParser(this.props.question.question)}</h4>
                         <br/>
                         <Row style={{margin: "0", padding:"0"}}>
-                        <div class="col-md-5 col-md-offset-2">{<ImageMagnifier url={this.props.question.attachment} />}</div>
+                        <div className="col-md-5 col-md-offset-2">{<ImageMagnifier url={this.props.question.attachment} />}</div>
                         </Row>
                         <Row>
                             <Col smOffset={1}>
