@@ -14,12 +14,14 @@ class VettedCases extends Component {
             switch(this.props.filterVetted) {
                 case 'All':
                     let dateTime = moment(vettedCase.uploadTime).format('MMMM Do YYYY, h:mm:ss a');
+                    let vettedDate = moment(vettedCase.vetTime).format('MMMM Do YYYY, h:mm:ss a');
                     return(
                         <tr align="center" key={vettedCase._id}>
                             <td>{vettedCase.title}</td>
                             <td>{vettedCase.subspeciality}</td>
                             <td>{vettedCase.authorid.username}</td>
                             <td>{dateTime}</td>
+                            <td>{vettedDate}</td>
                         </tr>
                     );
                 default:
@@ -68,6 +70,7 @@ class VettedCases extends Component {
                     <th><center>Sub-speciality</center></th>
                     <th><center>Uploaded by</center></th>
                     <th><center>Upload Date</center></th>
+                    <th><center>Vetted Date</center></th>
                     <th></th>
                 </tr>
                 </thead>
