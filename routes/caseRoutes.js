@@ -10,9 +10,11 @@ const commonMethods = require('../utility/commonMethods');
 module.exports = app => {
 
     app.post('/api/uploadCase', function (req, res) {
+        let vetTime = null;
         let caseStatus = constants.CASE_STATUS_PENDING;
         if(req.session.user.usertype === constants.USER_TYPE_PROFESSOR) {
             caseStatus = constants.CASE_STATUS_VETTED;
+            vetTime = new Date();
         }
         const newCase = new Case({
             title: req.body.values.title,
@@ -23,7 +25,8 @@ module.exports = app => {
             uploadTime: new Date(),
             authorid: mongoose.Types.ObjectId(req.body.values.authid),
             authorname: req.body.values.authname,
-            status: caseStatus
+            status: caseStatus,
+            vetTime: vetTime
         });
 
         for (const key in req.body.values.approach) {
@@ -336,6 +339,7 @@ module.exports = app => {
             const lastLogin = new Date(user.previousLogin);
             for(let i = 0; i < cases.length; i++) {
                 const vettedCase = cases[i];
+                console.log(vettedCase);
                 const caseDate = new Date(vettedCase.vetTime.toLocaleString());
                 if(caseDate > lastLogin) {
                     console.log(caseDate, lastLogin);
