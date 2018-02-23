@@ -23,6 +23,8 @@ class VettedCases extends Component {
             let toRenderCase = false;
             switch(this.props.filterVetted) {
                 case 'All':
+                    console.log(this.state.currentUser);
+                    console.log(this.state.currentUser.subspeciality);
                     for(let i = 0; i < vettedCase.subspeciality.length; i++) {
                         const vettedCaseSubspeciality = vettedCase.subspeciality[i];
                         for(let j = 0; j < this.state.currentUser.subspeciality.length; j++) {
