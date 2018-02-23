@@ -58,38 +58,42 @@ class ProfessorHome extends Component {
                         </div>
                         <br/>
                         <div className="row">
-                            <strong><h3 style={{fontStyle:"italic", marginBottom:"1%"}}>Latest Discussion Posts</h3></strong>
+                            <strong><h3 style={{fontStyle:"italic", marginBottom:"1%"}}>Upload Recommendations</h3></strong>
                             <Table responsive>
                                 <thead >
                                 <tr style={{background: '#82C5D9', fontSize:'130%'}}>
-                                    <th><center>Discussion Post</center></th>
-                                    <th><center>Authored by</center></th>
+                                    <th><center>S/N</center></th>
+                                    <th><center>Approach</center></th>
                                     <th><center>Sub-speciality</center></th>
-                                    <th><center>Date Posted</center></th>
+                                    <th><center>Difficulty</center></th>
+                                    <th><center>Recommended Time Limit</center></th>
                                     <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr align="center">
-                                    <td>Clarification on  case 1 Qn 2 answer</td>
-                                    <td>You</td>
-                                    <td>Sub-Speciality 1</td>
-                                    <td>05 Nov 2017<br/>16:51</td>
-                                    <td><Button  type="button" bsStyle="primary">View</Button></td>
+                                    <td>1</td>
+                                    <td>Cough</td>
+                                    <td>Respiratory & Critical Care Medicine</td>
+                                    <td>Beginner</td>
+                                    <td>5min (MCQ)<br/>12min (Open-ended)</td>
+                                    <td><Button  type="button" bsStyle="primary">Upload</Button></td>
                                 </tr>
                                 <tr align="center">
-                                    <td>Key learning points of case 2</td>
-                                    <td>Prof. Ng</td>
-                                    <td>Sub-Speciality 2</td>
-                                    <td>04 Nov 2017<br/>22:41</td>
-                                    <td><Button  type="button" bsStyle="primary">View</Button></td>
+                                    <td>2</td>
+                                    <td>Dizziness</td>
+                                    <td>Respiratory & Critical Care Medicine</td>
+                                    <td>Advanced</td>
+                                    <td>5min (MCQ)<br/>8min (Open-ended)</td>
+                                    <td><Button  type="button" bsStyle="primary">Upload</Button></td>
                                 </tr>
                                 <tr align="center">
-                                    <td>Why is the answer "Stage1 Colorectal Cancer"???</td>
-                                    <td>Ketty123</td>
-                                    <td>Sub-Speciality 1</td>
-                                    <td>03 Nov 2017<br/>22:41</td>
-                                    <td><Button  type="button" bsStyle="primary">View</Button></td>
+                                    <td>3</td>
+                                    <td>Palpitations</td>
+                                    <td>Cardiology</td>
+                                    <td>Beginner</td>
+                                    <td>2min (MCQ)<br/>10min (Open-ended)</td>
+                                    <td><Button  type="button" bsStyle="primary">Upload</Button></td>
                                 </tr>
                                 </tbody>
                             </Table>
