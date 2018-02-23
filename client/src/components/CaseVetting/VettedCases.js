@@ -12,7 +12,7 @@ class VettedCases extends Component {
 
     componentDidMount() {
         // Get current user
-        axios.get('/api/currentUser').then(res => {
+        axios.get('/api/current_user').then(res => {
             this.setState({currentUser: res.data});
         });
         this.props.fetchVettedCases();
