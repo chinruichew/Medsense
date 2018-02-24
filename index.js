@@ -235,7 +235,7 @@ if (process.env.NODE_ENV === 'production') {
                 key: privateKey,
                 cert: certificate
             };
-            https.createServer(credentials, app).listen(443);
+            https.createServer(credentials, app).listen(process.env.PORT);
         });
     });
 } else {
