@@ -209,11 +209,35 @@ if (process.env.NODE_ENV === 'production') {
         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
     });
 
-    const options = {
-        key: fs.readFileSync('/etc/pki/tls/certs/server.key'),
-        cert: fs.readFileSync('/etc/pki/tls/certs/server.crt')
+    getParams = {
+        Bucket: keys.httpsBucket,
+        Key: keys.httpsPrivateKey
     };
-    https.createServer(options, app.callback()).listen(process.env.PORT);
+
+    s3.getObject(getParams, function (err, data) {
+        if (err)
+            console.log(err);
+
+        const privateKey = data.Body.toString('utf-8');
+
+        const getParams = {
+            Bucket: keys.httpsBucket,
+            Key: keys.httpsCertificate
+        };
+
+        s3.getObject(getParams, function (err, data) {
+            if (err)
+                console.log(err);
+
+            const certificate = data.Body.toString('utf-8');
+
+            const credentials = {
+                key: privateKey,
+                cert: certificate
+            };
+            https.createServer(credentials, app.callback()).listen(process.env.PORT);
+        });
+    });
 } else {
     const PORT = process.env.PORT || 5000;
     console.log(chalk.blue.underline.bold('Listening to PORT:', PORT));
