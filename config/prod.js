@@ -1,19 +1,19 @@
 const keyManagement = require('../utility/keyManagement');
 
 module.exports = {
-    cookieKey: process.env.COOKIE_KEY,
-    mongoHost: process.env.MONGO_HOST,
-    awsAccessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    awsSecretKey: process.env.AWS_SECRET_KEY,
-    mongoURI: process.env.MONGO_URI,
-    mongoUser: process.env.MONGO_USER,
-    mongoPort: process.env.MONGO_PORT,
-    dstPort: process.env.DST_PORT,
-    localPort: process.env.LOCAL_PORT,
-    mongoConnectBucket: process.env.MONGO_CONNECT_BUCKET,
-    mongoConnectKey: process.env.MONGO_CONNECT_KEY,
-    cookieKeySecret: process.env.COOKIE_KEY_SECRET,
-    httpsBucket: process.env.HTTPS_BUCKET,
-    httpsPrivateKey: process.env.HTTPS_PRIVATE_KEY,
-    httpsCertificate: process.env.HTTPS_CERTIFICATE
+    cookieKey: keyManagement.decryptKey(process.env.COOKIE_KEY),
+    mongoHost: keyManagement.decryptKey(process.env.MONGO_HOST),
+    awsAccessKeyId: keyManagement.decryptKey(process.env.AWS_ACCESS_KEY_ID),
+    awsSecretKey: keyManagement.decryptKey(process.env.AWS_SECRET_KEY),
+    mongoURI: keyManagement.decryptKey(process.env.MONGO_URI),
+    mongoUser: keyManagement.decryptKey(process.env.MONGO_USER),
+    mongoPort: keyManagement.decryptKey(process.env.MONGO_PORT),
+    dstPort: keyManagement.decryptKey(process.env.DST_PORT),
+    localPort: keyManagement.decryptKey(process.env.LOCAL_PORT),
+    mongoConnectBucket: keyManagement.decryptKey(process.env.MONGO_CONNECT_BUCKET),
+    mongoConnectKey: keyManagement.decryptKey(process.env.MONGO_CONNECT_KEY),
+    cookieKeySecret: keyManagement.decryptKey(process.env.COOKIE_KEY_SECRET),
+    httpsBucket: keyManagement.decryptKey(process.env.HTTPS_BUCKET),
+    httpsPrivateKey: keyManagement.decryptKey(process.env.HTTPS_PRIVATE_KEY),
+    httpsCertificate: keyManagement.decryptKey(process.env.HTTPS_CERTIFICATE)
 };
