@@ -117,8 +117,6 @@ module.exports = app => {
     });
 
     app.post('/api/storeCaseAnswerOpenEnded', function (req, res) {
-        console.log(req.body.values.score);
-        console.log(req.body.values.timeLimit,req.body.values.seconds);
         Answer.find({
             // _id: req.body.values.answerid,
             userid: req.body.values.authid,

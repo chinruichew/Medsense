@@ -161,7 +161,6 @@ module.exports = app => {
                     oneCase.save();
                     questions.push(newQuestion);
                 }
-                // console.log(questions);
                 resolve("Done");
             });
         });
@@ -199,7 +198,6 @@ module.exports = app => {
             jsonObject.forEach(function(prop, index, arr) {
                 p.then(new Promise(function(resolve, reject) {
                     putQuestions(prop, oneCase, questions).then(response => {
-                        // console.log(questions);
                         res.send({data: {case:oneCase._id, question:questions}, message: "uploadCase success"});
                         resolve();
                     });
@@ -339,10 +337,8 @@ module.exports = app => {
             const lastLogin = new Date(user.previousLogin);
             for(let i = 0; i < cases.length; i++) {
                 const vettedCase = cases[i];
-                console.log(vettedCase);
                 const caseDate = new Date(vettedCase.vetTime.toLocaleString());
                 if(caseDate > lastLogin) {
-                    console.log(caseDate, lastLogin);
                     pendingCases.push(vettedCase);
                 }
             }
