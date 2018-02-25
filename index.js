@@ -209,39 +209,40 @@ if (process.env.NODE_ENV === 'production') {
         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
     });
 
-    getParams = {
-        Bucket: keys.httpsBucket,
-        Key: keys.httpsPrivateKey
-    };
-
-    s3.getObject(getParams, function (err, data) {
-        if (err)
-            console.log(err);
-
-        const privateKey = data.Body.toString('utf-8');
-
-        const getParams = {
-            Bucket: keys.httpsBucket,
-            Key: keys.httpsCertificate
-        };
-
-        s3.getObject(getParams, function (err, data) {
-            if (err)
-                console.log(err);
-
-            const certificate = data.Body.toString('utf-8');
-
-            const credentials = {
-                key: privateKey,
-                cert: certificate
-            };
-            https.createServer(credentials, app).listen(process.env.PORT);
-        });
-    });
-} else {
-    const PORT = process.env.PORT || 5000;
-    console.log(chalk.blue.underline.bold('Listening to PORT:', PORT));
+    // getParams = {
+    //     Bucket: keys.httpsBucket,
+    //     Key: keys.httpsPrivateKey
+    // };
+    //
+    // s3.getObject(getParams, function (err, data) {
+    //     if (err)
+    //         console.log(err);
+    //
+    //     const privateKey = data.Body.toString('utf-8');
+    //
+    //     const getParams = {
+    //         Bucket: keys.httpsBucket,
+    //         Key: keys.httpsCertificate
+    //     };
+    //
+    //     s3.getObject(getParams, function (err, data) {
+    //         if (err)
+    //             console.log(err);
+    //
+    //         const certificate = data.Body.toString('utf-8');
+    //
+    //         const credentials = {
+    //             key: privateKey,
+    //             cert: certificate
+    //         };
+    //         https.createServer(credentials, app).listen(process.env.PORT);
+    //     });
+    // });
 }
+
+const PORT = process.env.PORT || 5000;
+console.log(chalk.blue.underline.bold('Listening to PORT:', PORT));
+app.listen(PORT);
 
 // getParams = {
 //     Bucket: keys.httpsBucket,
