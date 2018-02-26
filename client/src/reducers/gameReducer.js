@@ -33,8 +33,20 @@ const fetchGame = (state, action) => {
 };
 
 const addOpenEndedAnswerOfQuestion = (state, action) => {
+    const values = {
+        ...action.values
+    };
+    delete values['stem'];
+    delete values['attachment'];
+    delete values['pearl'];
+    delete values['reference'];
+    delete values['timeLimit'];
+    delete values['seconds'];
+    delete values['authid'];
+    delete values['date'];
+    delete values['showResult'];
     const openEndedAnswers = state.openEndedAnswers;
-    openEndedAnswers.push(action.values);
+    openEndedAnswers.push(values);
     const updatedState = {
         openEndedAnswers: openEndedAnswers
     };
@@ -45,8 +57,26 @@ const addOpenEndedAnswerOfQuestion = (state, action) => {
 };
 
 const addMCQAnswerOfQuestion = (state, action) => {
+    const values = {
+        ...action.values
+    };
+    delete values['stem'];
+    delete values['attachment'];
+    delete values['pearl'];
+    delete values['reference'];
+    delete values['timeLimit'];
+    delete values['seconds'];
+    delete values['authid'];
+    delete values['date'];
+    delete values['showResult'];
+    delete values['mcq1'];
+    delete values['mcq2'];
+    delete values['mcq3'];
+    delete values['mcq4'];
+    delete values['mcq5'];
+    delete values['mcq6'];
     const mcqAnswers = state.mcqAnswers;
-    mcqAnswers.push(action.values);
+    mcqAnswers.push(values);
     const updatedState = {
         mcqAnswers: mcqAnswers
     };

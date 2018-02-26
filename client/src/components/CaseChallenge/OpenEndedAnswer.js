@@ -20,6 +20,8 @@ class OpenEndedAnswer extends Component {
         reference: this.props.question.reference,
         openEnded: this.props.openEnded,
         score: this.props.score,
+        questionStart: this.props.questionStart,
+        questionEnd: this.props.questionEnd
     };
 
     componentDidMount() {

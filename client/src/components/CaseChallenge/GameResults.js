@@ -14,7 +14,8 @@ class GameResults extends Component {
     componentDidMount() {
         window.scrollTo(0, 0);
         this.props.completeGame({
-            score: this.props.score
+            score: this.props.score,
+            xp: this.props.xp
         });
         this.checkLevel();
     }
@@ -68,7 +69,7 @@ class GameResults extends Component {
             <div>
                 <div align="center">
                 <h1>{this.props.case.title}</h1>
-                <h1> You have earned {this.props.score} XP! </h1>
+                <h1> You have earned {this.props.xp} XP! </h1>
                 <br /><br />
 
                 </div>
@@ -93,7 +94,7 @@ class GameResults extends Component {
     }
 
     checkLevel(){
-        const prev = this.state.points-this.props.score;
+        const prev = this.state.points-this.props.xp;
         const prevLevel = Math.floor((50+Math.sqrt(400*prev-37500))/100) ;
         const currLevel = Math.floor((50+Math.sqrt(400*this.state.points-37500))/100);
         if (!isNaN(prevLevel) && prevLevel!==currLevel){

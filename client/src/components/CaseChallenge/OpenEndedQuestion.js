@@ -41,6 +41,7 @@ class OpenEndedQuestion extends Component {
             date: this.props.date,
             seconds: parseFloat(this.props.question.time) * 60,
             score: 0,
+            questionStart: null
         };
         this.timer = 0;
         bindAll(this, 'selectDone', 'startTimer', 'countDown', 'secondsToTime', 'pauseTimer', 'renderTimer',
@@ -89,7 +90,7 @@ class OpenEndedQuestion extends Component {
 
     componentDidMount() {
         let timeLeftVar = this.secondsToTime(this.state.seconds);
-        this.setState({ time: timeLeftVar });
+        this.setState({ time: timeLeftVar, questionStart: new Date() });
         window.scrollTo(0, 0)
     }
 
@@ -273,7 +274,10 @@ class OpenEndedQuestion extends Component {
                         question={this.props.question}
                         totalQnNum={this.props.totalQnNum}
                         handleViewScore={this.props.handleViewScore}
-                        handleNextQuestion={this.props.handleNextQuestion} />}
+                        handleNextQuestion={this.props.handleNextQuestion}
+                        questionStart={this.state.questionStart}
+                        questionEnd={new Date()}
+                    />}
                 </Row>
             </div>
 

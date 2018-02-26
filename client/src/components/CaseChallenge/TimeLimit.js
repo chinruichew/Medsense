@@ -163,7 +163,7 @@ class TimeLimit extends Component {
                     const score = this.state.score / total * base;
                     const final = Math.round(this.state.withTimeLimit ? score * 1.5 : score);
 
-                    return <GameResults date={this.state.date} caseid={this.state.caseid} authid={this.props.auth._id} case={gameCase} score={final}/>;
+                    return <GameResults date={this.state.date} caseid={this.state.caseid} authid={this.props.auth._id} case={gameCase} xp={final} score={this.state.score}/>;
             }
         }
     };

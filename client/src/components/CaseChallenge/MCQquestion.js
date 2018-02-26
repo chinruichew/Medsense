@@ -39,6 +39,7 @@ class MCQquestion extends Component {
             time: {},
             date: this.props.date,
             seconds: parseFloat(this.props.question.time) * 60,
+            questionStart: null
         };
         this.timer = 0;
         bindAll(this, 'selectDone', 'startTimer', 'countDown', 'secondsToTime', 'pauseTimer', 'renderTimer',
@@ -87,7 +88,7 @@ class MCQquestion extends Component {
 
     componentDidMount() {
         let timeLeftVar = this.secondsToTime(this.state.seconds);
-        this.setState({ time: timeLeftVar });
+        this.setState({ time: timeLeftVar, questionStart: new Date() });
         window.scrollTo(0, 0)
     }
 
@@ -98,7 +99,7 @@ class MCQquestion extends Component {
         if (!showAnswers) {
             this.setState({ showAnswers: !showAnswers });
             this.setState({ showNextButton: !showNextButton });
-            this.pauseTimer()
+            this.pauseTimer();
         }
     }
 
@@ -323,7 +324,10 @@ class MCQquestion extends Component {
                         handleNextQuestion={this.props.handleNextQuestion}
                         check1Stu={this.state.check1Stu} check2Stu={this.state.check2Stu}
                         check3Stu={this.state.check3Stu} check4Stu={this.state.check4Stu}
-                        check5Stu={this.state.check5Stu} check6Stu={this.state.check6Stu} />}
+                        check5Stu={this.state.check5Stu} check6Stu={this.state.check6Stu}
+                        questionStart={this.state.questionStart}
+                        questionEnd={new Date()}
+                    />}
                 </Row>
             </div>
         );
