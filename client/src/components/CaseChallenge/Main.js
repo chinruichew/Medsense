@@ -1,47 +1,37 @@
 import React, { Component } from 'react';
 import { Button, Table, Col } from 'react-bootstrap';
-import { bindAll } from 'lodash';
 import * as ReactGA from "react-ga";
 import SearchBySpeciality from './SearchBySpeciality';
 import TimeLimit from "./TimeLimit";
 import {connect} from "react-redux";
-import {fetchRandomCase} from "../../actions";
+import {fetchRandomCase, setGameOverview} from "../../actions";
 import SearchByApproach from './SearchByApproach';
 import {Redirect} from "react-router-dom";
 
+import './Game.css';
 
 class Main extends Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            approachBtnBackground: false,
-            specialityBtnBackground: false,
-            //showApproachTable: false,
-            showApproachSearch: false,
-            //showSpecialityTable: false,
-            showSpecialitySearch: false,
-            showTimeLimit: false,
-            //approach: null,
-            // authid: this.props.authid,
-            // authname: this.props.authname,
-            random: false,
-        };
-
-        bindAll(this, 'chooseApproachSearch', 'chooseSpecialitySearch', 'getRandomCase', 'renderMainContent', 'renderSearch');
-    }
+    state = {
+        approachBtnBackground: false,
+        specialityBtnBackground: false,
+        showApproachSearch: false,
+        showSpecialitySearch: false,
+        showTimeLimit: false,
+        random: false,
+    };
 
     componentDidMount() {
         this.props.fetchRandomCase();
     }
 
 
-    getRandomCase(){
+    getRandomCase = () => {
         //set showTimeLimit to true
         this.setState({showTimeLimit: true, random: true});
 
-    }
-    chooseApproachSearch () {
+    };
+
+    chooseApproachSearch = () => {
         if(!this.state.showApproachSearch){
             this.setState({showApproachSearch: !this.state.showApproachSearch});
             this.setState({showSpecialitySearch: false});
@@ -51,9 +41,9 @@ class Main extends Component {
             this.setState({approachBtnBackground: !this.state.approachBtnBackground});
             this.setState({specialityBtnBackground: false})
         }
-    }
+    };
 
-    chooseSpecialitySearch(){
+    chooseSpecialitySearch = () => {
         if(!this.state.showSpecialitySearch){
             this.setState({showSpecialitySearch: !this.state.showSpecialitySearch});
             this.setState({showApproachSearch: false})
@@ -63,7 +53,7 @@ class Main extends Component {
             this.setState({specialityBtnBackground: !this.state.specialityBtnBackground});
             this.setState({approachBtnBackground: false})
         }
-    }
+    };
 
     handleReturnCase = (game) => {
         this.setState({
@@ -72,7 +62,7 @@ class Main extends Component {
         })
     };
 
-    renderMainContent(){
+    renderMainContent = () => {
         if(!this.state.showTimeLimit){
             let approachBtnBgColor = this.state.approachBtnBackground ?  "#F2F2F2": "white";
             let specialityBtnBgColor = this.state.specialityBtnBackground ?  "#F2F2F2": "white";
@@ -104,15 +94,13 @@ class Main extends Component {
 
                                 </td>
                                 <td style={{width:"12em"}}>
-                                    <Button style={{background: approachBtnBgColor,
-                                        color: 'black', width: "10em", height: "9em"}}
+                                    <Button style={{background: approachBtnBgColor, color: 'black', width: "10em", height: "9em"}}
                                             onClick={(e)=> this.chooseApproachSearch ()} bsSize="large">
                                         <img style={{marginBottom: "5%"}} src="./appSearch.png" alt="" width="60%"/> <br />Search by Approach
                                     </Button>
                                 </td>
                                 <td style={{width:"12em"}}>
-                                    <Button style={{background: specialityBtnBgColor,
-                                        color: 'black', width: "10em", height: "9em"}}
+                                    <Button style={{background: specialityBtnBgColor, color: 'black', width: "10em", height: "9em"}}
                                             onClick={(e)=> this.chooseSpecialitySearch()} bsSize="large">
                                         <img style={{marginBottom: "5%"}} src="./speSearch.png" alt="" width="60%"/> <br /> <div>Search by Speciality</div>
                                     </Button>
@@ -128,17 +116,16 @@ class Main extends Component {
                     return;
                 default:
                     if (this.state.random){
-                        return <TimeLimit case={this.props.randomCase}/>
+                        return <TimeLimit setGameOverview={this.props.setGameOverview} case={this.props.randomCase}/>
                     } else {
-                        console.log(this.state.game);
-                        return <TimeLimit case={this.state.game}/>
+                        return <TimeLimit setGameOverview={this.props.setGameOverview} case={this.state.game}/>
                     }
 
             }
         }
-    }
+    };
 
-    renderSearch(){
+    renderSearch = () => {
         if(!this.state.showTimeLimit){
             return(
               <div>
@@ -147,7 +134,7 @@ class Main extends Component {
               </div>
             );
         }
-    }
+    };
 
     renderContent = () => {
         switch(this.props.auth) {
@@ -188,4 +175,11 @@ function mapStateToProps({randomCase, auth}) {
     };
 }
 
-export default connect(mapStateToProps, {fetchRandomCase})(Main);
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchRandomCase: () => dispatch(fetchRandomCase()),
+        setGameOverview: (values) => dispatch(setGameOverview(values))
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

@@ -4,7 +4,8 @@ import {
     FETCH_CASE_BY_ID, UPDATE_CASE, FETCH_RANDOM_CASE, FETCH_ADMIN_CASES, FETCH_CASE_BY_APPROACH,
     FETCH_CASE_BY_SPECIALITY, DELETE_ADMIN_CASE, FETCH_ADMIN_USERS, FETCH_FILTERED_ADMIN_STUDENTS,
     FETCH_FILTERED_ADMIN_PROFESSORS, DELETE_ADMIN_PROFESSOR, DELETE_ADMIN_STUDENT, FETCH_FILTERED_ADMIN_CASES,
-    STORE_CASE_ANSWER, FETCH_CONSTANT_TYPES
+    STORE_CASE_ANSWER, FETCH_CONSTANT_TYPES, SET_GAME_OVERVIEW,
+    ADD_OPEN_ENDED_ANSWER_OF_QUESTION, ADD_MCQ_ANSWER_OF_QUESTION, SET_GAME_FINAL_DETAILS
 } from './types';
 
 export const fetchUser = () => async dispatch => {
@@ -163,13 +164,6 @@ export const fetchFilteredAdminCases = (values) => async dispatch => {
     dispatch({ type: FETCH_FILTERED_ADMIN_CASES, payload: res.data });
 };
 
-export const fetchGameById = (values) => async dispatch => {
-    const res = await axios.post('/api/fetchGameById', {
-        values
-    });
-    dispatch({ type: FETCH_GAME_BY_ID, payload: res.data });
-};
-
 export const storeCaseAnswer = (values, values1, values2, values3, values4) => async dispatch => {
     const res = await axios.post('/api/storeCaseAnswer', {
         values, values1, values2, values3, values4
@@ -194,4 +188,69 @@ export const storeCaseAnswerOpenEnded = (values) => async dispatch => {
 export const fetchConstantTypes = () => async dispatch => {
     const res = await axios.get('/api/getConstantTypes');
     dispatch({ type: FETCH_CONSTANT_TYPES, payload: res.data });
+};
+
+export const setGameOverview = (values) => {
+    return {
+        type: SET_GAME_OVERVIEW,
+        values
+    };
+};
+
+export const fetchGame = (values) => {
+    return {
+        type: FETCH_GAME_BY_ID,
+        values
+    };
+};
+
+export const fetchGameById = (id) => {
+    return dispatch => {
+        axios.post('/api/fetchGameById', {
+            id
+        }).then(res => {
+            dispatch(fetchGame(res.data));
+        }).catch(err => {
+            console.log(err);
+        })
+    };
+};
+
+export const addOpenEndedAnswerOfQuestion = (values) => {
+    return {
+        type: ADD_OPEN_ENDED_ANSWER_OF_QUESTION,
+        values
+    };
+};
+
+export const addMCQAnswerOfQuestion = (values) => {
+    return {
+        type: ADD_MCQ_ANSWER_OF_QUESTION,
+        values
+    };
+};
+
+export const setGameFinalDetails = (values) => {
+    return {
+        type: SET_GAME_FINAL_DETAILS,
+        values
+    };
+};
+
+export const completeGame = (values) => {
+    return (dispatch, getState) => {
+        dispatch(setGameFinalDetails(values));
+        axios.post('/api/completeGame', {
+            values: getState().game
+        }).then(res => {
+            console.log(res);
+        }).catch(err => {
+            console.log(err);
+        });
+        axios.post('/api/updateUserPoints', {
+            score: getState().game.gameOverview.score
+        }).then(res => {
+            console.log(res);
+        });
+    };
 };

@@ -5,7 +5,6 @@ import { Line } from 'rc-progress';
 import { bindAll } from 'lodash';
 import ReactHtmlParser from 'react-html-parser';
 import MCQAnswers from './MCQAnswers';
-import './Game.css';
 import ImageMagnifier from "./ImageMagnifier";
 
 class MCQquestion extends Component {
@@ -339,11 +338,4 @@ class MCQquestion extends Component {
     }
 }
 
-// function mapStateToProps2({ game}) {
-//     return {
-//         game
-//     };
-// }
-
-// export default connect(mapStateToProps2, { storeCaseAnswerMCQ })(MCQquestion);
 export default MCQquestion;

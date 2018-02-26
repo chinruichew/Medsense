@@ -33,7 +33,7 @@ module.exports = app => {
     });
 
     app.post('/api/fetchGameById', async (req, res) => {
-        const result = await Case.findOne({ _id: req.body.values }).select().populate({
+        const result = await Case.findOne({ _id: req.body.id }).select().populate({
             path: 'questions',
             model: 'questions'
         });
@@ -50,102 +50,6 @@ module.exports = app => {
             model: 'users'
         });
         res.send(result);
-    });
-
-
-    app.post('/api/storeCaseAnswer', async (req, res)=> {
-        let attempt=0;
-        Answer.findOne({ caseid: req.body.case._id, completionStatus: true, userid: req.body.authid}).sort({attempt:-1}).exec(function (err, completedCase) {
-            if (completedCase){
-                attempt = completedCase.attempt;
-            }
-
-            const newCaseAnswer = new Answer({
-                attempt: attempt+1,
-                userid: mongoose.Types.ObjectId(req.body.authid),
-                date: req.body.date,
-                title: req.body.case.title,
-                difficulty: req.body.case.difficulty,
-                speciality: req.body.case.speciality,
-                approach: req.body.case.approach,
-                subspeciality: req.body.case.subspeciality,
-                scenario: req.body.case.scenario,
-                learning: req.body.case.learning,
-                status: req.body.case.status,
-                caseid: mongoose.Types.ObjectId(req.body.case._id),
-            });
-            newCaseAnswer.save();
-            return res.send({attempt: attempt+1});
-        });
-    });
-
-    app.post('/api/storeCaseAnswerMCQ', function (req, res) {
-        Answer.find({
-            //_id: req.body.values.answerid,
-            userid: req.body.values.authid,
-            date: req.body.values.date
-        }, function (err, answer) {
-            const timeTaken = req.body.values.timeLimit-req.body.values.seconds;
-            const newCaseQuestion = new QuestionAnswer({
-                question: req.body.values.question,
-                stem: req.body.values.stem,
-                type: req.body.values.type,
-                attachment: req.body.values.attachment,
-                pearl: req.body.values.pearl,
-                reference: req.body.values.reference,
-                mcq1: req.body.values.mcq1,
-                mcq2: req.body.values.mcq2,
-                mcq3: req.body.values.mcq3,
-                mcq4: req.body.values.mcq4,
-                mcq5: req.body.values.mcq5,
-                mcq6: req.body.values.mcq6,
-                check1: req.body.values.check1Stu,
-                check2: req.body.values.check2Stu,
-                check3: req.body.values.check3Stu,
-                check4: req.body.values.check4Stu,
-                check5: req.body.values.check5Stu,
-                check6: req.body.values.check6Stu,
-                timeTaken: timeTaken,
-                mark: req.body.values.mark,
-                score: req.body.values.score,
-            });
-            newCaseQuestion.save();
-            answer[0]['questions'].push(newCaseQuestion);
-            answer[0].save();
-        });
-        return res.send({ data: {}, message: "storeCaseMCQ success" });
-    });
-
-    app.post('/api/storeCaseAnswerOpenEnded', function (req, res) {
-        Answer.find({
-            // _id: req.body.values.answerid,
-            userid: req.body.values.authid,
-            date: req.body.values.date
-        }, function (err, answer) {
-            const timeTaken = req.body.values.timeLimit-req.body.values.seconds;
-            const newCaseQuestion = new QuestionAnswer({
-                question: req.body.values.question,
-                openEnded: req.body.values.openEnded,
-                stem: req.body.values.stem,
-                type: req.body.values.type,
-                attachment: req.body.values.attachment,
-                pearl: req.body.values.pearl,
-                reference: req.body.values.reference,
-                timeTaken: timeTaken,
-                mark: req.body.values.mark,
-                score: req.body.values.score,
-            });
-            newCaseQuestion.save();
-            answer[0]['questions'].push(newCaseQuestion);
-            answer[0].save();
-        });
-        return res.send({ data: {}, message: "storeCaseOpenEnded success" });
-    });
-
-    app.post('/api/gameCompleted', async (req, res) => {
-        Answer.update({userid: req.body.authid, date: req.body.date}, {completionStatus: true, score: req.body.score}, function (err, response) {
-        });
-        res.send("completion status updated");
     });
 
     app.get('/api/fetchAllAnswers', async(req, res) => {
@@ -177,5 +81,106 @@ module.exports = app => {
             }
             res.send(filteredAnswers);
         });
+    });
+
+    // app.post('/api/storeCaseAnswer', async (req, res)=> {
+    //     let attempt=0;
+    //     Answer.findOne({ caseid: req.body.case._id, completionStatus: true, userid: req.body.authid}).sort({attempt:-1}).exec(function (err, completedCase) {
+    //         if (completedCase){
+    //             attempt = completedCase.attempt;
+    //         }
+    //
+    //         const newCaseAnswer = new Answer({
+    //             attempt: attempt+1,
+    //             userid: mongoose.Types.ObjectId(req.body.authid),
+    //             date: req.body.date,
+    //             title: req.body.case.title,
+    //             difficulty: req.body.case.difficulty,
+    //             speciality: req.body.case.speciality,
+    //             approach: req.body.case.approach,
+    //             subspeciality: req.body.case.subspeciality,
+    //             scenario: req.body.case.scenario,
+    //             learning: req.body.case.learning,
+    //             status: req.body.case.status,
+    //             caseid: mongoose.Types.ObjectId(req.body.case._id),
+    //         });
+    //         newCaseAnswer.save();
+    //         return res.send({attempt: attempt+1});
+    //     });
+    // });
+    //
+    // app.post('/api/storeCaseAnswerMCQ', function (req, res) {
+    //     Answer.find({
+    //         //_id: req.body.values.answerid,
+    //         userid: req.body.values.authid,
+    //         date: req.body.values.date
+    //     }, function (err, answer) {
+    //         const timeTaken = req.body.values.timeLimit-req.body.values.seconds;
+    //         const newCaseQuestion = new QuestionAnswer({
+    //             question: req.body.values.question,
+    //             stem: req.body.values.stem,
+    //             type: req.body.values.type,
+    //             attachment: req.body.values.attachment,
+    //             pearl: req.body.values.pearl,
+    //             reference: req.body.values.reference,
+    //             mcq1: req.body.values.mcq1,
+    //             mcq2: req.body.values.mcq2,
+    //             mcq3: req.body.values.mcq3,
+    //             mcq4: req.body.values.mcq4,
+    //             mcq5: req.body.values.mcq5,
+    //             mcq6: req.body.values.mcq6,
+    //             check1: req.body.values.check1Stu,
+    //             check2: req.body.values.check2Stu,
+    //             check3: req.body.values.check3Stu,
+    //             check4: req.body.values.check4Stu,
+    //             check5: req.body.values.check5Stu,
+    //             check6: req.body.values.check6Stu,
+    //             timeTaken: timeTaken,
+    //             mark: req.body.values.mark,
+    //             score: req.body.values.score,
+    //         });
+    //         newCaseQuestion.save();
+    //         answer[0]['questions'].push(newCaseQuestion);
+    //         answer[0].save();
+    //     });
+    //     return res.send({ data: {}, message: "storeCaseMCQ success" });
+    // });
+    //
+    // app.post('/api/storeCaseAnswerOpenEnded', function (req, res) {
+    //     Answer.find({
+    //         // _id: req.body.values.answerid,
+    //         userid: req.body.values.authid,
+    //         date: req.body.values.date
+    //     }, function (err, answer) {
+    //         const timeTaken = req.body.values.timeLimit-req.body.values.seconds;
+    //         const newCaseQuestion = new QuestionAnswer({
+    //             question: req.body.values.question,
+    //             openEnded: req.body.values.openEnded,
+    //             stem: req.body.values.stem,
+    //             type: req.body.values.type,
+    //             attachment: req.body.values.attachment,
+    //             pearl: req.body.values.pearl,
+    //             reference: req.body.values.reference,
+    //             timeTaken: timeTaken,
+    //             mark: req.body.values.mark,
+    //             score: req.body.values.score,
+    //         });
+    //         newCaseQuestion.save();
+    //         answer[0]['questions'].push(newCaseQuestion);
+    //         answer[0].save();
+    //     });
+    //     return res.send({ data: {}, message: "storeCaseOpenEnded success" });
+    // });
+    //
+    // app.post('/api/gameCompleted', async (req, res) => {
+    //     Answer.update({userid: req.body.authid, date: req.body.date}, {completionStatus: true, score: req.body.score}, function (err, response) {
+    //     });
+    //     res.send("completion status updated");
+    // });
+
+    app.post('/api/completeGame', async(req, res) => {
+        const values = req.body.values;
+        console.log(values);
+        res.send(values);
     });
 };

@@ -1,66 +1,53 @@
 import React, { Component } from 'react';
 import { Button, Col } from 'react-bootstrap';
-import { bindAll } from 'lodash';
 import { connect } from 'react-redux';
-import { storeCaseAnswerOpenEnded } from '../../actions';
+import {addOpenEndedAnswerOfQuestion} from '../../actions';
 import ReactHtmlParser from 'react-html-parser';
 
 class OpenEndedAnswer extends Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            showResult: false,
-            authid: this.props.authid,
-            timeLimit: this.props.timeLimit,
-            date: this.props.date,
-            seconds: this.props.seconds,
-            mark: this.props.question.mark,
-            question: this.props.question.question,
-            stem: this.props.question.stem,
-            type: this.props.question.type,
-            attachment: this.props.question.attachment,
-            pearl: this.props.question.pearl,
-            reference: this.props.question.reference,
-            openEnded: this.props.openEnded,
-            score: this.props.score,
-        };
-
-        bindAll(this, 'renderContent', 'renderNextQuestion', 'nextQuestion');
-    }
+    state = {
+        showResult: false,
+        authid: this.props.authid,
+        timeLimit: this.props.timeLimit,
+        date: this.props.date,
+        seconds: this.props.seconds,
+        mark: this.props.question.mark,
+        question: this.props.question.question,
+        stem: this.props.question.stem,
+        type: this.props.question.type,
+        attachment: this.props.question.attachment,
+        pearl: this.props.question.pearl,
+        reference: this.props.question.reference,
+        openEnded: this.props.openEnded,
+        score: this.props.score,
+    };
 
     componentDidMount() {
-        this.props.storeCaseAnswerOpenEnded(this.state);
+        this.props.addOpenEndedAnswerOfQuestion(this.state);
         window.scrollTo(0, 0);
     }
 
-    renderContent() {
-        //if (!this.state.showResult) {
-            return (
-                <Col sm={11}>
-                    {/*<h3>You got 20 points!</h3><br />*/}
-                    <h4>
-                        <strong>Answer</strong> <br />
-                        <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{ReactHtmlParser(this.props.question.openEnded)}</h4> <br /><br />
+    renderContent = () => {
+        return (
+            <Col sm={11}>
+                <h4>
+                    <strong>Answer</strong> <br />
+                    <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{ReactHtmlParser(this.props.question.openEnded)}</h4> <br /><br />
 
-                        <strong>PEARL</strong> <br />
-                        <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{ReactHtmlParser(this.props.question.pearl)} </h4><br /><br />
+                    <strong>PEARL</strong> <br />
+                    <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{ReactHtmlParser(this.props.question.pearl)} </h4><br /><br />
 
-                        <strong>References</strong> <br />
-                        <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{ReactHtmlParser(this.props.question.reference)} </h4><br /><br />
+                    <strong>References</strong> <br />
+                    <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{ReactHtmlParser(this.props.question.reference)} </h4><br /><br />
 
-                    </h4>
-                    {this.renderNextQuestion()}
+                </h4>
+                {this.renderNextQuestion()}
 
-                </Col>
-            );
-        //}else{
-            //return <GameResults />
-        //}
+            </Col>
+        );
+    };
 
-    }
-
-    renderNextQuestion() {
+    renderNextQuestion = () => {
         if (this.props.question.id === this.props.totalQnNum + "") {
             return (
                 <Col smOffset={10}>
@@ -79,17 +66,17 @@ class OpenEndedAnswer extends Component {
                 </Col>
             );
         }
-    }
+    };
 
-    complete() {
+    complete = () => {
         this.props.updateScore(Math.round(this.props.score));
         this.props.handleViewScore();
-    }
+    };
 
-    nextQuestion() {
+    nextQuestion = () => {
         this.props.updateScore(Math.round(this.props.score));
         this.props.handleNextQuestion(parseFloat(this.props.question.id));
-    }
+    };
 
     render() {
         return (
@@ -100,10 +87,16 @@ class OpenEndedAnswer extends Component {
     }
 }
 
-function mapStateToProps2({ game}) {
+function mapStateToProps({ game}) {
     return {
         game
     };
 }
 
-export default connect(mapStateToProps2, { storeCaseAnswerOpenEnded })(OpenEndedAnswer);
+const mapDispatchToProps = dispatch => {
+    return {
+        addOpenEndedAnswerOfQuestion: (values) => dispatch(addOpenEndedAnswerOfQuestion(values))
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(OpenEndedAnswer);

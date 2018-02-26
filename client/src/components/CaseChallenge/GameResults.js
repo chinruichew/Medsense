@@ -1,32 +1,22 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
-import axios from 'axios';
 import BootstrapModal from '../UI/Modal/VettingBootstrapModal.js';
 import ReactHtmlParser from 'react-html-parser';
+import {connect} from "react-redux";
+import {completeGame} from "../../actions";
 
 class GameResults extends Component {
-    constructor(props){
-        super(props);
-        this.state={
-            vmShow:false,
-            points:0,
-        };
-    }
+    state = {
+        vmShow:false,
+        points:0,
+    };
 
     componentDidMount() {
         window.scrollTo(0, 0);
-        axios.post('/api/updateUserPoints', {
+        this.props.completeGame({
             score: this.props.score
-        }).then(res => {
-            this.setState({points: res.data.points})
-            this.checkLevel();
         });
-        axios.post('/api/gameCompleted', {
-            authid: this.props.authid,
-            date: this.props.date,
-            score: this.props.score,
-        });
-
+        this.checkLevel();
     }
 
     renderContent(){
@@ -56,7 +46,7 @@ class GameResults extends Component {
                 answer = obj.openEnded;
             }
             return (
-                <div>
+                <div key={index}>
                     <h3>Question {obj.id}</h3>
                     <h4 style={{whiteSpace: "pre-wrap", wordBreak: "keep-all"}}>
                         {ReactHtmlParser(obj.stem)}
@@ -139,4 +129,10 @@ class GameResults extends Component {
     }
 }
 
-export default GameResults;
+const mapDispatchToProps = dispatch => {
+    return {
+        completeGame: (values) => dispatch(completeGame(values))
+    }
+};
+
+export default connect(null, mapDispatchToProps)(GameResults);

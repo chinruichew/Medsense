@@ -2,54 +2,48 @@ import React, { Component } from 'react';
 import { Button, Col } from 'react-bootstrap';
 import { bindAll } from 'lodash';
 import { connect } from 'react-redux';
-import { storeCaseAnswerMCQ } from '../../actions';
+import {addMCQAnswerOfQuestion} from '../../actions';
 import ReactHtmlParser from 'react-html-parser';
 
 class MCQAnswers extends Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            showResult: false,
-            answerCount: 0,
-            mcqAnswer: "",
-            stuCorrectAnswerCount: 0,
-            score: 0,
-            authid: this.props.authid,
-            mark: this.props.question.mark,
-            question: this.props.question.question,
-            stem: this.props.question.stem,
-            type: this.props.question.type,
-            attachment: this.props.question.attachment,
-            pearl: this.props.question.pearl,
-            reference: this.props.question.reference,
-            mcq1: this.props.question.mcq1,
-            mcq2: this.props.question.mcq2,
-            mcq3: this.props.question.mcq3,
-            mcq4: this.props.question.mcq4,
-            mcq5: this.props.question.mcq5,
-            mcq6: this.props.question.mcq6,
-            check1Stu: this.props.check1Stu,
-            check2Stu: this.props.check2Stu,
-            check3Stu: this.props.check3Stu,
-            check4Stu: this.props.check4Stu,
-            check5Stu: this.props.check5Stu,
-            check6Stu: this.props.check6Stu,
-            timeLimit: this.props.timeLimit,
-            date: this.props.date,
-            seconds: this.props.seconds,
-        };
-
-        bindAll(this, 'renderContent', 'getMCQAnswer', 'renderNextQuestion', 'nextQuestion');
-    }
+    state = {
+        showResult: false,
+        answerCount: 0,
+        mcqAnswer: "",
+        stuCorrectAnswerCount: 0,
+        score: 0,
+        authid: this.props.authid,
+        mark: this.props.question.mark,
+        question: this.props.question.question,
+        stem: this.props.question.stem,
+        type: this.props.question.type,
+        attachment: this.props.question.attachment,
+        pearl: this.props.question.pearl,
+        reference: this.props.question.reference,
+        mcq1: this.props.question.mcq1,
+        mcq2: this.props.question.mcq2,
+        mcq3: this.props.question.mcq3,
+        mcq4: this.props.question.mcq4,
+        mcq5: this.props.question.mcq5,
+        mcq6: this.props.question.mcq6,
+        check1Stu: this.props.check1Stu,
+        check2Stu: this.props.check2Stu,
+        check3Stu: this.props.check3Stu,
+        check4Stu: this.props.check4Stu,
+        check5Stu: this.props.check5Stu,
+        check6Stu: this.props.check6Stu,
+        timeLimit: this.props.timeLimit,
+        date: this.props.date,
+        seconds: this.props.seconds,
+    };
 
     componentDidMount() {
         this.getMCQAnswer();
         window.scrollTo(0, 0);
-        this.props.storeCaseAnswerMCQ(this.state);
+        this.props.addMCQAnswerOfQuestion(this.state);
     }
 
-    getMCQAnswer() {
+    getMCQAnswer = () => {
         let answer = "";
         let answerCount = 0;
         let stuCorrectCount = 0;
@@ -139,10 +133,10 @@ class MCQAnswers extends Component {
             this.setState({score: Math.round(finalScore)});
         }
 
-    }
+    };
 
 
-    renderContent() {
+    renderContent = () => {
         //if (!this.state.showResult) {
             return (
                 <Col sm={11}>
@@ -166,9 +160,9 @@ class MCQAnswers extends Component {
         //     return <GameResults />
         // }
 
-    }
+    };
 
-    renderNextQuestion() {
+    renderNextQuestion = () => {
         if (this.props.question.id === this.props.totalQnNum + "") {
             return (
                 <Col smOffset={10}>
@@ -187,17 +181,17 @@ class MCQAnswers extends Component {
                 </Col>
             );
         }
-    }
+    };
 
-    complete() {
+    complete = () => {
         this.props.updateScore(this.state.score);
         this.props.handleViewScore();
-    }
+    };
 
-    nextQuestion() {
+    nextQuestion = () => {
         this.props.updateScore(this.state.score);
         this.props.handleNextQuestion(parseFloat(this.props.question.id));
-    }
+    };
 
     render() {
         return (
@@ -208,10 +202,16 @@ class MCQAnswers extends Component {
     }
 }
 
-function mapStateToProps2({ game}) {
+function mapStateToProps({ game}) {
     return {
         game
     };
 }
 
-export default connect(mapStateToProps2, { storeCaseAnswerMCQ })(MCQAnswers);
+const mapDispatchToProps = dispatch => {
+    return {
+        addMCQAnswerOfQuestion: (values) => dispatch(addMCQAnswerOfQuestion(values))
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MCQAnswers);
