@@ -410,15 +410,16 @@ class Main extends Component {
 
     render() {
         const overviewTitle = (
-            <span style={{fontSize:'150%'}}><center>▽ Case Overview</center></span>
+            <span className="title"><center>Case Overview</center></span>
         );
 
         const questionTitle = (
-            <span style={{fontSize:'150%'}}><center>▽ Case Questions</center></span>
+            <span className="title"><center>Case Questions</center></span>
         );
         const PDPA = (
-            <span style={{fontSize:'150%'}}><center>▽ Tell Us Who You Are</center></span>
+            <span className="title"><center>Tell Us Who You Are</center></span>
         );
+        const storySoFar = (<span className="story-title"><center>Story So Far</center></span>);
         let vmClose = () => this.setState({ vmShow: false });
         let vmConfirmClose = () => this.setState({ vmConfirm: false });
         let questionNodes = this.state.qnData.map((obj, index) => {
@@ -482,7 +483,7 @@ class Main extends Component {
 
         return (
 
-            <div id="main">
+            <div>
                 <center>
                 <table>
                     <tr>
@@ -491,26 +492,46 @@ class Main extends Component {
                     </tr>
                 </table>
                 </center>
-                <div className="story">
+                <center>*Expand/collapse the headers to view/hide case details*</center>
+                <center><a href="./MedSense WorkPlan.pdf" target="_blank">Click here for CASE TEMPLATE</a></center>
 
-                    <p className="story-title">Story So Far</p>
-                    <p style={{textDecorationLine: "underline", margin: "0", fontSize: "200%"}}>Case Scenario</p>
-                    <div className="row" style={{whiteSpace:"pre-wrap", paddingLeft: "5%", fontSize:"120%"}}>
-                        {ReactHtmlParser(this.state.scenario)}
-                    </div>
-                    <br/><br/>
-                    <p style={{textDecorationLine: "underline", margin: "0", fontSize: "200%"}}>Case Questions</p>
-                    <div className="row" style={{whiteSpace:"pre-wrap", paddingLeft: "5%"}}>{stems}</div>
-                    <br/><br/>
+                    {/*<div className="story">*/}
 
-                </div>
+                    {/*<p className="story-title">Story So Far</p>*/}
+                    {/*<p style={{textDecorationLine: "underline", margin: "0", fontSize: "200%"}}>Case Scenario</p>*/}
+                    {/*<div className="row" style={{whiteSpace:"pre-wrap", paddingLeft: "5%", fontSize:"120%"}}>*/}
+                        {/*{ReactHtmlParser(this.state.scenario)}*/}
+                    {/*</div>*/}
+                    {/*<br/><br/>*/}
+                    {/*<p style={{textDecorationLine: "underline", margin: "0", fontSize: "200%"}}>Case Questions</p>*/}
+                    {/*<div className="row" style={{whiteSpace:"pre-wrap", paddingLeft: "5%"}}>{stems}</div>*/}
+                    {/*<br/><br/>*/}
+
+                {/*</div>*/}
+                <div id="main">
+                <PanelGroup accordion style={{marginTop: "2%", position: "fixed", width: "96%"}}>
+                    <Panel eventKey="1" bsStyle="info">
+                        <Panel.Heading>
+                            <Panel.Title toggle>{storySoFar}</Panel.Title>
+                        </Panel.Heading>
+                        <Panel.Body collapsible>
+                            <p style={{textDecorationLine: "underline", margin: "0", fontSize: "200%", fontFamily: "Great Vibes", letterSpacing: "0.1em"}}>Case Scenario</p>
+                            <div className="row" style={{whiteSpace:"pre-wrap", paddingLeft: "5%", fontSize:"120%"}}>
+                                {ReactHtmlParser(this.state.scenario)}
+                            </div>
+                            <br/><br/>
+                            <p style={{textDecorationLine: "underline", margin: "0", fontSize: "200%", fontFamily: "Great Vibes", letterSpacing: "0.1em"}}>Case Questions</p>
+                            <div className="row" style={{whiteSpace:"pre-wrap", paddingLeft: "5%"}}>{stems}</div>
+                            <br/><br/>
+                        </Panel.Body>
+                    </Panel>
+                </PanelGroup>
+
+                <br/><br/><br/><br/>
 
                 <form action="/api/uploadCase" method="post" className="case-area">
-                    <center>*Expand/collapse the headers to view/hide case details*</center>
-                    <center><a href="./MedSense WorkPlan.pdf" target="_blank">Click here for CASE TEMPLATE</a></center>
-
-                    <PanelGroup accordion style={{marginTop: "2%"}}>
-                        <Panel bsStyle="info">
+                    <PanelGroup accordion style={{marginTop: "3%"}}>
+                        <Panel eventKey="1" bsStyle="info">
                             <Panel.Heading>
                             <Panel.Title toggle>{overviewTitle}</Panel.Title>
                             </Panel.Heading>
@@ -580,7 +601,7 @@ class Main extends Component {
                             <br />
                             <h4>
                             Should you wish to withdraw your consent for us to contact you for the purposes stated above, please notify us in writing to [email]. We will then remove your personal information from our database.
-                                <br/>
+                                <br/><br/>
                             Please allow at least 7 business days for your withdrawal of consent to take effect.
                             </h4>
                             </Panel.Body>
@@ -635,7 +656,7 @@ class Main extends Component {
                         </BootstrapModal.Footer>
                     </BootstrapModal>
                 </form>
-
+                </div>
             </div>
         );
     }

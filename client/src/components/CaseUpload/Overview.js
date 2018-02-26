@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bindAll } from 'lodash';
 import { FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 import ReactQuill from 'react-quill';
-
+import axios from 'axios';
 import './Upload.css';
 import 'react-quill/dist/quill.snow.css';
 
@@ -30,6 +30,13 @@ class Overview extends Component {
             'handleApproachChange', 'handleScenarioChange', 'handleLearningChange', 'setSubspeciality', 'update');
     }
 
+    componentDidMount(){
+        axios.post('/api/fetchApproach', {
+            // values: this.state
+        }).then(res => {
+            console.log(res);
+        });
+    }
 
     update(value, key) {
         let details = {

@@ -535,7 +535,7 @@ class Question extends Component {
     }
 
     checkQ1(){
-        if (this.props.id==1){
+        if (parseInt(this.props.id, 10)===1){
             return;
         }
         return (
