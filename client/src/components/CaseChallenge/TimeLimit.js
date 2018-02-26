@@ -46,7 +46,7 @@ class TimeLimit extends Component {
                     date = makeUnique();
                     this.setState({date: date});
                 }
-                this.props.setGameOverview({
+                this.props.startGame({
                     case: this.state.challenge,
                     score: this.state.score
                 });
@@ -218,7 +218,7 @@ function mapStateToProps({ game, auth}) {
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchGameById: (id) => dispatch(fetchGameById(id))
+        fetchGameById: (id) => dispatch(fetchGameById(id)),
     }
 };
 

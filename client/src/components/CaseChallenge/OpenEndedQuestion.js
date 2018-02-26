@@ -99,7 +99,7 @@ class OpenEndedQuestion extends Component {
         if (!this.state.showAnswers) {
             this.pauseTimer();
         }
-        var score = "toBeFilled";
+        let score = "toBeFilled";
         axios.post('/api/matchNLP', {
             id: this.props.question._id,
             values: this.state
@@ -124,7 +124,6 @@ class OpenEndedQuestion extends Component {
                 </Col>
             );
         }
-        return;
     }
 
     renderStorySoFar(){
@@ -202,7 +201,6 @@ class OpenEndedQuestion extends Component {
 
     handleOpenEndedChange(value){
         this.setState({ openEnded: value });
-        // console.log(this.state.openEnded);
     }
 
     renderContent() {
@@ -277,6 +275,9 @@ class OpenEndedQuestion extends Component {
                         handleNextQuestion={this.props.handleNextQuestion}
                         questionStart={this.state.questionStart}
                         questionEnd={new Date()}
+                        questionId={this.props.question._id}
+                        nlpAccuracy={(this.state.score/this.state.mark*100).toFixed(2)}
+                        questionNumber={this.props.question.id}
                     />}
                 </Row>
             </div>

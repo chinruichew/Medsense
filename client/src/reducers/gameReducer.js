@@ -14,7 +14,8 @@ const setGameOverview = (state, action) => {
         gameOverview: {
             case: action.values.case._id,
             score: action.values.score,
-            startTime: new Date()
+            startTime: new Date(),
+            attempt: action.values.attempt
         }
     };
     return {
@@ -45,6 +46,8 @@ const addOpenEndedAnswerOfQuestion = (state, action) => {
     delete values['authid'];
     delete values['date'];
     delete values['showResult'];
+    delete values['type'];
+    delete values['question'];
     const openEndedAnswers = state.openEndedAnswers;
     openEndedAnswers.push(values);
     const updatedState = {
@@ -69,6 +72,8 @@ const addMCQAnswerOfQuestion = (state, action) => {
     delete values['authid'];
     delete values['date'];
     delete values['showResult'];
+    delete values['type'];
+    delete values['question'];
     delete values['mcq1'];
     delete values['mcq2'];
     delete values['mcq3'];
@@ -90,7 +95,8 @@ const setGameFinalDetails = (state, action) => {
     const gameOverview = {
         ...state.gameOverview,
         score: action.values.score,
-        endTime: new Date()
+        endTime: new Date(),
+        xp: action.values.xp
     };
     const updatedState = {
         ...state,

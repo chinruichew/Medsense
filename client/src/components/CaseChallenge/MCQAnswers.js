@@ -36,13 +36,14 @@ class MCQAnswers extends Component {
         date: this.props.date,
         seconds: this.props.seconds,
         questionStart: this.props.questionStart,
-        questionEnd: this.props.questionEnd
+        questionEnd: this.props.questionEnd,
+        questionId: this.props.questionId,
+        questionNumber: this.props.questionNumber
     };
 
     componentDidMount() {
         this.getMCQAnswer();
         window.scrollTo(0, 0);
-        console.log(this.state);
         this.props.addMCQAnswerOfQuestion(this.state);
     }
 

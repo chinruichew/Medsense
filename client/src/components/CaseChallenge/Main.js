@@ -4,7 +4,7 @@ import * as ReactGA from "react-ga";
 import SearchBySpeciality from './SearchBySpeciality';
 import TimeLimit from "./TimeLimit";
 import {connect} from "react-redux";
-import {fetchRandomCase, setGameOverview} from "../../actions";
+import {fetchRandomCase, startGame} from "../../actions";
 import SearchByApproach from './SearchByApproach';
 import {Redirect} from "react-router-dom";
 
@@ -116,9 +116,9 @@ class Main extends Component {
                     return;
                 default:
                     if (this.state.random){
-                        return <TimeLimit setGameOverview={this.props.setGameOverview} case={this.props.randomCase}/>
+                        return <TimeLimit startGame={this.props.startGame} case={this.props.randomCase}/>
                     } else {
-                        return <TimeLimit setGameOverview={this.props.setGameOverview} case={this.state.game}/>
+                        return <TimeLimit startGame={this.props.startGame} case={this.state.game}/>
                     }
 
             }
@@ -178,7 +178,7 @@ function mapStateToProps({randomCase, auth}) {
 const mapDispatchToProps = dispatch => {
     return {
         fetchRandomCase: () => dispatch(fetchRandomCase()),
-        setGameOverview: (values) => dispatch(setGameOverview(values))
+        startGame: (values) => dispatch(startGame(values))
     }
 };
 

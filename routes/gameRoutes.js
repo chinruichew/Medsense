@@ -86,6 +86,19 @@ module.exports = app => {
     app.post('/api/completeGame', async(req, res) => {
         const values = req.body.values;
         console.log(values);
+        // Insert user id
+        // Find wrong answer count
         res.send(values);
+    });
+
+    app.post('/api/getGameAttempt', async(req, res) => {
+        const gameCase = req.body.case;
+        let attempt = 0;
+        Answer.findOne({ caseid: gameCase._id, completionStatus: true, userid: req.session.user._id}).sort({attempt:-1}).exec(function(err, completedCase) {
+            if(completedCase) {
+                attempt = completedCase.attempt;
+            }
+            res.send('' + (attempt + 1));
+        });
     });
 };

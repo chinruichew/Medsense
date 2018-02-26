@@ -93,7 +93,6 @@ class MCQquestion extends Component {
     }
 
     selectDone() {
-        // this.props.storeCaseAnswerMCQ(this.state);
         const { showAnswers } = this.state;
         const { showNextButton } = this.state;
         if (!showAnswers) {
@@ -327,6 +326,8 @@ class MCQquestion extends Component {
                         check5Stu={this.state.check5Stu} check6Stu={this.state.check6Stu}
                         questionStart={this.state.questionStart}
                         questionEnd={new Date()}
+                        questionId={this.props.question._id}
+                        questionNumber={this.props.question.id}
                     />}
                 </Row>
             </div>

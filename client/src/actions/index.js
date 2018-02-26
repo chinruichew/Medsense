@@ -190,10 +190,26 @@ export const fetchConstantTypes = () => async dispatch => {
     dispatch({ type: FETCH_CONSTANT_TYPES, payload: res.data });
 };
 
-export const setGameOverview = (values) => {
+export const setGameOverview = (values, attempt) => {
     return {
         type: SET_GAME_OVERVIEW,
-        values
+        values: {
+            ...values,
+            attempt
+        }
+    };
+};
+
+export const startGame = (values) => {
+    return dispatch => {
+        axios.post('/api/getGameAttempt', {
+            case: values.case
+        }).then(res => {
+            const attempt = res.data;
+            dispatch(setGameOverview(values, attempt));
+        }).catch(err => {
+            console.log(err);
+        });
     };
 };
 

@@ -21,7 +21,10 @@ class OpenEndedAnswer extends Component {
         openEnded: this.props.openEnded,
         score: this.props.score,
         questionStart: this.props.questionStart,
-        questionEnd: this.props.questionEnd
+        questionEnd: this.props.questionEnd,
+        questionId: this.props.questionId,
+        nlpAccuracy: this.props.nlpAccuracy,
+        questionNumber: this.props.questionNumber
     };
 
     componentDidMount() {
