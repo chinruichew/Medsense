@@ -240,8 +240,13 @@ export const setGameFinalDetails = (values) => {
 export const completeGame = (values) => {
     return (dispatch, getState) => {
         dispatch(setGameFinalDetails(values));
+        const gameValues = {
+            gameOverview: getState().game.gameOverview,
+            openEndedAnswers: getState().game.openEndedAnswers,
+            mcqAnswers: getState().game.mcqAnswers,
+        };
         axios.post('/api/completeGame', {
-            values: getState().game
+            values: gameValues
         }).then(res => {
             console.log(res);
         }).catch(err => {

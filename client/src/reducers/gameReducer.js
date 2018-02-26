@@ -12,7 +12,7 @@ const initialState = {
 const setGameOverview = (state, action) => {
     const updatedState = {
         gameOverview: {
-            case: action.values.case,
+            case: action.values.case._id,
             score: action.values.score,
             startTime: new Date()
         }
@@ -63,8 +63,10 @@ const setGameFinalDetails = (state, action) => {
         endTime: new Date()
     };
     const updatedState = {
+        ...state,
         gameOverview: gameOverview
     };
+    delete updatedState['gameCase'];
     return {
         ...state,
         ...updatedState
