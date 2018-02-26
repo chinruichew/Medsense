@@ -22,6 +22,7 @@ const cors = require("cors");
 const cluster = require("cluster");
 const https = require('https');
 const fs = require('fs-extra');
+const aws = require('aws-sdk');
 
 const keys = require('./config/keys');
 require('./models/User');
@@ -48,7 +49,6 @@ console.log = function(){
 // console.log(encryptedKeys);
 
 /* Start of MongoDB Connection */
-const aws = require('aws-sdk');
 aws.config.update({
     accessKeyId: keys.awsAccessKeyId,
     secretAccessKey: keys.awsSecretKey

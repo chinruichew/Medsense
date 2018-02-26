@@ -16,7 +16,7 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "deploy": "npm run update && npm run build --prefix client --verbose && git add . --verbose && git commit -m \"aws deploy\" --verbose && git pull --verbose && git push origin master --verbose && eb deploy --verbose && eb open --verbose",
     "update": "npm install --verbose && npm update --verbose && cd client && npm install --verbose && npm update --verbose",
-    "quick-deploy": "git add . --verbose && git commit -m \"aws deploy\" --verbose && git pull --verbose && git push origin master --verbose && eb deploy --verbose && eb open --verbose"
+    "quick-deploy": "eb deploy --verbose && eb open --verbose"
   },
   "repository": {
     "type": "git",
@@ -75,6 +75,7 @@
     "moment": "^2.20.1",
     "moment-timezone": "^0.5.14",
     "mongoose": "5.0.6",
+    "mongoose-batches": "0.0.1",
     "mongoose-deep-populate": "^3.1.1",
     "morgan": "^1.9.0",
     "multiparty": "^4.1.3",
