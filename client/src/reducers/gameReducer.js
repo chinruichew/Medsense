@@ -35,7 +35,8 @@ const fetchGame = (state, action) => {
 
 const addOpenEndedAnswerOfQuestion = (state, action) => {
     const values = {
-        ...action.values
+        ...action.values,
+        studentAnswer: action.values.openEnded
     };
     delete values['stem'];
     delete values['attachment'];
@@ -48,6 +49,7 @@ const addOpenEndedAnswerOfQuestion = (state, action) => {
     delete values['showResult'];
     delete values['type'];
     delete values['question'];
+    delete values['openEnded'];
     const openEndedAnswers = state.openEndedAnswers;
     openEndedAnswers.push(values);
     const updatedState = {
@@ -74,6 +76,7 @@ const addMCQAnswerOfQuestion = (state, action) => {
     delete values['showResult'];
     delete values['type'];
     delete values['question'];
+    delete values['mcqAnswer'];
     delete values['mcq1'];
     delete values['mcq2'];
     delete values['mcq3'];

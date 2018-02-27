@@ -4,7 +4,6 @@ const { Schema } = mongoose;
 
 const openEndedAnswerSchema = new Schema({
     id: { type: String, default: "" },
-    case: { type: Schema.Types.ObjectId, ref: 'cases' },
     mark: { type: String, default: "" },
     score: { type: Number, default: 0 },
     startTime: { type: Date, default: null},

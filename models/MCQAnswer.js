@@ -4,7 +4,6 @@ const { Schema } = mongoose;
 
 const mcqAnswerSchema = new Schema({
     id: { type: String, default: "" },
-    case: { type: Schema.Types.ObjectId, ref: 'cases' },
     check1: { type: Boolean, default: false },
     check2: { type: Boolean, default: false },
     check3: { type: Boolean, default: false },
@@ -17,8 +16,7 @@ const mcqAnswerSchema = new Schema({
     endTime: { type: Date, default: null},
     question: { type: Schema.Types.ObjectId, ref: 'questions' },
     answerCount: { type: Number, default: 0 },
-    correctAnswerCount: { type: Number, default: 0 },
-    wrongAnswerCount: { type: Number, default: 0 }
+    correctAnswerCount: { type: Number, default: 0 }
 });
 
 module.exports = mongoose.model('mcqAnswers', mcqAnswerSchema);
