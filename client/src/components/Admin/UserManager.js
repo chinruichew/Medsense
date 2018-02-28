@@ -8,6 +8,7 @@ import CaseManager from './CaseManager';
 import './Admin.css';
 import NewUser from './NewUser';
 import DeleteUser from './DeleteUser';
+import { fetchAdminUsers } from '../../actions';
 
 class UserManager extends Component {
     constructor(props) {
@@ -17,49 +18,43 @@ class UserManager extends Component {
         };
     }
 
+    componentWillMount() {
+        this.props.fetchAdminUsers();
+    }
+
     renderContent() {
         switch (this.state.auth) {
             case false:
                 return <Redirect to='/' />;
             default:
-                switch (this.props.cases) {
+                switch (this.props.adminUsers) {
                     case null:
                         return;
                     default:
-                        if (this.state.display === '') {
-                            return (
-                                <Admin />
-                            );
-                        } else if (this.state.display === 'case') {
-                            return (
-                                <CaseManager />
-                            );
-                        } else {
-                            return (
-                                <div className="container-fluid">
-                                    <div className="row">
-                                        
-                                        
-                                        <div className='col-sm-9 col-sm-offset-1'>
-                                            <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
-                                                <Tab eventKey={1} title="Add New User">
-                                                    <br />
-                                                    <NewUser />
-                                                    <br />
-                                                </Tab>
-                                                <Tab eventKey={2} title="Delete User">
-                                                    <br />
-                                                    <DeleteUser />
-                                                </Tab>
-                                            </Tabs>
-                                        </div>
+                        return (
+                            <div className="container-fluid">
+                                <div className="row">
+
+
+                                    <div className='col-sm-9 col-sm-offset-1'>
+                                        <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
+                                            <Tab eventKey={1} title="Add New User">
+                                                <br />
+                                                <NewUser />
+                                                <br />
+                                            </Tab>
+                                            <Tab eventKey={2} title="Delete User">
+                                                <br />
+                                                <DeleteUser />
+                                            </Tab>
+                                        </Tabs>
                                     </div>
-                                    <br />
-                                    {/* Insert User Manager code here */}
-                                    <br />
                                 </div>
-                            );
-                        }
+                                <br />
+                                {/* Insert User Manager code here */}
+                                <br />
+                            </div>
+                        );
                 }
         }
     }
@@ -95,4 +90,4 @@ function mapStateToProps({ auth, adminUsers }) {
 
 
 
-export default connect(mapStateToProps)(UserManager);
+export default connect(mapStateToProps, { fetchAdminUsers })(UserManager);
