@@ -7,11 +7,10 @@ class ContributionLeaderboard extends Component {
             case null:
                 return;
             default:
-                console.log(this.props.leaders);
                 const leadersToMap = this.props.leaders;
                 const leaders = Object.keys(leadersToMap).map(function(key) {
                     return(
-                        <div className="col-md-12">
+                        <div key={key} className="col-md-12">
                             <div className="col-md-offset-2 col-md-8">
                                 <div className="col-md-6 text-left leader_text_div">
                                     <p className="leader_text_font">{key}</p>

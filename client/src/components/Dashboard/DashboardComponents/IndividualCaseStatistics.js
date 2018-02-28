@@ -17,8 +17,8 @@ class IndividualCaseStatistics extends Component {
             if(answer._id === answerId) {
                 let totalScore = 0;
                 let totalMark = 0;
-                const questions = answer.caseid.questions;
-                const caseStatsDisplay = answer.questions.map((question, index) => {
+                const questions = answer.case.questions;
+                const caseStatsDisplay = questions.map((question, index) => {
                     let answers = '';
                     if(question.type === this.props.constants.QUESTION_TYPE_OPEN_ENDED) {
                         answers = ReactHtmlParser(question.openEnded);
@@ -75,7 +75,7 @@ class IndividualCaseStatistics extends Component {
             default:
                 const selectOptions = this.state.answers.map((answer, index) => {
                     return(
-                        <option key={answer._id} value={answer._id}>{answer.title + ' (Attempt ' + answer.attempt + ')'}</option>
+                        <option key={answer._id} value={answer._id}>{answer.case.title + ' (Attempt ' + answer.attempt + ')'}</option>
                     );
                 });
                 return(

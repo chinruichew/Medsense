@@ -10,37 +10,31 @@ import BootstrapModal from '../UI/Modal/UploadBootstrapModal.js';
 import './Upload.css';
 
 class Main extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            qnData: [],
-            title: '',
-            difficulty: "Select One",
-            speciality: "Select One",
-            // subspeciality: "Select One",
-            // approach: "Select One",
-            subspeciality: null,
-            approach: null,
-            scenario: '',
-            learning: '',
-            authid: this.props.authid,
-            authname: this.props.authname,
-            author: "",
-        };
-        bindAll(this, 'validFileType', 'addQuestion', 'saveChanges', 'handleUpdateOverview', 'handleUpdateQuestion', 'handleDeleteQuestion', 'isValidNRIC');
-    }
+    state = {
+        qnData: [],
+        title: '',
+        difficulty: "Select One",
+        speciality: "Select One",
+        subspeciality: null,
+        approach: null,
+        scenario: '',
+        learning: '',
+        authid: this.props.authid,
+        authname: this.props.authname,
+        author: "",
+    };
 
-    isValidNRIC(theNric) {
+    isValidNRIC = (theNric) => {
         const upperCaseNric = theNric.toUpperCase();
         return new RegExp(/^.*[STFG]\d{7}[A-Z].*$/).test(upperCaseNric);
-    }
+    };
 
-    handleAuthorChange(e) {
+    handleAuthorChange = (e) => {
         const value = e.target.value;
         this.setState({ author: value });
-    }
+    };
 
-    addQuestion() {
+    addQuestion = () => {
         let len = this.state.qnData.length;
         this.setState({
             qnData: this.state.qnData.concat(
@@ -79,10 +73,9 @@ class Main extends Component {
                 }
             ),
         });
+    };
 
-    }
-
-    saveChanges(e) {
+    saveChanges = (e) => {
         e.preventDefault();
         if (this.state.title === '') {
             this.setState({ vmShow: true, error: "Case Overview: Please fill in the Case Title!" });
@@ -232,7 +225,7 @@ class Main extends Component {
                 }
             }
         }
-    }
+    };
 
     uploadFile = (file, caseID, qID, objID) => {
         const formData = new FormData();
@@ -266,19 +259,19 @@ class Main extends Component {
         });
     };
 
-    validFileType(file) {
+    validFileType = (file) => {
         const fileTypes = [
             'image/jpeg',
             'image/pjpeg',
             'image/png'
-        ]
+        ];
         for(let i = 0; i < fileTypes.length; i++) {
             if(file.type === fileTypes[i]) {
                 return true;
             }
         }
         return false;
-    }
+    };
 
     submitCase = (e) => {
         axios.post('/api/uploadCase', {
@@ -301,10 +294,11 @@ class Main extends Component {
         });
     };
 
-    handleDeleteQuestion(id) {
+    handleDeleteQuestion = (id) => {
         let questions = this.state.qnData;
         let newQuestions = [];
         let offset = 1;
+        console.log(questions);
         questions.forEach(function (obj) {
             if (obj.id > id) {
                 newQuestions = newQuestions.concat(
@@ -350,9 +344,9 @@ class Main extends Component {
 
         this.setState({ qnData: newQuestions});
 
-    }
+    };
 
-    handleUpdateQuestion(details, id) {
+    handleUpdateQuestion = (details, id) => {
         let questions = this.state.qnData;
         questions.forEach(function (obj) {
             if (obj.id === id) {
@@ -389,9 +383,9 @@ class Main extends Component {
             }
         });
         this.setState({ qnData: questions });
-    }
+    };
 
-    handleUpdateOverview(details) {
+    handleUpdateOverview = (details) => {
         this.setState({
             title: details.title,
             difficulty: details.difficulty,
@@ -401,12 +395,7 @@ class Main extends Component {
             scenario: details.scenario,
             learning: details.learning,
         });
-    }
-
-    redirect(){
-        window.location = '/home';
-    }
-
+    };
 
     render() {
         const overviewTitle = (
@@ -422,6 +411,7 @@ class Main extends Component {
         const storySoFar = (<span className="story-title"><center>Story So Far</center></span>);
         let vmClose = () => this.setState({ vmShow: false });
         let vmConfirmClose = () => this.setState({ vmConfirm: false });
+        console.log(this.state.qnData);
         let questionNodes = this.state.qnData.map((obj, index) => {
             return (
                 <Question
@@ -462,7 +452,7 @@ class Main extends Component {
         });
 
         let stems = this.state.qnData.map((obj, index) => {
-            let stem
+            let stem;
             if (obj.id===1){
                 stem='';
             } else {
@@ -652,7 +642,7 @@ class Main extends Component {
                             <p>Your case has been uploaded successfully! You will be redirected to the Homepage.</p>
                         </BootstrapModal.Body>
                         <BootstrapModal.Footer>
-                            <Button onClick={this.redirect}>OK</Button>
+                            <Button onClick={(e) => window.location = '/home'}>OK</Button>
                         </BootstrapModal.Footer>
                     </BootstrapModal>
                 </form>

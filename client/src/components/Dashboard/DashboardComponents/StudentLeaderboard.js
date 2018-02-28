@@ -9,7 +9,7 @@ class StudentLeaderboard extends Component {
             default:
                 const leaders = this.props.leaders.map(leader => {
                     return(
-                        <div className="col-md-12">
+                        <div key={leader._id} className="col-md-12">
                             <div className="col-md-offset-2 col-md-8">
                                 <div className="col-md-6 text-left leader_text_div">
                                     <p className="leader_text_font">{leader.username}</p>

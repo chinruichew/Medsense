@@ -59,34 +59,47 @@ module.exports = app => {
     });
 
     app.get('/api/getIndividualAnswers', function(req, res) {
-        Answer.find({completionStatus: true}).populate({
-            path: 'caseid',
+        AnswerOverview.find().populate({
+            path: 'case',
             model: 'cases',
             populate: {
                 path: 'questions',
                 model: 'questions'
             }
         }).populate({
-            path: 'userid',
+            path: 'user',
             model: 'users'
         }).populate({
-            path: 'questions',
-            model: 'questionanswers'
-        }).exec(function(error, answers) {
+            path: 'mcqAnswers',
+            model: 'mcqAnswers'
+        }).populate({
+            path: 'openEndedAnswers',
+            model: 'openEndedAnswers'
+        }).exec(function(err, answers) {
+            if(err) {
+                throw err;
+            }
+
             let filteredAnswers = [];
             for(let i = 0; i < answers.length; i++) {
                 const answer = answers[i];
-                if(String(answer.userid._id) === req.session.user._id) {
+                if(String(answer.user._id) === req.session.user._id) {
                     filteredAnswers.push(answer);
                 }
             }
+
+            // Do not delete - production logging
+            console.log('Student case statistics:' + '\n' + filteredAnswers);
+
             res.send(filteredAnswers);
         });
     });
 
     app.post('/api/completeGame', async(req, res) => {
         const values = req.body.values;
-        console.log(values);
+
+        // Do not erase - Production Logging
+        console.log('Case Challenge Final details:' + '\n' + values);
 
         // Insert MCQ Answers
         MCQAnswer.collection.insert(values.mcqAnswers, async(err, mcqAnswers) => {
