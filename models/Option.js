@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
-const mcqSchema = new Schema({
+const optionSchema = new Schema({
     id: { type: String, default: "" },
     question: { type: Schema.Types.ObjectId, ref: 'questions' },
     case: { type: Schema.Types.ObjectId, ref: 'cases' },
@@ -10,8 +10,8 @@ const mcqSchema = new Schema({
     check: { type: Boolean, default: false },
 });
 
-const mcqModel = mongoose.model('mcq', mcqSchema);
+const optionModel = mongoose.model('options', optionSchema);
 
-module.exports = mcqModel;
+module.exports = optionModel;
 
 
