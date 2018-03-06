@@ -7,8 +7,16 @@ class SearchByApproach extends Component {
     state = {
         showApproachTable: false,
         approach: null,
-        approachCase: null
+        approachCase: null,
+        approachList: []
     };
+
+    componentDidMount(){
+        axios.post('/api/fetchCasesApproach', {
+        }).then(res => {
+            this.setState({approachList:res.data.sort()});
+        });
+    }
 
     handleReturnCase = (game) => {
         this.props.handleReturnCase(game);
@@ -32,31 +40,23 @@ class SearchByApproach extends Component {
             approach: this.state.approach
         }).then(res => {
             if(res.data.length > 0) {
+                const approaches = this.state.approach;
                 const approachCase = res.data.map(approachCase => {
-                    const approaches = this.state.approach;
-                    //console.log(approaches);
-                    let sameElementCount=0;
+                    let same = false;
                     let additionalApproaches = [];
                     for (let i=0; i<approachCase.approach.length; i++){
                         for (let j=0; j<approaches.length; j++){
                             if (approachCase.approach[i]===approaches[j]){
-                                sameElementCount += 1;
-                                //let index = additional.indexOf(approaches[j]);
-                                //console.log(index);
-                                //if (index !== -1) {
-                                // additional.slice(index, 1);
-                                //console.log(additional.splice(index, 1));
-                                //}
+                                same = true;
                             }
                         }
-                        if(sameElementCount === 0){
+                        if(!same){
                             additionalApproaches.push(approachCase.approach[i]);
-                            //console.log(additionalApproaches)
                         }
-                        sameElementCount = 0;
+                        same = true;
                     }
-                    let additionalApproach = "";
 
+                    let additionalApproach = "";
                     if(additionalApproaches.length === 0){
                         additionalApproach = "-";
                     } else {
@@ -73,8 +73,10 @@ class SearchByApproach extends Component {
                     }
                     specialities+=subspecialities[subspecialities.length-1];
 
-                    let dateTime = moment(approachCase.uploadTime).format('MMMM Do YYYY, h:mm:ss a');
-                    // console.log(additionalApproach);
+                    let dateTime = moment(approachCase.uploadTime).format('Do MMMM YYYY h:mm a');
+                    let date = dateTime.substring(0,dateTime.length-8);
+                    let time = dateTime.substring(dateTime.length-8,dateTime.length);
+
                     return(
                         <tr align="center" key={approachCase._id}>
                             <td>{approachCase.title}</td>
@@ -83,7 +85,7 @@ class SearchByApproach extends Component {
                             <td>{specialities}</td>
                             <td>{approachCase.difficulty}</td>
                             {/*<td>{approachCase.authorid.username}</td>*/}
-                            <td>{dateTime}</td>
+                            <td>{date}<br/>{time}</td>
                             <td><Button  type="button" bsStyle="primary" onClick={(e)=>this.handleReturnCase(approachCase)}>Try</Button></td>
                         </tr>
                     );
@@ -138,6 +140,9 @@ class SearchByApproach extends Component {
     };
 
     render(){
+        let approaches = this.state.approachList.map((obj, index) => {
+            return <option value={obj}>{obj}</option>;
+        });
         return(
             <div>
                 <FormGroup controlId="formControlsApproach" style={{ paddingTop: "0", paddingLeft: "7%" }}>
@@ -149,27 +154,9 @@ class SearchByApproach extends Component {
                     </ControlLabel>
                     <Row>
                         <Col sm={10}>
-                            <FormControl componentClass="select" size='10' value={this.state.approach} name="approach" onChange={(e) => this.handleApproachChange(e)} multiple>
+                            <FormControl componentClass="select" size='5' value={this.state.approach} name="approach" onChange={(e) => this.handleApproachChange(e)} multiple>
                                 <option value="Select All Relevant">Select All Relevant</option>
-                                <option value="Abdominal Pain">Abdominal Pain</option>
-                                <option value="Breathlessness">Breathlessness</option>
-                                <option value="Chest Pain">Chest Pain</option>
-                                <option value="Confusion">Confusion</option>
-                                <option value="Cough">Cough</option>
-                                <option value="Diarrhea">Diarrhea</option>
-                                <option value="Dizziness">Dizziness</option>
-                                <option value="Falls">Falls</option>
-                                <option value="Fever">Fever</option>
-                                <option value="Gastrointestinal bleed">Gastrointestinal bleed</option>
-                                <option value="Headache">Headache</option>
-                                <option value="Jaundice">Jaundice</option>
-                                <option value="Limb pain">Limb pain</option>
-                                <option value="Limb swelling">Limb swelling</option>
-                                <option value="Palpitations">Palpitations</option>
-                                <option value="Seizure">Seizure</option>
-                                <option value="Syncope">Syncope</option>
-                                <option value="Vomiting">Vomiting</option>
-                                <option value="Weakness">Weakness</option>
+                                {approaches}
                             </FormControl>
                         </Col>
                         <Col sm={2}>

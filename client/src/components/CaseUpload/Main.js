@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { Button, PanelGroup, Panel, FormGroup, Radio, ControlLabel, FormControl, Col } from 'react-bootstrap';
-import { bindAll } from 'lodash';
 import axios from 'axios';
 import ReactHtmlParser from 'react-html-parser';
-
 import Question from './Question.js';
 import Overview from './Overview.js';
 import BootstrapModal from '../UI/Modal/UploadBootstrapModal.js';

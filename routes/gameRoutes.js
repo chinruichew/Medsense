@@ -6,6 +6,43 @@ const OpenEndedAnswer = require('../models/OpenEndedAnswer');
 const constants = require('../utility/constantTypes');
 
 module.exports = app => {
+    app.post('/api/fetchCasesApproach', async (req, res) => {
+        let list=[];
+        const approaches = await Case.find({status:"Vetted"});
+        approaches.forEach(function (obj) {
+            obj.approach.forEach(function (approach) {
+                if(!list.includes(approach)){
+                    list = list.concat(approach);
+                }
+            });
+        });
+        res.send(list);
+    });
+
+    app.post('/api/fetchCasesSpeciality', async (req, res) => {
+        let list=[];
+        const specialities = await Case.find({status:"Vetted"});
+        specialities.forEach(function (obj) {
+            if(!list.includes(obj.speciality)){
+                list = list.concat(obj.speciality);
+            }
+        });
+        res.send(list);
+    });
+
+    app.post('/api/fetchCasesSubspeciality', async (req, res) => {
+        let list=[];
+        const subspecialities = await Case.find({status:"Vetted", "speciality":req.body.speciality});
+        subspecialities.forEach(function (obj) {
+            obj.subspeciality.forEach(function (subspeciality) {
+                if(!list.includes(subspeciality)){
+                    list = list.concat(subspeciality);
+                }
+            });
+        });
+        res.send(list);
+    });
+
     app.get('/api/fetchRandomCase', async (req, res) => {
         // Get the count of all cases
         Case.count({ status: 'Vetted' }).exec(function (err, count) {
@@ -39,14 +76,25 @@ module.exports = app => {
     });
 
     app.post('/api/fetchCaseBySpeciality', async (req, res) => {
-        const result = await Case.find({
-            status: constants.CASE_STATUS_VETTED,
-            speciality: req.body.speciality,
-            subspeciality: { $all: req.body.subspeciality }
-        }).select().populate({
-            path: 'authorid',
-            model: 'users'
-        });
+        let result;
+        if (req.body.subspeciality==="Select One"){
+            result = await Case.find({
+                status: constants.CASE_STATUS_VETTED,
+                speciality: req.body.speciality
+            }).select().populate({
+                path: 'authorid',
+                model: 'users'
+            });
+        } else {
+            result = await Case.find({
+                status: constants.CASE_STATUS_VETTED,
+                speciality: req.body.speciality,
+                subspeciality: {$all: req.body.subspeciality}
+            }).select().populate({
+                path: 'authorid',
+                model: 'users'
+            });
+        }
         res.send(result);
     });
 

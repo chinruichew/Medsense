@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Button, Col } from 'react-bootstrap';
-import { bindAll } from 'lodash';
 import { connect } from 'react-redux';
 import {addMCQAnswerOfQuestion} from '../../actions';
 import ReactHtmlParser from 'react-html-parser';

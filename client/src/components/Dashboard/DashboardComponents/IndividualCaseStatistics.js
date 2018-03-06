@@ -45,8 +45,8 @@ class IndividualCaseStatistics extends Component {
                             break;
                         }
                     }
-                    totalScore += parseInt(question.score);
-                    totalMark += parseInt(question.mark);
+                    totalScore += parseInt(question.score,10);
+                    totalMark += parseInt(question.mark,10);
                     let timeTaken = 'NIL';
                     if(question.timeTaken !== 0) {
                         timeTaken = question.timeTaken + ' seconds';

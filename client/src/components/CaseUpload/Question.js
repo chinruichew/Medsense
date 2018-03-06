@@ -319,7 +319,7 @@ class Question extends Component {
     options(){
         if (this.state.type==="MCQ" && this.state.mcq!=="Select One"){
             let array = [];
-            for (let i=1;i<=parseInt(this.state.mcq);i++) {
+            for (let i=1;i<=parseInt(this.state.mcq,10);i++) {
                 array.push(i);
             }
             let options = array.map((number, index) => {
