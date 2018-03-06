@@ -6,7 +6,7 @@ const Question = require('../models/Question');
 const constants = require('../utility/constantTypes');
 
 module.exports = app => {
-    app.post('/api/uploadCase', function (req, res) {
+    app.post('/api/uploadCase', async (req, res) => {
         let vetTime = null;
         let caseStatus = constants.CASE_STATUS_PENDING;
         if(req.session.user.usertype === constants.USER_TYPE_PROFESSOR) {
@@ -33,6 +33,8 @@ module.exports = app => {
         for (const key in req.body.values.subspeciality) {
             newCase.subspeciality.push(req.body.values.subspeciality[key]);
         }
+
+        await newCase.save();
 
         const jsonObject = req.body.values.qnData;
 
@@ -72,11 +74,16 @@ module.exports = app => {
                 mark: jsonObject[prop]['mark'],
                 case: newCase._id
             });
-            newQuestion.save();
-            newCase.questions.push(newQuestion._id);
-            newCase.save();
             questions.push(newQuestion);
         }
+
+        // Batch insertion
+        Question.insertMany(questions).then(docs => {
+            console.log(docs);
+        }).catch(err => {
+            throw(err);
+        });
+
         return res.send({ data: {case:newCase._id, question:questions}, message: "uploadCase success" });
     });
 
