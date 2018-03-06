@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const User = require('../models/User');
 const Case = require('../models/Case');
 const Question = require('../models/Question');
 
@@ -170,8 +169,9 @@ module.exports = app => {
         });
     }
 
-    app.post('/api/updateCase', function (req, res) {
-        Case.findById(req.body.values.id, function (err, oneCase) {
+    // Case Vetting
+    app.post('/api/updateCase', async (req, res) => {
+        Case.findById(req.body.values.id, async (err, oneCase) => {
             oneCase.title = req.body.values.title;
             oneCase.difficulty = req.body.values.difficulty;
             oneCase.speciality = req.body.values.speciality;
@@ -192,7 +192,7 @@ module.exports = app => {
             oneCase.vetter = req.body.values.authid;
             oneCase.status = constants.CASE_STATUS_VETTED;
             oneCase.vetTime = new Date();
-            oneCase.save();
+            await oneCase.save();
 
             const jsonObject = req.body.values.qnData;
 
