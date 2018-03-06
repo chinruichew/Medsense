@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const User = require('../models/User');
 const Case = require('../models/Case');
 const Question = require('../models/Question');
@@ -6,9 +5,8 @@ const Approach = require('../models/Approach');
 const constants = require('../utility/constantTypes');
 
 module.exports = app => {
-
     app.get('/api/fetchAdminUsers', async (req, res) => {
-        const users = await User.find({}).select("-password");
+        const users = await User.find().select("-password");
         res.send(users);
     });
 
@@ -319,19 +317,6 @@ module.exports = app => {
     app.post('/api/deleteAdminProfessor', function (req, res) {
         User.find({ _id: req.body.values }, function (err, deleteProfessor) { }).remove().exec();
         return res.status(201).send({ data: null, message: "deleteAdminProfessor success" });
-    });
-
-    app.post('/api/addApproach', function (req, res) {
-        const newApproach = new Approach({
-            approach: req.body.approach
-        });
-        newApproach.save();
-        return res.status(201).send({ data: null, message: "approach success" });
-    });
-
-    app.post('/api/fetchApproaches', async (req, res) => {
-        const approaches = await Approach.find({}).lean().distinct('approach');
-        res.send(approaches);
     });
 };
 

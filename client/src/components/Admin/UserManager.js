@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import { Tabs, Tab } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 
-import Admin from './Admin';
-import CaseManager from './CaseManager';
 import './Admin.css';
 import NewUser from './NewUser';
 import DeleteUser from './DeleteUser';

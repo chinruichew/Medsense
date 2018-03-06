@@ -14,25 +14,6 @@ aws.config.update({
 });
 
 module.exports = app => {
-    app.post('/getS3SignedURL', function (req, res) {
-        const s3 = new aws.S3();
-        const params = {
-            Bucket: "case-upload-images",
-            Key: req.body.filename,
-            Expires: 60,
-            ContentType: req.body.filetype
-        };
-        s3.getSignedUrl('putObject', params, function (err, data) {
-            if (err) {
-                console.log(err);
-                return err;
-            } else {
-                console.log(data);
-                return res.status(201).send({ data: null, message: "s3URL success" });
-            }
-        });
-    });
-
     app.post('/api/uploadProfileImage', (req, res) => {
         const form = new multiparty.Form();
         form.parse(req, function(err, fields, files) {
@@ -104,7 +85,7 @@ module.exports = app => {
                 s3.getObject(params, function(err, data) {
                     // Handle any error and exit
                     if (err) {
-                        // console.log(err);
+                        throw(err);
                     } else {
                         const params = {Bucket: myBucket, Delete: {Objects:[{Key:caseID + "/question" + qID + ".jpg"}]}};
                         s3.deleteObjects(params, function(err, data) {
@@ -124,14 +105,11 @@ module.exports = app => {
     app.post('/api/uploadPearlAttachment', (req, res) => {
         const form = new multiparty.Form();
         form.parse(req, function(err, fields, files) {
-
             const caseID = fields.caseID;
             const qID = fields.qID;
             const objID = fields.objID;
             const myBucket = 'case-upload-attachments';
             const s3 = new aws.S3();
-            console.log("pearl");
-            console.log(files.file);
             if (files.file!==undefined && files.file!==null){
                 const file = files.file[0];
 
@@ -144,8 +122,7 @@ module.exports = app => {
                     };
                     s3.putObject(params, function (err, data) {
                         if (err) {
-                            console.log(err);
-                            res.send("done");
+                            throw(err);
                         } else {
                             Question.update({_id: objID}, {pearlAttachment: "https://s3-ap-southeast-1.amazonaws.com/case-upload-attachments/" + caseID + "/question" + qID + "/pearls.jpg"}, function (err, response) {
                                 console.log("Successfully uploaded data to case-upload-attachments/" + caseID + "/question" + qID + "/pearls.jpg");
@@ -175,7 +152,6 @@ module.exports = app => {
                     res.send("done");
                 })
             }
-
         });
     });
 };

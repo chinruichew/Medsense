@@ -2,13 +2,10 @@ const mongoose = require('mongoose');
 const User = require('../models/User');
 const Case = require('../models/Case');
 const Question = require('../models/Question');
-const moment = require('moment-timezone');
 
 const constants = require('../utility/constantTypes');
-const commonMethods = require('../utility/commonMethods');
 
 module.exports = app => {
-
     app.post('/api/uploadCase', function (req, res) {
         let vetTime = null;
         let caseStatus = constants.CASE_STATUS_PENDING;
@@ -238,84 +235,6 @@ module.exports = app => {
         }).exec(function(error, cases) {
             res.send(cases);
         });
-    });
-
-    app.get('/api/fetchAllCases', async (req, res) => {
-        Case.find().populate({
-            path: 'questions',
-            model: 'questions',
-        }).exec(function(error, cases) {
-            res.send(cases);
-        });
-    });
-
-    app.post('/api/fetchAllCasesByAuthor', function (req, res) {
-        Case.find({ author: req.body.authorid }).populate({
-            path: 'questions',
-            model: 'questions',
-        }).exec(function (error, cases) {
-            res.send('fetchAllByAuthor success');
-        })
-    });
-
-    app.post('/api/deleteCase', function (req, res) {
-        Case.find({ _id: req.body.caseid }, function (err, oneCase) {
-            Question.find({ case: req.body.caseid }, function (err, questions) {
-            }).remove().exec();
-        }).remove().exec();
-
-        return res.status(201).send({ data: null, message: "deleteCase success" });
-    });
-
-    app.post('/api/updateCaseOnly', function (req, res) {
-        Case.update({ _id: req.body.caseid }, { $set: { subspeciality: [] } }, function (err, response) { });
-        Case.findById(req.body.caseid, function (err, oneCase) {
-            oneCase.casetitle = req.body.title;
-            oneCase.difficulty = req.body.difficulty;
-            oneCase.speciality = req.body.speciality;
-            oneCase.subspeciality = req.body.subspeciality;
-            oneCase.approach = req.body.aproach;
-            oneCase.scenario = req.body.scenario;
-            oneCase.learning = req.body.learning;
-            oneCase.timestamp = req.body.timestamp;
-            oneCase.save();
-        });
-        return res.status(201).send({ data: null, message: "updateCaseOnly success" });
-    });
-
-    app.post('/api/updateQuestion', function (req, res) {
-        Question.findById(req.body.questionid, function (err, oneQuestion) {
-            oneQuestion.questiontitle = req.body.title;
-            oneQuestion.attachment = null;
-            oneQuestion.type = req.body.type;
-            oneQuestion.openEnded = req.body.openEnded;
-            oneQuestion.pearl = req.body.pearl;
-            oneQuestion.timelimit = req.body.timelimit;
-            oneQuestion.reference = req.body.reference;
-            oneQuestion.stem = req.body.stem;
-            oneQuestion.mcq1 = req.body.mcq1;
-            oneQuestion.mcq2 = req.body.mcq2;
-            oneQuestion.mcq3 = req.body.mcq3;
-            oneQuestion.mcq4 = req.body.mcq4;
-            oneQuestion.mcq5 = req.body.mcq5;
-            oneQuestion.mcq6 = req.body.mcq6;
-            oneQuestion.check1 = req.body.check1;
-            oneQuestion.check2 = req.body.check2;
-            oneQuestion.check3 = req.body.check3;
-            oneQuestion.check4 = req.body.check4;
-            oneQuestion.check5 = req.body.check5;
-            oneQuestion.check6 = req.body.check6;
-            oneQuestion.save();
-            return res.status(201).send({ data: null, message: "updateCaseQuestion success" });
-        })
-    });
-
-    app.post('/api/fetchAllCasesByProfessor', function (req, res) {
-        User.findById(req.body.authorid, function (err, oneUser) {
-            Case.find({ subspeciality: { $in: oneUser.subspeciality } }, function (err, cases) {
-                return res.status(201).send({ data: cases, message: "fetchAllByAuthor success" });
-            })
-        })
     });
 
     app.post('/api/fetchCaseById', async (req, res) => {

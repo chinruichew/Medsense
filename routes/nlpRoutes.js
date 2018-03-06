@@ -1,24 +1,17 @@
-const mongoose = require('mongoose');
-const User = require('../models/User');
-const Case = require('../models/Case');
 const Question = require('../models/Question');
 
-const constants = require('../utility/constantTypes');
-
-var natural = require('natural');
-var unique = require('array-unique');
-var stopword = require('stopword');
-// var nlp = require('compromise');
+const natural = require('natural');
+const stopword = require('stopword');
 
 String.prototype.cleanup = function () {
     return this.toLowerCase().replace(/[^a-zA-Z0-9]+/g, " ");
-}   
+};
 
 function toArray(answerArray) {
-    var nounInflector = new natural.NounInflector();
+    const nounInflector = new natural.NounInflector();
     natural.PorterStemmer.attach();
-    var returnArray = [];
-    for (var i in answerArray) {
+    const returnArray = [];
+    for (const i in answerArray) {
         if (typeof (answerArray[i].stem()) === 'object') {
             returnArray.push(nounInflector.singularize(answerArray[i]));
         } else {
@@ -34,25 +27,23 @@ function remove(array, element) {
 
 module.exports = app => {
     app.post('/api/matchNLP', async (req, res) => {
-        var counter = ""
-        var studentAnswer = req.body.values.openEnded;
+        let studentAnswer = req.body.values.openEnded;
         studentAnswer = studentAnswer.replace(/<[^>]*>/g, " "); //remove html tags
-        var originalAnswer = "";
+        let originalAnswer = "";
         Question.find({"_id": req.body.id}, function (req, res) {
             originalAnswer = res[0]['openEnded'];
             originalAnswer = originalAnswer.replace(/<[^>]*>/g, " "); //remove html tags
             originalAnswer = originalAnswer.cleanup(); //cleanup original answer
             // originalAnswer = nlp(originalAnswer).normalize().out('text'); //normalize
-        })
+        });
 
         setTimeout(function () {
             //student answer
-            var tokenizer = new natural.WordTokenizer();
-            var cleanStudentAnswer = studentAnswer.cleanup(); //cleanup student answer
-            var cleanStudentAnswerToken = tokenizer.tokenize(cleanStudentAnswer); //tokenize student answer
-            var cleanStudentAnswerTokenStopword = stopword.removeStopwords(cleanStudentAnswerToken); //remove stopwords
-            var studentAnswerArray = [];
-            studentAnswerArray = toArray(cleanStudentAnswerTokenStopword);
+            const tokenizer = new natural.WordTokenizer();
+            const cleanStudentAnswer = studentAnswer.cleanup(); //cleanup student answer
+            const cleanStudentAnswerToken = tokenizer.tokenize(cleanStudentAnswer); //tokenize student answer
+            const cleanStudentAnswerTokenStopword = stopword.removeStopwords(cleanStudentAnswerToken); //remove stopwords
+            let studentAnswerArray = toArray(cleanStudentAnswerTokenStopword);
             studentAnswerArray = remove(studentAnswerArray, "nbsp");
             studentAnswerArray = remove(studentAnswerArray, "amp");
             studentAnswerArray = remove(studentAnswerArray, "quot");
@@ -60,7 +51,7 @@ module.exports = app => {
             studentAnswerArray = remove(studentAnswerArray, "gt");
             studentAnswerArray = unique(studentAnswerArray);
             //remove tokens with one characters + remove arrays
-            for (var i in studentAnswerArray) {
+            for (const i in studentAnswerArray) {
                 if (studentAnswerArray[i] != null && studentAnswerArray[i].length == 1) {
                     //console.log(studentAnswerArray[i]);
                     studentAnswerArray = remove(studentAnswerArray, studentAnswerArray[i]);
@@ -70,16 +61,15 @@ module.exports = app => {
                     studentAnswerArray = remove(studentAnswerArray, studentAnswerArray[i]);
                 }
             }
-            console.log(studentAnswerArray)
+            console.log(studentAnswerArray);
 
             //original answer
-            var cleanOriginalAnswerToken = tokenizer.tokenize(originalAnswer); //tokenize student answer
+            const cleanOriginalAnswerToken = tokenizer.tokenize(originalAnswer); //tokenize student answer
             //console.log(cleanOriginalAnswerToken)
-            var cleanOriginalAnswerTokenStopword = stopword.removeStopwords(cleanOriginalAnswerToken); //remove stopwords
+            const cleanOriginalAnswerTokenStopword = stopword.removeStopwords(cleanOriginalAnswerToken); //remove stopwords
             //console.log(cleanOriginalAnswerTokenStopword)
-            var originalAnswerArray = []
-            originalAnswerArray = toArray(cleanOriginalAnswerTokenStopword);
-            console.log(originalAnswerArray)
+            let originalAnswerArray = toArray(cleanOriginalAnswerTokenStopword);
+            console.log(originalAnswerArray);
             originalAnswerArray = remove(originalAnswerArray, "nbsp");
             originalAnswerArray = remove(originalAnswerArray, "amp");
             originalAnswerArray = remove(originalAnswerArray, "quot");
@@ -87,7 +77,7 @@ module.exports = app => {
             originalAnswerArray = remove(originalAnswerArray, "gt");
             originalAnswerArray = unique(originalAnswerArray);
             //remove tokens with one characters + remove arrays
-            for (var i in originalAnswerArray) {
+            for (const i in originalAnswerArray) {
                 if (originalAnswerArray[i] != null && originalAnswerArray[i].length == 1) {
                     //console.log(originalAnswerArray[i]);
                     originalAnswerArray = remove(originalAnswerArray, originalAnswerArray[i]);
@@ -97,17 +87,17 @@ module.exports = app => {
                     originalAnswerArray = remove(originalAnswerArray, originalAnswerArray[i]);
                 }   
             } 
-            console.log(originalAnswerArray)
+            console.log(originalAnswerArray);
 
             //build up dictionary trie
-            var Trie = natural.Trie;
-            var trie = new Trie(false);
+            const Trie = natural.Trie;
+            const trie = new Trie(false);
             trie.addStrings(studentAnswerArray);
 
             //check studentAnswer vs originalAnswer
-            var counter = 0;
+            let counter = 0;
 
-            for (var i in originalAnswerArray) {
+            for (const i in originalAnswerArray) {
                 if (trie.contains(originalAnswerArray[i])) {
                     counter++;
                 } else {
@@ -118,11 +108,9 @@ module.exports = app => {
             }
             // console.log(counter);
             // console.log(originalAnswerArray.length);
-            counter = counter / originalAnswerArray.length
+            counter = counter / originalAnswerArray.length;
             console.log(counter);
             res.send({ "data": counter })
         }.bind(this), 500);
-
     });
-
 };

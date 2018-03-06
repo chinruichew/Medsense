@@ -1,5 +1,3 @@
-const mongoose = require('mongoose');
-const User = require('../models/User');
 const Case = require('../models/Case');
 const Question = require('../models/Question');
 const AnswerOverview = require('../models/AnswerOverview');
@@ -8,7 +6,6 @@ const OpenEndedAnswer = require('../models/OpenEndedAnswer');
 const constants = require('../utility/constantTypes');
 
 module.exports = app => {
-
     app.get('/api/fetchRandomCase', async (req, res) => {
         // Get the count of all cases
         Case.count({ status: 'Vetted' }).exec(function (err, count) {
@@ -51,11 +48,6 @@ module.exports = app => {
             model: 'users'
         });
         res.send(result);
-    });
-
-    app.get('/api/fetchAllAnswers', async(req, res) => {
-        const answers = await Answer.find().select();
-        res.send(answers);
     });
 
     app.get('/api/getIndividualAnswers', function(req, res) {

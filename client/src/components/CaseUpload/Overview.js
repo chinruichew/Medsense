@@ -6,7 +6,7 @@ import axios from 'axios';
 import './Upload.css';
 import 'react-quill/dist/quill.snow.css';
 
-var toolbarOptions = [
+const toolbarOptions = [
     [{ 'header': [1, 2, 3, false] }],
     ['bold', 'italic', 'underline'],        // toggled buttons
     [{ 'list': 'ordered'}, { 'list': 'bullet' }],
@@ -93,13 +93,13 @@ class Overview extends Component {
         const value = e.target.value;
         this.setState({ title: value });
         this.update(value, "title");
-    }
+    };
 
     handleDifficultyChange = (e) => {
         const value = e.target.value;
         this.setState({ difficulty: value });
         this.update(value, "difficulty");
-    }
+    };
 
     handleSpecialityChange = (e) => {
         const value = e.target.value;
@@ -115,7 +115,7 @@ class Overview extends Component {
                 this.setState({subspecialityList: res.data[0].subspecialities});
             });
         }
-    }
+    };
 
     handleSubspecialityChange = (e) => {
         const options = e.target.options;
@@ -129,7 +129,7 @@ class Overview extends Component {
             this.setState({ subspeciality: value });
             this.update(value, "subspeciality");
         }
-    }
+    };
 
     handleApproachChange = (e) => {
         const options = e.target.options;
@@ -143,18 +143,18 @@ class Overview extends Component {
             this.setState({ approach: value });
             this.update(value, "approach");
         }
-    }
+    };
 
     handleScenarioChange = (value) => {
-        this.setState({ scenario: value })
+        this.setState({ scenario: value });
         this.update(value, "scenario");
-    }
+    };
 
     handleLearningChange = (value) => {
         this.setState({ learning: value });
         //console.log(this.state.learning);
         this.update(value, "learning");
-    }
+    };
 
     renderSubspeciality(){
         let subspecialities = this.state.subspecialityList.map((obj, index) => {
