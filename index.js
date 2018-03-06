@@ -26,7 +26,7 @@ const aws = require('aws-sdk');
 
 const keys = require('./config/keys');
 require('./models/User');
-const keyManagement = require('./utility/keyManagement');
+// const keyManagement = require('./utility/keyManagement');
 
 const app = express();
 
