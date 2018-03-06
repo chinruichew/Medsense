@@ -59,20 +59,45 @@ module.exports = app => {
             studentAnswerArray = remove(studentAnswerArray, "lt");
             studentAnswerArray = remove(studentAnswerArray, "gt");
             studentAnswerArray = unique(studentAnswerArray);
+            //remove tokens with one characters + remove arrays
+            for (var i in studentAnswerArray) {
+                if (studentAnswerArray[i] != null && studentAnswerArray[i].length == 1) {
+                    //console.log(studentAnswerArray[i]);
+                    studentAnswerArray = remove(studentAnswerArray, studentAnswerArray[i]);
+                }   
+                if (studentAnswerArray[i] != null && typeof studentAnswerArray[i] == "object") {
+                    //console.log(studentAnswerArray[i]);
+                    studentAnswerArray = remove(studentAnswerArray, studentAnswerArray[i]);
+                }
+            }
             console.log(studentAnswerArray)
 
             //original answer
             var cleanOriginalAnswerToken = tokenizer.tokenize(originalAnswer); //tokenize student answer
+            //console.log(cleanOriginalAnswerToken)
             var cleanOriginalAnswerTokenStopword = stopword.removeStopwords(cleanOriginalAnswerToken); //remove stopwords
+            //console.log(cleanOriginalAnswerTokenStopword)
             var originalAnswerArray = []
             originalAnswerArray = toArray(cleanOriginalAnswerTokenStopword);
+            console.log(originalAnswerArray)
             originalAnswerArray = remove(originalAnswerArray, "nbsp");
             originalAnswerArray = remove(originalAnswerArray, "amp");
             originalAnswerArray = remove(originalAnswerArray, "quot");
             originalAnswerArray = remove(originalAnswerArray, "lt");
             originalAnswerArray = remove(originalAnswerArray, "gt");
             originalAnswerArray = unique(originalAnswerArray);
-            console.log(originalAnswerArray);
+            //remove tokens with one characters + remove arrays
+            for (var i in originalAnswerArray) {
+                if (originalAnswerArray[i] != null && originalAnswerArray[i].length == 1) {
+                    //console.log(originalAnswerArray[i]);
+                    originalAnswerArray = remove(originalAnswerArray, originalAnswerArray[i]);
+                }
+                if (originalAnswerArray[i] != null && typeof originalAnswerArray[i] == "object") {
+                    //console.log(originalAnswerArray[i]);
+                    originalAnswerArray = remove(originalAnswerArray, originalAnswerArray[i]);
+                }   
+            } 
+            console.log(originalAnswerArray)
 
             //build up dictionary trie
             var Trie = natural.Trie;
@@ -91,6 +116,8 @@ module.exports = app => {
                     // }
                 }
             }
+            // console.log(counter);
+            // console.log(originalAnswerArray.length);
             counter = counter / originalAnswerArray.length
             console.log(counter);
             res.send({ "data": counter })

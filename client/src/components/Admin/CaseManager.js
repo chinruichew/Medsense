@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 import { bindAll } from 'lodash';
 import Admin from './Admin';
 import UserManager from './UserManager';
-import { deleteAdminCase, fetchFilteredAdminCases } from '../../actions';
+import { deleteAdminCase, fetchFilteredAdminCases, fetchAdminCases } from '../../actions';
 
 
 import './Admin.css';
@@ -15,7 +15,7 @@ class CaseManager extends Component {
         super(props);
         this.state = {
             display: 'case',
-            title: ''   ,
+            title: '',
             difficulty: 'Beginner',
             subspeciality: [],
             approach: [],
@@ -31,6 +31,10 @@ class CaseManager extends Component {
             'setDifficulty', 'handleOpenModal', 'handleCloseModal', 'handleOpenConfirmDelete', 'handleCloseConfirmDelete');
     }
 
+    componentWillMount() {
+        this.props.fetchAdminCases();
+    }
+
     handleOpenModal(oneCase) {
         this.setState({ displayModal: true, oneCaseQuestions: oneCase.questions, oneCaseId: oneCase._id });
     }
@@ -39,12 +43,12 @@ class CaseManager extends Component {
         this.setState({ displayModal: false });
     }
 
-    handleOpenConfirmDelete(){
-        this.setState({showConfirmDelete: true});
+    handleOpenConfirmDelete() {
+        this.setState({ showConfirmDelete: true });
     }
 
-    handleCloseConfirmDelete(){
-        this.setState({showConfirmDelete: false});
+    handleCloseConfirmDelete() {
+        this.setState({ showConfirmDelete: false });
     }
 
 
@@ -178,7 +182,7 @@ class CaseManager extends Component {
         );
     }
 
-    
+
 
     setSubspeciality() {
         return (
@@ -188,7 +192,7 @@ class CaseManager extends Component {
                     <div style={{ fontSize: "70%", fontWeight: "200" }}>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.
                         </div>
                 </ControlLabel>
-                <FormControl  componentClass="select" size='10' value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)} multiple>
+                <FormControl componentClass="select" size='10' value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)} multiple>
                     <option value="Select One">Select All Relevant</option>
 
                     <optgroup label="--Medicine--"></optgroup>
@@ -338,56 +342,46 @@ class CaseManager extends Component {
             case false:
                 return <Redirect to='/' />;
             default:
-                switch (this.props.cases) {
+                switch (this.props.adminCases) {
                     case null:
                         return;
                     default:
-                        if (this.state.display === '') {
-                            return (
-                                <Admin />
-                            );
-                        } else if (this.state.display === 'user') {
-                            return (
-                                <UserManager />
-                            );
-                        } else {
-                            return (
-                                <div className="container-fluid" >
-                                    <div className='container-fluid'>
-                                        <div className='col-sm-12'>
-                                            {this.setName()}
-                                        </div>
+                        return (
+                            <div className="container-fluid" >
+                                <div className='container-fluid'>
+                                    <div className='col-sm-12'>
+                                        {this.setName()}
+                                    </div>
 
-                                        {/* <div className='col-sm-6'>
+                                    {/* <div className='col-sm-6'>
                                             {this.setSpeciality()}
                                         </div> */}
-                                        <div className='col-sm-6'>
-                                            {this.setSubspeciality()}
-                                        </div>
-                                        <div className='col-sm-6'>
-                                            {this.setApproach()}
-                                        </div> 
-                                        <div className='col-sm-6'>
-                                            {this.setDifficulty()}
-                                        </div>
-                                        <div className='col-sm-6'>
-                                            {this.setCaseStatus()}
-                                        </div> 
-                                        {/* <div className='col-sm-4'>
+                                    <div className='col-sm-6'>
+                                        {this.setSubspeciality()}
+                                    </div>
+                                    <div className='col-sm-6'>
+                                        {this.setApproach()}
+                                    </div>
+                                    <div className='col-sm-6'>
+                                        {this.setDifficulty()}
+                                    </div>
+                                    <div className='col-sm-6'>
+                                        {this.setCaseStatus()}
+                                    </div>
+                                    {/* <div className='col-sm-4'>
                                             {this.setTime()}
                                         </div> */}
-                                        <div className='col-sm-12' align='right'>
-                                            <Button type="button" bsSize="lg" bsStyle="primary" onClick={(e) => this.searchCases()}> &nbsp; Search &nbsp;</Button>
-                                        </div>
+                                    <div className='col-sm-12' align='right'>
+                                        <Button type="button" bsSize="lg" bsStyle="primary" onClick={(e) => this.searchCases()}> &nbsp; Search &nbsp;</Button>
                                     </div>
-                                    <br /><br />
-                                    <div className='col-sm-12'>
-                                        {this.renderTable()}
-                                    </div>
-                                    {this.renderModal()}
                                 </div>
-                            );
-                        }
+                                <br /><br />
+                                <div className='col-sm-12'>
+                                    {this.renderTable()}
+                                </div>
+                                {this.renderModal()}
+                            </div>
+                        );
                 }
         }
     }
@@ -478,4 +472,4 @@ function mapStateToProps({ adminCases }) {
 
 
 
-export default connect(mapStateToProps, { deleteAdminCase, fetchFilteredAdminCases })(CaseManager);
+export default connect(mapStateToProps, { deleteAdminCase, fetchFilteredAdminCases, fetchAdminCases })(CaseManager);
