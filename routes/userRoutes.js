@@ -23,6 +23,25 @@ module.exports = app => {
         });
     });
 
+    app.post('/api/updateUserfromYearlyPrompt', async(req, res) => {
+        User.findById(req.session.user._id, async (err, user) => {
+            if (err) {
+                throw(err);
+            }
+
+            if (user) {
+                user.year = req.body.year;
+                await user.save();
+
+                // Set session user profile
+                req.session.user.year = req.body.year;
+
+                res.send(user);
+            }
+
+        });
+    });
+
     app.post('/api/updateStudent', function (req, res) {
         User.findById(req.body.values.id, function (err, user) {
             if (err) { return res.send(err) }
@@ -127,5 +146,24 @@ module.exports = app => {
             }
             res.send(sortedLeaders);
         });
+    });
+
+    app.get('/api/checkUserToUpdateYear', async(req, res) => {
+        let toPromptUpdateYear = false;
+        switch(req.session.user.year) {
+            case constants.STUDENT_YEAR_ONE:
+                toPromptUpdateYear = new Date().getMonth() === 8;
+                break;
+            case constants.STUDENT_YEAR_TWO:
+                toPromptUpdateYear = new Date().getMonth() === 6;
+                break;
+            case constants.STUDENT_YEAR_THREE:
+                toPromptUpdateYear = new Date().getMonth() === 7;
+                break;
+            case constants.STUDENT_YEAR_FOUR:
+                toPromptUpdateYear = new Date().getMonth() === 6;
+                break;
+        }
+        res.send(toPromptUpdateYear);
     });
 };

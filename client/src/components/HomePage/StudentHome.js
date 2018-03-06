@@ -3,18 +3,45 @@ import {Button, Table} from 'react-bootstrap';
 import {NavLink} from "react-router-dom";
 import axios from 'axios';
 
+import BootstrapModal from '../UI/Modal/UploadBootstrapModal.js';
+
 class StudentHome extends Component {
     state = {
-        pendingCases: null
+        pendingCases: null,
+        showModal: false,
+        year: null
     };
 
     componentDidMount() {
+        // Get vetted cases since last login
         axios.get('/api/getVettedCasesSinceUserLogin').then(res => {
             this.setState({pendingCases: res.data});
         }).catch(err => {
-            console.log(err);
-        })
+            throw(err);
+        });
+
+        // Check for need to prompt user to update year
+        axios.get('/api/checkUserToUpdateYear').then(res => {
+            this.setState({showModal: res.data});
+        }).catch(err => {
+            throw(err);
+        });
     }
+
+    handleYearChange = (e) => {
+        const year = e.target.value;
+        this.setState({year});
+    };
+
+    submitYear = (e) => {
+        axios.post('/api/updateUserfromYearlyPrompt', {
+            year: 'Year ' + this.state.year
+        }).then(res => {
+            console.log(res);
+        }).catch(err => {
+            throw(err);
+        });
+    };
 
     renderContent() {
         switch(this.state.pendingCases) {
@@ -91,6 +118,36 @@ class StudentHome extends Component {
                                 </tr>
                                 </tbody>
                             </Table>
+
+                            <BootstrapModal
+                                show={this.state.showModal}
+                                onHide={(e) => this.setState({ showModal: false })}
+                                aria-labelledby="contained-modal-title-vm">
+                                <BootstrapModal.Header closeButton>
+                                    <BootstrapModal.Title id="contained-modal-title-vm">Update your year</BootstrapModal.Title>
+                                </BootstrapModal.Header>
+                                <BootstrapModal.Body>
+                                    <p>It is around the start of a new semester! Have you moved on to a new academic year? Update your current year.</p>
+                                    <form>
+                                        <div className="form-group">
+                                            <div className="input-group">
+                                                <span className="input-group-addon"><i className="fa fa-graduation-cap fa-lg" aria-hidden="true"></i></span>
+                                                <select className="form-control" value={this.state.year} onChange={(e) => this.handleYearChange(e)}>
+                                                    <option value="1">Year 1</option>
+                                                    <option value="2">Year 2</option>
+                                                    <option value="3">Year 3</option>
+                                                    <option value="4">Year 4</option>
+                                                    <option value="5">Year 5</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </BootstrapModal.Body>
+                                <BootstrapModal.Footer>
+                                    <Button onClick={(e) => this.submitYear(e)}>Submit</Button>
+                                    <Button onClick={(e) => this.setState({ showModal: false })}>Close</Button>
+                                </BootstrapModal.Footer>
+                            </BootstrapModal>
                         </div>
                     </div>
                 );
