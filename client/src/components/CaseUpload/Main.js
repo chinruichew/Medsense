@@ -34,45 +34,165 @@ class Main extends Component {
         this.setState({ author: value });
     };
 
-    addQuestion = () => {
+    addQuestion = (id) => {
         let len = this.state.qnData.length;
-        this.setState({
-            qnData: this.state.qnData.concat(
-                {
-                    "id": len+1,
-                    "stem": '',
-                    "question": '',
-                    "attachment": null,
-                    "pearlAttachment": null,
-                    "type": "Select One",
-                    "openEnded": '',
-                    "mcq1": '',
-                    "mcq2": '',
-                    "mcq3": '',
-                    "mcq4": '',
-                    "mcq5": '',
-                    "mcq6": '',
-                    "mcq7": '',
-                    "mcq8": '',
-                    "mcq9": '',
-                    "mcq10": '',
-                    "check1": false,
-                    "check2": false,
-                    "check3": false,
-                    "check4": false,
-                    "check5": false,
-                    "check6": false,
-                    "check7": false,
-                    "check8": false,
-                    "check9": false,
-                    "check10": false,
-                    "pearl": '',
-                    "time": "Select One",
-                    "reference": '',
-                    "mark":'',
+        if (id>len){
+            this.setState({
+                qnData: this.state.qnData.concat(
+                    {
+                        "id": len+1,
+                        "stem": '',
+                        "question": '',
+                        "attachment": null,
+                        "pearlAttachment": null,
+                        "type": "Select One",
+                        "openEnded": '',
+                        "mcq1": '',
+                        "mcq2": '',
+                        "mcq3": '',
+                        "mcq4": '',
+                        "mcq5": '',
+                        "mcq6": '',
+                        "mcq7": '',
+                        "mcq8": '',
+                        "mcq9": '',
+                        "mcq10": '',
+                        "check1": false,
+                        "check2": false,
+                        "check3": false,
+                        "check4": false,
+                        "check5": false,
+                        "check6": false,
+                        "check7": false,
+                        "check8": false,
+                        "check9": false,
+                        "check10": false,
+                        "pearl": '',
+                        "time": "Select One",
+                        "reference": '',
+                        "mark":'',
+                    }
+                )
+            });
+        } else {
+            let questions = this.state.qnData;
+            let newQuestions = [];
+            let offset = 1;
+            questions.forEach(function (obj) {
+                if (obj.id > id) {
+                    newQuestions = newQuestions.concat(
+                        {
+                            "id": obj.id + offset,
+                            "stem": obj.stem,
+                            "question": obj.question,
+                            "attachment": obj.attachment,
+                            "pearlAttachment": obj.pearlAttachment,
+                            "type": obj.type,
+                            "openEnded": obj.openEnded,
+                            "mcq1": obj.mcq1,
+                            "mcq2": obj.mcq2,
+                            "mcq3": obj.mcq3,
+                            "mcq4": obj.mcq4,
+                            "mcq5": obj.mcq5,
+                            "mcq6": obj.mcq6,
+                            "mcq7": obj.mcq7,
+                            "mcq8": obj.mcq8,
+                            "mcq9": obj.mcq9,
+                            "mcq10": obj.mcq10,
+                            "check1": obj.check1,
+                            "check2": obj.check2,
+                            "check3": obj.check3,
+                            "check4": obj.check4,
+                            "check5": obj.check5,
+                            "check6": obj.check6,
+                            "check7": obj.check7,
+                            "check8": obj.check8,
+                            "check9": obj.check9,
+                            "check10": obj.check10,
+                            "pearl": obj.pearl,
+                            "time": obj.time,
+                            "reference": obj.reference,
+                            "mark": obj.mark,
+                        }
+                    );
+                } else if (obj.id < id) {
+                    newQuestions = newQuestions.concat(obj);
+                } else {
+                    newQuestions = newQuestions.concat(
+                        {
+                            "id": obj.id,
+                            "stem": '',
+                            "question": '',
+                            "attachment": null,
+                            "pearlAttachment": null,
+                            "type": "Select One",
+                            "openEnded": '',
+                            "mcq1": '',
+                            "mcq2": '',
+                            "mcq3": '',
+                            "mcq4": '',
+                            "mcq5": '',
+                            "mcq6": '',
+                            "mcq7": '',
+                            "mcq8": '',
+                            "mcq9": '',
+                            "mcq10": '',
+                            "check1": false,
+                            "check2": false,
+                            "check3": false,
+                            "check4": false,
+                            "check5": false,
+                            "check6": false,
+                            "check7": false,
+                            "check8": false,
+                            "check9": false,
+                            "check10": false,
+                            "pearl": '',
+                            "time": "Select One",
+                            "reference": '',
+                            "mark": '',
+                        }
+                    );
+                    newQuestions = newQuestions.concat(
+                        {
+                            "id": obj.id + offset,
+                            "stem": obj.stem,
+                            "question": obj.question,
+                            "attachment": obj.attachment,
+                            "pearlAttachment": obj.pearlAttachment,
+                            "type": obj.type,
+                            "openEnded": obj.openEnded,
+                            "mcq1": obj.mcq1,
+                            "mcq2": obj.mcq2,
+                            "mcq3": obj.mcq3,
+                            "mcq4": obj.mcq4,
+                            "mcq5": obj.mcq5,
+                            "mcq6": obj.mcq6,
+                            "mcq7": obj.mcq7,
+                            "mcq8": obj.mcq8,
+                            "mcq9": obj.mcq9,
+                            "mcq10": obj.mcq10,
+                            "check1": obj.check1,
+                            "check2": obj.check2,
+                            "check3": obj.check3,
+                            "check4": obj.check4,
+                            "check5": obj.check5,
+                            "check6": obj.check6,
+                            "check7": obj.check7,
+                            "check8": obj.check8,
+                            "check9": obj.check9,
+                            "check10": obj.check10,
+                            "pearl": obj.pearl,
+                            "time": obj.time,
+                            "reference": obj.reference,
+                            "mark": obj.mark,
+                        }
+                    );
                 }
-            ),
-        });
+
+            });
+            this.setState({ qnData: newQuestions});
+        }
     };
 
     saveChanges = (e) => {
@@ -298,7 +418,6 @@ class Main extends Component {
         let questions = this.state.qnData;
         let newQuestions = [];
         let offset = 1;
-        console.log(questions);
         questions.forEach(function (obj) {
             if (obj.id > id) {
                 newQuestions = newQuestions.concat(
@@ -447,7 +566,8 @@ class Main extends Component {
                     reference={obj.reference}
                     mark={obj.mark}
                     handleUpdateQuestion={this.handleUpdateQuestion}
-                    handleDeleteQuestion={this.handleDeleteQuestion} />
+                    handleDeleteQuestion={this.handleDeleteQuestion}
+                    handleAddQuestion={this.addQuestion}/>
             );
         });
 
@@ -499,28 +619,30 @@ class Main extends Component {
 
                 {/*</div>*/}
                 <div id="main">
-                <PanelGroup accordion style={{marginTop: "2%", position: "fixed", width: "96%"}}>
-                    <Panel eventKey="1" bsStyle="info">
-                        <Panel.Heading>
-                            <Panel.Title toggle>{storySoFar}</Panel.Title>
-                        </Panel.Heading>
-                        <Panel.Body collapsible>
-                            <p style={{textDecorationLine: "underline", margin: "0", fontSize: "200%", fontFamily: "Great Vibes", letterSpacing: "0.1em"}}>Case Scenario</p>
-                            <div className="row" style={{whiteSpace:"pre-wrap", paddingLeft: "5%", fontSize:"120%"}}>
-                                {ReactHtmlParser(this.state.scenario)}
-                            </div>
-                            <br/><br/>
-                            <p style={{textDecorationLine: "underline", margin: "0", fontSize: "200%", fontFamily: "Great Vibes", letterSpacing: "0.1em"}}>Case Questions</p>
-                            <div className="row" style={{whiteSpace:"pre-wrap", paddingLeft: "5%"}}>{stems}</div>
-                            <br/><br/>
-                        </Panel.Body>
-                    </Panel>
-                </PanelGroup>
+                    <PanelGroup accordion style={{marginTop: "2%"}}>
+                {/*<PanelGroup accordion style={{marginTop: "2%", position: "fixed", width: "96%"}}>*/}
+                        <Panel eventKey="1" bsStyle="info">
+                            <Panel.Heading>
+                                <Panel.Title toggle>{storySoFar}</Panel.Title>
+                            </Panel.Heading>
+                            <Panel.Body collapsible>
+                                <p style={{textDecorationLine: "underline", margin: "0", fontSize: "200%", fontFamily: "Great Vibes", letterSpacing: "0.1em"}}>Case Scenario</p>
+                                <div className="row" style={{whiteSpace:"pre-wrap", paddingLeft: "5%", fontSize:"120%"}}>
+                                    {ReactHtmlParser(this.state.scenario)}
+                                </div>
+                                <br/><br/>
+                                <p style={{textDecorationLine: "underline", margin: "0", fontSize: "200%", fontFamily: "Great Vibes", letterSpacing: "0.1em"}}>Case Questions</p>
+                                <div className="row" style={{whiteSpace:"pre-wrap", paddingLeft: "5%"}}>{stems}</div>
+                                <br/><br/>
+                            </Panel.Body>
+                        </Panel>
+                    </PanelGroup>
 
-                <br/><br/><br/><br/>
+                {/*<br/><br/><br/><br/>*/}
 
                 <form action="/api/uploadCase" method="post" className="case-area">
-                    <PanelGroup accordion style={{marginTop: "3%"}}>
+                    <PanelGroup accordion>
+                    {/*<PanelGroup accordion style={{marginTop: "3%"}}>*/}
                         <Panel eventKey="1" bsStyle="info">
                             <Panel.Heading>
                             <Panel.Title toggle>{overviewTitle}</Panel.Title>
@@ -548,7 +670,7 @@ class Main extends Component {
                             </div>
 
                             <div className="add-question-button">
-                                <Button type="button" bsStyle="primary" onClick={(e) => this.addQuestion()}>Add Question</Button><br />
+                                <Button type="button" bsStyle="primary" onClick={(e) => this.addQuestion(this.state.qnData.length+1)}>Add Question</Button><br />
                             </div>
                             </Panel.Body>
                         </Panel>

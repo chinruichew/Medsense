@@ -17,7 +17,6 @@ const toolbarOptions = [
     ['clean']                                         // remove formatting button
 ];
 
-
 class Question extends Component {
     constructor(props){
         super(props);
@@ -55,11 +54,8 @@ class Question extends Component {
             open: false,
             showfile: false,
         };
-        bindAll(this, 'handleFile', 'handleStemChange', 'handleQuestionChange', 'handleTypeChange', 'handleOpenEndedChange',
-            'handleMCQ1Change', 'handleMCQ2Change', 'handleMCQ3Change', 'handleMCQ4Change', 'handleMCQ5Change', 'handleMCQ6Change',
-            'handleMCQ7Change', 'handleMCQ8Change', 'handleMCQ9Change', 'handleMCQ10Change', 'handleCheck7Change', 'handleCheck8Change', 'handleCheck9Change', 'handleCheck10Change',
-            'handleCheck1Change', 'handleCheck2Change', 'handleCheck3Change', 'handleCheck4Change', 'handleCheck5Change', 'showAttachment',
-            'handleCheck6Change', 'handlePearlChange', 'handleTimeChange', 'handleMarkChange', 'handleReferenceChange','answer', 'update',
+        bindAll(this, 'handleFile', 'handleStemChange', 'handleQuestionChange', 'handleOpenEndedChange',
+            'showAttachment', 'handlePearlChange', 'handleReferenceChange','answer', 'update',
             'showPearlAttachment', 'handlePearlFile', 'deleteQuestion');
     }
 
@@ -99,9 +95,14 @@ class Question extends Component {
         });
     }
 
-    deleteQuestion(){
+    deleteQuestion = () =>{
         let id = this.state.id;
         this.props.handleDeleteQuestion(id);
+    }
+
+    addQuestion = () =>{
+        let id = this.state.id;
+        this.props.handleAddQuestion(id);
     }
 
     update(value,key){
@@ -277,6 +278,13 @@ class Question extends Component {
         this.update(value, "pearlAttachment");
     }
 
+    handleInputChange = (e) => {
+        const name = e.target.name;
+        const value = e.target.value;
+        this.setState({[name]:value});
+        this.update(value, name);
+    };
+
     handleStemChange(value){
         this.setState({ stem: value });
         this.update(value, "stem");
@@ -285,233 +293,73 @@ class Question extends Component {
         this.setState({ question: value });
         this.update(value, "question");
     }
-    handleTypeChange(e){
-        const value = e.target.value;
-        this.setState({ type: value });
-        this.update(value, "type");
-    }
+
     handleOpenEndedChange(value){
         this.setState({ openEnded: value });
         this.update(value, "openEnded");
     }
-    handleMCQ1Change(e){
-        const value = e.target.value;
-        this.setState({ mcq1: value });
-        this.update(value, "mcq1");
-    }
-    handleMCQ2Change(e){
-        const value = e.target.value;
-        this.setState({ mcq2: value });
-        this.update(value, "mcq2");
-    }
-    handleMCQ3Change(e){
-        const value = e.target.value;
-        this.setState({ mcq3: value });
-        this.update(value, "mcq3");
-    }
-    handleMCQ4Change(e){
-        const value = e.target.value;
-        this.setState({ mcq4: value });
-        this.update(value, "mcq4");
-    }
-    handleMCQ5Change(e){
-        const value = e.target.value;
-        this.setState({ mcq5: value });
-        this.update(value, "mcq5");
-    }
-    handleMCQ6Change(e){
-        const value = e.target.value;
-        this.setState({ mcq6: value });
-        this.update(value, "mcq6");
-    }
-    handleMCQ7Change(e){
-        const value = e.target.value;
-        this.setState({ mcq7: value });
-        this.update(value, "mcq7");
-    }
-    handleMCQ8Change(e){
-        const value = e.target.value;
-        this.setState({ mcq8: value });
-        this.update(value, "mcq8");
-    }
-    handleMCQ9Change(e){
-        const value = e.target.value;
-        this.setState({ mcq9: value });
-        this.update(value, "mcq9");
-    }
-    handleMCQ10Change(e){
-        const value = e.target.value;
-        this.setState({ mcq10: value });
-        this.update(value, "mcq10");
-    }
-    handleCheck1Change(e){
+
+    handleCheckChange = (e) => {
+        const name = e.target.name;
         const value = e.target.checked;
-        this.setState({ check1: value });
-        this.update(value, "check1");
+        this.setState({ [name]: value });
+        this.update(value, name);
     }
-    handleCheck2Change(e){
-        const value = e.target.checked;
-        this.setState({ check2: value });
-        this.update(value, "check2");
-    }
-    handleCheck3Change(e){
-        const value = e.target.checked;
-        this.setState({ check3: value });
-        this.update(value, "check3");
-    }
-    handleCheck4Change(e){
-        const value = e.target.checked;
-        this.setState({ check4: value });
-        this.update(value, "check4");
-    }
-    handleCheck5Change(e){
-        const value = e.target.checked;
-        this.setState({ check5: value });
-        this.update(value, "check5");
-    }
-    handleCheck6Change(e){
-        const value = e.target.checked;
-        this.setState({ check6: value });
-        this.update(value, "check6");
-    }
-    handleCheck7Change(e){
-        const value = e.target.checked;
-        this.setState({ check7: value });
-        this.update(value, "check7");
-    }
-    handleCheck8Change(e){
-        const value = e.target.checked;
-        this.setState({ check8: value });
-        this.update(value, "check8");
-    }
-    handleCheck9Change(e){
-        const value = e.target.checked;
-        this.setState({ check9: value });
-        this.update(value, "check9");
-    }
-    handleCheck10Change(e){
-        const value = e.target.checked;
-        this.setState({ check10: value });
-        this.update(value, "check10");
-    }
+
     handlePearlChange(value){
         this.setState({ pearl: value });
         this.update(value, "pearl");
     }
-    handleTimeChange(e){
-        const value = e.target.value;
-        this.setState({ time: value });
-        this.update(value, "time");
-    }
-    handleMarkChange(e){
-        const value = e.target.value;
-        this.setState({ mark: value });
-        this.update(value, "mark");
-    }
+
     handleReferenceChange(value){
         this.setState({ reference: value });
         this.update(value, "reference");
+    }
+
+    options(){
+        if (this.state.type==="MCQ" && this.state.mcq!=="Select One"){
+            let array = [];
+            for (let i=1;i<=parseInt(this.state.mcq);i++) {
+                array.push(i);
+            }
+            let options = array.map((number, index) => {
+                let mandatory = number<3 ? "*": "";
+                return(
+                    <div>
+                        <FormGroup>
+                            <ControlLabel>Option {number}<span style={{color:"red"}}>{mandatory}</span></ControlLabel>
+                            <InputGroup>
+                                <InputGroup.Addon>
+                                    <input type="checkbox" aria-label="..." checked={this.state["check"+number]} name={"check"+number} onChange={(e)=>this.handleCheckChange(e)}/>
+                                </InputGroup.Addon>
+                                <FormControl type="text" placeholder="Enter an answer" value={this.state["mcq"+number]} name={"mcq"+number} onChange={(e)=>this.handleInputChange(e)}/>
+                            </InputGroup>
+                        </FormGroup>
+                    </div>
+                );
+            });
+            return options;
+        }
     }
 
     answer(){
         if(this.state.type==="MCQ"){
             return(
                 <div>
-                    <FormGroup>
-                        <ControlLabel>Option 1<span style={{color:"red"}}>*</span></ControlLabel>
-                        <InputGroup>
-                            <InputGroup.Addon>
-                                <input type="checkbox" aria-label="..." checked={this.state.check1} name="check1" onChange={(e)=>this.handleCheck1Change(e)}/>
-                            </InputGroup.Addon>
-                            <FormControl type="text" placeholder="Enter an answer" value={this.state.mcq1} name="mcq1" onChange={(e)=>this.handleMCQ1Change(e)}/>
-                        </InputGroup>
-                    </FormGroup>
-
-                    <FormGroup>
-                        <ControlLabel>Option 2<span style={{color:"red"}}>*</span></ControlLabel>
-                        <InputGroup>
-                            <InputGroup.Addon>
-                                <input type="checkbox" aria-label="..." checked={this.state.check2} name="check2" onChange={(e)=>this.handleCheck2Change(e)}/>
-                            </InputGroup.Addon>
-                            <FormControl type="text" placeholder="Enter an answer" value={this.state.mcq2} name="mcq2" onChange={(e)=>this.handleMCQ2Change(e)}/>
-                        </InputGroup>
-                    </FormGroup>
-
-                    <FormGroup>
-                        <ControlLabel>Option 3</ControlLabel>
-                        <InputGroup>
-                            <InputGroup.Addon>
-                                <input type="checkbox" aria-label="..." checked={this.state.check3} name="check3" onChange={(e)=>this.handleCheck3Change(e)}/>
-                            </InputGroup.Addon>
-                            <FormControl type="text" placeholder="Optional" value={this.state.mcq3} name="mcq3" onChange={(e)=>this.handleMCQ3Change(e)}/>
-                        </InputGroup>
-                    </FormGroup>
-
-                    <FormGroup>
-                        <ControlLabel>Option 4</ControlLabel>
-                        <InputGroup>
-                            <InputGroup.Addon>
-                                <input type="checkbox" aria-label="..." checked={this.state.check4} name="check4" onChange={(e)=>this.handleCheck4Change(e)}/>
-                            </InputGroup.Addon>
-                            <FormControl type="text" placeholder="Optional" value={this.state.mcq4} name="mcq4" onChange={(e)=>this.handleMCQ4Change(e)}/>
-                        </InputGroup>
-                    </FormGroup>
-
-                    <FormGroup>
-                        <ControlLabel>Option 5</ControlLabel>
-                        <InputGroup>
-                            <InputGroup.Addon>
-                                <input type="checkbox" aria-label="..." checked={this.state.check5} name="check5" onChange={(e)=>this.handleCheck5Change(e)}/>
-                            </InputGroup.Addon>
-                            <FormControl type="text" placeholder="Optional" value={this.state.mcq5} name="mcq5" onChange={(e)=>this.handleMCQ5Change(e)}/>
-                        </InputGroup>
-                    </FormGroup>
-
-                    <FormGroup>
-                        <ControlLabel>Option 6</ControlLabel>
-                        <InputGroup>
-                            <InputGroup.Addon>
-                                <input type="checkbox" aria-label="..." checked={this.state.check6} name="check6" onChange={(e)=>this.handleCheck6Change(e)}/>
-                            </InputGroup.Addon>
-                            <FormControl type="text" placeholder="Optional" value={this.state.mcq6} name="mcq6" onChange={(e)=>this.handleMCQ6Change(e)}/>
-                        </InputGroup>
-                    </FormGroup>
-
-                    <FormGroup>
-                        <ControlLabel>Option 7</ControlLabel>
-                        <InputGroup>
-                            <InputGroup.Addon>
-                                <input type="checkbox" aria-label="..." checked={this.state.check7} name="check7" onChange={(e)=>this.handleCheck7Change(e)}/>
-                            </InputGroup.Addon>
-                            <FormControl type="text" placeholder="Optional" value={this.state.mcq7} name="mcq7" onChange={(e)=>this.handleMCQ7Change(e)}/>
-                        </InputGroup>
-                    </FormGroup>
-                    <FormGroup>
-                        <ControlLabel>Option 8</ControlLabel>
-                        <InputGroup>
-                            <InputGroup.Addon>
-                                <input type="checkbox" aria-label="..." checked={this.state.check8} name="check8" onChange={(e)=>this.handleCheck8Change(e)}/>
-                            </InputGroup.Addon>
-                            <FormControl type="text" placeholder="Optional" value={this.state.mcq8} name="mcq8" onChange={(e)=>this.handleMCQ8Change(e)}/>
-                        </InputGroup>
-                    </FormGroup>
-                    <FormGroup>
-                        <ControlLabel>Option 9</ControlLabel>
-                        <InputGroup>
-                            <InputGroup.Addon>
-                                <input type="checkbox" aria-label="..." checked={this.state.check9} name="check9" onChange={(e)=>this.handleCheck9Change(e)}/>
-                            </InputGroup.Addon>
-                            <FormControl type="text" placeholder="Optional" value={this.state.mcq9} name="mcq9" onChange={(e)=>this.handleMCQ9Change(e)}/>
-                        </InputGroup>
-                    </FormGroup>
-                    <FormGroup>
-                        <ControlLabel>Option 10</ControlLabel>
-                        <InputGroup>
-                            <InputGroup.Addon>
-                                <input type="checkbox" aria-label="..." checked={this.state.check10} name="check10" onChange={(e)=>this.handleCheck10Change(e)}/>
-                            </InputGroup.Addon>
-                            <FormControl type="text" placeholder="Optional" value={this.state.mcq10} name="mcq10" onChange={(e)=>this.handleMCQ10Change(e)}/>
-                        </InputGroup>
+                    <FormGroup controlId="formControlsMCQ">
+                        <ControlLabel style={{ fontSize: "150%" }}>Number of Options<span style={{color:"red"}}>*</span></ControlLabel>
+                            <FormControl componentClass="select" value={this.state.mcq} name="mcq" onChange={(e)=>this.handleInputChange(e)}>
+                                <option value="Select One">Select One</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </FormControl>
                     </FormGroup>
                 </div>
             );
@@ -526,7 +374,6 @@ class Question extends Component {
                                 onChange={this.handleOpenEndedChange}
                                 placeholder="Enter an answer"
                                 style={{height:'100px'}}/>
-                    {/*<FormControl componentClass="textarea" rows={5} style={{height:400}} placeholder="Enter an answer" value={this.state.openEnded} name="openEnded" onChange={(e)=>this.handleOpenEndedChange(e)}/>*/}
                 </FormGroup>
             );
         }
@@ -545,7 +392,6 @@ class Question extends Component {
                             onChange={this.handleStemChange}
                             placeholder="Enter a continuation of the scenario"
                             style={{height:'100px'}}/>
-                {/*<FormControl componentClass="textarea" rows={3} style={{height:'600px'}} placeholder="Enter a continuation of the scenario" value={this.state.stem} name="stem" onChange={(e)=>this.handleStemChange(e)} />*/}
             </FormGroup>
         );
     }
@@ -580,6 +426,9 @@ class Question extends Component {
         );
         return(
             <div id="question">
+                <div className="add-question-button">
+                    <Button type="button" bsStyle="primary" onClick={(e) => this.addQuestion()}>Add Question</Button><br />
+                </div><br/>
                 <PanelGroup accordion>
                     <Panel>
                         <Panel.Heading><Panel.Title toggle>{"▽ Question #"+this.state.id}</Panel.Title></Panel.Heading>
@@ -596,7 +445,6 @@ class Question extends Component {
                                         onChange={this.handleQuestionChange}
                                         placeholder="Enter a question"
                                         style={{height:'100px'}}/>
-                            {/*<FormControl componentClass="textarea" rows={5} placeholder="Enter a question" value={this.state.question} name="question" onChange={(e)=>this.handleQuestionChange(e)} />*/}
                         </FormGroup>
 
                         <FormGroup controlId="formControlsAttachment">
@@ -607,7 +455,7 @@ class Question extends Component {
 
                         <FormGroup controlId="formControlsType">
                             <ControlLabel style={{ fontSize: "150%" }}>Question Type<span style={{color:"red"}}>*</span></ControlLabel>
-                            <FormControl componentClass="select" value={this.state.type} name="type" onChange={(e)=>this.handleTypeChange(e)}>
+                            <FormControl componentClass="select" value={this.state.type} name="type" onChange={(e)=>this.handleInputChange(e)}>
                                 <option value="Select One">Select One</option>
                                 <option value="MCQ">MCQ</option>
                                 <option value="Open-ended">Open-ended</option>
@@ -615,6 +463,7 @@ class Question extends Component {
                         </FormGroup>
 
                         {this.answer()}
+                        {this.options()}
 
                         <FormGroup controlId="formControlsPEARL" style={{height:'200px'}}>
                             <ControlLabel style={{ fontSize: "150%" }}>Clinical Pearls<span style={{color:"red"}}>*</span>
@@ -626,7 +475,6 @@ class Question extends Component {
                                         onChange={this.handlePearlChange}
                                         placeholder="Enter an explanation for the answer(s)"
                                         style={{height:'100px'}}/>
-                            {/*<FormControl componentClass="textarea" rows={5} placeholder="Enter an explanation for the answer(s)" value={this.state.pearl} name="pearl" onChange={(e)=>this.handlePearlChange(e)} />*/}
                         </FormGroup>
 
                         <FormGroup controlId="formControlsPearlAttachment">
@@ -638,7 +486,7 @@ class Question extends Component {
                         <FormGroup controlId="formControlsTime">
                             <ControlLabel style={{ fontSize: "150%" }}>Time Limit<span style={{color:"red"}}>*</span></ControlLabel>
                             <InputGroup>
-                                <FormControl componentClass="select" value={this.state.time} name="time" onChange={(e)=>this.handleTimeChange(e)}>
+                                <FormControl componentClass="select" value={this.state.time} name="time" onChange={(e)=>this.handleInputChange(e)}>
                                     <option value="Select One">Select One</option>
                                     <option value="0.5">0.5</option>
                                     <option value="1">1</option>
@@ -657,7 +505,7 @@ class Question extends Component {
                             <ControlLabel style={{ fontSize: "150%" }}>Allocate Marks<span style={{color:"red"}}>*</span></ControlLabel>
                             <InputGroup>
                                 <FormControl type="text" placeholder="Enter a positive whole number" value={this.state.mark}
-                                             onChange={(e)=>this.handleMarkChange(e)} name="mark" />
+                                             onChange={(e)=>this.handleInputChange(e)} name="mark" />
                                 <InputGroup.Addon>Mark(s)</InputGroup.Addon>
                             </InputGroup>
                         </FormGroup>
@@ -669,7 +517,6 @@ class Question extends Component {
                                         onChange={this.handleReferenceChange}
                                         placeholder="Enter your references"
                                         style={{height:'100px'}}/>
-                            {/*<FormControl componentClass="textarea" rows={3} placeholder="Enter your references" value={this.state.reference} name="reference" onChange={(e)=>this.handleReferenceChange(e)} />*/}
                         </FormGroup>
                         </Panel.Body>
                     </Panel>
