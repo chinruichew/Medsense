@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, FormGroup, Col, Alert } from 'react-bootstrap';
+import {Form, FormGroup, Col, Alert, PanelGroup} from 'react-bootstrap';
 import { Button, Row, ControlLabel, Panel } from 'react-bootstrap';
 import { bindAll } from 'lodash';
 import { Line } from 'rc-progress';
@@ -8,7 +8,7 @@ import OpenEndedAnswer from "./OpenEndedAnswer";
 import ImageMagnifier from "./ImageMagnifier";
 import ReactQuill from 'react-quill';
 import axios from 'axios';
-
+import './Game.css';
 import 'react-quill/dist/quill.snow.css';
 
 const toolbarOptions = [
@@ -145,17 +145,19 @@ class OpenEndedQuestion extends Component {
         });
 
         if (this.props.question.id > "1") {
+            const storySoFar = (<span id="story-title"><center>Story So Far</center></span>);
             return (
-                <Panel bsStyle="info" style={{border: "0", width: "93%", background: "white"}}>
-                    <p style={{fontFamily: "Great Vibes, cursive", fontWeight: "bold", fontSize: "300%", textAlign: "center"}}>Story So Far</p>
-                    {/*<p style={{textDecorationLine: "underline", margin: "0", fontSize: "200%"}}>Case Scenario</p>*/}
-                    <div className="row" style={{fontSize: "120%", whiteSpace: "pre-wrap", paddingLeft: "2%", color: "black"}}>
-                        {ReactHtmlParser(this.props.scenario)}
-                    </div>
-                    {/*<p style={{textDecorationLine: "underline", margin: "0", fontSize: "200%"}}>Case Question</p>*/}
-                    <div className="row" style={{fontSize: "120%", whiteSpace: "pre-wrap", paddingLeft: "2%"}}>{stems}</div>
-                    {/*<br/><br/>*/}
-                </Panel>
+                <PanelGroup accordion style={{width: "93%"}}>
+                    <Panel eventKey="1" bsStyle="info">
+                        <Panel.Heading><Panel.Title toggle>{storySoFar}</Panel.Title></Panel.Heading>
+                        <Panel.Body collapsible>
+                            <div style={{fontSize: "120%"}}>
+                                {ReactHtmlParser(this.props.scenario)}
+                                {stems}
+                            </div>
+                        </Panel.Body>
+                    </Panel>
+                </PanelGroup>
             );
         }
     }
