@@ -78,99 +78,19 @@ module.exports = app => {
 
         // Batch insertion
         Question.insertMany(questions).then(docs => {
-            console.log(docs);
+            newCase.questions = questions;
+            newCase.save().then(docs => {
+                res.send({ data: {case:newCase._id, question:questions}, message: "uploadCase success" });
+            }).catch(err => {
+                throw(err);
+            });
         }).catch(err => {
             throw(err);
         });
-
-        return res.send({ data: {case:newCase._id, question:questions}, message: "uploadCase success" });
     });
 
-    function putQuestions(prop, oneCase, questions) {
-        return new Promise(resolve => {
-            Question.findById(prop['_id'], function (err, oneQuestion) {
-                if (oneQuestion) {
-                    oneQuestion.id = prop['id'];
-                    oneQuestion.question = prop['question'];
-                    oneQuestion.attachment = null;
-                    oneQuestion.pearlAttachment = null;
-                    oneQuestion.type = prop['type'];
-                    oneQuestion.openEnded = prop['openEnded'];
-                    oneQuestion.pearl = prop['pearl'];
-                    oneQuestion.time = prop['time'];
-                    oneQuestion.reference = prop['reference'];
-                    oneQuestion.stem = prop['stem'];
-                    oneQuestion.mcq1 = prop['mcq1'];
-                    oneQuestion.mcq2 = prop['mcq2'];
-                    oneQuestion.mcq3 = prop['mcq3'];
-                    oneQuestion.mcq4 = prop['mcq4'];
-                    oneQuestion.mcq5 = prop['mcq5'];
-                    oneQuestion.mcq6 = prop['mcq6'];
-                    oneQuestion.mcq7 = prop['mcq7'];
-                    oneQuestion.mcq8 = prop['mcq8'];
-                    oneQuestion.mcq9 = prop['mcq9'];
-                    oneQuestion.mcq10 = prop['mcq10'];
-                    oneQuestion.check1 = prop['check1'];
-                    oneQuestion.check2 = prop['check2'];
-                    oneQuestion.check3 = prop['check3'];
-                    oneQuestion.check4 = prop['check4'];
-                    oneQuestion.check5 = prop['check5'];
-                    oneQuestion.check6 = prop['check6'];
-                    oneQuestion.check7 = prop['check7'];
-                    oneQuestion.check8 = prop['check8'];
-                    oneQuestion.check9 = prop['check9'];
-                    oneQuestion.check10 = prop['check10'];
-                    oneQuestion.mark = prop['mark'];
-                    oneQuestion.save();
-                    questions.push(oneQuestion);
-                }
-                if (!oneQuestion) {
-                    const newQuestion = new Question({
-                        id: prop['id'],
-                        stem: prop['stem'],
-                        question: prop['question'],
-                        attachment: null,
-                        pearlAttachment: null,
-                        type: prop['type'],
-                        openEnded: prop['openEnded'],
-                        pearl: prop['pearl'],
-                        time: prop['time'],
-                        reference: prop['reference'],
-                        mcq1: prop['mcq1'],
-                        mcq2: prop['mcq2'],
-                        mcq3: prop['mcq3'],
-                        mcq4: prop['mcq4'],
-                        mcq5: prop['mcq5'],
-                        mcq6: prop['mcq6'],
-                        mcq7: prop['mcq7'],
-                        mcq8: prop['mcq8'],
-                        mcq9: prop['mcq9'],
-                        mcq10: prop['mcq10'],
-                        check1: prop['check1'],
-                        check2: prop['check2'],
-                        check3: prop['check3'],
-                        check4: prop['check4'],
-                        check5: prop['check5'],
-                        check6: prop['check6'],
-                        check7: prop['check7'],
-                        check8: prop['check8'],
-                        check9: prop['check9'],
-                        check10: prop['check10'],
-                        mark: prop['mark'],
-                        case: oneCase._id
-                    });
-                    newQuestion.save();
-                    oneCase.questions.push(newQuestion._id);
-                    oneCase.save();
-                    questions.push(newQuestion);
-                }
-                resolve("Done");
-            });
-        });
-    }
-
     // Case Vetting
-    app.post('/api/updateCase', async (req, res) => {
+    app.post('/api/updateCase', function (req, res) {
         Case.findById(req.body.values.id, async (err, oneCase) => {
             oneCase.title = req.body.values.title;
             oneCase.difficulty = req.body.values.difficulty;
@@ -194,21 +114,55 @@ module.exports = app => {
             oneCase.vetTime = new Date();
             await oneCase.save();
 
-            const jsonObject = req.body.values.qnData;
+            const qnData = req.body.values.qnData;
 
             let questions=[];
-            const Promise = require("bluebird");
-            const p = Promise.resolve();
-            jsonObject.forEach(function(prop, index, arr) {
-                p.then(new Promise(function(resolve, reject) {
-                    putQuestions(prop, oneCase, questions).then(response => {
-                        res.send({data: {case:oneCase._id, question:questions}, message: "uploadCase success"});
-                        resolve();
-                    });
-                }));
-            });
-            p.then(function(){
-                // console.log('Final: ', questions);
+            let bulk = Question.collection.initializeUnorderedBulkOp();
+            for(let i = 0; i < qnData.length; i++) {
+                const question = qnData[i];
+                const updatedQuestion = {
+                    id : question.id,
+                    question : question.question,
+                    attachment : null,
+                    pearlAttachment : null,
+                    type : question.type,
+                    openEnded : question.openEnded,
+                    pearl : question.pearl,
+                    time : question.time,
+                    reference : question.reference,
+                    stem : question.stem,
+                    mcq1 : question.mcq1,
+                    mcq2 : question.mcq2,
+                    mcq3 : question.mcq3,
+                    mcq4 : question.mcq4,
+                    mcq5 : question.mcq5,
+                    mcq6 : question.mcq6,
+                    mcq7 : question.mcq7,
+                    mcq8 : question.mcq8,
+                    mcq9 : question.mcq9,
+                    mcq10 : question.mcq10,
+                    check1 : question.check1,
+                    check2 : question.check2,
+                    check3 : question.check3,
+                    check4 : question.check4,
+                    check5 : question.check5,
+                    check6 : question.check6,
+                    check7 : question.check7,
+                    check8 : question.check8,
+                    check9 : question.check9,
+                    check10 : question.check10,
+                    mark : question.mark
+                };
+                bulk.find({_id: question._id}).update({$set: updatedQuestion});
+                questions.push(updatedQuestion);
+            }
+            bulk.execute(async(err) => {
+                if(err) {
+                    throw(err);
+                }
+                oneCase.questions = questions;
+                await oneCase.save();
+                res.send({data: {case:oneCase._id, question:questions}, message: "uploadCase success"});
             });
         });
     });
