@@ -109,7 +109,7 @@ class SearchBySpeciality extends Component {
                     let time = dateTime.substring(dateTime.length-8,dateTime.length);
 
                     let subspec = subspecialities==="Select One"?specialities:additionalSubspeciality;
-                   
+
                     return(
                         <tr align="center" key={specialityCase._id}>
                             <td>{specialityCase.title}</td>
