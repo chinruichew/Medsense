@@ -18,10 +18,6 @@ class VetOne extends Component {
         authorid: this.props.authorid,
     };
 
-    componentDidMount() {
-        console.log(this.state.questions)
-    }
-
     render() {
         return (
             <div>

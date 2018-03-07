@@ -46,30 +46,9 @@ module.exports = app => {
                 attachment: null,
                 pearlAttachment: null,
                 type: jsonObject[prop]['type'],
-                openEnded: jsonObject[prop]['openEnded'],
                 pearl: jsonObject[prop]['pearl'],
                 time: jsonObject[prop]['time'],
                 reference: jsonObject[prop]['reference'],
-                mcq1: jsonObject[prop]['mcq1'],
-                mcq2: jsonObject[prop]['mcq2'],
-                mcq3: jsonObject[prop]['mcq3'],
-                mcq4: jsonObject[prop]['mcq4'],
-                mcq5: jsonObject[prop]['mcq5'],
-                mcq6: jsonObject[prop]['mcq6'],
-                mcq7: jsonObject[prop]['mcq7'],
-                mcq8: jsonObject[prop]['mcq8'],
-                mcq9: jsonObject[prop]['mcq9'],
-                mcq10: jsonObject[prop]['mcq10'],
-                check1: jsonObject[prop]['check1'],
-                check2: jsonObject[prop]['check2'],
-                check3: jsonObject[prop]['check3'],
-                check4: jsonObject[prop]['check4'],
-                check5: jsonObject[prop]['check5'],
-                check6: jsonObject[prop]['check6'],
-                check7: jsonObject[prop]['check7'],
-                check8: jsonObject[prop]['check8'],
-                check9: jsonObject[prop]['check9'],
-                check10: jsonObject[prop]['check10'],
                 mark: jsonObject[prop]['mark'],
                 case: newCase._id
             });
@@ -126,43 +105,25 @@ module.exports = app => {
                     attachment : null,
                     pearlAttachment : null,
                     type : question.type,
-                    openEnded : question.openEnded,
                     pearl : question.pearl,
                     time : question.time,
                     reference : question.reference,
                     stem : question.stem,
-                    mcq1 : question.mcq1,
-                    mcq2 : question.mcq2,
-                    mcq3 : question.mcq3,
-                    mcq4 : question.mcq4,
-                    mcq5 : question.mcq5,
-                    mcq6 : question.mcq6,
-                    mcq7 : question.mcq7,
-                    mcq8 : question.mcq8,
-                    mcq9 : question.mcq9,
-                    mcq10 : question.mcq10,
-                    check1 : question.check1,
-                    check2 : question.check2,
-                    check3 : question.check3,
-                    check4 : question.check4,
-                    check5 : question.check5,
-                    check6 : question.check6,
-                    check7 : question.check7,
-                    check8 : question.check8,
-                    check9 : question.check9,
-                    check10 : question.check10,
-                    mark : question.mark
+                    mark : question.mark,
+                    case: req.body.values.id
                 };
                 bulk.find({_id: question._id}).update({$set: updatedQuestion});
-                questions.push(updatedQuestion);
+                questions.push(question._id);
             }
+
+            // Initiate bulk update operation
             bulk.execute(async(err) => {
                 if(err) {
                     throw(err);
                 }
                 oneCase.questions = questions;
                 await oneCase.save();
-                res.send({data: {case:oneCase._id, question:questions}, message: "uploadCase success"});
+                res.send({data: {case:oneCase._id, questions:questions}, message: "updateCase success"});
             });
         });
     });

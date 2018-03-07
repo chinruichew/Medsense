@@ -25,8 +25,7 @@ class Main extends Component {
     };
 
     isValidNRIC = (theNric) => {
-        const upperCaseNric = theNric.toUpperCase();
-        return new RegExp(/^.*[STFG]\d{7}[A-Z].*$/).test(upperCaseNric);
+        return new RegExp(/^.*[STFG]\d{7}[A-Z].*$/).test(theNric.toUpperCase());
     };
 
     addQuestion = () => {
@@ -245,8 +244,7 @@ class Main extends Component {
                 'content-type': 'multipart/form-data'
             }
         };
-        axios.post('/api/uploadCaseAttachment', formData, config).then(res => {
-        });
+        axios.post('/api/uploadCaseAttachment', formData, config);
     };
 
     uploadPearlFile = (file, caseID, qID, objID) => {
@@ -260,8 +258,7 @@ class Main extends Component {
                 'content-type': 'multipart/form-data'
             }
         };
-        axios.post('/api/uploadPearlAttachment', formData, config).then(res => {
-        });
+        axios.post('/api/uploadPearlAttachment', formData, config);
     };
 
     submitCase = (e) => {
@@ -269,15 +266,19 @@ class Main extends Component {
             values: this.state
         }).then(res => {
             const caseID = res.data.data.case;
-            let questions = res.data.data.question;
+            let questions = res.data.data.questions;
             let qnData = this.state.qnData;
             this.setState({vm: true});
+            console.log(questions);
             for (let i=0; i<questions.length; i++){
                 let question = questions[i];
                 let qn = qnData[i];
-                console.log(question.id, question._id);
                 this.uploadFile(qn.attachment, caseID, question.id, question._id);
                 this.uploadPearlFile(qn.pearlAttachment, caseID, question.id, question._id);
+            }
+        }).catch(err => {
+            if(err) {
+                throw(err);
             }
         });
     };
