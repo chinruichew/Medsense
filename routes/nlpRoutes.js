@@ -2,6 +2,7 @@ const Question = require('../models/Question');
 
 const natural = require('natural');
 const stopword = require('stopword');
+const unique = require('array-unique');
 
 String.prototype.cleanup = function () {
     return this.toLowerCase().replace(/[^a-zA-Z0-9]+/g, " ");
