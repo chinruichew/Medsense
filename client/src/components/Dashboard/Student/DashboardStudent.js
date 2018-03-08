@@ -3,7 +3,8 @@ import axios from 'axios';
 
 import StudentLeaderboard from "../DashboardComponents/StudentLeaderboard";
 import ContributionLeaderboard from "../DashboardComponents/ContributionLeaderboard";
-import IndividualCaseStatistics from "../DashboardComponents/IndividualCaseStatistics";
+import StudentCaseStatistics from "../DashboardComponents/StudentCaseStatistics";
+import {Tab, Tabs} from "react-bootstrap";
 
 class DashboardStudent extends Component {
     state = {
@@ -54,17 +55,24 @@ class DashboardStudent extends Component {
                     default:
                         return(
                             <div className="container">
-                                <div className="row" style={{minHeight: '500px'}}>
-                                    <IndividualCaseStatistics answers={this.state.answers} constants={this.state.constants} />
-                                </div>
-                                <div className="row">
-                                    <div className="col-md-6">
-                                        <StudentLeaderboard leaders={this.state.studentLeaders} />
-                                    </div>
-                                    <div className="col-md-6">
-                                        <ContributionLeaderboard leaders={this.state.contributionLeaders} />
-                                    </div>
-                                </div>
+                                <Tabs defaultActiveKey={1}>
+                                    <Tab eventKey={1} title="Leaderboard">
+                                        <div className="row">
+                                            <br/>
+                                            <div className="col-md-6">
+                                                <StudentLeaderboard leaders={this.state.studentLeaders} />
+                                            </div>
+                                            <div className="col-md-6">
+                                                <ContributionLeaderboard leaders={this.state.contributionLeaders} />
+                                            </div>
+                                        </div>
+                                    </Tab>
+                                    <Tab eventKey={2} title="Case Statistics">
+                                        <div className="row">
+                                            <StudentCaseStatistics answers={this.state.answers} />
+                                        </div>
+                                    </Tab>
+                                </Tabs>
                             </div>
                         );
                 }
