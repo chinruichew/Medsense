@@ -26,3 +26,4 @@ export const FETCH_GAME_BY_ID = 'fetch_game_by_id';
 export const ADD_OPEN_ENDED_ANSWER_OF_QUESTION = 'add_open_ended_answer_of_question';
 export const ADD_MCQ_ANSWER_OF_QUESTION = 'add_mcq_answer_of_question';
 export const SET_GAME_FINAL_DETAILS = 'SET_GAME_FINAL_DETAILS';
+export const FETCH_APPROACH = 'fetch_approach';

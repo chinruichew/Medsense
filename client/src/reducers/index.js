@@ -9,6 +9,7 @@ import caseByApproachReducer from './caseByApproachReducer';
 import caseBySpecialityReducer from './caseBySpecialityReducer';
 import adminReducer from './adminReducer';
 import adminUsersReducer from './adminUsersReducer';
+import adminApproachReducer from './adminApproachReducer';
 import constantsReducer from './constantsReducer';
 import gameReducer from "./gameReducer";
 
@@ -23,6 +24,7 @@ export default combineReducers({
     specialityCases: caseBySpecialityReducer,
     adminCases: adminReducer,
     adminUsers: adminUsersReducer,
+    approach: adminApproachReducer,
     constants: constantsReducer,
     form: reduxForm
 });

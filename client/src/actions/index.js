@@ -5,7 +5,7 @@ import {
     FETCH_CASE_BY_SPECIALITY, DELETE_ADMIN_CASE, FETCH_ADMIN_USERS, FETCH_FILTERED_ADMIN_STUDENTS,
     FETCH_FILTERED_ADMIN_PROFESSORS, DELETE_ADMIN_PROFESSOR, DELETE_ADMIN_STUDENT, FETCH_FILTERED_ADMIN_CASES,
     STORE_CASE_ANSWER, FETCH_CONSTANT_TYPES, SET_GAME_OVERVIEW,
-    ADD_OPEN_ENDED_ANSWER_OF_QUESTION, ADD_MCQ_ANSWER_OF_QUESTION, SET_GAME_FINAL_DETAILS
+    ADD_OPEN_ENDED_ANSWER_OF_QUESTION, ADD_MCQ_ANSWER_OF_QUESTION, SET_GAME_FINAL_DETAILS, FETCH_APPROACH
 } from './types';
 
 export const fetchUser = () => async dispatch => {
@@ -274,4 +274,11 @@ export const completeGame = (values) => {
             console.log(res);
         });
     };
+};
+
+export const fetchApproach = (values) => async dispatch => {
+    const res = await axios.post('/api/fetchApproach', {
+        values
+    });
+    dispatch({ type: FETCH_APPROACH, payload: res.data });
 };
