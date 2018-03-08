@@ -8,6 +8,20 @@ module.exports = app => {
         res.send(approaches);
     });
 
+    app.post('/api/addNewApproach', function (req, res) {
+        const values = req.body.values;
+        Approach.findOne({ approach: values.approach }, function (err, approach) {
+            if (!approach) {
+                const newApproach = new Approach();
+                newApproach.approach = values.approach;
+                newApproach.save();
+                return res.send(newApproach);
+            } else {
+                return res.send('Approach Exists');
+            }
+        });
+    });
+
     app.post('/api/fetchSpeciality', async (req, res) => {
         const specialities = await Speciality.find({}).sort("speciality");
         res.send(specialities);

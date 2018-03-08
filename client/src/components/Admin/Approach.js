@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, ControlLabel, FormGroup, FormControl, Table } from 'react-bootstrap';
 
-import { } from '../../actions';
+import { addNewApproach } from '../../actions';
 import './Admin.css';
 import axios from 'axios';
 
@@ -68,13 +68,13 @@ class Approach extends Component {
         if (this.state.approach.trim() === '' || this.state.approach == null) {
             window.alert("Approach not filled")
         } else {
-            // this.props.addNewApproach(this.state).then(function (response) {
-            //     if (response.data === "User Exists") {
-            //         window.alert("User Exists")
-            //     } else {
-            //         window.alert("User Created")
-            //     }
-            // })
+            this.props.addNewApproach(this.state).then(function (response) {
+                if (response.data === "Approach Exists") {
+                    window.alert("Approach Exists")
+                } else {
+                    window.alert("Approach Created")
+                }
+            })
             console.log(this.state.approach)
         }
     }
@@ -95,4 +95,4 @@ function mapStateToProps({ auth, approach }) {
     return { auth, approach };
 }
 
-export default connect(mapStateToProps, {})(Approach);
+export default connect(mapStateToProps, { addNewApproach })(Approach);

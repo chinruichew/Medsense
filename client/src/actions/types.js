@@ -27,3 +27,4 @@ export const ADD_OPEN_ENDED_ANSWER_OF_QUESTION = 'add_open_ended_answer_of_quest
 export const ADD_MCQ_ANSWER_OF_QUESTION = 'add_mcq_answer_of_question';
 export const SET_GAME_FINAL_DETAILS = 'SET_GAME_FINAL_DETAILS';
 export const FETCH_APPROACH = 'fetch_approach';
+export const ADD_NEW_APPROACH = 'add_new_approach';
