@@ -187,5 +187,3 @@ module.exports = app => {
         res.send(pendingCases);
     });
 };
-
-

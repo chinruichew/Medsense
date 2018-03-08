@@ -27,26 +27,8 @@ class Question extends Component {
             attachment: this.props.attachment,
             type: this.props.type,
             openEnded: this.props.openEnded,
-            mcq1: this.props.mcq1,
-            mcq2: this.props.mcq2,
-            mcq3: this.props.mcq3,
-            mcq4: this.props.mcq4,
-            mcq5: this.props.mcq5,
-            mcq6: this.props.mcq6,
-            mcq7: this.props.mcq7,
-            mcq8: this.props.mcq8,
-            mcq9: this.props.mcq9,
-            mcq10: this.props.mcq10,
-            check1: this.props.check1,
-            check2: this.props.check2,
-            check3: this.props.check3,
-            check4: this.props.check4,
-            check5: this.props.check5,
-            check6: this.props.check6,
-            check7: this.props.check7,
-            check8: this.props.check8,
-            check9: this.props.check9,
-            check10: this.props.check10,
+            optionData: [],
+            mcq: "Select One",
             pearl: this.props.pearl,
             time: this.props.time,
             mark: this.props.mark,
@@ -54,9 +36,14 @@ class Question extends Component {
             open: false,
             showfile: false,
         };
-        bindAll(this, 'handleFile', 'handleStemChange', 'handleQuestionChange', 'handleOpenEndedChange',
-            'showAttachment', 'handlePearlChange', 'handleReferenceChange','answer', 'update',
-            'showPearlAttachment', 'handlePearlFile', 'deleteQuestion');
+        bindAll(this, 'handleFile', 'showAttachment', 'answer', 'update',
+            'showPearlAttachment', 'handlePearlFile', 'options');
+    }
+
+    componentDidMount(){
+        for (let i=0;i<10;i++){
+
+        }
     }
 
     componentWillReceiveProps(nextProps){
@@ -68,26 +55,7 @@ class Question extends Component {
             pearlAttachment: nextProps.pearlAttachment,
             type: nextProps.type,
             openEnded: nextProps.openEnded,
-            mcq1: nextProps.mcq1,
-            mcq2: nextProps.mcq2,
-            mcq3: nextProps.mcq3,
-            mcq4: nextProps.mcq4,
-            mcq5: nextProps.mcq5,
-            mcq6: nextProps.mcq6,
-            mcq7: nextProps.mcq7,
-            mcq8: nextProps.mcq8,
-            mcq9: nextProps.mcq9,
-            mcq10: nextProps.mcq10,
-            check1: nextProps.check1,
-            check2: nextProps.check2,
-            check3: nextProps.check3,
-            check4: nextProps.check4,
-            check5: nextProps.check5,
-            check6: nextProps.check6,
-            check7: nextProps.check7,
-            check8: nextProps.check8,
-            check9: nextProps.check9,
-            check10: nextProps.check10,
+            optionData: nextProps.optionData,
             pearl: nextProps.pearl,
             time: nextProps.time,
             mark: nextProps.mark,
@@ -107,36 +75,7 @@ class Question extends Component {
 
     update(value,key){
         let details = {
-            stem: this.state.stem,
-            question: this.state.question,
-            attachment: this.state.attachment,
-            pearlAttachment: this.state.pearlAttachment,
-            type: this.state.type,
-            openEnded: this.state.openEnded,
-            mcq1: this.state.mcq1,
-            mcq2: this.state.mcq2,
-            mcq3: this.state.mcq3,
-            mcq4: this.state.mcq4,
-            mcq5: this.state.mcq5,
-            mcq6: this.state.mcq6,
-            mcq7: this.state.mcq7,
-            mcq8: this.state.mcq8,
-            mcq9: this.state.mcq9,
-            mcq10: this.state.mcq10,
-            check1: this.state.check1,
-            check2: this.state.check2,
-            check3: this.state.check3,
-            check4: this.state.check4,
-            check5: this.state.check5,
-            check6: this.state.check6,
-            check7: this.state.check7,
-            check8: this.state.check8,
-            check9: this.state.check9,
-            check10: this.state.check10,
-            pearl: this.state.pearl,
-            time: this.state.time,
-            mark: this.state.mark,
-            reference: this.state.reference,
+            ...this.state
         };
 
         switch(key) {
@@ -156,84 +95,8 @@ class Question extends Component {
                 details.openEnded = value;
                 this.props.handleUpdateQuestion(details,this.state.id);
                 return;
-            case "mcq1":
-                details.mcq1 = value;
-                this.props.handleUpdateQuestion(details,this.state.id);
-                return;
-            case "mcq2":
-                details.mcq2 = value;
-                this.props.handleUpdateQuestion(details,this.state.id);
-                return;
-            case "mcq3":
-                details.mcq3 = value;
-                this.props.handleUpdateQuestion(details,this.state.id);
-                return;
-            case "mcq4":
-                details.mcq4 = value;
-                this.props.handleUpdateQuestion(details,this.state.id);
-                return;
-            case "mcq5":
-                details.mcq5 = value;
-                this.props.handleUpdateQuestion(details,this.state.id);
-                return;
-            case "mcq6":
-                details.mcq6 = value;
-                this.props.handleUpdateQuestion(details,this.state.id);
-                return;
-            case "mcq7":
-                details.mcq7 = value;
-                this.props.handleUpdateQuestion(details,this.state.id);
-                return;
-            case "mcq8":
-                details.mcq8 = value;
-                this.props.handleUpdateQuestion(details,this.state.id);
-                return;
-            case "mcq9":
-                details.mcq9 = value;
-                this.props.handleUpdateQuestion(details,this.state.id);
-                return;
-            case "mcq10":
-                details.mcq10 = value;
-                this.props.handleUpdateQuestion(details,this.state.id);
-                return;
-            case "check1":
-                details.check1 = value;
-                this.props.handleUpdateQuestion(details,this.state.id);
-                return;
-            case "check2":
-                details.check2 = value;
-                this.props.handleUpdateQuestion(details,this.state.id);
-                return;
-            case "check3":
-                details.check3 = value;
-                this.props.handleUpdateQuestion(details,this.state.id);
-                return;
-            case "check4":
-                details.check4 = value;
-                this.props.handleUpdateQuestion(details,this.state.id);
-                return;
-            case "check5":
-                details.check5 = value;
-                this.props.handleUpdateQuestion(details,this.state.id);
-                return;
-            case "check6":
-                details.check6 = value;
-                this.props.handleUpdateQuestion(details,this.state.id);
-                return;
-            case "check7":
-                details.check7 = value;
-                this.props.handleUpdateQuestion(details,this.state.id);
-                return;
-            case "check8":
-                details.check8 = value;
-                this.props.handleUpdateQuestion(details,this.state.id);
-                return;
-            case "check9":
-                details.check9 = value;
-                this.props.handleUpdateQuestion(details,this.state.id);
-                return;
-            case "check10":
-                details.check10 = value;
+            case "optionData":
+                details.optionData = value;
                 this.props.handleUpdateQuestion(details,this.state.id);
                 return;
             case "pearl":
@@ -285,36 +148,76 @@ class Question extends Component {
         this.update(value, name);
     };
 
-    handleStemChange(value){
+    handleMCQChange = (e) => {
+        const name = e.target.name;
+        this.state.optionData.forEach(function (obj) {
+            if (obj.id  === parseInt(name.slice(-1),10)){
+                if (name.substring(0,3)==="mcq"){
+                    obj.mcq = e.target.value;
+                } else {
+                    obj.check = e.target.checked;
+                }
+            }
+        });
+
+        this.update(this.state.optionData, "optionData");
+    };
+
+    handleNumberChange = (e) => {
+        const value = e.target.value;
+        let temp = [];
+        if (this.state.type ==="MCQ" && value!==this.state.mcq){
+            let id = value==="Select One"?0:parseInt(value,10);
+            let prevId = this.state.mcq==="Select One"?0:parseInt(this.state.mcq,10);
+            if (id > prevId){
+                for (let j=0;j<this.state.optionData.length;j++){
+                    if(this.state.optionData[j].id<=prevId){
+                        temp.push(this.state.optionData[j]);
+                    }
+                }
+                for (let k=1;k<=id-prevId;k++){
+                    temp.push({
+                            "id": prevId+k,
+                            "mcq": "",
+                            "check": false
+                    });
+                }
+            } else if (id < prevId){
+                for (let j=0;j<this.state.optionData.length;j++){
+                    if(this.state.optionData[j].id<=id){
+                        temp.push(this.state.optionData[j]);
+                    }
+                }
+            }
+        }
+        this.setState({mcq: value, optionData: temp});
+        this.update(temp, "optionData");
+    };
+
+    handleStemChange = (value) =>{
         this.setState({ stem: value });
         this.update(value, "stem");
-    }
-    handleQuestionChange(value){
+    };
+
+    handleQuestionChange = (value) =>{
         this.setState({ question: value });
         this.update(value, "question");
-    }
+    };
 
-    handleOpenEndedChange(value){
+    handleOpenEndedChange = (value) =>{
         this.setState({ openEnded: value });
         this.update(value, "openEnded");
-    }
+    };
 
-    handleCheckChange = (e) => {
-        const name = e.target.name;
-        const value = e.target.checked;
-        this.setState({ [name]: value });
-        this.update(value, name);
-    }
-
-    handlePearlChange(value){
+    handlePearlChange = (value) =>{
         this.setState({ pearl: value });
         this.update(value, "pearl");
-    }
+    };
 
-    handleReferenceChange(value){
+    handleReferenceChange = (value) =>{
         this.setState({ reference: value });
         this.update(value, "reference");
-    }
+    };
 
     options(){
         if (this.state.type==="MCQ" && this.state.mcq!=="Select One"){
@@ -322,6 +225,7 @@ class Question extends Component {
             for (let i=1;i<=parseInt(this.state.mcq,10);i++) {
                 array.push(i);
             }
+
             let options = array.map((number, index) => {
                 let mandatory = number<3 ? "*": "";
                 return(
@@ -330,9 +234,9 @@ class Question extends Component {
                             <ControlLabel>Option {number}<span style={{color:"red"}}>{mandatory}</span></ControlLabel>
                             <InputGroup>
                                 <InputGroup.Addon>
-                                    <input type="checkbox" aria-label="..." checked={this.state["check"+number]} name={"check"+number} onChange={(e)=>this.handleCheckChange(e)}/>
+                                    <input type="checkbox" aria-label="..." checked={this.state["check"+number]} name={"check"+number} onChange={(e)=>this.handleMCQChange(e)}/>
                                 </InputGroup.Addon>
-                                <FormControl type="text" placeholder="Enter an answer" value={this.state["mcq"+number]} name={"mcq"+number} onChange={(e)=>this.handleInputChange(e)}/>
+                                <FormControl type="text" placeholder="Enter an answer" value={this.state["mcq"+number]} name={"mcq"+number} onChange={(e)=>this.handleMCQChange(e)}/>
                             </InputGroup>
                         </FormGroup>
                     </div>
@@ -348,7 +252,7 @@ class Question extends Component {
                 <div>
                     <FormGroup controlId="formControlsMCQ">
                         <ControlLabel style={{ fontSize: "150%" }}>Number of Options<span style={{color:"red"}}>*</span></ControlLabel>
-                            <FormControl componentClass="select" value={this.state.mcq} name="mcq" onChange={(e)=>this.handleInputChange(e)}>
+                            <FormControl componentClass="select" value={this.state.mcq} name="mcq" onChange={(e)=>this.handleNumberChange(e)}>
                                 <option value="Select One">Select One</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
