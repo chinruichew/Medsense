@@ -32,6 +32,25 @@ module.exports = app => {
         res.send(specialities);
     });
 
+    app.post('/api/addNewSpeciality', function (req, res) {
+        const values = req.body.values;
+        Speciality.findOne({ speciality: values.speciality }, function (err, speciality) {
+            if (!speciality) {
+                const newSpeciality = new Speciality();
+                newSpeciality.speciality = values.speciality;
+                newSpeciality.save();
+                return res.send(newSpeciality);
+            } else {
+                return res.send('Speciality Exists');
+            }
+        });
+    });
+
+    app.post('/api/deleteSpeciality', function (req, res) {
+        Speciality.find({ _id: req.body.values }, function (err, deleteSpeciality) { }).remove().exec();
+        return res.status(201).send({ data: null, message: "deleteSpeciality success" });
+    });
+
     app.post('/api/fetchSubspeciality', async (req, res) => {
         Speciality.find({"speciality":req.body.speciality}).populate({
             path: 'subspecialities',

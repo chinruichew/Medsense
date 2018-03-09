@@ -29,3 +29,6 @@ export const SET_GAME_FINAL_DETAILS = 'SET_GAME_FINAL_DETAILS';
 export const FETCH_APPROACH = 'fetch_approach';
 export const ADD_NEW_APPROACH = 'add_new_approach';
 export const DELETE_APPROACH = 'delete_approach';
+export const FETCH_SPECIALITY = 'fetch_speciality';
+export const ADD_NEW_SPECIALITY = 'add_new_speciality';
+export const DELETE_SPECIALITY = 'delete_speciality';

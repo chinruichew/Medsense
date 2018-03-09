@@ -5,7 +5,7 @@ import {
     FETCH_CASE_BY_SPECIALITY, DELETE_ADMIN_CASE, FETCH_ADMIN_USERS, FETCH_FILTERED_ADMIN_STUDENTS,
     FETCH_FILTERED_ADMIN_PROFESSORS, DELETE_ADMIN_PROFESSOR, DELETE_ADMIN_STUDENT, FETCH_FILTERED_ADMIN_CASES,
     STORE_CASE_ANSWER, FETCH_CONSTANT_TYPES, SET_GAME_OVERVIEW,
-    ADD_OPEN_ENDED_ANSWER_OF_QUESTION, ADD_MCQ_ANSWER_OF_QUESTION, SET_GAME_FINAL_DETAILS, FETCH_APPROACH, ADD_NEW_APPROACH, DELETE_APPROACH
+    ADD_OPEN_ENDED_ANSWER_OF_QUESTION, ADD_MCQ_ANSWER_OF_QUESTION, SET_GAME_FINAL_DETAILS, FETCH_APPROACH, ADD_NEW_APPROACH, DELETE_APPROACH, FETCH_SPECIALITY, ADD_NEW_SPECIALITY, DELETE_SPECIALITY
 } from './types';
 
 export const fetchUser = () => async dispatch => {
@@ -296,4 +296,26 @@ export const deleteApproach = (values) => async dispatch => {
         values
     });
     dispatch({ type: DELETE_APPROACH, payload: values });
+};
+
+export const fetchSpeciality = (values) => async dispatch => {
+    const res = await axios.post('/api/fetchSpeciality', {
+        values
+    });
+    dispatch({ type: FETCH_SPECIALITY, payload: res.data });
+};
+
+export const addNewSpeciality = (values) => async dispatch => {
+    const res = await axios.post('/api/addNewSpeciality', {
+        values
+    });
+    dispatch({ type: ADD_NEW_SPECIALITY, payload: res.data });
+    return res
+};
+
+export const deleteSpeciality = (values) => async dispatch => {
+    axios.post('/api/deleteSpeciality', {
+        values
+    });
+    dispatch({ type: DELETE_SPECIALITY, payload: values });
 };

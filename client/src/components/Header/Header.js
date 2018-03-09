@@ -74,6 +74,7 @@ class Header extends Component {
                                         <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={6} href="/about">     About     </NavItem>
                                         <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={7} href="/admincasemanager">     Case Management    </NavItem>
                                         <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={7} href="/adminusermanager">     User Management    </NavItem>
+                                        <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={7} href="/admintermmanager">     Term Management    </NavItem>
                                         <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={8} href="/api/logout">     Logout               </NavItem>
                                         <a href="/profile"><Image src={this.props.auth.profilepicture} className="img-circle" style={{height: '50px', width: '50px'}} /></a>
                                     </Nav>

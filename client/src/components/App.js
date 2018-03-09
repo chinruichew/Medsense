@@ -17,6 +17,7 @@ import CaseStart from './CaseUpload/CaseStart';
 import CaseChallenge from './CaseChallenge/Main';
 import AdminCaseManager from './Admin/CaseManager';
 import AdminUserManager from './Admin/UserManager';
+import AdminTermManager from './Admin/TermManager';
 import Result from './CaseChallenge/GameResults';
 import NotFound from "./NotFound/NotFound";
 import IndividualCaseStatistics from "./Dashboard/DashboardComponents/IndividualCaseStatistics";
@@ -43,6 +44,7 @@ class App extends Component {
                         <Route exact path="/game" component={CaseChallenge} />
                         <Route exact path="/admincasemanager" component={AdminCaseManager} />
                         <Route exact path="/adminusermanager" component={AdminUserManager} />
+                        <Route exact path="/admintermmanager" component={AdminTermManager} />
                         <Route exact path="/result" component={Result} />
                         <Route exact path="/caseStatsIndividual" component={IndividualCaseStatistics} />
                         <Route exact path="/" component={About}/>
