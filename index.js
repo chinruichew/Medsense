@@ -201,6 +201,7 @@ require('./routes/gameRoutes')(app);
 require('./routes/utilityRoutes')(app);
 require('./routes/nlpRoutes')(app);
 require('./routes/approachSpecialityRoutes')(app);
+require('./routes/analyticsRoutes')(app);
 /* End of REST API Configurations */
 
 /* Start of GraphQL Configurations */

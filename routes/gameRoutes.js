@@ -98,43 +98,6 @@ module.exports = app => {
         res.send(result);
     });
 
-    app.get('/api/getIndividualAnswers', function(req, res) {
-        AnswerOverview.find().populate({
-            path: 'case',
-            model: 'cases',
-            populate: {
-                path: 'questions',
-                model: 'questions'
-            }
-        }).populate({
-            path: 'user',
-            model: 'users'
-        }).populate({
-            path: 'mcqAnswers',
-            model: 'mcqAnswers'
-        }).populate({
-            path: 'openEndedAnswers',
-            model: 'openEndedAnswers'
-        }).exec(function(err, answers) {
-            if(err) {
-                throw err;
-            }
-
-            let filteredAnswers = [];
-            for(let i = 0; i < answers.length; i++) {
-                const answer = answers[i];
-                if(String(answer.user._id) === req.session.user._id) {
-                    filteredAnswers.push(answer);
-                }
-            }
-
-            // Do not delete - production logging
-            console.log('Student case statistics:' + '\n' + filteredAnswers);
-
-            res.send(filteredAnswers);
-        });
-    });
-
     app.post('/api/completeGame', async(req, res) => {
         const values = req.body.values;
 

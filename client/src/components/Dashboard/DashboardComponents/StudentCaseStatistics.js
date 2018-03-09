@@ -7,11 +7,16 @@ class StudentCaseStatistics extends Component {
     };
 
     renderContent = () => {
+        const selectOptions = this.state.answers.map((answer, index) => {
+            return(
+                <option key={answer._id} value={answer._id}>{answer.case.title + ' (Attempt ' + answer.attempt + ')'}</option>
+            );
+        });
+
         const answers = this.state.answers.map(answer => {
-            console.log(answer);
             return(
                 <div key={answer._id} className="col-md-4">
-                    <a href="/home">
+                    <a href={"/caseStatsIndividual?case=" + answer._id}>
                         <div className="card">
                             <div className="card-content text-center">
                                 <Image circle src="/individual_case_image.jpg" style={{height: '150px', width: '150px'}} />

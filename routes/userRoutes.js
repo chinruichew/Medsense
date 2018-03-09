@@ -101,53 +101,6 @@ module.exports = app => {
         });
     });
 
-    // Get leaders with highest scores
-    app.get('/api/getLeadersWithHighestScores', function(req, res) {
-        User.find().sort('-points').limit(5).exec(function (err, users) {
-            res.send(users);
-        });
-    });
-
-    // Get leaders with highest contributions
-    app.get('/api/getLeadersWithHighestContributions', function(req, res) {
-        Case.find().populate({
-            path: 'authorid',
-            model: 'users',
-        }).exec(function (err, cases) {
-            const leaders = {};
-            for(let i = 0; i < cases.length; i++) {
-                const uploadedCase = cases[i];
-                if(leaders[uploadedCase.authorid.username] === undefined) {
-                    leaders[uploadedCase.authorid.username] = 0;
-                }
-                const num = leaders[uploadedCase.authorid.username];
-                leaders[uploadedCase.authorid.username] = num + 1;
-            }
-            const sortedLeaders = {};
-            let counter = 0;
-            while (counter < 5) {
-                let max = 0;
-                for(const key in leaders) {
-                    if(leaders[key] > max) {
-                        max = leaders[key];
-                    }
-                }
-                for(const key in leaders) {
-                    if(counter < 5) {
-                        if(leaders[key] === max) {
-                            sortedLeaders[key] = leaders[key];
-                            counter += 1;
-                            delete leaders[key];
-                        }
-                    } else {
-                        break;
-                    }
-                }
-            }
-            res.send(sortedLeaders);
-        });
-    });
-
     app.get('/api/checkUserToUpdateYear', async(req, res) => {
         let toPromptUpdateYear = false;
         switch(req.session.user.year) {
