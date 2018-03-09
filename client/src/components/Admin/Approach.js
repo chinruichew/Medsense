@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, ControlLabel, FormGroup, FormControl, Table } from 'react-bootstrap';
 
-import { addNewApproach } from '../../actions';
+import { addNewApproach, deleteApproach } from '../../actions';
 import './Admin.css';
 import axios from 'axios';
 
@@ -29,9 +29,7 @@ class Approach extends Component {
     }
 
     deleteAdminApproach(e) {
-        console.log(e)
-        console.log(e._id)
-        //this.props.deleteAdminStudent(e._id)
+        this.props.deleteApproach(e._id)
     }
 
     renderApproach() {
@@ -95,4 +93,4 @@ function mapStateToProps({ auth, approach }) {
     return { auth, approach };
 }
 
-export default connect(mapStateToProps, { addNewApproach })(Approach);
+export default connect(mapStateToProps, { addNewApproach, deleteApproach })(Approach);

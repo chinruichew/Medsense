@@ -22,6 +22,11 @@ module.exports = app => {
         });
     });
 
+    app.post('/api/deleteApproach', function (req, res) {
+        Approach.find({ _id: req.body.values }, function (err, deleteApproach) { }).remove().exec();
+        return res.status(201).send({ data: null, message: "deleteApproach success" });
+    });
+
     app.post('/api/fetchSpeciality', async (req, res) => {
         const specialities = await Speciality.find({}).sort("speciality");
         res.send(specialities);

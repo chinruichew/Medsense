@@ -5,7 +5,7 @@ import {
     FETCH_CASE_BY_SPECIALITY, DELETE_ADMIN_CASE, FETCH_ADMIN_USERS, FETCH_FILTERED_ADMIN_STUDENTS,
     FETCH_FILTERED_ADMIN_PROFESSORS, DELETE_ADMIN_PROFESSOR, DELETE_ADMIN_STUDENT, FETCH_FILTERED_ADMIN_CASES,
     STORE_CASE_ANSWER, FETCH_CONSTANT_TYPES, SET_GAME_OVERVIEW,
-    ADD_OPEN_ENDED_ANSWER_OF_QUESTION, ADD_MCQ_ANSWER_OF_QUESTION, SET_GAME_FINAL_DETAILS, FETCH_APPROACH, ADD_NEW_APPROACH
+    ADD_OPEN_ENDED_ANSWER_OF_QUESTION, ADD_MCQ_ANSWER_OF_QUESTION, SET_GAME_FINAL_DETAILS, FETCH_APPROACH, ADD_NEW_APPROACH, DELETE_APPROACH
 } from './types';
 
 export const fetchUser = () => async dispatch => {
@@ -289,4 +289,11 @@ export const addNewApproach = (values) => async dispatch => {
     });
     dispatch({ type: ADD_NEW_APPROACH, payload: res.data });
     return res
+};
+
+export const deleteApproach = (values) => async dispatch => {
+    axios.post('/api/deleteApproach', {
+        values
+    });
+    dispatch({ type: DELETE_APPROACH, payload: values });
 };
