@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Case = require('../models/Case');
 const Question = require('../models/Question');
+const Option = require('../models/Option');
 
 const constants = require('../utility/constantTypes');
 
@@ -38,7 +39,19 @@ module.exports = app => {
         const jsonObject = req.body.values.qnData;
 
         let questions=[];
+        let options = [];
         for (const prop in jsonObject) {
+            const optionData = jsonObject[prop]['optionData'];
+            for(let i = 0; i < optionData.length; i++) {
+                const optionDaten = optionData[i];
+                options.push({
+                    optionId: optionDaten.id,
+                    case: newCase._id,
+                    qnId: jsonObject[prop]['id'],
+                    mcq: optionDaten.mcq,
+                    check: optionDaten.check
+                });
+            }
             const newQuestion = new Question({
                 id: jsonObject[prop]['id'],
                 stem: jsonObject[prop]['stem'],
@@ -56,10 +69,24 @@ module.exports = app => {
         }
 
         // Batch insertion
-        Question.insertMany(questions).then(docs => {
-            newCase.questions = questions;
-            newCase.save().then(docs => {
-                res.send({ data: {case:newCase._id, question:questions}, message: "uploadCase success" });
+        Question.insertMany(questions).then(updatedQuestions => {
+            for(let i = 0; i < updatedQuestions.length; i++) {
+                const updatedQuestion = updatedQuestions[i];
+                for(let j = 0; j < options.length; j++) {
+                    const option = options[j];
+                    if(option.qnId === updatedQuestion.id) {
+                        option[j].question = updatedQuestion._id;
+                        break;
+                    }
+                }
+            }
+            Option.insertMany(options).then(updatedOptions => {
+                newCase.questions = questions;
+                newCase.save().then(docs => {
+                    res.send({ data: {case:newCase._id, question:questions}, message: "uploadCase success" });
+                }).catch(err => {
+                    throw(err);
+                });
             }).catch(err => {
                 throw(err);
             });

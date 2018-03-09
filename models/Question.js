@@ -14,7 +14,6 @@ const questionSchema = new Schema({
     time: { type: String, default: "" },
     reference: { type: String, default: "" },
     case: { type: Schema.Types.ObjectId, ref: 'cases' },
-    options: [{ type: Schema.Types.ObjectId, ref: 'options' }],
     mark: {type: String, default: ""},
 });
 
