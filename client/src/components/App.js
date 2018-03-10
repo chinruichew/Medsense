@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
+import {whyDidYouUpdate} from "why-did-you-update";
 // import HttpsRedirect from 'react-https-redirect';
 
 import './App.css';
@@ -24,6 +25,9 @@ import IndividualCaseStatistics from "./Dashboard/DashboardComponents/Individual
 
 class App extends Component {
     componentDidMount() {
+        // Render optimization Tracker
+        whyDidYouUpdate(React);
+
         this.props.fetchUser();
     }
 

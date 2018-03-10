@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import * as ReactGA from "react-ga";
+import {whyDidYouUpdate} from 'why-did-you-update';
 
 import './Home.css';
 import StudentHome from "./StudentHome";
