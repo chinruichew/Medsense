@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import StudentLeaderboard from "../DashboardComponents/StudentLeaderboard";
 import ContributionLeaderboard from "../DashboardComponents/ContributionLeaderboard";
-import CaseStatistics from "../DashboardComponents/CaseStatistics";
+import ProfessorCaseStatistics from "./ProfessorCaseStatistics";
 
 class DashboardProfessor extends Component {
     state = {
@@ -18,28 +18,28 @@ class DashboardProfessor extends Component {
         axios.get('/api/getLeadersWithHighestScores').then(res => {
             this.setState({studentLeaders: res.data});
         }).catch(err => {
-            console.log(err);
+            throw(err);
         });
 
         // Get leaders with highest contributions
         axios.get('/api/getLeadersWithHighestContributions').then(res => {
             this.setState({contributionLeaders: res.data});
         }).catch(err => {
-            console.log(err);
+            throw(err);
         });
 
         // Get all Cases
         axios.get('/api/fetchVettedCases').then(res => {
             this.setState({cases: res.data});
         }).catch(err => {
-            console.log(err);
+            throw(err);
         });
 
-        // Get all Question Answers
+        // Get all Answers
         axios.get('/api/fetchAnswers').then(res => {
             this.setState({answers: res.data});
         }).catch(err => {
-            console.log(err);
+            throw(err);
         });
     };
 
@@ -56,21 +56,26 @@ class DashboardProfessor extends Component {
                             case null:
                                 return;
                             default:
-                                return(
-                                    <div className="container">
-                                        <div className="row">
-                                            <div className="col-md-6">
-                                                <StudentLeaderboard leaders={this.state.studentLeaders} />
+                                switch(this.state.answers) {
+                                    case null:
+                                        return;
+                                    default:
+                                        return(
+                                            <div className="container">
+                                                <div className="row">
+                                                    <div className="col-md-6">
+                                                        <StudentLeaderboard leaders={this.state.studentLeaders} />
+                                                    </div>
+                                                    <div className="col-md-6">
+                                                        <ContributionLeaderboard leaders={this.state.contributionLeaders} />
+                                                    </div>
+                                                </div>
+                                                <div className="row">
+                                                    <ProfessorCaseStatistics cases={this.state.cases} answers={this.state.answers} />
+                                                </div>
                                             </div>
-                                            <div className="col-md-6">
-                                                <ContributionLeaderboard leaders={this.state.contributionLeaders} />
-                                            </div>
-                                        </div>
-                                        <div className="row">
-                                            <CaseStatistics cases={this.state.cases} />
-                                        </div>
-                                    </div>
-                                );
+                                        );
+                                }
                         }
                 }
         }

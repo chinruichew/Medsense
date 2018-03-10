@@ -106,4 +106,29 @@ module.exports = app => {
             res.send(answer);
         });
     });
+
+    app.get('/api/fetchAnswers', async(req, res) => {
+        AnswerOverview.find().populate({
+            path: 'case',
+            model: 'cases',
+            populate: {
+                path: 'questions',
+                model: 'questions'
+            }
+        }).populate({
+            path: 'mcqAnswers',
+            model: 'mcqAnswers'
+        }).populate({
+            path: 'openEndedAnswers',
+            model: 'openEndedAnswers'
+        }).populate({
+            path: 'user',
+            model: 'users',
+        }).exec(function(err, answer) {
+            if(err) {
+                throw(err);
+            }
+            res.send(answer);
+        });
+    });
 };
