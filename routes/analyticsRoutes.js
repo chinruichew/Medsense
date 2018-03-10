@@ -1,4 +1,5 @@
 const Case = require('../models/Case');
+const User = require('../models/User');
 const AnswerOverview = require('../models/AnswerOverview');
 
 module.exports = app => {

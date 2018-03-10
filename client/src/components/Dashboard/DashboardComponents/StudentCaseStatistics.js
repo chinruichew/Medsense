@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Image} from "react-bootstrap";
+import {NavLink} from "react-router-dom";
 
 class StudentCaseStatistics extends Component {
     state = {
@@ -14,17 +15,19 @@ class StudentCaseStatistics extends Component {
         });
 
         const answers = this.state.answers.map(answer => {
+            console.log(answer);
             return(
                 <div key={answer._id} className="col-md-4">
-                    <a href={"/caseStatsIndividual?case=" + answer._id}>
+                    <NavLink to={"/caseStatsIndividual?case=" + answer._id}>
                         <div className="card">
                             <div className="card-content text-center">
                                 <Image circle src="/individual_case_image.jpg" style={{height: '150px', width: '150px'}} />
                                 <h4>{answer.case.title}</h4>
+                                <p>Speciality: {answer.case.speciality}</p>
                                 <p>Attempt {answer.attempt}</p>
                             </div>
                         </div>
-                    </a>
+                    </NavLink>
                 </div>
             );
         });

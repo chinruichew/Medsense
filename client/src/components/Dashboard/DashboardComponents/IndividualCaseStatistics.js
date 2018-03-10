@@ -13,12 +13,16 @@ class IndividualCaseStatistics extends Component {
     }
 
     renderContent = () => {
-        switch(this.state.answer) {
+        const answer = this.state.answer;
+        switch(answer) {
             case null:
                 return;
             default:
                 return(
-                    <div></div>
+                    <div>
+                        <h1>{answer.case.title}</h1>
+                        <p>Attempt {answer.attempt}</p>
+                    </div>
                 );
         }
     };
