@@ -4,12 +4,7 @@ const { Schema } = mongoose;
 
 const mcqAnswerSchema = new Schema({
     id: { type: String, default: "" },
-    check1: { type: Boolean, default: false },
-    check2: { type: Boolean, default: false },
-    check3: { type: Boolean, default: false },
-    check4: { type: Boolean, default: false },
-    check5: { type: Boolean, default: false },
-    check6: { type: Boolean, default: false },
+    answerOptions: [{ type: Schema.Types.ObjectId, ref: 'mcqAnswerOptions' }],
     mark: { type: String, default: "" },
     score: { type: Number, default: 0 },
     startTime: { type: Date, default: null},
