@@ -13,10 +13,12 @@
     "server": "nodemon index.js --verbose",
     "client": "npm run start --prefix client",
     "babel": "babel-node index.js --verbose",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "deploy": "npm run update && npm run build --prefix client --verbose && git add . --verbose && git commit -m \"aws deploy\" --verbose && git pull --verbose && git push origin master --verbose && eb deploy --verbose && eb open --verbose",
+    "dev": "concurrently \"npm run server\" \"npm run client\" \"npm run watch-docs\"",
+    "deploy": "npm run update && generate-docs && npm run build --prefix client --verbose && git add . --verbose && git commit -m \"aws deploy\" --verbose && git pull --verbose && git push origin master --verbose && eb deploy --verbose && eb open --verbose",
     "update": "npm install --verbose && npm update --verbose && cd client && npm install --verbose && npm update --verbose",
-    "quick-deploy": "eb deploy --verbose && eb open --verbose"
+    "quick-deploy": "eb deploy --verbose && eb open --verbose",
+    "generate-docs": "documentation build index.js --format html --output docs --sort-order source",
+    "watch-docs": "documentation build --watch index.js --format html --output docs --sort-order source && documentation serve --watch index.js --format html --output docs --sort-order source"
   },
   "repository": {
     "type": "git",
@@ -55,6 +57,7 @@
     "cors": "^2.8.4",
     "crypto-js": "^3.1.9-1",
     "csurf": "^1.9.0",
+    "documentation": "^6.1.0",
     "draft-js": "^0.10.5",
     "errorhandler": "^1.5.0",
     "express": "^4.16.2",

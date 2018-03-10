@@ -151,6 +151,9 @@ const Merror = MerrorModule.Merror;
 const MerrorMiddleware = MerrorModule.MerrorMiddleware;
 app.use(MerrorMiddleware());
 
+/**
+ * This function notifies any error in a request method.
+ */
 function errorNotification (err, str, req) {
     const title = 'Error in ' + req.method + ' ' + req.url;
 
