@@ -6,7 +6,8 @@ import { Redirect } from 'react-router-dom';
 import './Admin.css';
 import Approach from './Approach';
 import Speciality from './Speciality';
-import { fetchApproach, fetchSpeciality } from '../../actions';
+import Subspeciality from './Subspeciality';
+import { fetchApproach, fetchSpeciality, fetchSubspeciality } from '../../actions';
 
 class TermManager extends Component {
     constructor(props) {
@@ -18,6 +19,7 @@ class TermManager extends Component {
     componentWillMount() {
         this.props.fetchApproach();
         this.props.fetchSpeciality();
+        this.props.fetchSubspeciality();
     }
 
     renderContent() {
@@ -25,7 +27,7 @@ class TermManager extends Component {
             case false:
                 return <Redirect to='/' />;
             default:
-                switch (this.props.speciality && this.props.approach) {
+                switch (this.props.speciality && this.props.approach && this.props.subspeciality) {
                     case null:
                         return;
                     default:
@@ -42,6 +44,12 @@ class TermManager extends Component {
                                             <Tab eventKey={2} title="Speciality">
                                                 <br />
                                                 <Speciality />
+                                                <br />
+                                            </Tab>
+                                            <Tab eventKey={3} title="Subspeciality">
+                                                <br />
+                                                <Subspeciality />
+                                                <br />
                                             </Tab>
                                         </Tabs>
                                     </div>
@@ -64,10 +72,10 @@ class TermManager extends Component {
     }
 }
 
-function mapStateToProps({ auth, approach, speciality }) {
-    return { auth, approach, speciality };
+function mapStateToProps({ auth, approach, speciality, subspeciality }) {
+    return { auth, approach, speciality, subspeciality };
 }
 
 
 
-export default connect(mapStateToProps, { fetchApproach, fetchSpeciality })(TermManager);
+export default connect(mapStateToProps, { fetchApproach, fetchSpeciality, fetchSubspeciality })(TermManager);

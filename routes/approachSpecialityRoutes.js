@@ -59,4 +59,28 @@ module.exports = app => {
             res.send(subspecialities);
         });
     });
+
+    app.post('/api/fetchAdminSubspeciality', async (req, res) => {
+        const subspecialities = await Subspeciality.find({}).sort("subspeciality");
+        res.send(subspecialities);
+    });
+
+     app.post('/api/addNewSubspeciality', function (req, res) {
+        const values = req.body.values;
+        Subspeciality.findOne({ subspeciality: values.subspeciality }, function (err, subspeciality) {
+            if (!subspeciality) {
+                const newSubspeciality = new Subspeciality();
+                newSubspeciality.subspeciality = values.subspeciality;
+                newSubspeciality.save();
+                return res.send(newSubspeciality);
+            } else {
+                return res.send('Subspeciality Exists');
+            }
+        });
+    });
+
+    app.post('/api/deleteSubspeciality', function (req, res) {
+        Subspeciality.find({ _id: req.body.values }, function (err, deleteSubspeciality) { }).remove().exec();
+        return res.status(201).send({ data: null, message: "deleteSubspeciality success" });
+    });
 };

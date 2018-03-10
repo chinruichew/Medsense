@@ -32,3 +32,6 @@ export const DELETE_APPROACH = 'delete_approach';
 export const FETCH_SPECIALITY = 'fetch_speciality';
 export const ADD_NEW_SPECIALITY = 'add_new_speciality';
 export const DELETE_SPECIALITY = 'delete_speciality';
+export const FETCH_SUBSPECIALITY = 'fetch_subspeciality';
+export const ADD_NEW_SUBSPECIALITY = 'add_new_subspeciality';
+export const DELETE_SUBSPECIALITY = 'delete_subspeciality';
