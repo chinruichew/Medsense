@@ -150,7 +150,7 @@ module.exports = app => {
     app.post('/api/getGameAttempt', async(req, res) => {
         const gameCase = req.body.case;
         let attempt = 0;
-        AnswerOverview.findOne({ caseid: gameCase._id, completionStatus: true, userid: req.session.user._id}).sort({attempt:-1}).exec(function(err, completedCase) {
+        AnswerOverview.findOne({ caseid: gameCase._id, userid: req.session.user._id}).sort({attempt:-1}).exec(function(err, completedCase) {
             if(completedCase) {
                 attempt = completedCase.attempt;
             }

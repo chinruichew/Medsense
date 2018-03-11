@@ -28,6 +28,7 @@ class Main extends Component {
     };
 
     handleAuthorChange = (e) => {
+        //insert API call to store actual name of user in User
         const value = e.target.value;
         this.setState({ author: value });
     };
@@ -130,8 +131,6 @@ class Main extends Component {
         } else if (this.state.subspeciality === null) {
             this.setState({ vmShow: true, error: "Case Overview: Please select a Sub-speciality!" });
         } else if (this.state.approach === null) {
-        // } else if (this.state.approach === "Select One") {
-        //     this.setState({ vmShow: true, error: "Case Overview: Please select an Approach!" });
             this.setState({ vmShow: true, error: "Case Overview: Please select at least 1 Approach!" });
         } else if (this.state.scenario === '' || this.state.scenario === '<p><br></p>') {
             this.setState({ vmShow: true, error: "Case Overview: Please fill in the Case Scenario!" });
@@ -142,7 +141,6 @@ class Main extends Component {
         } else if (this.isValidNRIC(this.state.learning)){
             this.setState({ vmShow: true, error: "Case Overview: Key Learning Objectives should NOT contain NRIC!" });
         } else {
-
             let questions = this.state.qnData;
 
             if (questions.length === 0) {
@@ -175,6 +173,7 @@ class Main extends Component {
                                 let checked = false;
                                 for (let j = 0; j < options.length; j++) {
                                     let option = options[j];
+                                    console.log(checked, option);
                                     if (option.check) {
                                         checked = true;
                                     }
@@ -247,7 +246,6 @@ class Main extends Component {
                         // });
                     }
                     this.setState({vmConfirm: true});
-
 
                 } catch (e) {
                     this.setState({vmShow: true, error: error});
@@ -397,7 +395,7 @@ class Main extends Component {
             <span className="title"><center>Case Questions</center></span>
         );
         const PDPA = (
-            <span className="title"><center>Tell Us Who You Are</center></span>
+            <span className="title"><center>Credits</center></span>
         );
         const storySoFar = (<span className="story-title"><center>Story So Far</center></span>);
         let vmClose = () => this.setState({ vmShow: false });
@@ -445,7 +443,6 @@ class Main extends Component {
 
 
         return (
-
             <div>
                 <center>
                 <table>
@@ -458,19 +455,6 @@ class Main extends Component {
                 <center>*Expand/collapse the headers to view/hide case details*</center>
                 <center><a href="./MedSense WorkPlan.pdf" target="_blank">Click here for CASE TEMPLATE</a></center>
 
-                    {/*<div className="story">*/}
-
-                    {/*<p className="story-title">Story So Far</p>*/}
-                    {/*<p style={{textDecorationLine: "underline", margin: "0", fontSize: "200%"}}>Case Scenario</p>*/}
-                    {/*<div className="row" style={{whiteSpace:"pre-wrap", paddingLeft: "5%", fontSize:"120%"}}>*/}
-                        {/*{ReactHtmlParser(this.state.scenario)}*/}
-                    {/*</div>*/}
-                    {/*<br/><br/>*/}
-                    {/*<p style={{textDecorationLine: "underline", margin: "0", fontSize: "200%"}}>Case Questions</p>*/}
-                    {/*<div className="row" style={{whiteSpace:"pre-wrap", paddingLeft: "5%"}}>{stems}</div>*/}
-                    {/*<br/><br/>*/}
-
-                {/*</div>*/}
                 <div id="main">
                     <PanelGroup accordion style={{marginTop: "2%"}}>
                 {/*<PanelGroup accordion style={{marginTop: "2%", position: "fixed", width: "96%"}}>*/}
@@ -493,7 +477,7 @@ class Main extends Component {
 
                 {/*<br/><br/><br/><br/>*/}
 
-                <form action="/api/uploadCase" method="post" className="case-area">
+                <form className="case-area">
                     <PanelGroup accordion>
                     {/*<PanelGroup accordion style={{marginTop: "3%"}}>*/}
                         <Panel eventKey="1" bsStyle="info">

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { bindAll } from 'lodash';
 import { FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 import ReactQuill from 'react-quill';
 import axios from 'axios';
@@ -29,7 +28,6 @@ class Overview extends Component {
             approachList: [],
             subspecialityList: []
         };
-        bindAll(this, 'update');
     }
 
     componentDidMount(){
@@ -43,15 +41,9 @@ class Overview extends Component {
         });
     }
 
-    update(value, key) {
+    update = (value, key) =>{
         let details = {
-            title: this.state.title,
-            difficulty: this.state.difficulty,
-            speciality: this.state.speciality,
-            subspeciality: this.state.subspeciality,
-            approach: this.state.approach,
-            scenario: this.state.scenario,
-            learning: this.state.learning,
+            ...this.state
         };
 
         switch (key) {
@@ -87,18 +79,13 @@ class Overview extends Component {
                 this.props.handleUpdateOverview(details);
                 return;
         }
-    }
-
-    handleTitleChange = (e) => {
-        const value = e.target.value;
-        this.setState({ title: value });
-        this.update(value, "title");
     };
 
-    handleDifficultyChange = (e) => {
+    handleInputChange = (e) => {
+        const name = e.target.name;
         const value = e.target.value;
-        this.setState({ difficulty: value });
-        this.update(value, "difficulty");
+        this.setState({[name]:value});
+        this.update(value, name);
     };
 
     handleSpecialityChange = (e) => {
@@ -117,8 +104,9 @@ class Overview extends Component {
         }
     };
 
-    handleSubspecialityChange = (e) => {
+    handleSelectChange = (e) => {
         const options = e.target.options;
+        const name = e.target.name;
         let value = [];
         for (let i = 1, l = options.length; i < l; i++) {
             if (options[i].selected) {
@@ -126,22 +114,8 @@ class Overview extends Component {
             }
         }
         if (value.length > 0) {
-            this.setState({ subspeciality: value });
-            this.update(value, "subspeciality");
-        }
-    };
-
-    handleApproachChange = (e) => {
-        const options = e.target.options;
-        let value = [];
-        for (let i = 1, l = options.length; i < l; i++) {
-            if (options[i].selected) {
-                value.push(options[i].value);
-            }
-        }
-        if (value.length > 0) {
-            this.setState({ approach: value });
-            this.update(value, "approach");
+            this.setState({ [name]: value });
+            this.update(value, name);
         }
     };
 
@@ -156,7 +130,7 @@ class Overview extends Component {
         this.update(value, "learning");
     };
 
-    renderSubspeciality(){
+    renderSubspeciality = ()=>{
         let subspecialities = this.state.subspecialityList.map((obj, index) => {
             return <option value={obj.subspeciality}>{obj.subspeciality}</option>;
         });
@@ -168,7 +142,7 @@ class Overview extends Component {
                     </div>
                 </ControlLabel>
                 <FormControl componentClass="select" value={this.state.subspeciality} name="subspeciality"
-                             onChange={(e) => this.handleSubspecialityChange(e)} multiple>
+                             onChange={(e) => this.handleSelectChange(e)} multiple>
                     <option value="Select One">Select One</option>
                     {subspecialities}
                 </FormControl>
@@ -179,13 +153,13 @@ class Overview extends Component {
                     <br/>
                 </ControlLabel>
                 <FormControl componentClass="select" value={this.state.subspeciality} name="subspeciality"
-                             onChange={(e) => this.handleSubspecialityChange(e)}>
+                             onChange={(e) => this.handleSelectChange(e)}>
                     <option value="Select One">Select One</option>
                     {subspecialities}
                 </FormControl>
             </FormGroup>;
         }
-    }
+    };
 
     render() {
         let approaches = this.state.approachList.map((obj, index) => {
@@ -199,12 +173,12 @@ class Overview extends Component {
             <div id="overview-box">
                 <FormGroup controlId="formControlsTitle">
                     <ControlLabel style={{ fontSize: "150%" }}>Case Title<span style={{color:"red"}}>*</span></ControlLabel>
-                    <FormControl type="text" placeholder="Enter a title" value={this.state.title} name="title" onChange={(e) => this.handleTitleChange(e)} />
+                    <FormControl type="text" placeholder="Enter a title" value={this.state.title} name="title" onChange={(e) => this.handleInputChange(e)} />
                 </FormGroup>
 
                 <FormGroup controlId="formControlsDifficulty">
                     <ControlLabel style={{ fontSize: "150%" }}>Difficulty Level<span style={{color:"red"}}>*</span></ControlLabel>
-                    <FormControl componentClass="select" value={this.state.difficulty} name="difficulty" onChange={(e) => this.handleDifficultyChange(e)}>
+                    <FormControl componentClass="select" value={this.state.difficulty} name="difficulty" onChange={(e) => this.handleInputChange(e)}>
                         <option value="Select One">Select One</option>
                         <option value="Beginner">Beginner</option>
                         <option value="Advanced">Advanced</option>
@@ -227,7 +201,7 @@ class Overview extends Component {
                         <div style={{ fontSize: "70%", fontWeight:"200"}}>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.
                         </div>
                     </ControlLabel>
-                    <FormControl size='10' componentClass="select" value={this.state.approach} name="approach" onChange={(e) => this.handleApproachChange(e)} multiple>
+                    <FormControl size='10' componentClass="select" value={this.state.approach} name="approach" onChange={(e) => this.handleSelectChange(e)} multiple>
                         <option value="Select All Relevant">Select All Relevant</option>
                         {approaches}
                     </FormControl>

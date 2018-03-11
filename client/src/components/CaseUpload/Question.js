@@ -36,14 +36,8 @@ class Question extends Component {
             open: false,
             showfile: false,
         };
-        bindAll(this, 'handleFile', 'showAttachment', 'answer', 'update',
-            'showPearlAttachment', 'handlePearlFile', 'options');
-    }
-
-    componentDidMount(){
-        for (let i=0;i<10;i++){
-
-        }
+        bindAll(this, 'handleFile', 'showAttachment',
+            'showPearlAttachment', 'handlePearlFile');
     }
 
     componentWillReceiveProps(nextProps){
@@ -66,14 +60,14 @@ class Question extends Component {
     deleteQuestion = () =>{
         let id = this.state.id;
         this.props.handleDeleteQuestion(id);
-    }
+    };
 
     addQuestion = () =>{
         let id = this.state.id;
         this.props.handleAddQuestion(id);
-    }
+    };
 
-    update(value,key){
+    update = (value,key) =>{
         let details = {
             ...this.state
         };
@@ -127,19 +121,19 @@ class Question extends Component {
                 this.props.handleUpdateQuestion(details,this.state.id);
                 return;
         }
-    }
+    };
 
-    handleFile(e){
+    handleFile = (e) =>{
         const value = e.target.files[0];
         this.setState({ attachment: value });
         this.update(value, "attachment");
-    }
+    };
 
-    handlePearlFile(e){
+    handlePearlFile = (e) =>{
         const value = e.target.files[0];
         this.setState({ pearlAttachment: value });
         this.update(value, "pearlAttachment");
-    }
+    };
 
     handleInputChange = (e) => {
         const name = e.target.name;
@@ -170,9 +164,9 @@ class Question extends Component {
             let id = value==="Select One"?0:parseInt(value,10);
             let prevId = this.state.mcq==="Select One"?0:parseInt(this.state.mcq,10);
             if (id > prevId){
-                for (let j=0;j<this.state.optionData.length;j++){
-                    if(this.state.optionData[j].id<=prevId){
-                        temp.push(this.state.optionData[j]);
+                for (let i=0;i<this.state.optionData.length;i++){
+                    if(this.state.optionData[i].id<=prevId){
+                        temp.push(this.state.optionData[i]);
                     }
                 }
                 for (let k=1;k<=id-prevId;k++){
@@ -189,9 +183,9 @@ class Question extends Component {
                     }
                 }
             }
+            this.setState({mcq: value, optionData: temp});
+            this.update(temp, "optionData");
         }
-        this.setState({mcq: value, optionData: temp});
-        this.update(temp, "optionData");
     };
 
     handleStemChange = (value) =>{
@@ -219,7 +213,7 @@ class Question extends Component {
         this.update(value, "reference");
     };
 
-    options(){
+    options = () =>{
         if (this.state.type==="MCQ" && this.state.mcq!=="Select One"){
             let array = [];
             for (let i=1;i<=parseInt(this.state.mcq,10);i++) {
@@ -244,28 +238,26 @@ class Question extends Component {
             });
             return options;
         }
-    }
+    };
 
-    answer(){
+    answer = ()=>{
         if(this.state.type==="MCQ"){
             return(
-                <div>
-                    <FormGroup controlId="formControlsMCQ">
-                        <ControlLabel style={{ fontSize: "150%" }}>Number of Options<span style={{color:"red"}}>*</span></ControlLabel>
-                            <FormControl componentClass="select" value={this.state.mcq} name="mcq" onChange={(e)=>this.handleNumberChange(e)}>
-                                <option value="Select One">Select One</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
-                                <option value="10">10</option>
-                            </FormControl>
-                    </FormGroup>
-                </div>
+                <FormGroup controlId="formControlsMCQ">
+                    <ControlLabel style={{ fontSize: "150%" }}>Number of Options<span style={{color:"red"}}>*</span></ControlLabel>
+                        <FormControl componentClass="select" value={this.state.mcq} name="mcq" onChange={(e)=>this.handleNumberChange(e)}>
+                            <option value="Select One">Select One</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </FormControl>
+                </FormGroup>
             );
         } else if(this.state.type==="Open-ended"){
             return(
@@ -282,9 +274,9 @@ class Question extends Component {
             );
         }
         return;
-    }
+    };
 
-    checkQ1(){
+    checkQ1 = () =>{
         if (this.state.id===1){
             return;
         }
@@ -298,9 +290,9 @@ class Question extends Component {
                             style={{height:'100px'}}/>
             </FormGroup>
         );
-    }
+    };
 
-    showAttachment(){
+    showAttachment = () =>{
         if (this.state.attachment) {
             let source = window.URL.createObjectURL(this.state.attachment);
             return (
@@ -309,9 +301,9 @@ class Question extends Component {
                     <ImageMagnifier url={source} /></div></Row>
             );
         }
-    }
+    };
 
-    showPearlAttachment(){
+    showPearlAttachment = () =>{
         if (this.state.pearlAttachment) {
             let source = window.URL.createObjectURL(this.state.pearlAttachment);
             return (
@@ -320,7 +312,7 @@ class Question extends Component {
                         <ImageMagnifier url={source} /></div></Row>
             );
         }
-    }
+    };
 
     render(){
         const popoverHover = (
@@ -328,6 +320,7 @@ class Question extends Component {
                 Notes on how to approach the question, add-on explanations to the answers provided or simply useful tips on how to survive in the wards.
             </Popover>
         );
+
         return(
             <div id="question">
                 <div className="add-question-button">
@@ -335,7 +328,7 @@ class Question extends Component {
                 </div><br/>
                 <PanelGroup accordion>
                     <Panel>
-                        <Panel.Heading><Panel.Title toggle>{"▽ Question #"+this.state.id}</Panel.Title></Panel.Heading>
+                        <Panel.Heading><Panel.Title toggle>{"Question #"+this.state.id}</Panel.Title></Panel.Heading>
                         <Panel.Body collapsible>
                         <div className="delete-question-button">
                         <Button  type="button" bsStyle="primary" onClick={(e)=>this.deleteQuestion()}>Delete Question</Button><br/>
