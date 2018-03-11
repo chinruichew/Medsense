@@ -209,7 +209,7 @@ export const startGame = (values) => {
             const attempt = res.data;
             dispatch(setGameOverview(values, attempt));
         }).catch(err => {
-            console.log(err);
+            throw(err);
         });
     };
 };

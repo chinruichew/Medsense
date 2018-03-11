@@ -49,8 +49,10 @@ class TimeLimit extends Component {
                 this.props.startGame({
                     case: this.state.challenge,
                     score: this.state.score
+                }).then(res => {
+                    const game = res.data;
+                    this.setState({attempt: game.gameOverview.attempt, authid: this.props.auth._id, showGameView:true});
                 });
-                this.setState({attempt: 0, authid: this.props.auth._id, showGameView:true});
         }
     };
 
