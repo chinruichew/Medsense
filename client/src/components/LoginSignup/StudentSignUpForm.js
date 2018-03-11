@@ -68,9 +68,15 @@ class StudentSignUpForm extends Component {
 
 
     render() {
-        const popoverHover = (
+        const popoverPassword = (
             <Popover id="popover-trigger-hover" title="Password">
                 Passwords must contain both letter(s) and number(s) and be at least 8 characters long.
+            </Popover>
+        );
+
+        const popoverEmail = (
+            <Popover id="popover-trigger-hover" title="Email">
+                No actual email address will be stored, a hashed version of the email is stored to enable password reset.
             </Popover>
         );
         let vmClose = () => this.setState({ vmShow: false });
@@ -91,7 +97,7 @@ class StudentSignUpForm extends Component {
                     <div className="form-group">
 
                         <label for="password" className="cols-sm-2 control-label"><span style={{fontSize:'120%'}}>Password</span>
-                        <OverlayTrigger trigger={['hover']} placement="bottom" overlay={popoverHover}><img src='./info.png' hspace="5" alt="" style={{height:"1.3em", marginBottom:"1em"}}/></OverlayTrigger>
+                        <OverlayTrigger trigger={['hover']} placement="bottom" overlay={popoverPassword}><img src='./info.png' hspace="5" alt="" style={{height:"1.3em", marginBottom:"1em"}}/></OverlayTrigger>
                         </label>
                         <div className="cols-sm-10">
                             <div className="input-group">
@@ -111,6 +117,7 @@ class StudentSignUpForm extends Component {
                     </div>
                     <div className="form-group">
                         <label for="user_email" className="cols-sm-2 control-label"><span style={{fontSize:'120%'}}>Email</span></label>
+                        <OverlayTrigger trigger={['hover']} placement="bottom" overlay={popoverEmail}><img src='./info.png' hspace="5" alt="" style={{height:"1.3em", marginBottom:"1em"}}/></OverlayTrigger>
                         <div className="cols-sm-10">
                             <div className="input-group">
                                 <span className="input-group-addon"><i className="fa fa-envelope fa-lg" aria-hidden="true"></i></span>
