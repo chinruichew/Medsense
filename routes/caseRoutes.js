@@ -205,9 +205,11 @@ module.exports = app => {
             const lastLogin = new Date(user.previousLogin);
             for(let i = 0; i < cases.length; i++) {
                 const vettedCase = cases[i];
-                const caseDate = new Date(vettedCase.vetTime.toLocaleString());
-                if(caseDate > lastLogin) {
-                    pendingCases.push(vettedCase);
+                if(vettedCase.vetTime !== null) {
+                    const caseDate = new Date(vettedCase.vetTime.toLocaleString());
+                    if(caseDate > lastLogin) {
+                        pendingCases.push(vettedCase);
+                    }
                 }
             }
         }
