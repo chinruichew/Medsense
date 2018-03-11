@@ -11,7 +11,8 @@ class StudentSignup extends Component {
         password: null,
         confirm_password: null,
         school: "Duke-NUS",
-        year: "Year 1"
+        year: "Year 1",
+        email: null
     };
 
     handleSchoolChange(e) {
@@ -29,7 +30,7 @@ class StudentSignup extends Component {
             case false:
                 return(
                     <div className="row">
-                        <StudentSignUpForm username={this.state.username} password={this.state.password} confirm_password={this.state.confirm_password} school={this.state.school} year={this.state.year} />
+                        <StudentSignUpForm username={this.state.username} password={this.state.password} confirm_password={this.state.confirm_password} school={this.state.school} year={this.state.year} email={this.state.email} />
                     </div>
                 );
             default:

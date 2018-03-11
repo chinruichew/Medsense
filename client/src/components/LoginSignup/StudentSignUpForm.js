@@ -9,7 +9,8 @@ class StudentSignUpForm extends Component {
         password: this.props.password,
         confirm_password: this.props.confirm_password,
         school: this.props.school,
-        year: this.props.year
+        year: this.props.year,
+        email: this.props.email
     };
 
     handleSchoolChange(e) {
@@ -31,6 +32,10 @@ class StudentSignUpForm extends Component {
     handleConfirmPasswordChange(e) {
         this.setState({ confirm_password: e.target.value });
     }
+
+    handleConfirmEmailChange = (e) => {
+        this.setState({ email: e.target.value });
+    };
 
     handleUserSignUp = () => {
         let regex = /^.*(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+).*$/;
@@ -101,6 +106,15 @@ class StudentSignUpForm extends Component {
                             <div className="input-group">
                                 <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
                                 <input type="password" className="form-control" name="confirm_password" id="confirm_password"  placeholder="Confirm your Password" value={this.state.confirm_password} onChange={(e) => this.handleConfirmPasswordChange(e)} />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <label for="user_email" className="cols-sm-2 control-label"><span style={{fontSize:'120%'}}>Email</span></label>
+                        <div className="cols-sm-10">
+                            <div className="input-group">
+                                <span className="input-group-addon"><i className="fa fa-envelope fa-lg" aria-hidden="true"></i></span>
+                                <input type="email" className="form-control" name="user_email" id="user_email"  placeholder="Enter your Email" value={this.state.email} onChange={(e) => this.handleConfirmEmailChange(e)} />
                             </div>
                         </div>
                     </div>
