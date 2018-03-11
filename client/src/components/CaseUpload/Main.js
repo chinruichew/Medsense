@@ -47,6 +47,7 @@ class Main extends Component {
                         "type": "Select One",
                         "openEnded": '',
                         "optionData": [],
+                        "numOptions": "Select One",
                         "pearl": '',
                         "time": "Select One",
                         "reference": '',
@@ -70,6 +71,7 @@ class Main extends Component {
                             "type": obj.type,
                             "openEnded": obj.openEnded,
                             "optionData": obj.optionData,
+                            "numOptions": obj.numOptions,
                             "pearl": obj.pearl,
                             "time": obj.time,
                             "reference": obj.reference,
@@ -89,6 +91,7 @@ class Main extends Component {
                             "type": "Select One",
                             "openEnded": '',
                             "optionData": [],
+                            "numOptions": "Select One",
                             "pearl": '',
                             "time": "Select One",
                             "reference": '',
@@ -105,6 +108,7 @@ class Main extends Component {
                             "type": obj.type,
                             "openEnded": obj.openEnded,
                             "optionData": obj.optionData,
+                            "numOptions": obj.numOptions,
                             "pearl": obj.pearl,
                             "time": obj.time,
                             "reference": obj.reference,
@@ -338,6 +342,7 @@ class Main extends Component {
                         "type": obj.type,
                         "openEnded": obj.openEnded,
                         "optionData": obj.optionData,
+                        "numOptions": obj.numOptions,
                         "pearl": obj.pearl,
                         "time": obj.time,
                         "reference": obj.reference,
@@ -365,6 +370,7 @@ class Main extends Component {
                 obj.type = details.type;
                 obj.openEnded = details.openEnded;
                 obj.optionData = details.optionData;
+                obj.numOptions = details.numOptions,
                 obj.pearl = details.pearl;
                 obj.time = details.time;
                 obj.reference = details.reference;
@@ -412,6 +418,7 @@ class Main extends Component {
                     type={obj.type}
                     openEnded={obj.openEnded}
                     optionData={obj.optionData}
+                    numOptions={obj.numOptions}
                     pearl={obj.pearl}
                     time={obj.time}
                     reference={obj.reference}

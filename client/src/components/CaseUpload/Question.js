@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { bindAll } from 'lodash';
 import {
     Button, FormGroup, ControlLabel, FormControl, InputGroup, Panel, Row,
     PanelGroup, Popover, OverlayTrigger
@@ -27,8 +26,8 @@ class Question extends Component {
             attachment: this.props.attachment,
             type: this.props.type,
             openEnded: this.props.openEnded,
-            optionData: [],
-            mcq: "Select One",
+            optionData: this.props.optionData,
+            numOptions: this.props.numOptions,
             pearl: this.props.pearl,
             time: this.props.time,
             mark: this.props.mark,
@@ -36,8 +35,6 @@ class Question extends Component {
             open: false,
             showfile: false,
         };
-        bindAll(this, 'handleFile', 'showAttachment',
-            'showPearlAttachment', 'handlePearlFile');
     }
 
     componentWillReceiveProps(nextProps){
@@ -50,6 +47,7 @@ class Question extends Component {
             type: nextProps.type,
             openEnded: nextProps.openEnded,
             optionData: nextProps.optionData,
+            numOptions: nextProps.numOptions,
             pearl: nextProps.pearl,
             time: nextProps.time,
             mark: nextProps.mark,
@@ -91,6 +89,10 @@ class Question extends Component {
                 return;
             case "optionData":
                 details.optionData = value;
+                this.props.handleUpdateQuestion(details,this.state.id);
+                return;
+            case "numOptions":
+                details.numOptions = value;
                 this.props.handleUpdateQuestion(details,this.state.id);
                 return;
             case "pearl":
@@ -145,6 +147,7 @@ class Question extends Component {
     handleMCQChange = (e) => {
         const name = e.target.name;
         this.state.optionData.forEach(function (obj) {
+            console.log("hello");
             if (obj.id  === parseInt(name.slice(-1),10)){
                 if (name.substring(0,3)==="mcq"){
                     obj.mcq = e.target.value;
@@ -153,16 +156,16 @@ class Question extends Component {
                 }
             }
         });
-
         this.update(this.state.optionData, "optionData");
+        console.log(this.state.optionData);
     };
 
     handleNumberChange = (e) => {
         const value = e.target.value;
         let temp = [];
-        if (this.state.type ==="MCQ" && value!==this.state.mcq){
+        if (this.state.type ==="MCQ" && value!==this.state.numOptions){
             let id = value==="Select One"?0:parseInt(value,10);
-            let prevId = this.state.mcq==="Select One"?0:parseInt(this.state.mcq,10);
+            let prevId = this.state.numOptions==="Select One"?0:parseInt(this.state.numOptions,10);
             if (id > prevId){
                 for (let i=0;i<this.state.optionData.length;i++){
                     if(this.state.optionData[i].id<=prevId){
@@ -183,9 +186,11 @@ class Question extends Component {
                     }
                 }
             }
-            this.setState({mcq: value, optionData: temp});
+            this.setState({numOptions: value, optionData: temp});
             this.update(temp, "optionData");
+            this.update(value, "numOptions");
         }
+        console.log(value, temp);
     };
 
     handleStemChange = (value) =>{
@@ -214,9 +219,9 @@ class Question extends Component {
     };
 
     options = () =>{
-        if (this.state.type==="MCQ" && this.state.mcq!=="Select One"){
+        if (this.state.type==="MCQ" && this.state.numOptions!=="Select One"){
             let array = [];
-            for (let i=1;i<=parseInt(this.state.mcq,10);i++) {
+            for (let i=1;i<=parseInt(this.state.numOptions,10);i++) {
                 array.push(i);
             }
 
@@ -228,14 +233,17 @@ class Question extends Component {
                             <ControlLabel>Option {number}<span style={{color:"red"}}>{mandatory}</span></ControlLabel>
                             <InputGroup>
                                 <InputGroup.Addon>
-                                    <input type="checkbox" aria-label="..." checked={this.state["check"+number]} name={"check"+number} onChange={(e)=>this.handleMCQChange(e)}/>
+                                    {/*checked={this.state.optionData[number-1].check}*/}
+                                    <input type="checkbox" name={"check"+number} onChange={(e)=>this.handleMCQChange(e)}/>
                                 </InputGroup.Addon>
-                                <FormControl type="text" placeholder="Enter an answer" value={this.state["mcq"+number]} name={"mcq"+number} onChange={(e)=>this.handleMCQChange(e)}/>
+                                {/*value={this.state.optionData[number-1].mcq}*/}
+                                <FormControl type="text" placeholder="Enter an answer" name={"mcq"+number} onChange={(e)=>this.handleMCQChange(e)}/>
                             </InputGroup>
                         </FormGroup>
                     </div>
                 );
             });
+            console.log(this.state.optionData);
             return options;
         }
     };
@@ -245,7 +253,7 @@ class Question extends Component {
             return(
                 <FormGroup controlId="formControlsMCQ">
                     <ControlLabel style={{ fontSize: "150%" }}>Number of Options<span style={{color:"red"}}>*</span></ControlLabel>
-                        <FormControl componentClass="select" value={this.state.mcq} name="mcq" onChange={(e)=>this.handleNumberChange(e)}>
+                        <FormControl componentClass="select" value={this.state.numOptions} name="numOptions" onChange={(e)=>this.handleNumberChange(e)}>
                             <option value="Select One">Select One</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
