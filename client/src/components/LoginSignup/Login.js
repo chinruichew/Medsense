@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import {NavLink, Redirect} from 'react-router-dom';
 import {connect} from "react-redux";
 import axios from 'axios';
 import BootstrapModal from '../UI/Modal/VettingBootstrapModal.js';
@@ -71,6 +71,7 @@ class Login extends Component {
                                         <button type="submit" className="btn btn-primary btn-lg btn-block login-button">Login</button>
                                     </div>
                                 </form>
+                                <NavLink to="/resetPassword">Forgot your password?</NavLink>
                             </div>
                         </div>
                         <BootstrapModal

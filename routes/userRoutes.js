@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const nodemailer = require('nodemailer');
 const User = mongoose.model('users');
 const Case = mongoose.model('cases');
 
@@ -15,10 +16,58 @@ module.exports = app => {
                 newUser.usertype = constants.USER_TYPE_STUDENT;
                 newUser.school = values.school;
                 newUser.year = values.year;
-                newUser.save();
+                newUser.email = newUser.generateHash(values.email);
+                // newUser.save();
                 res.send('Done');
             } else {
                 res.send('User Exists');
+            }
+        });
+    });
+
+    app.post('/api/resetPassword', async(req, res) => {
+        const email = req.body.email;
+        const username = req.body.username;
+        User.findOne({ username: username }, null, {collation: {locale: 'en', strength: 2 }}, async (err, user) => {
+            if(err) {
+                throw(err);
+            }
+
+            if(user !== null && user.validEmail(email)) {
+                // Reset password
+                const buf = new Buffer(10);
+                for (let i = 0; i < buf.length; i++) {
+                    buf[i] = Math.floor(Math.random() * 256);
+                }
+                const password = buf.toString('base64');
+
+                user.password = user.generateHash(password);
+                await user.save();
+
+                // Generate email
+                const transporter = nodemailer.createTransport({
+                    service: 'gmail',
+                    auth: {
+                        user: 'themedsense@gmail.com',
+                        pass: 'teamzenith2018'
+                    }
+                });
+                const mailOptions = {
+                    from: 'themedsense@gmail.com',
+                    to: email,
+                    subject: 'Resetting of password',
+                    html: '<h1>Your password has been reset!</h1><p>Your new password is: ' + password + '</p>'
+                };
+                transporter.sendMail(mailOptions, function(err, info){
+                    if (err) {
+                        throw(err);
+                    }
+
+                    console.log('Email sent: ' + info.response);
+                    res.send('Done');
+                });
+            } else {
+                res.send('Invalid Username/Email!');
             }
         });
     });

@@ -7,6 +7,7 @@ const userSchema = new Schema({
     password: { type: String, default: "" },
     school: { type: String, default: "" },
     year: { type: String, default: "" },
+    email: { type: String, default: "" },
     profilepicture: { type: String, default: "/userMD.png" },
     profilepictureVersion: {type: Number, default: 0},
     speciality: { type: String, default: "" },
@@ -27,6 +28,11 @@ userSchema.methods.generateHash = function (password) {
 // checking if password is valid
 userSchema.methods.validPassword = function (password) {
     return bcrypt.compareSync(password, this.password);
+};
+
+// checking if email is valid
+userSchema.methods.validEmail = function (email) {
+    return bcrypt.compareSync(email, this.email);
 };
 
 module.exports = mongoose.model('users', userSchema);

@@ -22,6 +22,7 @@ import AdminTermManager from './Admin/TermManager';
 import Result from './CaseChallenge/GameResults';
 import NotFound from "./NotFound/NotFound";
 import IndividualCaseStatistics from "./Dashboard/DashboardComponents/IndividualCaseStatistics";
+import ResetPassword from "./LoginSignup/ResetPassword";
 
 class App extends Component {
     componentDidMount() {
@@ -39,6 +40,7 @@ class App extends Component {
                     <Header />
                     <Switch>
                         <Route exact path="/login" component={Login} />
+                        <Route exact path="/resetPassword" component={ResetPassword} />
                         <Route exact path="/home" component={Home} />
                         <Route exact path="/register" component={StudentSignup} />
                         <Route exact path="/upload" component={CaseStart} />
