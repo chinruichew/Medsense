@@ -5,6 +5,7 @@ import StudentLeaderboard from "../DashboardComponents/StudentLeaderboard";
 import ContributionLeaderboard from "../DashboardComponents/ContributionLeaderboard";
 import StudentCaseStatistics from "../DashboardComponents/StudentCaseStatistics";
 import {Tab, Tabs} from "react-bootstrap";
+import NoGamesFound from "./NoGamesFound";
 
 class DashboardStudent extends Component {
     state = {
@@ -15,32 +16,32 @@ class DashboardStudent extends Component {
     };
 
     componentDidMount() {
-        // Get leaders with highest scores
-        axios.get('/api/getLeadersWithHighestScores').then(res => {
-            this.setState({studentLeaders: res.data});
-        }).catch(err => {
-            console.log(err);
-        });
-
-        // Get leaders with highest contributions
-        axios.get('/api/getLeadersWithHighestContributions').then(res => {
-            this.setState({contributionLeaders: res.data});
-        }).catch(err => {
-            console.log(err);
-        });
-
-        // Get all individual answers
-        axios.get('/api/getIndividualAnswers').then(res => {
-            this.setState({answers: res.data});
-        }).catch(err => {
-            console.log(err);
-        });
-
         // Get Constant Types
         axios.get('/api/getConstantTypes').then(res => {
             this.setState({constants: res.data});
+
+            // Get all individual answers
+            axios.get('/api/getIndividualAnswers').then(res => {
+                this.setState({answers: res.data});
+
+                // Get leaders with highest scores
+                axios.get('/api/getLeadersWithHighestScores').then(res => {
+                    this.setState({studentLeaders: res.data});
+                }).catch(err => {
+                    throw(err);
+                });
+
+                // Get leaders with highest contributions
+                axios.get('/api/getLeadersWithHighestContributions').then(res => {
+                    this.setState({contributionLeaders: res.data});
+                }).catch(err => {
+                    throw(err);
+                });
+            }).catch(err => {
+                throw(err);
+            });
         }).catch(err => {
-            console.log(err);
+            throw(err);
         });
     }
 
@@ -53,6 +54,11 @@ class DashboardStudent extends Component {
                     case null:
                         return;
                     default:
+                        if(this.state.answers.length === 0) {
+                            return(
+                                <NoGamesFound/>
+                            );
+                        }
                         return(
                             <div className="container">
                                 <Tabs defaultActiveKey={2}>
