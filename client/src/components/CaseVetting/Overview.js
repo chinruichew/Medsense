@@ -5,7 +5,7 @@ import axios from 'axios';
 import '../CaseUpload/Upload.css';
 import 'react-quill/dist/quill.snow.css';
 
-var toolbarOptions = [
+const toolbarOptions = [
     [{ 'header': [1, 2, 3, false] }],
     ['bold', 'italic', 'underline'],        // toggled buttons
     [{ 'list': 'ordered'}, { 'list': 'bullet' }],
@@ -26,7 +26,6 @@ class Overview extends Component {
             learning: this.props.learning,
             specialityList: [],
             approachList: [],
-            subspecialityList: []
         };
     }
 
@@ -79,7 +78,7 @@ class Overview extends Component {
                 this.props.handleUpdateOverview(details);
                 return;
         }
-    }
+    };
 
     handleInputChange = (e) => {
         const name = e.target.name;
@@ -130,8 +129,8 @@ class Overview extends Component {
     };
 
     renderSubspeciality = () =>{
-        let subspecialities = this.state.subspecialityList.map((obj, index) => {
-            return <option value={obj.subspeciality}>{obj.subspeciality}</option>;
+        let subspecialities = this.state.subspeciality.map((obj, index) => {
+            return <option value={obj}>{obj}</option>;
         });
         if (this.state.speciality==="Clinical Practicum") {
             return <FormGroup controlId="formControlsSubspeciality">

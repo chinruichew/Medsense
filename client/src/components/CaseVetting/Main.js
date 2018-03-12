@@ -297,7 +297,6 @@ class Main extends Component {
             let questions = res.data.data.questions;
             let qnData = this.state.qnData;
             this.setState({vm: true});
-            console.log(questions);
             for (let i=0; i<questions.length; i++){
                 let question = questions[i];
                 let qn = qnData[i];
@@ -461,12 +460,9 @@ class Main extends Component {
                         </Panel>
                     </PanelGroup>
 
-                    {/*<br/><br/><br/><br/>*/}
-
 
                 <form className="case-area">
                     <PanelGroup accordion>
-                        {/*<PanelGroup accordion style={{marginTop: "3%"}}>*/}
                         <Panel eventKey="1" bsStyle="info">
                             <Panel.Heading>
                                 <Panel.Title toggle>{overviewTitle}</Panel.Title>

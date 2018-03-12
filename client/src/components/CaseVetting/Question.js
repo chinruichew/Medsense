@@ -294,7 +294,6 @@ class Question extends Component {
         if (this.state.attachment) {
             let source;
             if (typeof(this.state.attachment)==="string"){
-                console.log(this.state.attachment);
                 source = this.state.attachment;
             } else {
                 source = window.URL.createObjectURL(this.state.attachment);
@@ -312,7 +311,6 @@ class Question extends Component {
         if (this.state.pearlAttachment) {
             let source;
             if (typeof(this.state.pearlAttachment)==="string"){
-                console.log(this.state.pearlAttachment);
                 source = this.state.pearlAttachment;
             } else {
                 source = window.URL.createObjectURL(this.state.pearlAttachment);

@@ -63,6 +63,7 @@ module.exports = app => {
                 time: jsonObject[prop]['time'],
                 reference: jsonObject[prop]['reference'],
                 mark: jsonObject[prop]['mark'],
+                openEnded: jsonObject[prop]['openEnded'],
                 case: newCase._id
             });
             questions.push(newQuestion);
