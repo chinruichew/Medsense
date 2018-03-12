@@ -78,7 +78,7 @@ class Main extends Component {
                             <br/><br/>Try out beginner mode for more focuses on history and physical exam,
                             <br/>and advanced mode for management.
                             <br/><br/>Better yet, if you're up for the challenge, why not try a completely random case? :)
-                            {/*<br/><br/>Take a look at your strengths and weaknesses on the analytics page after!*/}
+                            <br/><br/>Take a look at your strengths and weaknesses on the analytics page after that!
                         </em>
                     </h4>
                     <br />
@@ -114,6 +114,8 @@ class Main extends Component {
             switch(this.props.randomCase) {
                 case null:
                     return;
+                case false:
+                    return <Redirect to="/home" />;
                 default:
                     if (this.state.random){
                         return <TimeLimit startGame={this.props.startGame} case={this.props.randomCase}/>
