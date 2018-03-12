@@ -29,9 +29,20 @@ class CaseStart extends Component {
                     case null:
                         return;
                     default:
-                        return(
-                            <Main />
-                        );
+                        switch (this.props.auth.usertype) {
+                            case this.state.constants.USER_TYPE_PROFESSOR:
+                                return (
+                                    <Main authid={this.props.auth._id}
+                                          authname={this.props.auth.username} />
+                                );
+                            case this.state.constants.USER_TYPE_STUDENT:
+                                return (
+                                    <Main authid={this.props.auth._id}
+                                          authname={this.props.auth.username} />
+                                );
+                            default:
+                                return;
+                        }
                 }
         }
     }

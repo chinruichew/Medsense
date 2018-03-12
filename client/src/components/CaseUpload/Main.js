@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import ReactHtmlParser from "react-html-parser";
 import { Button, PanelGroup, Panel, FormGroup, Radio, ControlLabel, FormControl, Col } from 'react-bootstrap';
 import axios from 'axios';
-
+import ReactHtmlParser from 'react-html-parser';
+import Question from './Question.js';
+import Overview from './Overview.js';
 import BootstrapModal from '../UI/Modal/UploadBootstrapModal.js';
 import './Upload.css';
-import Overview from "./Overview";
-import Question from "./Question";
 
 class Main extends Component {
     state = {
@@ -18,21 +17,20 @@ class Main extends Component {
         approach: null,
         scenario: '',
         learning: '',
+        authid: this.props.authid,
+        authname: this.props.authname,
         author: "",
-        vmShow: false,
-        vmConfirm: false
     };
 
-    handleUpdateOverview = (details) => {
-        this.setState({
-            title: details.title,
-            difficulty: details.difficulty,
-            speciality: details.speciality,
-            subspeciality: details.subspeciality,
-            approach: details.approach,
-            scenario: details.scenario,
-            learning: details.learning,
-        });
+    isValidNRIC = (theNric) => {
+        const upperCaseNric = theNric.toUpperCase();
+        return new RegExp(/^.*[STFG]\d{7}[A-Z].*$/).test(upperCaseNric);
+    };
+
+    handleAuthorChange = (e) => {
+        //insert API call to store actual name of user in User
+        const value = e.target.value;
+        this.setState({ author: value });
     };
 
     addQuestion = (id) => {
@@ -124,166 +122,6 @@ class Main extends Component {
         }
     };
 
-    handleDeleteQuestion = (id) => {
-        let questions = this.state.qnData;
-        let newQuestions = [];
-        let offset = 1;
-        questions.forEach(function (obj) {
-            if (obj.id > id) {
-                newQuestions = newQuestions.concat(
-                    {
-                        "id": obj.id - offset,
-                        "stem": obj.stem,
-                        "question": obj.question,
-                        "attachment": obj.attachment,
-                        "pearlAttachment": obj.pearlAttachment,
-                        "type": obj.type,
-                        "openEnded": obj.openEnded,
-                        "optionData": obj.optionData,
-                        "numOptions": obj.numOptions,
-                        "pearl": obj.pearl,
-                        "time": obj.time,
-                        "reference": obj.reference,
-                        "mark": obj.mark,
-                    }
-                );
-
-            } else if (obj.id < id) {
-                newQuestions = newQuestions.concat(obj);
-            }
-        });
-
-        this.setState({ qnData: newQuestions});
-
-    };
-
-    handleQuestionChange = (value, qnId) =>{
-        const qnData = this.state.qnData;
-        for(let i = 0; i < qnData.length; i++) {
-            const qn = qnData[i];
-            if(qn.id === qnId) {
-                qnData.splice(qnData.indexOf(qn), 1);
-                qn.question = value;
-                qnData.push(qn);
-                this.setState({qnData: qnData});
-                break;
-            }
-        }
-    };
-
-    handleFile = (value, qnId) =>{
-        const qnData = this.state.qnData;
-        for(let i = 0; i < qnData.length; i++) {
-            const qn = qnData[i];
-            if(qn.id === qnId) {
-                qnData.splice(qnData.indexOf(qn), 1);
-                qn.attachment = value;
-                qnData.push(qn);
-                this.setState({qnData: qnData});
-                break;
-            }
-        }
-    };
-
-    handleInputChange = (name, value, qnId) => {
-        const qnData = this.state.qnData;
-        for(let i = 0; i < qnData.length; i++) {
-            const qn = qnData[i];
-            if(qn.id === qnId) {
-                qnData.splice(qnData.indexOf(qn), 1);
-                qn[name] = value;
-                qnData.push(qn);
-                this.setState({qnData: qnData});
-                break;
-            }
-        }
-    };
-
-    handleNumberChange = (numOptions, optionData, qnId) => {
-        const qnData = this.state.qnData;
-        for(let i = 0; i < qnData.length; i++) {
-            const qn = qnData[i];
-            if(qn.id === qnId) {
-                qnData.splice(qnData.indexOf(qn), 1);
-                qn.numOptions = numOptions;
-                qn.optionData = optionData;
-                qnData.push(qn);
-                this.setState({qnData: qnData});
-                break;
-            }
-        }
-    };
-
-    handlePearlChange = (value, qnId) => {
-        const qnData = this.state.qnData;
-        for(let i = 0; i < qnData.length; i++) {
-            const qn = qnData[i];
-            if(qn.id === qnId) {
-                qnData.splice(qnData.indexOf(qn), 1);
-                qn.pearl = value;
-                qnData.push(qn);
-                this.setState({qnData: qnData});
-                break;
-            }
-        }
-    };
-
-    handlePearlFile = (value, qnId) => {
-        const qnData = this.state.qnData;
-        for(let i = 0; i < qnData.length; i++) {
-            const qn = qnData[i];
-            if(qn.id === qnId) {
-                qnData.splice(qnData.indexOf(qn), 1);
-                qn.pearlAttachment = value;
-                qnData.push(qn);
-                this.setState({qnData: qnData});
-                break;
-            }
-        }
-    };
-
-    handleReferenceChange = (value, qnId) => {
-        const qnData = this.state.qnData;
-        for(let i = 0; i < qnData.length; i++) {
-            const qn = qnData[i];
-            if(qn.id === qnId) {
-                qnData.splice(qnData.indexOf(qn), 1);
-                qn.reference = value;
-                qnData.push(qn);
-                this.setState({qnData: qnData});
-                break;
-            }
-        }
-    };
-
-    handleStemChange = (value, qnId) => {
-        const qnData = this.state.qnData;
-        for(let i = 0; i < qnData.length; i++) {
-            const qn = qnData[i];
-            if(qn.id === qnId) {
-                qnData.splice(qnData.indexOf(qn), 1);
-                qn.stem = value;
-                qnData.push(qn);
-                this.setState({qnData: qnData});
-                break;
-            }
-        }
-    };
-
-    handleMCQChange = (value, qnId) => {
-        const qnData = this.state.qnData;
-        for(let i = 0; i < qnData.length; i++) {
-            const qn = qnData[i];
-            if(qn.id === qnId) {
-                qnData.splice(qnData.indexOf(qn), 1);
-                qn.optionData = value;
-                qnData.push(qn);
-                this.setState({qnData: qnData});
-                break;
-            }
-        }
-    };
-
     saveChanges = (e) => {
         e.preventDefault();
         if (this.state.title === '') {
@@ -331,6 +169,7 @@ class Main extends Component {
                             error = "Question #" + obj.id + ": Please select a Question Type!";
                             throw BreakException;
                         } else if (obj.type === "MCQ") {
+                            console.log('Option data here:', obj.optionData);
                             if (obj.optionData.length === 0){
                                 error = "Question #" + obj.id + ": Please select the Number of Options!";
                                 throw BreakException;
@@ -339,9 +178,11 @@ class Main extends Component {
                                 let checked = false;
                                 for (let j = 0; j < options.length; j++) {
                                     let option = options[j];
+                                    console.log(checked, option);
                                     if (option.check) {
                                         checked = true;
                                     }
+                                    console.log(option);
                                     if ((option.id === 1 || option.id === 2) && option.mcq === "") {
                                         error = "Question #" + obj.id + ": Please fill in Option " + option.id + "!";
                                         throw BreakException;
@@ -407,6 +248,7 @@ class Main extends Component {
                             error = "Question #" + obj.id + ": References should NOT contain NRIC!";
                             throw BreakException;
                         }
+                        // });
                     }
                     this.setState({vmConfirm: true});
 
@@ -416,11 +258,6 @@ class Main extends Component {
                 }
             }
         }
-    };
-
-    isValidNRIC = (theNric) => {
-        const upperCaseNric = theNric.toUpperCase();
-        return new RegExp(/^.*[STFG]\d{7}[A-Z].*$/).test(upperCaseNric);
     };
 
     uploadFile = (file, caseID, qID, objID) => {
@@ -490,28 +327,75 @@ class Main extends Component {
         });
     };
 
-    render() {
-        const storySoFar = (<span className="story-title"><center>Story So Far</center></span>);
+    handleDeleteQuestion = (id) => {
+        let questions = this.state.qnData;
+        let newQuestions = [];
+        let offset = 1;
+        questions.forEach(function (obj) {
+            if (obj.id > id) {
+                newQuestions = newQuestions.concat(
+                    {
+                        "id": obj.id - offset,
+                        "stem": obj.stem,
+                        "question": obj.question,
+                        "attachment": obj.attachment,
+                        "pearlAttachment": obj.pearlAttachment,
+                        "type": obj.type,
+                        "openEnded": obj.openEnded,
+                        "optionData": obj.optionData,
+                        "numOptions": obj.numOptions,
+                        "pearl": obj.pearl,
+                        "time": obj.time,
+                        "reference": obj.reference,
+                        "mark": obj.mark,
+                    }
+                );
 
-        let stems = this.state.qnData.map((obj, index) => {
-            let stem;
-            if (obj.id===1){
-                stem='';
-            } else {
-                stem=obj.stem;
+            } else if (obj.id < id) {
+                newQuestions = newQuestions.concat(obj);
             }
-            let qn=obj.question;
-            return (
-                <div key={index} className="stem">
-                    <div className="stem-label" style={{fontSize: "180%"}}>
-                        Question {obj.id}
-                    </div>
-                    <div style={{fontSize: "120%"}}>{ReactHtmlParser(stem)}</div>
-                    <div style={{fontSize: "120%"}}>{ReactHtmlParser(qn)}</div>
-                </div>
-            );
         });
 
+        this.setState({ qnData: newQuestions});
+
+    };
+
+    handleUpdateQuestion = (details, id) => {
+        console.log('Details:', details);
+        let questions = this.state.qnData;
+        questions.forEach(function (obj) {
+            if (obj.id === id) {
+                obj.stem = details.stem;
+                obj.question = details.question;
+                obj.attachment = details.attachment;
+                obj.pearlAttachment = details.pearlAttachment;
+                obj.type = details.type;
+                obj.openEnded = details.openEnded;
+                obj.optionData = details.optionData;
+                obj.numOptions = details.numOptions;
+                obj.pearl = details.pearl;
+                obj.time = details.time;
+                obj.reference = details.reference;
+                obj.mark=details.mark;
+            }
+        });
+        this.setState({ qnData: questions });
+        console.log('State:', this.state.qnData);
+    };
+
+    handleUpdateOverview = (details) => {
+        this.setState({
+            title: details.title,
+            difficulty: details.difficulty,
+            speciality: details.speciality,
+            subspeciality: details.subspeciality,
+            approach: details.approach,
+            scenario: details.scenario,
+            learning: details.learning,
+        });
+    };
+
+    render() {
         const overviewTitle = (
             <span className="title"><center>Case Overview</center></span>
         );
@@ -519,6 +403,12 @@ class Main extends Component {
         const questionTitle = (
             <span className="title"><center>Case Questions</center></span>
         );
+        const PDPA = (
+            <span className="title"><center>Credits</center></span>
+        );
+        const storySoFar = (<span className="story-title"><center>Story So Far</center></span>);
+        let vmClose = () => this.setState({ vmShow: false });
+        let vmConfirmClose = () => this.setState({ vmConfirm: false });
 
         let questionNodes = this.state.qnData.map((obj, index) => {
             return (
@@ -539,42 +429,46 @@ class Main extends Component {
                     mark={obj.mark}
                     handleUpdateQuestion={this.handleUpdateQuestion}
                     handleDeleteQuestion={this.handleDeleteQuestion}
-                    handleAddQuestion={this.addQuestion}
-                    handleQuestionChange={this.handleQuestionChange}
-                    handleFile={this.handleFile}
-                    handleInputChange={this.handleInputChange}
-                    handleNumberChange={this.handleNumberChange}
-                    handlePearlChange={this.handlePearlChange}
-                    handlePearlFile={this.handlePearlFile}
-                    handleReferenceChange={this.handleReferenceChange}
-                    handleStemChange={this.handleStemChange}
-                    handleMCQChange={this.handleMCQChange}
-                />
+                    handleAddQuestion={this.addQuestion}/>
             );
         });
 
-        const PDPA = (
-            <span className="title"><center>Credits</center></span>
-        );
+        let stems = this.state.qnData.map((obj, index) => {
+            let stem;
+            if (obj.id===1){
+                stem='';
+            } else {
+                stem=obj.stem;
+            }
+            let qn=obj.question;
+            return (
+                <div key={index} className="stem">
+                    <div className="stem-label" style={{fontSize: "180%"}}>
+                        Question {obj.id}
+                    </div>
+                    <div style={{fontSize: "120%"}}>{ReactHtmlParser(stem)}</div>
+                    <div style={{fontSize: "120%"}}>{ReactHtmlParser(qn)}</div>
+                </div>
+            );
+        });
 
-        console.log(this.state.qnData);
 
-        return(
+        return (
             <div>
                 <center>
-                    <table>
-                        <tr>
-                            <td width="60px"><a href="/disclaimer"><img src="./stop.png" alt="" style={{height:"4em"}}/></a></td>
-                            <td>Before you upload the case, please ensure that all texts and attachments <br/> do not contain identifiable information such as IC number or patient's face</td>
-                        </tr>
-                    </table>
+                <table>
+                    <tr>
+                        <td width="60px"><a href="/disclaimer"><img src="./stop.png" alt="" style={{height:"4em"}}/></a></td>
+                        <td>Before you upload the case, please ensure that all texts and attachments <br/> do not contain identifiable information such as IC number or patient's face</td>
+                    </tr>
+                </table>
                 </center>
                 <center>*Expand/collapse the headers to view/hide case details*</center>
                 <center><a href="./MedSense WorkPlan.pdf" target="_blank">Click here for CASE TEMPLATE</a></center>
 
                 <div id="main">
                     <PanelGroup accordion style={{marginTop: "2%"}}>
-                        {/*<PanelGroup accordion style={{marginTop: "2%", position: "fixed", width: "96%"}}>*/}
+                {/*<PanelGroup accordion style={{marginTop: "2%", position: "fixed", width: "96%"}}>*/}
                         <Panel eventKey="1" bsStyle="info">
                             <Panel.Heading>
                                 <Panel.Title toggle>{storySoFar}</Panel.Title>
@@ -592,136 +486,136 @@ class Main extends Component {
                         </Panel>
                     </PanelGroup>
 
-                    {/*<br/><br/><br/><br/>*/}
+                {/*<br/><br/><br/><br/>*/}
 
-                    <form className="case-area">
-                        <PanelGroup accordion>
-                            {/*<PanelGroup accordion style={{marginTop: "3%"}}>*/}
-                            <Panel eventKey="1" bsStyle="info">
-                                <Panel.Heading>
-                                    <Panel.Title toggle>{overviewTitle}</Panel.Title>
-                                </Panel.Heading>
-                                <Panel.Body collapsible>
-                                    <Overview
-                                        title={this.state.title}
-                                        difficulty={this.state.difficulty}
-                                        speciality={this.state.speciality}
-                                        subspeciality={this.state.subspeciality}
-                                        approach={this.state.approach}
-                                        scenario={this.state.scenario}
-                                        learning={this.state.learning}
-                                        handleUpdateOverview={this.handleUpdateOverview} />
-                                </Panel.Body>
-                            </Panel>
-                        </PanelGroup>
+                <form className="case-area">
+                    <PanelGroup accordion>
+                    {/*<PanelGroup accordion style={{marginTop: "3%"}}>*/}
+                        <Panel eventKey="1" bsStyle="info">
+                            <Panel.Heading>
+                            <Panel.Title toggle>{overviewTitle}</Panel.Title>
+                            </Panel.Heading>
+                            <Panel.Body collapsible>
+                            <Overview
+                                title={this.state.title}
+                                difficulty={this.state.difficulty}
+                                speciality={this.state.speciality}
+                                subspeciality={this.state.subspeciality}
+                                approach={this.state.approach}
+                                scenario={this.state.scenario}
+                                learning={this.state.learning}
+                                handleUpdateOverview={this.handleUpdateOverview} />
+                            </Panel.Body>
+                        </Panel>
+                    </PanelGroup>
 
-                        <PanelGroup accordion>
-                            <Panel eventKey="1" bsStyle="info">
-                                <Panel.Heading><Panel.Title toggle>{questionTitle}</Panel.Title></Panel.Heading>
-                                <Panel.Body collapsible>
-                                    <div className="question-area">
-                                        {questionNodes}
-                                    </div>
+                    <PanelGroup accordion>
+                        <Panel eventKey="1" bsStyle="info">
+                            <Panel.Heading><Panel.Title toggle>{questionTitle}</Panel.Title></Panel.Heading>
+                            <Panel.Body collapsible>
+                            <div className="question-area">
+                                {questionNodes}
+                            </div>
 
-                                    <div className="add-question-button">
-                                        <Button type="button" bsStyle="primary" onClick={(e) => this.addQuestion(this.state.qnData.length+1)}>Add Question</Button><br />
-                                    </div>
-                                </Panel.Body>
-                            </Panel>
-                        </PanelGroup>
+                            <div className="add-question-button">
+                                <Button type="button" bsStyle="primary" onClick={(e) => this.addQuestion(this.state.qnData.length+1)}>Add Question</Button><br />
+                            </div>
+                            </Panel.Body>
+                        </Panel>
+                    </PanelGroup>
 
-                        <PanelGroup accordion>
-                            <Panel eventKey="1" bsStyle="info">
-                                <Panel.Heading><Panel.Title toggle>{PDPA}</Panel.Title></Panel.Heading>
-                                <Panel.Body collapsible>
-                                    <FormGroup controlId="formControlsAuthor">
-                                        <ControlLabel style={{ fontSize: "150%" }}>Author of case (Optional)</ControlLabel>
-                                        <FormControl type="text" placeholder="Enter your name as registered in school" value={this.state.author} name="author" onChange={(e) => this.handleAuthorChange(e)} />
-                                    </FormGroup>
-                                    <h3>Note:</h3>
-                                    <h4>
-                                        <br/>
-                                        Do leave your name if you would like to be contacted for credit in contributing this case if the event arises.
+                    <PanelGroup accordion>
+                        <Panel eventKey="1" bsStyle="info">
+                            <Panel.Heading><Panel.Title toggle>{PDPA}</Panel.Title></Panel.Heading>
+                            <Panel.Body collapsible>
+                            <FormGroup controlId="formControlsAuthor">
+                                <ControlLabel style={{ fontSize: "150%" }}>Author of case (Optional)</ControlLabel>
+                                <FormControl type="text" placeholder="Enter your name as registered in school" value={this.state.author} name="author" onChange={(e) => this.handleAuthorChange(e)} />
+                            </FormGroup>
+                            <h3>Note:</h3>
+                            <h4>
+                                <br/>
+                                Do leave your name if you would like to be contacted for credit in contributing this case if the event arises.
 
-                                        By indicating your consent to provide your personal data in this form, you agree to be contacted for the purposes of  Medsense.
-                                        <br/><br/>
-                                        I hereby declare all information I have provided as accurate, and understand that my information may be passed to relevant committee members for the purposes of contacting me. All personal information will be kept confidential and used for the purpose(s) stated.
-                                        <br/><br/>
-                                        I hereby give my consent to the survey-taker to collect my personal information for dissemination to relevant parties and be contacted for issues pertaining to, or related to, this event.
-                                        <br/><br/>
-                                        PDPA Consent
-                                        <br/><br/>
-                                    </h4>
-                                    <FormGroup controlId="formControlsPDPA" style={{paddingLeft: "30%", paddingTop: "0"}}>
-                                        <Col sm={6}>
-                                            <Radio name="radioGroup" inline>
-                                                <h5>Yes</h5>
-                                            </Radio>
-                                        </Col>
-                                        <Col sm={6}>
-                                            <Radio name="radioGroup" inline>
-                                                <h5>No</h5>
-                                            </Radio>
-                                        </Col>
-                                    </FormGroup>
-                                    <br />
-                                    <h4>
-                                        Should you wish to withdraw your consent for us to contact you for the purposes stated above, please notify us in writing to [email]. We will then remove your personal information from our database.
-                                        <br/><br/>
-                                        Please allow at least 7 business days for your withdrawal of consent to take effect.
-                                    </h4>
-                                </Panel.Body>
-                            </Panel>
-                        </PanelGroup>
+                            By indicating your consent to provide your personal data in this form, you agree to be contacted for the purposes of  Medsense.
+                                <br/><br/>
+                            I hereby declare all information I have provided as accurate, and understand that my information may be passed to relevant committee members for the purposes of contacting me. All personal information will be kept confidential and used for the purpose(s) stated.
+                                <br/><br/>
+                            I hereby give my consent to the survey-taker to collect my personal information for dissemination to relevant parties and be contacted for issues pertaining to, or related to, this event.
+                                <br/><br/>
+                            PDPA Consent
+                                <br/><br/>
+                            </h4>
+                            <FormGroup controlId="formControlsPDPA" style={{paddingLeft: "30%", paddingTop: "0"}}>
+                                <Col sm={6}>
+                                <Radio name="radioGroup" inline>
+                                    <h5>Yes</h5>
+                                </Radio>
+                                </Col>
+                                <Col sm={6}>
+                                <Radio name="radioGroup" inline>
+                                    <h5>No</h5>
+                                </Radio>
+                                </Col>
+                            </FormGroup>
+                            <br />
+                            <h4>
+                            Should you wish to withdraw your consent for us to contact you for the purposes stated above, please notify us in writing to [email]. We will then remove your personal information from our database.
+                                <br/><br/>
+                            Please allow at least 7 business days for your withdrawal of consent to take effect.
+                            </h4>
+                            </Panel.Body>
+                        </Panel>
+                    </PanelGroup>
 
-                        <div className="submit-case-button">
-                            <Button type="button" align="center" bsStyle="primary" onClick={(e) => this.saveChanges(e)}>Submit</Button>
-                        </div>
+                    <div className="submit-case-button">
+                        <Button type="submit" align="center" bsStyle="primary" onClick={(e) => this.saveChanges(e)}>Submit</Button>
+                    </div>
 
-                        <BootstrapModal
-                            show={this.state.vmShow}
-                            onHide={(e) => this.setState({ vmShow: false })}
-                            aria-labelledby="contained-modal-title-vm">
-                            <BootstrapModal.Header closeButton>
-                                <BootstrapModal.Title id="contained-modal-title-vm">Unable to Submit</BootstrapModal.Title>
-                            </BootstrapModal.Header>
-                            <BootstrapModal.Body>
-                                <p>{this.state.error}</p>
-                            </BootstrapModal.Body>
-                            <BootstrapModal.Footer>
-                                <Button onClick={(e) => this.setState({ vmShow: false })}>Close</Button>
-                            </BootstrapModal.Footer>
-                        </BootstrapModal>
+                    <BootstrapModal
+                        show={this.state.vmShow}
+                        onHide={vmClose}
+                        aria-labelledby="contained-modal-title-vm">
+                        <BootstrapModal.Header closeButton>
+                            <BootstrapModal.Title id="contained-modal-title-vm">Unable to Submit</BootstrapModal.Title>
+                        </BootstrapModal.Header>
+                        <BootstrapModal.Body>
+                            <p>{this.state.error}</p>
+                        </BootstrapModal.Body>
+                        <BootstrapModal.Footer>
+                            <Button onClick={vmClose}>Close</Button>
+                        </BootstrapModal.Footer>
+                    </BootstrapModal>
 
-                        <BootstrapModal
-                            show={this.state.vmConfirm}
-                            onHide={(e) => this.setState({ vmConfirm: false })}
-                            aria-labelledby="confirm-modal" >
-                            <BootstrapModal.Header closeButton>
-                                <BootstrapModal.Title id="confirm-modal">Case Submission</BootstrapModal.Title>
-                            </BootstrapModal.Header>
-                            <BootstrapModal.Body>
-                                <p>Before you upload the case, please ensure that all texts and attachments do not contain identifiable information eg. IC number or patient's face</p>
-                            </BootstrapModal.Body>
-                            <BootstrapModal.Footer>
-                                <Button onClick={this.submitCase}>Proceed to Submit</Button>
-                            </BootstrapModal.Footer>
-                        </BootstrapModal>
+                    <BootstrapModal
+                        show={this.state.vmConfirm}
+                        onHide={vmConfirmClose}
+                        aria-labelledby="confirm-modal" >
+                        <BootstrapModal.Header closeButton>
+                            <BootstrapModal.Title id="confirm-modal">Case Submission</BootstrapModal.Title>
+                        </BootstrapModal.Header>
+                        <BootstrapModal.Body>
+                            <p>Before you upload the case, please ensure that all texts and attachments do not contain identifiable information eg. IC number or patient's face</p>
+                        </BootstrapModal.Body>
+                        <BootstrapModal.Footer>
+                            <Button onClick={this.submitCase}>Proceed to Submit</Button>
+                        </BootstrapModal.Footer>
+                    </BootstrapModal>
 
-                        <BootstrapModal
-                            show={this.state.vm}
-                            aria-labelledby="success-modal">
-                            <BootstrapModal.Header>
-                                <BootstrapModal.Title id="success-modal">Case Submitted</BootstrapModal.Title>
-                            </BootstrapModal.Header>
-                            <BootstrapModal.Body>
-                                <p>Your case has been uploaded successfully! You will be redirected to the Homepage.</p>
-                            </BootstrapModal.Body>
-                            <BootstrapModal.Footer>
-                                <Button onClick={(e) => window.location = '/home'}>OK</Button>
-                            </BootstrapModal.Footer>
-                        </BootstrapModal>
-                    </form>
+                    <BootstrapModal
+                        show={this.state.vm}
+                        aria-labelledby="success-modal">
+                        <BootstrapModal.Header>
+                            <BootstrapModal.Title id="success-modal">Case Submitted</BootstrapModal.Title>
+                        </BootstrapModal.Header>
+                        <BootstrapModal.Body>
+                            <p>Your case has been uploaded successfully! You will be redirected to the Homepage.</p>
+                        </BootstrapModal.Body>
+                        <BootstrapModal.Footer>
+                            <Button onClick={(e) => window.location = '/home'}>OK</Button>
+                        </BootstrapModal.Footer>
+                    </BootstrapModal>
+                </form>
                 </div>
             </div>
         );
