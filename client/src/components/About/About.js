@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import * as ReactGA from "react-ga";
 import { Button } from 'react-bootstrap';
+import {Redirect} from "react-router-dom";
+import {connect} from "react-redux";
 
 class About extends Component {
     state = {
@@ -67,58 +69,76 @@ class About extends Component {
         );
     }
 
+    renderContent() {
+        switch(this.props.auth) {
+            case null:
+                return;
+            case false:
+                return(
+                    <div className="container">
+                        {/*<div className="row">*/}
+                        {/*<div className="col-md-12 text-center">*/}
+                        {/*<h1>*/}
+                        {/*Welcome to Medsense!*/}
+                        {/*</h1>*/}
+                        {/*<h1>*/}
+                        {/*The time now is {this.state.currentTime}.*/}
+                        {/*</h1>*/}
+                        {/*<h1 style={{color: 'red'}}>*/}
+                        {/*{this.state.doomsdayCountdown}*/}
+                        {/*</h1>*/}
+                        {/*<h2>*/}
+                        {/*{this.state.motivationalQuote}*/}
+                        {/*</h2>*/}
+                        {/*</div>*/}
+                        {/*</div>*/}
+                        <div className="row">
+                            <div className="col-md-offset-2 col-md-9 text-center">
+                                <img src="./medsense_logo.png" style={{width: '70%'}} alt="Medsense" />
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-md-offset-2 col-md-8 text-center main-login" style={{backgroundColor: 'rgba(255,255,255,0.4)', padding: '20px'}}>
+                                <h1>
+                                    Welcome to Medsense
+                                </h1><br/>
+                                <h4>
+                                    {/*Medsense is a gamified learning platform for medical students in Singapore. It was developed as a collaboration between NUS Yong Loo Lin School of Medicine, and Singapore Management University. This platform is a web application that simulates interaction with "patients", facilitates peer learning via a discussion board, and allow Professors to track the performance of students anonymously.*/}
+                                    Ever felt like getting a bit more practice?<br/>
+                                    This is the place for you.<br/><br/>
+                                    Medsense is a case-based simulation website for medical trainees, <br/>
+                                    with faculty-vetted cases <em>from you, for you</em>.<br/><br/>
+                                    <strong>Upload</strong> an interesting case or <strong>try out</strong> a case<br/>
+                                    and check out your strength and weaknesses at your dashboard.<br/><br/>
+                                    Come make sense of medicine.
+                                </h4><br/><br/>
+                                <Button onClick={(e) => window.location='/register'} className="btn btn-primary btn-lg" style={{whiteSpace:"pre-wrap", background: "#483D8B", color:"white", width: "25%"}}>
+                                    <p style={{marginTop: "7%"}}>REGISTER</p>
+                                </Button>
+                            </div>
+                        </div>
+                    </div>
+                );
+            default:
+                return <Redirect to="/home"/>;
+        }
+    }
+
     render() {
         // React GA
         ReactGA.initialize('UA-112382826-1');
         ReactGA.pageview(window.location.pathname + window.location.search);
 
         return(
-            <div className="container">
-                {/*<div className="row">*/}
-                    {/*<div className="col-md-12 text-center">*/}
-                        {/*<h1>*/}
-                            {/*Welcome to Medsense!*/}
-                        {/*</h1>*/}
-                        {/*<h1>*/}
-                            {/*The time now is {this.state.currentTime}.*/}
-                        {/*</h1>*/}
-                        {/*<h1 style={{color: 'red'}}>*/}
-                            {/*{this.state.doomsdayCountdown}*/}
-                        {/*</h1>*/}
-                        {/*<h2>*/}
-                            {/*{this.state.motivationalQuote}*/}
-                        {/*</h2>*/}
-                    {/*</div>*/}
-                {/*</div>*/}
-                <div className="row">
-                    <div className="col-md-offset-2 col-md-9 text-center">
-                        <img src="./medsense_logo.png" style={{width: '70%'}} alt="Medsense" />
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-md-offset-2 col-md-8 text-center main-login" style={{backgroundColor: 'rgba(255,255,255,0.4)', padding: '20px'}}>
-                        <h1>
-                            Welcome to Medsense
-                        </h1><br/>
-                        <h4>
-                            {/*Medsense is a gamified learning platform for medical students in Singapore. It was developed as a collaboration between NUS Yong Loo Lin School of Medicine, and Singapore Management University. This platform is a web application that simulates interaction with "patients", facilitates peer learning via a discussion board, and allow Professors to track the performance of students anonymously.*/}
-                            Ever felt like getting a bit more practice?<br/>
-                            This is the place for you.<br/><br/>
-                            Medsense is a case-based simulation website for medical trainees, <br/>
-                            with faculty-vetted cases <em>from you, for you</em>.<br/><br/>
-                            <strong>Upload</strong> an interesting case or <strong>try out</strong> a case<br/>
-                            and check out your strength and weaknesses at your dashboard.<br/><br/>
-                            Come make sense of medicine.
-                        </h4><br/><br/>
-                        <Button onClick={(e) => window.location='/register'} className="btn btn-primary btn-lg" style={{whiteSpace:"pre-wrap", background: "#483D8B", color:"white", width: "25%"}}>
-                            <p style={{marginTop: "7%"}}>REGISTER</p>
-                        </Button>
-                    </div>
-                </div>
-
+            <div>
+                {this.renderContent()}
             </div>
         );
     }
 }
 
-export default About;
+function mapStateToProps({ auth }) {
+    return { auth };
+}
+
+export default connect(mapStateToProps)(About);
