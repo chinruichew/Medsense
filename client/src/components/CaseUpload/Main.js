@@ -317,7 +317,7 @@ class Main extends Component {
                 let qn = qnData[j];
                 for (let i = 0; i < questions.length; i++) {
                     let question = questions[i];
-                    if (question.id===qn.id) {
+                    if (question.id===String(qn.id)) {
                         this.uploadFile(qn.attachment, caseID, question.id, question._id);
                         this.uploadPearlFile(qn.pearlAttachment, caseID, question.id, question._id);
                     }
