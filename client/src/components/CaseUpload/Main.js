@@ -169,6 +169,7 @@ class Main extends Component {
                             error = "Question #" + obj.id + ": Please select a Question Type!";
                             throw BreakException;
                         } else if (obj.type === "MCQ") {
+                            console.log('Option data here:', obj.optionData);
                             if (obj.optionData.length === 0){
                                 error = "Question #" + obj.id + ": Please select the Number of Options!";
                                 throw BreakException;
@@ -360,6 +361,7 @@ class Main extends Component {
     };
 
     handleUpdateQuestion = (details, id) => {
+        console.log('Details:', details);
         let questions = this.state.qnData;
         questions.forEach(function (obj) {
             if (obj.id === id) {
@@ -370,7 +372,7 @@ class Main extends Component {
                 obj.type = details.type;
                 obj.openEnded = details.openEnded;
                 obj.optionData = details.optionData;
-                obj.numOptions = details.numOptions,
+                obj.numOptions = details.numOptions;
                 obj.pearl = details.pearl;
                 obj.time = details.time;
                 obj.reference = details.reference;
@@ -378,6 +380,7 @@ class Main extends Component {
             }
         });
         this.setState({ qnData: questions });
+        console.log('State:', this.state.qnData);
     };
 
     handleUpdateOverview = (details) => {
@@ -410,6 +413,7 @@ class Main extends Component {
         let questionNodes = this.state.qnData.map((obj, index) => {
             return (
                 <Question
+                    key={index}
                     id={obj.id}
                     stem={obj.stem}
                     question={obj.question}
@@ -438,7 +442,7 @@ class Main extends Component {
             }
             let qn=obj.question;
             return (
-                <div className="stem">
+                <div key={index} className="stem">
                     <div className="stem-label" style={{fontSize: "180%"}}>
                         Question {obj.id}
                     </div>

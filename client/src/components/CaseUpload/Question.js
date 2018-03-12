@@ -186,6 +186,7 @@ class Question extends Component {
                     }
                 }
             }
+            console.log(temp);
             this.setState({numOptions: value, optionData: temp});
             this.update(temp, "optionData");
             this.update(value, "numOptions");

@@ -163,10 +163,10 @@ class Overview extends Component {
 
     render() {
         let approaches = this.state.approachList.map((obj, index) => {
-            return <option value={obj.approach}>{obj.approach}</option>;
+            return <option key={index} value={obj.approach}>{obj.approach}</option>;
         });
         let specialities = this.state.specialityList.map((obj, index) => {
-            return <option value={obj.speciality}>{obj.speciality}</option>;
+            return <option key={index} value={obj.speciality}>{obj.speciality}</option>;
         });
 
         return (
