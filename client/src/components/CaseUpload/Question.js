@@ -4,9 +4,10 @@ import {
     PanelGroup, Popover, OverlayTrigger
 } from 'react-bootstrap';
 import ReactQuill from 'react-quill';
-import ImageMagnifier from "./ImageMagnifier";
-import './Upload.css';
 import 'react-quill/dist/quill.snow.css';
+import ImageMagnifier from "./ImageMagnifier";
+
+import './Upload.css';
 
 const toolbarOptions = [
     [{ 'header': [1, 2, 3, false] }],
@@ -17,264 +18,109 @@ const toolbarOptions = [
 ];
 
 class Question extends Component {
-    constructor(props){
-        super(props);
-        this.state={
-            id: this.props.id,
-            stem: this.props.stem,
-            question: this.props.question,
-            attachment: this.props.attachment,
-            type: this.props.type,
-            openEnded: this.props.openEnded,
-            optionData: this.props.optionData,
-            numOptions: this.props.numOptions,
-            pearl: this.props.pearl,
-            time: this.props.time,
-            mark: this.props.mark,
-            reference: this.props.reference,
-            open: false,
-            showfile: false,
-        };
-    }
-
-    componentWillReceiveProps(nextProps){
-        this.setState({
-            id: nextProps.id,
-            stem: nextProps.stem,
-            question: nextProps.question,
-            attachment: nextProps.attachment,
-            pearlAttachment: nextProps.pearlAttachment,
-            type: nextProps.type,
-            openEnded: nextProps.openEnded,
-            optionData: nextProps.optionData,
-            numOptions: nextProps.numOptions,
-            pearl: nextProps.pearl,
-            time: nextProps.time,
-            mark: nextProps.mark,
-            reference: nextProps.reference,
-        });
-    }
-
-    deleteQuestion = () =>{
-        let id = this.state.id;
-        this.props.handleDeleteQuestion(id);
+    checkQ1 = () =>{
+        if (this.props.id===1){
+            return;
+        }
+        return (
+            <FormGroup controlId="formControlsSTEM" style={{height:'200px'}}>
+                <ControlLabel style={{ fontSize: "150%" }}>STEM</ControlLabel>
+                <ReactQuill value={this.props.stem}
+                            modules={{toolbar: toolbarOptions}}
+                            onChange={this.handleStemChange}
+                            placeholder="Enter a continuation of the scenario"
+                            style={{height:'100px'}}/>
+            </FormGroup>
+        );
     };
 
-    addQuestion = () =>{
-        let id = this.state.id;
-        this.props.handleAddQuestion(id);
+    handleStemChange = (value) => {
+        this.props.handleStemChange(value, this.props.id);
     };
 
-    update = (value,key) =>{
-        let details = {
-            ...this.state
-        };
+    handleQuestionChange = (value) =>{
+        this.props.handleQuestionChange(value, this.props.id);
+    };
 
-        switch(key) {
-            case "stem":
-                details.stem = value;
-                this.props.handleUpdateQuestion(details,this.state.id);
-                return;
-            case "question":
-                details.question = value;
-                this.props.handleUpdateQuestion(details,this.state.id);
-                return;
-            case "type":
-                details.type = value;
-                this.props.handleUpdateQuestion(details,this.state.id);
-                return;
-            case "openEnded":
-                details.openEnded = value;
-                this.props.handleUpdateQuestion(details,this.state.id);
-                return;
-            case "optionData":
-                details.optionData = value;
-                this.props.handleUpdateQuestion(details,this.state.id);
-                return;
-            case "numOptions":
-                details.numOptions = value;
-                this.props.handleUpdateQuestion(details,this.state.id);
-                return;
-            case "pearl":
-                details.pearl = value;
-                this.props.handleUpdateQuestion(details,this.state.id);
-                return;
-            case "time":
-                details.time = value;
-                this.props.handleUpdateQuestion(details,this.state.id);
-                return;
-            case "mark":
-                details.mark = value;
-                this.props.handleUpdateQuestion(details,this.state.id);
-                return;
-            case "reference":
-                details.reference = value;
-                this.props.handleUpdateQuestion(details,this.state.id);
-                return;
-            case "attachment":
-                details.attachment = value;
-                this.props.handleUpdateQuestion(details,this.state.id);
-                return;
-            case "pearlAttachment":
-                details.pearlAttachment = value;
-                this.props.handleUpdateQuestion(details,this.state.id);
-                return;
-            default:
-                this.props.handleUpdateQuestion(details,this.state.id);
-                return;
+    showAttachment = () =>{
+        if (this.props.attachment) {
+            let source = window.URL.createObjectURL(this.props.attachment);
+            return (
+                <Row>
+                    <div className="col-md-5 col-md-offset-1">
+                        <ImageMagnifier url={source} />
+                    </div>
+                </Row>
+            );
         }
     };
 
     handleFile = (e) =>{
-        const value = e.target.files[0];
-        this.setState({ attachment: value });
-        this.update(value, "attachment");
-    };
-
-    handlePearlFile = (e) =>{
-        const value = e.target.files[0];
-        this.setState({ pearlAttachment: value });
-        this.update(value, "pearlAttachment");
+        this.props.handleFile(e.target.files[0], this.props.id);
     };
 
     handleInputChange = (e) => {
         const name = e.target.name;
         const value = e.target.value;
-        this.setState({[name]:value});
-        this.update(value, name);
-    };
-
-    handleMCQChange = (e) => {
-        const name = e.target.name;
-        this.state.optionData.forEach(function (obj) {
-            console.log("hello");
-            if (obj.id  === parseInt(name.slice(-1),10)){
-                if (name.substring(0,3)==="mcq"){
-                    obj.mcq = e.target.value;
-                } else {
-                    obj.check = e.target.checked;
-                }
-            }
-        });
-        this.update(this.state.optionData, "optionData");
-        console.log(this.state.optionData);
+        this.props.handleInputChange(name, value, this.props.id);
     };
 
     handleNumberChange = (e) => {
         const value = e.target.value;
         let temp = [];
-        if (this.state.type ==="MCQ" && value!==this.state.numOptions){
+        if (this.props.type ==="MCQ" && value!==this.props.numOptions){
             let id = value==="Select One"?0:parseInt(value,10);
-            let prevId = this.state.numOptions==="Select One"?0:parseInt(this.state.numOptions,10);
+            let prevId = this.props.numOptions==="Select One"?0:parseInt(this.props.numOptions,10);
             if (id > prevId){
-                for (let i=0;i<this.state.optionData.length;i++){
-                    if(this.state.optionData[i].id<=prevId){
-                        temp.push(this.state.optionData[i]);
+                for (let i=0;i<this.props.optionData.length;i++){
+                    if(this.props.optionData[i].id<=prevId){
+                        temp.push(this.props.optionData[i]);
                     }
                 }
                 for (let k=1;k<=id-prevId;k++){
                     temp.push({
-                            "id": prevId+k,
-                            "mcq": "",
-                            "check": false
+                        "id": prevId+k,
+                        "mcq": "",
+                        "check": false
                     });
                 }
             } else if (id < prevId){
-                for (let j=0;j<this.state.optionData.length;j++){
-                    if(this.state.optionData[j].id<=id){
-                        temp.push(this.state.optionData[j]);
+                for (let j=0;j<this.props.optionData.length;j++){
+                    if(this.props.optionData[j].id<=id){
+                        temp.push(this.props.optionData[j]);
                     }
                 }
             }
-            console.log(temp);
-            this.setState({numOptions: value, optionData: temp});
-            this.update(temp, "optionData");
-            this.update(value, "numOptions");
-        }
-        console.log(value, temp);
-    };
-
-    handleStemChange = (value) =>{
-        this.setState({ stem: value });
-        this.update(value, "stem");
-    };
-
-    handleQuestionChange = (value) =>{
-        this.setState({ question: value });
-        this.update(value, "question");
-    };
-
-    handleOpenEndedChange = (value) =>{
-        this.setState({ openEnded: value });
-        this.update(value, "openEnded");
-    };
-
-    handlePearlChange = (value) =>{
-        this.setState({ pearl: value });
-        this.update(value, "pearl");
-    };
-
-    handleReferenceChange = (value) =>{
-        this.setState({ reference: value });
-        this.update(value, "reference");
-    };
-
-    options = () =>{
-        if (this.state.type==="MCQ" && this.state.numOptions!=="Select One"){
-            let array = [];
-            for (let i=1;i<=parseInt(this.state.numOptions,10);i++) {
-                array.push(i);
-            }
-
-            let options = array.map((number, index) => {
-                let mandatory = number<3 ? "*": "";
-                return(
-                    <div>
-                        <FormGroup>
-                            <ControlLabel>Option {number}<span style={{color:"red"}}>{mandatory}</span></ControlLabel>
-                            <InputGroup>
-                                <InputGroup.Addon>
-                                    {/*checked={this.state.optionData[number-1].check}*/}
-                                    <input type="checkbox" name={"check"+number} onChange={(e)=>this.handleMCQChange(e)}/>
-                                </InputGroup.Addon>
-                                {/*value={this.state.optionData[number-1].mcq}*/}
-                                <FormControl type="text" placeholder="Enter an answer" name={"mcq"+number} onChange={(e)=>this.handleMCQChange(e)}/>
-                            </InputGroup>
-                        </FormGroup>
-                    </div>
-                );
-            });
-            console.log(this.state.optionData);
-            return options;
+            this.props.handleNumberChange(value, temp, this.props.id);
         }
     };
 
     answer = ()=>{
-        if(this.state.type==="MCQ"){
+        if(this.props.type==="MCQ"){
             return(
                 <FormGroup controlId="formControlsMCQ">
                     <ControlLabel style={{ fontSize: "150%" }}>Number of Options<span style={{color:"red"}}>*</span></ControlLabel>
-                        <FormControl componentClass="select" value={this.state.numOptions} name="numOptions" onChange={(e)=>this.handleNumberChange(e)}>
-                            <option value="Select One">Select One</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                        </FormControl>
+                    <FormControl componentClass="select" value={this.props.numOptions} name="numOptions" onChange={(e)=>this.handleNumberChange(e)}>
+                        <option value="Select One">Select One</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </FormControl>
                 </FormGroup>
             );
-        } else if(this.state.type==="Open-ended"){
+        } else if(this.props.type==="Open-ended"){
             return(
                 <FormGroup controlId="formControlsOpenEnded" style={{height:'200px'}}>
                     <ControlLabel style={{ fontSize: "150%" }}>Answer<span style={{color:"red"}}>*</span>
                         <br />
                     </ControlLabel>
-                    <ReactQuill value={this.state.openEnded}
+                    <ReactQuill value={this.props.openEnded}
                                 modules={{toolbar: toolbarOptions}}
                                 onChange={this.handleOpenEndedChange}
                                 placeholder="Enter an answer"
@@ -285,36 +131,57 @@ class Question extends Component {
         return;
     };
 
-    checkQ1 = () =>{
-        if (this.state.id===1){
-            return;
+    options = () =>{
+        if (this.props.type==="MCQ" && this.props.numOptions!=="Select One"){
+            let array = [];
+            for (let i=1;i<=parseInt(this.props.numOptions,10);i++) {
+                array.push(i);
+            }
+
+            let options = array.map((number, index) => {
+                let mandatory = number<3 ? "*": "";
+                return(
+                    <div key={index}>
+                        <FormGroup>
+                            <ControlLabel>Option {number}<span style={{color:"red"}}>{mandatory}</span></ControlLabel>
+                            <InputGroup>
+                                <InputGroup.Addon>
+                                    {/*checked={this.props.optionData[number-1].check}*/}
+                                    <input type="checkbox" name={"check"+number} onChange={(e)=>this.handleMCQChange(e)}/>
+                                </InputGroup.Addon>
+                                {/*value={this.props.optionData[number-1].mcq}*/}
+                                <FormControl type="text" placeholder="Enter an answer" name={"mcq"+number} onChange={(e)=>this.handleMCQChange(e)}/>
+                            </InputGroup>
+                        </FormGroup>
+                    </div>
+                );
+            });
+            return options;
         }
-        return (
-            <FormGroup controlId="formControlsSTEM" style={{height:'200px'}}>
-                <ControlLabel style={{ fontSize: "150%" }}>STEM</ControlLabel>
-                <ReactQuill value={this.state.stem}
-                            modules={{toolbar: toolbarOptions}}
-                            onChange={this.handleStemChange}
-                            placeholder="Enter a continuation of the scenario"
-                            style={{height:'100px'}}/>
-            </FormGroup>
-        );
     };
 
-    showAttachment = () =>{
-        if (this.state.attachment) {
-            let source = window.URL.createObjectURL(this.state.attachment);
-            return (
-                <Row>
-                <div className="col-md-5 col-md-offset-1">
-                    <ImageMagnifier url={source} /></div></Row>
-            );
-        }
+    handleMCQChange = (e) => {
+        const name = e.target.name;
+        const optionData = this.props.optionData;
+        optionData.forEach(function (obj) {
+            if (obj.id  === parseInt(name.slice(-1),10)){
+                if (name.substring(0,3)==="mcq"){
+                    obj.mcq = e.target.value;
+                } else {
+                    obj.check = e.target.checked;
+                }
+            }
+        });
+        this.props.handleMCQChange(optionData, this.props.id);
+    };
+
+    handlePearlChange = (value) => {
+        this.props.handlePearlChange(value, this.props.id);
     };
 
     showPearlAttachment = () =>{
-        if (this.state.pearlAttachment) {
-            let source = window.URL.createObjectURL(this.state.pearlAttachment);
+        if (this.props.pearlAttachment) {
+            let source = window.URL.createObjectURL(this.props.pearlAttachment);
             return (
                 <Row>
                     <div className="col-md-5 col-md-offset-1">
@@ -323,7 +190,16 @@ class Question extends Component {
         }
     };
 
-    render(){
+    handlePearlFile = (e) =>{
+        const value = e.target.files[0];
+        this.props.handlePearlFile(value, this.props.id);
+    };
+
+    handleReferenceChange = (value) => {
+        this.props.handleReferenceChange(value, this.props.id);
+    };
+
+    render() {
         const popoverHover = (
             <Popover id="popover-trigger-hover" title="Clinical Pearls">
                 Notes on how to approach the question, add-on explanations to the answers provided or simply useful tips on how to survive in the wards.
@@ -335,95 +211,98 @@ class Question extends Component {
                 <div className="add-question-button">
                     <Button type="button" bsStyle="primary" onClick={(e) => this.addQuestion()}>Add Question</Button><br />
                 </div><br/>
+
                 <PanelGroup accordion>
                     <Panel>
-                        <Panel.Heading><Panel.Title toggle>{"Question #"+this.state.id}</Panel.Title></Panel.Heading>
+                        <Panel.Heading><Panel.Title toggle>{"Question #"+this.props.id}</Panel.Title></Panel.Heading>
                         <Panel.Body collapsible>
-                        <div className="delete-question-button">
-                        <Button  type="button" bsStyle="primary" onClick={(e)=>this.deleteQuestion()}>Delete Question</Button><br/>
-                        </div>
-                        {this.checkQ1()}
+                            <div className="delete-question-button">
+                                <Button  type="button" bsStyle="primary" onClick={(e)=>this.props.handleDeleteQuestion(this.props.id)}>Delete Question</Button><br/>
+                            </div>
 
-                        <FormGroup controlId="formControlsQuestion" style={{height:'200px'}}>
-                            <ControlLabel style={{ fontSize: "150%" }}>Question {this.state.id}<span style={{color:"red"}}>*</span></ControlLabel>
-                            <ReactQuill value={this.state.question}
-                                        modules={{toolbar: toolbarOptions}}
-                                        onChange={this.handleQuestionChange}
-                                        placeholder="Enter a question"
-                                        style={{height:'100px'}}/>
-                        </FormGroup>
+                            {this.checkQ1()}
 
-                        <FormGroup controlId="formControlsAttachment">
-                            <ControlLabel style={{ fontSize: "150%" }}>Question Attachment</ControlLabel>
-                            {this.showAttachment()}
-                            <FormControl type="file" onChange={(e)=>this.handleFile(e)} accept=".jpg, .jpeg, .png"/>
-                        </FormGroup>
+                            <FormGroup controlId="formControlsQuestion" style={{height:'200px'}}>
+                                <ControlLabel style={{ fontSize: "150%" }}>Question {this.props.id}<span style={{color:"red"}}>*</span></ControlLabel>
+                                <ReactQuill value={this.props.question}
+                                            modules={{toolbar: toolbarOptions}}
+                                            onChange={this.handleQuestionChange}
+                                            placeholder="Enter a question"
+                                            style={{height:'100px'}}/>
+                            </FormGroup>
 
-                        <FormGroup controlId="formControlsType">
-                            <ControlLabel style={{ fontSize: "150%" }}>Question Type<span style={{color:"red"}}>*</span></ControlLabel>
-                            <FormControl componentClass="select" value={this.state.type} name="type" onChange={(e)=>this.handleInputChange(e)}>
-                                <option value="Select One">Select One</option>
-                                <option value="MCQ">MCQ</option>
-                                <option value="Open-ended">Open-ended</option>
-                            </FormControl>
-                        </FormGroup>
+                            <FormGroup controlId="formControlsAttachment">
+                                <ControlLabel style={{ fontSize: "150%" }}>Question Attachment</ControlLabel>
+                                {this.showAttachment()}
+                                <FormControl type="file" onChange={(e)=>this.handleFile(e)} accept=".jpg, .jpeg, .png"/>
+                            </FormGroup>
 
-                        {this.answer()}
-                        {this.options()}
-
-                        <FormGroup controlId="formControlsPEARL" style={{height:'200px'}}>
-                            <ControlLabel style={{ fontSize: "150%" }}>Clinical Pearls<span style={{color:"red"}}>*</span>
-                                <OverlayTrigger trigger={['hover']} placement="bottom" overlay={popoverHover}><img src='./info.png' hspace="5" alt="" style={{height:"1em", marginBottom:"1em"}}/></OverlayTrigger>
-                            </ControlLabel>
-
-                            <ReactQuill value={this.state.pearl}
-                                        modules={{toolbar: toolbarOptions}}
-                                        onChange={this.handlePearlChange}
-                                        placeholder="Enter an explanation for the answer(s)"
-                                        style={{height:'100px'}}/>
-                        </FormGroup>
-
-                        <FormGroup controlId="formControlsPearlAttachment">
-                            <ControlLabel style={{ fontSize: "150%" }}>Clinical Pearls Attachment</ControlLabel>
-                            {this.showPearlAttachment()}
-                            <FormControl type="file" onChange={(e)=>this.handlePearlFile(e)} accept=".jpg, .jpeg, .png"/>
-                        </FormGroup>
-
-                        <FormGroup controlId="formControlsTime">
-                            <ControlLabel style={{ fontSize: "150%" }}>Time Limit<span style={{color:"red"}}>*</span></ControlLabel>
-                            <InputGroup>
-                                <FormControl componentClass="select" value={this.state.time} name="time" onChange={(e)=>this.handleInputChange(e)}>
+                            <FormGroup controlId="formControlsType">
+                                <ControlLabel style={{ fontSize: "150%" }}>Question Type<span style={{color:"red"}}>*</span></ControlLabel>
+                                <FormControl componentClass="select" value={this.props.type} name="type" onChange={(e)=>this.handleInputChange(e)}>
                                     <option value="Select One">Select One</option>
-                                    <option value="0.5">0.5</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="5">5</option>
-                                    <option value="8">8</option>
-                                    <option value="10">10</option>
-                                    <option value="12">12</option>
-                                    <option value="15">15</option>
+                                    <option value="MCQ">MCQ</option>
+                                    <option value="Open-ended">Open-ended</option>
                                 </FormControl>
-                                <InputGroup.Addon>Minute(s)</InputGroup.Addon>
-                            </InputGroup>
-                        </FormGroup>
+                            </FormGroup>
 
-                        <FormGroup>
-                            <ControlLabel style={{ fontSize: "150%" }}>Allocate Marks<span style={{color:"red"}}>*</span></ControlLabel>
-                            <InputGroup>
-                                <FormControl type="text" placeholder="Enter a positive whole number" value={this.state.mark}
-                                             onChange={(e)=>this.handleInputChange(e)} name="mark" />
-                                <InputGroup.Addon>Mark(s)</InputGroup.Addon>
-                            </InputGroup>
-                        </FormGroup>
+                            {this.answer()}
+                            {this.options()}
 
-                        <FormGroup controlId="formControlsReferences" style={{height:'200px'}}>
-                            <ControlLabel style={{ fontSize: "150%" }}>References</ControlLabel>
-                            <ReactQuill value={this.state.reference}
-                                        modules={{toolbar: toolbarOptions}}
-                                        onChange={this.handleReferenceChange}
-                                        placeholder="Enter your references"
-                                        style={{height:'100px'}}/>
-                        </FormGroup>
+                            <FormGroup controlId="formControlsPEARL" style={{height:'200px'}}>
+                                <ControlLabel style={{ fontSize: "150%" }}>Clinical Pearls<span style={{color:"red"}}>*</span>
+                                    <OverlayTrigger trigger={['hover']} placement="bottom" overlay={popoverHover}><img src='./info.png' hspace="5" alt="" style={{height:"1em", marginBottom:"1em"}}/></OverlayTrigger>
+                                </ControlLabel>
+
+                                <ReactQuill value={this.props.pearl}
+                                            modules={{toolbar: toolbarOptions}}
+                                            onChange={this.handlePearlChange}
+                                            placeholder="Enter an explanation for the answer(s)"
+                                            style={{height:'100px'}}/>
+                            </FormGroup>
+
+                            <FormGroup controlId="formControlsPearlAttachment">
+                                <ControlLabel style={{ fontSize: "150%" }}>Clinical Pearls Attachment</ControlLabel>
+                                {this.showPearlAttachment()}
+                                <FormControl type="file" onChange={(e)=>this.handlePearlFile(e)} accept=".jpg, .jpeg, .png"/>
+                            </FormGroup>
+
+                            <FormGroup controlId="formControlsTime">
+                                <ControlLabel style={{ fontSize: "150%" }}>Time Limit<span style={{color:"red"}}>*</span></ControlLabel>
+                                <InputGroup>
+                                    <FormControl componentClass="select" value={this.props.time} name="time" onChange={(e)=>this.handleInputChange(e)}>
+                                        <option value="Select One">Select One</option>
+                                        <option value="0.5">0.5</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="5">5</option>
+                                        <option value="8">8</option>
+                                        <option value="10">10</option>
+                                        <option value="12">12</option>
+                                        <option value="15">15</option>
+                                    </FormControl>
+                                    <InputGroup.Addon>Minute(s)</InputGroup.Addon>
+                                </InputGroup>
+                            </FormGroup>
+
+                            <FormGroup>
+                                <ControlLabel style={{ fontSize: "150%" }}>Allocate Marks<span style={{color:"red"}}>*</span></ControlLabel>
+                                <InputGroup>
+                                    <FormControl type="text" placeholder="Enter a positive whole number" value={this.props.mark}
+                                                 onChange={(e)=>this.handleInputChange(e)} name="mark" />
+                                    <InputGroup.Addon>Mark(s)</InputGroup.Addon>
+                                </InputGroup>
+                            </FormGroup>
+
+                            <FormGroup controlId="formControlsReferences" style={{height:'200px'}}>
+                                <ControlLabel style={{ fontSize: "150%" }}>References</ControlLabel>
+                                <ReactQuill value={this.props.reference}
+                                            modules={{toolbar: toolbarOptions}}
+                                            onChange={this.handleReferenceChange}
+                                            placeholder="Enter your references"
+                                            style={{height:'100px'}}/>
+                            </FormGroup>
+
                         </Panel.Body>
                     </Panel>
                 </PanelGroup>

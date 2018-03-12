@@ -27,7 +27,7 @@ import ResetPassword from "./LoginSignup/ResetPassword";
 class App extends Component {
     componentDidMount() {
         // Render optimization Tracker
-        whyDidYouUpdate(React);
+        // whyDidYouUpdate(React);
 
         this.props.fetchUser();
     }
