@@ -67,7 +67,7 @@ module.exports = app => {
                     };
                     s3.putObject(params, function (err, data) {
                         if (err) {
-                            throw(err);
+                            console.log(err);
                         } else {
                             Question.update({_id: objID}, {attachment: "https://s3-ap-southeast-1.amazonaws.com/case-upload-attachments/" + caseID + "/question" + qID + ".jpg"}, function (err, response) {
                                 // Do not delete - production logging
@@ -85,18 +85,18 @@ module.exports = app => {
                 s3.getObject(params, function(err, data) {
                     // Handle any error and exit
                     if (err) {
-                        throw(err);
+                        console.log(err);
                     } else {
                         const params = {Bucket: myBucket, Delete: {Objects:[{Key:caseID + "/question" + qID + ".jpg"}]}};
                         s3.deleteObjects(params, function(err, data) {
                             if (err) {
-                                throw(err);
+                                console.log(err);
                             }
                         });
                     }
 
                     res.send("done");
-                })
+                });
             }
 
         });
@@ -122,7 +122,7 @@ module.exports = app => {
                     };
                     s3.putObject(params, function (err, data) {
                         if (err) {
-                            throw(err);
+                            console.log(err);
                         } else {
                             Question.update({_id: objID}, {pearlAttachment: "https://s3-ap-southeast-1.amazonaws.com/case-pearl-upload-attachments/" + caseID + "/question" + qID + ".jpg"}, function (err, response) {
                                 // Do not delete - production logging
@@ -145,7 +145,7 @@ module.exports = app => {
                         const params = {Bucket: myBucket, Delete: {Objects:[{Key:caseID + "/question" + qID + ".jpg"}]}};
                         s3.deleteObjects(params, function(err, data) {
                             if (err) {
-                                throw(err);
+                                console.log(err);
                             }
                         });
                     }
