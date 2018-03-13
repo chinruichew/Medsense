@@ -20,7 +20,8 @@ class ResetPassword extends Component {
         this.setState({email: e.target.value});
     };
 
-    onResetPassword = () => {
+    onResetPassword = (e) => {
+        e.preventDefault();
         axios.post('/api/resetPassword', {
             ...this.state
         }).then(res => {
