@@ -139,7 +139,7 @@ class Vetting extends Component {
                     default:
                         if(!this.state.showVetView) {
                             return(
-                                <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
+                                <Tabs defaultActiveKey={1} id="uncontrolled-tab-example" style={{marginRight: '20px', marginLeft: '20px'}}>
                                     <Tab eventKey={1} title="Pending Cases">
                                         <br/>
                                         <Form horizontal>

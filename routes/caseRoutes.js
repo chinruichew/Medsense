@@ -82,11 +82,33 @@ module.exports = app => {
                 }
             }
             Option.insertMany(options).then(updatedOptions => {
-                newCase.questions = questions;
-                newCase.save().then(docs => {
-                    res.send({ data: {case:newCase._id, question:questions}, message: "uploadCase success" });
-                }).catch(err => {
-                    throw(err);
+                let bulk = Question.collection.initializeUnorderedBulkOp();
+                const finalQuestions = [];
+                for(let i = 0; i < updatedQuestions.length; i++) {
+                    const updatedQuestion = updatedQuestions[i];
+                    const questionOptions = [];
+                    for(let j = 0; j < updatedOptions.length; j++) {
+                        const updatedOption = updatedOptions[j];
+                        if(updatedOption.qnId === updatedQuestion.id) {
+                            questionOptions.push(updatedOption._id);
+                        }
+                    }
+                    updatedQuestion.options = questionOptions;
+                    finalQuestions.push(updatedQuestion);
+                    bulk.find({_id: updatedQuestion._id}).update({$set: updatedQuestion});
+                }
+
+                // Initiate bulk update operation
+                bulk.execute(async(err) => {
+                    if(err) {
+                        throw(err);
+                    }
+                    newCase.questions = finalQuestions;
+                    newCase.save().then(docs => {
+                        res.send({ data: {case:newCase._id, question:finalQuestions}, message: "uploadCase success" });
+                    }).catch(err => {
+                        throw(err);
+                    });
                 });
             }).catch(err => {
                 throw(err);
@@ -171,6 +193,9 @@ module.exports = app => {
             path: 'authorid',
             model: 'users'
         }).exec(function(error, cases) {
+            if(error) {
+                console.log(err);
+            }
             res.send(cases);
         });
     });
@@ -192,6 +217,7 @@ module.exports = app => {
             path: 'questions',
             model: 'questions'
         });
+        console.log(cases);
         res.send(cases);
     });
 
