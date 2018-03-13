@@ -146,11 +146,9 @@ class Question extends Component {
                             <ControlLabel>Option {number}<span style={{color:"red"}}>{mandatory}</span></ControlLabel>
                             <InputGroup>
                                 <InputGroup.Addon>
-                                    {/*checked={this.props.optionData[number-1].check}*/}
-                                    <input type="checkbox" name={"check"+number} onChange={(e)=>this.handleMCQChange(e)}/>
+                                    <input type="checkbox" checked={this.props.optionData[number-1].check} name={"check"+number} onChange={(e)=>this.handleMCQChange(e)}/>
                                 </InputGroup.Addon>
-                                {/*value={this.props.optionData[number-1].mcq}*/}
-                                <FormControl type="text" placeholder="Enter an answer" name={"mcq"+number} onChange={(e)=>this.handleMCQChange(e)}/>
+                                <FormControl type="text" value={this.props.optionData[number-1].mcq} placeholder="Enter an answer" name={"mcq"+number} onChange={(e)=>this.handleMCQChange(e)}/>
                             </InputGroup>
                         </FormGroup>
                     </div>

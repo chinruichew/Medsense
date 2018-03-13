@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Main from './Main.js';
+import Main from '../CaseUpload/Main.js';
 
 class VetOne extends Component {
     state = {
@@ -14,14 +14,13 @@ class VetOne extends Component {
         learning: this.props.learning,
         timestamp: this.props.timestamp,
         questions: this.props.questions,
-        authorname:this.props.authorname,
-        authorid: this.props.authorid,
     };
 
     render() {
         return (
             <div>
                 <Main
+                    process={"vet"}
                     id={this.props.id}
                     title={this.props.title}
                     difficulty={this.props.difficulty}
@@ -31,9 +30,7 @@ class VetOne extends Component {
                     scenario={this.props.scenario}
                     learning={this.props.learning}
                     timestamp={this.props.timestamp}
-                    questions={this.props.questions}
-                    authorname={this.props.authorname}
-                    authorid={this.props.authorid}/>
+                    questions={this.props.questions}/>
             </div>
         );
     }

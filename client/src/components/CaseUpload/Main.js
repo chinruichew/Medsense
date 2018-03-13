@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import ReactHtmlParser from "react-html-parser";
 import { Button, PanelGroup, Panel, FormGroup, Radio, ControlLabel, FormControl, Col } from 'react-bootstrap';
 import axios from 'axios';
-
 import BootstrapModal from '../UI/Modal/UploadBootstrapModal.js';
 import './Upload.css';
 import Overview from "./Overview";
@@ -22,6 +21,21 @@ class Main extends Component {
         vmShow: false,
         vmConfirm: false
     };
+
+    componentDidMount(){
+        if (this.props.process==="vet"){
+            this.setState({
+                qnData: this.props.questions,
+                title: this.props.title,
+                difficulty: this.props.difficulty,
+                speciality: this.props.speciality,
+                subspeciality: this.props.subspeciality,
+                approach: this.props.approach,
+                scenario: this.props.scenario,
+                learning: this.props.learning,
+            });
+        }
+    }
 
     handleUpdateOverview = (details) => {
         this.setState({
@@ -324,7 +338,10 @@ class Main extends Component {
                         } else if (this.isValidNRIC(obj.question)){
                             error = "Question #" + obj.id + ": Question should NOT contain NRIC!";
                             throw BreakException;
-                        } else if (obj.attachment && !this.validFileType(obj.attachment)) {
+                        } else if (this.props.process!=="vet" && obj.attachment && !this.validFileType(obj.attachment)) {
+                            error = "Question #" + obj.id + ": Please make sure your Question attachment is an image of type .jpg, .jpeg, or .png!";
+                            throw BreakException;
+                        } else if (this.props.process==="vet" && typeof(obj.attachment)!=="string" && !this.validFileType(obj.attachment)){
                             error = "Question #" + obj.id + ": Please make sure your Question attachment is an image of type .jpg, .jpeg, or .png!";
                             throw BreakException;
                         } else if (obj.type === "Select One") {
@@ -362,7 +379,10 @@ class Main extends Component {
                                 } else if(this.isValidNRIC(obj.pearl)){
                                     error = "Question #" + obj.id + ": Clinical Pearls should NOT contain NRIC!";
                                     throw BreakException;
-                                } else if (obj.pearlAttachment && !this.validFileType(obj.pearlAttachment)) {
+                                } else if (this.props.process!=="vet" && obj.pearlAttachment && !this.validFileType(obj.pearlAttachment)) {
+                                    error = "Question #" + obj.id + ": Please make sure your Clinical Pearls attachment is an image of type .jpg, .jpeg, or .png!";
+                                    throw BreakException;
+                                } else if (this.props.process==="vet" && obj.pearlAttachment && typeof(obj.pearlAttachment)!=="string" && !this.validFileType(obj.pearlAttachment)) {
                                     error = "Question #" + obj.id + ": Please make sure your Clinical Pearls attachment is an image of type .jpg, .jpeg, or .png!";
                                     throw BreakException;
                                 } else if (obj.time === "Select One") {
@@ -391,7 +411,10 @@ class Main extends Component {
                         } else if(this.isValidNRIC(obj.pearl)){
                             error = "Question #" + obj.id + ": Clinical Pearls should NOT contain NRIC!";
                             throw BreakException;
-                        } else if (obj.pearlAttachment && !this.validFileType(obj.pearlAttachment)) {
+                        } else if (this.props.process!=="vet" && obj.pearlAttachment && !this.validFileType(obj.pearlAttachment)) {
+                            error = "Question #" + obj.id + ": Please make sure your Clinical Pearls attachment is an image of type .jpg, .jpeg, or .png!";
+                            throw BreakException;
+                        } else if (this.props.process==="vet" && obj.pearlAttachment && typeof(obj.pearlAttachment)!=="string" && !this.validFileType(obj.pearlAttachment)) {
                             error = "Question #" + obj.id + ": Please make sure your Clinical Pearls attachment is an image of type .jpg, .jpeg, or .png!";
                             throw BreakException;
                         } else if (obj.time === "Select One") {
@@ -470,25 +493,116 @@ class Main extends Component {
     };
 
     submitCase = (e) => {
-        axios.post('/api/uploadCase', {
-            values: this.state
-        }).then(res => {
-            const caseID = res.data.data.case;
-            let questions = res.data.data.question;
-            let qnData = this.state.qnData;
-            this.setState({vm: true});
-            for (let j=0;j<qnData.length;j++) {
-                let qn = qnData[j];
-                for (let i = 0; i < questions.length; i++) {
-                    let question = questions[i];
-                    if (question.id===String(qn.id)) {
-                        this.uploadFile(qn.attachment, caseID, question.id, question._id);
-                        this.uploadPearlFile(qn.pearlAttachment, caseID, question.id, question._id);
+        if (this.props.process==="vet"){
+            axios.post('/api/updateCase', {
+                values: this.state
+            }).then(res => {
+                const caseID = res.data.data.case;
+                let questions = res.data.data.questions;
+                let qnData = this.state.qnData;
+                this.setState({vm: true});
+                for (let j=0;j<qnData.length;j++) {
+                    let qn = qnData[j];
+                    for (let i=0; i<questions.length; i++){
+                        let question = questions[i];
+                        if (question.id===String(qn.id)) {
+                            this.uploadFile(qn.attachment, caseID, question.id, question._id);
+                            this.uploadPearlFile(qn.pearlAttachment, caseID, question.id, question._id);
+                        }
                     }
                 }
-            }
-        });
+            }).catch(err => {
+                if(err) {
+                    throw(err);
+                }
+            });
+        } else {
+            axios.post('/api/uploadCase', {
+                values: this.state
+            }).then(res => {
+                const caseID = res.data.data.case;
+                let questions = res.data.data.question;
+                let qnData = this.state.qnData;
+                this.setState({vm: true});
+                for (let j = 0; j < qnData.length; j++) {
+                    let qn = qnData[j];
+                    for (let i = 0; i < questions.length; i++) {
+                        let question = questions[i];
+                        if (question.id === String(qn.id)) {
+                            this.uploadFile(qn.attachment, caseID, question.id, question._id);
+                            this.uploadPearlFile(qn.pearlAttachment, caseID, question.id, question._id);
+                        }
+                    }
+                }
+            }).catch(err => {
+                if (err) {
+                    throw(err);
+                }
+            });
+        }
     };
+
+    renderPDPA(){
+        if (this.props.process==="vet"){
+            return;
+        } else {
+            return(
+            <PanelGroup accordion>
+                <Panel eventKey="1" bsStyle="info">
+                    <Panel.Heading><Panel.Title toggle>{PDPA}</Panel.Title></Panel.Heading>
+                    <Panel.Body collapsible>
+                        <FormGroup controlId="formControlsAuthor">
+                            <ControlLabel style={{fontSize: "150%"}}>Author of case (Optional)</ControlLabel>
+                            <FormControl type="text" placeholder="Enter your name as registered in school"
+                                         value={this.state.author} name="author"
+                                         onChange={(e) => this.handleAuthorChange(e)}/>
+                        </FormGroup>
+                        <h3>Note:</h3>
+                        <h4>
+                            <br/>
+                            Do leave your name if you would like to be contacted for credit in contributing this case if
+                            the event arises.
+
+                            By indicating your consent to provide your personal data in this form, you agree to be
+                            contacted for the purposes of Medsense.
+                            <br/><br/>
+                            I hereby declare all information I have provided as accurate, and understand that my
+                            information may be passed to relevant committee members for the purposes of contacting me.
+                            All personal information will be kept confidential and used for the purpose(s) stated.
+                            <br/><br/>
+                            I hereby give my consent to the survey-taker to collect my personal information for
+                            dissemination to relevant parties and be contacted for issues pertaining to, or related to,
+                            this event.
+                            <br/><br/>
+                            PDPA Consent
+                            <br/><br/>
+                        </h4>
+                        <FormGroup controlId="formControlsPDPA" style={{paddingLeft: "30%", paddingTop: "0"}}>
+                            <Col sm={6}>
+                                <Radio name="radioGroup" inline>
+                                    <h5>Yes</h5>
+                                </Radio>
+                            </Col>
+                            <Col sm={6}>
+                                <Radio name="radioGroup" inline>
+                                    <h5>No</h5>
+                                </Radio>
+                            </Col>
+                        </FormGroup>
+                        <br/>
+                        <h4>
+                            Should you wish to withdraw your consent for us to contact you for the purposes stated
+                            above, please notify us in writing to [email]. We will then remove your personal information
+                            from our database.
+                            <br/><br/>
+                            Please allow at least 7 business days for your withdrawal of consent to take effect.
+                        </h4>
+                    </Panel.Body>
+                </Panel>
+            </PanelGroup>
+            );
+        }
+    }
 
     render() {
         const storySoFar = (<span className="story-title"><center>Story So Far</center></span>);
@@ -535,8 +649,8 @@ class Main extends Component {
                     numOptions={obj.numOptions}
                     pearl={obj.pearl}
                     time={obj.time}
-                    reference={obj.reference}
                     mark={obj.mark}
+                    reference={obj.reference}
                     handleUpdateQuestion={this.handleUpdateQuestion}
                     handleDeleteQuestion={this.handleDeleteQuestion}
                     handleAddQuestion={this.addQuestion}
@@ -557,7 +671,7 @@ class Main extends Component {
             <span className="title"><center>Credits</center></span>
         );
 
-        console.log(this.state.qnData);
+        const modalMessage = this.props.process==="vet" ? "Your case has been released successfully! You will be redirected to the Homepage." : "Your case has been uploaded successfully! You will be redirected to the Homepage.";
 
         return(
             <div>
@@ -630,49 +744,7 @@ class Main extends Component {
                             </Panel>
                         </PanelGroup>
 
-                        <PanelGroup accordion>
-                            <Panel eventKey="1" bsStyle="info">
-                                <Panel.Heading><Panel.Title toggle>{PDPA}</Panel.Title></Panel.Heading>
-                                <Panel.Body collapsible>
-                                    <FormGroup controlId="formControlsAuthor">
-                                        <ControlLabel style={{ fontSize: "150%" }}>Author of case (Optional)</ControlLabel>
-                                        <FormControl type="text" placeholder="Enter your name as registered in school" value={this.state.author} name="author" onChange={(e) => this.handleAuthorChange(e)} />
-                                    </FormGroup>
-                                    <h3>Note:</h3>
-                                    <h4>
-                                        <br/>
-                                        Do leave your name if you would like to be contacted for credit in contributing this case if the event arises.
-
-                                        By indicating your consent to provide your personal data in this form, you agree to be contacted for the purposes of  Medsense.
-                                        <br/><br/>
-                                        I hereby declare all information I have provided as accurate, and understand that my information may be passed to relevant committee members for the purposes of contacting me. All personal information will be kept confidential and used for the purpose(s) stated.
-                                        <br/><br/>
-                                        I hereby give my consent to the survey-taker to collect my personal information for dissemination to relevant parties and be contacted for issues pertaining to, or related to, this event.
-                                        <br/><br/>
-                                        PDPA Consent
-                                        <br/><br/>
-                                    </h4>
-                                    <FormGroup controlId="formControlsPDPA" style={{paddingLeft: "30%", paddingTop: "0"}}>
-                                        <Col sm={6}>
-                                            <Radio name="radioGroup" inline>
-                                                <h5>Yes</h5>
-                                            </Radio>
-                                        </Col>
-                                        <Col sm={6}>
-                                            <Radio name="radioGroup" inline>
-                                                <h5>No</h5>
-                                            </Radio>
-                                        </Col>
-                                    </FormGroup>
-                                    <br />
-                                    <h4>
-                                        Should you wish to withdraw your consent for us to contact you for the purposes stated above, please notify us in writing to [email]. We will then remove your personal information from our database.
-                                        <br/><br/>
-                                        Please allow at least 7 business days for your withdrawal of consent to take effect.
-                                    </h4>
-                                </Panel.Body>
-                            </Panel>
-                        </PanelGroup>
+                        {this.renderPDPA()}
 
                         <div className="submit-case-button">
                             <Button type="button" align="center" bsStyle="primary" onClick={(e) => this.saveChanges(e)}>Submit</Button>
@@ -715,7 +787,7 @@ class Main extends Component {
                                 <BootstrapModal.Title id="success-modal">Case Submitted</BootstrapModal.Title>
                             </BootstrapModal.Header>
                             <BootstrapModal.Body>
-                                <p>Your case has been uploaded successfully! You will be redirected to the Homepage.</p>
+                                <p>{modalMessage}</p>
                             </BootstrapModal.Body>
                             <BootstrapModal.Footer>
                                 <Button onClick={(e) => window.location = '/home'}>OK</Button>
