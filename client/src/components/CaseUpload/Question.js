@@ -179,7 +179,7 @@ class Question extends Component {
 
     showPearlAttachment = () =>{
         if (this.props.pearlAttachment) {
-            let source = window.URL.createObjectURL(this.props.pearlAttachment);
+            let source = this.props.pearlAttachment;
             return (
                 <Row>
                     <div className="col-md-5 col-md-offset-1">

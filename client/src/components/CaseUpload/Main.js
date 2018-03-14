@@ -9,33 +9,18 @@ import Question from "./Question";
 
 class Main extends Component {
     state = {
-        qnData: [],
-        title: '',
-        difficulty: "Select One",
-        speciality: "Select One",
-        subspeciality: null,
-        approach: null,
-        scenario: '',
-        learning: '',
+        qnData: this.props.questions || [],
+        title: this.props.title || '',
+        difficulty: this.props.difficulty || "Select One",
+        speciality: this.props.speciality || "Select One",
+        subspeciality: this.props.subspeciality || null,
+        approach: this.props.approach || null,
+        scenario: this.props.scenario || '',
+        learning: this.props.learning || '',
         author: "",
         vmShow: false,
         vmConfirm: false
     };
-
-    componentDidMount(){
-        if (this.props.process==="vet"){
-            this.setState({
-                qnData: this.props.questions,
-                title: this.props.title,
-                difficulty: this.props.difficulty,
-                speciality: this.props.speciality,
-                subspeciality: this.props.subspeciality,
-                approach: this.props.approach,
-                scenario: this.props.scenario,
-                learning: this.props.learning,
-            });
-        }
-    }
 
     handleUpdateOverview = (details) => {
         this.setState({
@@ -542,10 +527,14 @@ class Main extends Component {
         }
     };
 
-    renderPDPA(){
+    renderPDPA() {
         if (this.props.process==="vet"){
             return;
         } else {
+            const PDPA = (
+                <span className="title"><center>Credits</center></span>
+            );
+
             return(
             <PanelGroup accordion>
                 <Panel eventKey="1" bsStyle="info">
@@ -666,10 +655,6 @@ class Main extends Component {
                 />
             );
         });
-
-        const PDPA = (
-            <span className="title"><center>Credits</center></span>
-        );
 
         const modalMessage = this.props.process==="vet" ? "Your case has been released successfully! You will be redirected to the Homepage." : "Your case has been uploaded successfully! You will be redirected to the Homepage.";
 
