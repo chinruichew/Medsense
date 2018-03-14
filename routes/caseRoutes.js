@@ -215,7 +215,11 @@ module.exports = app => {
     app.post('/api/fetchCaseById', async (req, res) => {
         const cases = await Case.findOne({ _id: req.body.values.vetId }).select().populate({
             path: 'questions',
-            model: 'questions'
+            model: 'questions',
+            populate: {
+                path: 'options',
+                model: 'options'
+            }
         });
         res.send(cases);
     });
