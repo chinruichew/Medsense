@@ -44,7 +44,7 @@ class Question extends Component {
 
     showAttachment = () =>{
         if (this.props.attachment) {
-            let source = window.URL.createObjectURL(this.props.attachment);
+            let source = this.props.attachment;
             return (
                 <Row>
                     <div className="col-md-5 col-md-offset-1">
