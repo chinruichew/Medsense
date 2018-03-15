@@ -13,7 +13,7 @@ class MCQquestion extends Component {
         super(props);
         this.state = {
             mark: this.props.question.mark,
-            question: this.props.question.question,
+            question: this.props.question,
             stem: this.props.question.stem,
             type: this.props.question.type,
             attachment: this.props.question.attachment,
@@ -21,25 +21,14 @@ class MCQquestion extends Component {
             reference: this.props.question.reference,
             showAnswers: false,
             showNextButton: true,
-            mcq1: this.props.question.mcq1,
-            mcq2: this.props.question.mcq2,
-            mcq3: this.props.question.mcq3,
-            mcq4: this.props.question.mcq4,
-            mcq5: this.props.question.mcq5,
-            mcq6: this.props.question.mcq6,
-            check1Stu: false,
-            check2Stu: false,
-            check3Stu: false,
-            check4Stu: false,
-            check5Stu: false,
-            check6Stu: false,
             answerid: this.props.answerid,
             authid: this.props.authid,
             timeLimit: parseFloat(this.props.question.time) * 60,
             time: {},
             date: this.props.date,
             seconds: parseFloat(this.props.question.time) * 60,
-            questionStart: null
+            questionStart: null,
+            checkedMCQs: []
         };
         this.timer = 0;
     }
@@ -84,6 +73,18 @@ class MCQquestion extends Component {
     }
 
     componentDidMount() {
+        const options = this.props.question.options;
+        const newOptions = [];
+        for(let i = 0; i < options.length; i++) {
+            const option = options[i];
+            const newOption = {
+                check: false,
+                questionOption: option._id
+            };
+            newOptions.push(newOption);
+        }
+        this.setState({checkedMCQs: newOptions});
+
         let timeLeftVar = this.secondsToTime(this.state.seconds);
         this.setState({ time: timeLeftVar, questionStart: new Date() });
         window.scrollTo(0, 0)
@@ -250,14 +251,25 @@ class MCQquestion extends Component {
         }
     }
 
-    handleCheckChange = (value) => {
-        // Set MCQ options state here
+    handleCheckChange = (value, optionId) => {
+        // Set value for MCQ option
+        let newOptions = [];
+        for(let i = 0; i < this.state.checkedMCQs.length; i++) {
+            const option = this.state.checkedMCQs[i];
+            if(option.questionOption === optionId) {
+                option.check = value;
+            }
+            newOptions.push(option);
+        }
+
+        // Set new check MCQs state
+        this.setState({checkedMCQs: newOptions});
     };
 
     renderMCQs = () => {
-        return this.props.question.options.map(option => {
+        return this.props.question.options.map((option, index) => {
             return(
-                <Checkbox onChange={(e) => this.handleCheckChange(e.target.checked, option._id)}>{option.mcq}</Checkbox>
+                <Checkbox key={index} onChange={(e) => this.handleCheckChange(e.target.checked, option._id)}>{option.mcq}</Checkbox>
             );
         });
     };
@@ -330,13 +342,11 @@ class MCQquestion extends Component {
                         updateScore={this.props.updateScore}
                         handleViewScore={this.props.handleViewScore}
                         handleNextQuestion={this.props.handleNextQuestion}
-                        check1Stu={this.state.check1Stu} check2Stu={this.state.check2Stu}
-                        check3Stu={this.state.check3Stu} check4Stu={this.state.check4Stu}
-                        check5Stu={this.state.check5Stu} check6Stu={this.state.check6Stu}
                         questionStart={this.state.questionStart}
                         questionEnd={new Date()}
                         questionId={this.props.question._id}
                         questionNumber={this.props.question.id}
+                        checkedMCQs={this.state.checkedMCQs}
                     />}
                 </Row>
             </div>

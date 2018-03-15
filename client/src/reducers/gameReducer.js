@@ -63,16 +63,15 @@ const addOpenEndedAnswerOfQuestion = (state, action) => {
 };
 
 const addMCQAnswerOfQuestion = (state, action) => {
-    // Waiting for refactoring and passing here as a array of options id
-    const options = action.values['options'];
+    const mcqAnswerOptions = [];
+    const options = action.values['checkedMCQs'];
     for(let i = 0; i < options.length; i++) {
         const option = options[i];
-        for(let j = 0; j < action.values['usermcqAnswerOptions'].length; j++) {
-            // Check each answer option and store corresponding option id
-        }
+        mcqAnswerOptions.push(option);
     }
     const values = {
-        ...action.values
+        ...action.values,
+        mcqAnswerOptions
     };
     delete values['stem'];
     delete values['attachment'];

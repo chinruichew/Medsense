@@ -7,43 +7,35 @@ import ReactHtmlParser from 'react-html-parser';
 class MCQAnswers extends Component {
     state = {
         showResult: false,
-        answerCount: 0,
-        mcqAnswer: "",
-        stuCorrectAnswerCount: 0,
+        // answerCount: 0,
+        // mcqAnswer: "",
+        // stuCorrectAnswerCount: 0,
         score: 0,
         authid: this.props.authid,
         mark: this.props.question.mark,
-        question: this.props.question.question,
+        question: this.props.question,
         stem: this.props.question.stem,
         type: this.props.question.type,
         attachment: this.props.question.attachment,
         pearl: this.props.question.pearl,
         reference: this.props.question.reference,
-        mcq1: this.props.question.mcq1,
-        mcq2: this.props.question.mcq2,
-        mcq3: this.props.question.mcq3,
-        mcq4: this.props.question.mcq4,
-        mcq5: this.props.question.mcq5,
-        mcq6: this.props.question.mcq6,
-        check1Stu: this.props.check1Stu,
-        check2Stu: this.props.check2Stu,
-        check3Stu: this.props.check3Stu,
-        check4Stu: this.props.check4Stu,
-        check5Stu: this.props.check5Stu,
-        check6Stu: this.props.check6Stu,
         timeLimit: this.props.timeLimit,
         date: this.props.date,
         seconds: this.props.seconds,
         questionStart: this.props.questionStart,
         questionEnd: this.props.questionEnd,
         questionId: this.props.questionId,
-        questionNumber: this.props.questionNumber
+        questionNumber: this.props.questionNumber,
+        checkedMCQs: this.props.checkedMCQs
     };
 
     componentDidMount() {
-        this.getMCQAnswer();
+        const answers = this.getMCQAnswer();
         window.scrollTo(0, 0);
-        this.props.addMCQAnswerOfQuestion(this.state);
+        this.props.addMCQAnswerOfQuestion({
+            ...this.state,
+            ...answers
+        });
     }
 
     getMCQAnswer = () => {
@@ -52,90 +44,36 @@ class MCQAnswers extends Component {
         let stuCorrectCount = 0;
         let stuWrongCount = 0;
 
-        if (this.props.question.check1) {
-            answer += this.props.question.mcq1 + ", ";
-            answerCount += 1;
-            if (this.props.question.check1 === this.props.check1Stu) {
-                stuCorrectCount += 1;
-            }
-        }else{
-            if(this.props.check1Stu) {
-                stuWrongCount += 1;
-            }
-        }
-
-        if (this.props.question.check2) {
-            answer += this.props.question.mcq2 + ", ";
-            answerCount += 1;
-            if (this.props.question.check2 === this.props.check2Stu) {
-                stuCorrectCount += 1;
-            }
-        }else{
-            if(this.props.check2Stu){
-                stuWrongCount += 1;
-            }
-        }
-
-        if (this.props.question.check3) {
-            answer += this.props.question.mcq3 + ", ";
-            answerCount += 1;
-            if (this.props.question.check3 === this.props.check3Stu) {
-                stuCorrectCount += 1;
-            }
-        }else {
-            if (this.props.check3Stu) {
-                stuWrongCount += 1;
+        const questionOptions = this.state.question.options;
+        for(let i = 0; i < this.state.checkedMCQs.length; i++) {
+            const checkedMCQ = this.state.checkedMCQs[i];
+            for(let j = 0; j < questionOptions.length; j++) {
+                const questionOption = questionOptions[j];
+                if(checkedMCQ.questionOption === questionOption._id) {
+                    if(checkedMCQ.check) {
+                        answer += questionOption.mcq + ", ";
+                        answerCount += 1;
+                    }
+                    if(checkedMCQ.check === questionOption.check) {
+                        stuCorrectCount++;
+                    } else {
+                        stuWrongCount++;
+                    }
+                    break;
+                }
             }
         }
 
 
-        if (this.props.question.check4) {
-            answer += this.props.question.mcq4 + ", ";
-            answerCount += 1;
-            if (this.props.question.check4 === this.props.check4Stu) {
-                stuCorrectCount += 1;
-            }
-        }else {
-            if (this.props.check4Stu) {
-                stuWrongCount += 1;
-            }
-        }
-
-        if (this.props.question.check5) {
-            answer += this.props.question.mcq5 + ", ";
-            answerCount += 1;
-            if (this.props.question.check5 === this.props.check5Stu) {
-                stuCorrectCount += 1;
-            }
-        }else {
-            if (this.props.check5Stu) {
-                stuWrongCount += 1;
-            }
-        }
-
-        if (this.props.question.check6) {
-            answer += this.props.question.mcq6 + ", ";
-            answerCount += 1;
-            if (this.props.question.check6 === this.props.check6Stu) {
-                stuCorrectCount += 1;
-            }
-        }else {
-            if (this.props.check6Stu) {
-                stuWrongCount += 1;
-            }
-        }
-
-        answer = answer.substring(0, answer.length - 2);
-        this.setState({ answerCount: answerCount, mcqAnswer: answer });
-
-        this.setState({ stuCorrectAnswerCount: stuCorrectCount });
 
         let finalScore = (stuCorrectCount-stuWrongCount) * (this.state.mark / answerCount);
 
+        let toReturn = { answerCount: answerCount, mcqAnswer: answer.substring(0, answer.length - 2), stuCorrectAnswerCount: stuCorrectCount };
         if(stuWrongCount < stuCorrectCount){
-            this.setState({score: Math.round(finalScore)});
+            toReturn.score = Math.round(finalScore);
         }
 
+        return(toReturn);
     };
 
 

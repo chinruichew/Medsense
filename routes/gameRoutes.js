@@ -2,6 +2,7 @@ const Case = require('../models/Case');
 const Question = require('../models/Question');
 const AnswerOverview = require('../models/AnswerOverview');
 const MCQAnswer = require('../models/MCQAnswer');
+const MCQAnswerOption = require('../models/MCQAnswerOption');
 const OpenEndedAnswer = require('../models/OpenEndedAnswer');
 const constants = require('../utility/constantTypes');
 
@@ -109,46 +110,92 @@ module.exports = app => {
         console.log('Case Challenge Final details:');
         console.log(values);
 
+        const mcqAnswers = values.mcqAnswers;
+        for(let i = 0; i < mcqAnswers.length; i++) {
+            const mcqAnswer = mcqAnswers[i];
+            const options = mcqAnswer.mcqAnswerOptions;
+            const newOptions = [];
+            for(let j = 0; j < options.length; j++) {
+                const option = options[j];
+                option.id = mcqAnswer.questionNumber;
+                newOptions.push(option);
+            }
+        }
+
         // Insert MCQ Answers
-        // MCQAnswer.collection.insert(values.mcqAnswers, async(err, mcqAnswers) => {
-        //     if(err) {
-        //         throw err;
-        //     }
-        //
-        //     const mcqAnswersIds = mcqAnswers.insertedIds;
-        //
-        //     // Insert Open-ended Answers
-        //     OpenEndedAnswer.collection.insert(values.openEndedAnswers, async(err, openEndedAnswers) => {
-        //         if(err) {
-        //             throw err;
-        //         }
-        //
-        //         const openEndedAnswersIds = openEndedAnswers.insertedIds;
-        //
-        //         // Get array of mcqAnswerIds
-        //         const mcqAnswersArray = [];
-        //         for(let key in mcqAnswersIds) {
-        //             mcqAnswersArray.push(mcqAnswersIds[key]);
-        //         }
-        //
-        //         // Get array of openEndedAnswerIds
-        //         const openEndedAnswersArray = [];
-        //         for(let key in openEndedAnswersIds) {
-        //             openEndedAnswersArray.push(openEndedAnswersIds[key]);
-        //         }
-        //
-        //         // Insert Answer Overview
-        //         const answerOverview = new AnswerOverview({
-        //             ...values.gameOverview,
-        //             user: req.session.user._id,
-        //             mcqAnswers: mcqAnswersArray,
-        //             openEndedAnswers: openEndedAnswersArray
-        //         });
-        //         await answerOverview.save();
-        //
-        //         res.send('Done');
-        //     });
-        // });
+        let bulk = MCQAnswer.collection.initializeOrderedBulkOp();
+        for(let i = 0; i < mcqAnswers.length; i++) {
+            const mcqAnswer = {
+                score: mcqAnswers[i].score,
+                mark: mcqAnswers[i].mark,
+                startTime: mcqAnswers[i].questionStart,
+                endTime: mcqAnswers[i].questionEnd,
+                question: mcqAnswers[i].questionId,
+                answerCount: mcqAnswers[i].answerCount,
+                correctAnswerCount: mcqAnswers[i].stuCorrectAnswerCount,
+                id: mcqAnswers[i].questionNumber
+            };
+            bulk.insert(mcqAnswer);
+        }
+
+        bulk.execute(function(err, result) {
+            if (err) {
+                throw(err);
+            }
+
+            const mcqAnswerIds = result.getInsertedIds();
+
+            MCQAnswer.find({
+                '_id': { $in: mcqAnswerIds}
+            }, function(err, updatedMcqAnswers){
+                for(let i = 0; i < mcqAnswers.length; i++) {
+                    const mcqAnswer = mcqAnswers[i];
+                    const options = mcqAnswer.mcqAnswerOptions;
+                    for(let j = 0; j < options.length; j++) {
+                        const option = options[j];
+                        for(let k = 0; k < updatedMcqAnswers.length; k++) {
+                            const updatedMcqAnswer = updatedMcqAnswers[k];
+                            if(updatedMcqAnswer.id === option.id) {
+                                option.answer = updatedMcqAnswer._id;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                // Insert MCQ Answer options
+                let bulk = MCQAnswerOption.collection.initializeOrderedBulkOp();
+                for(let i = 0; i < mcqAnswers.length; i++) {
+                    const mcqAnswer = mcqAnswers[i];
+                    const options = mcqAnswer.mcqAnswerOptions;
+                    for(let j = 0; j < options.length; j++) {
+                        const option = options[j];
+                        bulk.insert(option);
+                    }
+                }
+
+                bulk.execute(function(err, result) {
+                    if (err) {
+                        throw(err);
+                    }
+
+                    // Insert Open-Ended answers
+                    let bulk = OpenEndedAnswer.collection.initializeOrderedBulkOp();
+                    console.log(values.openEndedAnswers);
+
+                    //         // Insert Answer Overview
+                    //         const answerOverview = new AnswerOverview({
+                    //             ...values.gameOverview,
+                    //             user: req.session.user._id,
+                    //             mcqAnswers: mcqAnswersArray,
+                    //             openEndedAnswers: openEndedAnswersArray
+                    //         });
+                    //         await answerOverview.save();
+                    //
+                    //         res.send('Done');
+                });
+            });
+        });
     });
 
     app.post('/api/getGameAttempt', async(req, res) => {
