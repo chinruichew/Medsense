@@ -70,7 +70,11 @@ module.exports = app => {
     app.post('/api/fetchGameById', async (req, res) => {
         const result = await Case.findOne({ _id: req.body.id }).select().populate({
             path: 'questions',
-            model: 'questions'
+            model: 'questions',
+            populate: {
+                path: 'options',
+                model: 'options'
+            }
         });
         res.send(result);
     });

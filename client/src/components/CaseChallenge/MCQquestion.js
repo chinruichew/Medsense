@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {Form, FormGroup, Col, PanelGroup} from 'react-bootstrap';
 import { Checkbox, Button, Row, Panel } from 'react-bootstrap';
 import { Line } from 'rc-progress';
-import { bindAll } from 'lodash';
 import ReactHtmlParser from 'react-html-parser';
 import MCQAnswers from './MCQAnswers';
 import ImageMagnifier from "./ImageMagnifier";
@@ -43,9 +42,6 @@ class MCQquestion extends Component {
             questionStart: null
         };
         this.timer = 0;
-        bindAll(this, 'selectDone', 'startTimer', 'countDown', 'secondsToTime', 'pauseTimer', 'renderTimer',
-            'renderShowNextButton', 'renderProgressBar', 'renderScenario', 'renderMCQ3', 'renderMCQ4', 'renderMCQ5',
-            'renderMCQ6', 'renderContent', 'renderStorySoFar');
     }
 
     startTimer() {
@@ -156,73 +152,71 @@ class MCQquestion extends Component {
         }
     }
 
-    handleCheck1Change(e) {
-        const value = e.target.checked;
-        this.setState({ check1Stu: value });
-        // this.update(value, "check1");
-    }
-    handleCheck2Change(e) {
-        const value = e.target.checked;
-        this.setState({ check2Stu: value });
-        // this.update(value, "check2");
-    }
-    handleCheck3Change(e) {
-        const value = e.target.checked;
-        this.setState({ check3Stu: value });
-        console.log(e.target.checked);
-        // this.update(value, "check3");
-    }
-    handleCheck4Change(e) {
-        const value = e.target.checked;
-        this.setState({ check4Stu: value });
-        // this.update(value, "check4");
-    }
-    handleCheck5Change(e) {
-        const value = e.target.checked;
-        this.setState({ check5Stu: value });
-        // this.update(value, "check5");
-    }
-    handleCheck6Change(e) {
-        const value = e.target.checked;
-        this.setState({ check6Stu: value });
-        // this.update(value, "check6");
-    }
-
-    renderMCQ3() {
-        if (this.props.question.mcq3.length !== 0) {
-            return (
-                <Checkbox onChange={(e) => this.handleCheck3Change(e)}>{this.props.question.mcq3}</Checkbox>
-            );
-        }
-    }
-
-    renderMCQ4() {
-        if (this.props.question.mcq4.length !== 0) {
-            return (
-                <Checkbox onChange={(e) => this.handleCheck4Change(e)}>{this.props.question.mcq4}</Checkbox>
-            );
-        }
-    }
-
-    renderMCQ5() {
-        if (this.props.question.mcq5.length !== 0) {
-            return (
-                <Checkbox onChange={(e) => this.handleCheck5Change(e)}>{this.props.question.mcq5}</Checkbox>
-            );
-        }
-    }
-
-    renderMCQ6() {
-        if (this.props.question.mcq6.length !== 0) {
-            return (
-                <Checkbox onChange={(e) => this.handleCheck6Change(e)}>{this.props.question.mcq6}</Checkbox>
-            );
-        }
-    }
+    // handleCheck1Change(e) {
+    //     const value = e.target.checked;
+    //     this.setState({ check1Stu: value });
+    //     // this.update(value, "check1");
+    // }
+    // handleCheck2Change(e) {
+    //     const value = e.target.checked;
+    //     this.setState({ check2Stu: value });
+    //     // this.update(value, "check2");
+    // }
+    // handleCheck3Change(e) {
+    //     const value = e.target.checked;
+    //     this.setState({ check3Stu: value });
+    //     // this.update(value, "check3");
+    // }
+    // handleCheck4Change(e) {
+    //     const value = e.target.checked;
+    //     this.setState({ check4Stu: value });
+    //     // this.update(value, "check4");
+    // }
+    // handleCheck5Change(e) {
+    //     const value = e.target.checked;
+    //     this.setState({ check5Stu: value });
+    //     // this.update(value, "check5");
+    // }
+    // handleCheck6Change(e) {
+    //     const value = e.target.checked;
+    //     this.setState({ check6Stu: value });
+    //     // this.update(value, "check6");
+    // }
+    //
+    // renderMCQ3() {
+    //     if (this.props.question.mcq3.length !== 0) {
+    //         return (
+    //             <Checkbox onChange={(e) => this.handleCheck3Change(e)}>{this.props.question.mcq3}</Checkbox>
+    //         );
+    //     }
+    // }
+    //
+    // renderMCQ4() {
+    //     if (this.props.question.mcq4.length !== 0) {
+    //         return (
+    //             <Checkbox onChange={(e) => this.handleCheck4Change(e)}>{this.props.question.mcq4}</Checkbox>
+    //         );
+    //     }
+    // }
+    //
+    // renderMCQ5() {
+    //     if (this.props.question.mcq5.length !== 0) {
+    //         return (
+    //             <Checkbox onChange={(e) => this.handleCheck5Change(e)}>{this.props.question.mcq5}</Checkbox>
+    //         );
+    //     }
+    // }
+    //
+    // renderMCQ6() {
+    //     if (this.props.question.mcq6.length !== 0) {
+    //         return (
+    //             <Checkbox onChange={(e) => this.handleCheck6Change(e)}>{this.props.question.mcq6}</Checkbox>
+    //         );
+    //     }
+    // }
 
     renderStorySoFar(){
         let stems = this.props.case.questions.map((obj, index) => {
-            console.log(this.props.question.id);
             if (parseFloat(obj.id) < parseFloat(this.props.question.id)) {
                 let stem = '';
                 if (obj.id !== 1) {
@@ -256,6 +250,17 @@ class MCQquestion extends Component {
         }
     }
 
+    handleCheckChange = (value) => {
+        // Set MCQ options state here
+    };
+
+    renderMCQs = () => {
+        return this.props.question.options.map(option => {
+            return(
+                <Checkbox onChange={(e) => this.handleCheckChange(e.target.checked, option._id)}>{option.mcq}</Checkbox>
+            );
+        });
+    };
 
     renderContent() {
         return (
@@ -300,12 +305,13 @@ class MCQquestion extends Component {
                         <Form><h4>
                             <FormGroup>
                                 <div className="col-md-6 col-md-offset-2">
-                                    <Checkbox onChange={(e) => this.handleCheck1Change(e)}>{this.props.question.mcq1}</Checkbox>
-                                    <Checkbox onChange={(e) => this.handleCheck2Change(e)}>{this.props.question.mcq2}</Checkbox>
-                                    {this.renderMCQ3()}
-                                    {this.renderMCQ4()}
-                                    {this.renderMCQ5()}
-                                    {this.renderMCQ6()}
+                                    {/*<Checkbox onChange={(e) => this.handleCheck1Change(e)}>{this.props.question.mcq1}</Checkbox>*/}
+                                    {/*<Checkbox onChange={(e) => this.handleCheck2Change(e)}>{this.props.question.mcq2}</Checkbox>*/}
+                                    {/*{this.renderMCQ3()}*/}
+                                    {/*{this.renderMCQ4()}*/}
+                                    {/*{this.renderMCQ5()}*/}
+                                    {/*{this.renderMCQ6()}*/}
+                                    {this.renderMCQs()}
                                 </div>
                             </FormGroup>
                         </h4></Form>
