@@ -1,5 +1,6 @@
 import {
-    ADD_MCQ_ANSWER_OF_QUESTION, ADD_OPEN_ENDED_ANSWER_OF_QUESTION, FETCH_GAME_BY_ID, SET_GAME_FINAL_DETAILS,
+    ADD_MCQ_ANSWER_OF_QUESTION, ADD_OPEN_ENDED_ANSWER_OF_QUESTION, FETCH_GAME_BY_ID, GET_GAME_ATTEMPT,
+    SET_GAME_FINAL_DETAILS,
     SET_GAME_OVERVIEW
 } from "../actions/types";
 
@@ -126,6 +127,8 @@ export default function ( state = initialState, action ) {
             return setGameOverview(state, action);
         case FETCH_GAME_BY_ID:
             return fetchGame(state, action);
+        case GET_GAME_ATTEMPT:
+            return action.payload;
         case ADD_OPEN_ENDED_ANSWER_OF_QUESTION:
             return addOpenEndedAnswerOfQuestion(state, action);
         case ADD_MCQ_ANSWER_OF_QUESTION:

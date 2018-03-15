@@ -35,3 +35,4 @@ export const DELETE_SPECIALITY = 'delete_speciality';
 export const FETCH_SUBSPECIALITY = 'fetch_subspeciality';
 export const ADD_NEW_SUBSPECIALITY = 'add_new_subspeciality';
 export const DELETE_SUBSPECIALITY = 'delete_subspeciality';
+export const GET_GAME_ATTEMPT = 'get_game_attempt';

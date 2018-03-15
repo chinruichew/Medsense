@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Form, FormGroup, Col } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import {fetchGameById} from '../../actions';
+import {fetchGameById, getAttempt, startGame} from '../../actions';
 import MCQquestion from "./MCQquestion";
 import OpenEndedQuestion from "./OpenEndedQuestion";
 import GameResults from "./GameResults";
@@ -49,10 +49,11 @@ class TimeLimit extends Component {
                 this.props.startGame({
                     case: this.state.challenge,
                     score: this.state.score
-                }).then(res => {
-                    const game = res.data;
-                    this.setState({attempt: game.gameOverview.attempt, authid: this.props.auth._id, showGameView:true});
                 });
+                window.setTimeout(() => {
+                    const gameOverview = this.props.getAttempt();
+                    this.setState({attempt: gameOverview.values.attempt, authid: this.props.auth._id, showGameView:true});
+                },200);
         }
     };
 
@@ -221,6 +222,8 @@ function mapStateToProps({ game, auth}) {
 const mapDispatchToProps = dispatch => {
     return {
         fetchGameById: (id) => dispatch(fetchGameById(id)),
+        startGame: (gameCase, score) => dispatch(startGame(gameCase, score)),
+        getAttempt: () => dispatch(getAttempt())
     }
 };
 
