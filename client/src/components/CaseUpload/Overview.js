@@ -130,7 +130,7 @@ class Overview extends Component {
         this.update(value, "learning");
     };
 
-    renderSubspeciality = ()=>{
+    loadSubspecialities = () => {
         let subspecialities = this.state.subspecialityList.map((obj, index) => {
             return <option value={obj.subspeciality}>{obj.subspeciality}</option>;
         });
@@ -158,6 +158,20 @@ class Overview extends Component {
                     {subspecialities}
                 </FormControl>
             </FormGroup>;
+        }
+    };
+
+    renderSubspeciality = () => {
+        if(this.props.process === 'vet' && this.state.subspecialityList.length === 0) {
+            axios.post('/api/fetchSubspeciality', {
+                speciality: this.props.speciality
+            }).then(res => {
+                this.setState({subspecialityList: res.data[0].subspecialities});
+
+                return this.loadSubspecialities();
+            });
+        } else {
+            return this.loadSubspecialities();
         }
     };
 

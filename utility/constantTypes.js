@@ -17,5 +17,7 @@ module.exports = {
     STUDENT_YEAR_TWO: "Year 2",
     STUDENT_YEAR_THREE: "Year 3",
     STUDENT_YEAR_FOUR: "Year 4",
-    STUDENT_YEAR_FIVE: "Year 5"
+    STUDENT_YEAR_FIVE: "Year 5",
+    CASE_PROCESS_UPLOAD: "Upload",
+    CASE_PROCESS_VET: "Vet"
 };

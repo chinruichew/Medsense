@@ -634,7 +634,7 @@ class Main extends Component {
                     pearlAttachment={obj.pearlAttachment}
                     type={obj.type}
                     openEnded={obj.openEnded}
-                    optionData={obj.optionData}
+                    optionData={obj.options}
                     numOptions={obj.numOptions}
                     pearl={obj.pearl}
                     time={obj.time}
@@ -709,7 +709,9 @@ class Main extends Component {
                                         approach={this.state.approach}
                                         scenario={this.state.scenario}
                                         learning={this.state.learning}
-                                        handleUpdateOverview={this.handleUpdateOverview} />
+                                        handleUpdateOverview={this.handleUpdateOverview}
+                                        process={this.props.process}
+                                    />
                                 </Panel.Body>
                             </Panel>
                         </PanelGroup>

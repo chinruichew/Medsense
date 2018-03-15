@@ -97,23 +97,43 @@ class Question extends Component {
 
     answer = ()=>{
         if(this.props.type==="MCQ"){
-            return(
-                <FormGroup controlId="formControlsMCQ">
-                    <ControlLabel style={{ fontSize: "150%" }}>Number of Options<span style={{color:"red"}}>*</span></ControlLabel>
-                    <FormControl componentClass="select" value={this.props.numOptions} name="numOptions" onChange={(e)=>this.handleNumberChange(e)}>
-                        <option value="Select One">Select One</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                    </FormControl>
-                </FormGroup>
-            );
+            if(this.props.process === "vet") {
+                return(
+                    <FormGroup controlId="formControlsMCQ">
+                        <ControlLabel style={{ fontSize: "150%" }}>Number of Options<span style={{color:"red"}}>*</span></ControlLabel>
+                        <FormControl componentClass="select" value={this.props.optionData.length} name="numOptions" onChange={(e)=>this.handleNumberChange(e)}>
+                            <option value="Select One">Select One</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </FormControl>
+                    </FormGroup>
+                );
+            } else {
+                return(
+                    <FormGroup controlId="formControlsMCQ">
+                        <ControlLabel style={{ fontSize: "150%" }}>Number of Options<span style={{color:"red"}}>*</span></ControlLabel>
+                        <FormControl componentClass="select" value={this.props.numOptions} name="numOptions" onChange={(e)=>this.handleNumberChange(e)}>
+                            <option value="Select One">Select One</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </FormControl>
+                    </FormGroup>
+                );
+            }
         } else if(this.props.type==="Open-ended"){
             return(
                 <FormGroup controlId="formControlsOpenEnded" style={{height:'200px'}}>
@@ -134,8 +154,14 @@ class Question extends Component {
     options = () =>{
         if (this.props.type==="MCQ" && this.props.numOptions!=="Select One"){
             let array = [];
-            for (let i=1;i<=parseInt(this.props.numOptions,10);i++) {
-                array.push(i);
+            if(this.props.process === 'vet') {
+                for (let i=1;i<=this.props.optionData.length;i++) {
+                    array.push(i);
+                }
+            } else {
+                for (let i=1;i<=parseInt(this.props.numOptions,10);i++) {
+                    array.push(i);
+                }
             }
 
             let options = array.map((number, index) => {
