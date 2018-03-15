@@ -132,7 +132,7 @@ class Overview extends Component {
 
     loadSubspecialities = () => {
         let subspecialities = this.state.subspecialityList.map((obj, index) => {
-            return <option value={obj.subspeciality}>{obj.subspeciality}</option>;
+            return <option key={index} value={obj.subspeciality}>{obj.subspeciality}</option>;
         });
         if (this.state.speciality==="Clinical Practicum") {
             return <FormGroup controlId="formControlsSubspeciality">

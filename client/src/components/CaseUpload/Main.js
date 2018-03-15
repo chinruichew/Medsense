@@ -19,7 +19,8 @@ class Main extends Component {
         learning: this.props.learning || '',
         author: "",
         vmShow: false,
-        vmConfirm: false
+        vmConfirm: false,
+        id: this.props.id
     };
 
     handleUpdateOverview = (details) => {
@@ -333,11 +334,11 @@ class Main extends Component {
                             error = "Question #" + obj.id + ": Please select a Question Type!";
                             throw BreakException;
                         } else if (obj.type === "MCQ") {
-                            if (obj.optionData.length === 0){
+                            if (obj.options.length === 0){
                                 error = "Question #" + obj.id + ": Please select the Number of Options!";
                                 throw BreakException;
                             } else {
-                                let options = obj.optionData;
+                                let options = obj.options;
                                 let checked = false;
                                 for (let j = 0; j < options.length; j++) {
                                     let option = options[j];
@@ -420,6 +421,7 @@ class Main extends Component {
 
                 } catch (e) {
                     this.setState({vmShow: true, error: error});
+                    console.log(e);
                     return;
                 }
             }
