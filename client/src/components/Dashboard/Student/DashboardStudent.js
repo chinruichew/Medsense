@@ -19,27 +19,28 @@ class DashboardStudent extends Component {
         // Get Constant Types
         axios.get('/api/getConstantTypes').then(res => {
             this.setState({constants: res.data});
+        }).catch(err => {
+            throw(err);
+        });
 
-            // Get all individual answers
-            axios.get('/api/getIndividualAnswers').then(res => {
-                this.setState({answers: res.data});
+        // Get all individual answers
+        axios.get('/api/getIndividualAnswers').then(res => {
+            this.setState({answers: res.data});
 
-                // Get leaders with highest scores
-                axios.get('/api/getLeadersWithHighestScores').then(res => {
-                    this.setState({studentLeaders: res.data});
-                }).catch(err => {
-                    throw(err);
-                });
+        }).catch(err => {
+            throw(err);
+        });
 
-                // Get leaders with highest contributions
-                axios.get('/api/getLeadersWithHighestContributions').then(res => {
-                    this.setState({contributionLeaders: res.data});
-                }).catch(err => {
-                    throw(err);
-                });
-            }).catch(err => {
-                throw(err);
-            });
+        // Get leaders with highest scores
+        axios.get('/api/getLeadersWithHighestScores').then(res => {
+            this.setState({studentLeaders: res.data});
+        }).catch(err => {
+            throw(err);
+        });
+
+        // Get leaders with highest contributions
+        axios.get('/api/getLeadersWithHighestContributions').then(res => {
+            this.setState({contributionLeaders: res.data});
         }).catch(err => {
             throw(err);
         });

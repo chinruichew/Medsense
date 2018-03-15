@@ -13,7 +13,7 @@
     "server": "nodemon index.js --verbose",
     "client": "npm run start --prefix client",
     "babel": "babel-node index.js --verbose",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "dev": "concurrently \"npm run server\" \"npm run client\" \"npm run watch-docs\"",
     "deploy": "npm run update && npm run generate-docs && npm run build --prefix client --verbose && git add . --verbose && git commit -m \"aws deploy\" --verbose && git pull --verbose && git push origin master --verbose && eb deploy --verbose && eb open --verbose",
     "update": "npm install --verbose && npm update --verbose && cd client && npm install --verbose && npm update --verbose",
     "quick-deploy": "eb deploy --verbose && eb open --verbose",
