@@ -199,19 +199,47 @@ class Main extends Component {
         }
     };
 
-    handleNumberChange = (numOptions, optionData, qnId) => {
+    handleNumberChange = (value, qnId) => {
         const qnData = this.state.qnData;
         for(let i = 0; i < qnData.length; i++) {
             const qn = qnData[i];
             if(qn.id === qnId) {
                 qnData.splice(qnData.indexOf(qn), 1);
-                qn.numOptions = numOptions;
-                qn.optionData = optionData;
+
+                let temp = [];
+                if (qn.type ==="MCQ" && value !== qn.numOptions) {
+                    let id = value==="Select One"?0:parseInt(value,10);
+                    let prevId = qn.numOptions==="Select One"?0:parseInt(qn.numOptions,10);
+                    if (id > prevId){
+                        for (let i=0;i<qn.optionData.length;i++){
+                            if(qn.optionData[i].id<=prevId){
+                                temp.push(qn.optionData[i]);
+                            }
+                        }
+                        for (let k=1;k<=id-prevId;k++){
+                            temp.push({
+                                "id": prevId+k,
+                                "mcq": "",
+                                "check": false
+                            });
+                        }
+                    } else if (id < prevId){
+                        for (let j=0;j<qn.optionData.length;j++){
+                            if(qn.optionData[j].id<=id){
+                                temp.push(qn.optionData[j]);
+                            }
+                        }
+                    }
+                    qn.numOptions = value;
+                    qn.optionData = temp;
+                }
+                
                 qnData.push(qn);
                 this.setState({qnData: qnData});
                 break;
             }
         }
+        console.log(this.state.qnData);
     };
 
     handlePearlChange = (value, qnId) => {
@@ -649,7 +677,7 @@ class Main extends Component {
                     pearlAttachment={obj.pearlAttachment}
                     type={obj.type}
                     openEnded={obj.openEnded}
-                    optionData={obj.options}
+                    optionData={obj.optionData}
                     numOptions={obj.numOptions}
                     pearl={obj.pearl}
                     time={obj.time}

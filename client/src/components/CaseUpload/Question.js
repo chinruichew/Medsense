@@ -71,32 +71,7 @@ class Question extends Component {
 
     handleNumberChange = (e) => {
         const value = e.target.value;
-        let temp = [];
-        if (this.props.type ==="MCQ" && value!==this.props.numOptions){
-            let id = value==="Select One"?0:parseInt(value,10);
-            let prevId = this.props.numOptions==="Select One"?0:parseInt(this.props.numOptions,10);
-            if (id > prevId){
-                for (let i=0;i<this.props.optionData.length;i++){
-                    if(this.props.optionData[i].id<=prevId){
-                        temp.push(this.props.optionData[i]);
-                    }
-                }
-                for (let k=1;k<=id-prevId;k++){
-                    temp.push({
-                        "id": prevId+k,
-                        "mcq": "",
-                        "check": false
-                    });
-                }
-            } else if (id < prevId){
-                for (let j=0;j<this.props.optionData.length;j++){
-                    if(this.props.optionData[j].id<=id){
-                        temp.push(this.props.optionData[j]);
-                    }
-                }
-            }
-            this.props.handleNumberChange(value, temp, this.props.id);
-        }
+        this.props.handleNumberChange(value, this.props.id);
     };
 
     answer = ()=>{
