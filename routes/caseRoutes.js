@@ -137,7 +137,7 @@ module.exports = app => {
 
             oneCase.scenario = req.body.values.scenario;
             oneCase.learning = req.body.values.learning;
-            oneCase.vetter = req.body.values.authid;
+            oneCase.vetter = req.session.user._id;
             oneCase.status = constants.CASE_STATUS_VETTED;
             oneCase.vetTime = new Date();
             await oneCase.save();
