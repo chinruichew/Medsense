@@ -53,6 +53,7 @@ class App extends Component {
                         <Route exact path="/admintermmanager" component={AdminTermManager} />
                         <Route exact path="/result" component={Result} />
                         <Route exact path="/caseStatsIndividual" component={IndividualCaseStatistics} />
+                        <Route exact path="/" component={About}/>
                         <Route exact path="/about" component={Acknowledgement}/>
                         <Route path="/" component={NotFound} />
                     </Switch>
