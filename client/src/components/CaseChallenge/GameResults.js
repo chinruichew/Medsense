@@ -107,7 +107,6 @@ class GameResults extends Component {
         return(
             <div className='container'>
                 {this.renderContent()}
-                {/* {this.renderDiscussionForum()} */}
                 <BootstrapModal
                     show={this.state.vmShow}
                     onHide={vmClose}

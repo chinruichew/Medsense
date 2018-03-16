@@ -241,19 +241,16 @@ class OpenEndedQuestion extends Component {
                         <Row>
                             <Col smOffset={1}>
                                 <Form style={{ margin: "0", width: "90%"}}><h4>
-                                    <FormGroup style={{height:'300px'}}>
-                                        <FormGroup controlId="formControlsOpenEnded">
-                                            <ControlLabel style={{padding: "0", margin: "0"}}>Your Answer</ControlLabel><br /><br/>
+                                    <FormGroup style={{height:'300px'}} controlId="formControlsOpenEnded">
+                                        <ControlLabel style={{padding: "0", margin: "0"}}>Your Answer</ControlLabel><br /><br/>
 
-                                            {/*<FormControl componentClass="textarea" rows={6} placeholder="Enter your answer" value={this.state.openEnded} name="openEnded" onChange={(e) => this.handleOpenEndedChange(e)} />*/}
+                                        {/*<FormControl componentClass="textarea" rows={6} placeholder="Enter your answer" value={this.state.openEnded} name="openEnded" onChange={(e) => this.handleOpenEndedChange(e)} />*/}
 
-                                            <ReactQuill value={this.state.openEnded}
-                                                        modules={{toolbar: toolbarOptions}}
-                                                        onChange={this.handleOpenEndedChange}
-                                                        placeholder="Enter your answer"
-                                                        style={{height:'200px'}}/>
-                                        </FormGroup>
-
+                                        <ReactQuill value={this.state.openEnded}
+                                                    modules={{toolbar: toolbarOptions}}
+                                                    onChange={this.handleOpenEndedChange}
+                                                    placeholder="Enter your answer"
+                                                    style={{height:'200px'}}/>
                                     </FormGroup>
                                 </h4></Form></Col>
                         </Row>

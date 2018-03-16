@@ -35,17 +35,14 @@ class OpenEndedAnswer extends Component {
     renderContent = () => {
         return (
             <Col sm={11}>
-                <h4>
-                    <strong>Answer</strong> <br />
-                    <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{ReactHtmlParser(this.props.question.openEnded)}</h4> <br /><br />
+                <strong>Answer</strong> <br />
+                <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{ReactHtmlParser(this.props.question.openEnded)}</h4> <br /><br />
 
-                    <strong>PEARL</strong> <br />
-                    <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{ReactHtmlParser(this.props.question.pearl)} </h4><br /><br />
+                <strong>PEARL</strong> <br />
+                <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{ReactHtmlParser(this.props.question.pearl)} </h4><br /><br />
 
-                    <strong>References</strong> <br />
-                    <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{ReactHtmlParser(this.props.question.reference)} </h4><br /><br />
-
-                </h4>
+                <strong>References</strong> <br />
+                <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{ReactHtmlParser(this.props.question.reference)} </h4><br /><br />
                 {this.renderNextQuestion()}
 
             </Col>
