@@ -29,7 +29,6 @@ class MainProfile extends Component {
                 refresh: prevState.refresh + 1
             }
         });
-        console.log(this.state.refresh);
     }
 
     renderContent() {
@@ -57,7 +56,6 @@ class MainProfile extends Component {
 
                                 );
                             case this.state.constants.USER_TYPE_STUDENT:
-                                console.log(this.props.auth);
                                 return (
                                     <StudentProfile
                                         refresh={this.state.refresh}

@@ -98,7 +98,6 @@ class Overview extends Component {
             axios.post('/api/fetchSubspeciality', {
                 speciality: value,
             }).then(res => {
-                // console.log(res.data[0].subspecialities);
                 this.setState({subspecialityList: res.data[0].subspecialities});
             });
         }
@@ -126,7 +125,6 @@ class Overview extends Component {
 
     handleLearningChange = (value) => {
         this.setState({ learning: value });
-        //console.log(this.state.learning);
         this.update(value, "learning");
     };
 

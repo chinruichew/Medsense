@@ -39,7 +39,6 @@ class StudentProfile extends Component {
 
     renderProgressBar() {
         let nextLvlPoints = 100+this.state.level*(this.state.level+1)/2*50;
-        console.log(nextLvlPoints);
         let progress = this.props.xp / nextLvlPoints * 100;
         return <Line    percent={progress}
                         strokeWidth="8"

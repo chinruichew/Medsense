@@ -184,7 +184,6 @@ class Main extends Component {
                                     if (option.check) {
                                         checked = true;
                                     }
-                                    console.log(option);
                                     if ((option.id === 1 || option.id === 2) && option.mcq === "") {
                                         error = "Question #" + obj.id + ": Please fill in Option " + option.id + "!";
                                         throw BreakException;

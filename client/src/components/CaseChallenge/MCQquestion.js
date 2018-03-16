@@ -101,7 +101,6 @@ class MCQquestion extends Component {
     }
 
     renderTimer(duration) {
-        //console.log(this.props.timeLimit);
         if (this.props.timeLimit) {
             return (
                 <Col>

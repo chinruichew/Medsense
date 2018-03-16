@@ -239,7 +239,6 @@ class Main extends Component {
                 break;
             }
         }
-        console.log(this.state.qnData);
     };
 
     handlePearlChange = (value, qnId) => {

@@ -97,7 +97,6 @@ class Overview extends Component {
             axios.post('/api/fetchSubspeciality', {
                 speciality: value,
             }).then(res => {
-                // console.log(res.data[0].subspecialities);
                 this.setState({subspecialityList: res.data[0].subspecialities});
             });
         }

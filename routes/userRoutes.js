@@ -63,6 +63,7 @@ module.exports = app => {
                         throw(err);
                     }
 
+                    // Do not erase - Production Logging
                     console.log('Email sent: ' + info.response);
                     res.send('Done');
                 });
