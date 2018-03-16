@@ -375,11 +375,11 @@ class Main extends Component {
                             error = "Question #" + obj.id + ": Please select a Question Type!";
                             throw BreakException;
                         } else if (obj.type === "MCQ") {
-                            if (obj.options.length === 0){
+                            if (obj.optionData.length === 0){
                                 error = "Question #" + obj.id + ": Please select the Number of Options!";
                                 throw BreakException;
                             } else {
-                                let options = obj.options;
+                                let options = obj.optionData;
                                 let checked = false;
                                 for (let j = 0; j < options.length; j++) {
                                     let option = options[j];
