@@ -284,6 +284,20 @@ class Main extends Component {
         }
     };
 
+    handleOpenEndedChange = (value, qnId) => {
+        const qnData = this.state.qnData;
+        for(let i = 0; i < qnData.length; i++) {
+            const qn = qnData[i];
+            if(qn.id === qnId) {
+                qnData.splice(qnData.indexOf(qn), 1);
+                qn.openEnded = value;
+                qnData.push(qn);
+                this.setState({qnData: qnData});
+                break;
+            }
+        }
+    };
+
     saveChanges = (e) => {
         e.preventDefault();
         if (this.state.title === '') {
@@ -421,7 +435,6 @@ class Main extends Component {
 
                 } catch (e) {
                     this.setState({vmShow: true, error: error});
-                    console.log(e);
                     return;
                 }
             }
@@ -654,6 +667,7 @@ class Main extends Component {
                     handleReferenceChange={this.handleReferenceChange}
                     handleStemChange={this.handleStemChange}
                     handleMCQChange={this.handleMCQChange}
+                    handleOpenEndedChange={this.handleOpenEndedChange}
                 />
             );
         });

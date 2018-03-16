@@ -65,6 +65,10 @@ class Question extends Component {
         this.props.handleInputChange(name, value, this.props.id);
     };
 
+    handleOpenEndedChange = (value) => {
+        this.props.handleOpenEndedChange(value, this.props.id);
+    };
+
     handleNumberChange = (e) => {
         const value = e.target.value;
         let temp = [];
