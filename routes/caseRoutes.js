@@ -20,8 +20,7 @@ module.exports = app => {
             scenario: req.body.values.scenario,
             learning: req.body.values.learning,
             uploadTime: new Date(),
-            authorid: mongoose.Types.ObjectId(req.body.values.authid),
-            authorname: req.body.values.authname,
+            authorid: req.session.user._id,
             status: caseStatus,
             vetTime: vetTime
         });
