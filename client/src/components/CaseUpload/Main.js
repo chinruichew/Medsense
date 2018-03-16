@@ -65,7 +65,7 @@ class Main extends Component {
                 if (obj.id > id) {
                     newQuestions = newQuestions.concat(
                         {
-                            "id": obj.id + offset,
+                            "id": parseInt(obj.id) + offset,
                             "stem": obj.stem,
                             "question": obj.question,
                             "attachment": obj.attachment,
@@ -102,7 +102,7 @@ class Main extends Component {
                     );
                     newQuestions = newQuestions.concat(
                         {
-                            "id": obj.id + offset,
+                            "id": parseInt(obj.id) + offset,
                             "stem": obj.stem,
                             "question": obj.question,
                             "attachment": obj.attachment,
