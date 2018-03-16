@@ -20,7 +20,8 @@ class VettingEditing extends Component {
             default:
                 return (
                     <div>
-                        <VetOne id={this.props.caseById._id}
+                        <VetOne
+                            id={this.props.caseById._id}
                             title={this.props.caseById.title}
                             difficulty={this.props.caseById.difficulty}
                             speciality={this.props.caseById.speciality}
@@ -30,8 +31,6 @@ class VettingEditing extends Component {
                             learning={this.props.caseById.learning}
                             timestamp={this.props.caseById.timestamp}
                             questions={this.props.caseById.questions}
-                            authorname={this.props.caseById.authorname}
-                            authorid={this.props.caseById.authorid}
                         ></VetOne>
                     </div>
                 );

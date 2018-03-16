@@ -4,6 +4,11 @@ import Main from '../CaseUpload/Main.js';
 
 class VetOne extends Component {
     render() {
+        const questions = this.props.questions;
+        for(let i = 0; i < questions.length; i++) {
+            const question = questions[i];
+            question.optionData = question.options;
+        }
         return (
             <div>
                 <Main
@@ -17,7 +22,7 @@ class VetOne extends Component {
                     scenario={this.props.scenario}
                     learning={this.props.learning}
                     timestamp={this.props.timestamp}
-                    questions={this.props.questions}
+                    questions={questions}
                 />
             </div>
         );
