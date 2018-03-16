@@ -237,7 +237,7 @@ class Question extends Component {
         return(
             <div id="question">
                 <div className="add-question-button">
-                    <Button type="button" bsStyle="primary" onClick={(e) => this.addQuestion()}>Add Question</Button><br />
+                    <Button type="button" bsStyle="primary" onClick={(e) => this.props.handleAddQuestion()}>Add Question</Button><br />
                 </div><br/>
 
                 <PanelGroup accordion>
