@@ -1,27 +1,41 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import {Button} from "react-bootstrap";
 
 class IndividualCaseStatistics extends Component {
     state = {
-        answer: null
+        answers: null
     };
 
     componentDidMount() {
-        axios.get('/api/getCaseAnswerById?id=' + new URLSearchParams(this.props.location.search).entries().next().value[1]).then(res => {
-            this.setState({answer: res.data});
+        axios.get('/api/getAnswersByCase?id=' + this.props.caseId).then(res => {
+            this.setState({answers: res.data});
         });
     }
 
     renderContent = () => {
-        const answer = this.state.answer;
-        switch(answer) {
+        switch(this.state.answers) {
             case null:
                 return;
             default:
+                const answers = this.state.answers.map((answer, index) => {
+                    return(
+                        <div>
+                            {answer._id}
+                        </div>
+                    );
+                });
                 return(
-                    <div>
-                        <h1>{answer.case.title}</h1>
-                        <p>Attempt {answer.attempt}</p>
+                    <div className="container">
+                        <div className="row">
+                            <br/>
+                            <Button onClick={this.props.returnToCaseStats} bsStyle="primary">Back</Button>
+                            <div className="col-md-12 text-center">
+                                <h1>{this.state.answers[0].case.title}</h1>
+                            </div>
+                        </div>
+                        <div className="row">
+                        </div>
                     </div>
                 );
         }

@@ -3,7 +3,7 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import {whyDidYouUpdate} from "why-did-you-update";
-// import HttpsRedirect from 'react-https-redirect';
+import HttpsRedirect from 'react-https-redirect';
 
 import './App.css';
 import Login from './LoginSignup/Login';
@@ -21,7 +21,6 @@ import AdminUserManager from './Admin/UserManager';
 import AdminTermManager from './Admin/TermManager';
 import Result from './CaseChallenge/GameResults';
 import NotFound from "./NotFound/NotFound";
-import IndividualCaseStatistics from "./Dashboard/DashboardComponents/IndividualCaseStatistics";
 import ResetPassword from "./LoginSignup/ResetPassword";
 import Acknowledgement from './Acknowledgement/Acknowledgement';
 
@@ -36,7 +35,7 @@ class App extends Component {
     render() {
         return (
             <BrowserRouter>
-                <div>
+                <HttpsRedirect>
                     <Header />
                     <Switch>
                         <Route exact path="/login" component={Login} />
@@ -52,12 +51,11 @@ class App extends Component {
                         <Route exact path="/adminusermanager" component={AdminUserManager} />
                         <Route exact path="/admintermmanager" component={AdminTermManager} />
                         <Route exact path="/result" component={Result} />
-                        <Route exact path="/caseStatsIndividual" component={IndividualCaseStatistics} />
                         <Route exact path="/" component={About}/>
                         <Route exact path="/about" component={Acknowledgement}/>
                         <Route path="/" component={NotFound} />
                     </Switch>
-                </div>
+                </HttpsRedirect>
             </BrowserRouter>
         );
     }

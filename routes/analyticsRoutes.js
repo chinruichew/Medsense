@@ -27,6 +27,7 @@ module.exports = app => {
                 throw err;
             }
 
+            // Filter only answers done by user
             let filteredAnswers = [];
             for(let i = 0; i < answers.length; i++) {
                 const answer = answers[i];
@@ -37,7 +38,7 @@ module.exports = app => {
 
             // Do not delete - production logging
             console.log('Student case statistics:');
-            console.log(filteredAnswers);
+            // console.log(filteredAnswers);
 
             res.send(filteredAnswers);
         });
@@ -111,6 +112,26 @@ module.exports = app => {
                 throw(err);
             }
             res.send(answer);
+        });
+    });
+
+    app.get('/api/getAnswersByCase', async(req, res) => {
+        const id = req.query.id;
+        AnswerOverview.find({case: id, user: req.session.user._id}).populate({
+            path: 'case',
+            model: 'cases',
+            populate: {
+                path: 'questions',
+                model: 'questions'
+            }
+        }).populate({
+            path: 'user',
+            model: 'users',
+        }).exec(function(err, answers) {
+            if(err) {
+                throw(err);
+            }
+            res.send(answers);
         });
     });
 
