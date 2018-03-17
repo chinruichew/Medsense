@@ -44,7 +44,6 @@ class Header extends Component {
 
                                         <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={2} href="/upload">     Upload     </NavItem>
                                         <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={3} href="/vetting">     Vet     </NavItem>
-                                        {/*<NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={4} href="/forum">     Forum     </NavItem>*/}
                                         <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={5} href="/dashboard">     Dashboard     </NavItem>
                                         <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={6} href="/about">     About     </NavItem>
                                         <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={7} href="/api/logout">     Logout               </NavItem>
@@ -57,7 +56,6 @@ class Header extends Component {
                                     <Nav pullRight>
                                         <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={2} href="/game">     Game     </NavItem>
                                         <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={3} href="/upload">     Upload     </NavItem>
-                                        {/*<NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={4} href="/forum">     Forum     </NavItem>*/}
                                         <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={5} href="/dashboard">     Dashboard     </NavItem>
                                         <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={6} href="/about">     About     </NavItem>
                                         <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={7} href="/api/logout">     Logout               </NavItem>
@@ -67,14 +65,15 @@ class Header extends Component {
                             case this.state.constants.USER_TYPE_ADMIN:
                                 return(
                                     <Nav pullRight>
-                                        <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={2} href="/game">     Game     </NavItem>
-                                        <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={3} href="/upload">     Upload     </NavItem>
-                                        {/*<NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={4} href="/forum">     Forum     </NavItem>*/}
-                                        <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={5} href="/dashboard">     Dashboard     </NavItem>
-                                        <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={6} href="/about">     About     </NavItem>
-                                        <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={7} href="/admincasemanager">     Case Management    </NavItem>
-                                        <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={7} href="/adminusermanager">     User Management    </NavItem>
-                                        <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={7} href="/admintermmanager">     Term Management    </NavItem>
+                                        <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={1} href="/game">     Game     </NavItem>
+                                        <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={2} href="/upload">     Upload     </NavItem>
+                                        <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={3} href="/dashboard">     Dashboard     </NavItem>
+                                        <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={4} href="/about">     About     </NavItem>
+                                        <NavDropdown eventKey={5} title="Admin Management" id="basic-nav-dropdown">
+                                            <MenuItem href="/admincasemanager" eventKey={5.1}>Case Management</MenuItem>
+                                            <MenuItem href="/adminusermanager" eventKey={5.2}>User Management</MenuItem>
+                                            <MenuItem href="/admintermmanager" eventKey={5.3}>Term Management</MenuItem>
+                                        </NavDropdown>
                                         <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={8} href="/api/logout">     Logout               </NavItem>
                                         <a href="/profile"><Image src={this.props.auth.profilepicture} className="img-circle" style={{height: '50px', width: '50px'}} /></a>
                                     </Nav>
