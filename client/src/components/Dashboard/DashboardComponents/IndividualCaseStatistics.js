@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import {Button} from "react-bootstrap";
+import Timeline from 'react-visjs-timeline';
 
 class IndividualCaseStatistics extends Component {
     state = {
@@ -19,9 +20,31 @@ class IndividualCaseStatistics extends Component {
                 return;
             default:
                 const answers = this.state.answers.map((answer, index) => {
+                    // const options = {
+                    //     width: '100%',
+                    //     height: '60px',
+                    //     stack: false,
+                    //     showMajorLabels: true,
+                    //     showCurrentTime: true,
+                    //     zoomMin: 1000000,
+                    //     type: 'background',
+                    //     format: {
+                    //         minorLabels: {
+                    //             minute: 'h:mma',
+                    //             hour: 'ha'
+                    //         }
+                    //     }
+                    // };
+                    // const items = [{
+                    //     start: new Date(2010, 7, 15),
+                    //     end: new Date(2010, 7, 16),
+                    //     content: 'Trajectory A',
+                    //     type: 'point',
+                    //     title: 'hello'
+                    // }];
                     return(
                         <div>
-                            {answer._id}
+                            {/*<Timeline options={options} items={items} />*/}
                         </div>
                     );
                 });
@@ -35,6 +58,7 @@ class IndividualCaseStatistics extends Component {
                             </div>
                         </div>
                         <div className="row">
+                            {answers}
                         </div>
                     </div>
                 );
