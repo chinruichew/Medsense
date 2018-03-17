@@ -65,7 +65,11 @@ module.exports = app => {
             }
             const sortedLeaders = {};
             let counter = 0;
-            while (counter < 5) {
+            let maxCounter = 5;
+            if(Object.keys(leaders).length < 5) {
+                maxCounter = Object.keys(leaders).length;
+            }
+            while (counter < maxCounter) {
                 let max = 0;
                 for(const key in leaders) {
                     if(leaders[key] > max) {
@@ -73,7 +77,7 @@ module.exports = app => {
                     }
                 }
                 for(const key in leaders) {
-                    if(counter < 5) {
+                    if(counter < maxCounter) {
                         if(leaders[key] === max) {
                             sortedLeaders[key] = leaders[key];
                             counter += 1;
