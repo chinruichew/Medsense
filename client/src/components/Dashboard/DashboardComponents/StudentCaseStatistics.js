@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Button, Image} from "react-bootstrap";
-import {NavLink} from "react-router-dom";
 import IndividualCaseStatistics from "./IndividualCaseStatistics";
 
 class StudentCaseStatistics extends Component {

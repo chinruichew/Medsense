@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import {Button, ControlLabel, FormControl, FormGroup} from "react-bootstrap";
 import ReactHtmlParser from 'react-html-parser';
+import { Charts, ChartContainer, ChartRow, YAxis, LineChart } from "react-timeseries-charts";
+import { TimeSeries, TimeRange } from "pondjs";
 import Timeline from 'react-visjs-timeline';
 
 class IndividualCaseStatistics extends Component {
@@ -17,36 +19,56 @@ class IndividualCaseStatistics extends Component {
         });
     }
 
-    renderAnswerOverviews = () => {
+    renderOverviews = () => {
         return this.state.answers.map((answer, index) => {
-            // const options = {
-            //     width: '100%',
-            //     height: '60px',
-            //     stack: false,
-            //     showMajorLabels: true,
-            //     showCurrentTime: true,
-            //     zoomMin: 1000000,
-            //     type: 'background',
-            //     format: {
-            //         minorLabels: {
-            //             minute: 'h:mma',
-            //             hour: 'ha'
-            //         }
-            //     }
-            // };
-            // const items = [{
-            //     start: new Date(2010, 7, 15),
-            //     end: new Date(2010, 7, 16),
-            //     content: 'Trajectory A',
-            //     type: 'point',
-            //     title: 'hello'
-            // }];
+            const options = {
+                width: '100%',
+                height: '200px',
+                stack: false,
+                showMajorLabels: true,
+                showCurrentTime: true,
+                zoomMin: 1000000,
+                type: 'range',
+                autoResize: true
+            };
+            const items = [{
+                start: new Date(2010, 7, 15),
+                end: new Date(2011, 7, 16),
+                content: 'Trajectory A',
+                title: 'hello'
+            }];
             return(
                 <div key={index}>
-                    {/*<Timeline options={options} items={items} />*/}
+                    <Timeline options={options} items={items} />
                 </div>
             );
         });
+    };
+
+    renderTimeSeriesGraphs = () => {
+        const data = {
+            name: "traffic",
+            columns: ["time", "in", "out"],
+            points: [
+                [1400425947000, 52, 41],
+                [1400425948000, 18, 45],
+                [1400425949000, 26, 49],
+                [1400425950000, 93, 81]
+            ]
+        };
+        const timeseries = new TimeSeries(data);
+
+        return(
+            <ChartContainer timeRange={timeseries.timerange()} width={800}>
+                <ChartRow height="200">
+                    <YAxis id="axis1" label="AUD" min={0.5} max={1.5} width="60" type="linear" format="$,.2f"/>
+                    <Charts>
+                        <LineChart axis="axis1" series={timeseries}/>
+                    </Charts>
+                    <YAxis id="axis2" label="Euro" min={0.5} max={1.5} width="80" type="linear" format="$,.2f"/>
+                </ChartRow>
+            </ChartContainer>
+        );
     };
 
     handleQuestionFilterChange = (e) => {
@@ -121,6 +143,7 @@ class IndividualCaseStatistics extends Component {
                 }
                 return(
                     <div key={index} className="col-md-12">
+                        <h2>Question {question.id}</h2>
                         <h3>Question Description</h3>
                         <p>{ReactHtmlParser(question.question)}</p>
                         <h3>Your Answer</h3>
@@ -147,9 +170,13 @@ class IndividualCaseStatistics extends Component {
                                 <h1>{this.state.answers[0].case.title}</h1>
                             </div>
                         </div>
-                        <div className="row">
-                            {this.renderAnswerOverviews()}
+                        <div className="row" style={{marginBottom: '50px'}}>
+                            {this.renderOverviews()}
                         </div>
+                        <div className="row" style={{marginBottom: '50px'}}>
+                            {this.renderTimeSeriesGraphs()}
+                        </div>
+                        <br/>
                         <div className="row">
                             {this.renderQuestionFilter()}
                             {this.renderQuestionAnswers()}
