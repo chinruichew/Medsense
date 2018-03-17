@@ -122,11 +122,21 @@ module.exports = app => {
             model: 'cases',
             populate: {
                 path: 'questions',
-                model: 'questions'
+                model: 'questions',
+                populate: {
+                    path: 'options',
+                    model: 'options'
+                }
             }
         }).populate({
             path: 'user',
             model: 'users',
+        }).populate({
+            path: 'openEndedAnswers',
+            model: 'openEndedAnswers',
+        }).populate({
+            path: 'mcqAnswers',
+            model: 'mcqAnswers',
         }).exec(function(err, answers) {
             if(err) {
                 throw(err);
