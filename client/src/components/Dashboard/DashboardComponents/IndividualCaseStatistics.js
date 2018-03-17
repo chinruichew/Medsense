@@ -170,14 +170,20 @@ class IndividualCaseStatistics extends Component {
                                 <h1>{this.state.answers[0].case.title}</h1>
                             </div>
                         </div>
+                        {/*To do - Allow hiding and showing of very detailed data*/}
                         <div className="row" style={{marginBottom: '50px'}}>
+                            {/*To do - Complete timeline display of attempts*/}
                             {this.renderOverviews()}
                         </div>
                         <div className="row" style={{marginBottom: '50px'}}>
+                            {/*To do - Add time series line chart comparison against cohort over several attempts*/}
                             {this.renderTimeSeriesGraphs()}
                         </div>
-                        <br/>
+                        <div className="row" style={{marginBottom: '50px'}}>
+                            {/*To do - Add bar chart to show data over several attempts*/}
+                        </div>
                         <div className="row">
+                            {/*To do - Implement Attempt filters*/}
                             {this.renderQuestionFilter()}
                             {this.renderQuestionAnswers()}
                         </div>
