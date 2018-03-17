@@ -80,6 +80,16 @@ class Acknowledgement extends Component {
                                     </center>
                                 </Col>
                             </Row>
+                            <Row>
+                                <Col sm={4}>
+                                    <center>
+                                        <Thumbnail style={{width: "17em", height: "17em"}}>
+                                            <Image src="./lawrence.png" circle style={{width: "14em", height: "14em"}} />
+                                            <h5 style={{textAlign: "center", fontSize: "100%"}}>Lawrence</h5>
+                                        </Thumbnail>
+                                    </center>
+                                </Col>
+                            </Row>
                         </div>
                     </Tab>
                     <Tab eventKey={2} title="SMU">
@@ -132,7 +142,15 @@ class Acknowledgement extends Component {
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
                                             <Image src="./amelia.jpg" circle style={{width: "14em", height: "14em"}} />
-                                            <h5 style={{textAlign: "center", fontSize: "100%"}}>Amelia</h5>
+                                            <h5 style={{textAlign: "center", fontSize: "100%"}}>Amelia Lee</h5>
+                                        </Thumbnail>
+                                    </center>
+                                </Col>
+                                <Col sm={4}>
+                                    <center>
+                                        <Thumbnail style={{width: "17em", height: "17em"}}>
+                                            <Image src="./chinrui.jpg" circle style={{width: "14em", height: "14em"}} />
+                                            <h5 style={{textAlign: "center", fontSize: "100%"}}>Chew Chin Rui</h5>
                                         </Thumbnail>
                                     </center>
                                 </Col>
@@ -140,15 +158,7 @@ class Acknowledgement extends Component {
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
                                             <Image src="./ervin.png" circle style={{width: "14em", height: "14em"}} />
-                                            <h5 style={{textAlign: "center", fontSize: "100%"}}>Ervin</h5>
-                                        </Thumbnail>
-                                    </center>
-                                </Col>
-                                <Col md={4}>
-                                    <center>
-                                        <Thumbnail style={{width: "17em", height: "17em"}}>
-                                            <Image src="./mingrui.png" circle style={{width: "14em", height: "14em"}} />
-                                            <h5 style={{textAlign: "center", fontSize: "100%"}}>Ming Rui</h5>
+                                            <h5 style={{textAlign: "center", fontSize: "100%"}}>Ervin Chong</h5>
                                         </Thumbnail>
                                     </center>
                                 </Col>
@@ -157,8 +167,16 @@ class Acknowledgement extends Component {
                                 <Col md={4}>
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
+                                            <Image src="./mingrui.png" circle style={{width: "14em", height: "14em"}} />
+                                            <h5 style={{textAlign: "center", fontSize: "100%"}}>Huang Ming Rui</h5>
+                                        </Thumbnail>
+                                    </center>
+                                </Col>
+                                <Col md={4}>
+                                    <center>
+                                        <Thumbnail style={{width: "17em", height: "17em"}}>
                                             <Image src="./ricky.jpg" circle style={{width: "14em", height: "14em"}} />
-                                            <h5 style={{textAlign: "center", fontSize: "100%"}}>Ricky</h5>
+                                            <h5 style={{textAlign: "center", fontSize: "100%"}}>Ricky Franslay</h5>
                                         </Thumbnail>
                                     </center>
                                 </Col>
@@ -166,18 +184,11 @@ class Acknowledgement extends Component {
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
                                             <Image src="./qimin.jpg" circle style={{width: "14em", height: "14em"}} />
-                                            <h5 style={{textAlign: "center", fontSize: "100%"}}>Qimin</h5>
+                                            <h5 style={{textAlign: "center", fontSize: "100%"}}>Wang Qimin</h5>
                                         </Thumbnail>
                                     </center>
                                 </Col>
-                                <Col sm={4}>
-                                    <center>
-                                        <Thumbnail style={{width: "17em", height: "17em"}}>
-                                            <Image src="./chinrui.jpg" circle style={{width: "14em", height: "14em"}} />
-                                            <h5 style={{textAlign: "center", fontSize: "100%"}}>Chin Rui</h5>
-                                        </Thumbnail>
-                                    </center>
-                                </Col>
+
                             </Row>
                         </div>
                     </Tab>
