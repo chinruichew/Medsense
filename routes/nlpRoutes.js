@@ -1,4 +1,5 @@
 const Question = require('../models/Question');
+// const Synonyms = require('../models/Synonyms');
 
 const natural = require('natural');
 const stopword = require('stopword');
@@ -93,18 +94,24 @@ module.exports = app => {
             //build up dictionary trie
             const Trie = natural.Trie;
             const trie = new Trie(false);
-            trie.addStrings(studentAnswerArray);
+            trie.addStrings(originalAnswerArray);
 
             //check studentAnswer vs originalAnswer
             let counter = 0;
 
-            for (const i in originalAnswerArray) {
-                if (trie.contains(originalAnswerArray[i])) {
+            var remainingTokens = []
+
+            for (const i in studentAnswerArray) {
+                if (trie.contains(studentAnswerArray[i])) {
                     counter++;
                 } else {
                     // if (trie.findPrefix(originalAnswerArray[i])[0] != null) {
                     //     counter++;
                     // }
+                    remainingTokens.push(studentAnswerArray[i]);
+
+                    console.log("remainingTokens");
+                    console.log(remainingTokens);
                 }
             }
             // console.log(counter);
