@@ -75,3 +75,5 @@ container_commands:
     command: "ln -sf /etc/letsencrypt/live/${certdomain} /etc/letsencrypt/live/ebcert"
   40_config:
     command: "mv /etc/nginx/conf.d/https_custom.pre /etc/nginx/conf.d/https_custom.conf"
+  50_restartnginx:
+    command: "sudo initctl restart nginx"
