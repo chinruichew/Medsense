@@ -16,7 +16,7 @@
     "dev": "concurrently \"npm run server\" \"npm run client\" \"npm run watch-docs\"",
     "deploy": "npm run update && npm run generate-docs && npm run build --prefix client --verbose && git add . --verbose && git commit -m \"aws deploy\" --verbose && git pull --verbose && git push origin master --verbose && eb deploy --verbose && eb open --verbose",
     "update": "npm install --verbose && npm update --verbose && cd client && npm install --verbose && npm update --verbose",
-    "quick-deploy": "eb deploy --verbose && eb open --verbose",
+    "quick-deploy": "git add . && git commit -m \"aws deploy\" && git pull --verbose && git push origin master --verbose && eb deploy --verbose && eb open --verbose",
     "generate-docs": "documentation build index.js --format html --output docs --sort-order source",
     "watch-docs": "documentation build --watch index.js --format html --output docs --sort-order source && documentation serve --watch index.js --format html --output docs --sort-order source"
   },
