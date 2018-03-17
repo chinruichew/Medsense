@@ -7,7 +7,7 @@ class StudentLeaderboard extends Component {
             case null:
                 return;
             default:
-                const leaders = this.props.leaders.map(leader => {
+                return this.props.leaders.map(leader => {
                     return(
                         <div key={leader._id} className="col-md-12">
                             <div className="col-md-offset-2 col-md-8">
@@ -22,7 +22,6 @@ class StudentLeaderboard extends Component {
                         </div>
                     );
                 });
-                return leaders;
         }
     };
 

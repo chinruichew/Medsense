@@ -62,7 +62,7 @@ class DashboardStudent extends Component {
                         }
                         return(
                             <div className="container">
-                                <Tabs defaultActiveKey={2}>
+                                <Tabs defaultActiveKey={1}>
                                     <Tab eventKey={1} title="Leaderboard">
                                         <div className="row">
                                             <br/>

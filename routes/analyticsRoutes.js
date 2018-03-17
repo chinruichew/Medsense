@@ -2,6 +2,8 @@ const Case = require('../models/Case');
 const User = require('../models/User');
 const AnswerOverview = require('../models/AnswerOverview');
 
+const constants = require('../utility/constantTypes');
+
 module.exports = app => {
     app.get('/api/getIndividualAnswers', function(req, res) {
         AnswerOverview.find().populate({
@@ -43,7 +45,7 @@ module.exports = app => {
 
     // Get leaders with highest scores
     app.get('/api/getLeadersWithHighestScores', function(req, res) {
-        User.find().sort('-points').limit(5).exec(function (err, users) {
+        User.find({usertype: constants.USER_TYPE_STUDENT}).sort('-points').limit(5).exec(function (err, users) {
             res.send(users);
         });
     });
