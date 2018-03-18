@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, ControlLabel, FormGroup, FormControl, Table } from 'react-bootstrap';
-
 import { addNewSpeciality, deleteSpeciality } from '../../actions';
 import './Admin.css';
-import axios from 'axios';
 
 class Speciality extends Component {
     state = {

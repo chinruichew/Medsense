@@ -43,7 +43,7 @@ module.exports = app => {
             for(let i = 0; i < optionData.length; i++) {
                 const optionDaten = optionData[i];
                 options.push({
-                    optionId: optionDaten.id,
+                    id: optionDaten.id,
                     case: newCase._id,
                     qnId: jsonObject[prop]['id'],
                     mcq: optionDaten.mcq,
@@ -61,6 +61,7 @@ module.exports = app => {
                 time: jsonObject[prop]['time'],
                 reference: jsonObject[prop]['reference'],
                 mark: jsonObject[prop]['mark'],
+                numOptions: jsonObject[prop]['numOptions'],
                 openEnded: jsonObject[prop]['openEnded'],
                 case: newCase._id
             });
@@ -148,6 +149,8 @@ module.exports = app => {
             for(let i = 0; i < qnData.length; i++) {
                 const question = qnData[i];
                 const updatedQuestion = {
+                    numOptions: question.numOptions,
+                    openEnded: question.openEnded,
                     id : question.id,
                     question : question.question,
                     attachment : null,

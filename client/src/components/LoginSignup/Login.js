@@ -31,7 +31,7 @@ class Login extends Component {
                 window.location = '/home';
             } else {
                 // alert(res.data);
-                this.setState({vmShow: true});
+                this.setState({vmShow: true, password: "", username: ""});
             }
         });
     };

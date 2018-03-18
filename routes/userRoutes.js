@@ -92,6 +92,18 @@ module.exports = app => {
         });
     });
 
+    app.post('/api/updateName', function (req, res) {
+        User.findById(req.session.user._id, function (err, user) {
+            if (err) { return res.send(err) }
+            if (user) {
+                user.name = req.body.values;
+                user.save();
+                res.send("name saved");
+            }
+
+        });
+    });
+
     app.post('/api/updateStudent', function (req, res) {
         User.findById(req.body.values.id, function (err, user) {
             if (err) { return res.send(err) }

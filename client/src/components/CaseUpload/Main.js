@@ -20,7 +20,8 @@ class Main extends Component {
         author: "",
         vmShow: false,
         vmConfirm: false,
-        id: this.props.id
+        id: this.props.id,
+        radio: false,
     };
 
     handleUpdateOverview = (details) => {
@@ -65,7 +66,7 @@ class Main extends Component {
                 if (obj.id > id) {
                     newQuestions = newQuestions.concat(
                         {
-                            "id": parseInt(obj.id) + offset,
+                            "id": parseInt(obj.id,10) + offset,
                             "stem": obj.stem,
                             "question": obj.question,
                             "attachment": obj.attachment,
@@ -102,7 +103,7 @@ class Main extends Component {
                     );
                     newQuestions = newQuestions.concat(
                         {
-                            "id": parseInt(obj.id) + offset,
+                            "id": parseInt(obj.id,10) + offset,
                             "stem": obj.stem,
                             "question": obj.question,
                             "attachment": obj.attachment,
@@ -118,13 +119,12 @@ class Main extends Component {
                         }
                     );
                 }
-
             });
             this.setState({ qnData: newQuestions});
         }
     };
 
-    handleDeleteQuestion = (id) => {
+    deleteQuestion = (id) => {
         let questions = this.state.qnData;
         let newQuestions = [];
         let offset = 1;
@@ -152,9 +152,7 @@ class Main extends Component {
                 newQuestions = newQuestions.concat(obj);
             }
         });
-
         this.setState({ qnData: newQuestions});
-
     };
 
     handleQuestionChange = (value, qnId) =>{
@@ -232,6 +230,7 @@ class Main extends Component {
                     }
                     qn.numOptions = value;
                     qn.optionData = temp;
+                    console.log(value, temp);
                 }
                 
                 qnData.push(qn);
@@ -304,6 +303,7 @@ class Main extends Component {
             if(qn.id === qnId) {
                 qnData.splice(qnData.indexOf(qn), 1);
                 qn.optionData = value;
+                console.log(value);
                 qnData.push(qn);
                 this.setState({qnData: qnData});
                 break;
@@ -327,7 +327,9 @@ class Main extends Component {
 
     saveChanges = (e) => {
         e.preventDefault();
-        if (this.state.title === '') {
+        if (!this.state.radio && this.state.author!==""){
+            this.setState({ vmShow: true, error: "Credits: Please give your PDPA Consent if you want your name to be recorded!" });
+        } else if (this.state.title === '') {
             this.setState({ vmShow: true, error: "Case Overview: Please fill in the Case Title!" });
         } else if (this.isValidNRIC(this.state.title)){
             this.setState({ vmShow: true, error: "Case Overview: Title should NOT contain NRIC!" });
@@ -375,7 +377,7 @@ class Main extends Component {
                             error = "Question #" + obj.id + ": Please select a Question Type!";
                             throw BreakException;
                         } else if (obj.type === "MCQ") {
-                            if (obj.optionData.length === 0){
+                            if (obj.numOptions === "Select One"){
                                 error = "Question #" + obj.id + ": Please select the Number of Options!";
                                 throw BreakException;
                             } else {
@@ -386,7 +388,7 @@ class Main extends Component {
                                     if (option.check) {
                                         checked = true;
                                     }
-                                    if ((option.id === 1 || option.id === 2) && option.mcq === "") {
+                                    if (option.mcq === "") {
                                         error = "Question #" + obj.id + ": Please fill in Option " + option.id + "!";
                                         throw BreakException;
                                     } else if (this.isValidNRIC(option.mcq)) {
@@ -532,7 +534,7 @@ class Main extends Component {
                     let qn = qnData[j];
                     for (let i=0; i<questions.length; i++){
                         let question = questions[i];
-                        if (question.id===String(qn.id)) {
+                        if (String(question.id)===String(qn.id)) {
                             this.uploadFile(qn.attachment, caseID, question.id, question._id);
                             this.uploadPearlFile(qn.pearlAttachment, caseID, question.id, question._id);
                         }
@@ -555,11 +557,16 @@ class Main extends Component {
                     let qn = qnData[j];
                     for (let i = 0; i < questions.length; i++) {
                         let question = questions[i];
-                        if (question.id === String(qn.id)) {
+                        if (String(question.id) === String(qn.id)) {
                             this.uploadFile(qn.attachment, caseID, question.id, question._id);
                             this.uploadPearlFile(qn.pearlAttachment, caseID, question.id, question._id);
                         }
                     }
+                }
+                if (this.state.author!==""){
+                    axios.post('api/updateName', {
+                        values: this.state.author
+                    });
                 }
             }).catch(err => {
                 if (err) {
@@ -610,12 +617,12 @@ class Main extends Component {
                         </h4>
                         <FormGroup controlId="formControlsPDPA" style={{paddingLeft: "30%", paddingTop: "0"}}>
                             <Col sm={6}>
-                                <Radio name="radioGroup" inline>
+                                <Radio name="radio" value="yes" checked={this.state.radio} inline onChange={(e) => this.handleRadioChange(e)}>
                                     <h5>Yes</h5>
                                 </Radio>
                             </Col>
                             <Col sm={6}>
-                                <Radio name="radioGroup" inline>
+                                <Radio name="radio" value="no" checked={!this.state.radio} inline onChange={(e) => this.handleRadioChange(e)}>
                                     <h5>No</h5>
                                 </Radio>
                             </Col>
@@ -634,6 +641,24 @@ class Main extends Component {
             );
         }
     }
+
+    compare = (a,b) => {
+        if (a.id < b.id)
+            return -1;
+        if (a.id > b.id)
+            return 1;
+        return 0;
+    };
+
+    handleAuthorChange = (e) => {
+        this.setState({[e.target.name]:e.target.value});
+    };
+
+    handleRadioChange = (e) => {
+        let checked = this.state.radio;
+        this.setState({radio:!checked});
+        console.log(!checked);
+    };
 
     render() {
         const storySoFar = (<span className="story-title"><center>Story So Far</center></span>);
@@ -664,11 +689,13 @@ class Main extends Component {
         const questionTitle = (
             <span className="title"><center>Case Questions</center></span>
         );
-
-        let questionNodes = this.state.qnData.map((obj, index) => {
+        let questions = this.state.qnData;
+        questions.sort(this.compare);
+        let questionNodes = questions.map((obj, index) => {
             return (
                 <Question
                     key={index}
+                    process={this.props.process}
                     id={obj.id}
                     stem={obj.stem}
                     question={obj.question}
@@ -683,7 +710,7 @@ class Main extends Component {
                     mark={obj.mark}
                     reference={obj.reference}
                     handleUpdateQuestion={this.handleUpdateQuestion}
-                    handleDeleteQuestion={this.handleDeleteQuestion}
+                    handleDeleteQuestion={this.deleteQuestion}
                     handleAddQuestion={this.addQuestion}
                     handleQuestionChange={this.handleQuestionChange}
                     handleFile={this.handleFile}

@@ -18,8 +18,13 @@ const toolbarOptions = [
 ];
 
 class Question extends Component {
+    state = {
+        changeFile: false,
+        changePearlFile:false,
+    };
+
     checkQ1 = () =>{
-        if (this.props.id===1){
+        if (parseInt(this.props.id,10)===1){
             return;
         }
         return (
@@ -44,12 +49,16 @@ class Question extends Component {
 
     showAttachment = () =>{
         if (this.props.attachment) {
-            let source = this.props.attachment;
+            let source;
+            if (typeof(this.props.attachment)==="string"){
+                source = this.props.attachment;
+            } else {
+                source = window.URL.createObjectURL(this.props.attachment);
+            }
             return (
                 <Row>
                     <div className="col-md-5 col-md-offset-1">
-                        <ImageMagnifier url={source} />
-                    </div>
+                        <ImageMagnifier url={source}/></div>
                 </Row>
             );
         }
@@ -76,43 +85,23 @@ class Question extends Component {
 
     answer = ()=>{
         if(this.props.type==="MCQ"){
-            if(this.props.process === "vet") {
-                return(
-                    <FormGroup controlId="formControlsMCQ">
-                        <ControlLabel style={{ fontSize: "150%" }}>Number of Options<span style={{color:"red"}}>*</span></ControlLabel>
-                        <FormControl componentClass="select" value={this.props.optionData.length} name="numOptions" onChange={(e)=>this.handleNumberChange(e)}>
-                            <option value="Select One">Select One</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                        </FormControl>
-                    </FormGroup>
-                );
-            } else {
-                return(
-                    <FormGroup controlId="formControlsMCQ">
-                        <ControlLabel style={{ fontSize: "150%" }}>Number of Options<span style={{color:"red"}}>*</span></ControlLabel>
-                        <FormControl componentClass="select" value={this.props.numOptions} name="numOptions" onChange={(e)=>this.handleNumberChange(e)}>
-                            <option value="Select One">Select One</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                        </FormControl>
-                    </FormGroup>
-                );
-            }
+            return(
+                <FormGroup controlId="formControlsMCQ">
+                    <ControlLabel style={{ fontSize: "150%" }}>Number of Options<span style={{color:"red"}}>*</span></ControlLabel>
+                    <FormControl componentClass="select" value={this.props.numOptions} name="numOptions" onChange={(e)=>this.handleNumberChange(e)}>
+                        <option value="Select One">Select One</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </FormControl>
+                </FormGroup>
+            );
         } else if(this.props.type==="Open-ended"){
             return(
                 <FormGroup controlId="formControlsOpenEnded" style={{height:'200px'}}>
@@ -133,22 +122,15 @@ class Question extends Component {
     options = () =>{
         if (this.props.type==="MCQ" && this.props.numOptions!=="Select One"){
             let array = [];
-            if(this.props.process === 'vet') {
-                for (let i=1;i<=this.props.optionData.length;i++) {
-                    array.push(i);
-                }
-            } else {
-                for (let i=1;i<=parseInt(this.props.numOptions,10);i++) {
-                    array.push(i);
-                }
+            for (let i=1;i<=parseInt(this.props.numOptions,10);i++) {
+                array.push(i);
             }
 
             let options = array.map((number, index) => {
-                let mandatory = number<3 ? "*": "";
                 return(
                     <div key={index}>
                         <FormGroup>
-                            <ControlLabel>Option {number}<span style={{color:"red"}}>{mandatory}</span></ControlLabel>
+                            <ControlLabel>Option {number}<span style={{color:"red"}}>*</span></ControlLabel>
                             <InputGroup>
                                 <InputGroup.Addon>
                                     <input type="checkbox" checked={this.props.optionData[number-1].check} name={"check"+number} onChange={(e)=>this.handleMCQChange(e)}/>
@@ -167,10 +149,13 @@ class Question extends Component {
         const name = e.target.name;
         const optionData = this.props.optionData;
         optionData.forEach(function (obj) {
-            if (obj.id  === parseInt(name.slice(-1),10)){
+            console.log(obj);
+            if (parseInt(obj.id,10)  === parseInt(name.slice(-1),10) || parseInt(obj.id,10)  === parseInt(name.slice(-2),10)){
                 if (name.substring(0,3)==="mcq"){
+                    console.log(e.target.value);
                     obj.mcq = e.target.value;
                 } else {
+                    console.log(e.target.checked);
                     obj.check = e.target.checked;
                 }
             }
@@ -184,11 +169,17 @@ class Question extends Component {
 
     showPearlAttachment = () =>{
         if (this.props.pearlAttachment) {
-            let source = this.props.pearlAttachment;
+            let source;
+            if (typeof(this.props.pearlAttachment)==="string"){
+                source = this.props.pearlAttachment;
+            } else {
+                source = window.URL.createObjectURL(this.props.pearlAttachment);
+            }
             return (
                 <Row>
                     <div className="col-md-5 col-md-offset-1">
-                        <ImageMagnifier url={source} /></div></Row>
+                        <ImageMagnifier url={source}/></div>
+                </Row>
             );
         }
     };
@@ -202,7 +193,42 @@ class Question extends Component {
         this.props.handleReferenceChange(value, this.props.id);
     };
 
+    showUpload = () =>{
+        if (this.state.changeFile){
+            console.log("toh");
+            return <FormControl type="file" onChange={(e)=>this.handleFile(e)} accept=".jpg, .jpeg, .png"/>;
+        }
+    };
+
+    showPearlUpload = () =>{
+        if (this.state.changePearlFile){
+            console.log("dbl toh");
+            return <FormControl type="file" onChange={(e)=>this.handlePearlFile(e)} accept=".jpg, .jpeg, .png"/>;
+        }
+    };
+
+    handleShowUpload = () =>{
+        this.setState({ changeFile: true });
+    };
+
+    handleShowPearlUpload = () =>{
+        this.setState({ changePearlFile: true });
+    };
+
     render() {
+        let button;
+        if (this.props.process==="vet" && typeof(this.props.attachment)==="string" && this.props.attachment!==""){
+            button = <Button onClick={(e) => this.handleShowUpload()}>Change Attachment</Button>;
+        } else if (!this.state.changeFile) {
+            button = <FormControl type="file" onChange={(e)=>this.handleFile(e)} accept=".jpg, .jpeg, .png"/>;
+        }
+        let pearlButton;
+        if (this.props.process==="vet" && typeof(this.props.pearlAttachment)==="string" && this.props.pearlAttachment!==""){
+            pearlButton = <Button onClick={(e) => this.handleShowPearlUpload()}>Change Attachment</Button>;
+        } else if (!this.state.changePearlFile) {
+            pearlButton = <FormControl type="file" onChange={(e)=>this.handlePearlFile(e)} accept=".jpg, .jpeg, .png"/>;
+        }
+
         const popoverHover = (
             <Popover id="popover-trigger-hover" title="Clinical Pearls">
                 Notes on how to approach the question, add-on explanations to the answers provided or simply useful tips on how to survive in the wards.
@@ -212,7 +238,7 @@ class Question extends Component {
         return(
             <div id="question">
                 <div className="add-question-button">
-                    <Button type="button" bsStyle="primary" onClick={(e) => this.props.handleAddQuestion()}>Add Question</Button><br />
+                    <Button type="button" bsStyle="primary" onClick={(e) => this.props.handleAddQuestion(this.props.id)}>Add Question</Button><br />
                 </div><br/>
 
                 <PanelGroup accordion>
@@ -237,7 +263,9 @@ class Question extends Component {
                             <FormGroup controlId="formControlsAttachment">
                                 <ControlLabel style={{ fontSize: "150%" }}>Question Attachment</ControlLabel>
                                 {this.showAttachment()}
-                                <FormControl type="file" onChange={(e)=>this.handleFile(e)} accept=".jpg, .jpeg, .png"/>
+                                {button}
+                                {this.showUpload()}
+                                {/*<FormControl type="file" onChange={(e)=>this.handleFile(e)} accept=".jpg, .jpeg, .png"/>*/}
                             </FormGroup>
 
                             <FormGroup controlId="formControlsType">
@@ -267,7 +295,9 @@ class Question extends Component {
                             <FormGroup controlId="formControlsPearlAttachment">
                                 <ControlLabel style={{ fontSize: "150%" }}>Clinical Pearls Attachment</ControlLabel>
                                 {this.showPearlAttachment()}
-                                <FormControl type="file" onChange={(e)=>this.handlePearlFile(e)} accept=".jpg, .jpeg, .png"/>
+                                {pearlButton}
+                                {this.showPearlUpload()}
+                                {/*<FormControl type="file" onChange={(e)=>this.handlePearlFile(e)} accept=".jpg, .jpeg, .png"/>*/}
                             </FormGroup>
 
                             <FormGroup controlId="formControlsTime">

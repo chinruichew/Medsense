@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, ControlLabel, FormGroup, FormControl, Table } from 'react-bootstrap';
-
 import { addNewSubspeciality, deleteSubspeciality } from '../../actions';
 import './Admin.css';
-import axios from 'axios';
 
 class Subspeciality extends Component {
     state = {
