@@ -38,7 +38,7 @@ module.exports = app => {
 
             // Do not delete - production logging
             console.log('Student case statistics:');
-            // console.log(filteredAnswers);
+            console.log(filteredAnswers);
 
             res.send(filteredAnswers);
         });

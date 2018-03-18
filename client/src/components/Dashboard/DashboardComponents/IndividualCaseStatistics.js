@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import {Button, ControlLabel, FormControl, FormGroup} from "react-bootstrap";
+import {Button, ControlLabel, FormControl, FormGroup, Panel} from "react-bootstrap";
 import ReactHtmlParser from 'react-html-parser';
 import { Charts, ChartContainer, ChartRow, YAxis, LineChart } from "react-timeseries-charts";
 import { TimeSeries, TimeRange } from "pondjs";
@@ -19,30 +19,42 @@ class IndividualCaseStatistics extends Component {
         });
     }
 
+    visTimelineClickHandler = (props) => {
+        console.log(props);
+        const answerId = props.item;
+        // this.setState({
+        //     selectedAnswerIndex: answerId
+        // });
+    };
+
     renderOverviews = () => {
-        return this.state.answers.map((answer, index) => {
-            const options = {
-                width: '100%',
-                height: '200px',
-                stack: false,
-                showMajorLabels: true,
-                showCurrentTime: true,
-                zoomMin: 1000000,
-                type: 'range',
-                autoResize: true
-            };
-            const items = [{
-                start: new Date(2010, 7, 15),
-                end: new Date(2011, 7, 16),
-                content: 'Trajectory A',
-                title: 'hello'
-            }];
-            return(
-                <div key={index}>
-                    <Timeline options={options} items={items} />
-                </div>
-            );
-        });
+        const options = {
+            width: '100%',
+            height: '200px',
+            stack: false,
+            showMajorLabels: true,
+            showCurrentTime: true,
+            zoomMin: 1000,
+            type: 'range',
+            autoResize: true
+        };
+        const items = [];
+        for(let i = 0; i < this.state.answers.length; i++) {
+            const answer = this.state.answers[i];
+            items.push({
+                start: new Date(answer.startTime),
+                end: new Date(answer.endTime),
+                content: 'Attempt ' + answer.attempt,
+                title: 'Attempt ' + answer.attempt,
+                id: i
+            });
+        }
+        console.log(items);
+        return(
+            <div>
+                <Timeline options={options} items={items} clickHandler={this.visTimelineClickHandler} />
+            </div>
+        );
     };
 
     renderTimeSeriesGraphs = () => {
@@ -59,15 +71,17 @@ class IndividualCaseStatistics extends Component {
         const timeseries = new TimeSeries(data);
 
         return(
-            <ChartContainer timeRange={timeseries.timerange()} width={800}>
-                <ChartRow height="200">
-                    <YAxis id="axis1" label="AUD" min={0.5} max={1.5} width="60" type="linear" format="$,.2f"/>
-                    <Charts>
-                        <LineChart axis="axis1" series={timeseries}/>
-                    </Charts>
-                    <YAxis id="axis2" label="Euro" min={0.5} max={1.5} width="80" type="linear" format="$,.2f"/>
-                </ChartRow>
-            </ChartContainer>
+            <div className="col-md-12 text-center">
+                <ChartContainer timeRange={timeseries.timerange()} width={800}>
+                    <ChartRow height="200">
+                        <YAxis id="axis1" label="AUD" min={0.5} max={1.5} width="60" type="linear" format="$,.2f"/>
+                        <Charts>
+                            <LineChart axis="axis1" series={timeseries}/>
+                        </Charts>
+                        <YAxis id="axis2" label="Euro" min={0.5} max={1.5} width="80" type="linear" format="$,.2f"/>
+                    </ChartRow>
+                </ChartContainer>
+            </div>
         );
     };
 
@@ -87,7 +101,7 @@ class IndividualCaseStatistics extends Component {
             <div className="col-md-2">
                 <FormGroup controlId="formControlsType">
                     <ControlLabel>Filter Attempts</ControlLabel>
-                    <FormControl componentClass="select" value={this.state.selectedAnswerIndex} onChange={(e)=>this.handleAttemptFilterChange(e)}>
+                    <FormControl componentClass="select" value={this.state.selectedAnswerIndex + 1} onChange={(e)=>this.handleAttemptFilterChange(e)}>
                         {attempts}
                     </FormControl>
                 </FormGroup>
@@ -103,7 +117,19 @@ class IndividualCaseStatistics extends Component {
 
     renderQuestionFilter = () => {
         const answer = this.state.answers[this.state.selectedAnswerIndex];
-        const caseQuestions = answer.case.questions.map((caseQuestion, index) => {
+        let counter = 1;
+        const sortedCaseQuestions = [];
+        while(counter <= answer.case.questions.length) {
+            for(let i = 0; i < answer.case.questions.length; i++) {
+                const caseQuestion = answer.case.questions[i];
+                if(caseQuestion.id === String(counter)) {
+                    sortedCaseQuestions.push(caseQuestion);
+                    counter++;
+                    break;
+                }
+            }
+        }
+        const caseQuestions = sortedCaseQuestions.map((caseQuestion, index) => {
             return(
                 <option key={index} value={caseQuestion.id}>Question {caseQuestion.id}</option>
             );
@@ -126,7 +152,19 @@ class IndividualCaseStatistics extends Component {
         const caseQuestions = answer.case.questions;
         const mcqAnswers = answer.mcqAnswers;
         const openEndedAnswers = answer.openEndedAnswers;
-        return caseQuestions.map((question, index) => {
+        let counter = 1;
+        const sortedCaseQuestions = [];
+        while(counter <= caseQuestions.length) {
+            for(let i = 0; i < caseQuestions.length; i++) {
+                const caseQuestion = caseQuestions[i];
+                if(caseQuestion.id === String(counter)) {
+                    sortedCaseQuestions.push(caseQuestion);
+                    counter++;
+                    break;
+                }
+            }
+        }
+        return sortedCaseQuestions.map((question, index) => {
             if(this.state.questionFilter === 'All' || this.state.questionFilter === question.id) {
                 let modelAnswer = question.openEnded;
                 if(question.openEnded === '') {
@@ -166,14 +204,22 @@ class IndividualCaseStatistics extends Component {
                     // Display MCQ Answers here
                 }
                 return(
-                    <div key={index} className="col-md-12">
-                        <h2>Question {question.id}</h2>
-                        <h3>Question Description</h3>
-                        <p>{ReactHtmlParser(question.question)}</p>
-                        <h3>Your Answer</h3>
-                        <p>{displayAnswer}</p>
-                        <h3>Model Answer</h3>
-                        <p>{modelAnswer}</p>
+                    <div key={index} className="col-md-12 questionAnswerPanels">
+                        <Panel bsStyle="primary" defaultExpanded>
+                            <Panel.Heading>
+                                <Panel.Title componentClass="h3" toggle>Question {question.id}</Panel.Title>
+                            </Panel.Heading>
+                            <Panel.Collapse>
+                                <Panel.Body>
+                                    <h3>Question Description</h3>
+                                    <p>{ReactHtmlParser(question.question)}</p>
+                                    <h3>Your Answer</h3>
+                                    <p>{displayAnswer}</p>
+                                    <h3>Model Answer</h3>
+                                    <p>{modelAnswer}</p>
+                                </Panel.Body>
+                            </Panel.Collapse>
+                        </Panel>
                     </div>
                 );
             }
@@ -189,25 +235,26 @@ class IndividualCaseStatistics extends Component {
                     <div className="container">
                         <div className="row">
                             <br/>
-                            <Button onClick={this.props.returnToCaseStats} bsStyle="primary">Back</Button>
-                            <div className="col-md-12 text-center">
+                            <div className="col-md-4 text-left">
+                                <Button onClick={this.props.returnToCaseStats} bsStyle="primary">Back to cases</Button>
+                            </div>
+                            <div className="col-md-4 text-center">
                                 <h1>{this.state.answers[0].case.title}</h1>
                             </div>
                         </div>
                         {/*To do - Allow hiding and showing of very detailed data*/}
-                        <div className="row" style={{marginBottom: '50px'}}>
+                        <div className="row" style={{marginBottom: '30px'}}>
                             {/*To do - Complete timeline display of attempts*/}
                             {this.renderOverviews()}
                         </div>
-                        <div className="row" style={{marginBottom: '50px'}}>
+                        {/*<div className="row" style={{marginBottom: '50px'}}>*/}
                             {/*To do - Add time series line chart comparison against cohort over several attempts*/}
-                            {this.renderTimeSeriesGraphs()}
-                        </div>
+                            {/*{this.renderTimeSeriesGraphs()}*/}
+                        {/*</div>*/}
                         <div className="row" style={{marginBottom: '50px'}}>
                             {/*To do - Add bar chart to show data over several attempts*/}
                         </div>
                         <div className="row">
-                            {/*To do - Implement Attempt filters*/}
                             {this.renderAttemptFilter()}
                             {this.renderQuestionFilter()}
                             {this.renderQuestionAnswers()}

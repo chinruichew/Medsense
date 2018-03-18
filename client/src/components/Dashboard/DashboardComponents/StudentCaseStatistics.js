@@ -29,7 +29,11 @@ class StudentCaseStatistics extends Component {
                         const answerCase = cases[j];
                         if(answerCase._id === answer.case._id) {
                             toAdd = false;
-                            answerCase.numAttempts = answerCase.numAttempts + 1 || 1;
+                            if(answerCase.numAttempts === undefined) {
+                                answerCase.numAttempts = 1;
+                            } else {
+                                answerCase.numAttempts = answerCase.numAttempts + 1;
+                            }
                         }
                     }
                     if(toAdd) {
