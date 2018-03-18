@@ -22,9 +22,11 @@ class IndividualCaseStatistics extends Component {
     visTimelineClickHandler = (props) => {
         console.log(props);
         const answerId = props.item;
-        // this.setState({
-        //     selectedAnswerIndex: answerId
-        // });
+        if(answerId !== null) {
+            this.setState({
+                selectedAnswerIndex: answerId
+            });
+        }
     };
 
     renderOverviews = () => {
@@ -49,7 +51,6 @@ class IndividualCaseStatistics extends Component {
                 id: i
             });
         }
-        console.log(items);
         return(
             <div>
                 <Timeline options={options} items={items} clickHandler={this.visTimelineClickHandler} />
@@ -71,16 +72,23 @@ class IndividualCaseStatistics extends Component {
         const timeseries = new TimeSeries(data);
 
         return(
-            <div className="col-md-12 text-center">
+            <div className="col-md-12 text-center" style={{marginLeft: '15%'}}>
                 <ChartContainer timeRange={timeseries.timerange()} width={800}>
                     <ChartRow height="200">
-                        <YAxis id="axis1" label="AUD" min={0.5} max={1.5} width="60" type="linear" format="$,.2f"/>
+                        <YAxis id="axis1" label="AUD" min={10} max={100} width="60" type="linear"/>
                         <Charts>
                             <LineChart axis="axis1" series={timeseries}/>
                         </Charts>
-                        <YAxis id="axis2" label="Euro" min={0.5} max={1.5} width="80" type="linear" format="$,.2f"/>
                     </ChartRow>
                 </ChartContainer>
+            </div>
+        );
+    };
+
+    renderGraphs = () => {
+        return(
+            <div className="col-md-12">
+                {this.renderTimeSeriesGraphs()}
             </div>
         );
     };
@@ -203,6 +211,8 @@ class IndividualCaseStatistics extends Component {
                 } else {
                     // Display MCQ Answers here
                 }
+                const nlpAccuracyColor = answerOfQuestion.nlpAccuracy < 50? 'red': 'green';
+                const score = answerOfQuestion.score < answerOfQuestion.mark/2? 'red': 'green';
                 return(
                     <div key={index} className="col-md-12 questionAnswerPanels">
                         <Panel bsStyle="primary" defaultExpanded>
@@ -213,8 +223,22 @@ class IndividualCaseStatistics extends Component {
                                 <Panel.Body>
                                     <h3>Question Description</h3>
                                     <p>{ReactHtmlParser(question.question)}</p>
-                                    <h3>Your Answer</h3>
-                                    <p>{displayAnswer}</p>
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            <div className="col-md-4" style={{paddingLeft: '0px'}}>
+                                                <h3>Your Answer</h3>
+                                            </div>
+                                            <div className="col-md-4 text-center">
+                                                <h4 style={{marginTop: '25px', color: nlpAccuracyColor}}>Accuracy: {answerOfQuestion.nlpAccuracy}%</h4>
+                                            </div>
+                                            <div className="col-md-4 text-center">
+                                                <h4 style={{marginTop: '25px', color: score}}>Score: {answerOfQuestion.score}/{answerOfQuestion.mark}</h4>
+                                            </div>
+                                        </div>
+                                        <div className="col-md-12">
+                                            <p>{displayAnswer}</p>
+                                        </div>
+                                    </div>
                                     <h3>Model Answer</h3>
                                     <p>{modelAnswer}</p>
                                 </Panel.Body>
@@ -236,21 +260,20 @@ class IndividualCaseStatistics extends Component {
                         <div className="row">
                             <br/>
                             <div className="col-md-4 text-left">
-                                <Button onClick={this.props.returnToCaseStats} bsStyle="primary">Back to cases</Button>
+                                <Button style={{marginTop: '20px'}} onClick={this.props.returnToCaseStats} bsStyle="primary">Back to cases</Button>
                             </div>
                             <div className="col-md-4 text-center">
                                 <h1>{this.state.answers[0].case.title}</h1>
                             </div>
                         </div>
-                        {/*To do - Allow hiding and showing of very detailed data*/}
-                        <div className="row" style={{marginBottom: '30px'}}>
-                            {/*To do - Complete timeline display of attempts*/}
+                        <div className="row" style={{marginBottom: '10px'}}>
                             {this.renderOverviews()}
                         </div>
-                        {/*<div className="row" style={{marginBottom: '50px'}}>*/}
+                        {/*To do - Allow hiding and showing of very detailed data*/}
+                        <div className="row" style={{marginBottom: '10px'}}>
                             {/*To do - Add time series line chart comparison against cohort over several attempts*/}
-                            {/*{this.renderTimeSeriesGraphs()}*/}
-                        {/*</div>*/}
+                            {/*{this.renderGraphs()}*/}
+                        </div>
                         <div className="row" style={{marginBottom: '50px'}}>
                             {/*To do - Add bar chart to show data over several attempts*/}
                         </div>

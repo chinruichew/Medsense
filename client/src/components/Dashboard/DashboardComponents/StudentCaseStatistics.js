@@ -9,18 +9,14 @@ class StudentCaseStatistics extends Component {
     };
 
     returnToCaseStats = () => {
-        this.setState({caseId: null});
+        this.setState({
+            caseId: null
+        });
     };
 
     renderContent = () => {
         switch(this.state.caseId) {
             case null:
-                const selectOptions = this.state.answers.map((answer, index) => {
-                    return(
-                        <option key={answer._id} value={answer._id}>{answer.case.title + ' (Attempt ' + answer.attempt + ')'}</option>
-                    );
-                });
-
                 const cases = [];
                 for(let i = 0; i < this.state.answers.length; i++) {
                     const answer = this.state.answers[i];
