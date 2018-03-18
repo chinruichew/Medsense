@@ -71,6 +71,30 @@ class IndividualCaseStatistics extends Component {
         );
     };
 
+    handleAttemptFilterChange = (e) => {
+        this.setState({
+            selectedAnswerIndex: e.target.value - 1
+        });
+    };
+
+    renderAttemptFilter = () => {
+        const attempts = this.state.answers.map((answer, index) => {
+            return(
+                <option key={index} value={answer.attempt}>Attempt {answer.attempt}</option>
+            );
+        });
+        return(
+            <div className="col-md-2">
+                <FormGroup controlId="formControlsType">
+                    <ControlLabel>Filter Attempts</ControlLabel>
+                    <FormControl componentClass="select" value={this.state.selectedAnswerIndex} onChange={(e)=>this.handleAttemptFilterChange(e)}>
+                        {attempts}
+                    </FormControl>
+                </FormGroup>
+            </div>
+        );
+    };
+
     handleQuestionFilterChange = (e) => {
         this.setState({
             questionFilter: e.target.value
@@ -81,14 +105,14 @@ class IndividualCaseStatistics extends Component {
         const answer = this.state.answers[this.state.selectedAnswerIndex];
         const caseQuestions = answer.case.questions.map((caseQuestion, index) => {
             return(
-                <option value={caseQuestion.id}>Question {caseQuestion.id}</option>
+                <option key={index} value={caseQuestion.id}>Question {caseQuestion.id}</option>
             );
         });
         return(
             <div className="col-md-2">
                 <FormGroup controlId="formControlsType">
                     <ControlLabel>Filter Questions</ControlLabel>
-                    <FormControl componentClass="select" value={this.state.questionFilter} name="type" onChange={(e)=>this.handleQuestionFilterChange(e)}>
+                    <FormControl componentClass="select" value={this.state.questionFilter} onChange={(e)=>this.handleQuestionFilterChange(e)}>
                         <option value="All">All</option>
                         {caseQuestions}
                     </FormControl>
@@ -184,6 +208,7 @@ class IndividualCaseStatistics extends Component {
                         </div>
                         <div className="row">
                             {/*To do - Implement Attempt filters*/}
+                            {this.renderAttemptFilter()}
                             {this.renderQuestionFilter()}
                             {this.renderQuestionAnswers()}
                         </div>
