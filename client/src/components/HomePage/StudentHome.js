@@ -48,7 +48,7 @@ class StudentHome extends Component {
             case null:
                 return;
             default:
-                let imgUrl = './homepage.png'
+                let imgUrl = './homepage.png';
                 return(
                     <div>
                         <div className="text-center">
@@ -109,7 +109,7 @@ class StudentHome extends Component {
                         <div >
                             <Col sm={6} style={{backgroundColor: "#F7F7F7", height: "180px"}}>
                                 <h3 style={{marginLeft: "3%", paddingTop: "3%"}}>FOLLOW US</h3>
-                                <a href="https://www.facebook.com/medsense/">
+                                <a target="_blank" href="https://www.facebook.com/medsense/">
                                     <img src="./facebook.png" style={{width: "3em", marginLeft: "8%" }}/>
                                 </a>
                             </Col>
