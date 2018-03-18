@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Button, Carousel, Col} from 'react-bootstrap';
 import {NavLink} from "react-router-dom";
-import "./carousel.css";
+import "./Home.css";
 
 class ProfessorHome extends Component {
     state = {

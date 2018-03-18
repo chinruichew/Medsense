@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const Case = require('../models/Case');
 const Question = require('../models/Question');
 const Option = require('../models/Option');

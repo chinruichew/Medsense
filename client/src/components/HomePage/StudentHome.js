@@ -3,13 +3,14 @@ import {Button, Carousel, Col} from 'react-bootstrap';
 import {NavLink} from "react-router-dom";
 import axios from 'axios';
 import BootstrapModal from '../UI/Modal/UploadBootstrapModal.js';
-import "./carousel.css";
+import "./Home.css";
 
 class StudentHome extends Component {
     state = {
         pendingCases: null,
         showModal: false,
-        year: null
+        year: null,
+        recommendedCases: null
     };
 
     componentDidMount() {
@@ -25,6 +26,15 @@ class StudentHome extends Component {
             this.setState({showModal: res.data});
         }).catch(err => {
             throw(err);
+        });
+
+        // Fetch recommended cases for students
+        axios.get('/api/getStudentRecommendedCases').then(res => {
+            this.setState({
+                recommendedCases: res.data
+            })
+        }).catch(err => {
+            console.log(err);
         });
     }
 
@@ -43,6 +53,40 @@ class StudentHome extends Component {
         });
     };
 
+    renderRecommendations = () => {
+        switch(this.state.recommendedCases) {
+            case null:
+                return;
+            default:
+                const recommendedCases = this.state.recommendedCases.map((recommendedCase, index) => {
+                    // Need to remove this later to make proper carousel
+                    if(index < 3) {
+                        recommendedCase = recommendedCase._doc;
+                        const subspecialities = recommendedCase.subspeciality;
+                        let subSpecialityString = subspecialities[0];
+                        for(let i = 1; i < subspecialities.length; i++) {
+                            subSpecialityString += ', ' + subspecialities[i];
+                        }
+                        return(
+                            <Button style={{background: "white", color: 'black', width: "14em", height: "13em", marginRight: "8%"}} bsSize="large">
+                                <img src="./approach1.jpg" alt="" style={{height:"8em"}}/>
+                                <h3 style={{fontWeight: "bold", margin: "0"}}>{recommendedCase.title}</h3>
+                                <h4 style={{margin: "0"}}>{recommendedCase.speciality}</h4>
+                                {/*<h4 style={{margin: "0"}}>{subSpecialityString}</h4>*/}
+                            </Button>
+                        );
+                    }
+                });
+                return(
+                    <Carousel style={{height: "25em"}} className="carousel">
+                        <Carousel.Item style={{paddingLeft: "12%", paddingTop: "3%"}}>
+                            {recommendedCases}
+                        </Carousel.Item>
+                    </Carousel>
+                );
+        }
+    };
+
     renderContent() {
         switch(this.state.pendingCases) {
             case null:
@@ -55,43 +99,7 @@ class StudentHome extends Component {
                             <h1 style={{color: "#199ED8", fontWeight: "bold", marginTop: "0"}}>Recommended Cases</h1>
                         </div>
 
-                        <Carousel style={{height: "25em"}} className="carousel">
-                            <Carousel.Item style={{paddingLeft: "12%", paddingTop: "3%"}}>
-                                <Button style={{background: "white", color: 'black', width: "14em", height: "13em", marginRight: "8%"}} bsSize="large">
-                                    <img src="./approach1.jpg" alt="" style={{height:"8em"}}/>
-                                    <h3 style={{fontWeight: "bold", margin: "0"}}>Case Title</h3>
-                                    <h4 style={{margin: "0"}}>Speciality</h4>
-                                    <h4 style={{margin: "0"}}>Sub-speciality</h4>
-                                </Button>
-                                <Button style={{background: "white", color: 'black', width: "14em", height: "13em", marginRight: "8%"}} bsSize="large">
-                                    <img src="./approach1.jpg" alt="" style={{height:"8em"}}/>
-                                    <h3 style={{fontWeight: "bold", margin: "0"}}>Case Title</h3>
-                                    <h4 style={{margin: "0"}}>Speciality</h4>
-                                    <h4 style={{margin: "0"}}>Sub-speciality</h4>
-                                </Button>
-                                <Button style={{background: "white", color: 'black', width: "14em", height: "13em", marginRight: "8%"}} bsSize="large">
-                                    <img src="./approach1.jpg" alt="" style={{height:"8em"}}/>
-                                    <h3 style={{fontWeight: "bold", margin: "0"}}>Case Title</h3>
-                                    <h4 style={{margin: "0"}}>Speciality</h4>
-                                    <h4 style={{margin: "0"}}>Sub-speciality</h4>
-                                </Button>
-                            </Carousel.Item>
-                            <Carousel.Item style={{paddingLeft: "12%", paddingTop: "3%"}}>
-                                <Button style={{background: "white", color: 'black', width: "15em", height: "13em", marginRight: "8%"}} bsSize="large">
-                                    <img src="./approach1.jpg" alt="" style={{height:"8em"}}/>
-                                    <h3 style={{fontWeight: "bold", margin: "0"}}>Case Title</h3>
-                                    <h4 style={{margin: "0"}}>Speciality</h4>
-                                    <h4 style={{margin: "0"}}>Sub-speciality</h4>
-                                </Button>
-                                <Button style={{background: "white", color: 'black', width: "15em", height: "13em", marginRight: "8%"}} bsSize="large">
-                                    <img src="./approach1.jpg" alt="" style={{height:"8em"}}/>
-                                    <h3 style={{fontWeight: "bold", margin: "0"}}>Case Title</h3>
-                                    <h4 style={{margin: "0"}}>Speciality</h4>
-                                    <h4 style={{margin: "0"}}>Sub-speciality</h4>
-                                </Button>
-
-                            </Carousel.Item>
-                        </Carousel>
+                        {this.renderRecommendations()}
 
                         <div style={{backgroundImage: 'url(' + imgUrl + ')', backgroundSize: 'cover',
                             height: "350px", textAlign: "center", color: "white"}}>
