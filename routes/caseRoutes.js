@@ -144,10 +144,26 @@ module.exports = app => {
 
             const qnData = req.body.values.qnData;
 
+            const questionOptions = question.options;
+            const newQuestionOptions = question.optionData;
+            console.log(questionOptions);
+            console.log(newQuestionOptions);
+            let bulk = Option.collection.initializeUnorderedBulkOp();
+            for(let i = 0; i < newQuestionOptions.length; i++) {
+                const newQuestionOption = newQuestionOptions[i];
+                if(newQuestionOption._id === undefined) {
+                    bulk.insert({
+                        ...newQuestionOption,
+                        case: oneCase._id
+                    });
+                }
+            }
+
             let questions=[];
-            let bulk = Question.collection.initializeUnorderedBulkOp();
+            bulk = Question.collection.initializeUnorderedBulkOp();
             for(let i = 0; i < qnData.length; i++) {
                 const question = qnData[i];
+
                 const updatedQuestion = {
                     numOptions: question.numOptions,
                     openEnded: question.openEnded,
@@ -161,7 +177,8 @@ module.exports = app => {
                     reference : question.reference,
                     stem : question.stem,
                     mark : question.mark,
-                    case: req.body.values.id
+                    case: req.body.values.id,
+                    options: question.optionData
                 };
                 bulk.find({_id: question._id}).update({$set: updatedQuestion});
                 questions.push(question._id);
