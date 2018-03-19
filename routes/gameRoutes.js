@@ -300,10 +300,15 @@ module.exports = app => {
     app.post('/api/getGameAttempt', async(req, res) => {
         const gameCase = req.body.case;
         let attempt = 0;
-        AnswerOverview.findOne({ caseid: gameCase._id, userid: req.session.user._id}).sort({attempt:-1}).exec(function(err, completedCase) {
+        AnswerOverview.findOne({ case: gameCase._id, user: req.session.user._id}).sort({attempt:-1}).exec(async(err, completedCase) => {
+            if(err) {
+                console.log(err);
+            }
+
             if(completedCase) {
                 attempt = completedCase.attempt;
             }
+            
             res.send('' + (attempt + 1));
         });
     });
