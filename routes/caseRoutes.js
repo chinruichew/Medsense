@@ -144,54 +144,72 @@ module.exports = app => {
 
             const qnData = req.body.values.qnData;
 
-            const questionOptions = question.options;
-            const newQuestionOptions = question.optionData;
-            console.log(questionOptions);
-            console.log(newQuestionOptions);
+            // Update or insert each option
             let bulk = Option.collection.initializeUnorderedBulkOp();
-            for(let i = 0; i < newQuestionOptions.length; i++) {
-                const newQuestionOption = newQuestionOptions[i];
-                if(newQuestionOption._id === undefined) {
-                    bulk.insert({
-                        ...newQuestionOption,
-                        case: oneCase._id
-                    });
-                }
-            }
-
-            let questions=[];
-            bulk = Question.collection.initializeUnorderedBulkOp();
+            const optionsToInsert = [];
             for(let i = 0; i < qnData.length; i++) {
                 const question = qnData[i];
-
-                const updatedQuestion = {
-                    numOptions: question.numOptions,
-                    openEnded: question.openEnded,
-                    id : question.id,
-                    question : question.question,
-                    attachment : null,
-                    pearlAttachment : null,
-                    type : question.type,
-                    pearl : question.pearl,
-                    time : question.time,
-                    reference : question.reference,
-                    stem : question.stem,
-                    mark : question.mark,
-                    case: req.body.values.id,
-                    options: question.optionData
-                };
-                bulk.find({_id: question._id}).update({$set: updatedQuestion});
-                questions.push(question._id);
+                const newQuestionOptions = question.optionData;
+                for (let i = 0; i < newQuestionOptions.length; i++) {
+                    const newQuestionOption = newQuestionOptions[i];
+                    if (newQuestionOption._id === undefined) {
+                        optionsToInsert.push(newQuestionOption);
+                        bulk.insert({
+                            ...newQuestionOption,
+                            case: oneCase._id
+                        });
+                    } else {
+                        bulk.find({_id: newQuestionOption._id}).update({$set: newQuestionOption});
+                    }
+                }
             }
 
-            // Initiate bulk update operation
-            bulk.execute(async(err) => {
-                if(err) {
+            bulk.execute(async(err, result) => {
+                if (err) {
                     throw(err);
                 }
-                oneCase.questions = questions;
-                await oneCase.save();
-                res.send({data: {case:oneCase._id, questions:questions}, message: "updateCase success"});
+
+                const insertedOptionIds = result.getInsertedIds();
+                console.log(insertedOptionIds);
+                for(let i = 0; i < optionsToInsert.length; i++) {
+                    const optionToInsert = optionsToInsert[i];
+                    optionToInsert._id = insertedOptionIds._id;
+                }
+
+                let questions=[];
+                bulk = Question.collection.initializeUnorderedBulkOp();
+                for(let i = 0; i < qnData.length; i++) {
+                    const question = qnData[i];
+
+                    const updatedQuestion = {
+                        numOptions: question.numOptions,
+                        openEnded: question.openEnded,
+                        id : question.id,
+                        question : question.question,
+                        attachment : null,
+                        pearlAttachment : null,
+                        type : question.type,
+                        pearl : question.pearl,
+                        time : question.time,
+                        reference : question.reference,
+                        stem : question.stem,
+                        mark : question.mark,
+                        case: req.body.values.id,
+                        options: question.optionData
+                    };
+                    bulk.find({_id: question._id}).update({$set: updatedQuestion});
+                    questions.push(question._id);
+                }
+
+                // Initiate bulk update operation
+                bulk.execute(async(err) => {
+                    if(err) {
+                        throw(err);
+                    }
+                    oneCase.questions = questions;
+                    await oneCase.save();
+                    res.send({data: {case:oneCase._id, questions:questions}, message: "updateCase success"});
+                });
             });
         });
     });
