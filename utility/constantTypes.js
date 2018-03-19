@@ -21,5 +21,6 @@ module.exports = {
     CASE_PROCESS_UPLOAD: "Upload",
     CASE_PROCESS_VET: "Vet",
     DIFFICULTY_LEVEL_BEGINNER: "Beginner",
-    DIFFICULTY_LEVEL_ADVANCED: "Advanced"
+    DIFFICULTY_LEVEL_ADVANCED: "Advanced",
+    RECOMMENDATION_THRESHOLD: 6
 };

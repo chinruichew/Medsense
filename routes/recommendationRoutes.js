@@ -4,12 +4,105 @@ const AnswerOverview = require('../models/AnswerOverview');
 const constants = require('../utility/constantTypes');
 
 module.exports = app => {
+    app.get('/api/getProfessorRecommendedCases', async(req, res) => {
+        // Recommend cases based on their subspecialities
+
+        const cases = await Case.find({status: constants.CASE_STATUS_PENDING});
+
+        // Find cases with same subspecialities as the user
+        const filteredCases = [];
+        const sessionUser = req.session.user;
+        const userSubSpecialities = sessionUser.subspeciality;
+        for(let i = 0; i < cases.length; i++) {
+            const fetchedCase = cases[i];
+            const caseSubSpecialities = fetchedCase.subspeciality;
+            let toAdd = false;
+            for(let j = 0; j < caseSubSpecialities.length; j++) {
+                const caseSubSpeciality = caseSubSpecialities[j];
+                for(let k = 0; k < userSubSpecialities.length; k++) {
+                    const userSubSpeciality = userSubSpecialities[k];
+                    if(caseSubSpeciality === userSubSpeciality) {
+                        toAdd = true;
+                    }
+                }
+            }
+            if(toAdd) {
+                filteredCases.push(fetchedCase);
+            }
+        }
+
+        if(filteredCases.length <= constants.RECOMMENDATION_THRESHOLD) {
+            res.send(filteredCases);
+        } else {
+            // From here, the algorithm will return the subspeciality with the highest demand (highest number of uploads)
+            // Sort cases by number of subspecialities
+            const caseIndex = {};
+            for(let i = 0; i < filteredCases.length; i++) {
+                const filteredCase = filteredCases[i];
+                const caseSubSpecialities = filteredCase.subspeciality;
+                let toAdd = true;
+                for(let j = 0; j < caseSubSpecialities.length; j++) {
+                    const caseSubSpeciality = caseSubSpecialities[j];
+                    for (let key in caseIndex) {
+                        if (key === caseSubSpeciality) {
+                            caseIndex[key] = caseIndex[key]++;
+                            toAdd = false;
+                            break;
+                        }
+                    }
+                    if(toAdd) {
+                        caseIndex[caseSubSpeciality] = 1;
+                    }
+                }
+            }
+
+            // Find max of filtered cases
+            let max = 0;
+            for(let key in caseIndex) {
+                const numSpeciality = caseIndex[key];
+                if(numSpeciality > max) {
+                    max = numSpeciality;
+                }
+            }
+
+            // Start adding in cases starting from max
+            const sortedCases = [];
+            while(sortedCases.length < constants.RECOMMENDATION_THRESHOLD) {
+                for(let key in caseIndex) {
+                    const numSpeciality = caseIndex[key];
+                    if(numSpeciality === max) {
+                        for(let i = 0; i < filteredCases.length; i++) {
+                            const filteredCase = filteredCases[i];
+                            const caseSubSpecialities = filteredCase.subspeciality;
+                            for(let j = 0; j < caseSubSpecialities.length; j++) {
+                                const caseSubSpeciality = caseSubSpecialities[j];
+                                if(caseSubSpeciality === key) {
+                                    sortedCases.push(filteredCase);
+                                    break;
+                                }
+                            }
+                            if(sortedCases >= constants.RECOMMENDATION_THRESHOLD) {
+                                break;
+                            }
+                        }
+                    }
+                    if(sortedCases >= constants.RECOMMENDATION_THRESHOLD) {
+                        break;
+                    }
+                }
+                max--;
+            }
+
+            res.send(sortedCases);
+        }
+    });
+
     app.get('/api/getStudentRecommendedCases', async(req, res) => {
         // Cases in spec they scored poorly in popularity else recommend popular cases if too little data
         // Year 2 and 3 for Beginner, Year 4 and 5 for Advanced
 
         // This threshold decides how much processing should be done for recommendations
-        const carouselThreshold = 6;
+        const carouselThreshold = constants.RECOMMENDATION_THRESHOLD;
         const specialityThreshold = 3;
 
         // Get all answers
