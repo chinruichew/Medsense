@@ -7,6 +7,7 @@ import {connect} from "react-redux";
 import {fetchRandomCase, startGame} from "../../actions";
 import SearchByApproach from './SearchByApproach';
 import {Redirect} from "react-router-dom";
+import axios from 'axios';
 
 import './Game.css';
 
@@ -18,10 +19,22 @@ class Main extends Component {
         showSpecialitySearch: false,
         showTimeLimit: false,
         random: false,
+        recommendedCase: null
     };
 
     componentDidMount() {
         this.props.fetchRandomCase();
+        if(this.props.location) {
+            axios.post('/api/fetchGameById', {
+                id: this.props.location.gameId
+            }).then(res => {
+                this.setState({
+                    recommendedCase: res.data
+                });
+            }).catch(err => {
+                console.log(err);
+            });
+        }
     }
 
 
@@ -63,66 +76,71 @@ class Main extends Component {
     };
 
     renderMainContent = () => {
-        if(!this.state.showTimeLimit){
-            let approachBtnBgColor = this.state.approachBtnBackground ?  "#F2F2F2": "white";
-            let specialityBtnBgColor = this.state.specialityBtnBackground ?  "#F2F2F2": "white";
-            return(
-                <div align="center" className='container'>
-                    <h1>
-                        Get in some practice
-                    </h1>
-                    <h4>
-                        <em>
-                            <br/>Choose a case from a particular subspecialty,
-                            <br/>or choose a case according to an approach you want to practice (e.g. chest pain)!
-                            <br/><br/>Try out beginner mode for more focuses on history and physical exam,
-                            <br/>and advanced mode for management.
-                            <br/><br/>Better yet, if you're up for the challenge, why not try a completely random case? :)
-                            <br/><br/>Take a look at your strengths and weaknesses on the analytics page after that!
-                        </em>
-                    </h4>
-                    <br />
-                    <br />
-                    <Col xsOffset={1} sm={10}>
-                        <Table responsive>
-                            <tr align="center">
-                                <td style={{width:"12em"}}>
-                                    <Button style={{background: "white", color: 'black', width: "10em", height: "9em"}}
-                                             bsSize="large" onClick={(e)=> this.getRandomCase()}>
-                                        <img style={{marginBottom: "5%"}} src="./random.png" alt="" width="60%"/> <br />Random Case
-                                    </Button>
-
-                                </td>
-                                <td style={{width:"12em"}}>
-                                    <Button style={{background: approachBtnBgColor, color: 'black', width: "10em", height: "9em"}}
-                                            onClick={(e)=> this.chooseApproachSearch ()} bsSize="large">
-                                        <img style={{marginBottom: "5%"}} src="./appSearch.png" alt="" width="60%"/> <br />Search by Approach
-                                    </Button>
-                                </td>
-                                <td style={{width:"12em"}}>
-                                    <Button style={{background: specialityBtnBgColor, color: 'black', width: "10em", height: "9em"}}
-                                            onClick={(e)=> this.chooseSpecialitySearch()} bsSize="large">
-                                        <img style={{marginBottom: "5%"}} src="./speSearch.png" alt="" width="60%"/> <br /> <div>Search by Speciality</div>
-                                    </Button>
-                                </td>
-                            </tr>
-                        </Table>
-                    </Col>
-                </div>
-            );
+        if(this.state.recommendedCase !== null && this.state.recommendedCase !== '') {
+            console.log(this.state.recommendedCase);
+            return <TimeLimit startGame={this.props.startGame} case={this.props.recommendedCase}/>
         } else {
-            switch(this.props.randomCase) {
-                case null:
-                    return;
-                case false:
-                    return <Redirect to="/home" />;
-                default:
-                    if (this.state.random){
-                        return <TimeLimit startGame={this.props.startGame} case={this.props.randomCase}/>
-                    } else {
-                        return <TimeLimit startGame={this.props.startGame} case={this.state.game}/>
-                    }
+            if(!this.state.showTimeLimit){
+                let approachBtnBgColor = this.state.approachBtnBackground ?  "#F2F2F2": "white";
+                let specialityBtnBgColor = this.state.specialityBtnBackground ?  "#F2F2F2": "white";
+                return(
+                    <div align="center" className='container'>
+                        <h1>
+                            Get in some practice
+                        </h1>
+                        <h4>
+                            <em>
+                                <br/>Choose a case from a particular subspecialty,
+                                <br/>or choose a case according to an approach you want to practice (e.g. chest pain)!
+                                <br/><br/>Try out beginner mode for more focuses on history and physical exam,
+                                <br/>and advanced mode for management.
+                                <br/><br/>Better yet, if you're up for the challenge, why not try a completely random case? :)
+                                <br/><br/>Take a look at your strengths and weaknesses on the analytics page after that!
+                            </em>
+                        </h4>
+                        <br />
+                        <br />
+                        <Col xsOffset={1} sm={10}>
+                            <Table responsive>
+                                <tr align="center">
+                                    <td style={{width:"12em"}}>
+                                        <Button style={{background: "white", color: 'black', width: "10em", height: "9em"}}
+                                                bsSize="large" onClick={(e)=> this.getRandomCase()}>
+                                            <img style={{marginBottom: "5%"}} src="./random.png" alt="" width="60%"/> <br />Random Case
+                                        </Button>
 
+                                    </td>
+                                    <td style={{width:"12em"}}>
+                                        <Button style={{background: approachBtnBgColor, color: 'black', width: "10em", height: "9em"}}
+                                                onClick={(e)=> this.chooseApproachSearch ()} bsSize="large">
+                                            <img style={{marginBottom: "5%"}} src="./appSearch.png" alt="" width="60%"/> <br />Search by Approach
+                                        </Button>
+                                    </td>
+                                    <td style={{width:"12em"}}>
+                                        <Button style={{background: specialityBtnBgColor, color: 'black', width: "10em", height: "9em"}}
+                                                onClick={(e)=> this.chooseSpecialitySearch()} bsSize="large">
+                                            <img style={{marginBottom: "5%"}} src="./speSearch.png" alt="" width="60%"/> <br /> <div>Search by Speciality</div>
+                                        </Button>
+                                    </td>
+                                </tr>
+                            </Table>
+                        </Col>
+                    </div>
+                );
+            } else {
+                switch(this.props.randomCase) {
+                    case null:
+                        return;
+                    case false:
+                        return <Redirect to="/home" />;
+                    default:
+                        if (this.state.random){
+                            return <TimeLimit startGame={this.props.startGame} case={this.props.randomCase}/>
+                        } else {
+                            return <TimeLimit startGame={this.props.startGame} case={this.state.game}/>
+                        }
+
+                }
             }
         }
     };

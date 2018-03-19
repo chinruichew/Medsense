@@ -32,6 +32,7 @@ class TimeLimit extends Component {
     };
 
     componentDidMount() {
+        console.log(this.props.case);
         this.props.fetchGameById(this.state.challenge._id);
         window.scrollTo(0, 0)
     }

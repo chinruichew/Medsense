@@ -76,7 +76,7 @@ class StudentHome extends Component {
                             subSpecialityString += ', ' + subspecialities[i];
                         }
                         return(
-                            <Button onClick={(e) => this.handleCarouselButtonClick(recommendedCase._id)} className="carousel-button" bsSize="large">
+                            <Button key={index} onClick={(e) => this.handleCarouselButtonClick(recommendedCase._id)} className="carousel-button" bsSize="large">
                                 <img src="./approach1.jpg" alt={recommendedCase.title}/>
                                 <h3>{recommendedCase.title}</h3>
                                 <h4>{recommendedCase.speciality}</h4>
@@ -196,7 +196,10 @@ class StudentHome extends Component {
                 }
             default:
                 return(
-                    <Redirect to={"/game?gameId=" + this.state.gameId} />
+                    <Redirect to={{
+                        pathname: "/game",
+                        gameId: this.state.gameId
+                    }} />
                 );
         }
     }
