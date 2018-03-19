@@ -7,11 +7,7 @@ import ReactHtmlParser from 'react-html-parser';
 class MCQAnswers extends Component {
     state = {
         showResult: false,
-        // answerCount: 0,
-        // mcqAnswer: "",
-        // stuCorrectAnswerCount: 0,
         score: 0,
-        authid: this.props.authid,
         mark: this.props.question.mark,
         question: this.props.question,
         stem: this.props.question.stem,
@@ -26,15 +22,17 @@ class MCQAnswers extends Component {
         questionEnd: this.props.questionEnd,
         questionId: this.props.questionId,
         questionNumber: this.props.questionNumber,
-        checkedMCQs: this.props.checkedMCQs
+        checkedMCQs: this.props.checkedMCQs,
+        answerIndex: null
     };
 
     componentDidMount() {
-        const answers = this.getMCQAnswer();
+        const answerIndex = this.getMCQAnswer();
+        this.setState({answerIndex: answerIndex});
         window.scrollTo(0, 0);
         this.props.addMCQAnswerOfQuestion({
             ...this.state,
-            ...answers
+            ...answerIndex
         });
     }
 
@@ -78,28 +76,29 @@ class MCQAnswers extends Component {
 
 
     renderContent = () => {
-        //if (!this.state.showResult) {
-            return (
-                <Col sm={11}>
-                    <h3>You got {this.state.stuCorrectAnswerCount} / {this.state.answerCount} correct!</h3><br />
-                    <h3>Your score for this question: {this.state.score}</h3>
-                    <h4>
-                        <strong>Answer</strong> <br />
-                        <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{ReactHtmlParser(this.state.mcqAnswer)}</h4> <br /><br />
+        switch(this.state.answerIndex) {
+            case null:
+                return;
+            default:
+                return (
+                    <Col sm={11}>
+                        <h3>You got {this.state.answerIndex.stuCorrectAnswerCount} / {this.state.answerIndex.answerCount} correct!</h3><br />
+                        <h3>Your score for this question: {this.state.answerIndex.score}</h3>
+                        <h4>
+                            <strong>Answer</strong> <br />
+                            <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{ReactHtmlParser(this.state.answerIndex.mcqAnswer)}</h4> <br /><br />
 
-                        <strong>PEARL</strong> <br />
-                        <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{ReactHtmlParser(this.props.question.pearl)} </h4><br /><br />
+                            <strong>PEARL</strong> <br />
+                            <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{ReactHtmlParser(this.props.question.pearl)} </h4><br /><br />
 
-                        <strong>References</strong> <br />
-                        <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{ReactHtmlParser(this.props.question.reference)}</h4> <br /><br />
+                            <strong>References</strong> <br />
+                            <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{ReactHtmlParser(this.props.question.reference)}</h4> <br /><br />
 
-                    </h4>
-                    {this.renderNextQuestion()}
-                </Col>
-            );
-        // }else{
-        //     return <GameResults />
-        // }
+                        </h4>
+                        {this.renderNextQuestion()}
+                    </Col>
+                );
+        }
 
     };
 

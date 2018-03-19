@@ -308,7 +308,7 @@ module.exports = app => {
             if(completedCase) {
                 attempt = completedCase.attempt;
             }
-            
+
             res.send('' + (attempt + 1));
         });
     });
