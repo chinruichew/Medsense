@@ -1,5 +1,5 @@
 const Question = require('../models/Question');
-// const Synonyms = require('../models/Synonyms');
+const Synonyms = require('../models/Synonyms');
 
 const natural = require('natural');
 const stopword = require('stopword');
@@ -118,6 +118,10 @@ module.exports = app => {
             // console.log(originalAnswerArray.length);
             counter = counter / originalAnswerArray.length;
             console.log(counter);
+            Synonyms.find({}, function(req, res) {
+                console.log(res);
+            })
+
             res.send({ "data": counter })
         }.bind(this), 500);
     });
