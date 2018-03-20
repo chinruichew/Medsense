@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Button, Carousel, Col} from 'react-bootstrap';
+import {Button, Carousel, Col, Image} from 'react-bootstrap';
 import {NavLink, Redirect} from "react-router-dom";
 import axios from 'axios';
 import BootstrapModal from '../UI/Modal/UploadBootstrapModal.js';
@@ -84,6 +84,7 @@ class StudentHome extends Component {
                             </Button>
                         );
                     }
+                    return;
                 });
                 const recommendedCasesV2 = this.state.recommendedCases.map((recommendedCase, index) => {
                     if(index >= 3 && index < 6) {
@@ -102,6 +103,7 @@ class StudentHome extends Component {
                             </Button>
                         );
                     }
+                    return;
                 });
                 return(
                     <Carousel className="carousel">
@@ -146,8 +148,8 @@ class StudentHome extends Component {
                                 <div >
                                     <Col sm={6} style={{backgroundColor: "#F7F7F7", height: "180px"}}>
                                         <h3 style={{marginLeft: "3%", paddingTop: "3%"}}>FOLLOW US</h3>
-                                        <a target="_blank" href="https://www.facebook.com/medsense/">
-                                            <img src="./facebook.png" style={{width: "3em", marginLeft: "8%" }}/>
+                                        <a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/medsense/">
+                                            <Image src="./facebook.png" alt="Medsense Facebook" style={{width: "3em", marginLeft: "8%" }}/>
                                         </a>
                                     </Col>
                                     <Col smOffset={6} style={{backgroundColor: "#F7F7F7", height: "180px"}}>

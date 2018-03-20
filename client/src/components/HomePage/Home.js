@@ -8,7 +8,6 @@ import './Home.css';
 import StudentHome from "./StudentHome";
 import ProfessorHome from "./ProfessorHome";
 import AdminHome from "./AdminHome";
-import { fetchUnvetCases } from "../../actions";
 
 class Home extends Component {
     state = {
@@ -16,7 +15,6 @@ class Home extends Component {
     };
 
     componentDidMount() {
-        this.props.fetchUnvetCases();
         axios.get('/api/getConstantTypes').then(res => {
             setTimeout(function () { this.setState({ constants: res.data }); }.bind(this), 1000);
         }).catch(err => {
@@ -37,15 +35,14 @@ class Home extends Component {
                     default:
                         if (this.props.auth.usertype === this.state.constants.USER_TYPE_PROFESSOR) {
                             return (
-                                <ProfessorHome user={this.props.auth} unvetCases={this.props.cases} />
+                                <ProfessorHome user={this.props.auth} />
                             );
                         } else if (this.props.auth.usertype === this.state.constants.USER_TYPE_ADMIN) {
                             return (
                                 <AdminHome />
                             )
 
-                        }
-                        else {
+                        } else {
                             return (
                                 <StudentHome />
                             );
@@ -67,8 +64,8 @@ class Home extends Component {
     }
 }
 
-function mapStateToProps({ auth, cases }) {
-    return { auth, cases };
+function mapStateToProps({ auth }) {
+    return { auth };
 }
 
-export default connect(mapStateToProps, { fetchUnvetCases })(Home);
+export default connect(mapStateToProps, {})(Home);
