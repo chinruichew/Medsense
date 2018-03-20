@@ -1,4 +1,5 @@
 const Case = require('../models/Case');
+const Question = require('../models/Question');
 const AnswerOverview = require('../models/AnswerOverview');
 const MCQAnswer = require('../models/MCQAnswer');
 const MCQAnswerOption = require('../models/MCQAnswerOption');
@@ -157,7 +158,6 @@ module.exports = app => {
                             for(let k = 0; k < updatedMcqAnswers.length; k++) {
                                 const updatedMcqAnswer = updatedMcqAnswers[k];
                                 if(updatedMcqAnswer.id === option.id) {
-                                    mcqAnswer._id = updatedMcqAnswer._id;
                                     option.answer = updatedMcqAnswer._id;
                                     break;
                                 }
@@ -181,26 +181,22 @@ module.exports = app => {
                             throw(err);
                         }
 
-                        const mcqAnswerOptionsIds = result.getInsertedIds();
-                        MCQAnswerOption.find({
-                            '_id': { $in: mcqAnswerOptionsIds}
-                        }, async(err, mcqAnswerOptions) => {
-                            for(let i = 0; i < mcqAnswerOptions.length; i++) {
-                                const mcqAnswerOption = mcqAnswerOptions[i];
-                                const mcqAnswerId = mcqAnswerOption.answer;
-                                for(let j = 0; j < mcqAnswers.length; j++) {
-                                    const mcqAnswer = mcqAnswers[j];
-                                    if(mcqAnswer._id === mcqAnswerId) {
-                                        mcqAnswer.answerOptions.push(mcqAnswerOption._id);
-                                        break;
-                                    }
-                                }
-                            }
-
-                            let bulk = MCQAnswer.collection.initializeOrderedBulkOp();
-                            for(let i = 0; i < mcqAnswers.length; i++) {
-                                const mcqAnswer = mcqAnswers[i];
-                                bulk.find({_id: mcqAnswer._id}).update({$set: mcqAnswer});
+                        if(values.openEndedAnswers.length > 0) {
+                            // Insert Open-Ended answers
+                            let bulk = OpenEndedAnswer.collection.initializeOrderedBulkOp();
+                            for(let i = 0; i < values.openEndedAnswers.length; i++) {
+                                const openEndedAnswer = values.openEndedAnswers[i];
+                                const value = {
+                                    id: openEndedAnswer.questionNumber,
+                                    mark: openEndedAnswer.mark,
+                                    score: openEndedAnswer.score,
+                                    startTime: openEndedAnswer.questionStart,
+                                    endTime: openEndedAnswer.questionEnd,
+                                    question: openEndedAnswer.questionId,
+                                    nlpAccuracy: openEndedAnswer.nlpAccuracy,
+                                    studentAnswer: openEndedAnswer.studentAnswer
+                                };
+                                bulk.insert(value);
                             }
 
                             bulk.execute(async(err, result) => {
@@ -208,76 +204,51 @@ module.exports = app => {
                                     throw(err);
                                 }
 
-                                if(values.openEndedAnswers.length > 0) {
-                                    // Insert Open-Ended answers
-                                    let bulk = OpenEndedAnswer.collection.initializeOrderedBulkOp();
-                                    for(let i = 0; i < values.openEndedAnswers.length; i++) {
-                                        const openEndedAnswer = values.openEndedAnswers[i];
-                                        const value = {
-                                            id: openEndedAnswer.questionNumber,
-                                            mark: openEndedAnswer.mark,
-                                            score: openEndedAnswer.score,
-                                            startTime: openEndedAnswer.questionStart,
-                                            endTime: openEndedAnswer.questionEnd,
-                                            question: openEndedAnswer.questionId,
-                                            nlpAccuracy: openEndedAnswer.nlpAccuracy,
-                                            studentAnswer: openEndedAnswer.studentAnswer
-                                        };
-                                        bulk.insert(value);
-                                    }
-
-                                    bulk.execute(async(err, result) => {
-                                        if (err) {
-                                            throw(err);
-                                        }
-
-                                        // Get proper array of MCQ Answer Ids
-                                        const mcqAnswerArray = [];
-                                        for(let i = 0; i < mcqAnswerIds.length; i++) {
-                                            const mcqAnswerId = mcqAnswerIds[i];
-                                            mcqAnswerArray.push(mcqAnswerId._id);
-                                        }
-
-                                        // Get proper array of open-ended Answer Ids
-                                        const openEndedAnswerIds = result.getInsertedIds();
-                                        const openEndedAnswerArray = [];
-                                        for(let i = 0; i < openEndedAnswerIds.length; i++) {
-                                            const openEndedAnswerId = openEndedAnswerIds[i];
-                                            openEndedAnswerArray.push(openEndedAnswerId._id);
-                                        }
-
-                                        // Insert Answer Overview
-                                        const answerOverview = new AnswerOverview({
-                                            ...values.gameOverview,
-                                            user: req.session.user._id,
-                                            mcqAnswers: mcqAnswerArray,
-                                            openEndedAnswers: openEndedAnswerArray
-                                        });
-                                        await answerOverview.save();
-
-                                        res.send('Done');
-                                    });
-                                } else {
-                                    // Get proper array of MCQ Answer Ids
-                                    const mcqAnswerArray = [];
-                                    for(let i = 0; i < mcqAnswerIds.length; i++) {
-                                        const mcqAnswerId = mcqAnswerIds[i];
-                                        mcqAnswerArray.push(mcqAnswerId._id);
-                                    }
-
-                                    // Insert Answer Overview
-                                    const answerOverview = new AnswerOverview({
-                                        ...values.gameOverview,
-                                        user: req.session.user._id,
-                                        mcqAnswers: mcqAnswerArray,
-                                        openEndedAnswers: []
-                                    });
-                                    await answerOverview.save();
-
-                                    res.send('Done');
+                                // Get proper array of MCQ Answer Ids
+                                const mcqAnswerArray = [];
+                                for(let i = 0; i < mcqAnswerIds.length; i++) {
+                                    const mcqAnswerId = mcqAnswerIds[i];
+                                    mcqAnswerArray.push(mcqAnswerId._id);
                                 }
+
+                                // Get proper array of open-ended Answer Ids
+                                const openEndedAnswerIds = result.getInsertedIds();
+                                const openEndedAnswerArray = [];
+                                for(let i = 0; i < openEndedAnswerIds.length; i++) {
+                                    const openEndedAnswerId = openEndedAnswerIds[i];
+                                    openEndedAnswerArray.push(openEndedAnswerId._id);
+                                }
+
+                                // Insert Answer Overview
+                                const answerOverview = new AnswerOverview({
+                                    ...values.gameOverview,
+                                    user: req.session.user._id,
+                                    mcqAnswers: mcqAnswerArray,
+                                    openEndedAnswers: openEndedAnswerArray
+                                });
+                                await answerOverview.save();
+
+                                res.send('Done');
                             });
-                        });
+                        } else {
+                            // Get proper array of MCQ Answer Ids
+                            const mcqAnswerArray = [];
+                            for(let i = 0; i < mcqAnswerIds.length; i++) {
+                                const mcqAnswerId = mcqAnswerIds[i];
+                                mcqAnswerArray.push(mcqAnswerId._id);
+                            }
+
+                            // Insert Answer Overview
+                            const answerOverview = new AnswerOverview({
+                                ...values.gameOverview,
+                                user: req.session.user._id,
+                                mcqAnswers: mcqAnswerArray,
+                                openEndedAnswers: []
+                            });
+                            await answerOverview.save();
+
+                            res.send('Done');
+                        }
                     });
                 });
             });

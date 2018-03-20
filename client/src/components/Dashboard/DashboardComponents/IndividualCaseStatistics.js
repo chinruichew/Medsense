@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import {Button, ControlLabel, FormControl, FormGroup, Image, Panel} from "react-bootstrap";
+import {Button, ControlLabel, FormControl, FormGroup, Panel} from "react-bootstrap";
 import ReactHtmlParser from 'react-html-parser';
 import { Charts, ChartContainer, ChartRow, YAxis, LineChart } from "react-timeseries-charts";
 import { TimeSeries, TimeRange } from "pondjs";
@@ -205,34 +205,14 @@ class IndividualCaseStatistics extends Component {
                         break;
                     }
                 }
-                let nlpAccuracy = '';
                 let displayAnswer = '';
                 if(answerType === 'open-ended') {
                     displayAnswer = ReactHtmlParser(answerOfQuestion.studentAnswer);
-                    nlpAccuracy = 'Accuracy: ' + answerOfQuestion.nlpAccuracy + '%';
                 } else {
-                    const mcqAnswerOptions = answerOfQuestion.answerOptions;
-                    for(let i = 0; i < mcqAnswerOptions.length; i++) {
-                        const mcqAnswerOption = mcqAnswerOptions[i];
-                        if(mcqAnswerOption.check) {
-                            displayAnswer += mcqAnswerOption.option.mcq;
-                        }
-                    }
+                    // Display MCQ Answers here
                 }
                 const nlpAccuracyColor = answerOfQuestion.nlpAccuracy < 50? 'red': 'green';
                 const score = answerOfQuestion.score < answerOfQuestion.mark/2? 'red': 'green';
-
-                // Display Picture if there is an attachment
-                let questionDisplay = question.attachment === ''? <p>{ReactHtmlParser(question.question)}</p>:
-                    <div className="row">
-                        <div className="col-md-4">
-                            <p>{ReactHtmlParser(question.question)}</p>
-                        </div>
-                        <div className="col-md-4">
-                            <Image src={question.attachment} style={{height: '300px', width: '300px'}} alt="" />
-                        </div>
-                    </div>;
-
                 return(
                     <div key={index} className="col-md-12 questionAnswerPanels">
                         <Panel bsStyle="primary" defaultExpanded>
@@ -242,14 +222,14 @@ class IndividualCaseStatistics extends Component {
                             <Panel.Collapse>
                                 <Panel.Body>
                                     <h3>Question Description</h3>
-                                    {questionDisplay}
+                                    <p>{ReactHtmlParser(question.question)}</p>
                                     <div className="row">
                                         <div className="col-md-12">
                                             <div className="col-md-4" style={{paddingLeft: '0px'}}>
                                                 <h3>Your Answer</h3>
                                             </div>
                                             <div className="col-md-4 text-center">
-                                                <h4 style={{marginTop: '25px', color: nlpAccuracyColor}}>{nlpAccuracy}</h4>
+                                                <h4 style={{marginTop: '25px', color: nlpAccuracyColor}}>Accuracy: {answerOfQuestion.nlpAccuracy}%</h4>
                                             </div>
                                             <div className="col-md-4 text-center">
                                                 <h4 style={{marginTop: '25px', color: score}}>Score: {answerOfQuestion.score}/{answerOfQuestion.mark}</h4>
