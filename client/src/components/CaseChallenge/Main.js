@@ -104,20 +104,20 @@ class Main extends Component {
                             <Table responsive>
                                 <tr align="center">
                                     <td style={{width:"12em"}}>
-                                        <Button style={{background: "white", color: 'black', width: "10em", height: "9em"}}
+                                        <Button style={{background: "white", color: 'black', width: "11em", height: "9em"}}
                                                 bsSize="large" onClick={(e)=> this.getRandomCase()}>
                                             <img style={{marginBottom: "5%"}} src="./random.png" alt="" width="60%"/> <br />Random Case
                                         </Button>
 
                                     </td>
                                     <td style={{width:"12em"}}>
-                                        <Button style={{background: approachBtnBgColor, color: 'black', width: "10em", height: "9em"}}
+                                        <Button style={{background: approachBtnBgColor, color: 'black', width: "11em", height: "9em"}}
                                                 onClick={(e)=> this.chooseApproachSearch ()} bsSize="large">
                                             <img style={{marginBottom: "5%"}} src="./appSearch.png" alt="" width="60%"/> <br />Search by Approach
                                         </Button>
                                     </td>
                                     <td style={{width:"12em"}}>
-                                        <Button style={{background: specialityBtnBgColor, color: 'black', width: "10em", height: "9em"}}
+                                        <Button style={{background: specialityBtnBgColor, color: 'black', width: "11em", height: "9em"}}
                                                 onClick={(e)=> this.chooseSpecialitySearch()} bsSize="large">
                                             <img style={{marginBottom: "5%"}} src="./speSearch.png" alt="" width="60%"/> <br /> <div>Search by Speciality</div>
                                         </Button>

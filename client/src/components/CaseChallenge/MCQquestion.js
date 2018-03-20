@@ -33,13 +33,13 @@ class MCQquestion extends Component {
         this.timer = 0;
     }
 
-    startTimer() {
+    startTimer = () => {
         if (this.timer === 0) {
             this.timer = setInterval(this.countDown, 1000);
         }
-    }
+    };
 
-    countDown() {
+    countDown = () => {
         // Remove one second, set state so a re-render happens.
         let seconds = this.state.seconds - 1;
         this.setState({
@@ -50,11 +50,11 @@ class MCQquestion extends Component {
         // Check if we're at zero.
         if (seconds === 0) {
             clearInterval(this.timer);
-            this.selectDone()
+            this.selectDone();
         }
-    }
+    };
 
-    secondsToTime(secs) {
+    secondsToTime = (secs) => {
         let divisor_for_minutes = secs % (60 * 60);
         let minutes = Math.floor(divisor_for_minutes / 60);
 
@@ -66,11 +66,11 @@ class MCQquestion extends Component {
             "s": seconds
         };
         return obj;
-    }
+    };
 
-    pauseTimer() {
+    pauseTimer = () =>{
         clearInterval(this.timer);
-    }
+    };
 
     componentDidMount() {
         const options = this.props.question.options;
@@ -90,7 +90,7 @@ class MCQquestion extends Component {
         window.scrollTo(0, 0)
     }
 
-    selectDone() {
+    selectDone = () => {
         const { showAnswers } = this.state;
         const { showNextButton } = this.state;
         if (!showAnswers) {
@@ -98,9 +98,9 @@ class MCQquestion extends Component {
             this.setState({ showNextButton: !showNextButton });
             this.pauseTimer();
         }
-    }
+    };
 
-    renderTimer(duration) {
+    renderTimer = (duration) => {
         if (this.props.timeLimit) {
             return (
                 <Col>
@@ -111,9 +111,9 @@ class MCQquestion extends Component {
             );
         }
         return;
-    }
+    };
 
-    renderShowNextButton() {
+    renderShowNextButton = () =>{
         const { showNextButton } = this.state;
         if (showNextButton) {
             return (
@@ -124,9 +124,9 @@ class MCQquestion extends Component {
                 </Col>
             );
         }
-    }
+    };
 
-    renderProgressBar() {
+    renderProgressBar = () =>{
         let progress = parseFloat(this.props.question.id) / parseFloat(this.props.totalQnNum) * 100;
         return (
             <div >
@@ -142,71 +142,22 @@ class MCQquestion extends Component {
                 <Col sm={2} align="left"><h4>{this.props.question.id}/{this.props.totalQnNum} Questions</h4> </Col>
             </div>
         );
-    }
+    };
 
-    renderScenario() {
+    renderScenario = () =>{
         if (this.props.question.id === 1 + "") {
             return ReactHtmlParser(this.props.scenario);
         } else {
             return ReactHtmlParser(this.props.question.stem);
         }
-    }
+    };
 
     // handleCheck1Change(e) {
     //     const value = e.target.checked;
     //     this.setState({ check1Stu: value });
     //     // this.update(value, "check1");
     // }
-    // handleCheck2Change(e) {
-    //     const value = e.target.checked;
-    //     this.setState({ check2Stu: value });
-    //     // this.update(value, "check2");
-    // }
-    // handleCheck3Change(e) {
-    //     const value = e.target.checked;
-    //     this.setState({ check3Stu: value });
-    //     // this.update(value, "check3");
-    // }
-    // handleCheck4Change(e) {
-    //     const value = e.target.checked;
-    //     this.setState({ check4Stu: value });
-    //     // this.update(value, "check4");
-    // }
-    // handleCheck5Change(e) {
-    //     const value = e.target.checked;
-    //     this.setState({ check5Stu: value });
-    //     // this.update(value, "check5");
-    // }
-    // handleCheck6Change(e) {
-    //     const value = e.target.checked;
-    //     this.setState({ check6Stu: value });
-    //     // this.update(value, "check6");
-    // }
-    //
-    // renderMCQ3() {
-    //     if (this.props.question.mcq3.length !== 0) {
-    //         return (
-    //             <Checkbox onChange={(e) => this.handleCheck3Change(e)}>{this.props.question.mcq3}</Checkbox>
-    //         );
-    //     }
-    // }
-    //
-    // renderMCQ4() {
-    //     if (this.props.question.mcq4.length !== 0) {
-    //         return (
-    //             <Checkbox onChange={(e) => this.handleCheck4Change(e)}>{this.props.question.mcq4}</Checkbox>
-    //         );
-    //     }
-    // }
-    //
-    // renderMCQ5() {
-    //     if (this.props.question.mcq5.length !== 0) {
-    //         return (
-    //             <Checkbox onChange={(e) => this.handleCheck5Change(e)}>{this.props.question.mcq5}</Checkbox>
-    //         );
-    //     }
-    // }
-    //
+
     // renderMCQ6() {
     //     if (this.props.question.mcq6.length !== 0) {
     //         return (
@@ -215,7 +166,7 @@ class MCQquestion extends Component {
     //     }
     // }
 
-    renderStorySoFar(){
+    renderStorySoFar = () =>{
         let stems = this.props.case.questions.map((obj, index) => {
             if (parseFloat(obj.id) < parseFloat(this.props.question.id)) {
                 let stem = '';
@@ -248,7 +199,7 @@ class MCQquestion extends Component {
                 </PanelGroup>
             );
         }
-    }
+    };
 
     handleCheckChange = (value, optionId) => {
         // Set value for MCQ option
@@ -273,89 +224,79 @@ class MCQquestion extends Component {
         });
     };
 
-    renderContent() {
-        return (
-            <div className='container'>
-                <h1>
-                    <Row>
-                        <div>{this.props.caseTitle}</div>
-                        <br />{this.renderProgressBar()}
-                    </Row>
-                </h1>
-
-                <br />
-
-                <h3>
-                    <Row style={{width: "95%"}}>
-                        <Col sm={3} style={{paddingLeft: "0", fontWeight: "bold"}}>Question {this.props.question.id}  </Col>
-                        <Col className='pull-right'>{this.renderTimer(0.2)}</Col>
-                    </Row>
-                </h3>
-
-                <br />
-
-                <Row style={{paddingLeft: "0"}}>
-                    {this.renderStorySoFar()}
-                </Row>
-
-                <Row>
-                    <Panel bsStyle="info" id="panel" style={{ borderWidth: "thick", width: "93%" }}>
-
-                        <h4 style={{ border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace: "pre-wrap", wordBreak: "keep-all" }}>{this.renderScenario()}</h4>
-
-                        <br />
-
-                        <h4 style={{ border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace: "pre-wrap", wordBreak: "keep-all" }}>
-                            {ReactHtmlParser(this.props.question.question)}
-                        </h4>
-
-                        <div className="col-md-5 col-md-offset-2">{<ImageMagnifier url={this.props.question.attachment} />}</div>
-
-                        <br /><br />
-
-                        <Form><h4>
-                            <FormGroup>
-                                <div className="col-md-6 col-md-offset-2">
-                                    {/*<Checkbox onChange={(e) => this.handleCheck1Change(e)}>{this.props.question.mcq1}</Checkbox>*/}
-                                    {/*<Checkbox onChange={(e) => this.handleCheck2Change(e)}>{this.props.question.mcq2}</Checkbox>*/}
-                                    {/*{this.renderMCQ3()}*/}
-                                    {/*{this.renderMCQ4()}*/}
-                                    {/*{this.renderMCQ5()}*/}
-                                    {/*{this.renderMCQ6()}*/}
-                                    {this.renderMCQs()}
-                                </div>
-                            </FormGroup>
-                        </h4></Form>
-                    </Panel>
-                    {this.renderShowNextButton()}
-
-
-                    {this.state.showAnswers && <MCQAnswers
-                        caseid={this.props.caseid}
-                        authid={this.props.authid}
-                        timeLimit={this.state.timeLimit}
-                        seconds={this.state.seconds}
-                        date={this.props.date}
-                        question={this.props.question}
-                        totalQnNum={this.props.totalQnNum}
-                        updateScore={this.props.updateScore}
-                        handleViewScore={this.props.handleViewScore}
-                        handleNextQuestion={this.props.handleNextQuestion}
-                        questionStart={this.state.questionStart}
-                        questionEnd={new Date()}
-                        questionId={this.props.question._id}
-                        questionNumber={this.props.question.id}
-                        checkedMCQs={this.state.checkedMCQs}
-                    />}
-                </Row>
-            </div>
-        );
-    }
-
     render() {
         return (
             <Form horizontal>
-                {this.renderContent()}
+                <div className='container'>
+                    <h1>
+                        <Row>
+                            <div>{this.props.caseTitle}</div>
+                            <br />{this.renderProgressBar()}
+                        </Row>
+                    </h1>
+
+                    <br />
+
+                    <h3>
+                        <Row style={{width: "95%"}}>
+                            <Col sm={3} style={{paddingLeft: "0", fontWeight: "bold"}}>Question {this.props.question.id}  </Col>
+                            <Col className='pull-right'>{this.renderTimer(0.2)}</Col>
+                        </Row>
+                    </h3>
+
+                    <br />
+
+                    <Row style={{paddingLeft: "0"}}>
+                        {this.renderStorySoFar()}
+                    </Row>
+
+                    <Row>
+                        <Panel bsStyle="info" id="panel" style={{ borderWidth: "thick", width: "93%" }}>
+
+                            <h4 style={{ border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace: "pre-wrap", wordBreak: "keep-all" }}>{this.renderScenario()}</h4>
+
+                            <br />
+
+                            <h4 style={{ border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace: "pre-wrap", wordBreak: "keep-all" }}>
+                                {ReactHtmlParser(this.props.question.question)}
+                            </h4>
+
+                            <div className="col-md-5 col-md-offset-2">{<ImageMagnifier url={this.props.question.attachment} />}</div>
+
+                            <br /><br />
+
+                            <Form><h4>
+                                <FormGroup>
+                                    <div className="col-md-6 col-md-offset-2">
+                                        {/*<Checkbox onChange={(e) => this.handleCheck1Change(e)}>{this.props.question.mcq1}</Checkbox>*/}
+                                        {/*{this.renderMCQ6()}*/}
+                                        {this.renderMCQs()}
+                                    </div>
+                                </FormGroup>
+                            </h4></Form>
+                        </Panel>
+
+                        {this.renderShowNextButton()}
+
+                        {this.state.showAnswers && <MCQAnswers
+                            caseid={this.props.caseid}
+                            authid={this.props.authid}
+                            timeLimit={this.state.timeLimit}
+                            seconds={this.state.seconds}
+                            date={this.props.date}
+                            question={this.props.question}
+                            totalQnNum={this.props.totalQnNum}
+                            updateScore={this.props.updateScore}
+                            handleViewScore={this.props.handleViewScore}
+                            handleNextQuestion={this.props.handleNextQuestion}
+                            questionStart={this.state.questionStart}
+                            questionEnd={new Date()}
+                            questionId={this.props.question._id}
+                            questionNumber={this.props.question.id}
+                            checkedMCQs={this.state.checkedMCQs}
+                        />}
+                    </Row>
+                </div>
             </Form>
         );
     }

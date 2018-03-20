@@ -41,20 +41,21 @@ class MCQAnswers extends Component {
         let answerCount = 0;
         let stuCorrectCount = 0;
         let stuWrongCount = 0;
-
         const questionOptions = this.state.question.options;
         for(let i = 0; i < this.state.checkedMCQs.length; i++) {
             const checkedMCQ = this.state.checkedMCQs[i];
             for(let j = 0; j < questionOptions.length; j++) {
                 const questionOption = questionOptions[j];
+                //checkedMCQ is student answer, questionOption is the model answer
                 if(checkedMCQ.questionOption === questionOption._id) {
-                    if(checkedMCQ.check) {
+                    console.log(checkedMCQ, questionOption);
+                    if(questionOption.check) {
                         answer += questionOption.mcq + ", ";
                         answerCount += 1;
                     }
-                    if(checkedMCQ.check === questionOption.check) {
+                    if(questionOption.check && checkedMCQ.check) {
                         stuCorrectCount++;
-                    } else {
+                    } else if (!questionOption.check && checkedMCQ.check){
                         stuWrongCount++;
                     }
                     break;
@@ -62,13 +63,14 @@ class MCQAnswers extends Component {
             }
         }
 
-
-
-        let finalScore = (stuCorrectCount-stuWrongCount) * (this.state.mark / answerCount);
+        let finalScore = (stuCorrectCount-stuWrongCount)/answerCount*this.state.mark;
 
         let toReturn = { answerCount: answerCount, mcqAnswer: answer.substring(0, answer.length - 2), stuCorrectAnswerCount: stuCorrectCount };
         if(stuWrongCount < stuCorrectCount){
             toReturn.score = Math.round(finalScore);
+            this.setState({score:Math.round(finalScore)});
+        } else {
+            toReturn.score = 0;
         }
 
         return(toReturn);
