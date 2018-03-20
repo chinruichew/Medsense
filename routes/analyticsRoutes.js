@@ -169,4 +169,15 @@ module.exports = app => {
             res.send(answer);
         });
     });
+
+    app.get('/api/getProfessorAssociatedCases', async(req, res) => {
+        // Fetch all cases uploaded or vetted by the professor
+        const sessionUser = req.session.user;
+        const uploadedCases = await Case.find({authorid: sessionUser._id});
+        const vettedCases = await Case.find({vetter: sessionUser._id});
+        res.send({
+            uploaded: uploadedCases,
+            vetted: vettedCases
+        });
+    });
 };

@@ -1,54 +1,100 @@
 import React, {Component} from 'react';
-import {Table} from "react-bootstrap";
+import axios from 'axios';
+import {Button, Image} from "react-bootstrap";
+
+import ProfessorIndividualCaseStatistics from "./ProfessorIndividualCaseStatistics";
 
 class ProfessorCaseStatistics extends Component {
-    render() {
-        console.log(this.props.answers);
-        const answers = this.props.answers;
-        const cases = this.props.cases.map(statCase => {
-            let totalScore = 0;
-            let numAnswers = 0;
-            let totalTime = 0;
-            for(let i = 0; i < answers.length; i++) {
-                const answer = answers[i];
-                if(answer.case._id === statCase._id) {
-                    totalScore += answer.score;
-                    numAnswers++;
-                    const mcqAnswers = answer.mcqAnswers;
-                    for(let j = 0; j < mcqAnswers.length; j++) {
-                        const mcqAnswer = mcqAnswers[j];
-                        totalTime += (mcqAnswer.questionEnd - mcqAnswer.questionStart);
-                    }
-                    const openEndedAnswers = answer.openEndedAnswers;
-                    for(let j = 0; j < openEndedAnswers.length; j++) {
-                        const openEndedAnswers = openEndedAnswers[j];
-                        totalTime += (openEndedAnswers.questionEnd - openEndedAnswers.questionStart);
-                    }
-                }
-            }
-            return(
-                <tr align="center">
-                    <td>{statCase.title}</td>
-                    <td>{totalScore/numAnswers}</td>
-                    <td>{totalTime}</td>
-                </tr>
-            );
+    state = {
+        associatedCases: null,
+        reviewedCase: null
+    };
+
+    componentDidMount() {
+        axios.get('/api/getProfessorAssociatedCases').then(res => {
+            this.setState({
+                associatedCases: res.data
+            });
+        }).catch(err => {
+            console.log(err);
         });
+    }
+
+    returnToCaseStats = () => {
+        this.setState({
+            reviewedCase: null
+        });
+    };
+
+    renderContent = () => {
+        switch(this.state.reviewedCase) {
+            case null:
+                switch(this.state.associatedCases) {
+                    case null:
+                        return;
+                    default:
+                        const uploadedCases = this.state.associatedCases.uploaded;
+                        const vettedCases = this.state.associatedCases.vetted;
+                        const uploadedSection = uploadedCases.map((uploadedCase, index) => {
+                            let placeholderImage = <Image circle src="/individual_case_image.jpg" style={{height: '150px', width: '150px'}} />;
+                            if(index % 2 === 0) {
+                                placeholderImage = <Image circle src="/individual_case_image_2.jpg" style={{height: '150px', width: '150px'}} />;
+                            }
+                            return(
+                                <div key={uploadedCase._id} className="col-md-4">
+                                    <div className="card">
+                                        <div className="card-content text-center">
+                                            {placeholderImage}
+                                            <h4>{uploadedCase.title}</h4>
+                                            <p>Speciality: {uploadedCase.speciality}</p>
+                                            <Button onClick={(e) => this.setState({reviewedCase: uploadedCase})} bsStyle="primary">Review</Button>
+                                        </div>
+                                    </div>
+                                </div>
+                            );
+                        });
+                        const vettedSection = vettedCases.map((vettedCase, index) => {
+                            let placeholderImage = <Image circle src="/individual_case_image.jpg" style={{height: '150px', width: '150px'}} />;
+                            if(index % 2 === 0) {
+                                placeholderImage = <Image circle src="/individual_case_image_2.jpg" style={{height: '150px', width: '150px'}} />;
+                            }
+                            return(
+                                <div key={vettedCase._id} className="col-md-4">
+                                    <div className="card">
+                                        <div className="card-content text-center">
+                                            {placeholderImage}
+                                            <h4>{vettedCase.title}</h4>
+                                            <p>Speciality: {vettedCase.speciality}</p>
+                                            <Button onClick={(e) => this.setState({reviewedCase: vettedCase})} bsStyle="primary">Review</Button>
+                                        </div>
+                                    </div>
+                                </div>
+                            );
+                        });
+                        return(
+                            <div>
+                                <div className="col-md-12 text-center">
+                                    <h3>Uploaded Cases</h3>
+                                    {uploadedSection}
+                                </div>
+                                <div className="col-md-12 text-center">
+                                    <h3>Vetted Cases</h3>
+                                    {vettedSection}
+                                </div>
+                            </div>
+                        );
+                }
+            default:
+                return(
+                    <ProfessorIndividualCaseStatistics returnToCaseStats={this.returnToCaseStats} reviewedCase={this.state.reviewedCase}/>
+                );
+        }
+    };
+
+    render() {
         return(
-            <div className="col-md-12">
-                <h2>Case Statistics</h2>
-                <Table responsive>
-                    <thead >
-                        <tr style={{background: '#82C5D9', fontSize:'130%'}}>
-                            <th><center>Case Title</center></th>
-                            <th><center>Average Score</center></th>
-                            <th><center>Average Time Spent</center></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {cases}
-                    </tbody>
-                </Table>
+            <div>
+                {this.renderContent()}
             </div>
         );
     }

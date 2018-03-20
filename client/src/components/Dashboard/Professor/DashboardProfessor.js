@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import {Tab, Tabs} from "react-bootstrap";
 
 import StudentLeaderboard from "../DashboardComponents/StudentLeaderboard";
 import ContributionLeaderboard from "../DashboardComponents/ContributionLeaderboard";
@@ -8,9 +9,7 @@ import ProfessorCaseStatistics from "./ProfessorCaseStatistics";
 class DashboardProfessor extends Component {
     state = {
         studentLeaders: null,
-        contributionLeaders: null,
-        cases: null,
-        answers: null
+        contributionLeaders: null
     };
 
     componentDidMount() {
@@ -27,20 +26,6 @@ class DashboardProfessor extends Component {
         }).catch(err => {
             throw(err);
         });
-
-        // Get all Cases
-        axios.get('/api/fetchVettedCases').then(res => {
-            this.setState({cases: res.data});
-        }).catch(err => {
-            throw(err);
-        });
-
-        // Get all Answers
-        axios.get('/api/fetchAnswers').then(res => {
-            this.setState({answers: res.data});
-        }).catch(err => {
-            throw(err);
-        });
     };
 
     renderContent = () => {
@@ -52,31 +37,28 @@ class DashboardProfessor extends Component {
                     case null:
                         return;
                     default:
-                        switch(this.state.cases) {
-                            case null:
-                                return;
-                            default:
-                                switch(this.state.answers) {
-                                    case null:
-                                        return;
-                                    default:
-                                        return(
-                                            <div className="container">
-                                                <div className="row">
-                                                    <div className="col-md-6">
-                                                        <StudentLeaderboard leaders={this.state.studentLeaders} />
-                                                    </div>
-                                                    <div className="col-md-6">
-                                                        <ContributionLeaderboard leaders={this.state.contributionLeaders} />
-                                                    </div>
-                                                </div>
-                                                <div className="row">
-                                                    <ProfessorCaseStatistics cases={this.state.cases} answers={this.state.answers} />
-                                                </div>
+                        return(
+                            <div className="container">
+                                <Tabs defaultActiveKey={1}>
+                                    <Tab eventKey={1} title="Case Statistics">
+                                        <div className="row">
+                                            <ProfessorCaseStatistics />
+                                        </div>
+                                    </Tab>
+                                    <Tab eventKey={2} title="Leaderboard">
+                                        <div className="row">
+                                            <br/>
+                                            <div className="col-md-6">
+                                                <StudentLeaderboard leaders={this.state.studentLeaders} />
                                             </div>
-                                        );
-                                }
-                        }
+                                            <div className="col-md-6">
+                                                <ContributionLeaderboard leaders={this.state.contributionLeaders} />
+                                            </div>
+                                        </div>
+                                    </Tab>
+                                </Tabs>
+                            </div>
+                        );
                 }
         }
     };

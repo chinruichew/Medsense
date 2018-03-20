@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import StudentLeaderboard from "../DashboardComponents/StudentLeaderboard";
 import ContributionLeaderboard from "../DashboardComponents/ContributionLeaderboard";
-import StudentCaseStatistics from "../DashboardComponents/StudentCaseStatistics";
+import StudentCaseStatistics from "./StudentCaseStatistics";
 import {Tab, Tabs} from "react-bootstrap";
 import NoGamesFound from "./NoGamesFound";
 

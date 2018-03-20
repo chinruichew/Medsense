@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Button, Image} from "react-bootstrap";
-import IndividualCaseStatistics from "./IndividualCaseStatistics";
+import StudentIndividualCaseStatistics from "./StudentIndividualCaseStatistics";
 
 class StudentCaseStatistics extends Component {
     state = {
@@ -62,7 +62,7 @@ class StudentCaseStatistics extends Component {
                 });
             default:
                 return(
-                    <IndividualCaseStatistics returnToCaseStats={this.returnToCaseStats} caseId={this.state.caseId}/>
+                    <StudentIndividualCaseStatistics returnToCaseStats={this.returnToCaseStats} caseId={this.state.caseId}/>
                 );
         }
     };

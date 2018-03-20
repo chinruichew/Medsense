@@ -6,7 +6,7 @@ import { Charts, ChartContainer, ChartRow, YAxis, LineChart } from "react-timese
 import { TimeSeries, TimeRange } from "pondjs";
 import Timeline from 'react-visjs-timeline';
 
-class IndividualCaseStatistics extends Component {
+class StudentIndividualCaseStatistics extends Component {
     state = {
         answers: null,
         selectedAnswerIndex: 0,
@@ -20,7 +20,6 @@ class IndividualCaseStatistics extends Component {
     }
 
     visTimelineClickHandler = (props) => {
-        console.log(props);
         const answerId = props.item;
         if(answerId !== null) {
             this.setState({
@@ -316,4 +315,4 @@ class IndividualCaseStatistics extends Component {
     }
 }
 
-export default IndividualCaseStatistics;
+export default StudentIndividualCaseStatistics;
