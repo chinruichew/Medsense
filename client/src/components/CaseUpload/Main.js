@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import ReactHtmlParser from "react-html-parser";
-import { Button, PanelGroup, Panel, FormGroup, Radio, ControlLabel, FormControl, Col, Row } from 'react-bootstrap';
+import {
+    Button, PanelGroup, Panel, FormGroup, Radio, ControlLabel, FormControl, Col, Row,
+    Glyphicon
+} from 'react-bootstrap';
 import axios from 'axios';
 import BootstrapModal from '../UI/Modal/UploadBootstrapModal.js';
 import './Upload.css';
@@ -23,6 +26,9 @@ class Main extends Component {
         previewShow: false,
         id: this.props.id,
         radio: false,
+        overview: false,
+        question: false,
+        pdpa: false
     };
 
     handleUpdateOverview = (details) => {
@@ -581,14 +587,16 @@ class Main extends Component {
         if (this.props.process==="vet"){
             return;
         } else {
-            const PDPA = (
-                <span className="title" style={{fontSize: "180%"}}><strong><center>Credits</center></strong></span>
+            const PDPA = this.state.pdpa?(
+                <span className="title" style={{fontSize: "180%"}}><strong><center>-| Credits</center></strong></span>
+            ):(
+                <span className="title" style={{fontSize: "180%"}}><strong><center>+| Credits</center></strong></span>
             );
 
             return(
             <PanelGroup accordion>
                 <Panel eventKey="1" bsStyle="primary" style={{marginLeft: "14%", marginRight: "15%", padding: "0"}}>
-                    <Panel.Heading><Panel.Title toggle>{PDPA}</Panel.Title></Panel.Heading>
+                    <Panel.Heading  onClick={(e) => this.setState({pdpa:!this.state.pdpa})}><Panel.Title toggle>{PDPA}</Panel.Title></Panel.Heading>
                     <Panel.Body collapsible>
                         <FormGroup controlId="formControlsAuthor">
                             <ControlLabel style={{fontSize: "150%"}}>Author of case (Optional)</ControlLabel>
@@ -663,7 +671,7 @@ class Main extends Component {
 
     showPreview = (e) => {
         this.setState({ previewShow: true });
-    }
+    };
 
     render() {
         let stems = this.state.qnData.map((obj, index) => {
@@ -683,12 +691,16 @@ class Main extends Component {
             );
         });
 
-        const overviewTitle = (
-            <span className="title" style={{fontSize: "180%"}}><strong><center>Case Overview</center></strong></span>
+        const overviewTitle = this.state.overview?(
+            <span className="title" style={{fontSize: "180%"}}><strong><center>-| Case Overview</center></strong></span>
+        ):(
+            <span className="title" style={{fontSize: "180%"}}><strong><center>+| Case Overview</center></strong></span>
         );
 
-        const questionTitle = (
-            <span className="title" style={{fontSize: "180%"}}><strong><center>Case Questions</center></strong></span>
+        const questionTitle = this.state.question?(
+            <span className="title" style={{fontSize: "180%"}}><strong><center>-| Case Questions</center></strong></span>
+        ):(
+            <span className="title" style={{fontSize: "180%"}}><strong><center>+| Case Questions</center></strong></span>
         );
         let questions = this.state.qnData;
         questions.sort(this.compare);
@@ -731,24 +743,24 @@ class Main extends Component {
 
         return(
             <div>
-                <div className="heading">
-                    <h1 align="center">Case Upload</h1>
-                    <hr/>
-                    <p>
-                        Do you have a case you would like to share?
-                        Please refer to the <a href="./MedSense WorkPlan.pdf" target="_blank">CASE TEMPLATE</a> to understand the format required for all cases.
-                        <br/><br/><img src="./stop.png" alt="" style={{height:"2em", marginLeft: "0"}} hspace="15"/>
-                        In addition, before you upload a case, please ensure that all texts and attachments do not contain identifiable information such as NRICs or patient's faces.
-                        <br/><br/>Please note that all cases uploaded by students will need to be vetted by Professors before they are released to the other students as a game.
+                <div align="center" className="heading">
+                    <h1>Have a case to share?</h1>
+                    <h4>
+                        <em><br/>
+                        Refer to the <a href="./MedSense WorkPlan.pdf" target="_blank">CASE TEMPLATE</a> to understand the format required.
+                        {/*<br/><br/><img src="./stop.png" alt="" style={{height:"2em", marginLeft: "0"}} hspace="15"/>*/}
+                        <br/><br/>In addition, ensure that all texts and attachments<br/>do not contain identifiable information such as NRICs or patient's faces.
+                        <br/><br/>Note that cases uploaded by students will need to be vetted by faculty<br/>before they are released as a game.
                         <br/><br/>Expand and collapse the headers to reduce the scrolling you will need to do! <br/>
-                    </p>
+                        </em>
+                    </h4>
                 </div>
 
                 <div id="main">
                     <form className="case-area">
                         <PanelGroup accordion bsStyle="primary" style={{marginLeft: "14%", marginRight: "15%", padding: "0"}}>
                             <Panel eventKey="1">
-                                <Panel.Heading>
+                                <Panel.Heading onClick={(e) => this.setState({overview:!this.state.overview})}>
                                     <Panel.Title toggle>{overviewTitle}</Panel.Title>
                                 </Panel.Heading>
                                 <Panel.Body collapsible>
@@ -769,14 +781,14 @@ class Main extends Component {
 
                         <PanelGroup accordion bsStyle="primary" style={{marginLeft: "14%", marginRight: "15%", padding: "0"}}>
                             <Panel eventKey="1" style={{border: "0"}}>
-                                <Panel.Heading><Panel.Title toggle>{questionTitle}</Panel.Title></Panel.Heading>
+                                <Panel.Heading onClick={(e) => this.setState({question:!this.state.question})}><Panel.Title toggle>{questionTitle}</Panel.Title></Panel.Heading>
                                 <Panel.Body collapsible>
                                     <div className="question-area">
                                         {questionNodes}
                                     </div>
 
                                     <div className="add-question-button">
-                                        <Button type="button" bsStyle="primary" onClick={(e) => this.addQuestion(this.state.qnData.length+1)}>Add Question</Button><br />
+                                        <Button type="button" bsSize="large" bsStyle="link" onClick={(e) => this.addQuestion(this.state.qnData.length+1)}><Glyphicon glyph="plus-sign"/> Add Question</Button><br />
                                     </div>
                                 </Panel.Body>
                             </Panel>

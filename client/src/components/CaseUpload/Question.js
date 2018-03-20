@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
     Button, FormGroup, ControlLabel, FormControl, InputGroup, Panel, Row,
-    PanelGroup, Popover, OverlayTrigger
+    PanelGroup, Popover, OverlayTrigger, Glyphicon
 } from 'react-bootstrap';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -21,6 +21,7 @@ class Question extends Component {
     state = {
         changeFile: false,
         changePearlFile:false,
+        heading: true,
     };
 
     checkQ1 = () =>{
@@ -235,18 +236,23 @@ class Question extends Component {
             </Popover>
         );
 
+        const questiontitle = this.state.heading?(
+            <span className="title" style={{fontSize: "150%"}}>{"-| Question "+this.props.id}</span>
+        ):(
+            <span className="title" style={{fontSize: "150%"}}>{"+| Question "+this.props.id}</span>
+        );
         return(
             <div id="question">
                 <div className="add-question-button">
-                    <Button type="button" bsStyle="primary" onClick={(e) => this.props.handleAddQuestion(this.props.id)}>Add Question</Button><br />
+                    <Button type="button" bsStyle="link" bsSize="large" onClick={(e) => this.props.handleAddQuestion(this.props.id)}><Glyphicon glyph="plus-sign"/> Add Question</Button><br />
                 </div><br/>
 
                 <PanelGroup accordion>
                     <Panel>
-                        <Panel.Heading><Panel.Title toggle style={{fontSize: "180%"}}>{"Question #"+this.props.id}</Panel.Title></Panel.Heading>
+                        <Panel.Heading onClick={(e) => this.setState({heading:!this.state.heading})}><Panel.Title toggle>{questiontitle}</Panel.Title></Panel.Heading>
                         <Panel.Body collapsible>
                             <div className="delete-question-button">
-                                <Button  type="button" bsStyle="primary" onClick={(e)=>this.props.handleDeleteQuestion(this.props.id)}>Delete Question</Button><br/>
+                                <Button  type="button" bsSize="large" bsStyle="link" onClick={(e)=>this.props.handleDeleteQuestion(this.props.id)}><Glyphicon glyph="trash"/></Button><br/>
                             </div>
 
                             {this.checkQ1()}
