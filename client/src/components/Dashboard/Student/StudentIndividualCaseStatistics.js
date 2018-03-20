@@ -14,7 +14,7 @@ class StudentIndividualCaseStatistics extends Component {
     };
 
     componentDidMount() {
-        axios.get('/api/getAnswersByCase?id=' + this.props.caseId).then(res => {
+        axios.get('/api/getUserAnswersByCase?id=' + this.props.caseId).then(res => {
             this.setState({answers: res.data});
         });
     }

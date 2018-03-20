@@ -117,6 +117,36 @@ module.exports = app => {
 
     app.get('/api/getAnswersByCase', async(req, res) => {
         const id = req.query.id;
+        AnswerOverview.find({case: id}).populate({
+            path: 'case',
+            model: 'cases',
+            populate: {
+                path: 'questions',
+                model: 'questions',
+                populate: {
+                    path: 'options',
+                    model: 'options'
+                }
+            }
+        }).populate({
+            path: 'user',
+            model: 'users',
+        }).populate({
+            path: 'openEndedAnswers',
+            model: 'openEndedAnswers',
+        }).populate({
+            path: 'mcqAnswers',
+            model: 'mcqAnswers',
+        }).exec(async(err, answers) => {
+            if(err) {
+                console.log(err);
+            }
+            res.send(answers);
+        });
+    });
+
+    app.get('/api/getUserAnswersByCase', async(req, res) => {
+        const id = req.query.id;
         AnswerOverview.find({case: id, user: req.session.user._id}).populate({
             path: 'case',
             model: 'cases',
@@ -173,7 +203,14 @@ module.exports = app => {
     app.get('/api/getProfessorAssociatedCases', async(req, res) => {
         // Fetch all cases uploaded or vetted by the professor
         const sessionUser = req.session.user;
-        const uploadedCases = await Case.find({authorid: sessionUser._id});
+        const uploadedCases = await Case.find({authorid: sessionUser._id}).populate({
+            path: 'questions',
+            model: 'questions',
+            populate: {
+                path: 'options',
+                model: 'options'
+            }
+        });
         const vettedCases = await Case.find({vetter: sessionUser._id});
         res.send({
             uploaded: uploadedCases,

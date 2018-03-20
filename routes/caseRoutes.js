@@ -170,7 +170,6 @@ module.exports = app => {
                 }
 
                 const insertedOptionIds = result.getInsertedIds();
-                console.log(insertedOptionIds);
                 for(let i = 0; i < optionsToInsert.length; i++) {
                     const optionToInsert = optionsToInsert[i];
                     optionToInsert._id = insertedOptionIds._id;
