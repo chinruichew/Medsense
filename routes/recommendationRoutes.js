@@ -1,11 +1,13 @@
 const Case = require('../models/Case');
 const AnswerOverview = require('../models/AnswerOverview');
+const Subspeciality = require('../models/Subspeciality');
 
 const constants = require('../utility/constantTypes');
 
 module.exports = app => {
     app.get('/api/getProfessorRecommendedCases', async(req, res) => {
-        // Recommend cases based on their subspecialities
+        // Recommend pending cases based on their subspecialities
+        // To-do: Recommend pending cases based on cohort's performance in the subspeciality
 
         const cases = await Case.find({status: constants.CASE_STATUS_PENDING});
 
@@ -34,43 +36,57 @@ module.exports = app => {
         if(filteredCases.length <= constants.RECOMMENDATION_THRESHOLD) {
             res.send(filteredCases);
         } else {
-            // From here, the algorithm will return the subspeciality with the highest demand (highest number of uploads)
+            // From here, the algorithm will return the subspecialities with the least number of vetted cases
+
+            // Get vetted cases
+            const vettedCases = await Case.find({status: constants.CASE_STATUS_VETTED});
+            
+            // Get all subspecialities and assign number 0 to all
+            const allSubspecialities = await Subspeciality.find();
+            for(let i = 0; i < allSubspecialities.length; i++) {
+                const subspeciality = allSubspecialities[i];
+                subspeciality.numSpeciality = 0;
+            }
+
             // Sort cases by number of subspecialities
-            const caseIndex = {};
-            for(let i = 0; i < filteredCases.length; i++) {
-                const filteredCase = filteredCases[i];
-                const caseSubSpecialities = filteredCase.subspeciality;
-                let toAdd = true;
+            for(let i = 0; i < vettedCases.length; i++) {
+                const vettedCase = vettedCases[i];
+                const caseSubSpecialities = vettedCase.subspeciality;
                 for(let j = 0; j < caseSubSpecialities.length; j++) {
                     const caseSubSpeciality = caseSubSpecialities[j];
-                    for (let key in caseIndex) {
+                    for (let key in allSubspecialities) {
                         if (key === caseSubSpeciality) {
-                            caseIndex[key] = caseIndex[key]++;
-                            toAdd = false;
+                            allSubspecialities[key] = allSubspecialities[key]++;
                             break;
                         }
-                    }
-                    if(toAdd) {
-                        caseIndex[caseSubSpeciality] = 1;
                     }
                 }
             }
 
-            // Find max of filtered cases
+            // Find max of vetted cases
             let max = 0;
-            for(let key in caseIndex) {
-                const numSpeciality = caseIndex[key];
+            for(let key in allSubspecialities) {
+                const numSpeciality = allSubspecialities[key];
                 if(numSpeciality > max) {
                     max = numSpeciality;
                 }
             }
 
-            // Start adding in cases starting from max
+            // Find min of vetted cases
+            let min = max;
+            for(let key in allSubspecialities) {
+                const numSpeciality = allSubspecialities[key];
+                if(numSpeciality < min) {
+                    min = numSpeciality;
+                }
+            }
+
+            // Start adding in cases starting from min
             const sortedCases = [];
             while(sortedCases.length < constants.RECOMMENDATION_THRESHOLD) {
-                for(let key in caseIndex) {
-                    const numSpeciality = caseIndex[key];
-                    if(numSpeciality === max) {
+                for(let key in allSubspecialities) {
+                    const numSpeciality = allSubspecialities[key];
+                    if(numSpeciality === min) {
                         for(let i = 0; i < filteredCases.length; i++) {
                             const filteredCase = filteredCases[i];
                             const caseSubSpecialities = filteredCase.subspeciality;
@@ -90,7 +106,7 @@ module.exports = app => {
                         break;
                     }
                 }
-                max--;
+                min++;
             }
 
             res.send(sortedCases);
