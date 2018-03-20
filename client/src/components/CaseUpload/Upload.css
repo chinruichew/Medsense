@@ -66,3 +66,29 @@
     background-color:#A4B2C8;
     border-radius: 25px;
 }
+
+.heading h1{
+    font-weight: bold;
+    color: #199ED8;
+}
+
+.heading hr{
+    border-width: thick;
+    border-color: #199ED8;
+    width: 70%;
+}
+
+.heading p{
+    margin:1% 16% 3%;
+    font-size: 150%;
+    font-weight: bold;
+
+}
+
+.preview-case-button{
+    margin:20% 15% 2%;
+}
+
+.submit-case-button{
+    margin:20% 15% 2%;
+}

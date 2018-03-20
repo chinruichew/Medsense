@@ -243,7 +243,7 @@ class Question extends Component {
 
                 <PanelGroup accordion>
                     <Panel>
-                        <Panel.Heading><Panel.Title toggle>{"Question #"+this.props.id}</Panel.Title></Panel.Heading>
+                        <Panel.Heading><Panel.Title toggle style={{fontSize: "180%"}}>{"Question #"+this.props.id}</Panel.Title></Panel.Heading>
                         <Panel.Body collapsible>
                             <div className="delete-question-button">
                                 <Button  type="button" bsStyle="primary" onClick={(e)=>this.props.handleDeleteQuestion(this.props.id)}>Delete Question</Button><br/>

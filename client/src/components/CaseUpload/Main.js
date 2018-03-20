@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactHtmlParser from "react-html-parser";
-import { Button, PanelGroup, Panel, FormGroup, Radio, ControlLabel, FormControl, Col } from 'react-bootstrap';
+import { Button, PanelGroup, Panel, FormGroup, Radio, ControlLabel, FormControl, Col, Row } from 'react-bootstrap';
 import axios from 'axios';
 import BootstrapModal from '../UI/Modal/UploadBootstrapModal.js';
 import './Upload.css';
@@ -20,6 +20,7 @@ class Main extends Component {
         author: "",
         vmShow: false,
         vmConfirm: false,
+        previewShow: false,
         id: this.props.id,
         radio: false,
     };
@@ -581,12 +582,12 @@ class Main extends Component {
             return;
         } else {
             const PDPA = (
-                <span className="title"><center>Credits</center></span>
+                <span className="title" style={{fontSize: "180%"}}><strong><center>Credits</center></strong></span>
             );
 
             return(
             <PanelGroup accordion>
-                <Panel eventKey="1" bsStyle="info">
+                <Panel eventKey="1" bsStyle="primary" style={{marginLeft: "14%", marginRight: "15%", padding: "0"}}>
                     <Panel.Heading><Panel.Title toggle>{PDPA}</Panel.Title></Panel.Heading>
                     <Panel.Body collapsible>
                         <FormGroup controlId="formControlsAuthor">
@@ -660,9 +661,11 @@ class Main extends Component {
         console.log(!checked);
     };
 
-    render() {
-        const storySoFar = (<span className="story-title"><center>Story So Far</center></span>);
+    showPreview = (e) => {
+        this.setState({ previewShow: true });
+    }
 
+    render() {
         let stems = this.state.qnData.map((obj, index) => {
             let stem;
             if (obj.id===1){
@@ -673,21 +676,19 @@ class Main extends Component {
             let qn=obj.question;
             return (
                 <div key={index} className="stem">
-                    <div className="stem-label" style={{fontSize: "180%"}}>
-                        Question {obj.id}
-                    </div>
-                    <div style={{fontSize: "120%"}}>{ReactHtmlParser(stem)}</div>
-                    <div style={{fontSize: "120%"}}>{ReactHtmlParser(qn)}</div>
+                    <h3 style={{marginTop: "2%", color: "#337ab7", marginLeft: "2%"}}><strong>Question {obj.id}</strong></h3>
+                    <div style={{whiteSpace:"pre-wrap", paddingLeft: "3%", fontSize:"120%", paddingRight: "3%"}}>{ReactHtmlParser(stem)}</div>
+                    <div style={{whiteSpace:"pre-wrap", paddingLeft: "3%", fontSize:"120%", paddingRight: "3%"}}>{ReactHtmlParser(qn)}</div>
                 </div>
             );
         });
 
         const overviewTitle = (
-            <span className="title"><center>Case Overview</center></span>
+            <span className="title" style={{fontSize: "180%"}}><strong><center>Case Overview</center></strong></span>
         );
 
         const questionTitle = (
-            <span className="title"><center>Case Questions</center></span>
+            <span className="title" style={{fontSize: "180%"}}><strong><center>Case Questions</center></strong></span>
         );
         let questions = this.state.qnData;
         questions.sort(this.compare);
@@ -730,43 +731,23 @@ class Main extends Component {
 
         return(
             <div>
-                <center>
-                    <table>
-                        <tr>
-                            <td width="60px"><a href="/disclaimer"><img src="./stop.png" alt="" style={{height:"4em"}}/></a></td>
-                            <td>Before you upload the case, please ensure that all texts and attachments <br/> do not contain identifiable information such as IC number or patient's face</td>
-                        </tr>
-                    </table>
-                </center>
-                <center>*Expand/collapse the headers to view/hide case details*</center>
-                <center><a href="./MedSense WorkPlan.pdf" target="_blank">Click here for CASE TEMPLATE</a></center>
+                <div className="heading">
+                    <h1 align="center">Case Upload</h1>
+                    <hr/>
+                    <p>
+                        Do you have a case you would like to share?
+                        Please refer to the <a href="./MedSense WorkPlan.pdf" target="_blank">CASE TEMPLATE</a> to understand the format required for all cases.
+                        <br/><br/><img src="./stop.png" alt="" style={{height:"2em", marginLeft: "0"}} hspace="15"/>
+                        In addition, before you upload a case, please ensure that all texts and attachments do not contain identifiable information such as NRICs or patient's faces.
+                        <br/><br/>Please note that all cases uploaded by students will need to be vetted by Professors before they are released to the other students as a game.
+                        <br/><br/>Expand and collapse the headers to reduce the scrolling you will need to do! <br/>
+                    </p>
+                </div>
 
                 <div id="main">
-                    <PanelGroup accordion style={{marginTop: "2%"}}>
-                        {/*<PanelGroup accordion style={{marginTop: "2%", position: "fixed", width: "96%"}}>*/}
-                        <Panel eventKey="1" bsStyle="info">
-                            <Panel.Heading>
-                                <Panel.Title toggle>{storySoFar}</Panel.Title>
-                            </Panel.Heading>
-                            <Panel.Body collapsible>
-                                <p style={{textDecorationLine: "underline", margin: "0", fontSize: "200%", fontFamily: "Great Vibes", letterSpacing: "0.1em"}}>Case Scenario</p>
-                                <div className="row" style={{whiteSpace:"pre-wrap", paddingLeft: "5%", fontSize:"120%"}}>
-                                    {ReactHtmlParser(this.state.scenario)}
-                                </div>
-                                <br/><br/>
-                                <p style={{textDecorationLine: "underline", margin: "0", fontSize: "200%", fontFamily: "Great Vibes", letterSpacing: "0.1em"}}>Case Questions</p>
-                                <div className="row" style={{whiteSpace:"pre-wrap", paddingLeft: "5%"}}>{stems}</div>
-                                <br/><br/>
-                            </Panel.Body>
-                        </Panel>
-                    </PanelGroup>
-
-                    {/*<br/><br/><br/><br/>*/}
-
                     <form className="case-area">
-                        <PanelGroup accordion>
-                            {/*<PanelGroup accordion style={{marginTop: "3%"}}>*/}
-                            <Panel eventKey="1" bsStyle="info">
+                        <PanelGroup accordion bsStyle="primary" style={{marginLeft: "14%", marginRight: "15%", padding: "0"}}>
+                            <Panel eventKey="1">
                                 <Panel.Heading>
                                     <Panel.Title toggle>{overviewTitle}</Panel.Title>
                                 </Panel.Heading>
@@ -786,8 +767,8 @@ class Main extends Component {
                             </Panel>
                         </PanelGroup>
 
-                        <PanelGroup accordion>
-                            <Panel eventKey="1" bsStyle="info">
+                        <PanelGroup accordion bsStyle="primary" style={{marginLeft: "14%", marginRight: "15%", padding: "0"}}>
+                            <Panel eventKey="1" style={{border: "0"}}>
                                 <Panel.Heading><Panel.Title toggle>{questionTitle}</Panel.Title></Panel.Heading>
                                 <Panel.Body collapsible>
                                     <div className="question-area">
@@ -803,9 +784,34 @@ class Main extends Component {
 
                         {this.renderPDPA()}
 
-                        <div className="submit-case-button">
-                            <Button type="button" align="center" bsStyle="primary" onClick={(e) => this.saveChanges(e)}>Submit</Button>
-                        </div>
+                        <Row>
+                            <Col smOffset={2} sm={2}>
+                                <div className="preview-case-button">
+                                    <Button type="button" align="center" bsStyle="primary" bsSize="large"  onClick={(e) => this.showPreview(e)}>Preview</Button>
+                                </div>
+                            </Col>
+                            <Col smOffset={4} sm={2}>
+                                <div className="submit-case-button">
+                                    <Button type="button" align="center" bsStyle="primary" bsSize="large" onClick={(e) => this.saveChanges(e)}>Submit</Button>
+                                </div>
+                            </Col>
+                        </Row>
+
+                        <BootstrapModal bsSize="large" show={this.state.previewShow} onHide={(e) => this.setState({ previewShow: false })}>
+                            <BootstrapModal.Header closeButton>
+                                <BootstrapModal.Title id="contained-modal-title-lg">{this.state.title}</BootstrapModal.Title>
+                            </BootstrapModal.Header>
+                            <BootstrapModal.Body>
+                                <h3 style={{marginTop: "0", color: "#337ab7"}}><strong>Case Scenario</strong></h3>
+                                <div className="row" style={{whiteSpace:"pre-wrap", paddingLeft: "3%", fontSize:"120%", paddingRight: "3%"}}>
+                                    {ReactHtmlParser(this.state.scenario)}
+                                </div>
+                                <div className="row">{stems}</div>
+                            </BootstrapModal.Body>
+                            <BootstrapModal.Footer>
+                                <Button onClick={(e) => this.setState({ previewShow: false })}>Close</Button>
+                            </BootstrapModal.Footer>
+                        </BootstrapModal>
 
                         <BootstrapModal
                             show={this.state.vmShow}
