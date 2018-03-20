@@ -676,7 +676,7 @@ class Main extends Component {
             let qn=obj.question;
             return (
                 <div key={index} className="stem">
-                    <h3 style={{marginTop: "2%", color: "#337ab7", marginLeft: "2%"}}><strong>Question {obj.id}</strong></h3>
+                    <h3 style={{marginTop: "3%", color: "#337ab7", marginLeft: "2%"}}><strong>Question {obj.id}</strong></h3>
                     <div style={{whiteSpace:"pre-wrap", paddingLeft: "3%", fontSize:"120%", paddingRight: "3%"}}>{ReactHtmlParser(stem)}</div>
                     <div style={{whiteSpace:"pre-wrap", paddingLeft: "3%", fontSize:"120%", paddingRight: "3%"}}>{ReactHtmlParser(qn)}</div>
                 </div>
@@ -799,7 +799,7 @@ class Main extends Component {
 
                         <BootstrapModal bsSize="large" show={this.state.previewShow} onHide={(e) => this.setState({ previewShow: false })}>
                             <BootstrapModal.Header closeButton>
-                                <BootstrapModal.Title id="contained-modal-title-lg">{this.state.title}</BootstrapModal.Title>
+                                <BootstrapModal.Title id="contained-modal-title-lg" style={{fontSize: "200%", fontWeight: "bold"}}>{this.state.title}</BootstrapModal.Title>
                             </BootstrapModal.Header>
                             <BootstrapModal.Body>
                                 <h3 style={{marginTop: "0", color: "#337ab7"}}><strong>Case Scenario</strong></h3>
