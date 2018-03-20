@@ -17,6 +17,10 @@ class StudentCaseStatistics extends Component {
     renderContent = () => {
         switch(this.state.caseId) {
             case null:
+                for(let i = 0; i < this.state.answers.length; i++) {
+                    const answer = this.state.answers[i];
+                    delete answer.case.numAttempts;
+                }
                 const cases = [];
                 for(let i = 0; i < this.state.answers.length; i++) {
                     const answer = this.state.answers[i];
@@ -28,7 +32,7 @@ class StudentCaseStatistics extends Component {
                             if(answerCase.numAttempts === undefined) {
                                 answerCase.numAttempts = 1;
                             } else {
-                                answerCase.numAttempts = answerCase.numAttempts + 1;
+                                answerCase.numAttempts += 1;
                             }
                         }
                     }

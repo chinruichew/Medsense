@@ -62,8 +62,13 @@ class DashboardStudent extends Component {
                         }
                         return(
                             <div className="container">
-                                <Tabs defaultActiveKey={2}>
-                                    <Tab eventKey={1} title="Leaderboard">
+                                <Tabs defaultActiveKey={1}>
+                                    <Tab eventKey={1} title="Case Statistics">
+                                        <div className="row">
+                                            <StudentCaseStatistics answers={this.state.answers} />
+                                        </div>
+                                    </Tab>
+                                    <Tab eventKey={2} title="Leaderboard">
                                         <div className="row">
                                             <br/>
                                             <div className="col-md-6">
@@ -72,11 +77,6 @@ class DashboardStudent extends Component {
                                             <div className="col-md-6">
                                                 <ContributionLeaderboard leaders={this.state.contributionLeaders} />
                                             </div>
-                                        </div>
-                                    </Tab>
-                                    <Tab eventKey={2} title="Case Statistics">
-                                        <div className="row">
-                                            <StudentCaseStatistics answers={this.state.answers} />
                                         </div>
                                     </Tab>
                                 </Tabs>
