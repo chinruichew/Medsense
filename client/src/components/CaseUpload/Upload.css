@@ -78,3 +78,10 @@
 .submit-case-button{
     margin:20% 15% 2%;
 }
+
+#stop-sign {
+    height:60px;
+    margin-left: 0;
+    margin-top: 20px;
+    margin-bottom: -15px;
+}

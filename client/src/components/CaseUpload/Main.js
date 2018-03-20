@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactHtmlParser from "react-html-parser";
 import {
     Button, PanelGroup, Panel, FormGroup, Radio, ControlLabel, FormControl, Col, Row,
-    Glyphicon
+    Glyphicon, Image
 } from 'react-bootstrap';
 import axios from 'axios';
 import BootstrapModal from '../UI/Modal/UploadBootstrapModal.js';
@@ -748,7 +748,7 @@ class Main extends Component {
                     <h4>
                         <em><br/>
                         Refer to the <a href="./MedSense WorkPlan.pdf" target="_blank">CASE TEMPLATE</a> to understand the format required.
-                        {/*<br/><br/><img src="./stop.png" alt="" style={{height:"2em", marginLeft: "0"}} hspace="15"/>*/}
+                        <br/><br/><Image id="stop-sign" src="./stop.png" alt="Stop" hspace="15"/>
                         <br/><br/>In addition, ensure that all texts and attachments<br/>do not contain identifiable information such as NRICs or patient's faces.
                         <br/><br/>Note that cases uploaded by students will need to be vetted by faculty<br/>before they are released as a game.
                         <br/><br/>Expand and collapse the headers to reduce the scrolling you will need to do! <br/>
