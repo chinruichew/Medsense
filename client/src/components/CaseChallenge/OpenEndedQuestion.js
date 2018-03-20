@@ -38,7 +38,6 @@ class OpenEndedQuestion extends Component {
             authid: this.props.authid,
             time: {},
             timeLimit: parseFloat(this.props.question.time) * 60,
-            date: this.props.date,
             seconds: parseFloat(this.props.question.time) * 60,
             score: 0,
             questionStart: null
@@ -265,7 +264,6 @@ class OpenEndedQuestion extends Component {
                         authid={this.props.authid}
                         timeLimit={this.state.timeLimit}
                         seconds={this.state.seconds}
-                        date={this.props.date}
                         openEnded={this.state.openEnded}
                         updateScore={this.props.updateScore}
                         question={this.props.question}

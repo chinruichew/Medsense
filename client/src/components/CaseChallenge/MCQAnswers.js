@@ -16,7 +16,6 @@ class MCQAnswers extends Component {
         pearl: this.props.question.pearl,
         reference: this.props.question.reference,
         timeLimit: this.props.timeLimit,
-        date: this.props.date,
         seconds: this.props.seconds,
         questionStart: this.props.questionStart,
         questionEnd: this.props.questionEnd,

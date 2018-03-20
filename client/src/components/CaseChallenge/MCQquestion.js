@@ -25,7 +25,6 @@ class MCQquestion extends Component {
             authid: this.props.authid,
             timeLimit: parseFloat(this.props.question.time) * 60,
             time: {},
-            date: this.props.date,
             seconds: parseFloat(this.props.question.time) * 60,
             questionStart: null,
             checkedMCQs: []
@@ -152,20 +151,6 @@ class MCQquestion extends Component {
         }
     };
 
-    // handleCheck1Change(e) {
-    //     const value = e.target.checked;
-    //     this.setState({ check1Stu: value });
-    //     // this.update(value, "check1");
-    // }
-
-    // renderMCQ6() {
-    //     if (this.props.question.mcq6.length !== 0) {
-    //         return (
-    //             <Checkbox onChange={(e) => this.handleCheck6Change(e)}>{this.props.question.mcq6}</Checkbox>
-    //         );
-    //     }
-    // }
-
     renderStorySoFar = () =>{
         let stems = this.props.case.questions.map((obj, index) => {
             if (parseFloat(obj.id) < parseFloat(this.props.question.id)) {
@@ -268,8 +253,6 @@ class MCQquestion extends Component {
                             <Form><h4>
                                 <FormGroup>
                                     <div className="col-md-6 col-md-offset-2">
-                                        {/*<Checkbox onChange={(e) => this.handleCheck1Change(e)}>{this.props.question.mcq1}</Checkbox>*/}
-                                        {/*{this.renderMCQ6()}*/}
                                         {this.renderMCQs()}
                                     </div>
                                 </FormGroup>
@@ -283,7 +266,6 @@ class MCQquestion extends Component {
                             authid={this.props.authid}
                             timeLimit={this.state.timeLimit}
                             seconds={this.state.seconds}
-                            date={this.props.date}
                             question={this.props.question}
                             totalQnNum={this.props.totalQnNum}
                             updateScore={this.props.updateScore}

@@ -9,7 +9,6 @@ class OpenEndedAnswer extends Component {
         showResult: false,
         authid: this.props.authid,
         timeLimit: this.props.timeLimit,
-        date: this.props.date,
         seconds: this.props.seconds,
         mark: this.props.question.mark,
         question: this.props.question.question,

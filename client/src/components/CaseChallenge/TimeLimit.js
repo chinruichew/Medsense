@@ -7,17 +7,6 @@ import MCQquestion from "./MCQquestion";
 import OpenEndedQuestion from "./OpenEndedQuestion";
 import GameResults from "./GameResults";
 
-function makeUnique() {
-    const now = new Date().getTime();
-    let random = Math.floor(Math.random() * 100000);
-    // zero pad random
-    random = "" + random;
-    while (random.length < 5) {
-        random = "0" + random;
-    }
-    return String(now + random);
-}
-
 class TimeLimit extends Component {
     state = {
         challenge: this.props.case,
@@ -26,7 +15,6 @@ class TimeLimit extends Component {
         noTimeLimit: true,
         currentQn: 1,
         caseid: "",
-        date: "",
         showResult:false,
         score: 0,
     };
@@ -42,11 +30,6 @@ class TimeLimit extends Component {
             case null:
                 return;
             default:
-                let date = this.state.date;
-                if (this.state.date === "") {
-                    date = makeUnique();
-                    this.setState({date: date});
-                }
                 this.props.startGame({
                     case: this.state.challenge,
                     score: this.state.score
@@ -167,7 +150,7 @@ class TimeLimit extends Component {
                     const score = this.state.score / total * base;
                     const final = Math.round(this.state.withTimeLimit ? score * 1.5 : score);
 
-                    return <GameResults date={this.state.date} caseid={this.state.caseid} case={gameCase} xp={final} score={this.state.score}/>;
+                    return <GameResults caseid={this.state.caseid} case={gameCase} xp={final} score={this.state.score}/>;
             }
         }
     };
@@ -187,11 +170,11 @@ class TimeLimit extends Component {
                 let questionNodes = gameCase.questions.map((obj, index) => {
                     if (obj.id === currentQn + "") {
                         if (obj.type === "MCQ") {
-                            return <MCQquestion key={index} date={this.state.date} caseid={gameCase._id} authid={this.state.authid} question={obj} scenario={scenario} timeLimit={timeLimit}
+                            return <MCQquestion key={index} caseid={gameCase._id} authid={this.state.authid} question={obj} scenario={scenario} timeLimit={timeLimit}
                                                 totalQnNum={totalQnNum} caseTitle={caseTitle} case={gameCase} handleViewScore={this.handleViewScore}
                                                 handleNextQuestion={this.handleNextQuestion} updateScore={this.updateScore}/>
                         } else {
-                            return <OpenEndedQuestion key={index} date={this.state.date} caseid={gameCase._id} authid={this.state.authid} question={obj} scenario={scenario} timeLimit={timeLimit} totalQnNum={totalQnNum}
+                            return <OpenEndedQuestion key={index} caseid={gameCase._id} authid={this.state.authid} question={obj} scenario={scenario} timeLimit={timeLimit} totalQnNum={totalQnNum}
                                                       case={gameCase} caseTitle={caseTitle} handleViewScore={this.handleViewScore} handleNextQuestion={this.handleNextQuestion} updateScore={this.updateScore}/>
                         }
                     } else {
