@@ -29,6 +29,8 @@
     "compression": "^1.7.2",
     "css-loader": "0.28.4",
     "dotenv": "4.0.0",
+    "echarts": "^4.0.4",
+    "echarts-for-react": "^2.0.8",
     "eslint": "4.4.1",
     "eslint-config-react-app": "^2.1.0",
     "eslint-loader": "1.9.0",
