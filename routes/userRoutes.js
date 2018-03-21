@@ -149,14 +149,14 @@ module.exports = app => {
 
     // Update points of User
     app.post('/api/updateUserPoints', function(req, res) {
-        User.findById(req.session.user._id, function (err, user) {
+        User.findById(req.session.user._id, async (err, user) => {
             if (err) {
                 res.send(err);
             }
 
             if (user) {
-                user.points += req.body.score;
-                user.save();
+                user.points += req.body.xp;
+                await user.save();
                 req.session.user.points = user.points;
                 res.send({points: user.points});
             }

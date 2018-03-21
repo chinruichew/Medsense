@@ -281,7 +281,7 @@ export const completeGame = (values) => {
             console.log(err);
         });
         axios.post('/api/updateUserPoints', {
-            score: getState().game.gameOverview.score
+            xp: getState().game.gameOverview.xp
         }).then(res => {
             console.log(res);
         });
