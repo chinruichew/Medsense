@@ -259,7 +259,6 @@ class ProfessorIndividualCaseStatistics extends Component {
     };
 
     renderQuestionCharts = (caseQuestion) => {
-        // Add time series and graph charts here
         return(
             <div className="col-md-12">
                 <div className="col-md-6">
