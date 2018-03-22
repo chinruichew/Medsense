@@ -41,10 +41,11 @@ class StudentCaseStatistics extends Component {
                     }
                 }
                 return cases.map((answerCase, index) => {
-                    let placeholderImage = <Image circle src="/individual_case_image.jpg" style={{height: '150px', width: '150px'}} />;
-                    if(index % 2 === 0) {
-                        placeholderImage = <Image circle src="/individual_case_image_2.jpg" style={{height: '150px', width: '150px'}} />;
-                    }
+                    // let placeholderImage = <Image circle src="/case-display-pictures/individual_case_image.jpg" style={{height: '150px', width: '150px'}} />;
+                    // if(index % 2 === 0) {
+                    //     placeholderImage = <Image circle src="/case-display-pictures/individual_case_image_2.jpg" style={{height: '150px', width: '150px'}} />;
+                    // }
+                    let placeholderImage = <Image circle src="/userMD.png" style={{height: '150px', width: '150px'}} />;
                     let attemptDisplay = !answerCase.numAttempts || answerCase.numAttempts === 1? 'Attempt': 'Attempts';
                     return(
                         <div key={answerCase._id} className="col-md-4">
