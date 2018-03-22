@@ -62,6 +62,38 @@ class StudentHome extends Component {
         });
     };
 
+    renderCarousel2 = () => {
+        if(this.state.recommendedCases.length > 3) {
+            const recommendedCasesV2 = this.state.recommendedCases.map((recommendedCase, index) => {
+                if (index >= 3 && index < 6) {
+                    recommendedCase = recommendedCase._doc;
+                    const subspecialities = recommendedCase.subspeciality;
+                    let subSpecialityString = subspecialities[0];
+                    for (let i = 1; i < subspecialities.length; i++) {
+                        subSpecialityString += ', ' + subspecialities[i];
+                    }
+                    return (
+                        <Button onClick={(e) => this.handleCarouselButtonClick(recommendedCase._id)}
+                                className="carousel-button" bsSize="large">
+                            <img src="./approach1.jpg" alt={recommendedCase.title}/>
+                            <h3>{recommendedCase.title}</h3>
+                            <h4>{recommendedCase.speciality}</h4>
+                            <h4>{subSpecialityString}</h4>
+                        </Button>
+                    );
+                }
+                return;
+            });
+
+            return(
+                <Carousel.Item className="carousel-item">
+                    {recommendedCasesV2}
+                </Carousel.Item>
+            );
+        }
+        return;
+    };
+
     renderRecommendations = () => {
         switch(this.state.recommendedCases) {
             case null:
@@ -86,33 +118,13 @@ class StudentHome extends Component {
                     }
                     return;
                 });
-                const recommendedCasesV2 = this.state.recommendedCases.map((recommendedCase, index) => {
-                    if(index >= 3 && index < 6) {
-                        recommendedCase = recommendedCase._doc;
-                        const subspecialities = recommendedCase.subspeciality;
-                        let subSpecialityString = subspecialities[0];
-                        for(let i = 1; i < subspecialities.length; i++) {
-                            subSpecialityString += ', ' + subspecialities[i];
-                        }
-                        return(
-                            <Button onClick={(e) => this.handleCarouselButtonClick(recommendedCase._id)} className="carousel-button" bsSize="large">
-                                <img src="./approach1.jpg" alt={recommendedCase.title}/>
-                                <h3>{recommendedCase.title}</h3>
-                                <h4>{recommendedCase.speciality}</h4>
-                                <h4>{subSpecialityString}</h4>
-                            </Button>
-                        );
-                    }
-                    return;
-                });
+
                 return(
                     <Carousel className="carousel">
                         <Carousel.Item className="carousel-item">
                             {recommendedCases}
                         </Carousel.Item>
-                        <Carousel.Item className="carousel-item">
-                            {recommendedCasesV2}
-                        </Carousel.Item>
+                        {this.renderCarousel2()}
                     </Carousel>
                 );
         }
