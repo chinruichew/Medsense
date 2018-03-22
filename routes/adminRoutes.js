@@ -13,16 +13,16 @@ module.exports = app => {
     app.post('/api/fetchFilteredAdminStudents', async (req, res) => {
         let users;
         if (req.body.values.username === "") {
-            if(req.body.values.school === "" && req.body.values.year === ""){
+            if (req.body.values.school === "" && req.body.values.year === "") {
                 users = await User.find({
                     usertype: constants.USER_TYPE_STUDENT
                 }).select("-password");
-            } else if(req.body.values.school === "") {
+            } else if (req.body.values.school === "") {
                 users = await User.find({
                     usertype: constants.USER_TYPE_STUDENT,
                     year: req.body.values.year
                 }).select("-password");
-            } else if(req.body.values.year === "") {
+            } else if (req.body.values.year === "") {
                 users = await User.find({
                     usertype: constants.USER_TYPE_STUDENT,
                     school: req.body.values.school
@@ -35,18 +35,18 @@ module.exports = app => {
                 }).select("-password");
             }
         } else {
-            if(req.body.values.school === "" && req.body.values.year === ""){
+            if (req.body.values.school === "" && req.body.values.year === "") {
                 users = await User.find({
                     username: { "$regex": req.body.values.username, "$options": "i" },
                     usertype: constants.USER_TYPE_STUDENT
                 }).select("-password");
-            } else if(req.body.values.school === "") {
+            } else if (req.body.values.school === "") {
                 users = await User.find({
                     username: { "$regex": req.body.values.username, "$options": "i" },
                     usertype: constants.USER_TYPE_STUDENT,
                     year: req.body.values.year
                 }).select("-password");
-            } else if(req.body.values.year === "") {
+            } else if (req.body.values.year === "") {
                 users = await User.find({
                     username: { "$regex": req.body.values.username, "$options": "i" },
                     usertype: constants.USER_TYPE_STUDENT,
@@ -71,28 +71,28 @@ module.exports = app => {
         }
         let users;
         if (req.body.values.username === "") {
-            if(req.body.values.school === "" && req.body.values.speciality === "") {
+            if (req.body.values.school === "" && req.body.values.speciality === "") {
                 users = await User.find({
                     usertype: constants.USER_TYPE_PROFESSOR
                 }).select("-password");
-            } else if(req.body.values.speciality === "") {
+            } else if (req.body.values.speciality === "") {
                 users = await User.find({
                     usertype: constants.USER_TYPE_PROFESSOR,
                     school: req.body.values.school
                 }).select("-password");
-            } else if(req.body.values.school === "" && subspecialityArray.length === 0) {
+            } else if (req.body.values.school === "" && subspecialityArray.length === 0) {
                 console.log("in")
                 users = await User.find({
                     usertype: constants.USER_TYPE_PROFESSOR,
                     speciality: req.body.values.speciality
                 }).select("-password");
-            } else if(req.body.values.school === "" && subspecialityArray.length !== 0) {
+            } else if (req.body.values.school === "" && subspecialityArray.length !== 0) {
                 users = await User.find({
                     usertype: constants.USER_TYPE_PROFESSOR,
                     speciality: req.body.values.speciality,
                     subspeciality: { "$in": subspecialityArray }
                 }).select("-password");
-            } else if(req.body.values.school !== "" && req.body.values.speciality !== "" && subspecialityArray.length === 0) {
+            } else if (req.body.values.school !== "" && req.body.values.speciality !== "" && subspecialityArray.length === 0) {
                 users = await User.find({
                     usertype: constants.USER_TYPE_PROFESSOR,
                     school: req.body.values.school,
@@ -107,31 +107,31 @@ module.exports = app => {
                 }).select("-password");
             }
         } else {
-            if(req.body.values.school === "" && req.body.values.speciality === "") {
+            if (req.body.values.school === "" && req.body.values.speciality === "") {
                 users = await User.find({
                     usertype: constants.USER_TYPE_PROFESSOR,
                     username: { "$regex": req.body.values.username, "$options": "i" }
                 }).select("-password");
-            } else if(req.body.values.speciality === "") {
+            } else if (req.body.values.speciality === "") {
                 users = await User.find({
                     usertype: constants.USER_TYPE_PROFESSOR,
                     school: req.body.values.school,
                     username: { "$regex": req.body.values.username, "$options": "i" }
                 }).select("-password");
-            } else if(req.body.values.school === "" && subspecialityArray.length == 0) {
+            } else if (req.body.values.school === "" && subspecialityArray.length == 0) {
                 users = await User.find({
                     usertype: constants.USER_TYPE_PROFESSOR,
                     speciality: req.body.values.speciality,
                     username: { "$regex": req.body.values.username, "$options": "i" }
                 }).select("-password");
-            } else if(req.body.values.school === "" && subspecialityArray.length !== 0) {
+            } else if (req.body.values.school === "" && subspecialityArray.length !== 0) {
                 users = await User.find({
                     usertype: constants.USER_TYPE_PROFESSOR,
                     speciality: req.body.values.speciality,
                     subspeciality: { "$in": subspecialityArray },
                     username: { "$regex": req.body.values.username, "$options": "i" }
                 }).select("-password");
-            } else if(req.body.values.school !== "" && req.body.values.speciality !== "" && subspecialityArray.length === 0) {
+            } else if (req.body.values.school !== "" && req.body.values.speciality !== "" && subspecialityArray.length === 0) {
                 users = await User.find({
                     usertype: constants.USER_TYPE_PROFESSOR,
                     school: req.body.values.school,
@@ -182,7 +182,7 @@ module.exports = app => {
                     model: 'questions'
                 });
             } else {
-                if(approachArray.length === 0) {
+                if (approachArray.length === 0) {
                     cases = await Case.find({
                         difficulty: req.body.values.difficulty,
                         status: req.body.values.casestatus,
@@ -191,7 +191,7 @@ module.exports = app => {
                         path: 'questions',
                         model: 'questions'
                     });
-                } else if(subspecialityArray.length === 0) {
+                } else if (subspecialityArray.length === 0) {
                     cases = await Case.find({
                         difficulty: req.body.values.difficulty,
                         status: req.body.values.casestatus,
@@ -223,7 +223,7 @@ module.exports = app => {
                     model: 'questions'
                 });
             } else {
-                if(approachArray.length === 0) {
+                if (approachArray.length === 0) {
                     cases = await Case.find({
                         title: { "$regex": req.body.values.title, "$options": "i" },
                         subspeciality: { "$in": subspecialityArray },
@@ -233,7 +233,7 @@ module.exports = app => {
                         path: 'questions',
                         model: 'questions'
                     });
-                } else if(subspecialityArray.length === 0) {
+                } else if (subspecialityArray.length === 0) {
                     cases = await Case.find({
                         title: { "$regex": req.body.values.title, "$options": "i" },
                         approach: { "$in": approachArray },
@@ -317,6 +317,15 @@ module.exports = app => {
     app.post('/api/deleteAdminProfessor', function (req, res) {
         User.find({ _id: req.body.values }, function (err, deleteProfessor) { }).remove().exec();
         return res.status(201).send({ data: null, message: "deleteAdminProfessor success" });
+    });
+
+    app.get('/api/fetchCount', async (req, res) => {
+        const specialityCount = await Case.aggregate([
+            { $group: { _id: '$speciality', count: { $addToSet: '$_id' } } },
+            { $unwind: "$count" },
+            { $group: { _id: "$_id", count: { $sum: 1 } } }
+        ]).exec();
+        res.send(specialityCount);
     });
 };
 
