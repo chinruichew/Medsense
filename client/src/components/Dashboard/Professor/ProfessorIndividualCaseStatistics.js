@@ -103,6 +103,54 @@ class ProfessorIndividualCaseStatistics extends Component {
     };
 
     renderAverageScoreChart = (caseQuestion) => {
+        // Create time frame of 12 weeks
+        const backlog = 12;
+        const currentDate = new Date();
+        currentDate.setDate(currentDate.getDate() - 7 * backlog);
+        const timeData = [];
+        for(let i = 0; i < backlog; i++) {
+            currentDate.setDate(currentDate.getDate() + 7);
+            timeData.push({
+                dateString: currentDate.toDateString(),
+                count: 0,
+                totalScore: 0
+            });
+        }
+        for(let i = 0; i < this.state.answers.length; i++){
+            const answer = this.state.answers[i];
+            for(let j = 0; j < timeData.length; j++) {
+                const dateTime = timeData[j];
+                const dateTimeForward = timeData[j + 1];
+                if(new Date(answer.endTime) >= new Date(dateTime.dateString) && new Date(answer.endTime) <= new Date(dateTimeForward.dateString)) {
+                    dateTime.count++;
+                    if(answer.openEndedAnswers.length > 0) {
+                        for(let k = 0; k < answer.openEndedAnswers.length; k++) {
+                            const openEndedAnswer = answer.openEndedAnswers[k];
+                            if(openEndedAnswer.question === caseQuestion._id) {
+                                dateTime.totalScore += openEndedAnswer.score;
+                                break;
+                            }
+                        }
+                    }
+                    if(answer.mcqAnswers.length > 0) {
+                        for(let k = 0; k < answer.mcqAnswers.length; k++) {
+                            const mcqAnswer = answer.mcqAnswers[k];
+                            if(mcqAnswer.question === caseQuestion._id) {
+                                dateTime.totalScore += mcqAnswer.score;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        const xAxisData = [];
+        const yAxisData = [];
+        for(let i = 0; i < timeData.length; i++){
+            xAxisData.push(timeData[i].dateString);
+            let averageScore = timeData[i].totalScore !== 0 && timeData[i].count !== 0? (timeData[i].totalScore/timeData[i].count).toFixed(2): 0;
+            yAxisData.push(averageScore);
+        }
         const option = {
             backgroundColor:'#FFFFFF',
             title: {
@@ -120,28 +168,105 @@ class ProfessorIndividualCaseStatistics extends Component {
                 bottom: '3%',
                 containLabel: true
             },
-            toolbox: {
-                feature: {
-                    saveAsImage: {}
-                }
-            },
             xAxis: {
                 type: 'category',
                 boundaryGap: false,
-                data: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'] // How to decide time frame?
+                data: xAxisData
             },
             yAxis: {
                 type: 'value',
                 name: 'Score',
-                min: -30,
-                max: 30,
+                min: 0,
+                max: 50,
                 interval: 10,
             },
             series: [
                 {
                     name:'Average Score',
                     type:'line',
-                    data:[4.6, 3.7, 2.4, -4.4, 1.2, 3.2, 6, 3.2, -0.1, 2.4, 0.3, 2.1]
+                    data:yAxisData
+                }
+            ]
+        };
+        return(
+            <ReactEcharts option={option} notMerge={true} lazyUpdate={true} />
+        );
+    };
+
+    renderNLPAccuracyChart = (caseQuestion) => {
+        // Create time frame of 12 weeks
+        const backlog = 12;
+        const currentDate = new Date();
+        currentDate.setDate(currentDate.getDate() - 7 * backlog);
+        const timeData = [];
+        for(let i = 0; i < backlog; i++) {
+            currentDate.setDate(currentDate.getDate() + 7);
+            timeData.push({
+                dateString: currentDate.toDateString(),
+                count: 0,
+                totalAccuracy: 0
+            });
+        }
+        for(let i = 0; i < this.state.answers.length; i++){
+            const answer = this.state.answers[i];
+            for(let j = 0; j < timeData.length; j++) {
+                const dateTime = timeData[j];
+                const dateTimeForward = timeData[j + 1];
+                if(new Date(answer.endTime) >= new Date(dateTime.dateString) && new Date(answer.endTime) <= new Date(dateTimeForward.dateString)) {
+                    dateTime.count++;
+                    if(answer.openEndedAnswers.length > 0) {
+                        for(let k = 0; k < answer.openEndedAnswers.length; k++) {
+                            const openEndedAnswer = answer.openEndedAnswers[k];
+                            if(openEndedAnswer.question === caseQuestion._id) {
+                                dateTime.totalAccuracy += openEndedAnswer.nlpAccuracy;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        const xAxisData = [];
+        const yAxisData = [];
+        for(let i = 0; i < timeData.length; i++){
+            xAxisData.push(timeData[i].dateString);
+            let averageAccuracy = timeData[i].totalAccuracy !== 0 && timeData[i].count !== 0? (timeData[i].totalAccuracy/timeData[i].count).toFixed(2): 0;
+            yAxisData.push(averageAccuracy);
+        }
+        const option = {
+            backgroundColor:'#FFFFFF',
+            title: {
+                text: 'Average Answer Accuracy over time'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data:['Average Accuracy']
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: xAxisData
+            },
+            yAxis: {
+                type: 'value',
+                name: 'Accuracy (%)',
+                min: 0,
+                max: 50,
+                interval: 10,
+            },
+            series: [
+                {
+                    name:'Average Accuracy',
+                    type:'line',
+                    data:yAxisData
                 }
             ]
         };
@@ -252,33 +377,25 @@ class ProfessorIndividualCaseStatistics extends Component {
         );
     };
 
-    renderNLPAccuracyChart = (caseQuestion) => {
-        return(
-            <div>
-
-            </div>
-        );
-    };
-
     renderQuestionCharts = (caseQuestion) => {
         if(caseQuestion.type === this.props.constants.QUESTION_TYPE_MCQ) {
             return(
-                <div className="col-md-12">
-                    <div className="col-md-6">
+                <div className="row">
+                    <div className="col-md-12 chart-col">
                         {this.renderAverageScoreChart(caseQuestion)}
                     </div>
-                    <div className="col-md-6">
-                        {this.renderBarChart(caseQuestion)}
-                    </div>
+                    {/*<div className="col-md-12 chart-col">*/}
+                        {/*{this.renderBarChart(caseQuestion)}*/}
+                    {/*</div>*/}
                 </div>
             );
         } else {
             return(
-                <div className="col-md-12">
-                    <div className="col-md-6">
+                <div className="row">
+                    <div className="col-md-12 chart-col">
                         {this.renderAverageScoreChart(caseQuestion)}
                     </div>
-                    <div className="col-md-6">
+                    <div className="col-md-12 chart-col">
                         {this.renderNLPAccuracyChart(caseQuestion)}
                     </div>
                 </div>
