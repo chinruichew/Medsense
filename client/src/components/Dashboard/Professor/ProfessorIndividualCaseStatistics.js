@@ -4,6 +4,9 @@ import Timeline from 'react-visjs-timeline';
 import axios from 'axios';
 import ReactHtmlParser from "react-html-parser";
 import ReactEcharts from 'echarts-for-react';
+import {connect} from "react-redux";
+
+import {fetchConstantTypes} from "../../../actions";
 
 class ProfessorIndividualCaseStatistics extends Component {
     state = {
@@ -13,6 +16,7 @@ class ProfessorIndividualCaseStatistics extends Component {
     };
 
     componentDidMount() {
+        this.props.fetchConstantTypes();
         axios.get('/api/getAnswersByCase?id=' + this.props.reviewedCase._id).then(res => {
             this.setState({
                 answers: res.data
@@ -98,17 +102,17 @@ class ProfessorIndividualCaseStatistics extends Component {
         );
     };
 
-    renderTimeSeriesGraph = (caseQuestion) => {
+    renderAverageScoreChart = (caseQuestion) => {
         const option = {
             backgroundColor:'#FFFFFF',
             title: {
-                text: '检查主体同比（环比）分析'
+                text: 'Average score over time'
             },
             tooltip: {
                 trigger: 'axis'
             },
             legend: {
-                data:['同比','环比']
+                data:['Average Score']
             },
             grid: {
                 left: '3%',
@@ -124,30 +128,20 @@ class ProfessorIndividualCaseStatistics extends Component {
             xAxis: {
                 type: 'category',
                 boundaryGap: false,
-                data: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+                data: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'] // How to decide time frame?
             },
             yAxis: {
                 type: 'value',
-                name: '同比/环比（%）',
+                name: 'Score',
                 min: -30,
                 max: 30,
                 interval: 10,
             },
             series: [
                 {
-                    name:'同比',
+                    name:'Average Score',
                     type:'line',
-
-                    stack: '总量',
                     data:[4.6, 3.7, 2.4, -4.4, 1.2, 3.2, 6, 3.2, -0.1, 2.4, 0.3, 2.1]
-
-                },
-                {
-                    name:'环比',
-                    type:'line',
-                    stack: '总量',
-                    data:[6, 20, -8, -4,9.5,26,10.3,9.6,-5.8,-6.2,-16.6,-16]
-
                 }
             ]
         };
@@ -258,17 +252,38 @@ class ProfessorIndividualCaseStatistics extends Component {
         );
     };
 
-    renderQuestionCharts = (caseQuestion) => {
+    renderNLPAccuracyChart = (caseQuestion) => {
         return(
-            <div className="col-md-12">
-                <div className="col-md-6">
-                    {this.renderTimeSeriesGraph(caseQuestion)}
-                </div>
-                <div className="col-md-6">
-                    {this.renderBarChart(caseQuestion)}
-                </div>
+            <div>
+
             </div>
         );
+    };
+
+    renderQuestionCharts = (caseQuestion) => {
+        if(caseQuestion.type === this.props.constants.QUESTION_TYPE_MCQ) {
+            return(
+                <div className="col-md-12">
+                    <div className="col-md-6">
+                        {this.renderAverageScoreChart(caseQuestion)}
+                    </div>
+                    <div className="col-md-6">
+                        {this.renderBarChart(caseQuestion)}
+                    </div>
+                </div>
+            );
+        } else {
+            return(
+                <div className="col-md-12">
+                    <div className="col-md-6">
+                        {this.renderAverageScoreChart(caseQuestion)}
+                    </div>
+                    <div className="col-md-6">
+                        {this.renderNLPAccuracyChart(caseQuestion)}
+                    </div>
+                </div>
+            );
+        }
     };
 
     renderQuestionStats = () => {
@@ -399,4 +414,8 @@ class ProfessorIndividualCaseStatistics extends Component {
     }
 }
 
-export default ProfessorIndividualCaseStatistics;
+function mapStateToProps({ constants }) {
+    return { constants };
+}
+
+export default connect(mapStateToProps, {fetchConstantTypes})(ProfessorIndividualCaseStatistics);
