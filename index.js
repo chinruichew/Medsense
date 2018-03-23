@@ -26,7 +26,6 @@ const aws = require('aws-sdk');
 
 const keys = require('./config/keys');
 require('./models/User');
-// const keyManagement = require('./utility/keyManagement');
 
 const app = express();
 
@@ -39,6 +38,7 @@ console.log = function(){
 /* End of Console Log configuration */
 
 // Uncomment for Keys encryption
+// const keyManagement = require('./utility/keyManagement');
 // const keyJSON = {
 //     // Fill in here
 // };

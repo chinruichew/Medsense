@@ -15,5 +15,7 @@ module.exports = {
     cookieKeySecret: keyManagement.decryptKey(process.env.COOKIE_KEY_SECRET),
     httpsBucket: keyManagement.decryptKey(process.env.HTTPS_BUCKET),
     httpsPrivateKey: keyManagement.decryptKey(process.env.HTTPS_PRIVATE_KEY),
-    httpsCertificate: keyManagement.decryptKey(process.env.HTTPS_CERTIFICATE)
+    httpsCertificate: keyManagement.decryptKey(process.env.HTTPS_CERTIFICATE),
+    medsenseEmailUsername: keyManagement.decryptKey(process.env.MEDSENSE_EMAIL_USERNAME),
+    medsenseEmailPassword: keyManagement.decryptKey(process.env.MEDSENSE_EMAIL_PASSWORD)
 };

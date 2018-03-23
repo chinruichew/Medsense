@@ -3,6 +3,7 @@ const nodemailer = require('nodemailer');
 const User = mongoose.model('users');
 const Case = mongoose.model('cases');
 
+const keys = require('../config/keys');
 const constants = require('../utility/constantTypes');
 const commonMethods = require('../utility/commonMethods');
 
@@ -49,12 +50,12 @@ module.exports = app => {
                 const transporter = nodemailer.createTransport({
                     service: 'gmail',
                     auth: {
-                        user: 'themedsense@gmail.com',
-                        pass: 'teamzenith2018'
+                        user: keys.medsenseEmailUsername,
+                        pass: keys.medsenseEmailPassword
                     }
                 });
                 const mailOptions = {
-                    from: 'themedsense@gmail.com',
+                    from: keys.medsenseEmailUsername,
                     to: email,
                     subject: 'Resetting of password',
                     html: '<h1>Your password has been reset!</h1><p>Your new password is: ' + password + '</p>'
