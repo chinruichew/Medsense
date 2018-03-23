@@ -385,21 +385,15 @@ class CaseManager extends Component {
     }
 
     renderModal() {
-        let allQuestions = this.state.oneCaseQuestions.map(question => {
+        let allQuestions = this.state.oneCaseQuestions.map((question, id) => {
             if (question.type === "MCQ") {
                 return <div>
-                    <p> Stem {question.stem} </p>
-                    <p> MCQ 1: &nbsp; {question.mcq1} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Answer 1: {JSON.stringify(question.check1)} </p>
-                    <p> MCQ 2: &nbsp; {question.mcq2} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Answer 1: {JSON.stringify(question.check2)} </p>
-                    <p> MCQ 3: &nbsp; {question.mcq3} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Answer 1: {JSON.stringify(question.check3)} </p>
-                    <p> MCQ 4: &nbsp; {question.mcq4} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Answer 1: {JSON.stringify(question.check4)} </p>
-                    <p> MCQ 5: &nbsp; {question.mcq5} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Answer 1: {JSON.stringify(question.check5)} </p>
-                    <p> MCQ 6: &nbsp; {question.mcq6} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Answer 1: {JSON.stringify(question.check6)} </p>
+                    <p><b>Question</b> {id+1} </p>
                 </div>
             } else {
                 return <div>
-                    <p> Stem {question.stem} </p>
-                    <p> Open Ended: &nbsp; {question.mcq1} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Answer 1: {JSON.stringify(question.check1)} </p>
+                    <p><b>Question</b> {id+1} </p>
+                    <p> <b>Answer</b> {question.openEnded.replace(/(&lt;|o&nbsp;|&amp;|&nbsp;|(<([^>]+)>))/ig,' ')} </p>
                 </div>
             }
         })
