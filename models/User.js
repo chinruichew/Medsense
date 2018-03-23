@@ -18,7 +18,8 @@ const userSchema = new Schema({
     points: { type: Number, default: 0},
     previousLogin: { type: Date, default: ""},
     currentLogin: { type: Date, default: ""},
-    loginCount: { type: Number, default: 0}
+    loginCount: { type: Number, default: 0},
+    levelScheme: { type: Schema.Types.ObjectId, ref: 'userLevelSchemes' }
 });
 
 // generating a hash
