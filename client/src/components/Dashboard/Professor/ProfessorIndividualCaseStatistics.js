@@ -179,7 +179,7 @@ class ProfessorIndividualCaseStatistics extends Component {
                 type: 'value',
                 name: 'Score',
                 min: 0,
-                max: 50,
+                max: parseInt(caseQuestion.mark),
                 interval: 10,
             },
             series: [
@@ -195,192 +195,6 @@ class ProfessorIndividualCaseStatistics extends Component {
         );
     };
 
-    renderNLPAccuracyChart = (caseQuestion) => {
-        // Create time frame of 12 weeks
-        const backlog = 12;
-        const currentDate = new Date();
-        currentDate.setDate(currentDate.getDate() - 7 * backlog);
-        const timeData = [];
-        for(let i = 0; i < backlog; i++) {
-            currentDate.setDate(currentDate.getDate() + 7);
-            timeData.push({
-                dateString: currentDate.toDateString(),
-                count: 0,
-                totalAccuracy: 0
-            });
-        }
-        for(let i = 0; i < this.state.answers.length; i++){
-            const answer = this.state.answers[i];
-            for(let j = 0; j < timeData.length; j++) {
-                const dateTime = timeData[j];
-                const dateTimeForward = timeData[j + 1];
-                if(dateTimeForward === undefined) {
-                    // Factor this here
-                } else if(new Date(answer.endTime) >= new Date(dateTime.dateString) && new Date(answer.endTime) <= new Date(dateTimeForward.dateString)) {
-                    dateTime.count++;
-                    if(answer.openEndedAnswers.length > 0) {
-                        for(let k = 0; k < answer.openEndedAnswers.length; k++) {
-                            const openEndedAnswer = answer.openEndedAnswers[k];
-                            if(openEndedAnswer.question === caseQuestion._id) {
-                                dateTime.totalAccuracy += openEndedAnswer.nlpAccuracy;
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        const xAxisData = [];
-        const yAxisData = [];
-        for(let i = 0; i < timeData.length; i++){
-            xAxisData.push(timeData[i].dateString);
-            let averageAccuracy = timeData[i].totalAccuracy !== 0 && timeData[i].count !== 0? (timeData[i].totalAccuracy/timeData[i].count).toFixed(2): 0;
-            yAxisData.push(averageAccuracy);
-        }
-        const option = {
-            backgroundColor:'#FFFFFF',
-            title: {
-                text: 'Average Answer Accuracy over time'
-            },
-            tooltip: {
-                trigger: 'axis'
-            },
-            legend: {
-                data:['Average Accuracy']
-            },
-            grid: {
-                left: '3%',
-                right: '4%',
-                bottom: '3%',
-                containLabel: true
-            },
-            xAxis: {
-                type: 'category',
-                boundaryGap: false,
-                data: xAxisData
-            },
-            yAxis: {
-                type: 'value',
-                name: 'Accuracy (%)',
-                min: 0,
-                max: 50,
-                interval: 10,
-            },
-            series: [
-                {
-                    name:'Average Accuracy',
-                    type:'line',
-                    data:yAxisData
-                }
-            ]
-        };
-        return(
-            <ReactEcharts option={option} notMerge={true} lazyUpdate={true} />
-        );
-    };
-
-    renderBarChart = (caseQuestion) => {
-        const option = {
-            backgroundColor:'#FFFFFF',
-            title: {
-                //text: '检查企业信息分析'
-            },
-            tooltip: {
-                trigger: 'axis',
-                axisPointer: { // 坐标轴指示器，坐标轴触发有效
-                    type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-                }
-            },
-            toolbox: {
-                feature: {
-                    dataView: {show: true, readOnly: false},
-                    //magicType: {show: true, type: ['stack', 'tiled']},
-                    restore: {show: true},
-                    saveAsImage: {show: true}
-                }
-            },
-            legend: {
-                data: ['检查企业数', '完成整改企业数', '违法违规企业数']
-            },
-
-            grid: {
-                left: '3%',
-                right: '4%',
-                bottom: '3%',
-                containLabel: true
-            },
-            xAxis: [{
-                type: 'category',
-                data: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
-            }],
-            yAxis: [{
-                type: 'value',
-                //name: '投诉举报数',
-                axisLabel: {
-                    formatter: '{value}'
-                }
-            }],
-            series: [{
-                name: '检查企业数',
-                type: 'bar',
-                itemStyle:{
-                    normal:{color:'#01949B'},
-                },
-                markPoint : {
-                    data : [
-                        {type : 'max', name : '最大值'},
-                        {type : 'min', name : '最小值'}
-                    ]
-                },
-                markLine : {
-                    data : [
-                        {type : 'average', name : '平均值'}
-                    ]
-                },
-                data: [2031, 1793, 3640, 2593, 4377,3201, 2275, 3289, 3356,2859,4244,3945]
-            }, {
-                name: '完成整改企业数',
-                type: 'bar',
-                itemStyle:{
-                    normal:{color:'#EBA954'},
-                },
-                markPoint : {
-                    data : [
-                        {type : 'max', name : '最大值'},
-                        {type : 'min', name : '最小值'}
-                    ]
-                },
-                markLine : {
-                    data : [
-                        {type : 'average', name : '平均值'}
-                    ]
-                },
-                data: [1043, 1456, 1900, 1200, 2100,1870, 980, 1569, 1130, 1490,2300, 2210]
-            }, {
-                name: '违法违规企业数',
-                type: 'bar',
-                itemStyle:{
-                    normal:{color:'#C23531'},
-                },
-                markPoint : {
-                    data : [
-                        {type : 'max', name : '最大值'},
-                        {type : 'min', name : '最小值'}
-                    ]
-                },
-                markLine : {
-                    data : [
-                        {type : 'average', name : '平均值'}
-                    ]
-                },
-                data: [787, 571, 999, 341, 231,812, 735, 231,322,712,1230, 870]
-            }]
-        };
-        return(
-            <ReactEcharts option={option} notMerge={true} lazyUpdate={true} />
-        );
-    };
-
     renderQuestionCharts = (caseQuestion) => {
         if(caseQuestion.type === this.props.constants.QUESTION_TYPE_MCQ) {
             return(
@@ -388,9 +202,6 @@ class ProfessorIndividualCaseStatistics extends Component {
                     <div className="col-md-12 chart-col">
                         {this.renderAverageScoreChart(caseQuestion)}
                     </div>
-                    {/*<div className="col-md-12 chart-col">*/}
-                        {/*{this.renderBarChart(caseQuestion)}*/}
-                    {/*</div>*/}
                 </div>
             );
         } else {
@@ -398,9 +209,6 @@ class ProfessorIndividualCaseStatistics extends Component {
                 <div className="row">
                     <div className="col-md-12 chart-col">
                         {this.renderAverageScoreChart(caseQuestion)}
-                    </div>
-                    <div className="col-md-12 chart-col">
-                        {this.renderNLPAccuracyChart(caseQuestion)}
                     </div>
                 </div>
             );
