@@ -149,7 +149,6 @@ module.exports = app => {
             let toAdd = true;
             for(let j = 0; j < caseArray.length; j++) {
                 const indexedCase = caseArray[j];
-                console.log(indexedCase._doc._id, answerCase._id);
                 if(indexedCase._doc._id === answerCase._id) {
                     toAdd = false;
                     indexedCase.numTries += 1;
@@ -162,7 +161,6 @@ module.exports = app => {
                     numTries: 1
                 });
             }
-            // console.log(caseArray);
         }
 
         console.log(userAnswers);

@@ -3,6 +3,14 @@ import {Button, Carousel, Col, Image} from 'react-bootstrap';
 import {NavLink, Redirect} from "react-router-dom";
 import axios from 'axios';
 import BootstrapModal from '../UI/Modal/UploadBootstrapModal.js';
+import Zoom from 'react-reveal/Zoom';
+import Flip from 'react-reveal/Flip';
+import Rotate from 'react-reveal/Rotate';
+import Bounce from 'react-reveal/Bounce';
+import Slide from 'react-reveal/Slide';
+import Roll from 'react-reveal/Roll';
+import LightSpeed from 'react-reveal/LightSpeed';
+
 import "./Home.css";
 
 class StudentHome extends Component {
@@ -72,14 +80,53 @@ class StudentHome extends Component {
                     for (let i = 1; i < subspecialities.length; i++) {
                         subSpecialityString += ', ' + subspecialities[i];
                     }
-                    return (
-                        <Button onClick={(e) => this.handleCarouselButtonClick(recommendedCase._id)}
-                                className="carousel-button" bsSize="large">
-                            <img src="./approach1.jpg" alt={recommendedCase.title}/>
-                            <h3>{recommendedCase.title}</h3>
-                            <h4>{recommendedCase.speciality}</h4>
-                            <h4>{subSpecialityString}</h4>
-                        </Button>
+
+                    const recommendationBox = <Button key={index} onClick={(e) => this.handleCarouselButtonClick(recommendedCase._id)} className="carousel-button" bsSize="large">
+                        <img src="./approach1.jpg" alt={recommendedCase.title}/>
+                        <h3>{recommendedCase.title}</h3>
+                        <h4>{recommendedCase.speciality}</h4>
+                        <h4>{subSpecialityString}</h4>
+                    </Button>;
+
+                    const animationStyles = [Zoom, Flip, Rotate, Bounce, Slide, Roll, LightSpeed];
+                    const animationStyle = animationStyles[Math.floor(Math.random()*animationStyles.length)];
+                    let recommendationAnimation = <Zoom left>
+                        {recommendationBox}
+                    </Zoom>;
+                    if(animationStyle === Flip) {
+                        recommendationAnimation = <Flip left>
+                            {recommendationBox}
+                        </Flip>;
+                    }
+                    if(animationStyle === Rotate) {
+                        recommendationAnimation = <Rotate top left>
+                            {recommendationBox}
+                        </Rotate>;
+                    }
+                    if(animationStyle === Bounce) {
+                        recommendationAnimation = <Bounce left>
+                            {recommendationBox}
+                        </Bounce>;
+                    }
+                    if(animationStyle === Slide) {
+                        recommendationAnimation = <Slide left>
+                            {recommendationBox}
+                        </Slide>;
+                    }
+                    if(animationStyle === Roll) {
+                        recommendationAnimation = <Roll left>
+                            {recommendationBox}
+                        </Roll>;
+                    }
+                    if(animationStyle === LightSpeed) {
+                        recommendationAnimation = <LightSpeed left>
+                            {recommendationBox}
+                        </LightSpeed>;
+                    }
+                    return(
+                        <div className="col-md-4">
+                            {recommendationAnimation}
+                        </div>
                     );
                 }
                 return;
@@ -107,13 +154,54 @@ class StudentHome extends Component {
                         for(let i = 1; i < subspecialities.length; i++) {
                             subSpecialityString += ', ' + subspecialities[i];
                         }
+
+                        const recommendationBox = <Button key={index} onClick={(e) => this.handleCarouselButtonClick(recommendedCase._id)} className="carousel-button" bsSize="large">
+                            <img src="./approach1.jpg" alt={recommendedCase.title}/>
+                            <h3>{recommendedCase.title}</h3>
+                            <h4>{recommendedCase.speciality}</h4>
+                            <h4>{subSpecialityString}</h4>
+                        </Button>;
+
+                        const animationStyles = [Zoom, Flip, Rotate, Bounce, Slide, Roll, LightSpeed];
+                        const animationStyle = animationStyles[Math.floor(Math.random()*animationStyles.length)];
+                        let recommendationAnimation = <Zoom left>
+                            {recommendationBox}
+                        </Zoom>;
+                        if(animationStyle === Flip) {
+                            recommendationAnimation = <Flip left>
+                                {recommendationBox}
+                            </Flip>;
+                        }
+                        if(animationStyle === Rotate) {
+                            recommendationAnimation = <Rotate top left>
+                                {recommendationBox}
+                            </Rotate>;
+                        }
+                        if(animationStyle === Bounce) {
+                            recommendationAnimation = <Bounce left>
+                                {recommendationBox}
+                            </Bounce>;
+                        }
+                        if(animationStyle === Slide) {
+                            recommendationAnimation = <Slide left>
+                                {recommendationBox}
+                            </Slide>;
+                        }
+                        if(animationStyle === Roll) {
+                            recommendationAnimation = <Roll left>
+                                {recommendationBox}
+                            </Roll>;
+                        }
+                        if(animationStyle === LightSpeed) {
+                            recommendationAnimation = <LightSpeed left>
+                                {recommendationBox}
+                            </LightSpeed>;
+                        }
+
                         return(
-                            <Button key={index} onClick={(e) => this.handleCarouselButtonClick(recommendedCase._id)} className="carousel-button" bsSize="large">
-                                <img src="./approach1.jpg" alt={recommendedCase.title}/>
-                                <h3>{recommendedCase.title}</h3>
-                                <h4>{recommendedCase.speciality}</h4>
-                                <h4>{subSpecialityString}</h4>
-                            </Button>
+                            <div className="col-md-4">
+                                {recommendationAnimation}
+                            </div>
                         );
                     }
                     return;
