@@ -156,6 +156,9 @@ module.exports = app => {
         const cases = await Case.find({}).select().populate({
             path: 'questions',
             model: 'questions'
+        }).populate({
+            path: 'authorid',
+            model: 'users',
         });
         res.send(cases);
     });
