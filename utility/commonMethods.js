@@ -8,7 +8,7 @@ module.exports = {
     UTC_DATE_FORMATTER: async(date) => {
         return new Date(date.substring(0, date.length - 1) + '+08:00');
     },
-    USER_LEVEL_CALCULATION: async(xp) => {
+    CALCULATE_USER_LEVEL: async(xp) => {
         const userLevelScorings = await UserLevelScoring.find().sort({level: -1});
         let level = 1;
         for(let i = 0; i < userLevelScorings.length; i++) {
@@ -20,7 +20,7 @@ module.exports = {
         }
         return level;
     },
-    USER_RANK_CALCULATION: async(level) => {
+    CALCULATE_USER_RANK: async(level) => {
         const userLevelSchemes = await UserLevelScheme.find().sort({level: -1});
         let userRank = '';
         for(let i = 0; i < userLevelSchemes.length; i++) {

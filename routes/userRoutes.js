@@ -4,6 +4,7 @@ const User = mongoose.model('users');
 const Case = mongoose.model('cases');
 
 const constants = require('../utility/constantTypes');
+const commonMethods = require('../utility/commonMethods');
 
 module.exports = app => {
     app.post('/api/signup', function (req, res) {
@@ -180,5 +181,10 @@ module.exports = app => {
                 break;
         }
         res.send(toPromptUpdateYear);
+    });
+
+    app.get('/api/calculateUserLevel', async(req, res) => {
+        const xp = req.query.xp;
+        return commonMethods.CALCULATE_USER_LEVEL(xp);
     });
 };
