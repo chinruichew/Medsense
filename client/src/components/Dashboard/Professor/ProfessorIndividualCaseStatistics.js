@@ -121,7 +121,9 @@ class ProfessorIndividualCaseStatistics extends Component {
             for(let j = 0; j < timeData.length; j++) {
                 const dateTime = timeData[j];
                 const dateTimeForward = timeData[j + 1];
-                if(new Date(answer.endTime) >= new Date(dateTime.dateString) && new Date(answer.endTime) <= new Date(dateTimeForward.dateString)) {
+                if(dateTimeForward === undefined) {
+                    // Factor this here
+                } else if(new Date(answer.endTime) >= new Date(dateTime.dateString) && new Date(answer.endTime) <= new Date(dateTimeForward.dateString)) {
                     dateTime.count++;
                     if(answer.openEndedAnswers.length > 0) {
                         for(let k = 0; k < answer.openEndedAnswers.length; k++) {
@@ -212,7 +214,9 @@ class ProfessorIndividualCaseStatistics extends Component {
             for(let j = 0; j < timeData.length; j++) {
                 const dateTime = timeData[j];
                 const dateTimeForward = timeData[j + 1];
-                if(new Date(answer.endTime) >= new Date(dateTime.dateString) && new Date(answer.endTime) <= new Date(dateTimeForward.dateString)) {
+                if(dateTimeForward === undefined) {
+                    // Factor this here
+                } else if(new Date(answer.endTime) >= new Date(dateTime.dateString) && new Date(answer.endTime) <= new Date(dateTimeForward.dateString)) {
                     dateTime.count++;
                     if(answer.openEndedAnswers.length > 0) {
                         for(let k = 0; k < answer.openEndedAnswers.length; k++) {

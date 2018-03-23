@@ -36,10 +36,11 @@ class ProfessorCaseStatistics extends Component {
                         const uploadedCases = this.state.associatedCases.uploaded;
                         const vettedCases = this.state.associatedCases.vetted;
                         const uploadedSection = uploadedCases.map((uploadedCase, index) => {
-                            let placeholderImage = <Image circle src="/individual_case_image.jpg" style={{height: '150px', width: '150px'}} />;
-                            if(index % 2 === 0) {
-                                placeholderImage = <Image circle src="/individual_case_image_2.jpg" style={{height: '150px', width: '150px'}} />;
-                            }
+                            // let placeholderImage = <Image circle src="/case-display-pictures/individual_case_image.jpg" style={{height: '150px', width: '150px'}} />;
+                            // if(index % 2 === 0) {
+                            //     placeholderImage = <Image circle src="/case-display-pictures/individual_case_image_2.jpg" style={{height: '150px', width: '150px'}} />;
+                            // }
+                            let placeholderImage = <Image circle src="/userMD.png" style={{height: '150px', width: '150px'}} />;
                             return(
                                 <div key={uploadedCase._id} className="col-md-4">
                                     <div className="card">
