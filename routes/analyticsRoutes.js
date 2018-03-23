@@ -72,7 +72,7 @@ module.exports = app => {
             if(Object.keys(leaders).length < 5) {
                 maxCounter = Object.keys(leaders).length;
             }
-            while (counter < maxCounter) {
+            while (true) {
                 let max = 0;
                 for(const key in leaders) {
                     if(leaders[key] > max) {
