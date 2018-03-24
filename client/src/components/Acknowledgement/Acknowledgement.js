@@ -33,7 +33,7 @@ class Acknowledgement extends Component {
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
                                             <Image src="./jamie.png" circle style={{width: "14em", height: "14em"}} />
-                                            <h5 style={{textAlign: "center", fontSize: "100%"}}>Jamie</h5>
+                                            <h5 style={{textAlign: "center", fontSize: "100%"}}>Kee Xiang Lee Jamie</h5>
                                         </Thumbnail>
                                     </center>
                                 </Col>
@@ -41,7 +41,7 @@ class Acknowledgement extends Component {
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
                                             <Image src="./justin.png" circle style={{width: "14em", height: "14em"}} />
-                                            <h5 style={{textAlign: "center", fontSize: "100%"}}>Justin</h5>
+                                            <h5 style={{textAlign: "center", fontSize: "100%"}}>Justin Ng Choon Hwee</h5>
                                         </Thumbnail>
                                     </center>
                                 </Col>
@@ -49,7 +49,7 @@ class Acknowledgement extends Component {
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
                                             <Image src="./andrea.png" circle style={{width: "14em", height: "14em"}} />
-                                            <h5 style={{textAlign: "center", fontSize: "100%"}}>Andrea</h5>
+                                            <h5 style={{textAlign: "center", fontSize: "100%"}}>Andrea Ang Jing Shi</h5>
                                         </Thumbnail>
                                     </center>
                                 </Col>
@@ -59,7 +59,7 @@ class Acknowledgement extends Component {
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
                                             <Image src="./jeremy.png" circle style={{width: "14em", height: "14em"}} />
-                                            <h5 style={{textAlign: "center", fontSize: "100%"}}>Jeremy</h5>
+                                            <h5 style={{textAlign: "center", fontSize: "100%"}}>Jeremy Teoh</h5>
                                         </Thumbnail>
                                     </center>
                                 </Col>
@@ -67,7 +67,7 @@ class Acknowledgement extends Component {
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
                                             <Image src="./philip.png" circle style={{width: "14em", height: "14em"}} />
-                                            <h5 style={{textAlign: "center", fontSize: "100%"}}>Philip</h5>
+                                            <h5 style={{textAlign: "center", fontSize: "100%"}}>Philip Ong Zheng Yang</h5>
                                         </Thumbnail>
                                     </center>
                                 </Col>
@@ -75,7 +75,7 @@ class Acknowledgement extends Component {
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
                                             <Image src="./sarah.png" circle style={{width: "14em", height: "14em"}} />
-                                            <h5 style={{textAlign: "center", fontSize: "100%"}}>Sarah</h5>
+                                            <h5 style={{textAlign: "center", fontSize: "100%"}}>Sarah Tham Zhuling</h5>
                                         </Thumbnail>
                                     </center>
                                 </Col>
@@ -85,7 +85,7 @@ class Acknowledgement extends Component {
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
                                             <Image src="./lawrence.png" circle style={{width: "14em", height: "14em"}} />
-                                            <h5 style={{textAlign: "center", fontSize: "100%"}}>Lawrence</h5>
+                                            <h5 style={{textAlign: "center", fontSize: "100%"}}>Wong Wen Jun Lawrence</h5>
                                         </Thumbnail>
                                     </center>
                                 </Col>
@@ -110,7 +110,7 @@ class Acknowledgement extends Component {
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
                                             <Image style={{width: "14em", height: "14em"}} src="./profhx.png" circle />
-                                            <h5 style={{textAlign: "center", fontSize: "100%"}}>Prof. Tan Hwee Xian</h5>
+                                            <h5 style={{textAlign: "center", fontSize: "100%"}}>Prof. Tan Hwee-Xian</h5>
                                         </Thumbnail>
                                     </center>
                                 </Col>
@@ -142,7 +142,7 @@ class Acknowledgement extends Component {
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
                                             <Image src="./amelia.jpg" circle style={{width: "14em", height: "14em"}} />
-                                            <h5 style={{textAlign: "center", fontSize: "100%"}}>Amelia Lee</h5>
+                                            <h5 style={{textAlign: "center", fontSize: "100%"}}>Lee Jing Hua Amelia</h5>
                                         </Thumbnail>
                                     </center>
                                 </Col>
@@ -158,7 +158,7 @@ class Acknowledgement extends Component {
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
                                             <Image src="./ervin.png" circle style={{width: "14em", height: "14em"}} />
-                                            <h5 style={{textAlign: "center", fontSize: "100%"}}>Ervin Chong</h5>
+                                            <h5 style={{textAlign: "center", fontSize: "100%"}}>Ervin Chong Sheng Loong</h5>
                                         </Thumbnail>
                                     </center>
                                 </Col>
