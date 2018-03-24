@@ -28,7 +28,7 @@ module.exports = app => {
     app.get('/api/logout', function(req, res) {
         // req.session.user = false;
         res.clearCookie("session");
-        res.clearCookie("express:sess");
+        res.clearCookie("session.sig");
         res.clearCookie("AWSELB");
         res.clearCookie("express:sess");
         res.clearCookie("express:sess.sig");
