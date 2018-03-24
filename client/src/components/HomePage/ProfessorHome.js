@@ -37,6 +37,10 @@ class ProfessorHome extends Component {
         });
     };
 
+    handleCarouselSelect = () => {
+        // Animation reset here
+    };
+
     renderCarousel2 = () => {
         if(this.state.recommendedPendingCases.length > 3) {
             const recommendedCasesV2 = this.state.recommendedPendingCases.map((recommendedPendingCase, index) => {
@@ -237,7 +241,7 @@ class ProfessorHome extends Component {
                     );
                 }
                 return(
-                    <Carousel.Item className="carousel-item">
+                    <Carousel.Item className="carousel-item" onSelect={this.handleCarouselSelect}>
                         {recommendedCasesV2}
                     </Carousel.Item>
                 );
@@ -453,7 +457,7 @@ class ProfessorHome extends Component {
 
                 return(
                     <Carousel className="carousel">
-                        <Carousel.Item className="carousel-item">
+                        <Carousel.Item className="carousel-item" onSelect={this.handleCarouselSelect}>
                             {recommendedPendingCases}
                         </Carousel.Item>
                         {this.renderCarousel2()}

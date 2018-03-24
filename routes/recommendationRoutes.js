@@ -190,6 +190,7 @@ module.exports = app => {
                     break;
                 }
             }
+
             res.send(processedCases);
         } else {
             // If user has attempted at least threshold number of cases in a spec, prioritise based on poor scoring
