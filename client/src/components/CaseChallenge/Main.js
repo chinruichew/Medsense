@@ -24,7 +24,7 @@ class Main extends Component {
 
     componentDidMount() {
         this.props.fetchRandomCase();
-        if(this.props.location) {
+        if(this.props.location.gameId !== undefined) {
             axios.post('/api/fetchGameById', {
                 id: this.props.location.gameId
             }).then(res => {
@@ -77,8 +77,7 @@ class Main extends Component {
 
     renderMainContent = () => {
         if(this.state.recommendedCase !== null && this.state.recommendedCase !== '') {
-            console.log(this.state.recommendedCase);
-            return <TimeLimit startGame={this.props.startGame} case={this.props.recommendedCase}/>
+            return <TimeLimit startGame={this.props.startGame} case={this.state.recommendedCase}/>
         } else {
             if(!this.state.showTimeLimit){
                 let approachBtnBgColor = this.state.approachBtnBackground ?  "#F2F2F2": "white";

@@ -36,7 +36,7 @@ class TimeLimit extends Component {
                 window.setTimeout(() => {
                     const gameOverview = this.props.getAttempt();
                     this.setState({attempt: gameOverview.values.attempt, authid: this.props.auth._id, showGameView:true});
-                },200);
+                }, 500);
         }
     };
 
