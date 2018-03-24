@@ -1,6 +1,7 @@
 const Case = require('../models/Case');
 const Question = require('../models/Question');
 const Option = require('../models/Option');
+const User = require('../models/User');
 
 const constants = require('../utility/constantTypes');
 
@@ -104,6 +105,17 @@ module.exports = app => {
                     }
                     newCase.questions = finalQuestions;
                     newCase.save().then(docs => {
+                        // Insert Author name
+                        if(req.body.values.author !== '') {
+                            User.findByIdAndUpdate(req.session.user._id, {name: req.body.values.author}, async(err, user) => {
+                                if(err) {
+                                    console.log(err);
+                                } else {
+                                    req.session.user = user;
+                                }
+                            });
+                        }
+
                         res.send({ data: {case:newCase._id, question:finalQuestions}, message: "uploadCase success" });
                     }).catch(err => {
                         throw(err);
