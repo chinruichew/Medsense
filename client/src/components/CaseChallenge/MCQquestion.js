@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import {Form, FormGroup, Col, PanelGroup} from 'react-bootstrap';
+import {Form, FormGroup, Col, PanelGroup, Glyphicon} from 'react-bootstrap';
 import { Checkbox, Button, Row, Panel } from 'react-bootstrap';
 import { Line } from 'rc-progress';
 import ReactHtmlParser from 'react-html-parser';
 import MCQAnswers from './MCQAnswers';
 import ImageMagnifier from "./ImageMagnifier";
+import BootstrapModal from '../UI/Modal/UploadBootstrapModal.js';
 import './Game.css';
 
 class MCQquestion extends Component {
@@ -27,7 +28,8 @@ class MCQquestion extends Component {
             time: {},
             seconds: parseFloat(this.props.question.time) * 60,
             questionStart: null,
-            checkedMCQs: []
+            checkedMCQs: [],
+            showSTEMs: false
         };
         this.timer = 0;
     }
@@ -129,7 +131,7 @@ class MCQquestion extends Component {
         let progress = parseFloat(this.props.question.id) / parseFloat(this.props.totalQnNum) * 100;
         return (
             <div >
-                <Col sm={10} align="left">
+                <Col sm={9} align="left" style={{paddingLeft: "0", width: "81%"}}>
                     <Line
                         percent={progress}
                         strokeWidth="2"
@@ -170,22 +172,31 @@ class MCQquestion extends Component {
         });
 
         if (this.props.question.id > "1") {
-            const storySoFar = (<span id="story-title"><center>Story So Far</center></span>);
             return (
-                <PanelGroup accordion style={{width: "93%"}}>
-                    <Panel eventKey="1" bsStyle="info">
-                        <Panel.Heading><Panel.Title toggle>{storySoFar}</Panel.Title></Panel.Heading>
-                        <Panel.Body collapsible>
-                            <div style={{fontSize: "120%"}}>
-                                {ReactHtmlParser(this.props.scenario)}
-                                {stems}
-                            </div>
-                        </Panel.Body>
-                    </Panel>
-                </PanelGroup>
+                <div className="previous-stem">
+                    <h3>Case Scenario</h3>
+                    <h5>{ReactHtmlParser(this.props.scenario)}</h5>
+                    <h3>STEM</h3>
+                    <h5>{stems}</h5>
+                </div>
             );
         }
     };
+
+    renderPreviousSTEM = () => {
+        if (this.props.question.id > "1") {
+            return (
+                <Row>
+                    <Col className="previous-stem-col">
+                        <Button type="button" bsStyle="link" className="previous-stem-btn" onClick={(e) => this.setState({ showSTEMs: true })}>
+                            <Glyphicon glyph="glyphicon glyphicon-list-alt"/> Previous STEM
+                        </Button>
+                    </Col>
+                </Row>
+            );
+        }
+
+    }
 
     handleCheckChange = (value, optionId) => {
         // Set value for MCQ option
@@ -210,6 +221,8 @@ class MCQquestion extends Component {
         });
     };
 
+    // handlePreviousSTEM
+
     render() {
         return (
             <Form horizontal>
@@ -232,33 +245,32 @@ class MCQquestion extends Component {
 
                     <br />
 
-                    <Row style={{paddingLeft: "0"}}>
-                        <h5>Expand and collapse the headers to view the previous questions!</h5>
-                        {this.renderStorySoFar()}
-                    </Row>
+                    {this.renderPreviousSTEM()}
 
                     <Row>
                         <Panel bsStyle="info" id="panel" style={{ borderWidth: "thick", width: "93%" }}>
 
-                            <h4 style={{ border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace: "pre-wrap", wordBreak: "keep-all" }}>{this.renderScenario()}</h4>
+                            <div className="game-question-area">
+                                <h4 style={{ border: "0", background: "white", padding: "0", fontSize: "medium",
+                                    whiteSpace: "pre-wrap", wordBreak: "keep-all" }}>{this.renderScenario()}</h4>
 
-                            <br />
+                                <h4 style={{ border: "0", background: "white", padding: "0", fontSize: "medium",
+                                    whiteSpace: "pre-wrap", wordBreak: "keep-all" }}>
+                                    {ReactHtmlParser(this.props.question.question)}
+                                </h4>
 
-                            <h4 style={{ border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace: "pre-wrap", wordBreak: "keep-all" }}>
-                                {ReactHtmlParser(this.props.question.question)}
-                            </h4>
+                                <div className="col-md-5 col-md-offset-2">{<ImageMagnifier url={this.props.question.attachment} />}</div>
 
-                            <div className="col-md-5 col-md-offset-2">{<ImageMagnifier url={this.props.question.attachment} />}</div>
+                                <br /><br />
 
-                            <br /><br />
-
-                            <Form><h4>
-                                <FormGroup>
-                                    <div className="col-md-6 col-md-offset-2">
-                                        {this.renderMCQs()}
-                                    </div>
-                                </FormGroup>
-                            </h4></Form>
+                                <Form><h4>
+                                    <FormGroup>
+                                        <div className="col-md-6 col-md-offset-2">
+                                            {this.renderMCQs()}
+                                        </div>
+                                    </FormGroup>
+                                </h4></Form>
+                            </div>
                         </Panel>
 
                         {this.renderShowNextButton()}
@@ -281,7 +293,21 @@ class MCQquestion extends Component {
                         />}
                     </Row>
                 </div>
+
+                <BootstrapModal bsSize="large" show={this.state.showSTEMs} onHide={(e) => this.setState({ showSTEMs: false })}>
+                    <BootstrapModal.Header closeButton>
+                        <BootstrapModal.Title id="contained-modal-title-lg" style={{fontSize: "200%", fontWeight: "bold"}}>Previous STEM</BootstrapModal.Title>
+                    </BootstrapModal.Header>
+                    <BootstrapModal.Body>
+                        {this.renderStorySoFar()}
+                    </BootstrapModal.Body>
+                    <BootstrapModal.Footer>
+                        <Button onClick={(e) => this.setState({ showSTEMs: false })}>Close</Button>
+                    </BootstrapModal.Footer>
+                </BootstrapModal>
             </Form>
+
+
         );
     }
 }

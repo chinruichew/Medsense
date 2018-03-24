@@ -83,19 +83,20 @@ class MCQAnswers extends Component {
             default:
                 return (
                     <Col sm={11}>
-                        <h3>You got {this.state.answerIndex.stuCorrectAnswerCount} / {this.state.answerIndex.answerCount} correct!</h3><br />
-                        <h3>Your score for this question: {this.state.answerIndex.score}</h3>
-                        <h4>
-                            <strong>Answer</strong> <br />
-                            <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{ReactHtmlParser(this.state.answerIndex.mcqAnswer)}</h4> <br /><br />
-
-                            <strong>PEARL</strong> <br />
-                            <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{ReactHtmlParser(this.props.question.pearl)} </h4><br /><br />
-
-                            <strong>References</strong> <br />
-                            <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{ReactHtmlParser(this.props.question.reference)}</h4> <br /><br />
-
-                        </h4>
+                        <h3>You got {this.state.answerIndex.stuCorrectAnswerCount} / {this.state.answerIndex.answerCount} correct!</h3>
+                        <h3>Your score for this question: {this.state.answerIndex.score}</h3><br/>
+                        <h4 style={{color: "#199ED8"}}><strong>Answer</strong></h4>
+                        <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium",
+                            whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{ReactHtmlParser(this.state.answerIndex.mcqAnswer)}
+                        </h4><br />
+                        <h4 style={{color: "#199ED8"}}><strong>PEARL</strong></h4>
+                        <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium",
+                            whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{ReactHtmlParser(this.props.question.pearl)}
+                        </h4><br />
+                        <h4 style={{color: "#199ED8"}}><strong>References</strong></h4>
+                        <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium",
+                            whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{ReactHtmlParser(this.props.question.reference)}
+                        </h4> <br /><br />
                         {this.renderNextQuestion()}
                     </Col>
                 );

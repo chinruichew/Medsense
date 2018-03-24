@@ -57,3 +57,24 @@ Col {
     color: #199ED8;
     font-weight: bold;
 }
+
+.previous-stem >h3 {
+    color: #199ED8;
+}
+
+.previous-stem-btn{
+    font-size: 130%;
+}
+
+.previous-stem-col{
+    margin-left: 79%;
+}
+
+.game-question-area{
+    padding: 1% 2%;
+}
+
+.progress-bar{
+    width: 81%;
+    padding-left: 0;
+}
