@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button } from 'react-bootstrap';
+import { Button, Image, Table } from 'react-bootstrap';
 import BootstrapModal from '../UI/Modal/VettingBootstrapModal.js';
 import { bindAll } from 'lodash';
 import { updateProfessor } from '../../actions/index';
+import UploadProfilePicture from './UploadProfilePicture';
 
 class ProfessorProfile extends Component {
     constructor(props) {
@@ -51,64 +52,63 @@ class ProfessorProfile extends Component {
         }).catch(() => { })
     }
 
+    handleUpdate(e) {
+        e.preventDefault();
+        this.props.updateProfessor(this.state).then((response) => {
+            if (response) {
+                console.log(response);
+                this.setState({ vmShow: false });
+                this.props.reRenderMain();
+                console.log(this.props.refresh);
+            }
+        }).catch(() => { })
+    }
+
     render() {
         let vmClose = () => this.setState({ vmShow: false });
         return (
             <div>
-                <div className="col-sm-5 col-sm-offset-2">
-                    <form >
-                        <div className="row" style={{paddingTop: "20%"}}>
-                            <h3> <b>{this.state.username}</b> </h3><br/>
-                        </div>
-
-                        <div className="row">
-                            <div className="form-group">
-
-                                    <div className="input-group">
-                                        <span className="input-group-addon"><i className="fa fa-heartbeat fa-lg" aria-hidden="true"></i></span>
-                                        <select className="form-control" value={this.state.speciality} onChange={(e) => this.handleSpecialityChange(e)}>
-                                            <option value="Medicine">Medicine</option>
-                                            <option value="Surgery">Surgery</option>
-                                            <option value="Orthopedics">Orthopedics</option>
-                                            <option value="Others">Others</option>
-                                        </select>
-                                    </div>
-
-                            </div>
-                        </div>
-
-                        <div className="row">
-                            <div className="form-group">
-
-                                    <div className="input-group">
-                                        <span className="input-group-addon"><i className="fa fa-plus-square fa-lg" aria-hidden="true"></i></span>
-                                        {this.setSubspeciality()}
-                                    </div>
-
-                            </div>
-                        </div>
-
-                        <div className="row">
-                            <div className="form-group">
-
-                                    <div className="input-group">
-                                        <span className="input-group-addon"><i className="fa fa-university fa-lg" aria-hidden="true"></i></span>
-                                        <select className="form-control" value={this.state.school} onChange={(e) => this.handleSchoolChange(e)}>
-                                            <option value="Duke-NUS">Duke-NUS</option>
-                                            <option value="NTU">NTU</option>
-                                            <option value="NUS">NUS</option>
-                                        </select>
-                                    </div>
-
-                            </div>
-                        </div>
-                        <div className="row">
-
-                        <div className="form-group">
-                            <button type="submit" onClick={(e) => this.handleSaveChange(e)} className="btn btn-primary btn-lg btn-block login-button">Save</button>
-                        </div>
-                        </div>
-                    </form>
+                <div align="center">
+                    <div className="main-center" style={{paddingBottom: "0", paddingTop: "0"}}>
+                        <Image src={this.props.auth.profilepicture} style={{width: '200px'}} alt={this.props.auth.username}  circle />
+                        <h3> <b>{this.state.username}</b> </h3>
+                    </div><br />
+                    <Table  style={{width: '700px'}} >
+                        <tr>
+                            <td><center>
+                                <Image src="./school.png" circle style={{width: "3em", height: "3em", borderRight: "1"}} />
+                            </center></td>
+                            <td><center>
+                                <Image src="./specialty.png" circle style={{width: "3em", height: "3em"}} />
+                            </center></td>
+                            <td><center>
+                                <Image src="./subspecialty.png" circle style={{width: "3em", height: "3em"}} />
+                            </center></td>
+                            <td><center>
+                                <Image src="./contribution.png" circle style={{width: "3em", height: "3em"}} />
+                            </center></td>
+                        </tr>
+                        <tr>
+                            <td style={{width: '100px'}} ><center>
+                                <h4 > {this.state.school} </h4>
+                            </center></td>
+                            <td style={{width: '100px'}} ><center>
+                                <h4> {this.state.speciality} </h4>
+                            </center></td>
+                            <td style={{width: '100px'}} ><center>
+                                <h4> {this.state.subspeciality} </h4>
+                            </center></td>
+                            <td style={{width: '100px'}} ><center>
+                                <h4> Silver </h4>
+                            </center></td>
+                        </tr>
+                    </Table>
+                    <br/>
+                    <div style={{ maxWidth: 400, margin: '0 auto 10px' }}>
+                        <Button onClick={(e) => this.handleSaveChange(e)} bsStyle="primary" bsSize="large" block>
+                            Edit
+                        </Button>
+                    </div>
                 </div>
                 <BootstrapModal
                     show={this.state.vmShow}
@@ -118,7 +118,51 @@ class ProfessorProfile extends Component {
                         <BootstrapModal.Title id="error-modal-">Profile Update</BootstrapModal.Title>
                     </BootstrapModal.Header>
                     <BootstrapModal.Body>
-                        <p>Your profile has been successfully updated.</p>
+                        <UploadProfilePicture/>
+
+                        <div className="main-center" style={{paddingTop:'0%', paddingBottom:'0%'}}>
+                            <div className="form-group">
+                                <div className="input-group">
+                                    <span className="input-group-addon"><i className="fa fa-heartbeat fa-lg" aria-hidden="true"></i></span>
+                                    <select className="form-control" value={this.state.speciality} onChange={(e) => this.handleSpecialityChange(e)}>
+                                        <option value="Medicine">Medicine</option>
+                                        <option value="Surgery">Surgery</option>
+                                        <option value="Orthopedics">Orthopedics</option>
+                                        <option value="Others">Others</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="main-center" style={{paddingTop:'0%', paddingBottom:'0%'}}>
+                            <div className="form-group">
+                                <div className="input-group">
+                                    <span className="input-group-addon"><i className="fa fa-plus-square fa-lg" aria-hidden="true"></i></span>
+                                    {this.setSubspeciality()}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="main-center" style={{paddingTop:'0%', paddingBottom:'0%'}}>
+                            <div className="form-group">
+
+                                <div className="input-group">
+                                    <span className="input-group-addon"><i className="fa fa-university fa-lg" aria-hidden="true"></i></span>
+                                    <select className="form-control" value={this.state.school} onChange={(e) => this.handleSchoolChange(e)}>
+                                        <option value="Duke-NUS">Duke-NUS</option>
+                                        <option value="NTU">NTU</option>
+                                        <option value="NUS">NUS</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <center>
+                            <div style={{  maxWidth: 200, maxHeight: 30 , paddingTop:'0%'}}>
+                                <Button type="submit" onClick={(e) => this.handleUpdate(e)} bsStyle="primary" bsSize="small" block>
+                                    Update Profile
+                                </Button>
+                            </div>
+                        </center>
                     </BootstrapModal.Body>
                     <BootstrapModal.Footer>
                         <Button onClick={vmClose}>Close</Button>

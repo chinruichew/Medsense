@@ -66,7 +66,7 @@ class StudentProfile extends Component {
             <div>
                 <div align="center">
                     <div className="main-center" style={{paddingBottom: "0", paddingTop: "0"}}>
-                        <Image src={this.props.auth.profilepicture} style={{width: '200px'}} alt={this.props.auth.username} />
+                        <Image src={this.props.auth.profilepicture} style={{width: '200px'}} alt={this.props.auth.username}  circle />
                         <h3> <b>{this.state.username}</b> </h3>
                         <h4 style={{textAlign:"center", marginBottom:"1em"}}>
                             {this.renderProgressBar()}

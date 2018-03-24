@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
     Button, FormGroup, ControlLabel, FormControl, InputGroup, Panel, Row,
-    PanelGroup, Popover, OverlayTrigger, Glyphicon
+    PanelGroup, Popover, OverlayTrigger, Glyphicon, Image
 } from 'react-bootstrap';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -244,7 +244,9 @@ class Question extends Component {
         return(
             <div id="question">
                 <div className="add-question-button">
-                    <Button type="button" bsStyle="link" bsSize="large" onClick={(e) => this.props.handleAddQuestion(this.props.id)}><Glyphicon glyph="plus-sign"/> Add Question</Button><br />
+                    <Button type="button" bsStyle="link" bsSize="large" onClick={(e) => this.props.handleAddQuestion(this.props.id)}>
+                        <Glyphicon glyph="plus-sign"/> Add Question
+                    </Button><br />
                 </div><br/>
 
                 <PanelGroup accordion>
@@ -252,7 +254,10 @@ class Question extends Component {
                         <Panel.Heading onClick={(e) => this.setState({heading:!this.state.heading})}><Panel.Title toggle>{questiontitle}</Panel.Title></Panel.Heading>
                         <Panel.Body collapsible>
                             <div className="delete-question-button">
-                                <Button  type="button" bsSize="large" bsStyle="link" onClick={(e)=>this.props.handleDeleteQuestion(this.props.id)}><Glyphicon glyph="trash"/></Button><br/>
+                                <Button  type="button" bsSize="large" bsStyle="link" onClick={(e)=>this.props.handleDeleteQuestion(this.props.id)}>
+                                    {/*<Image src="./delete.png" style={{width: '25px'}} /> Delete Question*/}
+                                    <Glyphicon glyph="trash"/> Delete Question
+                                </Button><br/>
                             </div>
 
                             {this.checkQ1()}
