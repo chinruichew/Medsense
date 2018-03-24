@@ -80,10 +80,12 @@ class MainProfile extends Component {
 
         return (
             <div>
-                <Col sm={6}>
-                    <UploadProfilePicture/></Col>
-                <Col smOffset={6}>
-                    {this.renderContent()}</Col>
+                {/*<Col sm={6}>*/}
+                    {/*<UploadProfilePicture/>*/}
+                {/*</Col>*/}
+                {/*<Col smOffset={6}>*/}
+                    {this.renderContent()}
+                {/*</Col>*/}
             </div>
         )
     }

@@ -5,6 +5,8 @@ import { bindAll } from 'lodash';
 import { updateStudent } from '../../actions/index';
 import { Button } from 'react-bootstrap';
 import { Line } from 'rc-progress';
+import UploadProfilePicture from './UploadProfilePicture';
+import {Image, Table} from "react-bootstrap";
 
 class StudentProfile extends Component {
     constructor(props) {
@@ -14,6 +16,7 @@ class StudentProfile extends Component {
             username: this.props.username,
             school: this.props.school,
             year: this.props.year,
+            vmShow: false,
             level: isNaN(Math.floor((50+Math.sqrt(400*this.props.xp-37500))/100))?0:Math.floor((50+Math.sqrt(400*this.props.xp-37500))/100),
         };
         bindAll(this, 'handleSchoolChange', 'handleYearChange', 'handleSaveChange', 'renderProgressBar');
@@ -37,6 +40,16 @@ class StudentProfile extends Component {
         }).catch(() => { })
     }
 
+    handleUpdate(e) {
+        e.preventDefault();
+        this.props.updateStudent(this.state).then((response) => {
+            if (response) {
+                this.setState({ vmShow: false });
+            }
+            this.props.reRenderMain();
+        }).catch(() => { })
+    }
+
     renderProgressBar() {
         let nextLvlPoints = 100+this.state.level*(this.state.level+1)/2*50;
         let progress = this.props.xp / nextLvlPoints * 100;
@@ -51,15 +64,65 @@ class StudentProfile extends Component {
         let vmClose = () => this.setState({ vmShow: false });
         return (
             <div>
-                <div className="col-sm-5 col-sm-offset-2">
-
-                    <div className="row" style={{paddingTop: "31%"}}>
-                        <h1> <b>{this.state.username}</b> </h1>
-                        <h4> <b>Level {this.state.level}</b> </h4>
-                    <h5 style={{textAlign:"right", marginBottom:"1em"}}>{this.renderProgressBar()}<b>{this.props.xp}/{100+this.state.level*(this.state.level+1)/2*50} XP</b></h5>
+                <div align="center">
+                    <div className="main-center" style={{paddingBottom: "0", paddingTop: "0"}}>
+                        <Image src={this.props.auth.profilepicture} style={{width: '200px'}} alt={this.props.auth.username} />
+                        <h3> <b>{this.state.username}</b> </h3>
+                        <h4 style={{textAlign:"center", marginBottom:"1em"}}>
+                            {this.renderProgressBar()}
+                            <b>{this.props.xp}/{100+this.state.level*(this.state.level+1)/2*50} XP</b>
+                        </h4>
                     </div>
-                    <div className="row">
-                        <div className="form-group">
+                    <Table  style={{width: '700px'}} >
+                        <tr>
+                            <td><center>
+                                <Image src="./school.png" circle style={{width: "3em", height: "3em", borderRight: "1"}} />
+                            </center></td>
+                            <td><center>
+                                <Image src="./year.png" circle style={{width: "3em", height: "3em"}} />
+                            </center></td>
+                            <td><center>
+                                <Image src="./experience.png" circle style={{width: "3em", height: "3em"}} />
+                            </center></td>
+                            <td><center>
+                                <Image src="./contribution.png" circle style={{width: "3em", height: "3em"}} />
+                            </center></td>
+                        </tr>
+                        <tr>
+                            <td style={{width: '100px'}} ><center>
+                                <h4 > {this.state.school} </h4>
+                            </center></td>
+                            <td style={{width: '100px'}} ><center>
+                                <h4> Year {this.state.year} </h4>
+                            </center></td>
+                            <td style={{width: '100px'}} ><center>
+                                <h4> {this.props.xp} XP </h4>
+                            </center></td>
+                            <td style={{width: '100px'}} ><center>
+                                <h4> Silver </h4>
+                            </center></td>
+                        </tr>
+                    </Table>
+                    <br/>
+                    <div style={{ maxWidth: 400, margin: '0 auto 10px' }}>
+                        <Button onClick={(e) => this.handleSaveChange(e)} bsStyle="primary" bsSize="large" block>
+                            Edit
+                        </Button>
+                    </div>
+                </div>
+
+                <BootstrapModal
+                    show={this.state.vmShow}
+                    onHide={(e) => this.setState({ vmShow: false })}
+                    aria-labelledby="error-modal">
+                    <BootstrapModal.Header closeButton>
+                        <BootstrapModal.Title id="error-modal-">Profile Update</BootstrapModal.Title>
+                    </BootstrapModal.Header>
+                    <BootstrapModal.Body>
+                        <UploadProfilePicture/>
+
+                        <div className="main-center" style={{paddingTop:'0%', paddingBottom:'0%'}}>
+                            <div className="form-group">
 
                                 <div className="input-group">
                                     <span className="input-group-addon"><i className="fa fa-graduation-cap fa-lg" aria-hidden="true"></i></span>
@@ -71,13 +134,11 @@ class StudentProfile extends Component {
                                         <option value="5">Year 5</option>
                                     </select>
                                 </div>
-
+                            </div>
                         </div>
-                    </div>
 
-                    <div className="row">
-                        <div className="form-group">
-
+                        <div className="main-center" style={{paddingTop:'0%', paddingBotoom:'0%'}}>
+                            <div className="form-group">
                                 <div className="input-group">
                                     <span className="input-group-addon"><i className="fa fa-university fa-lg" aria-hidden="true"></i></span>
                                     <select className="form-control" value={this.state.school} onChange={(e) => this.handleSchoolChange(e)}>
@@ -86,28 +147,25 @@ class StudentProfile extends Component {
                                         <option value="NUS">NUS</option>
                                     </select>
                                 </div>
-
+                            </div>
                         </div>
-                    </div>
 
-                    <div className="row">
-                    <div className="form-group">
-                        <button type="submit" onClick={(e) => this.handleSaveChange(e)} className="btn btn-primary btn-lg btn-block login-button">Save</button>
-                    </div>
-                    </div>
-                </div>
-                <BootstrapModal
-                    show={this.state.vmShow}
-                    onHide={vmClose}
-                    aria-labelledby="error-modal">
-                    <BootstrapModal.Header closeButton>
-                        <BootstrapModal.Title id="error-modal-">Profile Update</BootstrapModal.Title>
-                    </BootstrapModal.Header>
-                    <BootstrapModal.Body>
-                        <p>Your profile has been successfully updated.</p>
+                        <center>
+                            <div style={{  maxWidth: 200, maxHeight: 30 , paddingTop:'0%'}}>
+                                <Button type="submit" onClick={(e) => this.handleUpdate(e)} bsStyle="primary" bsSize="small" block>
+                                    Update Profile
+                                </Button>
+                            </div>
+                        </center>
+
+                        {/*<div className="row">*/}
+                            {/*<div className="form-group">*/}
+                                {/*<button type="submit" onClick={(e) => this.handleSaveChange(e)} className="btn btn-primary btn-lg btn-block login-button">Save</button>*/}
+                            {/*</div>*/}
+                        {/*</div>*/}
                     </BootstrapModal.Body>
                     <BootstrapModal.Footer>
-                        <Button onClick={vmClose}>Close</Button>
+                        <Button onClick={(e) => this.setState({ vmShow: false })}>Close</Button>
                     </BootstrapModal.Footer>
                 </BootstrapModal>
             </div>

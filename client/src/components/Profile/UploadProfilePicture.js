@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import {Image} from "react-bootstrap";
+import {Image, Button} from "react-bootstrap";
 import {connect} from "react-redux";
 
 class UploadProfilePicture extends Component {
@@ -39,18 +39,28 @@ class UploadProfilePicture extends Component {
                 return;
             default:
                 return(
-                    <div className="main-center">
-
+                    <div className="main-center" style={{paddingTop:'0%', paddingBottom:'0%'}}>
+                        <center>
                         <form onSubmit={this.onFormSubmit} className="form-horizontal" method="post" action="/api/uploadProfileImage" encType="multipart/form-data">
-                            <Image src={this.props.auth.profilepicture} style={{width: '200px', paddingLeft:'18%', paddingTop:'24%'}} alt={this.props.auth.username} />
-                            <br/><br/>
+                            <center><Image src={this.props.auth.profilepicture} style={{width: '180px', paddingTop:'0%', paddingBottom:'0%'}} alt={this.props.auth.username} />
+                            </center><br/>
                             <div className="form-group">
                                 <label>Upload a profile picture:</label>
+
                                 <input id="profile_picture" type="file" name="upload" multiple="multiple" onChange={this.onFileUploadChange} />
 
-                            <button type="submit" className="btn btn-primary btn-lg btn-block login-button">Submit</button>
+                            {/*<button type="submit" className="btn btn-primary btn-lg btn-block login-button">Submit</button>*/}
+                            <br />
+                                <div className="main-center" style={{paddingTop:'0%', paddingBotoom:'0%'}}>
+                            <div style={{ maxWidth: 200, maxHeight: 30}}>
+                                <Button type="submit" bsStyle="primary" bsSize="small" block>
+                                    Update Profile Picture
+                                </Button>
+                            </div>
+                            </div>
                             </div>
                         </form>
+                        </center>
                     </div>
                 );
         }
