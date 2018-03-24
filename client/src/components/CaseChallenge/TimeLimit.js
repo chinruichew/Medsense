@@ -66,7 +66,7 @@ class TimeLimit extends Component {
         if (!this.state.showGameView) {
             let timerBtnBgColor = this.state.withTimeLimit ? "#82C5D9" : "#CDE0EB";
             let noTimerBtnBgColor = this.state.noTimeLimit ? "#82C5D9" : "#CDE0EB";
-            //console.log(this.props.game.gameCase.authorid['username']);
+            let authornameDisplay = this.state.challenge.authorid.name !== '' && this.state.challenge.authorid.name !== undefined? <h5 className="text-center">This case has been uploaded by {this.state.challenge.authorid.name}.</h5>: '';
             return (
                 <div className='container' style={{margin: "0"}}>
                     <div align="center">
@@ -111,7 +111,7 @@ class TimeLimit extends Component {
                                 </Col>
                             </FormGroup>
                         </Col>
-                        <h5 className="text-center">This case has been uploaded by USERNAME.</h5>
+                        {authornameDisplay}
                         <FormGroup style={{width: "95%"}}>
                             <Col smOffset={1} sm={2} className='pull-left'>
                                 <Button bsStyle="primary" bsSize="large" onClick={(e) => window.location.reload()}>
