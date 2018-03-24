@@ -47,3 +47,12 @@
 Col {
     margin-bottom: 5%;
 }
+
+.limit-paragraph{
+    line-height: 1.4;
+    margin: 0;
+}
+
+br{
+    margin: 7px 0;
+}

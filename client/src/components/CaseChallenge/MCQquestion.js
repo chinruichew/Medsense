@@ -160,7 +160,8 @@ class MCQquestion extends Component {
                 }
 
                 return (
-                    <div style={{color: "black"}}>{ReactHtmlParser(stem)}
+                    <div style={{color: "black"}}>
+                        {ReactHtmlParser(stem)}
                         <br />
                     </div>
                 );
@@ -232,6 +233,7 @@ class MCQquestion extends Component {
                     <br />
 
                     <Row style={{paddingLeft: "0"}}>
+                        <h5>Expand and collapse the headers to view the previous questions!</h5>
                         {this.renderStorySoFar()}
                     </Row>
 

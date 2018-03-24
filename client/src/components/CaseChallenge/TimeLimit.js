@@ -66,18 +66,21 @@ class TimeLimit extends Component {
         if (!this.state.showGameView) {
             let timerBtnBgColor = this.state.withTimeLimit ? "#82C5D9" : "#CDE0EB";
             let noTimerBtnBgColor = this.state.noTimeLimit ? "#82C5D9" : "#CDE0EB";
+            //console.log(this.props.game.gameCase.authorid['username']);
             return (
                 <div className='container' style={{margin: "0"}}>
                     <div align="center">
-                        <h1>{this.state.challenge.title}</h1><br />
-                        <h4>
+                        <h1>{this.state.challenge.title}</h1><br/>
+                        <h4 className="limit-paragraph">
                             <em>
-                                Earn extra points when you try a case with time limit!
+                                Welcome to the case practice!<br/><br/>
+                                Playing with a time limit will earn you extra XP! <br/>Please note that the time limit is for <u>each individual question.</u><br/><br/>
+                                For MCQ questions, there will be a penalty for wrong answers that are selected.<br/>
+                                For the open-ended questions, your answers will be marked automatically.<br/>
                                 <br />
                             </em>
                         </h4>
                     </div>
-                    <br /><br />
                     <Form horizontal style={{width: "95%"}}>
                         <Col smOffset={3} style={{marginLeft: "35%"}}>
                             <FormGroup controlId="formHorizontalEmail">
@@ -108,7 +111,7 @@ class TimeLimit extends Component {
                                 </Col>
                             </FormGroup>
                         </Col>
-                        <br /><br />
+                        <h5 className="text-center">This case has been uploaded by USERNAME.</h5>
                         <FormGroup style={{width: "95%"}}>
                             <Col smOffset={1} sm={2} className='pull-left'>
                                 <Button bsStyle="primary" bsSize="large" onClick={(e) => window.location.reload()}>
