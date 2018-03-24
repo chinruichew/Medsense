@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import BootstrapModal from '../UI/Modal/VettingBootstrapModal.js';
-import { bindAll } from 'lodash';
+import axios from 'axios';
 import { updateStudent } from '../../actions/index';
 import { Button } from 'react-bootstrap';
 import { Line } from 'rc-progress';
@@ -17,48 +17,46 @@ class StudentProfile extends Component {
             school: this.props.school,
             year: this.props.year,
             vmShow: false,
-            level: isNaN(Math.floor((50+Math.sqrt(400*this.props.xp-37500))/100))?0:Math.floor((50+Math.sqrt(400*this.props.xp-37500))/100),
         };
-        bindAll(this, 'handleSchoolChange', 'handleYearChange', 'handleSaveChange', 'renderProgressBar');
     }
 
-    handleSchoolChange(e) {
+    componentDidMount(){
+        axios.get('/api/calculateUserLevel?xp=' + this.props.auth.points).then(res => {
+            console.log(res);
+            this.setState({level: res.data});
+        });
+    }
+
+    handleSchoolChange = (e) =>{
         this.setState({ school: e.target.value });
-    }
+    };
 
-    handleYearChange(e) {
+    handleYearChange = (e) =>{
         this.setState({ year: e.target.value });
-    }
+    };
 
-    handleSaveChange(e) {
-        e.preventDefault();
-        this.props.updateStudent(this.state).then((response) => {
-            if (response) {
-                this.setState({ vmShow: true });
-            }
-            this.props.reRenderMain();
-        }).catch(() => { })
-    }
+    handleEdit = (e) =>{
+        this.setState({ vmShow: true });
+    };
 
-    handleUpdate(e) {
+    handleUpdate = (e) =>{
         e.preventDefault();
         this.props.updateStudent(this.state).then((response) => {
             if (response) {
                 this.setState({ vmShow: false });
             }
-            this.props.reRenderMain();
         }).catch(() => { })
-    }
+    };
 
-    renderProgressBar() {
-        let nextLvlPoints = 100+this.state.level*(this.state.level+1)/2*50;
-        let progress = this.props.xp / nextLvlPoints * 100;
+    renderProgressBar = () =>{
+        let nextLvlPoints = 480+240*(this.state.level-1)*(this.state.level+2)/2;
+        let progress = this.props.auth.points / nextLvlPoints * 100;
         return <Line    percent={progress}
                         strokeWidth="8"
                         trailWidth="8"
                         strokeColor="#82C5D9"
                         strokeLinecap="round"/>
-    }
+    };
 
     render() {
         let vmClose = () => this.setState({ vmShow: false });
@@ -66,11 +64,11 @@ class StudentProfile extends Component {
             <div>
                 <div align="center">
                     <div className="main-center" style={{paddingBottom: "0", paddingTop: "0"}}>
-                        <Image src={this.props.auth.profilepicture} style={{width: '200px'}} alt={this.props.auth.username}  circle />
+                        <Image src={this.props.auth.profilepicture} style={{width: '18em', marginTop: '10%'}} alt={this.props.auth.username}  circle />
                         <h3> <b>{this.state.username}</b> </h3>
                         <h4 style={{textAlign:"center", marginBottom:"1em"}}>
                             {this.renderProgressBar()}
-                            <b>{this.props.xp}/{100+this.state.level*(this.state.level+1)/2*50} XP</b>
+                            <b>{this.props.auth.points}/{480+240*(this.state.level-1)*(this.state.level+2)/2} XP</b>
                         </h4>
                     </div>
                     <Table  style={{width: '700px'}} >
@@ -96,7 +94,7 @@ class StudentProfile extends Component {
                                 <h4> Year {this.state.year} </h4>
                             </center></td>
                             <td style={{width: '100px'}} ><center>
-                                <h4> {this.props.xp} XP </h4>
+                                <h4> {this.props.auth.points} XP </h4>
                             </center></td>
                             <td style={{width: '100px'}} ><center>
                                 <h4> Silver </h4>
@@ -105,7 +103,7 @@ class StudentProfile extends Component {
                     </Table>
                     <br/>
                     <div style={{ maxWidth: 400, margin: '0 auto 10px' }}>
-                        <Button onClick={(e) => this.handleSaveChange(e)} bsStyle="primary" bsSize="large" block>
+                        <Button onClick={(e) => this.handleEdit(e)} bsStyle="primary" bsSize="large" block>
                             Edit
                         </Button>
                     </div>
@@ -157,12 +155,6 @@ class StudentProfile extends Component {
                                 </Button>
                             </div>
                         </center>
-
-                        {/*<div className="row">*/}
-                            {/*<div className="form-group">*/}
-                                {/*<button type="submit" onClick={(e) => this.handleSaveChange(e)} className="btn btn-primary btn-lg btn-block login-button">Save</button>*/}
-                            {/*</div>*/}
-                        {/*</div>*/}
                     </BootstrapModal.Body>
                     <BootstrapModal.Footer>
                         <Button onClick={(e) => this.setState({ vmShow: false })}>Close</Button>

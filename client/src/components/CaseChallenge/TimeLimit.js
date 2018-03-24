@@ -64,20 +64,20 @@ class TimeLimit extends Component {
 
     renderTimeLimitContent = () => {
         if (!this.state.showGameView) {
-            let timerBtnBgColor = this.state.withTimeLimit ? "#82C5D9" : "#CDE0EB";
-            let noTimerBtnBgColor = this.state.noTimeLimit ? "#82C5D9" : "#CDE0EB";
-            let authornameDisplay = this.state.challenge.authorid.name !== '' && this.state.challenge.authorid.name !== undefined? <h5 className="text-center">This case has been uploaded by {this.state.challenge.authorid.name}.</h5>: '';
+            let timerBtnBgColor = this.state.withTimeLimit ? "#15317E" : "#98AFC7";
+            let noTimerBtnBgColor = this.state.noTimeLimit ? "#15317E" : "#98AFC7";
             return (
                 <div className='container' style={{margin: "0"}}>
                     <div align="center">
-                        <h1>{this.state.challenge.title}</h1><br/>
+                        <h1 className="game-heading">{this.state.challenge.title}</h1><br/>
                         <h4 className="limit-paragraph">
                             <em>
-                                Welcome to the case practice!<br/><br/>
-                                Playing with a time limit will earn you extra XP! <br/>Please note that the time limit is for <u>each individual question.</u><br/><br/>
+                                Playing with a time limit will earn you extra XP.<br/>Note that the time limit is for <u>each individual question</u>.<br/><br/>
                                 For MCQ questions, there will be a penalty for wrong answers that are selected.<br/>
-                                For the open-ended questions, your answers will be marked automatically.<br/>
+                                For Open-Ended questions, your answers will be marked automatically.<br/><br/>
+                                Let the game begin!<br/>
                                 <br />
+                                {/*This case has been uploaded by {this.state.challenge.authorid.username}.*/}
                             </em>
                         </h4>
                     </div>
@@ -98,20 +98,24 @@ class TimeLimit extends Component {
                                     <h3 style={{marginTop: "5%"}}>Time Limit </h3>
                                 </Col>
                                 <Col sm={2} className='pull-left'>
-                                    <Button style={{ background: timerBtnBgColor, color: 'black', border: 0, width: '60%'}}
+                                    <Button style={{ background: timerBtnBgColor, color: 'white', border: 0, width: '80%'}}
                                         onClick={(e) => this.withTimeLimit()}>
-                                        <h3 style={{margin: "0"}}>Yes</h3>
+                                        <h3 style={{margin: "0"}}>YES</h3>
                                     </Button>
                                 </Col>
                                 <Col sm={2}>
-                                    <Button style={{ background: noTimerBtnBgColor, color: 'black', border: 0, width: '60%' }}
+                                    <Button style={{ background: noTimerBtnBgColor, color: 'white', border: 0, width: '80%' }}
                                         onClick={(e) => this.withoutTimeLimit()}>
-                                        <h3 style={{ margin: "0" }}>No</h3>
+                                        <h3 style={{ margin: "0" }}>NO</h3>
                                     </Button>
                                 </Col>
                             </FormGroup>
                         </Col>
-                        {authornameDisplay}
+
+                        <br/>
+                        <h4 className="author">This case has been uploaded by {this.state.challenge.authorid.username}.</h4>
+                        <br/>
+
                         <FormGroup style={{width: "95%"}}>
                             <Col smOffset={1} sm={2} className='pull-left'>
                                 <Button bsStyle="primary" bsSize="large" onClick={(e) => window.location.reload()}>
@@ -143,7 +147,7 @@ class TimeLimit extends Component {
                 default:
                     //need to get the attempt when storeCaseAnswer
                     let attempt = this.state.attempt;
-                    const base = gameCase.difficulty === "Beginner" ? (0.5**(attempt-1)) * 500 : (0.5**(attempt-1)) * 1000;
+                    const base = gameCase.difficulty === "Beginner" ? (0.5**(attempt-1)) * 1000 : (0.5**(attempt-1)) * 2000;
                     let total = 0;
                     for (let i = 0; i < gameCase.questions.length; i++) {
                         total += parseFloat(gameCase.questions[i].mark);

@@ -8,15 +8,24 @@ module.exports = {
     UTC_DATE_FORMATTER: async(date) => {
         return new Date(date.substring(0, date.length - 1) + '+08:00');
     },
+    // CALCULATE_USER_LEVEL: async(xp) => {
+    //     const userLevelScorings = await UserLevelScoring.find().sort({level: -1});
+    //     let level = 1;
+    //     for(let i = 0; i < userLevelScorings.length; i++) {
+    //         const userLevelScoring = userLevelScorings[i];
+    //         if(userLevelScoring.scoreNeeded <= xp) {
+    //             level = userLevelScoring.level;
+    //             break;
+    //         }
+    //     }
+    //     return level;
+    // },
     CALCULATE_USER_LEVEL: async(xp) => {
-        const userLevelScorings = await UserLevelScoring.find().sort({level: -1});
-        let level = 1;
-        for(let i = 0; i < userLevelScorings.length; i++) {
-            const userLevelScoring = userLevelScorings[i];
-            if(userLevelScoring.scoreNeeded <= xp) {
-                level = userLevelScoring.level;
-                break;
-            }
+        let level;
+        if (xp<480){
+            level = 1;
+        } else {
+            level = Math.floor((120 + Math.sqrt(120**2-4*120*(240-xp)))/(2*120));
         }
         return level;
     },

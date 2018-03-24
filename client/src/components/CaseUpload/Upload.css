@@ -38,6 +38,10 @@
     font-size: 120%;
 }
 
+.upload-heading{
+    font-weight: bold;
+    color: #199ED8;
+}
 
 #main .add-question-button{
     text-align: center;
@@ -79,9 +83,6 @@
     margin:20% 15% 2%;
 }
 
-#stop-sign {
-    height:60px;
-    margin-left: 0;
-    margin-top: 20px;
-    margin-bottom: -15px;
+#note {
+    height:2em;
 }

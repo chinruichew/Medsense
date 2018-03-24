@@ -45,17 +45,18 @@ module.exports = app => {
 
     app.get('/api/fetchRandomCase', async (req, res) => {
         // Get the count of all cases
-        Case.count({ status: 'Vetted' }).exec(function (err, count) {
+        Case.count({ status: 'Vetted' }).exec(async (err, count) =>{
 
             // Get a random entry
             const random = Math.floor(Math.random() * count);
 
             // Again query all cases but only fetch one offset by our random #
-            Case.findOne({ status: 'Vetted' }).skip(random).exec(
-                function (err, result) {
-                    res.send(result);
-                })
-        })
+            const result = await Case.findOne({ status: 'Vetted' }).skip(random).select().populate({
+                path: 'authorid',
+                model: 'users'
+            });
+            res.send(result);
+        });
 
     });
 

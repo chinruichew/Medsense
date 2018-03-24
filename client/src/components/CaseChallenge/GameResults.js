@@ -3,12 +3,13 @@ import { Button, Panel, PanelGroup } from 'react-bootstrap';
 import BootstrapModal from '../UI/Modal/VettingBootstrapModal.js';
 import ReactHtmlParser from 'react-html-parser';
 import {connect} from "react-redux";
+import axios from 'axios';
 import {completeGame} from "../../actions";
 
 class GameResults extends Component {
     state = {
         vmShow:false,
-        points:0,
+        points: this.props.auth.points,
     };
 
     componentDidMount() {
@@ -19,8 +20,6 @@ class GameResults extends Component {
         });
         this.checkLevel();
     }
-
-
 
     renderContent(){
         const lpTitle = <span className="title" style={{fontSize: "180%"}}><strong>Learning Points</strong></span>
@@ -153,16 +152,21 @@ class GameResults extends Component {
         );
     }
 
-    checkLevel(){
-        const prev = this.state.points-this.props.xp;
-        const prevLevel = Math.floor((50+Math.sqrt(400*prev-37500))/100) ;
-        const currLevel = Math.floor((50+Math.sqrt(400*this.state.points-37500))/100);
-        if (!isNaN(prevLevel) && prevLevel!==currLevel){
-            this.setState({vmShow:true, level:currLevel});
-        }
-    }
+    checkLevel = () =>{
+        const xp = this.state.points + this.props.xp;
+        const prev = this.state.points;
+        axios.get('/api/calculateUserLevel?xp=' + prev).then(res => {
+            const prevLevel = res.data;
+            axios.get('/api/calculateUserLevel?xp=' + xp).then(res => {
+                const currLevel = res.data;
+                if (prevLevel !== currLevel) {
+                    this.setState({vmShow: true, level: currLevel});
+                }
+            });
+        });
+    };
 
-    render() {
+    render(){
         let vmClose = () => this.setState({ vmShow: false });
 
         return(
@@ -177,7 +181,7 @@ class GameResults extends Component {
                     </BootstrapModal.Header>
                     <BootstrapModal.Body>
                         <center><img hspace="5" src="./congrats.png" style={{ height: "50%" }} alt="" />
-                            <p>{this.state.points} XP</p>
+                            <p>{this.state.points+this.props.xp} XP</p>
                         <p>Level {this.state.level}</p>
                             <p>Your level increased</p></center>
                     </BootstrapModal.Body>
@@ -196,4 +200,8 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(null, mapDispatchToProps)(GameResults);
+function mapStateToProps({ auth }) {
+    return { auth };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(GameResults);

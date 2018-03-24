@@ -12,7 +12,6 @@ import {Col} from "react-bootstrap";
 class MainProfile extends Component {
     state = {
         constants: null,
-        refresh: 0,
     };
 
     componentDidMount() {
@@ -20,14 +19,6 @@ class MainProfile extends Component {
             this.setState({constants: res.data});
         }).catch(err => {
             console.log(err);
-        });
-    }
-
-    reRenderMain(){
-        this.setState(function (prevState, props) {
-            return {
-                refresh: prevState.refresh + 1
-            }
         });
     }
 
@@ -46,8 +37,6 @@ class MainProfile extends Component {
                             case this.state.constants.USER_TYPE_PROFESSOR:
                                 return (
                                     <ProfessorProfile
-                                        refresh={this.state.refresh}
-                                        reRenderMain={this.reRenderMain}
                                         id={this.props.auth._id}
                                         username={this.props.auth.username}
                                         speciality={this.props.auth.speciality}
@@ -58,10 +47,7 @@ class MainProfile extends Component {
                             case this.state.constants.USER_TYPE_STUDENT:
                                 return (
                                     <StudentProfile
-                                        refresh={this.state.refresh}
-                                        reRenderMain={this.reRenderMain}
                                         id={this.props.auth._id}
-                                        xp={this.props.auth.points}
                                         username={this.props.auth.username}
                                         year={this.props.auth.year}
                                         school={this.props.auth.school} />

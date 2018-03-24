@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Image, Table } from 'react-bootstrap';
 import BootstrapModal from '../UI/Modal/VettingBootstrapModal.js';
-import { bindAll } from 'lodash';
 import { updateProfessor } from '../../actions/index';
 import UploadProfilePicture from './UploadProfilePicture';
 
@@ -16,14 +15,13 @@ class ProfessorProfile extends Component {
             subspeciality: this.props.subspeciality,
             school: this.props.school
         };
-        bindAll(this, 'handleSpecialityChange', 'handleSubSpecialityChange', 'handleSchoolChange', 'setSubspeciality');
     }
 
-    handleSpecialityChange(e) {
+    handleSpecialityChange = (e) =>{
         this.setState({ speciality: e.target.value });
-    }
+    };
 
-    handleSubSpecialityChange(e) {
+    handleSubSpecialityChange = (e) =>{
         const options = e.target.options;
         let value = [];
         for (let i = 0, l = options.length; i < l; i++) {
@@ -34,35 +32,26 @@ class ProfessorProfile extends Component {
         if (value.length > 0) {
             this.setState({ subspeciality: value });
         }
-    }
+    };
 
-    handleSchoolChange(e) {
+    handleSchoolChange = (e) =>{
         this.setState({ school: e.target.value });
-    }
+    };
 
-    handleSaveChange(e) {
-        e.preventDefault();
-        this.props.updateProfessor(this.state).then((response) => {
-            if (response) {
-                console.log(response);
-                this.setState({ vmShow: true });
-                this.props.reRenderMain();
-                console.log(this.props.refresh);
-            }
-        }).catch(() => { })
-    }
+    handleEdit = (e) =>{
+        this.setState({ vmShow: true });
+    };
 
-    handleUpdate(e) {
+    handleUpdate = (e) =>{
         e.preventDefault();
         this.props.updateProfessor(this.state).then((response) => {
             if (response) {
                 console.log(response);
                 this.setState({ vmShow: false });
-                this.props.reRenderMain();
                 console.log(this.props.refresh);
             }
         }).catch(() => { })
-    }
+    };
 
     render() {
         let vmClose = () => this.setState({ vmShow: false });
@@ -105,7 +94,7 @@ class ProfessorProfile extends Component {
                     </Table>
                     <br/>
                     <div style={{ maxWidth: 400, margin: '0 auto 10px' }}>
-                        <Button onClick={(e) => this.handleSaveChange(e)} bsStyle="primary" bsSize="large" block>
+                        <Button onClick={(e) => this.handleEdit(e)} bsStyle="primary" bsSize="large" block>
                             Edit
                         </Button>
                     </div>

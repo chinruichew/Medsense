@@ -595,7 +595,7 @@ class Main extends Component {
 
             return(
             <PanelGroup accordion>
-                <Panel eventKey="1" bsStyle="primary" style={{marginLeft: "14%", marginRight: "15%", padding: "0"}}>
+                <Panel eventKey="1" bsStyle="primary" style={{marginLeft: "14%", marginRight: "14%", padding: "0"}}>
                     <Panel.Heading  onClick={(e) => this.setState({pdpa:!this.state.pdpa})}><Panel.Title toggle>{PDPA}</Panel.Title></Panel.Heading>
                     <Panel.Body collapsible>
                         <FormGroup controlId="formControlsAuthor">
@@ -744,12 +744,12 @@ class Main extends Component {
         return(
             <div>
                 <div align="center" className="heading">
-                    <h1>Have a case to share?</h1>
+                    <h1 className="upload-heading">Have a case to share?</h1>
                     <h4>
                         <em><br/>
                         Refer to the <a href="./MedSense WorkPlan.pdf" target="_blank">CASE TEMPLATE</a> to understand the format required.
-                        <br/><br/><Image id="stop-sign" src="./stop.png" alt="Stop" hspace="15"/>
-                        <br/><br/>In addition, ensure that all texts and attachments<br/>do not contain identifiable information such as NRICs or patient's faces.
+                        <br/><br/><Image id="note" src="./exclamation.jpg" alt="Disclaimer" hspace="3em"/>
+                        In addition, ensure that all texts and attachments<br/>do not contain identifiable information such as NRICs or patient's faces.
                         <br/><br/>Note that cases uploaded by students will need to be vetted by faculty<br/>before they are released as a game.
                         <br/><br/>Expand and collapse the headers to reduce the scrolling you will need to do! <br/>
                         </em>
@@ -758,7 +758,7 @@ class Main extends Component {
 
                 <div id="main">
                     <form className="case-area">
-                        <PanelGroup accordion bsStyle="primary" style={{marginLeft: "14%", marginRight: "15%", padding: "0"}}>
+                        <PanelGroup accordion bsStyle="primary" style={{marginLeft: "14%", marginRight: "14%", padding: "0"}}>
                             <Panel eventKey="1">
                                 <Panel.Heading onClick={(e) => this.setState({overview:!this.state.overview})}>
                                     <Panel.Title toggle>{overviewTitle}</Panel.Title>
@@ -779,7 +779,7 @@ class Main extends Component {
                             </Panel>
                         </PanelGroup>
 
-                        <PanelGroup accordion bsStyle="primary" style={{marginLeft: "14%", marginRight: "15%", padding: "0"}}>
+                        <PanelGroup accordion bsStyle="primary" style={{marginLeft: "14%", marginRight: "14%", padding: "0"}}>
                             <Panel eventKey="1" style={{border: "0"}}>
                                 <Panel.Heading onClick={(e) => this.setState({question:!this.state.question})}><Panel.Title toggle>{questionTitle}</Panel.Title></Panel.Heading>
                                 <Panel.Body collapsible>
