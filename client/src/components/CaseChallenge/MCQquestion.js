@@ -253,16 +253,16 @@ class MCQquestion extends Component {
                             <div className="game-question-area">
                                 <h4 style={{ border: "0", background: "white", padding: "0", fontSize: "medium",
                                     whiteSpace: "pre-wrap", wordBreak: "keep-all" }}>{this.renderScenario()}</h4>
-
                                 <h4 style={{ border: "0", background: "white", padding: "0", fontSize: "medium",
                                     whiteSpace: "pre-wrap", wordBreak: "keep-all" }}>
                                     {ReactHtmlParser(this.props.question.question)}
                                 </h4>
-
-                                <div className="col-md-5 col-md-offset-2">{<ImageMagnifier url={this.props.question.attachment} />}</div>
-
-                                <br /><br />
-
+                                <br/>
+                                <Row style={{margin: "0", padding:"0"}}>
+                                    <div className="col-md-5 col-md-offset-2" style={{marginLeft: "9%", marginBottom: "2%"}}>
+                                        {<ImageMagnifier url={this.props.question.attachment} />}
+                                    </div>
+                                </Row>
                                 <Form><h4>
                                     <FormGroup>
                                         <div className="col-md-6 col-md-offset-2">

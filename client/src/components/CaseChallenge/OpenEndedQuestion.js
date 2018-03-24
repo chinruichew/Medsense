@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Form, FormGroup, Col, PanelGroup} from 'react-bootstrap';
+import {Form, FormGroup, Col, PanelGroup, Glyphicon} from 'react-bootstrap';
 import { Button, Row, ControlLabel, Panel } from 'react-bootstrap';
 import { bindAll } from 'lodash';
 import { Line } from 'rc-progress';
@@ -8,6 +8,7 @@ import OpenEndedAnswer from "./OpenEndedAnswer";
 import ImageMagnifier from "./ImageMagnifier";
 import ReactQuill from 'react-quill';
 import axios from 'axios';
+import BootstrapModal from '../UI/Modal/UploadBootstrapModal.js';
 import './Game.css';
 import 'react-quill/dist/quill.snow.css';
 
@@ -40,7 +41,8 @@ class OpenEndedQuestion extends Component {
             timeLimit: parseFloat(this.props.question.time) * 60,
             seconds: parseFloat(this.props.question.time) * 60,
             score: 0,
-            questionStart: null
+            questionStart: null,
+            showSTEMs: false
         };
         this.timer = 0;
         bindAll(this, 'selectDone', 'startTimer', 'countDown', 'secondsToTime', 'pauseTimer', 'renderTimer',
@@ -144,21 +146,30 @@ class OpenEndedQuestion extends Component {
         });
 
         if (this.props.question.id > "1") {
-            const storySoFar = (<span id="story-title"><center>Story So Far</center></span>);
             return (
-                <PanelGroup accordion style={{width: "93%"}}>
-                    <Panel eventKey="1" bsStyle="info">
-                        <Panel.Heading><Panel.Title toggle>{storySoFar}</Panel.Title></Panel.Heading>
-                        <Panel.Body collapsible>
-                            <div style={{fontSize: "120%"}}>
-                                {ReactHtmlParser(this.props.scenario)}
-                                {stems}
-                            </div>
-                        </Panel.Body>
-                    </Panel>
-                </PanelGroup>
+                <div className="previous-stem">
+                    <h3>Case Scenario</h3>
+                    <h5>{ReactHtmlParser(this.props.scenario)}</h5>
+                    <h3>STEM</h3>
+                    <h5>{stems}</h5>
+                </div>
             );
         }
+    }
+
+    renderPreviousSTEM = () => {
+        if (this.props.question.id > "1") {
+            return (
+                <Row>
+                    <Col className="previous-stem-col">
+                        <Button type="button" bsStyle="link" className="previous-stem-btn" onClick={(e) => this.setState({ showSTEMs: true })}>
+                            <Glyphicon glyph="glyphicon glyphicon-list-alt"/> Previous STEM
+                        </Button>
+                    </Col>
+                </Row>
+            );
+        }
+
     }
 
     renderShowNextButton() {
@@ -178,7 +189,7 @@ class OpenEndedQuestion extends Component {
         let progress = parseFloat(this.props.question.id) / parseFloat(this.props.totalQnNum) * 100;
         return (
             <div >
-                <Col sm={10} align="left">
+                <Col sm={9} align="left" style={{paddingLeft: "0", width: "81%"}}>
                     <Line
                         percent={progress}
                         strokeWidth="2"
@@ -224,39 +235,46 @@ class OpenEndedQuestion extends Component {
                 </h3>
 
                 <br />
-                <Row style={{paddingLeft: "0"}}>
-                    {this.renderStorySoFar()}
-                </Row>
+
+                {this.renderPreviousSTEM()}
 
                 <Row>
                     <Panel bsStyle="info" id="panel" style={{ borderWidth: "thick", width: "93%" }}>
-                        <h4 style={{ border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace: "pre-wrap", wordBreak: "keep-all" }}>{this.renderScenario()}</h4>
-                        <br />
-                        <h4 style={{ border: "0", background: "white", padding: "0", fontSize: "medium", whiteSpace: "pre-wrap", wordBreak: "keep-all" }}>{ReactHtmlParser(this.props.question.question)}</h4>
-                        <br/>
-                        <Row style={{margin: "0", padding:"0"}}>
-                        <div className="col-md-5 col-md-offset-2">{<ImageMagnifier url={this.props.question.attachment} />}</div>
-                        </Row>
-                        <Row>
-                            <Col smOffset={1}>
-                                <Form style={{ margin: "0", width: "90%"}}><h4>
-                                    <FormGroup style={{height:'300px'}} controlId="formControlsOpenEnded">
-                                        <ControlLabel style={{padding: "0", margin: "0"}}>Your Answer</ControlLabel><br /><br/>
-
-                                        {/*<FormControl componentClass="textarea" rows={6} placeholder="Enter your answer" value={this.state.openEnded} name="openEnded" onChange={(e) => this.handleOpenEndedChange(e)} />*/}
-
-                                        <ReactQuill value={this.state.openEnded}
-                                                    modules={{toolbar: toolbarOptions}}
-                                                    onChange={this.handleOpenEndedChange}
-                                                    placeholder="Enter your answer"
-                                                    style={{height:'200px'}}/>
-                                    </FormGroup>
-                                </h4></Form></Col>
-                        </Row>
+                        <div className="game-question-area">
+                            <h4 style={{ border: "0", background: "white", padding: "0", fontSize: "medium",
+                                whiteSpace: "pre-wrap", wordBreak: "keep-all" }}>{this.renderScenario()}
+                            </h4>
+                            <h4 style={{ border: "0", background: "white", padding: "0", fontSize: "medium",
+                                whiteSpace: "pre-wrap", wordBreak: "keep-all" }}>{ReactHtmlParser(this.props.question.question)}
+                            </h4>
+                            <br/>
+                            <Row style={{margin: "0", padding:"0"}}>
+                                <div className="col-md-5 col-md-offset-2" style={{marginLeft: "9%", marginBottom: "2%"}}>
+                                    {<ImageMagnifier url={this.props.question.attachment} />}
+                                </div>
+                            </Row>
+                            <Row>
+                                <Col smOffset={1}>
+                                    <Form style={{ margin: "0", width: "90%"}}><h4>
+                                        <FormGroup style={{height:'300px'}} controlId="formControlsOpenEnded">
+                                            <ControlLabel style={{padding: "0", margin: "0"}}>Your Answer</ControlLabel><br /><br/>
+                                            <ReactQuill value={this.state.openEnded}
+                                                        modules={{toolbar: toolbarOptions}}
+                                                        onChange={this.handleOpenEndedChange}
+                                                        placeholder="Enter your answer"
+                                                        style={{height:'200px'}}/>
+                                        </FormGroup>
+                                    </h4></Form></Col>
+                            </Row>
+                        </div>
                     </Panel>
                     {this.renderShowNextButton()}
 
-                    {this.state.showAnswers && <h3>You got {(this.state.score/this.state.mark*100).toFixed(2)} % correct! <br/>Your score for this question: {Math.round(this.state.score)} / {this.state.mark}</h3>}
+                    {this.state.showAnswers &&
+                        <Col sm={11}>
+                            <h3>You got {(this.state.score/this.state.mark*100).toFixed(2)} % correct! </h3>
+                            <h3>Your score for this question: {Math.round(this.state.score)} / {this.state.mark}</h3><br/>
+                        </Col>}
 
                     {this.state.showAnswers && <OpenEndedAnswer
                         caseid={this.props.caseid}
@@ -277,6 +295,19 @@ class OpenEndedQuestion extends Component {
                         questionNumber={this.props.question.id}
                     />}
                 </Row>
+
+                <BootstrapModal bsSize="large" show={this.state.showSTEMs} onHide={(e) => this.setState({ showSTEMs: false })}>
+                    <BootstrapModal.Header closeButton>
+                        <BootstrapModal.Title id="contained-modal-title-lg" style={{fontSize: "200%", fontWeight: "bold"}}>Previous STEM</BootstrapModal.Title>
+                    </BootstrapModal.Header>
+                    <BootstrapModal.Body>
+                        {this.renderStorySoFar()}
+                    </BootstrapModal.Body>
+                    <BootstrapModal.Footer>
+                        <Button onClick={(e) => this.setState({ showSTEMs: false })}>Close</Button>
+                    </BootstrapModal.Footer>
+                </BootstrapModal>
+
             </div>
 
         );
