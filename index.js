@@ -125,11 +125,11 @@ const sessionConfig = {
     },
     resave: true,
     saveUninitialized: true,
-    httpOnly: false
+    httpOnly: true
 };
 if (process.env.NODE_ENV === 'production') {
-    app.set('trust proxy', 1);
-    sessionConfig.cookie.secure = true;
+    // app.set('trust proxy', 1);
+    // sessionConfig.cookie.secure = true;
 }
 app.use(cookieSession(sessionConfig));
 /* End of Session Configurations */
