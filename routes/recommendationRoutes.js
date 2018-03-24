@@ -163,11 +163,34 @@ module.exports = app => {
             }
         }
 
-        console.log(userAnswers);
-
         // Send all the cases if there are less than equal threshold, else start filtering
         if(caseArray.length <= carouselThreshold) {
-            res.send(caseArray);
+            // Process all the case array
+            const processedCases = [];
+            for(let i = 0; i < caseArray.length; i++) {
+                let answerCase = caseArray[i]._doc;
+                processedCases.push(answerCase);
+            }
+
+            // Get all vetted cases and add to case array one by one
+            const vettedCases = await Case.find({status: 'Vetted'});
+            for(let i = 0; i < vettedCases.length; i++) {
+                const vettedCase = vettedCases[i];
+                let toAdd = true;
+                for(let j = 0; j < processedCases.length; j++) {
+                    if(processedCases._id === vettedCase._id) {
+                        toAdd = false;
+                        break;
+                    }
+                }
+                if(toAdd) {
+                    processedCases.push(vettedCase);
+                }
+                if(processedCases.length >= carouselThreshold) {
+                    break;
+                }
+            }
+            res.send(processedCases);
         } else {
             // If user has attempted at least threshold number of cases in a spec, prioritise based on poor scoring
             // Tag specialities with number of times user has tried it

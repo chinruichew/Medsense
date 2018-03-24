@@ -75,7 +75,6 @@ class StudentHome extends Component {
         if(this.state.recommendedCases.length > 3) {
             const recommendedCasesV2 = this.state.recommendedCases.map((recommendedCase, index) => {
                 if (index >= 3 && index < 6) {
-                    recommendedCase = recommendedCase._doc;
                     const subspecialities = recommendedCase.subspeciality;
                     let subSpecialityString = subspecialities[0];
                     for (let i = 1; i < subspecialities.length; i++) {
@@ -290,7 +289,6 @@ class StudentHome extends Component {
             default:
                 const recommendedCases = this.state.recommendedCases.map((recommendedCase, index) => {
                     if(index < 3) {
-                        recommendedCase = recommendedCase._doc;
                         const subspecialities = recommendedCase.subspeciality;
                         let subSpecialityString = subspecialities[0];
                         for(let i = 1; i < subspecialities.length; i++) {
