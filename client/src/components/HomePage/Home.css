@@ -16,7 +16,8 @@
     background-color: #C9C9C9;
 }
 .carousel {
-    height: 25em
+    height: auto;
+    padding: 1em 0em 6em;
 }
 
 .carousel-item {
@@ -28,8 +29,7 @@
     background: white;
     color: black;
     width: 14em;
-    height: 13em;
-    margin-right: 8%;
+    height: auto;
 }
 
 .carousel-button > img {
@@ -38,11 +38,15 @@
 
 .carousel-button > h3 {
     font-weight: bold;
+    word-wrap: break-word;
+    white-space: pre-line;
     margin: 0;
 }
 
 .carousel-button > h4 {
     margin: 0;
+    word-wrap: break-word;
+    white-space: pre-line;
 }
 
 .image-div {
@@ -76,4 +80,8 @@
 .image-button > h4 {
     padding: 0;
     margin: 0;
+}
+
+.col-md-4{
+    width: 29%;
 }

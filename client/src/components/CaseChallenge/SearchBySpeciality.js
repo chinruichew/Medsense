@@ -3,6 +3,7 @@ import {Button, FormGroup, FormControl, ControlLabel, Col, Row, Table} from 'rea
 import { bindAll } from 'lodash';
 import axios from 'axios';
 import moment from "moment";
+import "./Game.css";
 
 class SearchBySpeciality extends Component {
     constructor(props) {
@@ -68,36 +69,38 @@ class SearchBySpeciality extends Component {
                     let additionalSubspeciality = "";
                     let specialities = "";
                     if (subspecialities!=="Select One") {
-                        let same = false;
-                        let additionalSubspecialities = [];
-                        for (let i = 0; i < specialityCase.subspeciality.length; i++) {
-                            for (let j = 0; j < subspecialities.length; j++) {
-                                if (specialityCase.subspeciality[i] === subspecialities[j]) {
-                                    same = true;
-                                }
-                            }
-                            if (!same) {
-                                additionalSubspecialities.push(specialityCase.subspeciality[i]);
-                            }
-                            same = false;
-                        }
+                        // let same = false;
+                        // let additionalSubspecialities = [];
+                        // for (let i = 0; i < specialityCase.subspeciality.length; i++) {
+                        //     for (let j = 0; j < subspecialities.length; j++) {
+                        //         if (specialityCase.subspeciality[i] === subspecialities[j]) {
+                        //             same = true;
+                        //         }
+                        //     }
+                        //     if (!same) {
+                        //         additionalSubspecialities.push(specialityCase.subspeciality[i]);
+                        //     }
+                        //     same = false;
+                        // }
 
-                        if (additionalSubspecialities.length === 0) {
-                            additionalSubspeciality = "-";
-                        } else {
-                            for (let k = 0; k < additionalSubspecialities.length - 1; k++) {
-                                additionalSubspeciality += additionalSubspecialities[k] + ", ";
-                            }
-                            additionalSubspeciality += additionalSubspecialities[additionalSubspecialities.length - 1];
-                        }
-                    } else {
+                        // if (additionalSubspecialities.length === 0) {
+                        //     additionalSubspeciality = "-";
+                        // } else {
+                        // const allSubspecialities = specialityCase.subspeciality;
+                        // let allSubspecialityString = "";
+                        // for (let k = 0; k < allSubspecialities.length - 1; k++) {
+                        //     allSubspecialityString += allSubspecialities[k] + ", ";
+                        // }
+                        // allSubspecialityString += allSubspecialities[allSubspecialities.length - 1];
+                        // }
+                    // } else {
                         const subspeciality = specialityCase.subspeciality;
 
                         for (let i = 0; i < subspeciality.length - 1; i++) {
                             specialities += subspeciality[i] + ", ";
                         }
                         specialities += subspeciality[subspeciality.length - 1];
-                    }
+                    // }
                     let approaches = "";
                     for (let k=0; k<specialityCase.approach.length-1; k++){
                         approaches+=specialityCase.approach[k] + ", ";
@@ -110,57 +113,63 @@ class SearchBySpeciality extends Component {
 
                     let subspec = subspecialities==="Select One"?specialities:additionalSubspeciality;
 
+                    const caseBox = <Button onClick={(e)=>this.handleReturnCase(specialityCase)} className="case-button" bsSize="large">
+                        <img src="./approach1.jpg" alt={specialityCase.title}/>
+                        <h3 className="case-title">{specialityCase.title}</h3>
+                        <h4>{specialityCase.difficulty}</h4>
+                        {/*<h4>{approachCase.speciality}</h4>*/}
+                        <h5 className="display-list">{specialities}</h5>
+                        <h5>3 attempts</h5>
+                    </Button>;
+
                     return(
-                        <tr align="center" key={specialityCase._id}>
-                            <td>{specialityCase.title}</td>
-                            <td>{approaches}</td>
-                            {/*<td>{specialityCase.speciality}</td>*/}
-                            <td>{subspec}</td>
-                            <td>{specialityCase.difficulty}</td>
-                            {/*<td>{specialityCase.authorid.username}</td>*/}
-                            <td>{date}<br/>{time}</td>
-                            <td><Button  type="button" bsStyle="primary" onClick={(e)=>this.handleReturnCase(specialityCase)}>Try</Button></td>
-                        </tr>
+                        <Col sm={4}>
+                            {caseBox}
+                        </Col>
+
+                        //{/*<tr align="center" key={specialityCase._id}>*/}
+                          //  {/*<td>{specialityCase.title}</td>*/}
+                            //{/*<td>{approaches}</td>*/}
+                          //  {/*<td>{subspec}</td>*/}
+                          //  {/*<td>{specialityCase.difficulty}</td>*/}
+                          //  {/*<td>{date}<br/>{time}</td>*/}
+                          //  {/*<td><Button  type="button" bsStyle="primary" onClick={(e)=>this.handleReturnCase(specialityCase)}>Try</Button></td>*/}
+                        //{/*</tr>*/}
                     );
-                });
+                }});
                 let label = subspecialities==="Select One"?"Sub-specialities":"Additional Sub-specialities"
                 const specialityState = (
-                    <Table responsive>
-                        <thead>
-                        <tr style={{background: '#82C5D9', fontSize: "130%"}}>
-                            <th>
-                                <center>Case Title</center>
-                            </th>
-                            <th>
-                                <center>Approaches</center>
-                            </th>
-                            {/*<th>*/}
-                                {/*<center>Speciality</center>*/}
-                            {/*</th>*/}
-                            <th>
-                                <center>{label}</center>
-                            </th>
-                            <th>
-                                <center>Difficulty Level</center>
-                            </th>
-                            {/*<th>*/}
-                                {/*<center>Uploaded by</center>*/}
-                            {/*</th>*/}
-                            <th>
-                                <center>Last Updated</center>
-                            </th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {specialityCases}
-                        </tbody>
-                    </Table>
+                    <div className="search-result">{specialityCases}</div>
+                    // {/*<Table responsive>*/}
+                    //     {/*<thead>*/}
+                    //     {/*<tr style={{background: '#82C5D9', fontSize: "130%"}}>*/}
+                    //         {/*<th>*/}
+                    //             {/*<center>Case Title</center>*/}
+                    //         {/*</th>*/}
+                    //         {/*<th>*/}
+                    //             {/*<center>Approaches</center>*/}
+                    //         {/*</th>*/}
+                    //         {/*<th>*/}
+                    //             {/*<center>{label}</center>*/}
+                    //         {/*</th>*/}
+                    //         {/*<th>*/}
+                    //             {/*<center>Difficulty Level</center>*/}
+                    //         {/*</th>*/}
+                    //         {/*<th>*/}
+                    //             {/*<center>Last Updated</center>*/}
+                    //         {/*</th>*/}
+                    //         {/*<th></th>*/}
+                    //     {/*</tr>*/}
+                    //     {/*</thead>*/}
+                    //     {/*<tbody>*/}
+                    //     {/*{specialityCases}*/}
+                    //     {/*</tbody>*/}
+                    // {/*</Table>*/}
                 );
                 this.setState({specialityCases: specialityState});
             } else {
                 const specialityState = (
-                    <div style={{ fontSize: "150%", fontWeight: "200" }}>
+                    <div className="search-result" style={{ fontSize: "150%", fontWeight: "200" }}>
                         <br />
                         <img src="./sad.png" hspace='5' alt="No Subspeciality cases" style={{ height: "35px" }} />
                         Sorry, no cases found.  Please try other specialities / sub-specialities!

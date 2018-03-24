@@ -9,3 +9,41 @@
     text-decoration: none;
     font-family: 'Great Vibes', cursive;
 }
+
+h1{
+    font-weight: bold;
+    color: #199ED8;
+}
+
+.display-list{
+    width: 17em;
+    word-wrap: break-word;
+    white-space: pre-line;
+    padding-top: 1%;
+}
+
+.case-button{
+    height: auto;
+    background: white;
+    color: black;
+    width: 15em;
+    margin-right: 8%;
+    margin-bottom: 4%;
+}
+
+.case-button img{
+    height: 8em;
+}
+
+.case-title{
+    word-wrap: break-word;
+    white-space: pre-line;
+}
+
+.search-result{
+    margin: 2% 6%;
+}
+
+Col {
+    margin-bottom: 5%;
+}

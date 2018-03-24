@@ -588,9 +588,9 @@ class Main extends Component {
             return;
         } else {
             const PDPA = this.state.pdpa?(
-                <span className="title" style={{fontSize: "180%"}}><strong><center>-| Credits</center></strong></span>
+                <span className="title" style={{fontSize: "180%"}}><strong>-| Credits</strong></span>
             ):(
-                <span className="title" style={{fontSize: "180%"}}><strong><center>+| Credits</center></strong></span>
+                <span className="title" style={{fontSize: "180%"}}><strong>+| Credits</strong></span>
             );
 
             return(
@@ -692,15 +692,15 @@ class Main extends Component {
         });
 
         const overviewTitle = this.state.overview?(
-            <span className="title" style={{fontSize: "180%"}}><strong><center>-| Case Overview</center></strong></span>
+            <span className="title" style={{fontSize: "180%"}}><strong>-| Case Overview</strong></span>
         ):(
-            <span className="title" style={{fontSize: "180%"}}><strong><center>+| Case Overview</center></strong></span>
+            <span className="title" style={{fontSize: "180%"}}><strong>+| Case Overview</strong></span>
         );
 
         const questionTitle = this.state.question?(
-            <span className="title" style={{fontSize: "180%"}}><strong><center>-| Case Questions</center></strong></span>
+            <span className="title" style={{fontSize: "180%"}}><strong>-| Case Questions</strong></span>
         ):(
-            <span className="title" style={{fontSize: "180%"}}><strong><center>+| Case Questions</center></strong></span>
+            <span className="title" style={{fontSize: "180%"}}><strong>+| Case Questions</strong></span>
         );
         let questions = this.state.qnData;
         questions.sort(this.compare);
