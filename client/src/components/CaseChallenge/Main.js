@@ -85,7 +85,7 @@ class Main extends Component {
                 let specialityBtnBgColor = this.state.specialityBtnBackground ?  "#F2F2F2": "white";
                 return(
                     <div align="center" className='container'>
-                        <h1>
+                        <h1 className="game-heading">
                             Get in some practice
                         </h1>
                         <h4>
