@@ -330,6 +330,11 @@ module.exports = app => {
         ]).exec();
         res.send(specialityCount);
     });
+    
+    app.post('/api/fetchSpecialityCount', async (req, res) => {
+        const specialityCount = await Case.aggregate([  {$match: { speciality: { $gte: "Orthopaedics" } } }, {$unwind:'$subspeciality'}, {$group:{_id:'$subspeciality', freq:{$sum:1}}}]).exec();
+        res.send(specialityCount);
+    });
 };
 
 
