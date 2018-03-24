@@ -53,6 +53,7 @@ Col {
     margin: 0;
 }
 
-br{
-    margin: 7px 0;
+.result-heading{
+    color: #199ED8;
+    font-weight: bold;
 }

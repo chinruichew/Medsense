@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Panel, PanelGroup } from 'react-bootstrap';
 import BootstrapModal from '../UI/Modal/VettingBootstrapModal.js';
 import ReactHtmlParser from 'react-html-parser';
 import {connect} from "react-redux";
@@ -20,7 +20,11 @@ class GameResults extends Component {
         this.checkLevel();
     }
 
+
+
     renderContent(){
+        const lpTitle = <span className="title" style={{fontSize: "180%"}}><strong>Learning Points</strong></span>
+
         let questions = this.props.case.questions.map((obj, index) => {
             let answer="";
             if (obj.type==="MCQ"){
@@ -46,38 +50,94 @@ class GameResults extends Component {
             } else {
                 answer = obj.openEnded;
             }
-            return (
-                <div key={index}>
-                    <h3>Question {obj.id}</h3>
-                    <h4 style={{whiteSpace: "pre-wrap", wordBreak: "keep-all"}}>
-                        {ReactHtmlParser(obj.stem)}
-                        <br/>
-                        {ReactHtmlParser(obj.question)}
-                    </h4>
-                    <br/>
-                    <h3>Answer</h3>
-                    <h4 style={{whiteSpace: "pre-wrap", wordBreak: "keep-all"}}>
-                        {ReactHtmlParser(answer)}
-                        <br/>
-                        {ReactHtmlParser(obj.pearl)}
-                    </h4>
-                    <br/>
-                </div>
-            );
+
+            const qnTitle = <span className="title" style={{fontSize: "180%"}}><strong>Question {obj.id}</strong></span>
+
+            if(obj.id === "1"){
+                return (
+                    <div key={index}>
+                        <PanelGroup accordion>
+                            <Panel eventKey="1" bsStyle="primary" style={{marginLeft: "14%", marginRight: "15%", padding: "0"}}>
+                                <Panel.Heading>
+                                    <Panel.Title toggle>{qnTitle}</Panel.Title>
+                                </Panel.Heading>
+                                <Panel.Body collapsible>
+                                    <h3 className="result-heading">Case Scenario</h3>
+                                    <h4 style={{whiteSpace: "pre-wrap", wordBreak: "keep-all"}}>
+                                        {ReactHtmlParser(this.props.case.scenario)}
+                                    </h4>
+                                    <h3 className="result-heading">Question</h3>
+                                    <h4 style={{whiteSpace: "pre-wrap", wordBreak: "keep-all"}}>
+                                        {ReactHtmlParser(obj.question)}
+                                    </h4>
+                                    <h3 className="result-heading">Answer</h3>
+                                    <h4 style={{whiteSpace: "pre-wrap", wordBreak: "keep-all"}}>
+                                        {ReactHtmlParser(answer)}
+                                    </h4>
+                                    <h3 className="result-heading">PEARL</h3>
+                                    <h4 style={{whiteSpace: "pre-wrap", wordBreak: "keep-all"}}>
+                                        {ReactHtmlParser(obj.pearl)}
+                                    </h4>
+                                </Panel.Body>
+                            </Panel>
+                        </PanelGroup>
+                    </div>
+                );
+            }else{
+                return (
+                    <div key={index}>
+                        <PanelGroup accordion>
+                            <Panel eventKey="1" bsStyle="primary" style={{marginLeft: "14%", marginRight: "15%", padding: "0"}}>
+                                <Panel.Heading>
+                                    <Panel.Title toggle>{qnTitle}</Panel.Title>
+                                </Panel.Heading>
+                                <Panel.Body collapsible>
+                                    <h3 className="result-heading">STEM</h3>
+                                    <h4 style={{whiteSpace: "pre-wrap", wordBreak: "keep-all"}}>
+                                        {ReactHtmlParser(obj.stem)}
+                                    </h4>
+                                    <h3 className="result-heading">Question</h3>
+                                    <h4 style={{whiteSpace: "pre-wrap", wordBreak: "keep-all"}}>
+                                        {ReactHtmlParser(obj.question)}
+                                    </h4>
+                                    <h3 className="result-heading">Answer</h3>
+                                    <h4 style={{whiteSpace: "pre-wrap", wordBreak: "keep-all"}}>
+                                        {ReactHtmlParser(answer)}
+                                    </h4>
+                                    <h3 className="result-heading">PEARL</h3>
+                                    <h4 style={{whiteSpace: "pre-wrap", wordBreak: "keep-all"}}>
+                                        {ReactHtmlParser(obj.pearl)}
+                                    </h4>
+                                </Panel.Body>
+                            </Panel>
+                        </PanelGroup>
+                    </div>
+                );
+            }
         });
         return(
             <div>
                 <div align="center">
-                <h1>{this.props.case.title}</h1>
-                <h1> You have earned {this.props.xp} XP! </h1>
+                <h1><strong>{this.props.case.title}</strong></h1>
+                <h2> You have earned {this.props.xp} XP! </h2>
                 <br /><br />
 
                 </div>
-                <h3><img src="./checklist.png" hspace='5' alt="" style={{ width: "5%" }} />Learning Points</h3>
-                <h4>{ReactHtmlParser(this.props.case.learning)}</h4>
+                <h4 style={{marginLeft: "14%", marginRight: "15%", padding: "0"}}>
+                    <em>Expand and collapse the headers to view the answers for the case!</em>
+                </h4>
                 <br/>
+                <PanelGroup accordion>
+                    <Panel eventKey="1" bsStyle="primary" style={{marginLeft: "14%", marginRight: "15%", padding: "0"}}>
+                        <Panel.Heading>
+                            <Panel.Title toggle>{lpTitle}</Panel.Title>
+                        </Panel.Heading>
+                        <Panel.Body collapsible>
+                            <h4>{ReactHtmlParser(this.props.case.learning)}</h4>
+                        </Panel.Body>
+                    </Panel>
+                </PanelGroup>
                 {questions}
-
             </div>
         );
     }
@@ -104,6 +164,7 @@ class GameResults extends Component {
 
     render() {
         let vmClose = () => this.setState({ vmShow: false });
+
         return(
             <div className='container'>
                 {this.renderContent()}
