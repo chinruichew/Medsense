@@ -189,7 +189,7 @@ class MCQquestion extends Component {
                 <Row>
                     <Col className="previous-stem-col">
                         <Button type="button" bsStyle="link" className="previous-stem-btn" onClick={(e) => this.setState({ showSTEMs: true })}>
-                            <Glyphicon glyph="glyphicon glyphicon-list-alt"/> Previous STEM
+                            <h3><Glyphicon glyph="glyphicon glyphicon-book"/> Read Story So Far</h3>
                         </Button>
                     </Col>
                 </Row>
@@ -229,21 +229,17 @@ class MCQquestion extends Component {
                 <div className='container'>
                     <h1>
                         <Row>
-                            <div>{this.props.caseTitle}</div>
-                            <br />{this.renderProgressBar()}
+                            <div style={{marginBottom:"1%"}}>{this.props.caseTitle}</div>
+                            {this.renderProgressBar()}
                         </Row>
                     </h1>
-
-                    <br />
-
+                    <br/>
                     <h3>
                         <Row style={{width: "95%"}}>
                             <Col sm={3} style={{paddingLeft: "0", fontWeight: "bold"}}>Question {this.props.question.id}  </Col>
                             <Col className='pull-right'>{this.renderTimer(0.2)}</Col>
                         </Row>
                     </h3>
-
-                    <br />
 
                     {this.renderPreviousSTEM()}
 

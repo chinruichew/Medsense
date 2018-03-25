@@ -196,14 +196,12 @@ class Question extends Component {
 
     showUpload = () =>{
         if (this.state.changeFile){
-            console.log("toh");
             return <FormControl type="file" onChange={(e)=>this.handleFile(e)} accept=".jpg, .jpeg, .png"/>;
         }
     };
 
     showPearlUpload = () =>{
         if (this.state.changePearlFile){
-            console.log("dbl toh");
             return <FormControl type="file" onChange={(e)=>this.handlePearlFile(e)} accept=".jpg, .jpeg, .png"/>;
         }
     };

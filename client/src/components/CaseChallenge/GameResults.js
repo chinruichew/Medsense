@@ -65,7 +65,7 @@ class GameResults extends Component {
                         return (
                             <div key={index}>
                                 <PanelGroup accordion>
-                                    <Panel eventKey="1" bsStyle="primary" style={{marginLeft: "14%", marginRight: "15%", padding: "0"}}>
+                                    <Panel eventKey="1" bsStyle="primary" style={{marginLeft: "10%", marginRight: "10%", padding: "0"}}>
                                         <Panel.Heading>
                                             <Panel.Title toggle>{qnTitle}</Panel.Title>
                                         </Panel.Heading>
@@ -95,7 +95,7 @@ class GameResults extends Component {
                         return (
                             <div key={index}>
                                 <PanelGroup accordion>
-                                    <Panel eventKey="1" bsStyle="primary" style={{marginLeft: "14%", marginRight: "15%", padding: "0"}}>
+                                    <Panel eventKey="1" bsStyle="primary" style={{marginLeft: "10%", marginRight: "10%", padding: "0"}}>
                                         <Panel.Heading>
                                             <Panel.Title toggle>{qnTitle}</Panel.Title>
                                         </Panel.Heading>
@@ -126,17 +126,16 @@ class GameResults extends Component {
                 return(
                     <div>
                         <div align="center">
-                            <h1><strong>{this.props.case.title}</strong></h1>
+                            <h1 className="game-heading"><strong>{this.props.case.title}</strong></h1>
                             <h2> You have earned {this.props.xp} XP! </h2>
                             <br /><br />
-
-                        </div>
-                        <h4 style={{marginLeft: "14%", marginRight: "15%", padding: "0"}}>
+                        <h4 style={{marginLeft: "10%", marginRight: "10%", padding: "0"}}>
                             <em>Expand and collapse the headers to view the answers for the case!</em>
                         </h4>
+                        </div>
                         <br/>
                         <PanelGroup accordion>
-                            <Panel eventKey="1" bsStyle="primary" style={{marginLeft: "14%", marginRight: "15%", padding: "0"}}>
+                            <Panel eventKey="1" bsStyle="primary" style={{marginLeft: "10%", marginRight: "10%", padding: "0"}}>
                                 <Panel.Heading>
                                     <Panel.Title toggle>{lpTitle}</Panel.Title>
                                 </Panel.Heading>
