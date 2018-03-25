@@ -17,13 +17,15 @@ class StudentProfile extends Component {
             school: this.props.school,
             year: this.props.year,
             vmShow: false,
+            level: ''
         };
     }
 
     componentDidMount(){
         axios.get('/api/calculateUserLevel?xp=' + this.props.auth.points).then(res => {
-            console.log(res);
             this.setState({level: res.data});
+        }).catch(err => {
+            console.log(err);
         });
     }
 
