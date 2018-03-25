@@ -28,7 +28,10 @@ module.exports = app => {
     });
 
     app.post('/api/fetchSpeciality', async (req, res) => {
-        const specialities = await Speciality.find({}).sort("speciality");
+        const specialities = await Speciality.find({}).populate({
+            path: 'subspecialities',
+            model: 'subspecialities'
+        }).sort("speciality");
         res.send(specialities);
     });
 
