@@ -1,5 +1,4 @@
 import axios from 'axios';
-import promiseMiddleware from 'redux-promise';
 import {
     FETCH_USER, FETCH_CASES, FETCH_VETTED_CASES, UPDATE_PROFESSOR, UPDATE_STUDENT, UPLOAD_CASE, FETCH_GAME_BY_ID,
     FETCH_CASE_BY_ID, UPDATE_CASE, FETCH_RANDOM_CASE, FETCH_ADMIN_CASES, FETCH_CASE_BY_APPROACH,
@@ -8,7 +7,7 @@ import {
     STORE_CASE_ANSWER, FETCH_CONSTANT_TYPES, SET_GAME_OVERVIEW,
     ADD_OPEN_ENDED_ANSWER_OF_QUESTION, ADD_MCQ_ANSWER_OF_QUESTION, SET_GAME_FINAL_DETAILS, FETCH_APPROACH,
     ADD_NEW_APPROACH, DELETE_APPROACH, FETCH_SPECIALITY, ADD_NEW_SPECIALITY, DELETE_SPECIALITY,
-    FETCH_SUBSPECIALITY, ADD_NEW_SUBSPECIALITY, DELETE_SUBSPECIALITY, GET_GAME_ATTEMPT
+    FETCH_SUBSPECIALITY, ADD_NEW_SUBSPECIALITY, DELETE_SUBSPECIALITY, GET_GAME_ATTEMPT, GET_GAME_FINAL_DETAILS
 } from './types';
 
 export const fetchUser = () => async dispatch => {
@@ -262,6 +261,15 @@ export const setGameFinalDetails = (values) => {
     return {
         type: SET_GAME_FINAL_DETAILS,
         values
+    };
+};
+
+export const getGameFinalDetails = () => {
+    return (dispatch, getState) => {
+        return {
+            type: GET_GAME_FINAL_DETAILS,
+            values: getState().game.gameOverview
+        };
     };
 };
 

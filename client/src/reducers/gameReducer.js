@@ -1,5 +1,6 @@
 import {
     ADD_MCQ_ANSWER_OF_QUESTION, ADD_OPEN_ENDED_ANSWER_OF_QUESTION, FETCH_GAME_BY_ID, GET_GAME_ATTEMPT,
+    GET_GAME_FINAL_DETAILS,
     SET_GAME_FINAL_DETAILS,
     SET_GAME_OVERVIEW
 } from "../actions/types";
@@ -134,6 +135,8 @@ export default function ( state = initialState, action ) {
             return addMCQAnswerOfQuestion(state, action);
         case SET_GAME_FINAL_DETAILS:
             return setGameFinalDetails(state, action);
+        case GET_GAME_FINAL_DETAILS:
+            return action.payload;
         default: return state;
     }
 };
