@@ -186,7 +186,7 @@ module.exports = app => {
 
     app.get('/api/calculateUserLevel', async(req, res) => {
         const xp = req.query.xp;
-        console.log(commonMethods.CALCULATE_USER_LEVEL(xp));
-        res.send(commonMethods.CALCULATE_USER_LEVEL(xp));
+        const level = await commonMethods.CALCULATE_USER_LEVEL(xp);
+        res.send(String(level));
     });
 };
