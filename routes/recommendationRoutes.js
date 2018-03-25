@@ -243,7 +243,7 @@ module.exports = app => {
                 let numAnswers = 0;
                 for(let j = 0; j < answers.length; j++) {
                     const answer = answers[j];
-                    if(answers.case.speciality === speciality) {
+                    if(answer.case.speciality === speciality) {
                         cohortAverageSpecialityScore += answer.score;
                         numAnswers++;
                     }
@@ -263,7 +263,18 @@ module.exports = app => {
 
             // If bad score cases
             if(badScoreCaseArray.length <= carouselThreshold) {
-                res.send(badScoreCaseArray);
+                const processedCases = [
+                    ...badScoreCaseArray
+                ];
+                for(let i = 0; i < caseArray.length; i++) {
+                    if(processedCases.length > carouselThreshold) {
+                        break;
+                    }
+                    let answerCase = caseArray[i]._doc;
+                    processedCases.push(answerCase);
+                }
+
+                res.send(processedCases);
             } else {
                 // Filter cases based on difficulty level according to student year
                 let difficultyLevel = constants.DIFFICULTY_LEVEL_BEGINNER;
