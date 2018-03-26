@@ -200,6 +200,9 @@ module.exports = app => {
                 }).select().populate({
                     path: 'questions',
                     model: 'questions'
+                }).populate({
+                    path: 'authorid',
+                    model: 'users',
                 });
             } else {
                 if (approachArray.length === 0) {
@@ -210,6 +213,9 @@ module.exports = app => {
                     }).select().populate({
                         path: 'questions',
                         model: 'questions'
+                    }).populate({
+                        path: 'authorid',
+                        model: 'users',
                     });
                 } else if (subspecialityArray.length === 0) {
                     cases = await Case.find({
@@ -219,6 +225,9 @@ module.exports = app => {
                     }).select().populate({
                         path: 'questions',
                         model: 'questions'
+                    }).populate({
+                        path: 'authorid',
+                        model: 'users',
                     });
                 } else {
                     cases = await Case.find({
@@ -229,6 +238,9 @@ module.exports = app => {
                     }).select().populate({
                         path: 'questions',
                         model: 'questions'
+                    }).populate({
+                        path: 'authorid',
+                        model: 'users',
                     });
                 }
             }
@@ -241,6 +253,9 @@ module.exports = app => {
                 }).select().populate({
                     path: 'questions',
                     model: 'questions'
+                }).populate({
+                    path: 'authorid',
+                    model: 'users',
                 });
             } else {
                 if (approachArray.length === 0) {
@@ -252,6 +267,9 @@ module.exports = app => {
                     }).select().populate({
                         path: 'questions',
                         model: 'questions'
+                    }).populate({
+                        path: 'authorid',
+                        model: 'users',
                     });
                 } else if (subspecialityArray.length === 0) {
                     cases = await Case.find({
@@ -262,6 +280,9 @@ module.exports = app => {
                     }).select().populate({
                         path: 'questions',
                         model: 'questions'
+                    }).populate({
+                        path: 'authorid',
+                        model: 'users',
                     });
                 } else {
                     cases = await Case.find({
@@ -273,6 +294,9 @@ module.exports = app => {
                     }).select().populate({
                         path: 'questions',
                         model: 'questions'
+                    }).populate({
+                        path: 'authorid',
+                        model: 'users',
                     });
                 }
             }
