@@ -3,7 +3,7 @@ import {
     FETCH_USER, FETCH_CASES, FETCH_VETTED_CASES, UPDATE_PROFESSOR, UPDATE_STUDENT, UPLOAD_CASE, FETCH_GAME_BY_ID,
     FETCH_CASE_BY_ID, UPDATE_CASE, FETCH_RANDOM_CASE, FETCH_ADMIN_CASES, FETCH_CASE_BY_APPROACH,
     FETCH_CASE_BY_SPECIALITY, DELETE_ADMIN_CASE, FETCH_ADMIN_USERS, FETCH_FILTERED_ADMIN_STUDENTS,
-    FETCH_FILTERED_ADMIN_PROFESSORS, DELETE_ADMIN_PROFESSOR, DELETE_ADMIN_STUDENT, FETCH_FILTERED_ADMIN_CASES,
+    FETCH_FILTERED_ADMIN_PROFESSORS, FETCH_FILTERED_ADMIN_ADMINS, DELETE_ADMIN_PROFESSOR, DELETE_ADMIN_STUDENT, DELETE_ADMIN_ADMIN, FETCH_FILTERED_ADMIN_CASES,
     STORE_CASE_ANSWER, FETCH_CONSTANT_TYPES, SET_GAME_OVERVIEW,
     ADD_OPEN_ENDED_ANSWER_OF_QUESTION, ADD_MCQ_ANSWER_OF_QUESTION, SET_GAME_FINAL_DETAILS, FETCH_APPROACH,
     ADD_NEW_APPROACH, DELETE_APPROACH, FETCH_SPECIALITY, ADD_NEW_SPECIALITY, DELETE_SPECIALITY,
@@ -129,6 +129,13 @@ export const deleteAdminProfessor = (values) => async dispatch => {
     dispatch({ type: DELETE_ADMIN_PROFESSOR, payload: values });
 };
 
+export const deleteAdminAdmin = (values) => async dispatch => {
+    axios.post('/api/deleteAdminAdmin', {
+        values
+    });
+    dispatch({ type: DELETE_ADMIN_ADMIN, payload: values });
+};
+
 export const addNewStudent = (values) => async dispatch => {
     const res = await axios.post('/api/addNewStudent', {
         values
@@ -165,6 +172,13 @@ export const fetchFilteredAdminProfessors = (values) => async dispatch => {
         values
     });
     dispatch({ type: FETCH_FILTERED_ADMIN_PROFESSORS, payload: res.data });
+};
+
+export const fetchFilteredAdminAdmins = (values) => async dispatch => {
+    const res = await axios.post('/api/fetchFilteredAdminAdmins', {
+        values
+    });
+    dispatch({ type: FETCH_FILTERED_ADMIN_ADMINS, payload: res.data });
 };
 
 export const fetchFilteredAdminCases = (values) => async dispatch => {

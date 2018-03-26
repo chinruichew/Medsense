@@ -10,6 +10,23 @@ module.exports = app => {
         res.send(users);
     });
 
+    app.post('/api/fetchFilteredAdminAdmins', async (req, res) => {
+        let users;
+        console.log(req.body.values.username)
+        if (req.body.values.username === "") {
+            users = await User.find({
+                usertype: constants.USER_TYPE_ADMIN
+            }).select("-password");
+        } else {
+            users = await User.find({
+                username: { "$regex": req.body.values.username, "$options": "i" },
+                usertype: constants.USER_TYPE_ADMIN
+            }).select("-password");
+        }
+        console.log(users)
+        res.send(users);
+    });
+
     app.post('/api/fetchFilteredAdminStudents', async (req, res) => {
         let users;
         if (req.body.values.username === "") {
@@ -336,6 +353,11 @@ module.exports = app => {
     app.post('/api/deleteAdminProfessor', function (req, res) {
         User.find({ _id: req.body.values }, function (err, deleteProfessor) { }).remove().exec();
         return res.status(201).send({ data: null, message: "deleteAdminProfessor success" });
+    });
+
+    app.post('/api/deleteAdminAdmin', function (req, res) {
+        User.find({ _id: req.body.values }, function (err, deleteAdmin) { }).remove().exec();
+        return res.status(201).send({ data: null, message: "deleteAdminAdmin success" });
     });
 
     app.get('/api/fetchCount', async (req, res) => {

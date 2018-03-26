@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, ControlLabel, FormGroup, FormControl, Table } from 'react-bootstrap';
 
-import { fetchFilteredAdminStudents, fetchFilteredAdminProfessors, deleteAdminStudent, deleteAdminProfessor } from '../../actions';
+import { fetchFilteredAdminStudents, fetchFilteredAdminProfessors, fetchFilteredAdminAdmins, deleteAdminStudent, deleteAdminProfessor, deleteAdminAdmin } from '../../actions';
 import './Admin.css';
 import axios from 'axios';
 
@@ -21,7 +21,7 @@ class DeleteUser extends Component {
 
     componentDidMount() {
         axios.get('/api/getConstantTypes').then(res => {
-            this.setState({constants: res.data});
+            this.setState({ constants: res.data });
         }).catch(err => {
             console.log(err);
         });
@@ -73,6 +73,7 @@ class DeleteUser extends Component {
                 <FormControl componentClass="select" value={this.state.usertype} name="usertype" onChange={(e) => this.handleUsertypeChange(e)}>
                     <option value="Student">Student</option>
                     <option value="Professor">Professor</option>
+                    <option value="Admin">Admin</option>
                 </FormControl>
             </FormGroup>
         );
@@ -97,18 +98,19 @@ class DeleteUser extends Component {
     }
 
     setSchool() {
-        return (
-            <FormGroup controlId="formControlsDifficulty">
-                <ControlLabel style={{ fontSize: "150%" }}>Select School:</ControlLabel>
-                <FormControl componentClass="select" value={this.state.school} name="usertype" onChange={(e) => this.handleSchoolChange(e)}>
-                    <option value="">Select School</option>
-                    <option value="Duke-NUS">Duke-NUS</option>
-                    <option value="NTU">NTU</option>
-                    <option value="NUS">NUS</option>
-                </FormControl>
-            </FormGroup>
-        );
-
+        if (this.state.usertype !== this.state.constants.USER_TYPE_ADMIN) {
+            return (
+                <FormGroup controlId="formControlsDifficulty">
+                    <ControlLabel style={{ fontSize: "150%" }}>Select School:</ControlLabel>
+                    <FormControl componentClass="select" value={this.state.school} name="usertype" onChange={(e) => this.handleSchoolChange(e)}>
+                        <option value="">Select School</option>
+                        <option value="Duke-NUS">Duke-NUS</option>
+                        <option value="NTU">NTU</option>
+                        <option value="NUS">NUS</option>
+                    </FormControl>
+                </FormGroup>
+            );
+        }
     }
 
     setYear() {
@@ -153,7 +155,7 @@ class DeleteUser extends Component {
                     <FormGroup controlId="formControlsSubspeciality">
                         <ControlLabel style={{ fontSize: "150%" }}>Sub-speciality
                             <br />
-                            <div style={{ fontSize: "70%", fontWeight:"200"}}>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.
+                            <div style={{ fontSize: "70%", fontWeight: "200" }}>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.
                             </div>
                         </ControlLabel>
                         <FormControl size='8' componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)} multiple>
@@ -176,7 +178,7 @@ class DeleteUser extends Component {
                     <FormGroup controlId="formControlsSubspeciality">
                         <ControlLabel style={{ fontSize: "150%" }}>Sub-speciality
                             <br />
-                            <div style={{ fontSize: "70%", fontWeight:"200"}}>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.
+                            <div style={{ fontSize: "70%", fontWeight: "200" }}>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.
                             </div>
                         </ControlLabel>
                         <FormControl size='8' componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)} multiple>
@@ -200,7 +202,7 @@ class DeleteUser extends Component {
                     <FormGroup controlId="formControlsSubspeciality">
                         <ControlLabel style={{ fontSize: "150%" }}>Sub-speciality
                             <br />
-                            <div style={{ fontSize: "70%", fontWeight:"200"}}>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.
+                            <div style={{ fontSize: "70%", fontWeight: "200" }}>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.
                             </div>
                         </ControlLabel>
                         <FormControl size='8' componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)} multiple>
@@ -223,20 +225,20 @@ class DeleteUser extends Component {
                     <FormGroup controlId="formControlsSubspeciality">
                         <ControlLabel style={{ fontSize: "150%" }}>Sub-speciality
                             <br />
-                            <div style={{ fontSize: "70%", fontWeight:"200"}}>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.
+                            <div style={{ fontSize: "70%", fontWeight: "200" }}>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.
                             </div>
                         </ControlLabel>
                         <FormControl size='8' componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)} multiple>
-                        <option value="Select One">Select All Relevant</option>
-                        <option value="Foot and Ankle Surgery">Foot and Ankle Surgery</option>
-                        <option value="Hip and Knee Surgery">Hip and Knee Surgery</option>
-                        <option value="Musculoskeletal Oncology">Musculoskeletal Oncology</option>
-                        <option value="Musculoskeletal Trauma">Musculoskeletal Trauma</option>
-                        <option value="Paediatric Orthopaedics">Paediatric Orthopaedics</option>
-                        <option value="Shoulder & Elbow Surgery">Shoulder & Elbow Surgery</option>
-                        <option value="Spine Surgery">Spine Surgery</option>
-                        <option value="Sports medicine">Sports medicine</option>
-                        <option value="Department of Hand & Reconstructive Microsurgery Trauma">Department of Hand & Reconstructive Microsurgery Trauma</option>
+                            <option value="Select One">Select All Relevant</option>
+                            <option value="Foot and Ankle Surgery">Foot and Ankle Surgery</option>
+                            <option value="Hip and Knee Surgery">Hip and Knee Surgery</option>
+                            <option value="Musculoskeletal Oncology">Musculoskeletal Oncology</option>
+                            <option value="Musculoskeletal Trauma">Musculoskeletal Trauma</option>
+                            <option value="Paediatric Orthopaedics">Paediatric Orthopaedics</option>
+                            <option value="Shoulder & Elbow Surgery">Shoulder & Elbow Surgery</option>
+                            <option value="Spine Surgery">Spine Surgery</option>
+                            <option value="Sports medicine">Sports medicine</option>
+                            <option value="Department of Hand & Reconstructive Microsurgery Trauma">Department of Hand & Reconstructive Microsurgery Trauma</option>
                         </FormControl>
                     </FormGroup>
                 );
@@ -293,12 +295,16 @@ class DeleteUser extends Component {
         this.props.deleteAdminProfessor(e._id)
     }
 
+    deleteAdminAdmin(e) {
+        this.props.deleteAdminAdmin(e._id)
+    }
+
     convert(xp) {
         let level = 1;
-        if (xp<480){
+        if (xp < 480) {
             level = 1;
         } else {
-            level = Math.floor((120 + Math.sqrt(120**2-4*120*(240-xp)))/(2*120));
+            level = Math.floor((120 + Math.sqrt(120 ** 2 - 4 * 120 * (240 - xp))) / (2 * 120));
         }
         return level;
     }
@@ -310,7 +316,7 @@ class DeleteUser extends Component {
                     <td><center>{user.username}</center></td>
                     <td><center>{user.school}</center></td>
                     <td><center>{user.year}</center></td>
-                    <td><center>{user.year === "4" || user.year === "5"? "Yes" : "No"}</center></td>
+                    <td><center>{user.year === "4" || user.year === "5" ? "Yes" : "No"}</center></td>
                     {/* <td><center>{user._id}</center></td> */}
                     <td><center>{this.convert(user.points)}</center></td>
                     <td><center>{user.points}</center></td>
@@ -324,6 +330,43 @@ class DeleteUser extends Component {
             return (
                 <tbody>
                     {allStudents}
+                </tbody>
+            );
+        }
+    }
+
+    renderTableAdmins() {
+        if (this.state.usertype === this.state.constants.USER_TYPE_ADMIN) {
+            return (
+                <Table responsive>
+                    <thead>
+                        <tr style={{ background: '#D9EDF7', fontSize: "130%" }}>
+                            <th><center>Username</center></th>
+                            <th> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
+                        </tr>
+
+                    </thead>
+                    {this.renderAdmins()}
+                </Table>
+            );
+        }
+
+    }
+
+    renderAdmins() {
+        let allAdmins = this.props.adminUsers.map(user => {
+            if (user.usertype === this.state.constants.USER_TYPE_ADMIN) {
+                return <tr>
+                    <td><center>{user.username}</center></td>
+                    <td><Button onClick={(e) => this.deleteAdminAdmin(user)}>Delete</Button></td >
+                </tr>
+            }
+            return '';
+        });
+        if (this.state.usertype === this.state.constants.USER_TYPE_ADMIN) {
+            return (
+                <tbody>
+                    {allAdmins}
                 </tbody>
             );
         }
@@ -375,7 +418,10 @@ class DeleteUser extends Component {
     searchUser() {
         if (this.state.usertype === this.state.constants.USER_TYPE_STUDENT) {
             this.props.fetchFilteredAdminStudents(this.state);
-        } else {
+        } else if (this.state.usertype === this.state.constants.USER_TYPE_ADMIN) {
+            this.props.fetchFilteredAdminAdmins(this.state);
+        }
+        else {
             this.props.fetchFilteredAdminProfessors(this.state);
         }
     }
@@ -391,9 +437,10 @@ class DeleteUser extends Component {
                 {this.setSubspeciality()}
                 <br />
                 <Button style={{ fontSize: "125%" }} bsStyle="primary" onClick={(e) => this.searchUser()}>Search</Button>
-                <br /><br /><br /> 
+                <br /><br /><br />
                 {this.renderTableStudent()}
                 {this.renderTableProfessors()}
+                {this.renderTableAdmins()}
             </div>
         );
     }
@@ -403,4 +450,4 @@ function mapStateToProps({ auth, adminUsers }) {
     return { auth, adminUsers };
 }
 
-export default connect(mapStateToProps, { fetchFilteredAdminStudents, fetchFilteredAdminProfessors, deleteAdminStudent, deleteAdminProfessor })(DeleteUser);
+export default connect(mapStateToProps, { fetchFilteredAdminStudents, fetchFilteredAdminProfessors, fetchFilteredAdminAdmins, deleteAdminStudent, deleteAdminProfessor, deleteAdminAdmin })(DeleteUser);
