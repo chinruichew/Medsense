@@ -145,6 +145,14 @@ export const addNewProfessor = (values) => async dispatch => {
     return res
 };
 
+export const addNewAdmin = (values) => async dispatch => {
+    const res = await axios.post('/api/addNewAdmin', {
+        values
+    });
+    //dispatch({ type: ADD_NEW_PROFESSOR, payload: res.data });
+    return res
+};
+
 export const fetchFilteredAdminStudents = (values) => async dispatch => {
     const res = await axios.post('/api/fetchFilteredAdminStudents', {
         values

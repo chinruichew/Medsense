@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Button, ControlLabel, FormGroup, FormControl } from 'react-bootstrap';
 
 import './Admin.css';
-import { addNewStudent, addNewProfessor } from '../../actions';
+import { addNewStudent, addNewProfessor, addNewAdmin } from '../../actions';
 
 class NewUser extends Component {
     state = {
@@ -76,7 +76,8 @@ class NewUser extends Component {
                 <ControlLabel style={{ fontSize: "150%" }}>Select User Type:</ControlLabel>
                 <FormControl componentClass="select" value={this.state.usertype} name="usertype" onChange={(e) => this.handleUsertypeChange(e)}>
                     <option value="Student">Student</option>
-                    <option value="Professor">Professor</option>
+                    <option value="Professor">Professor</option>#
+                    <option value="Admin">Admin</option>
                 </FormControl>
             </FormGroup>
         );
@@ -101,16 +102,18 @@ class NewUser extends Component {
     }
 
     setSchool() {
-        return (
-            <FormGroup controlId="formControlsDifficulty">
-                <ControlLabel style={{ fontSize: "150%" }}>Select School:</ControlLabel>
-                <FormControl componentClass="select" value={this.state.school} name="school" onChange={(e) => this.handleSchoolChange(e)}>
-                    <option value="Duke-NUS" default>Duke-NUS</option>
-                    <option value="NTU">NTU</option>
-                    <option value="NUS">NUS</option>
-                </FormControl>
-            </FormGroup>
-        );
+        if (this.state.usertype === "Student" && this.state.usertype === "Professor" ) {
+            return (
+                <FormGroup controlId="formControlsDifficulty">
+                    <ControlLabel style={{ fontSize: "150%" }}>Select School:</ControlLabel>
+                    <FormControl componentClass="select" value={this.state.school} name="school" onChange={(e) => this.handleSchoolChange(e)}>
+                        <option value="Duke-NUS" default>Duke-NUS</option>
+                        <option value="NTU">NTU</option>
+                        <option value="NUS">NUS</option>
+                    </FormControl>
+                </FormGroup>
+            );
+        }
 
     }
 
@@ -154,7 +157,7 @@ class NewUser extends Component {
                     <FormGroup controlId="formControlsSubspeciality">
                         <ControlLabel style={{ fontSize: "150%" }}>Sub-speciality
                             <br />
-                            <div style={{ fontSize: "70%", fontWeight:"200"}}>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.
+                            <div style={{ fontSize: "70%", fontWeight: "200" }}>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.
                             </div>
                         </ControlLabel>
                         <FormControl size='8' componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)} multiple>
@@ -177,7 +180,7 @@ class NewUser extends Component {
                     <FormGroup controlId="formControlsSubspeciality">
                         <ControlLabel style={{ fontSize: "150%" }}>Sub-speciality
                             <br />
-                            <div style={{ fontSize: "70%", fontWeight:"200"}}>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.
+                            <div style={{ fontSize: "70%", fontWeight: "200" }}>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.
                             </div>
                         </ControlLabel>
                         <FormControl size='8' componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)} multiple>
@@ -196,12 +199,12 @@ class NewUser extends Component {
                         </FormControl>
                     </FormGroup>
                 );
-            } else if (this.state.speciality === "Surgery") { 
+            } else if (this.state.speciality === "Surgery") {
                 return (
                     <FormGroup controlId="formControlsSubspeciality">
                         <ControlLabel style={{ fontSize: "150%" }}>Sub-speciality
                             <br />
-                            <div style={{ fontSize: "70%", fontWeight:"200"}}>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.
+                            <div style={{ fontSize: "70%", fontWeight: "200" }}>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.
                             </div>
                         </ControlLabel>
                         <FormControl size='8' componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)} multiple>
@@ -224,27 +227,27 @@ class NewUser extends Component {
                     <FormGroup controlId="formControlsSubspeciality">
                         <ControlLabel style={{ fontSize: "150%" }}>Sub-speciality
                             <br />
-                            <div style={{ fontSize: "70%", fontWeight:"200"}}>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.
+                            <div style={{ fontSize: "70%", fontWeight: "200" }}>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.
                             </div>
                         </ControlLabel>
                         <FormControl size='8' componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)} multiple>
-                        <option value="Select One">Select All Relevant</option>
-                        <option value="Foot and Ankle Surgery">Foot and Ankle Surgery</option>
-                        <option value="Hip and Knee Surgery">Hip and Knee Surgery</option>
-                        <option value="Musculoskeletal Oncology">Musculoskeletal Oncology</option>
-                        <option value="Musculoskeletal Trauma">Musculoskeletal Trauma</option>
-                        <option value="Paediatric Orthopaedics">Paediatric Orthopaedics</option>
-                        <option value="Shoulder & Elbow Surgery">Shoulder & Elbow Surgery</option>
-                        <option value="Spine Surgery">Spine Surgery</option>
-                        <option value="Sports medicine">Sports medicine</option>
-                        <option value="Department of Hand & Reconstructive Microsurgery Trauma">Department of Hand & Reconstructive Microsurgery Trauma</option>
+                            <option value="Select One">Select All Relevant</option>
+                            <option value="Foot and Ankle Surgery">Foot and Ankle Surgery</option>
+                            <option value="Hip and Knee Surgery">Hip and Knee Surgery</option>
+                            <option value="Musculoskeletal Oncology">Musculoskeletal Oncology</option>
+                            <option value="Musculoskeletal Trauma">Musculoskeletal Trauma</option>
+                            <option value="Paediatric Orthopaedics">Paediatric Orthopaedics</option>
+                            <option value="Shoulder & Elbow Surgery">Shoulder & Elbow Surgery</option>
+                            <option value="Spine Surgery">Spine Surgery</option>
+                            <option value="Sports medicine">Sports medicine</option>
+                            <option value="Department of Hand & Reconstructive Microsurgery Trauma">Department of Hand & Reconstructive Microsurgery Trauma</option>
                         </FormControl>
                     </FormGroup>
                 );
 
             }
 
-        } 
+        }
 
     }
 
@@ -256,6 +259,14 @@ class NewUser extends Component {
         } else {
             if (this.state.usertype === "Student") {
                 this.props.addNewStudent(this.state).then(function (response) {
+                    if (response.data === "User Exists") {
+                        window.alert("User Exists")
+                    } else {
+                        window.alert("User Created")
+                    }
+                })
+            } else if (this.state.usertype === "Admin") {
+                this.props.addNewAdmin(this.state).then(function (response) {
                     if (response.data === "User Exists") {
                         window.alert("User Exists")
                     } else {
@@ -295,4 +306,4 @@ function mapStateToProps({ auth }) {
     return { auth };
 }
 
-export default connect(mapStateToProps, { addNewStudent, addNewProfessor })(NewUser);
+export default connect(mapStateToProps, { addNewStudent, addNewProfessor, addNewAdmin })(NewUser);
