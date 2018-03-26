@@ -23,6 +23,7 @@ class CaseManager extends Component {
             oneCaseQuestions: [],
             oneCaseId: '',
             showConfirmDelete: false,
+            oneCase: ''
         };
         bindAll(this, 'handleTitleChange', 'handleDifficultyChange', 'handleSpecialityChange', 'handleSubspecialityChange',
             'handleApproachChange', 'handleScenarioChange', 'setSubspeciality', 'setName', 'setSpeciality', 'setApproach',
@@ -34,7 +35,7 @@ class CaseManager extends Component {
     }
 
     handleOpenModal(oneCase) {
-        this.setState({ displayModal: true, oneCaseQuestions: oneCase.questions, oneCaseId: oneCase._id });
+        this.setState({ displayModal: true, oneCaseQuestions: oneCase.questions, oneCaseId: oneCase._id, oneCase: oneCase });
     }
 
     handleCloseModal() {
@@ -388,23 +389,28 @@ class CaseManager extends Component {
         let allQuestions = this.state.oneCaseQuestions.map((question, id) => {
             if (question.type === "MCQ") {
                 return <div>
-                    <p><b>Question</b> {id+1} </p>
+                    <p><b>Question</b> {id + 1} </p>
                 </div>
             } else {
                 return <div>
-                    <p><b>Question</b> {id+1} </p>
-                    <p> <b>Answer</b> {question.openEnded.replace(/(&lt;|o&nbsp;|&amp;|&nbsp;|(<([^>]+)>))/ig,' ')} </p>
+                    <p><b>Question</b> {id + 1} </p>
+                    <p> <b>Answer</b> {question.openEnded.replace(/(&lt;|o&nbsp;|&amp;|&nbsp;|(<([^>]+)>))/ig, ' ')} </p>
                 </div>
             }
         })
+        let scenario = ""
+        if(this.state.oneCase != '') {
+            scenario = this.state.oneCase.scenario.replace(/(&lt;|o&nbsp;|&amp;|&nbsp;|(<([^>]+)>))/ig, ' ');
+        }
 
         return (
             <div>
                 <Modal show={this.state.displayModal} onHide={this.handleCloseModal}>
                     <Modal.Header closeButton>
-                        <Modal.Title></Modal.Title>
+                        <Modal.Title>{this.state.oneCase.title}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
+                        <p>{scenario} </p>
                         {allQuestions}
                     </Modal.Body>
                     <Modal.Footer>
