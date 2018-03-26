@@ -289,6 +289,22 @@ module.exports = app => {
         });
     });
 
+    app.post('/api/addNewAdmin', function (req, res) {
+        const values = req.body.values;
+        User.findOne({ username: values.username }, function (err, user) {
+            if (!user) {
+                const newUser = new User();
+                newUser.username = values.username;
+                newUser.password = newUser.generateHash(values.password);
+                newUser.usertype = constants.USER_TYPE_ADMIN;
+                newUser.save();
+                return res.send(newUser);
+            } else {
+                return res.send('User Exists');
+            }
+        });
+    });
+
     app.post('/api/addNewProfessor', function (req, res) {
         const values = req.body.values;
         const subspecialityArray = [];
@@ -326,13 +342,14 @@ module.exports = app => {
         const specialityCount = await Case.aggregate([
             { $group: { _id: '$speciality', count: { $addToSet: '$_id' } } },
             { $unwind: "$count" },
-            { $group: { _id: "$_id", count: { $sum: 1 } } }
+            { $group: { _id: "$_id", count: { $sum: 1 } } },
+            { $sort: { 'count': -1 } }
         ]).exec();
         res.send(specialityCount);
     });
-    
+
     app.post('/api/fetchSpecialityCount', async (req, res) => {
-        const specialityCount = await Case.aggregate([  {$match: { speciality: { $gte: "Orthopaedics" } } }, {$unwind:'$subspeciality'}, {$group:{_id:'$subspeciality', freq:{$sum:1}}}]).exec();
+        const specialityCount = await Case.aggregate([{ $match: { speciality: { $gte: "Orthopaedics" } } }, { $unwind: '$subspeciality' }, { $group: { _id: '$subspeciality', count: { $sum: 1 } } }]).exec();
         res.send(specialityCount);
     });
 };
