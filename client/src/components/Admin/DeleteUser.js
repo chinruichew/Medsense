@@ -293,6 +293,16 @@ class DeleteUser extends Component {
         this.props.deleteAdminProfessor(e._id)
     }
 
+    convert(xp) {
+        let level = 1;
+        if (xp<480){
+            level = 1;
+        } else {
+            level = Math.floor((120 + Math.sqrt(120**2-4*120*(240-xp)))/(2*120));
+        }
+        return level;
+    }
+
     renderStudents() {
         let allStudents = this.props.adminUsers.map(user => {
             if (user.usertype === this.state.constants.USER_TYPE_STUDENT) {
@@ -302,9 +312,9 @@ class DeleteUser extends Component {
                     <td><center>{user.year}</center></td>
                     <td><center>{user.year === "4" || user.year === "5"? "Yes" : "No"}</center></td>
                     {/* <td><center>{user._id}</center></td> */}
-                    <td><center>Level</center></td>
-                    <td><center>XP</center></td>
-                    <td><center>Timestamp</center></td>
+                    <td><center>{this.convert(user.points)}</center></td>
+                    <td><center>{user.points}</center></td>
+                    <td><center>{user.timestamp.split("T")[0]}</center></td>
                     <td><Button onClick={(e) => this.deleteAdminStudent(user)}>Delete</Button></td >
                 </tr>
             }
