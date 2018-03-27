@@ -39,8 +39,10 @@ class GameResults extends Component {
                         }
                     }
 
-                    let answer="";
+                    let studentAnswer = "";
+                    let modelAnswer = '';
                     if (question.type==="MCQ") {
+                        // Concat student answer
                         const mcqAnswerOptions = mcqAnswer.mcqAnswerOptions;
                         for(let i = 0; i < mcqAnswerOptions.length; i++) {
                             const mcqAnswerOption = mcqAnswerOptions[i];
@@ -48,15 +50,32 @@ class GameResults extends Component {
                                 for(let j = 0; j < question.options.length; j++) {
                                     const option = question.options[j];
                                     if(option._id === mcqAnswerOption.questionOption) {
-                                        answer += option.mcq + ', ';
+                                        studentAnswer += option.mcq + ', ';
                                         break;
                                     }
                                 }
                             }
                         }
-                        answer = answer.substring(0, answer.length - 2);
+                        studentAnswer = studentAnswer.substring(0, studentAnswer.length - 2);
+
+                        // Concat model answer
+                        for(let i = 0; i < question.options.length; i++) {
+                            const option = question.options[i];
+                            modelAnswer += option.mcq + ', ';
+                        }
+                        modelAnswer = modelAnswer.substring(0, modelAnswer.length - 2);
                     } else {
-                        answer = question.openEnded;
+                        modelAnswer = question.openEnded;
+
+                        // Get student answer
+                        const openEndedAnswers = game.openEndedAnswers;
+                        for(let i = 0; i < openEndedAnswers.length; i++) {
+                            const openEndedAnswer = openEndedAnswers[i];
+                            if(openEndedAnswer.questionId === question._id) {
+                                studentAnswer = openEndedAnswer.studentAnswer;
+                                break;
+                            }
+                        }
                     }
 
                     const qnTitle = <span className="title" style={{fontSize: "180%"}}><strong>Question {question.id}</strong></span>;
@@ -70,22 +89,40 @@ class GameResults extends Component {
                                             <Panel.Title toggle>{qnTitle}</Panel.Title>
                                         </Panel.Heading>
                                         <Panel.Body collapsible>
-                                            <h3 className="result-heading">Case Scenario</h3>
-                                            <h4 style={{whiteSpace: "pre-wrap", wordBreak: "keep-all"}}>
-                                                {ReactHtmlParser(this.props.case.scenario)}
-                                            </h4>
+                                            <div className="row">
+                                                <div className="col-md-12">
+                                                    <h3 className="result-heading">Case Scenario</h3>
+                                                    <h4>
+                                                        <p>{ReactHtmlParser(this.props.case.scenario)}</p>
+                                                    </h4>
+                                                </div>
+                                            </div>
                                             <h3 className="result-heading">Question</h3>
-                                            <h4 style={{whiteSpace: "pre-wrap", wordBreak: "keep-all"}}>
+                                            <h4>
                                                 {ReactHtmlParser(question.question)}
                                             </h4>
-                                            <h3 className="result-heading">Answer</h3>
-                                            <h4 style={{whiteSpace: "pre-wrap", wordBreak: "keep-all"}}>
-                                                {ReactHtmlParser(answer)}
-                                            </h4>
-                                            <h3 className="result-heading">PEARL</h3>
-                                            <h4 style={{whiteSpace: "pre-wrap", wordBreak: "keep-all"}}>
-                                                {ReactHtmlParser(question.pearl)}
-                                            </h4>
+                                            <div className="row">
+                                                <div className="col-md-6">
+                                                    <h3 className="result-heading">Your Answer</h3>
+                                                    <h4>
+                                                        {ReactHtmlParser(studentAnswer)}
+                                                    </h4>
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <h3 className="result-heading">Model Answer</h3>
+                                                    <h4>
+                                                        {ReactHtmlParser(modelAnswer)}
+                                                    </h4>
+                                                </div>
+                                            </div>
+                                            <div className="row">
+                                                <div className="col-md-12">
+                                                    <h3 className="result-heading">PEARL</h3>
+                                                    <h4>
+                                                        {ReactHtmlParser(question.pearl)}
+                                                    </h4>
+                                                </div>
+                                            </div>
                                         </Panel.Body>
                                     </Panel>
                                 </PanelGroup>
@@ -100,22 +137,40 @@ class GameResults extends Component {
                                             <Panel.Title toggle>{qnTitle}</Panel.Title>
                                         </Panel.Heading>
                                         <Panel.Body collapsible>
-                                            <h3 className="result-heading">STEM</h3>
-                                            <h4 style={{whiteSpace: "pre-wrap", wordBreak: "keep-all"}}>
-                                                {ReactHtmlParser(question.stem)}
-                                            </h4>
+                                            <div className="row">
+                                                <div className="col-md-12">
+                                                    <h3 className="result-heading">Case Scenario</h3>
+                                                    <h4>
+                                                        <p>{ReactHtmlParser(this.props.case.scenario)}</p>
+                                                    </h4>
+                                                </div>
+                                            </div>
                                             <h3 className="result-heading">Question</h3>
-                                            <h4 style={{whiteSpace: "pre-wrap", wordBreak: "keep-all"}}>
+                                            <h4>
                                                 {ReactHtmlParser(question.question)}
                                             </h4>
-                                            <h3 className="result-heading">Answer</h3>
-                                            <h4 style={{whiteSpace: "pre-wrap", wordBreak: "keep-all"}}>
-                                                {ReactHtmlParser(answer)}
-                                            </h4>
-                                            <h3 className="result-heading">PEARL</h3>
-                                            <h4 style={{whiteSpace: "pre-wrap", wordBreak: "keep-all"}}>
-                                                {ReactHtmlParser(question.pearl)}
-                                            </h4>
+                                            <div className="row">
+                                                <div className="col-md-6">
+                                                    <h3 className="result-heading">Your Answer</h3>
+                                                    <h4>
+                                                        {ReactHtmlParser(studentAnswer)}
+                                                    </h4>
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <h3 className="result-heading">Model Answer</h3>
+                                                    <h4>
+                                                        {ReactHtmlParser(modelAnswer)}
+                                                    </h4>
+                                                </div>
+                                            </div>
+                                            <div className="row">
+                                                <div className="col-md-12">
+                                                    <h3 className="result-heading">PEARL</h3>
+                                                    <h4>
+                                                        {ReactHtmlParser(question.pearl)}
+                                                    </h4>
+                                                </div>
+                                            </div>
                                         </Panel.Body>
                                     </Panel>
                                 </PanelGroup>
