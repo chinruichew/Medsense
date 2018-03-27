@@ -156,18 +156,18 @@ class CaseManager extends Component {
 
     setSubspeciality() {
         let specialities = this.state.specialityList.map((obj, index) => {
-            console.log(obj.speciality);
-            axios.post('/api/fetchSubspeciality', {
-                speciality: obj.speciality,
-            }).then(res => {
-                let subspecialities = res.data[0].subspecialities.map((obj,index) =>{
-                    // console.log(obj.subspeciality);
-                    if(obj.subspeciality!=="Clinical Practicum"){
+            // console.log(obj.speciality);
+            if(obj.speciality!=="Clinical Practicum") {
+                axios.post('/api/fetchSubspeciality', {
+                    speciality: obj.speciality,
+                }).then(res => {
+                    let subspecialities = res.data[0].subspecialities.map((obj, index) => {
+                        // console.log(obj.subspeciality);
                         return <option key={index} value={obj.subspeciality}>{obj.subspeciality}</option>;
-                    }
+                    });
+                    return <optgroup label={"--" + obj.speciality + "--"}>{subspecialities}</optgroup>;
                 });
-                return <optgroup label={"--"+obj.speciality+"--"}>{subspecialities}</optgroup>;
-            });
+            }
         });
         console.log(specialities);
         return (
