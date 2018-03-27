@@ -27,7 +27,7 @@ class GameResults extends Component {
             case null:
                 return;
             default:
-                const lpTitle = <span className="title" style={{fontSize: "180%"}}><strong>Learning Points</strong></span>;
+                const lpTitle = <span className="title" style={{fontSize: "180%"}}><strong>Key Learning Objectives</strong></span>;
 
                 const mcqAnswers = game.mcqAnswers;
                 let questions = this.props.case.questions.map((question, index) => {

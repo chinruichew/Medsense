@@ -30,12 +30,10 @@ class UserManager extends Component {
                         return;
                     default:
                         return (
-                            <div className="container-fluid">
-                                <div className="row">
-
-
-                                    <div className='col-sm-9 col-sm-offset-1'>
-                                        <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
+                            <div>
+                                <div className="container-fluid">
+                                    <div className='col-sm-12'>
+                                        <Tabs defaultActiveKey={1} className="tab">
                                             <Tab eventKey={1} title="Add New User">
                                                 <br />
                                                 <NewUser />

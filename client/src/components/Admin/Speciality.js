@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, ControlLabel, FormGroup, FormControl, Table } from 'react-bootstrap';
+import { Button, ControlLabel, FormGroup, FormControl, Table, Row, Col } from 'react-bootstrap';
 import { addNewSpeciality, deleteSpeciality } from '../../actions';
 import './Admin.css';
 
@@ -19,6 +19,7 @@ class Speciality extends Component {
                 <thead>
                     <tr style={{ background: '#D9EDF7', fontSize: "130%" }}>
                         <th><center>Speciality</center></th>
+                        <th> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
                     </tr>
                 </thead>
                 {this.renderSpeciality()}
@@ -34,7 +35,7 @@ class Speciality extends Component {
         let allSpeciality = this.props.speciality.map(speciality => {
             return <tr>
                 <td><center>{speciality.speciality}</center></td>
-                <td><Button onClick={(e) => this.deleteAdminSpeciality(speciality)}>Delete</Button></td >
+                <td><center><Button bsStyle="primary" onClick={(e) => this.deleteAdminSpeciality(speciality)}>Delete</Button></center></td >
             </tr>
         });
 
@@ -50,7 +51,16 @@ class Speciality extends Component {
         return (
             <FormGroup controlId="formControlsTitle">
                 <ControlLabel style={{ fontSize: "150%" }}>Speciality:</ControlLabel>
-                <FormControl type="text" value={this.state.speciality} name="username" onChange={(e) => this.handleSpecialityChange(e)} />
+                <Row>
+                    <Col sm={9}>
+                        <FormControl type="text" value={this.state.speciality} name="username"
+                                     onChange={(e) => this.handleSpecialityChange(e)} />
+                    </Col>
+                    <Col smOffset={10}>
+                        <Button style={{ fontSize: "125%" }} bsStyle="primary" o
+                                nClick={(e) => this.addSpeciality()}>Add Speciality</Button>
+                    </Col>
+                </Row>
             </FormGroup>
         );
     }
@@ -77,9 +87,9 @@ class Speciality extends Component {
 
     render() {
         return (
-            <div>
+            <div style={{paddingTop: "1%"}}>
                 {this.setSpeciality()}
-                <Button style={{ fontSize: "125%" }} bsStyle="primary" onClick={(e) => this.addSpeciality()}>Add Speciality</Button>
+                <br/>
                 {this.renderTableSpeciality()}
             </div>
         );

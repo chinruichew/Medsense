@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, ControlLabel, FormGroup, FormControl } from 'react-bootstrap';
+import { Button, ControlLabel, FormGroup, FormControl, Col } from 'react-bootstrap';
 
 import './Admin.css';
 import { addNewStudent, addNewProfessor, addNewAdmin } from '../../actions';
@@ -102,7 +102,7 @@ class NewUser extends Component {
     }
 
     setSchool() {
-        if (this.state.usertype === "Student" && this.state.usertype === "Professor" ) {
+        if (this.state.usertype === "Student" || this.state.usertype === "Professor" ) {
             return (
                 <FormGroup controlId="formControlsDifficulty">
                     <ControlLabel style={{ fontSize: "150%" }}>Select School:</ControlLabel>
@@ -287,7 +287,7 @@ class NewUser extends Component {
 
     render() {
         return (
-            <div>
+            <div style={{paddingTop: "1%"}}>
                 {this.setUserType()}
                 {this.setUsername()}
                 {this.setPassword()}
@@ -295,8 +295,11 @@ class NewUser extends Component {
                 {this.setYear()}
                 {this.setSpeciality()}
                 {this.setSubspeciality()}
-                <br />
-                <Button style={{ fontSize: "125%" }} bsStyle="primary" onClick={(e) => this.createUser()}>Create User</Button>
+                <br/>
+                <br/>
+                <Col smOffset={5}>
+                    <Button style={{ fontSize: "125%" }} bsStyle="primary" onClick={(e) => this.createUser()}>Create User</Button>
+                </Col>
             </div>
         );
     }

@@ -1,0 +1,28 @@
+.table > thead > tr > th{
+    vertical-align: middle;
+}
+
+.table > tbody > tr > td {
+    vertical-align: middle;
+    width: 14%;
+}
+
+.delete-case-detail h4{
+    color: #199ED8;
+}
+
+.col-sm-12{
+    padding-top: 1%;
+}
+
+.tab{
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
+.col-sm-offset-6 {
+    margin-left: 45%;
+}
+
+.admin-table{
+}

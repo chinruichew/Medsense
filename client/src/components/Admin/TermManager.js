@@ -33,26 +33,24 @@ class TermManager extends Component {
                     default:
                         return (
                             <div className="container-fluid">
-                                <div className="row">
-                                    <div className='col-sm-9 col-sm-offset-1'>
-                                        <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
-                                            <Tab eventKey={1} title="Approach">
-                                                <br />
-                                                <Approach />
-                                                <br />
-                                            </Tab>
-                                            <Tab eventKey={2} title="Speciality">
-                                                <br />
-                                                <Speciality />
-                                                <br />
-                                            </Tab>
-                                            <Tab eventKey={3} title="Subspeciality">
-                                                <br />
-                                                <Subspeciality />
-                                                <br />
-                                            </Tab>
-                                        </Tabs>
-                                    </div>
+                                <div className="col-sm-12">
+                                    <Tabs defaultActiveKey={1} className="tab">
+                                        <Tab eventKey={1} title="Approach">
+                                            <br />
+                                            <Approach />
+                                            <br />
+                                        </Tab>
+                                        <Tab eventKey={2} title="Speciality">
+                                            <br />
+                                            <Speciality />
+                                            <br />
+                                        </Tab>
+                                        <Tab eventKey={3} title="Subspeciality">
+                                            <br />
+                                            <Subspeciality />
+                                            <br />
+                                        </Tab>
+                                    </Tabs>
                                 </div>
                                 <br />
                                 {/* Insert User Manager code here */}

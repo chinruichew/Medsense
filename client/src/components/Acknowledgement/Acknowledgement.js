@@ -13,7 +13,7 @@ class Acknowledgement extends Component {
                         <hr style={{borderColor: "#199ED8", borderWidth: "3px", marginTop: "1%"}}/>
                         <div style={{padding: "2%"}}>
                             <Row>
-                                <Col md={4}>
+                                <Col sm={4}>
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
                                             <Image src="./proftay.png" circle style={{width: "14em", height: "14em"}} />
@@ -29,7 +29,7 @@ class Acknowledgement extends Component {
                         <hr style={{borderColor: "#199ED8", borderWidth: "3px", marginTop: "1%"}}/>
                         <div style={{padding: "2%"}}>
                             <Row>
-                                <Col md={4}>
+                                <Col sm={4}>
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
                                             <Image src="./jamie.png" circle style={{width: "14em", height: "14em"}} />
@@ -37,7 +37,7 @@ class Acknowledgement extends Component {
                                         </Thumbnail>
                                     </center>
                                 </Col>
-                                <Col md={4}>
+                                <Col sm={4}>
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
                                             <Image src="./justin.png" circle style={{width: "14em", height: "14em"}} />
@@ -45,7 +45,7 @@ class Acknowledgement extends Component {
                                         </Thumbnail>
                                     </center>
                                 </Col>
-                                <Col md={4}>
+                                <Col sm={4}>
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
                                             <Image src="./andrea.png" circle style={{width: "14em", height: "14em"}} />
@@ -55,7 +55,7 @@ class Acknowledgement extends Component {
                                 </Col>
                             </Row>
                             <Row>
-                                <Col md={4}>
+                                <Col sm={4}>
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
                                             <Image src="./jeremy.png" circle style={{width: "14em", height: "14em"}} />
@@ -98,7 +98,7 @@ class Acknowledgement extends Component {
                         <hr style={{borderColor: "#199ED8", borderWidth: "3px", marginTop: "1%"}}/>
                         <div style={{padding: "2%"}}>
                             <Row>
-                                <Col md={4}>
+                                <Col sm={4}>
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
                                             <Image src="./profhp.png" circle style={{width: "14em", height: "14em"}} />
@@ -106,7 +106,7 @@ class Acknowledgement extends Component {
                                         </Thumbnail>
                                     </center>
                                 </Col>
-                                <Col md={4}>
+                                <Col sm={4}>
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
                                             <Image style={{width: "14em", height: "14em"}} src="./profhx.png" circle />
@@ -114,7 +114,7 @@ class Acknowledgement extends Component {
                                         </Thumbnail>
                                     </center>
                                 </Col>
-                                <Col md={4}>
+                                <Col sm={4}>
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
                                             <Image src="./icitybt.png" circle style={{width: "14em", height: "14em"}} />
@@ -122,7 +122,7 @@ class Acknowledgement extends Component {
                                         </Thumbnail>
                                     </center>
                                 </Col>
-                                <Col md={4}>
+                                <Col sm={4}>
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
                                             <Image src="./icitycris.png" circle style={{width: "14em", height: "14em"}} />
@@ -138,7 +138,7 @@ class Acknowledgement extends Component {
                         <hr style={{borderColor: "#199ED8", borderWidth: "3px", marginTop: "1%"}}/>
                         <div style={{padding: "2%"}}>
                             <Row>
-                                <Col md={4}>
+                                <Col sm={4}>
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
                                             <Image src="./amelia.jpg" circle style={{width: "14em", height: "14em"}} />
@@ -154,7 +154,7 @@ class Acknowledgement extends Component {
                                         </Thumbnail>
                                     </center>
                                 </Col>
-                                <Col md={4}>
+                                <Col sm={4}>
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
                                             <Image src="./ervin.png" circle style={{width: "14em", height: "14em"}} />
@@ -164,7 +164,7 @@ class Acknowledgement extends Component {
                                 </Col>
                             </Row>
                             <Row>
-                                <Col md={4}>
+                                <Col sm={4}>
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
                                             <Image src="./mingrui.png" circle style={{width: "14em", height: "14em"}} />
@@ -172,7 +172,7 @@ class Acknowledgement extends Component {
                                         </Thumbnail>
                                     </center>
                                 </Col>
-                                <Col md={4}>
+                                <Col sm={4}>
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
                                             <Image src="./ricky.jpg" circle style={{width: "14em", height: "14em"}} />

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, ControlLabel, FormGroup, FormControl, Table } from 'react-bootstrap';
+import { Button, ControlLabel, FormGroup, FormControl, Table, Col } from 'react-bootstrap';
 
 import { fetchFilteredAdminStudents, fetchFilteredAdminProfessors, fetchFilteredAdminAdmins, deleteAdminStudent, deleteAdminProfessor, deleteAdminAdmin } from '../../actions';
 import './Admin.css';
@@ -272,7 +272,7 @@ class DeleteUser extends Component {
                             <th><center>Username</center></th>
                             <th><center>School</center></th>
                             <th><center>Year</center></th>
-                            <th><center>Senior Team</center></th>
+                            {/*<th><center>Senior Team</center></th>*/}
                             <th><center>Level</center></th>
                             <th><center>XP</center></th>
                             <th><center>Date Registered</center></th>
@@ -316,12 +316,12 @@ class DeleteUser extends Component {
                     <td><center>{user.username}</center></td>
                     <td><center>{user.school}</center></td>
                     <td><center>{user.year}</center></td>
-                    <td><center>{user.year === "4" || user.year === "5" ? "Yes" : "No"}</center></td>
+                    {/*<td><center>{user.year === "4" || user.year === "5" ? "Yes" : "No"}</center></td>*/}
                     {/* <td><center>{user._id}</center></td> */}
                     <td><center>{this.convert(user.points)}</center></td>
                     <td><center>{user.points}</center></td>
                     <td><center>{user.timestamp.split("T")[0]}</center></td>
-                    <td><Button onClick={(e) => this.deleteAdminStudent(user)}>Delete</Button></td >
+                    <td><center><Button bsStyle="primary" onClick={(e) => this.deleteAdminStudent(user)}>Delete</Button></center></td >
                 </tr>
             }
             return '';
@@ -338,7 +338,7 @@ class DeleteUser extends Component {
     renderTableAdmins() {
         if (this.state.usertype === this.state.constants.USER_TYPE_ADMIN) {
             return (
-                <Table responsive>
+                <Table responsive className="admin-table">
                     <thead>
                         <tr style={{ background: '#D9EDF7', fontSize: "130%" }}>
                             <th><center>Username</center></th>
@@ -358,7 +358,7 @@ class DeleteUser extends Component {
             if (user.usertype === this.state.constants.USER_TYPE_ADMIN) {
                 return <tr>
                     <td><center>{user.username}</center></td>
-                    <td><Button onClick={(e) => this.deleteAdminAdmin(user)}>Delete</Button></td >
+                    <td><center><Button bsStyle="primary" onClick={(e) => this.deleteAdminAdmin(user)}>Delete</Button></center></td >
                 </tr>
             }
             return '';
@@ -401,7 +401,7 @@ class DeleteUser extends Component {
                     <td><center>{user.speciality}</center></td>
                     <td><center>{user.subspeciality.join(", ")}</center></td>
                     <td><center>Contribution 1</center></td>
-                    <td><Button onClick={(e) => this.deleteAdminProfessor(user)}>Delete</Button></td >
+                    <td><center><Button bsStyle="primary" onClick={(e) => this.deleteAdminProfessor(user)}>Delete</Button></center></td >
                 </tr>
             }
             return '';
@@ -428,7 +428,7 @@ class DeleteUser extends Component {
 
     render() {
         return (
-            <div>
+            <div style={{paddingTop: "1%"}}>
                 {this.setUserType()}
                 {this.setUsername()}
                 {this.setSchool()}
@@ -436,7 +436,9 @@ class DeleteUser extends Component {
                 {this.setSpeciality()}
                 {this.setSubspeciality()}
                 <br />
-                <Button style={{ fontSize: "125%" }} bsStyle="primary" onClick={(e) => this.searchUser()}>Search</Button>
+                <Col smOffset={6}>
+                    <Button style={{ fontSize: "125%" }} bsStyle="primary" onClick={(e) => this.searchUser()}>Search</Button>
+                </Col>
                 <br /><br /><br />
                 {this.renderTableStudent()}
                 {this.renderTableProfessors()}

@@ -4,6 +4,7 @@ import { Button, FormGroup, ControlLabel, FormControl, Table, Modal } from 'reac
 import { Redirect } from 'react-router-dom';
 import { bindAll } from 'lodash';
 import { deleteAdminCase, fetchFilteredAdminCases, fetchAdminCases } from '../../actions';
+import ReactHtmlParser from 'react-html-parser';
 
 
 import './Admin.css';
@@ -289,7 +290,7 @@ class CaseManager extends Component {
 
     renderTable() {
         return (
-            <Table responsive>
+            <Table responsive className="table">
                 <thead>
                     <tr style={{ background: '#D9EDF7', fontSize: "130%" }}>
                         <th><center>Case Title</center></th>
@@ -317,7 +318,7 @@ class CaseManager extends Component {
                 <td>{item.title}</td>
                 <td>{item.approach.join(", ")}</td>
                 <td>{item.speciality}</td>
-                <td>{item.subspeciality}</td>
+                <td>{item.subspeciality.join(", ")}</td>
                 <td>{item.difficulty}</td>
                 <td>{item.authorid['username']}</td>
                 {/* <td>{item.timestamp.split(" ")[2] + " " + item.timestamp.split(" ")[1] + " " + item.timestamp.split(" ")[3]}<br />{item.timestamp.split(" ")[4].split(":")[0] + ":" + item.timestamp.split(" ")[4].split(":")[1]}</td> */}
@@ -389,28 +390,44 @@ class CaseManager extends Component {
         let allQuestions = this.state.oneCaseQuestions.map((question, id) => {
             if (question.type === "MCQ") {
                 return <div>
-                    <p><b>Question</b> {id + 1} </p>
+                    <h5><b><u>Question {id + 1}</u></b></h5>
+                    <p>{ReactHtmlParser(question.question)}</p><br/>
                 </div>
             } else {
                 return <div>
-                    <p><b>Question</b> {id + 1} </p>
-                    <p> <b>Answer</b> {question.openEnded.replace(/(&lt;|o&nbsp;|&amp;|&nbsp;|(<([^>]+)>))/ig, ' ')} </p>
+                    <h5><b><u>Question {id + 1}</u></b></h5>
+                    <p>{ReactHtmlParser(question.question)}</p><br/>
                 </div>
             }
-        })
-        let scenario = ""
-        if(this.state.oneCase != '') {
-            scenario = this.state.oneCase.scenario.replace(/(&lt;|o&nbsp;|&amp;|&nbsp;|(<([^>]+)>))/ig, ' ');
-        }
+        });
+        let scenario = "";
+        let caseStatus = "";
+        let difficulty = "";
+        let learning = "";
 
+        if(this.state.oneCase != '') {
+            scenario = this.state.oneCase.scenario;
+            console.log(this.state.oneCase);
+            caseStatus = this.state.oneCase.status;
+            difficulty = this.state.oneCase.difficulty;
+            learning = this.state.oneCase.learning;
+        }
+        const oneCaseTitle = <span className="title" style={{fontSize: "120%"}}><strong>{this.state.oneCase.title}</strong></span>;
         return (
             <div>
                 <Modal show={this.state.displayModal} onHide={this.handleCloseModal}>
                     <Modal.Header closeButton>
-                        <Modal.Title>{this.state.oneCase.title}</Modal.Title>
+                        <Modal.Title>{oneCaseTitle}</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>
-                        <p>{scenario} </p>
+                    <Modal.Body className="delete-case-detail">
+                        <h4>Case Status</h4>
+                        <p>{caseStatus}</p>
+                        <h4>Difficulty Level</h4> <p>{difficulty}</p>
+                        <h4>Key Learning Objectives</h4>
+                        <p>{ReactHtmlParser(learning)}</p>
+                        <h4>Case Scenario</h4>
+                        <p>{ReactHtmlParser(scenario)} </p>
+                        <h4>Case Questions</h4>
                         {allQuestions}
                     </Modal.Body>
                     <Modal.Footer>

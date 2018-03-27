@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, ControlLabel, FormGroup, FormControl, Table } from 'react-bootstrap';
+import { Button, ControlLabel, FormGroup, FormControl, Table, Col, Row } from 'react-bootstrap';
 import { addNewSubspeciality, deleteSubspeciality } from '../../actions';
 import './Admin.css';
 
@@ -19,6 +19,7 @@ class Subspeciality extends Component {
                 <thead>
                     <tr style={{ background: '#D9EDF7', fontSize: "130%" }}>
                         <th><center>Subspeciality</center></th>
+                        <th> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
                     </tr>
                 </thead>
                 {this.renderSubspeciality()}
@@ -34,7 +35,7 @@ class Subspeciality extends Component {
         let allSubspeciality = this.props.subspeciality.map(subspeciality => {
             return <tr>
                 <td><center>{subspeciality.subspeciality}</center></td>
-                <td><Button onClick={(e) => this.deleteAdminSubspeciality(subspeciality)}>Delete</Button></td >
+                <td><center><Button bsStyle="primary" onClick={(e) => this.deleteAdminSubspeciality(subspeciality)}>Delete</Button></center></td >
             </tr>
         });
 
@@ -50,7 +51,15 @@ class Subspeciality extends Component {
         return (
             <FormGroup controlId="formControlsTitle">
                 <ControlLabel style={{ fontSize: "150%" }}>Subspeciality:</ControlLabel>
-                <FormControl type="text" value={this.state.subspeciality} name="username" onChange={(e) => this.handleSubspecialityChange(e)} />
+                <Row>
+                    <Col sm={9}>
+                        <FormControl type="text" value={this.state.subspeciality} name="username"
+                                     onChange={(e) => this.handleSubspecialityChange(e)} />
+                    </Col>
+                    <Col smOffset={10}><Button style={{ fontSize: "125%" }} bsStyle="primary"
+                                               onClick={(e) => this.addSubspeciality()}>Add Subspeciality</Button>
+                    </Col>
+                </Row>
             </FormGroup>
         );
     }
@@ -77,9 +86,9 @@ class Subspeciality extends Component {
 
     render() {
         return (
-            <div>
+            <div style={{paddingTop: "1%"}}>
                 {this.setSubspeciality()}
-                <Button style={{ fontSize: "125%" }} bsStyle="primary" onClick={(e) => this.addSubspeciality()}>Add Subspeciality</Button>
+                <br/>
                 {this.renderTableSubspeciality()}
             </div>
         );
