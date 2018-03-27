@@ -12,7 +12,7 @@ module.exports = app => {
         const sessionUser = req.session.user;
         const pendingCases = await Case.find({status: constants.CASE_STATUS_PENDING});
 
-        if(pendingCases.length <= constants.PENDING_CASES_THRESHOLD) {
+        if(pendingCases.length <= constants.PENDING_CASES_RECOMMENDATION_THRESHOLD) {
             // Get all answers of all users
             const answers =  await AnswerOverview.find().populate({
                 path: 'case',
@@ -36,11 +36,23 @@ module.exports = app => {
                 model: 'mcqAnswers',
             });
 
+            // This step is to map all the sub-specialities of the user in the subSpecialityMapping array.
+            const subSpecialityMapping = [];
+            const userSubSpecialities = sessionUser.subspeciality;
+            // Loop through the userSubSpecialities array and add each one to subSpecialityMapping.
+            for(let i = 0; i < userSubSpecialities.length; i++){
+                const userSubSpeciality = userSubSpecialities[i];
+                subSpecialityMapping.push({
+                    subSpeciality: userSubSpeciality,
+                    totalScore: 0,
+                    numAttempts: 0
+                });
+            }
+
             // Loop through answers and find the cases with subspecialities that match the Professor's ones.
             // Add these answers to subSpecialitiesFilteredAnswers.
-            // Add the associated sub-speciality to subSpecialityMapping array
+            // Add the associated sub-speciality scores and attempts to subSpecialityMapping object
             const subSpecialitiesFilteredAnswers = [];
-            const subSpecialityMapping = [];
             for(let i = 0; i < answers.length; i++) {
                 const answer = answers[i];
                 const answerCase = answer.case;
@@ -51,16 +63,21 @@ module.exports = app => {
                 let isMatch = false;
                 for(let j = 0; j < caseSubSpecialities.length; j++) {
                     const caseSubSpeciality = caseSubSpecialities[j];
-                    const userSubSpecialities = sessionUser.subspeciality;
                     for(let k = 0; k < userSubSpecialities.length; k++) {
                         const userSubSpeciality = userSubSpecialities[k];
                         if(userSubSpeciality === caseSubSpeciality) {
                             isMatch = true;
-                            break;
+
+                            // Find the correct sub-speciality mapping in the subSpecialityMapping array and add the score and attempts accordingly.
+                            for(let l = 0; l < subSpecialityMapping.length; l++) {
+                                const subSpecialityMap = subSpecialityMapping[l];
+                                if(subSpecialityMap.subSpeciality === userSubSpeciality) {
+                                    subSpecialityMap.totalScore += answer.score;
+                                    subSpecialityMap.numAttempts++;
+                                    break;
+                                }
+                            }
                         }
-                    }
-                    if(isMatch) {
-                        break;
                     }
                 }
                 if(isMatch) {
@@ -68,19 +85,56 @@ module.exports = app => {
                 }
             }
 
-            console.log(subSpecialitiesFilteredAnswers);
-            // for(let i = 0; i < subSpecialitiesFilteredAnswers.length; i++) {
-            //     let hasDuplicate = false;
-            //     for(let j = 0; j < subSpecialityMapping.length; j++) {
-            //         const subSpecialityMap = subSpecialityMapping[j];
-            //         if(subSpecialityMap.subspeciality === ) {
-            //
-            //         }
-            //     }
-            //     if(!hasDuplicate) {
-            //
-            //     }
-            // }
+            // This step is to find the average score for each sub-speciality that the Professor is under
+            // Loop through subSpecialityMapping and calculate average score with totalScore/numAttempts, then insert
+            const averagedSubSpecialityMapping = [];
+            for(let i = 0; i < subSpecialityMapping.length; i++) {
+                const subSpecialityMap = subSpecialityMapping[i];
+                const averageScore = subSpecialityMap.totalScore > 0? subSpecialityMap.totalScore/subSpecialityMap.numAttempts: 0;
+                averagedSubSpecialityMapping.push({
+                    subSpeciality: subSpecialityMap.subSpeciality,
+                    averageScore
+                });
+            }
+
+            // Recommend cases to upload starting from the lowest average score, until the last case or when upload recommendation threshold is reached.
+            const uploadRecommendations = [];
+            // Copy to a new array to prevent mutations to the original array.
+            let averagedSubSpecialityMappingFilter = [
+                ...averagedSubSpecialityMapping
+            ];
+            // Keep looping and adding to upload recommendations while its length is lower than threshold and averagedSubSpecialityMappingFilter > 0
+            while(uploadRecommendations.length < constants.UPLOAD_CASES_RECOMMENDATION_THRESHOLD || averagedSubSpecialityMappingFilter.length >= 0) {
+
+                // Find lowest score out of averagedSubSpecialityMappingFilter array objects
+                let lowestScore = Number.MAX_SAFE_INTEGER;
+                for(let i = 0; i < averagedSubSpecialityMappingFilter.length; i++) {
+                    const averagedSubSpecialityMap = averagedSubSpecialityMappingFilter[i];
+                    lowestScore = averagedSubSpecialityMap.averageScore < lowestScore? averagedSubSpecialityMap.averageScore: lowestScore;
+                }
+
+                // If lower score, loop and put the sub-speciality into uploadRecommendations and the rest into tempMappingArray
+                let tempMappingArray = [];
+                for(let i = 0; i < averagedSubSpecialityMappingFilter.length; i++) {
+                    const averagedSubSpecialityMap = averagedSubSpecialityMappingFilter[i];
+                    if(averagedSubSpecialityMap.averageScore === lowestScore && uploadRecommendations.length < constants.UPLOAD_CASES_RECOMMENDATION_THRESHOLD) {
+                        uploadRecommendations.push(averagedSubSpecialityMap.subSpeciality);
+                    } else {
+                        tempMappingArray.push(averagedSubSpecialityMap);
+                    }
+                }
+
+                // Put the remaining objects into averagedSubSpecialityMappingFilter
+                averagedSubSpecialityMappingFilter = [
+                    ...tempMappingArray
+                ];
+            }
+
+            // Send the upload recommendations
+            res.send({
+                uploadRecommendations
+            });
+
         } else {
             // Find pending cases with same subspecialities as the user
             const filteredCases = [];
