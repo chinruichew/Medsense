@@ -6,110 +6,181 @@ const constants = require('../utility/constantTypes');
 
 module.exports = app => {
     app.get('/api/getProfessorRecommendedCases', async(req, res) => {
-        // Recommend pending cases based on their subspecialities
-        // To-do: Recommend pending cases based on cohort's performance in the subspeciality
+        // Recommend pending cases based on their subspecialities, if the number of pending cases are above the pending cases threshold
+        // To-do: Recommend cases to upload based on cohort's performance in their subspecialities
 
-        const cases = await Case.find({status: constants.CASE_STATUS_PENDING});
-
-        // Find cases with same subspecialities as the user
-        const filteredCases = [];
         const sessionUser = req.session.user;
-        const userSubSpecialities = sessionUser.subspeciality;
-        for(let i = 0; i < cases.length; i++) {
-            const fetchedCase = cases[i];
-            const caseSubSpecialities = fetchedCase.subspeciality;
-            let toAdd = false;
-            for(let j = 0; j < caseSubSpecialities.length; j++) {
-                const caseSubSpeciality = caseSubSpecialities[j];
-                for(let k = 0; k < userSubSpecialities.length; k++) {
-                    const userSubSpeciality = userSubSpecialities[k];
-                    if(caseSubSpeciality === userSubSpeciality) {
-                        toAdd = true;
+        const pendingCases = await Case.find({status: constants.CASE_STATUS_PENDING});
+
+        if(pendingCases.length <= constants.PENDING_CASES_THRESHOLD) {
+            // Get all answers of all users
+            const answers =  await AnswerOverview.find().populate({
+                path: 'case',
+                model: 'cases',
+                populate: {
+                    path: 'questions',
+                    model: 'questions',
+                    populate: {
+                        path: 'options',
+                        model: 'options'
                     }
                 }
-            }
-            if(toAdd) {
-                filteredCases.push(fetchedCase);
-            }
-        }
+            }).populate({
+                path: 'user',
+                model: 'users',
+            }).populate({
+                path: 'openEndedAnswers',
+                model: 'openEndedAnswers',
+            }).populate({
+                path: 'mcqAnswers',
+                model: 'mcqAnswers',
+            });
 
-        if(filteredCases.length <= constants.RECOMMENDATION_THRESHOLD) {
-            res.send(filteredCases);
-        } else {
-            // From here, the algorithm will return the subspecialities with the least number of vetted cases
+            // Loop through answers and find the cases with subspecialities that match the Professor's ones.
+            // Add these answers to subSpecialitiesFilteredAnswers.
+            // Add the associated sub-speciality to subSpecialityMapping array
+            const subSpecialitiesFilteredAnswers = [];
+            const subSpecialityMapping = [];
+            for(let i = 0; i < answers.length; i++) {
+                const answer = answers[i];
+                const answerCase = answer.case;
+                const caseSubSpecialities = answerCase.subspeciality;
 
-            // Get vetted cases
-            const vettedCases = await Case.find({status: constants.CASE_STATUS_VETTED});
-            
-            // Get all subspecialities and assign number 0 to all
-            const allSubspecialities = await Subspeciality.find();
-            for(let i = 0; i < allSubspecialities.length; i++) {
-                const subspeciality = allSubspecialities[i];
-                subspeciality.numSpeciality = 0;
-            }
-
-            // Sort cases by number of subspecialities
-            for(let i = 0; i < vettedCases.length; i++) {
-                const vettedCase = vettedCases[i];
-                const caseSubSpecialities = vettedCase.subspeciality;
+                // Loop through caseSubSpecialities & userSubSpecialities, and set isMatch to true if any subspeciality inside matches.
+                // If isMatch is true at the end, add to subSpecialitiesFilteredAnswers.
+                let isMatch = false;
                 for(let j = 0; j < caseSubSpecialities.length; j++) {
                     const caseSubSpeciality = caseSubSpecialities[j];
-                    for (let key in allSubspecialities) {
-                        if (key === caseSubSpeciality) {
-                            allSubspecialities[key] = allSubspecialities[key]++;
+                    const userSubSpecialities = sessionUser.subspeciality;
+                    for(let k = 0; k < userSubSpecialities.length; k++) {
+                        const userSubSpeciality = userSubSpecialities[k];
+                        if(userSubSpeciality === caseSubSpeciality) {
+                            isMatch = true;
                             break;
                         }
                     }
+                    if(isMatch) {
+                        break;
+                    }
+                }
+                if(isMatch) {
+                    subSpecialitiesFilteredAnswers.push(answer);
                 }
             }
 
-            // Find max of vetted cases
-            let max = 0;
-            for(let key in allSubspecialities) {
-                const numSpeciality = allSubspecialities[key];
-                if(numSpeciality > max) {
-                    max = numSpeciality;
+            console.log(subSpecialitiesFilteredAnswers);
+            // for(let i = 0; i < subSpecialitiesFilteredAnswers.length; i++) {
+            //     let hasDuplicate = false;
+            //     for(let j = 0; j < subSpecialityMapping.length; j++) {
+            //         const subSpecialityMap = subSpecialityMapping[j];
+            //         if(subSpecialityMap.subspeciality === ) {
+            //
+            //         }
+            //     }
+            //     if(!hasDuplicate) {
+            //
+            //     }
+            // }
+        } else {
+            // Find pending cases with same subspecialities as the user
+            const filteredCases = [];
+            const userSubSpecialities = sessionUser.subspeciality;
+            for(let i = 0; i < pendingCases.length; i++) {
+                const fetchedCase = pendingCases[i];
+                const caseSubSpecialities = fetchedCase.subspeciality;
+                let toAdd = false;
+                for(let j = 0; j < caseSubSpecialities.length; j++) {
+                    const caseSubSpeciality = caseSubSpecialities[j];
+                    for(let k = 0; k < userSubSpecialities.length; k++) {
+                        const userSubSpeciality = userSubSpecialities[k];
+                        if(caseSubSpeciality === userSubSpeciality) {
+                            toAdd = true;
+                        }
+                    }
+                }
+                if(toAdd) {
+                    filteredCases.push(fetchedCase);
                 }
             }
 
-            // Find min of vetted cases
-            let min = max;
-            for(let key in allSubspecialities) {
-                const numSpeciality = allSubspecialities[key];
-                if(numSpeciality < min) {
-                    min = numSpeciality;
-                }
-            }
+            if(filteredCases.length <= constants.RECOMMENDATION_THRESHOLD) {
+                res.send(filteredCases);
+            } else {
+                // From here, the algorithm will return the subspecialities with the least number of vetted pending cases
 
-            // Start adding in cases starting from min
-            const sortedCases = [];
-            while(sortedCases.length < constants.RECOMMENDATION_THRESHOLD) {
-                for(let key in allSubspecialities) {
-                    const numSpeciality = allSubspecialities[key];
-                    if(numSpeciality === min) {
-                        for(let i = 0; i < filteredCases.length; i++) {
-                            const filteredCase = filteredCases[i];
-                            const caseSubSpecialities = filteredCase.subspeciality;
-                            for(let j = 0; j < caseSubSpecialities.length; j++) {
-                                const caseSubSpeciality = caseSubSpecialities[j];
-                                if(caseSubSpeciality === key) {
-                                    sortedCases.push(filteredCase);
-                                    break;
-                                }
-                            }
-                            if(sortedCases >= constants.RECOMMENDATION_THRESHOLD) {
+                // Get vetted pendingCases
+                const vettedCases = await Case.find({status: constants.CASE_STATUS_VETTED});
+
+                // Get all subspecialities and assign number 0 to all
+                const allSubspecialities = await Subspeciality.find();
+                for(let i = 0; i < allSubspecialities.length; i++) {
+                    const subspeciality = allSubspecialities[i];
+                    subspeciality.numSpeciality = 0;
+                }
+
+                // Sort pendingCases by number of subspecialities
+                for(let i = 0; i < vettedCases.length; i++) {
+                    const vettedCase = vettedCases[i];
+                    const caseSubSpecialities = vettedCase.subspeciality;
+                    for(let j = 0; j < caseSubSpecialities.length; j++) {
+                        const caseSubSpeciality = caseSubSpecialities[j];
+                        for (let key in allSubspecialities) {
+                            if (key === caseSubSpeciality) {
+                                allSubspecialities[key] = allSubspecialities[key]++;
                                 break;
                             }
                         }
                     }
-                    if(sortedCases >= constants.RECOMMENDATION_THRESHOLD) {
-                        break;
+                }
+
+                // Find max of vetted pending cases
+                let max = 0;
+                for(let key in allSubspecialities) {
+                    const numSpeciality = allSubspecialities[key];
+                    if(numSpeciality > max) {
+                        max = numSpeciality;
                     }
                 }
-                min++;
-            }
 
-            res.send(sortedCases);
+                // Find min of vetted pending cases
+                let min = max;
+                for(let key in allSubspecialities) {
+                    const numSpeciality = allSubspecialities[key];
+                    if(numSpeciality < min) {
+                        min = numSpeciality;
+                    }
+                }
+
+                // Start adding in pending cases starting from min
+                const sortedCases = [];
+                while(sortedCases.length < constants.RECOMMENDATION_THRESHOLD) {
+                    for(let key in allSubspecialities) {
+                        const numSpeciality = allSubspecialities[key];
+                        if(numSpeciality === min) {
+                            for(let i = 0; i < filteredCases.length; i++) {
+                                const filteredCase = filteredCases[i];
+                                const caseSubSpecialities = filteredCase.subspeciality;
+                                for(let j = 0; j < caseSubSpecialities.length; j++) {
+                                    const caseSubSpeciality = caseSubSpecialities[j];
+                                    if(caseSubSpeciality === key) {
+                                        sortedCases.push(filteredCase);
+                                        break;
+                                    }
+                                }
+                                if(sortedCases >= constants.RECOMMENDATION_THRESHOLD) {
+                                    break;
+                                }
+                            }
+                        }
+                        if(sortedCases >= constants.RECOMMENDATION_THRESHOLD) {
+                            break;
+                        }
+                    }
+                    min++;
+                }
+
+                res.send(sortedCases);
+            }
         }
     });
 
