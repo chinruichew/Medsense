@@ -123,7 +123,7 @@ class SearchBySpeciality extends Component {
                     </Button>;
 
                     return(
-                        <Col sm={4}>
+                        <Col md={4}>
                             {caseBox}
                         </Col>
 
@@ -139,7 +139,7 @@ class SearchBySpeciality extends Component {
                 }});
                 let label = subspecialities==="Select One"?"Sub-specialities":"Additional Sub-specialities"
                 const specialityState = (
-                    <div className="search-result">{specialityCases}</div>
+                    <div className="row search-result">{specialityCases}</div>
                     // {/*<Table responsive>*/}
                     //     {/*<thead>*/}
                     //     {/*<tr style={{background: '#82C5D9', fontSize: "130%"}}>*/}

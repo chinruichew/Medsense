@@ -89,7 +89,7 @@ class SearchByApproach extends Component {
                     </Button>;
 
                     return(
-                        <Col sm={4}>
+                        <Col md={4}>
                             {caseBox}
                         </Col>
                         // {/*<tr align="center" key={approachCase._id}>*/}
@@ -106,7 +106,7 @@ class SearchByApproach extends Component {
 
                 console.log(approachCase);
                 const approachState = (
-                    <div className="search-result">{approachCase}</div>
+                    <div className="row search-result">{approachCase}</div>
                     // <Table responsive>
                     //     <thead>
                     //     <tr style={{background: '#82C5D9', fontSize: "130%"}}>
