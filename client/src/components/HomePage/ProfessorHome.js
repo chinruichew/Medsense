@@ -12,6 +12,7 @@ import Flip from "react-reveal/Flip";
 import Rotate from "react-reveal/Rotate";
 import Roll from "react-reveal/Roll";
 import Fade from "react-reveal/Fade";
+import HomePageFooter from "./HomePageFooter";
 
 class ProfessorHome extends Component {
     state = {
@@ -705,21 +706,8 @@ class ProfessorHome extends Component {
                                         </Button>
                                     </NavLink>
                                 </div>
-                                <br/>
-                                <div >
-                                    <Col sm={6} style={{backgroundColor: "#F7F7F7", height: "180px"}}>
-                                        <h3 style={{marginLeft: "3%", paddingTop: "3%"}}>FOLLOW US</h3>
-                                        <a href="https://www.facebook.com/medsense/">
-                                            <Image src="./facebook.png" alt="Medsense Facebook" style={{width: "3em", marginLeft: "8%" }}/>
-                                        </a>
-                                    </Col>
-                                    <Col smOffset={6} style={{backgroundColor: "#F7F7F7", height: "180px"}}>
-                                        <h3 style={{marginLeft: "79%", paddingTop: "5%"}}>VERSION</h3>
-                                        <h5 style={{marginLeft: "70%", fontSize: "130%", textAlign: "center"}}>Version 2.0
-                                            <br/>Last Updated: 1 April 2018
-                                        </h5>
-                                    </Col>
-                                </div>
+
+                                <HomePageFooter/>
 
                                 <div style={{margin: "2%"}}>Copyright © Medsense, 2018</div>
                             </div>

@@ -13,6 +13,7 @@ import LightSpeed from 'react-reveal/LightSpeed';
 
 import "./Home.css";
 import Fade from "react-reveal/Fade";
+import HomePageFooter from "./HomePageFooter";
 
 class StudentHome extends Component {
     state = {
@@ -511,7 +512,7 @@ class StudentHome extends Component {
                     default:
                         let imgUrl = './homepage.png';
                         return(
-                            <div>
+                            <div className="container-fluid">
                                 <div className="text-center">
                                     <h1 style={{color: "#199ED8", fontWeight: "bold", marginTop: "0"}}>Recommended Cases</h1>
                                 </div>
@@ -528,21 +529,8 @@ class StudentHome extends Component {
                                         </Button>
                                     </NavLink>
                                 </div>
-                                <br/>
-                                <div >
-                                    <Col sm={6} style={{backgroundColor: "#F7F7F7", height: "180px"}}>
-                                        <h3 style={{marginLeft: "3%", paddingTop: "3%"}}>FOLLOW US</h3>
-                                        <a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/medsense/">
-                                            <Image src="./facebook.png" alt="Medsense Facebook" style={{width: "3em", marginLeft: "8%" }}/>
-                                        </a>
-                                    </Col>
-                                    <Col smOffset={6} style={{backgroundColor: "#F7F7F7", height: "180px"}}>
-                                        <h3 style={{marginLeft: "79%", paddingTop: "5%"}}>VERSION</h3>
-                                        <h5 style={{marginLeft: "70%", fontSize: "130%", textAlign: "center"}}>Version 2.0
-                                            <br/>Last Updated: 1 April 2018
-                                        </h5>
-                                    </Col>
-                                </div>
+
+                                <HomePageFooter/>
 
                                 <div style={{margin: "2%"}}>Copyright © Medsense, 2018</div>
 

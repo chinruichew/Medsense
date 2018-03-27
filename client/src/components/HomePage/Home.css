@@ -54,6 +54,7 @@
     height: 350px;
     text-align: center;
     color: white;
+    margin-top: -20px;
 }
 
 .image-div > h1 {
@@ -82,6 +83,28 @@
     margin: 0;
 }
 
-.col-md-4{
-    width: 29%;
+.footer-row {
+    background-color: #F7F7F7;
+    height: 180px;
+}
+
+.footer-col-left {
+    padding-top: 20px;
+}
+
+.footer-col-left > h3{
+    margin-left: 15px;
+}
+
+.footer-col-right {
+    padding-top: 20px;
+}
+
+.footer-col-right > h5 {
+    font-size: 130%;
+}
+
+.footer-fb-img {
+    width: 3em;
+    margin-left: 8%;
 }
