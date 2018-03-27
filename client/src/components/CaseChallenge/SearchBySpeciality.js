@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import {Button, FormGroup, FormControl, ControlLabel, Col, Row, Table} from 'react-bootstrap';
+import {Button, FormGroup, FormControl, ControlLabel, Col, Row} from 'react-bootstrap';
 import { bindAll } from 'lodash';
 import axios from 'axios';
-import moment from "moment";
 import "./Game.css";
 
 class SearchBySpeciality extends Component {
@@ -67,7 +66,7 @@ class SearchBySpeciality extends Component {
             if(res.data.length > 0) {
                 const subspecialities = this.state.subspeciality;
                 const specialityCases = res.data.map((specialityCase, index) => {
-                    let additionalSubspeciality = "";
+                    // let additionalSubspeciality = "";
                     let specialities = "";
                     if (subspecialities!=="Select One") {
                         // let same = false;
@@ -108,11 +107,11 @@ class SearchBySpeciality extends Component {
                     }
                     approaches+=specialityCase.approach[specialityCase.approach.length-1];
 
-                    let dateTime = moment(specialityCase.uploadTime).format('Do MMMM YYYY h:mm a');
-                    let date = dateTime.substring(0,dateTime.length-8);
-                    let time = dateTime.substring(dateTime.length-8,dateTime.length);
+                    // let dateTime = moment(specialityCase.uploadTime).format('Do MMMM YYYY h:mm a');
+                    // let date = dateTime.substring(0,dateTime.length-8);
+                    // let time = dateTime.substring(dateTime.length-8,dateTime.length);
 
-                    let subspec = subspecialities==="Select One"?specialities:additionalSubspeciality;
+                    // let subspec = subspecialities==="Select One"?specialities:additionalSubspeciality;
 
                     const caseBox = <Button onClick={(e)=>this.handleReturnCase(specialityCase)} className="case-button" bsSize="large">
                         <img src="./approach1.jpg" alt={specialityCase.title}/>
@@ -138,7 +137,7 @@ class SearchBySpeciality extends Component {
                         //{/*</tr>*/}
                     );
                 }});
-                let label = subspecialities==="Select One"?"Sub-specialities":"Additional Sub-specialities"
+                // let label = subspecialities==="Select One"?"Sub-specialities":"Additional Sub-specialities"
                 const specialityState = (
                     <div className="row search-result">{specialityCases}</div>
                     // {/*<Table responsive>*/}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Col, Image, Row} from "react-bootstrap";
+import {Col, Image} from "react-bootstrap";
 
 class HomePageFooter extends Component {
     render() {

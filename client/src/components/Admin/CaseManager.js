@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Button, FormGroup, ControlLabel, FormControl, Table, Modal } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import { bindAll } from 'lodash';
+import axios from 'axios';
 import { deleteAdminCase, fetchFilteredAdminCases, fetchAdminCases } from '../../actions';
 import ReactHtmlParser from 'react-html-parser';
 
@@ -24,15 +25,25 @@ class CaseManager extends Component {
             oneCaseQuestions: [],
             oneCaseId: '',
             showConfirmDelete: false,
-            oneCase: ''
+            oneCase: '',
+            approachList: [],
+            specialityList: [],
         };
-        bindAll(this, 'handleTitleChange', 'handleDifficultyChange', 'handleSpecialityChange', 'handleSubspecialityChange',
-            'handleApproachChange', 'handleScenarioChange', 'setSubspeciality', 'setName', 'setSpeciality', 'setApproach',
+        bindAll(this, 'handleTitleChange', 'handleDifficultyChange', 'handleSubspecialityChange',
+            'handleApproachChange', 'handleScenarioChange', 'setSubspeciality', 'setName', 'setApproach',
             'setDifficulty', 'handleOpenModal', 'handleCloseModal', 'handleOpenConfirmDelete', 'handleCloseConfirmDelete');
     }
 
     componentWillMount() {
         this.props.fetchAdminCases();
+        axios.post('/api/fetchApproach', {
+        }).then(res => {
+            this.setState({approachList:res.data});
+        });
+        axios.post('/api/fetchSpeciality', {
+        }).then(res => {
+            this.setState({specialityList:res.data});
+        });
     }
 
     handleOpenModal(oneCase) {
@@ -70,10 +81,6 @@ class CaseManager extends Component {
     handleDifficultyChange(e) {
         const value = e.target.value;
         this.setState({ difficulty: value });
-    }
-    handleSpecialityChange(e) {
-        const value = e.target.value;
-        this.setState({ speciality: value });
     }
 
     handleSubspecialityChange(e) {
@@ -130,61 +137,39 @@ class CaseManager extends Component {
     }
 
     setApproach() {
+        let approaches = this.state.approachList.map((obj, index) => {
+            return <option key={index} value={obj.approach}>{obj.approach}</option>;
+        });
         return (
             <FormGroup controlId="formControlsApproach">
                 <ControlLabel style={{ fontSize: "150%" }}>Approaches
-                    {/*<ControlLabel style={{ fontSize: "150%" }}>Approach<span style={{color:"red"}}>*</span>*/}
                     <br />
-                    <div style={{ fontSize: "70%", fontWeight: "200" }}>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.
-                </div>
+                    <div style={{ fontSize: "70%", fontWeight: "200" }}>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.</div>
                 </ControlLabel>
                 <FormControl componentClass="select" size='10' value={this.state.approach} name="approach" onChange={(e) => this.handleApproachChange(e)} multiple>
-                    {/*<FormControl componentClass="select" value={this.state.approach} name="approach" onChange={(e) => this.handleApproachChange(e)}>*/}
                     <option value="Select All Relevant">Select All Relevant</option>
-                    {/*<option value="Select One">Select One</option>*/}
-                    <option value="Abdominal Pain" selected>Abdominal Pain</option>
-                    <option value="Breathlessness">Breathlessness</option>
-                    <option value="Chest Pain">Chest Pain</option>
-                    <option value="Confusion">Confusion</option>
-                    <option value="Cough">Cough</option>
-                    <option value="Diarrhea">Diarrhea</option>
-                    <option value="Dizziness">Dizziness</option>
-                    <option value="Falls">Falls</option>
-                    <option value="Fever">Fever</option>
-                    <option value="Gastrointestinal bleed">Gastrointestinal bleed</option>
-                    <option value="Headache">Headache</option>
-                    <option value="Jaundice">Jaundice</option>
-                    <option value="Limb Pain">Limb pain</option>
-                    <option value="Limb Swelling">Limb swelling</option>
-                    <option value="Palpitations">Palpitations</option>
-                    <option value="Seizure">Seizure</option>
-                    <option value="Syncope">Syncope</option>
-                    <option value="Vomiting">Vomiting</option>
-                    <option value="Weakness">Weakness</option>
+                    {approaches}
                 </FormControl>
             </FormGroup>
         )
     }
 
-    setSpeciality() {
-        return (
-            <FormGroup controlId="formControlsSpeciality" style={{ paddingBottom: "0" }}>
-                <ControlLabel style={{ fontSize: "150%" }}>Speciality</ControlLabel>
-                <FormControl componentClass="select" value={this.state.speciality} name="speciality" onChange={(e) => this.handleSpecialityChange(e)}>
-                    <option value="Select One">Select One</option>
-                    <option value="Clinical Practicum">Clinical Practicum</option>
-                    <option value="Medicine">Medicine</option>
-                    <option value="Surgery">Surgery</option>
-                    <option value="Orthopedics">Orthopedics</option>
-                    <option value="Others">Others</option>
-                </FormControl>
-            </FormGroup>
-        );
-    }
-
-
-
     setSubspeciality() {
+        let specialities = this.state.specialityList.map((obj, index) => {
+            console.log(obj.speciality);
+            axios.post('/api/fetchSubspeciality', {
+                speciality: obj.speciality,
+            }).then(res => {
+                let subspecialities = res.data[0].subspecialities.map((obj,index) =>{
+                    // console.log(obj.subspeciality);
+                    if(obj.subspeciality!=="Clinical Practicum"){
+                        return <option key={index} value={obj.subspeciality}>{obj.subspeciality}</option>;
+                    }
+                });
+                return <optgroup label={"--"+obj.speciality+"--"}>{subspecialities}</optgroup>;
+            });
+        });
+        console.log(specialities);
         return (
             <FormGroup controlId="formControlsSubspeciality">
                 <ControlLabel style={{ fontSize: "150%" }}>Sub-specialties
@@ -194,54 +179,53 @@ class CaseManager extends Component {
                 </ControlLabel>
                 <FormControl componentClass="select" size='10' value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)} multiple>
                     <option value="Select One">Select All Relevant</option>
+                    {specialities}
+                    {/*<optgroup label="--Medicine--"></optgroup>*/}
+                    {/*<option value="Cardiology">Cardiology</option>*/}
+                    {/*<option value="Endocrinology">Endocrinology</option>*/}
+                    {/*<option value="Gastroenterology & Hepatology">Gastroenterology & Hepatology</option>*/}
+                    {/*<option value="Haematology">Haematology</option>*/}
+                    {/*<option value="Internal Medicine">Internal Medicine</option>*/}
+                    {/*<option value="Medical Oncology">Medical Oncology</option>*/}
+                    {/*<option value="Neurology">Neurology</option>*/}
+                    {/*<option value="Renal Medicine">Renal Medicine</option>*/}
+                    {/*<option value="Respiratory & Critical Care Medicine">Respiratory & Critical Care Medicine</option>*/}
+                    {/*<option value="Rheumatology & Immunology">Rheumatology & Immunology</option>*/}
 
-                    <optgroup label="--Medicine--"></optgroup>
-                    <option value="Cardiology">Cardiology</option>
-                    <option value="Endocrinology">Endocrinology</option>
-                    <option value="Gastroenterology & Hepatology">Gastroenterology & Hepatology</option>
-                    <option value="Haematology">Haematology</option>
-                    <option value="Internal Medicine">Internal Medicine</option>
-                    <option value="Medical Oncology">Medical Oncology</option>
-                    <option value="Neurology">Neurology</option>
-                    <option value="Renal Medicine">Renal Medicine</option>
-                    <option value="Respiratory & Critical Care Medicine">Respiratory & Critical Care Medicine</option>
-                    <option value="Rheumatology & Immunology">Rheumatology & Immunology</option>
+                    {/*<optgroup label="--Surgery--"></optgroup>*/}
+                    {/*<option value="Breast">Breast</option>*/}
+                    {/*<option value="Colorectal">Colorectal</option>*/}
+                    {/*<option value="General Surgery">General Surgery</option>*/}
+                    {/*<option value="Head & Neck">Head & Neck</option>*/}
+                    {/*<option value="Hepato-pancreato-biliary">Hepato-pancreato-biliary</option>*/}
+                    {/*<option value="Surgical Oncology">Surgical Oncology</option>*/}
+                    {/*<option value="Upper Gastrointestinal & Bariatric Surgery">Upper Gastrointestinal & Bariatric Surgery</option>*/}
+                    {/*<option value="Urology">Urology</option>*/}
+                    {/*<option value="Vascular Surgery">Vascular Surgery</option>*/}
 
-                    <optgroup label="--Surgery--"></optgroup>
-                    <option value="Breast">Breast</option>
-                    <option value="Colorectal">Colorectal</option>
-                    <option value="General Surgery">General Surgery</option>
-                    <option value="Head & Neck">Head & Neck</option>
-                    <option value="Hepato-pancreato-biliary">Hepato-pancreato-biliary</option>
-                    <option value="Surgical Oncology">Surgical Oncology</option>
-                    <option value="Upper Gastrointestinal & Bariatric Surgery">Upper Gastrointestinal & Bariatric Surgery</option>
-                    <option value="Urology">Urology</option>
-                    <option value="Vascular Surgery">Vascular Surgery</option>
+                    {/*<optgroup label="--Orthopedics--"></optgroup>*/}
+                    {/*<option value="Foot and Ankle Surgery">Foot and Ankle Surgery</option>*/}
+                    {/*<option value="Hip and Knee Surgery">Hip and Knee Surgery</option>*/}
+                    {/*<option value="Musculoskeletal Oncology">Musculoskeletal Oncology</option>*/}
+                    {/*<option value="Musculoskeletal Trauma">Musculoskeletal Trauma</option>*/}
+                    {/*<option value="Paediatric Orthopaedics">Paediatric Orthopaedics</option>*/}
+                    {/*<option value="Shoulder & Elbow Surgery">Shoulder & Elbow Surgery</option>*/}
+                    {/*<option value="Spine Surgery">Spine Surgery</option>*/}
+                    {/*<option value="Sports medicine">Sports medicine</option>*/}
+                    {/*<option value="Department of Hand & Reconstructive Microsurgery Trauma">Department of Hand & Reconstructive Microsurgery Trauma</option>*/}
 
-                    <optgroup label="--Orthopedics--"></optgroup>
-                    <option value="Foot and Ankle Surgery">Foot and Ankle Surgery</option>
-                    <option value="Hip and Knee Surgery">Hip and Knee Surgery</option>
-                    <option value="Musculoskeletal Oncology">Musculoskeletal Oncology</option>
-                    <option value="Musculoskeletal Trauma">Musculoskeletal Trauma</option>
-                    <option value="Paediatric Orthopaedics">Paediatric Orthopaedics</option>
-                    <option value="Shoulder & Elbow Surgery">Shoulder & Elbow Surgery</option>
-                    <option value="Spine Surgery">Spine Surgery</option>
-                    <option value="Sports medicine">Sports medicine</option>
-                    <option value="Department of Hand & Reconstructive Microsurgery Trauma">Department of Hand & Reconstructive Microsurgery Trauma</option>
-
-                    <optgroup label="--Others--"></optgroup>
-                    <option value="Anaesthesiology">Anaesthesiology</option>
-                    <option value="Ear Nose & Throat">Ear Nose & Throat</option>
-                    <option value="Emergency Medicine">Emergency Medicine</option>
-                    <option value="Geriatric Medicine">Geriatric Medicine</option>
-                    <option value="Infectious Diseases">Infectious Diseases</option>
-                    <option value="Neonatal">Neonatal</option>
-                    <option value="Obstetrics & Gynaecology">Obstetrics & Gynaecology</option>
-                    <option value="Ophthalmology">Ophthalmology</option>
-                    <option value="Palliative Medicine">Palliative Medicine</option>
-                    <option value="Psychiatry">Psychiatry</option>
-                    <option value="Rehabilitation Medicine">Rehabilitation Medicine</option>
-
+                    {/*<optgroup label="--Others--"></optgroup>*/}
+                    {/*<option value="Anaesthesiology">Anaesthesiology</option>*/}
+                    {/*<option value="Ear Nose & Throat">Ear Nose & Throat</option>*/}
+                    {/*<option value="Emergency Medicine">Emergency Medicine</option>*/}
+                    {/*<option value="Geriatric Medicine">Geriatric Medicine</option>*/}
+                    {/*<option value="Infectious Diseases">Infectious Diseases</option>*/}
+                    {/*<option value="Neonatal">Neonatal</option>*/}
+                    {/*<option value="Obstetrics & Gynaecology">Obstetrics & Gynaecology</option>*/}
+                    {/*<option value="Ophthalmology">Ophthalmology</option>*/}
+                    {/*<option value="Palliative Medicine">Palliative Medicine</option>*/}
+                    {/*<option value="Psychiatry">Psychiatry</option>*/}
+                    {/*<option value="Rehabilitation Medicine">Rehabilitation Medicine</option>*/}
                 </FormControl>
             </FormGroup>
         );
@@ -352,10 +336,6 @@ class CaseManager extends Component {
                                     <div className='col-sm-12'>
                                         {this.setName()}
                                     </div>
-
-                                    {/* <div className='col-sm-6'>
-                                            {this.setSpeciality()}
-                                        </div> */}
                                     <div className='col-sm-6'>
                                         {this.setSubspeciality()}
                                     </div>

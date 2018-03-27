@@ -4,10 +4,7 @@ import ProfessorProfile from './ProfessorProfile';
 import StudentProfile from './StudentProfile';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
-
-import UploadProfilePicture from './UploadProfilePicture';
 import * as ReactGA from "react-ga";
-import {Col} from "react-bootstrap";
 
 class MainProfile extends Component {
     state = {

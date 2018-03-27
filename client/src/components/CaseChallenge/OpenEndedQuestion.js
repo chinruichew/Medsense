@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Form, FormGroup, Col, PanelGroup, Glyphicon} from 'react-bootstrap';
+import {Form, FormGroup, Col, Glyphicon} from 'react-bootstrap';
 import { Button, Row, ControlLabel, Panel } from 'react-bootstrap';
 import { bindAll } from 'lodash';
 import { Line } from 'rc-progress';

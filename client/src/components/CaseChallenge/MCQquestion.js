@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Form, FormGroup, Col, PanelGroup, Glyphicon} from 'react-bootstrap';
+import {Form, FormGroup, Col, Glyphicon} from 'react-bootstrap';
 import { Checkbox, Button, Row, Panel } from 'react-bootstrap';
 import { Line } from 'rc-progress';
 import ReactHtmlParser from 'react-html-parser';

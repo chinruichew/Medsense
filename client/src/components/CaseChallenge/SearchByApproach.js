@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import {Button, FormGroup, FormControl, ControlLabel, Col, Row, Table} from 'react-bootstrap';
+import {Button, FormGroup, FormControl, ControlLabel, Col, Row} from 'react-bootstrap';
 import axios from 'axios';
-import moment from "moment";
 
 import "./Game.css";
 
@@ -43,7 +42,7 @@ class SearchByApproach extends Component {
             approach: this.state.approach
         }).then(res => {
             if(res.data.length > 0) {
-                const approaches = this.state.approach;
+                // const approaches = this.state.approach;
                 const approachCase = res.data.map(approachCase => {
                     //let same = false;
                     // let additionalApproaches = [];
@@ -76,9 +75,9 @@ class SearchByApproach extends Component {
                     }
                     specialities+=subspecialities[subspecialities.length-1];
 
-                    let dateTime = moment(approachCase.uploadTime).format('Do MMMM YYYY h:mm a');
-                    let date = dateTime.substring(0,dateTime.length-8);
-                    let time = dateTime.substring(dateTime.length-8,dateTime.length);
+                    // let dateTime = moment(approachCase.uploadTime).format('Do MMMM YYYY h:mm a');
+                    // let date = dateTime.substring(0,dateTime.length-8);
+                    // let time = dateTime.substring(dateTime.length-8,dateTime.length);
 
                     const caseBox = <Button onClick={(e)=>this.handleReturnCase(approachCase)} className="case-button" bsSize="large">
                         <img src="./approach1.jpg" alt={approachCase.title}/>

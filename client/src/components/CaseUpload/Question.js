@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
     Button, FormGroup, ControlLabel, FormControl, InputGroup, Panel, Row,
-    PanelGroup, Popover, OverlayTrigger, Glyphicon, Image
+    PanelGroup, Popover, OverlayTrigger, Glyphicon
 } from 'react-bootstrap';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
