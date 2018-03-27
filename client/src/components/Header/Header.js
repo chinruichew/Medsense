@@ -96,7 +96,7 @@ class Header extends Component {
 
     render() {
         return (
-            <Navbar id="navbar" fixedTop={true}>
+            <Navbar id="navbar" fixedTop={false}>
                 <Navbar.Header>
                     <Navbar.Brand>
                         {this.renderLogo()}
