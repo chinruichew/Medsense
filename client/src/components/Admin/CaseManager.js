@@ -154,8 +154,8 @@ class CaseManager extends Component {
                     <option value="Gastrointestinal bleed">Gastrointestinal bleed</option>
                     <option value="Headache">Headache</option>
                     <option value="Jaundice">Jaundice</option>
-                    <option value="Limb pain">Limb pain</option>
-                    <option value="Limb swelling">Limb swelling</option>
+                    <option value="Limb Pain">Limb pain</option>
+                    <option value="Limb Swelling">Limb swelling</option>
                     <option value="Palpitations">Palpitations</option>
                     <option value="Seizure">Seizure</option>
                     <option value="Syncope">Syncope</option>
