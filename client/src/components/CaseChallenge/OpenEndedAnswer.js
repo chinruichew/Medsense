@@ -28,7 +28,7 @@ class OpenEndedAnswer extends Component {
 
     componentDidMount() {
         this.props.addOpenEndedAnswerOfQuestion(this.state);
-        window.scrollTo(0, 0);
+        this.node.scrollIntoView();
     }
 
     renderContent = () => {
@@ -86,7 +86,7 @@ class OpenEndedAnswer extends Component {
 
     render() {
         return (
-            <div>
+            <div ref={node => this.node = node}>
                 {this.renderContent()}
             </div>
         );

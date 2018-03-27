@@ -18,6 +18,7 @@ class SearchByApproach extends Component {
         }).then(res => {
             this.setState({approachList:res.data.sort()});
         });
+        this.node.scrollIntoView();
     }
 
     handleReturnCase = (game) => {
@@ -157,7 +158,7 @@ class SearchByApproach extends Component {
             return <option value={obj}>{obj}</option>;
         });
         return(
-            <div>
+            <div ref={node => this.node = node}>
                 <FormGroup controlId="formControlsApproach" style={{ paddingTop: "0", paddingLeft: "7%" }}>
                     <Col smOffset={0.5}>
                     <ControlLabel style={{ fontSize: "150%" }}>Approach(es)<br />

@@ -24,6 +24,7 @@ class SearchBySpeciality extends Component {
         }).then(res => {
             this.setState({specialityList:res.data.sort()});
         });
+        this.node.scrollIntoView();
     }
 
     handleReturnCase(game){
@@ -220,7 +221,7 @@ class SearchBySpeciality extends Component {
             return <option value={obj}>{obj}</option>;
         });
         return (
-            <div>
+            <div ref={node => this.node = node}>
                 <Row>
                     <FormGroup controlId="formControlsSpeciality" style={{ paddingTop: "0", paddingLeft: "7%" }}>
                         <Col componentClass={ControlLabel} sm={2}>

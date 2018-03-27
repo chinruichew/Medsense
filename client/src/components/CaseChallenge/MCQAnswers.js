@@ -28,7 +28,7 @@ class MCQAnswers extends Component {
     componentDidMount() {
         const answerIndex = this.getMCQAnswer();
         this.setState({answerIndex: answerIndex});
-        window.scrollTo(0, 0);
+        this.node.scrollIntoView();
         this.props.addMCQAnswerOfQuestion({
             ...this.state,
             ...answerIndex
@@ -137,7 +137,7 @@ class MCQAnswers extends Component {
 
     render() {
         return (
-            <div>
+            <div ref={node => this.node = node}>
                 {this.renderContent()}
             </div>
         );
