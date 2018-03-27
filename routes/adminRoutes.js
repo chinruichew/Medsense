@@ -218,6 +218,7 @@ module.exports = app => {
                         model: 'users',
                     });
                 } else if (subspecialityArray.length === 0) {
+                    console.log("in")
                     cases = await Case.find({
                         difficulty: req.body.values.difficulty,
                         status: req.body.values.casestatus,
@@ -395,7 +396,8 @@ module.exports = app => {
     });
 
     app.post('/api/fetchSpecialityCount', async (req, res) => {
-        const specialityCount = await Case.aggregate([{ $match: { speciality: { $gte: "Orthopaedics" } } }, { $unwind: '$subspeciality' }, { $group: { _id: '$subspeciality', count: { $sum: 1 } } }]).exec();
+        console.log(req.body['speciality'])
+        const specialityCount = await Case.aggregate([{ $match: { speciality: { $gte: req.body['speciality'] } } }, { $unwind: '$subspeciality' }, { $group: { _id: '$subspeciality', count: { $sum: 1 } } }]).exec();
         res.send(specialityCount);
     });
 };
