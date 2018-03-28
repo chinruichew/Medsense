@@ -1,4 +1,5 @@
 const UserLevelScheme = require('../models/UserLevelScheme');
+const ContributionLevelScheme = require('../models/ContributionLevelScheme');
 const UserLevelScoring = require('../models/UserLevelScoring');
 
 module.exports = {
@@ -40,5 +41,17 @@ module.exports = {
             }
         }
         return userRank;
+    },
+    CALCULATE_CONTRIBUTION_RANK: async(points) => {
+        const contributionSchemes = await ContributionLevelScheme.find().sort({points: -1});
+        let rank = '';
+        for(let i = 0; i < contributionSchemes.length; i++) {
+            const contributionScheme = contributionSchemes[i];
+            if(contributionScheme.points <= points) {
+                rank = contributionScheme.rank;
+                break;
+            }
+        }
+        return rank;
     }
 };

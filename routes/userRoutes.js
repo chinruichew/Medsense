@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const nodemailer = require('nodemailer');
 const User = mongoose.model('users');
 const Case = mongoose.model('cases');
-
+const AnswerOverview = require('../models/AnswerOverview');
 const keys = require('../config/keys');
 const constants = require('../utility/constantTypes');
 const commonMethods = require('../utility/commonMethods');
@@ -188,5 +188,39 @@ module.exports = app => {
         const xp = req.query.xp;
         const level = await commonMethods.CALCULATE_USER_LEVEL(xp);
         res.send(String(level));
+    });
+
+    app.get('/api/getLevelRank', async(req, res) => {
+        const level = req.query.level;
+        const rank = await commonMethods.CALCULATE_USER_RANK(level);
+        res.send(String(rank));
+    });
+
+    app.get('/api/getContributionRank', async(req, res) => {
+        const points = req.query.points;
+        const rank = await commonMethods.CALCULATE_CONTRIBUTION_RANK(points);
+        res.send(String(rank));
+    });
+
+    app.post('/api/calculateContributionPoints', function (req, res){
+        let points;
+        let numUploads = 0;
+        let numGames = 0;
+        Case.count({ vetter: req.session.user._id }, function (err, count){
+            points = 0.2 * count;
+            // Case.find({ author: req.session.user._id }).exec(async (err, uploads) =>{
+            //     for (let i=0;i<uploads.length;i++){
+            //         numUploads += 1;
+            //         let upload = uploads[i];
+            //         if (upload.status === "Vetted"){
+            //             AnswerOverview.find({ case: upload._id }).exec(async (err, games) =>{
+            //                 numGames += games.length;
+            //             });
+            //         }
+            //     }
+            // });
+            points += 0.3*numUploads+0.5*numGames;
+            res.send(points);
+        });
     });
 };

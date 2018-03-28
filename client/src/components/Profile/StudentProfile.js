@@ -24,6 +24,21 @@ class StudentProfile extends Component {
     componentDidMount(){
         axios.get('/api/calculateUserLevel?xp=' + this.props.auth.points).then(res => {
             this.setState({level: res.data});
+            axios.get('/api/getLevelRank?level=' + res.data).then(res => {
+                this.setState({rank: res.data});
+            }).catch(err => {
+                console.log(err);
+            });
+        }).catch(err => {
+            console.log(err);
+        });
+        axios.post('/api/calculateContributionPoints').then(res => {
+            console.log(res.data);
+            axios.get('/api/getContributionRank?points=' + res.data).then(res => {
+                this.setState({contribution: res.data});
+            }).catch(err => {
+                console.log(err);
+            });
         }).catch(err => {
             console.log(err);
         });
@@ -70,7 +85,9 @@ class StudentProfile extends Component {
                         <h3> <b>{this.state.username}</b> </h3>
                         <h4 style={{textAlign:"center", marginBottom:"1em"}}>
                             {this.renderProgressBar()}
-                            <b>{this.props.auth.points}/{480+240*(this.state.level-1)*(this.state.level+2)/2} XP</b>
+                            <b style={{marginBottom:"1em"}}>{this.props.auth.points}/{480+240*(this.state.level-1)*(this.state.level+2)/2} XP</b>
+                            <br/>
+                            <b>Level {this.state.level}</b>
                         </h4>
                     </div>
                     <Table  style={{width: '700px'}} >
@@ -96,10 +113,10 @@ class StudentProfile extends Component {
                                 <h4> Year {this.state.year} </h4>
                             </center></td>
                             <td style={{width: '100px'}} ><center>
-                                <h4> {this.props.auth.points} XP </h4>
+                                <h4> {this.state.rank} </h4>
                             </center></td>
                             <td style={{width: '100px'}} ><center>
-                                <h4> Silver </h4>
+                                <h4> {this.state.contribution} </h4>
                             </center></td>
                         </tr>
                     </Table>
