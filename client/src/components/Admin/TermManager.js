@@ -53,7 +53,6 @@ class TermManager extends Component {
                                     </Tabs>
                                 </div>
                                 <br />
-                                {/* Insert User Manager code here */}
                                 <br />
                             </div>
                         );

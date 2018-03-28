@@ -90,14 +90,18 @@ module.exports = app => {
 
      app.post('/api/addNewSubspeciality', function (req, res) {
         const values = req.body.values;
-        Subspeciality.findOne({ subspeciality: values.subspeciality }, function (err, subspeciality) {
+        Subspeciality.findOne({ subspeciality: values.subspeciality }, async (err, subspeciality) => {
             if (!subspeciality) {
                 const newSubspeciality = new Subspeciality();
                 newSubspeciality.subspeciality = values.subspeciality;
-                newSubspeciality.save();
-                return res.send(newSubspeciality);
+                await newSubspeciality.save();
+
+                const selectedSpecialities = values.selectedOptions;
+                // Updated specialities here
+
+                res.send(newSubspeciality);
             } else {
-                return res.send('Subspeciality Exists');
+                res.send('Subspeciality Exists');
             }
         });
     });

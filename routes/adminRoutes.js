@@ -431,10 +431,7 @@ module.exports = app => {
     });
 
     app.post('/api/fetchSpecialityCount', async (req, res) => {
-        console.log(req.body['speciality'])
         const specialityCount = await Case.aggregate([{ $match: { speciality: { $gte: req.body['speciality'] } } }, { $unwind: '$subspeciality' }, { $group: { _id: '$subspeciality', count: { $sum: 1 } } }]).exec();
         res.send(specialityCount);
     });
 };
-
-

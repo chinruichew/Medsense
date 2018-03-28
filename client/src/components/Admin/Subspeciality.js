@@ -2,15 +2,25 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, ControlLabel, FormGroup, FormControl, Table, Col, Row } from 'react-bootstrap';
 import { addNewSubspeciality, deleteSubspeciality } from '../../actions';
+import axios from 'axios';
+import Multiselect from 'react-bootstrap-multiselect';
+
 import './Admin.css';
 
 class Subspeciality extends Component {
     state = {
-        subspeciality: ""
+        subspeciality: "",
+        showSpec: false,
+        specialities: null,
+        selectedOptions: []
     };
 
     componentDidMount() {
-
+        axios.post('/api/fetchSpeciality').then(res => {
+            this.setState({
+                specialities: res.data
+            });
+        });
     }
 
     renderTableSubspeciality() {
@@ -56,8 +66,7 @@ class Subspeciality extends Component {
                         <FormControl type="text" value={this.state.subspeciality} name="username"
                                      onChange={(e) => this.handleSubspecialityChange(e)} />
                     </Col>
-                    <Col smOffset={10}><Button style={{ fontSize: "125%" }} bsStyle="primary"
-                                               onClick={(e) => this.addSubspeciality()}>Add Subspeciality</Button>
+                    <Col smOffset={10}><Button style={{ fontSize: "125%" }} bsStyle="primary" onClick={(e) => this.showSpecialities()}>Add Subspeciality</Button>
                     </Col>
                 </Row>
             </FormGroup>
@@ -69,6 +78,12 @@ class Subspeciality extends Component {
         this.setState({ subspeciality: value });
     }
 
+    showSpecialities = () => {
+        this.setState({
+            showSpec: true
+        });
+    };
+
     addSubspeciality() {
         if (this.state.subspeciality.trim() === '' || this.state.subspeciality == null) {
             window.alert("Subspeciality not filled")
@@ -79,17 +94,70 @@ class Subspeciality extends Component {
                 } else {
                     window.alert("Subspeciality Created")
                 }
-            })
-            console.log(this.state.subspeciality)
+            });
         }
     }
 
+    handleChange = (options) => {
+        for(let i = 0; i < options.length; i++) {
+            const option = options[i];
+            let toAdd = true;
+            for(let j = 0; j < this.state.selectedOptions.length; j++) {
+                const selectedOption = this.state.selectedOptions[j];
+                if(selectedOption === option.innerText) {
+                    toAdd = false;
+                    break;
+                }
+            }
+            if(toAdd) {
+                this.state.selectedOptions.push(option.innerText);
+            }
+        }
+    };
+
+    renderSpecialitySelection = () => {
+        if(this.state.showSpec) {
+            const specialities = [];
+            for(let i = 0; i < this.state.specialities.length; i++) {
+                const speciality = this.state.specialities[i];
+                if(speciality.speciality !== "Clinical Practicum") {
+                    specialities.push({
+                        value: speciality.speciality
+                    });
+                }
+            }
+
+            return(
+                <form>
+                    <Multiselect onChange={this.handleChange} ref="myRef" data={specialities} multiple />
+                    <Button onClick={(e) => this.addSubspeciality()}>Submit</Button>
+                </form>
+            );
+        }
+        return;
+    };
+
+    renderContent = () => {
+        switch(this.state.specialities) {
+            case null:
+                return;
+            default:
+                return (
+                    <div style={{paddingTop: "1%"}}>
+                        {this.setSubspeciality()}
+                        <br/>
+                        {this.renderSpecialitySelection()}
+                        <br/>
+                        {this.renderTableSubspeciality()}
+                    </div>
+                );
+        }
+    };
+
     render() {
-        return (
-            <div style={{paddingTop: "1%"}}>
-                {this.setSubspeciality()}
-                <br/>
-                {this.renderTableSubspeciality()}
+        return(
+            <div>
+                {this.renderContent()}
             </div>
         );
     }
