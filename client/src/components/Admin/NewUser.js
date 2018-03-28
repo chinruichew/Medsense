@@ -10,7 +10,7 @@ class NewUser extends Component {
         display: 'user',
         usertype: 'Student',
         username: '',
-        password: '',
+        email: '',
         school: 'Duke-NUS',
         year: 'Year 1',
         speciality: 'Medicine',
@@ -28,9 +28,9 @@ class NewUser extends Component {
         this.setState({ username: value });
     }
 
-    handlePasswordChange(e) {
+    handleEmailChange(e) {
         const value = e.target.value;
-        this.setState({ password: value });
+        this.setState({ email: value });
     }
 
 
@@ -92,14 +92,14 @@ class NewUser extends Component {
         );
     }
 
-    setPassword() {
+    setEmail = () => {
         return (
             <FormGroup controlId="formControlsTitle">
-                <ControlLabel style={{ fontSize: "150%" }}>Password:</ControlLabel>
-                <FormControl type="password" value={this.state.title} name="password" onChange={(e) => this.handlePasswordChange(e)} />
+                <ControlLabel style={{ fontSize: "150%" }}>Email:</ControlLabel>
+                <FormControl type="email" value={this.state.title} name="email" onChange={(e) => this.handleEmailChange(e)} />
             </FormGroup>
         );
-    }
+    };
 
     setSchool() {
         if (this.state.usertype === "Student" || this.state.usertype === "Professor" ) {
@@ -150,6 +150,7 @@ class NewUser extends Component {
         }
 
     }
+
     setSubspeciality() {
         if (this.state.usertype === "Professor") {
             if (this.state.speciality === "Medicine") {
@@ -254,31 +255,32 @@ class NewUser extends Component {
     createUser() {
         if (this.state.username.trim() === '' || this.state.username == null) {
             window.alert("Username not filled")
-        } else if (this.state.password.trim() === '' || this.state.password == null) {
-            window.alert("Password not filled")
+        } else if (this.state.email.trim() === '' || this.state.email == null) {
+            window.alert("Email not filled")
         } else {
             if (this.state.usertype === "Student") {
                 this.props.addNewStudent(this.state).then(function (response) {
+                    console.log(response.data);
                     if (response.data === "User Exists") {
-                        window.alert("User Exists")
+                        window.alert("User Exists");
                     } else {
-                        window.alert("User Created")
+                        window.alert("User Created");
                     }
                 })
             } else if (this.state.usertype === "Admin") {
                 this.props.addNewAdmin(this.state).then(function (response) {
                     if (response.data === "User Exists") {
-                        window.alert("User Exists")
+                        window.alert("User Exists");
                     } else {
-                        window.alert("User Created")
+                        window.alert("User Created");
                     }
                 })
             } else {
                 this.props.addNewProfessor(this.state).then(function (response) {
                     if (response.data === "User Exists") {
-                        window.alert("User Exists")
+                        window.alert("User Exists");
                     } else {
-                        window.alert("User Created")
+                        window.alert("User Created");
                     }
                 })
             }
@@ -290,7 +292,7 @@ class NewUser extends Component {
             <div style={{paddingTop: "1%"}}>
                 {this.setUserType()}
                 {this.setUsername()}
-                {this.setPassword()}
+                {this.setEmail()}
                 {this.setSchool()}
                 {this.setYear()}
                 {this.setSpeciality()}

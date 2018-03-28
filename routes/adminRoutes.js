@@ -3,6 +3,9 @@ const Case = require('../models/Case');
 const Question = require('../models/Question');
 const Approach = require('../models/Approach');
 const constants = require('../utility/constantTypes');
+const nodemailer = require('nodemailer');
+
+const keys = require('../config/keys');
 
 module.exports = app => {
     app.get('/api/fetchAdminUsers', async (req, res) => {
@@ -12,7 +15,6 @@ module.exports = app => {
 
     app.post('/api/fetchFilteredAdminAdmins', async (req, res) => {
         let users;
-        console.log(req.body.values.username)
         if (req.body.values.username === "") {
             users = await User.find({
                 usertype: constants.USER_TYPE_ADMIN
@@ -218,7 +220,6 @@ module.exports = app => {
                         model: 'users',
                     });
                 } else if (subspecialityArray.length === 0) {
-                    console.log("in")
                     cases = await Case.find({
                         difficulty: req.body.values.difficulty,
                         status: req.body.values.casestatus,
@@ -313,20 +314,54 @@ module.exports = app => {
         return res.status(201).send({ data: null, message: "deleteCase success" });
     });
 
-    app.post('/api/addNewStudent', function (req, res) {
+    app.post('/api/addNewStudent', async (req, res) => {
         const values = req.body.values;
-        User.findOne({ username: values.username }, function (err, user) {
+        User.findOne({ username: values.username }, async (err, user) => {
             if (!user) {
                 const newUser = new User();
                 newUser.username = values.username;
-                newUser.password = newUser.generateHash(values.password);
+                newUser.email = newUser.generateHash(values.email);
                 newUser.usertype = constants.USER_TYPE_STUDENT;
                 newUser.school = values.school;
                 newUser.year = values.year;
-                newUser.save();
-                return res.send(newUser);
+
+                // Generate random password
+                const buf = new Buffer(10);
+                for (let i = 0; i < buf.length; i++) {
+                    buf[i] = Math.floor(Math.random() * 256);
+                }
+                const password = buf.toString('base64');
+                newUser.password = newUser.generateHash(password);
+
+                await newUser.save();
+
+                // Generate email
+                const transporter = nodemailer.createTransport({
+                    service: 'gmail',
+                    auth: {
+                        user: keys.medsenseEmailUsername,
+                        pass: keys.medsenseEmailPassword
+                    }
+                });
+                const mailOptions = {
+                    from: keys.medsenseEmailUsername,
+                    to: values.email,
+                    subject: 'Creation of Account',
+                    html: '<h1>Your account has been successfully created!</h1><p>Your username is: ' + newUser.username + '</p><p>Your password is: ' + password + '</p>'
+                };
+                transporter.sendMail(mailOptions, function(err, info){
+                    if (err) {
+                        throw(err);
+                    }
+
+                    // Do not erase - Production Logging
+                    console.log('Email sent: ' + info.response);
+                    res.send('Done');
+                });
+
+                res.send(newUser);
             } else {
-                return res.send('User Exists');
+                res.send('User Exists');
             }
         });
     });

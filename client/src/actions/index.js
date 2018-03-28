@@ -141,7 +141,7 @@ export const addNewStudent = (values) => async dispatch => {
         values
     });
     //dispatch({ type: ADD_NEW_STUDENT, payload: res.data });
-    return res
+    return res;
 };
 
 export const addNewProfessor = (values) => async dispatch => {
@@ -149,7 +149,7 @@ export const addNewProfessor = (values) => async dispatch => {
         values
     });
     //dispatch({ type: ADD_NEW_PROFESSOR, payload: res.data });
-    return res
+    return res;
 };
 
 export const addNewAdmin = (values) => async dispatch => {
