@@ -349,9 +349,9 @@ module.exports = app => {
                     subject: 'Creation of Account',
                     html: '<h1>Your account has been successfully created!</h1><p>Your username is: ' + newUser.username + '</p><p>Your password is: ' + password + '</p>'
                 };
-                transporter.sendMail(mailOptions, function(err, info){
+                transporter.sendMail(mailOptions, function (err, info) {
                     if (err) {
-                        throw(err);
+                        throw (err);
                     }
 
                     // Do not erase - Production Logging
@@ -421,17 +421,41 @@ module.exports = app => {
     });
 
     app.get('/api/fetchCount', async (req, res) => {
-        const approachCount = await Case.aggregate([ 
-            { $unwind: '$approach' }, 
-            { $group: { _id: '$approach', count: { $sum: 1 } } }]).sort({count : -1}).exec();
+        const approachCount = await Case.aggregate([
+            { $unwind: '$approach' },
+            { $group: { _id: '$approach', count: { $sum: 1 } } }]).sort({ count: -1 }).exec();
         res.send(approachCount);
     });
 
     app.post('/api/fetchSpecialityCount', async (req, res) => {
         const specialityCount = await Case.aggregate([
-            { $match: { speciality: { $gte: req.body['speciality'] } } }, 
-            { $unwind: '$subspeciality' }, 
-            { $group: { _id: '$subspeciality', count: { $sum: 1 } } }]).sort({count : -1}).exec();
+            { $match: { speciality: { $gte: req.body['speciality'] } } },
+            { $unwind: '$subspeciality' },
+            { $group: { _id: '$subspeciality', count: { $sum: 1 } } }]).sort({ count: -1 }).exec();
         res.send(specialityCount);
+    });
+
+    app.get('/api/fetchStudentCount', async (req, res) => {
+        const approachCount = await User.aggregate([
+            { "$group": {
+                "_id": {
+                    "school": "$school",
+                    "year": "$year"
+                },
+                "yearCount": { "$sum": 1 }
+            }},
+            { "$group": {
+                "_id": "$_id.school",
+                "years": { 
+                    "$push": { 
+                        "year": "$_id.year",
+                        "count": "$yearCount"
+                    },
+                },
+                "count": { "$sum": "$yearCount" }
+            }},
+            { "$sort": { "count": -1 } },
+        ]).sort({ count: -1 }).exec();
+        res.send(studentCount);
     });
 };

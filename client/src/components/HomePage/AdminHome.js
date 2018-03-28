@@ -3,11 +3,14 @@ import { Button, Table, ControlLabel, FormGroup, FormControl, Col } from 'react-
 import { NavLink } from "react-router-dom";
 import axios from 'axios';
 
+
 class AdminHome extends Component {
     state = {
         caseCount: [],
         specialityCount: [],
-        speciality: ""
+        speciality: "",
+        subspecialityArray: [],
+        countArray: []
     };
 
     componentDidMount() {
@@ -38,10 +41,19 @@ class AdminHome extends Component {
             this.setState({
                 specialityCount: res.data
             });
+            this.state.subspecialityArray = [];
+            this.state.countArray = [];
+            for (var item in res.data) {
+                this.state.subspecialityArray.push(res.data[item]['_id']);
+                this.state.countArray.push(res.data[item]['count']);
+                console.log(res.data[item]['_id'])
+                console.log(res.data[item]['count'])
+            }
+            console.log(this.state.subspecialityArray)
         }).catch(err => {
             console.log(err);
         });
-        
+
     }
 
     render() {
@@ -72,20 +84,6 @@ class AdminHome extends Component {
                 <div className="row">
                     <div class="col-lg-6">
 
-                        <Table responsive className="table">
-                            <thead>
-                                <tr style={{ background: '#D9EDF7', fontSize: "130%" }}>
-                                    <th><center>Approach</center></th>
-                                    <th><center>Count</center></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {cases}
-                            </tbody>
-                        </Table>
-
-                    </div>
-                    <div class="col-lg-6">
                         <FormGroup controlId="formControlsDifficulty">
                             <ControlLabel style={{ fontSize: "150%" }}>Select Speciality:</ControlLabel>
                             <FormControl componentClass="select" value={this.state.speciality} name="usertype" onChange={(e) => this.handleSpecialityChange(e)}>
@@ -108,6 +106,22 @@ class AdminHome extends Component {
                                 {scases}
                             </tbody>
                         </Table>
+
+                    </div>
+                    <div class="col-lg-6">
+                        <br /><br /><br /><br /><br />
+                        <Table responsive className="table">
+                            <thead>
+                                <tr style={{ background: '#D9EDF7', fontSize: "130%" }}>
+                                    <th><center>Approach</center></th>
+                                    <th><center>Count</center></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {cases}
+                            </tbody>
+                        </Table>
+
                     </div>
                 </div>
             </div>
