@@ -63,6 +63,26 @@ module.exports = app => {
         });
     });
 
+    app.post('/api/batchFetchSubSpecialities', async(req, res) => {
+        let specialities = req.body.specialities;
+        const specialityMapping = [];
+        let counter = 0;
+        while(counter < specialities.length) {
+            const speciality = specialities[counter];
+            const subSpecialities = await Speciality.find({"speciality": speciality}).populate({
+                path: 'subspecialities',
+                model: 'subspecialities'
+            });
+            specialityMapping.push({
+                speciality,
+                subSpecialities
+            });
+            counter++;
+        }
+        console.log(specialityMapping);
+        res.send(specialityMapping);
+    });
+
     app.post('/api/fetchAdminSubspeciality', async (req, res) => {
         const subspecialities = await Subspeciality.find({}).sort("subspeciality");
         res.send(subspecialities);

@@ -6,7 +6,7 @@ import { bindAll } from 'lodash';
 import axios from 'axios';
 import { deleteAdminCase, fetchFilteredAdminCases, fetchAdminCases } from '../../actions';
 import ReactHtmlParser from 'react-html-parser';
-
+import Promise from 'bluebird';
 
 import './Admin.css';
 
@@ -28,6 +28,7 @@ class CaseManager extends Component {
             oneCase: '',
             approachList: [],
             specialityList: [],
+            specialities: null
         };
         bindAll(this, 'handleTitleChange', 'handleDifficultyChange', 'handleSubspecialityChange',
             'handleApproachChange', 'handleScenarioChange', 'setSubspeciality', 'setName', 'setApproach',
@@ -43,6 +44,26 @@ class CaseManager extends Component {
         axios.post('/api/fetchSpeciality', {
         }).then(res => {
             this.setState({specialityList:res.data});
+
+            const specialitiesToFetch = [];
+            this.state.specialityList.map((obj, index) => {
+                if(obj.speciality!=="Clinical Practicum") {
+                    specialitiesToFetch.push(obj.speciality);
+                }
+            });
+
+            axios.post('/api/batchFetchSubSpecialities', {
+                specialities: specialitiesToFetch
+            }).then(res => {
+                const fetchedSubSpecialityMapping = res.data;
+                const specialities = fetchedSubSpecialityMapping.map((fetchedSubSpecialityMap, index) => {
+                    const subspecialities = fetchedSubSpecialityMap.subSpecialities[0].subspecialities.map((subSpeciality, index) => {
+                        return <option key={index} value={subSpeciality.subspeciality}>{subSpeciality.subspeciality}</option>;
+                    });
+                    return <optgroup key={index} label={"--" + fetchedSubSpecialityMap.speciality + "--"}>{subspecialities}</optgroup>;
+                });
+                this.setState({specialities: specialities});
+            });
         });
     }
 
@@ -68,8 +89,8 @@ class CaseManager extends Component {
     }
 
     deleteCase(e) {
-        var oneCaseId = this.state.oneCaseId
-        this.props.deleteAdminCase(oneCaseId)
+        const oneCaseId = this.state.oneCaseId;
+        this.props.deleteAdminCase(oneCaseId);
         this.setState({ displayModal: false, showConfirmDelete: false });
     }
 
@@ -154,83 +175,26 @@ class CaseManager extends Component {
         )
     }
 
-    setSubspeciality() {
-        let specialities = this.state.specialityList.map((obj, index) => {
-            // console.log(obj.speciality);
-            if(obj.speciality!=="Clinical Practicum") {
-                axios.post('/api/fetchSubspeciality', {
-                    speciality: obj.speciality,
-                }).then(res => {
-                    let subspecialities = res.data[0].subspecialities.map((obj, index) => {
-                        // console.log(obj.subspeciality);
-                        return <option key={index} value={obj.subspeciality}>{obj.subspeciality}</option>;
-                    });
-                    return <optgroup label={"--" + obj.speciality + "--"}>{subspecialities}</optgroup>;
-                });
-            }
-        });
-        console.log(specialities);
-        return (
-            <FormGroup controlId="formControlsSubspeciality">
-                <ControlLabel style={{ fontSize: "150%" }}>Sub-specialties
-                        <br />
-                    <div style={{ fontSize: "70%", fontWeight: "200" }}>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.
-                        </div>
-                </ControlLabel>
-                <FormControl componentClass="select" size='10' value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)} multiple>
-                    <option value="Select One">Select All Relevant</option>
-                    {specialities}
-                    {/*<optgroup label="--Medicine--"></optgroup>*/}
-                    {/*<option value="Cardiology">Cardiology</option>*/}
-                    {/*<option value="Endocrinology">Endocrinology</option>*/}
-                    {/*<option value="Gastroenterology & Hepatology">Gastroenterology & Hepatology</option>*/}
-                    {/*<option value="Haematology">Haematology</option>*/}
-                    {/*<option value="Internal Medicine">Internal Medicine</option>*/}
-                    {/*<option value="Medical Oncology">Medical Oncology</option>*/}
-                    {/*<option value="Neurology">Neurology</option>*/}
-                    {/*<option value="Renal Medicine">Renal Medicine</option>*/}
-                    {/*<option value="Respiratory & Critical Care Medicine">Respiratory & Critical Care Medicine</option>*/}
-                    {/*<option value="Rheumatology & Immunology">Rheumatology & Immunology</option>*/}
-
-                    {/*<optgroup label="--Surgery--"></optgroup>*/}
-                    {/*<option value="Breast">Breast</option>*/}
-                    {/*<option value="Colorectal">Colorectal</option>*/}
-                    {/*<option value="General Surgery">General Surgery</option>*/}
-                    {/*<option value="Head & Neck">Head & Neck</option>*/}
-                    {/*<option value="Hepato-pancreato-biliary">Hepato-pancreato-biliary</option>*/}
-                    {/*<option value="Surgical Oncology">Surgical Oncology</option>*/}
-                    {/*<option value="Upper Gastrointestinal & Bariatric Surgery">Upper Gastrointestinal & Bariatric Surgery</option>*/}
-                    {/*<option value="Urology">Urology</option>*/}
-                    {/*<option value="Vascular Surgery">Vascular Surgery</option>*/}
-
-                    {/*<optgroup label="--Orthopedics--"></optgroup>*/}
-                    {/*<option value="Foot and Ankle Surgery">Foot and Ankle Surgery</option>*/}
-                    {/*<option value="Hip and Knee Surgery">Hip and Knee Surgery</option>*/}
-                    {/*<option value="Musculoskeletal Oncology">Musculoskeletal Oncology</option>*/}
-                    {/*<option value="Musculoskeletal Trauma">Musculoskeletal Trauma</option>*/}
-                    {/*<option value="Paediatric Orthopaedics">Paediatric Orthopaedics</option>*/}
-                    {/*<option value="Shoulder & Elbow Surgery">Shoulder & Elbow Surgery</option>*/}
-                    {/*<option value="Spine Surgery">Spine Surgery</option>*/}
-                    {/*<option value="Sports medicine">Sports medicine</option>*/}
-                    {/*<option value="Department of Hand & Reconstructive Microsurgery Trauma">Department of Hand & Reconstructive Microsurgery Trauma</option>*/}
-
-                    {/*<optgroup label="--Others--"></optgroup>*/}
-                    {/*<option value="Anaesthesiology">Anaesthesiology</option>*/}
-                    {/*<option value="Ear Nose & Throat">Ear Nose & Throat</option>*/}
-                    {/*<option value="Emergency Medicine">Emergency Medicine</option>*/}
-                    {/*<option value="Geriatric Medicine">Geriatric Medicine</option>*/}
-                    {/*<option value="Infectious Diseases">Infectious Diseases</option>*/}
-                    {/*<option value="Neonatal">Neonatal</option>*/}
-                    {/*<option value="Obstetrics & Gynaecology">Obstetrics & Gynaecology</option>*/}
-                    {/*<option value="Ophthalmology">Ophthalmology</option>*/}
-                    {/*<option value="Palliative Medicine">Palliative Medicine</option>*/}
-                    {/*<option value="Psychiatry">Psychiatry</option>*/}
-                    {/*<option value="Rehabilitation Medicine">Rehabilitation Medicine</option>*/}
-                </FormControl>
-            </FormGroup>
-        );
-
-    }
+    setSubspeciality = () => {
+        switch(this.state.specialities) {
+            case null:
+                return;
+            default:
+                return (
+                    <FormGroup controlId="formControlsSubspeciality">
+                        <ControlLabel style={{ fontSize: "150%" }}>Sub-specialties
+                            <br />
+                            <div style={{ fontSize: "70%", fontWeight: "200" }}>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.
+                            </div>
+                        </ControlLabel>
+                        <FormControl componentClass="select" size='10' value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)} multiple>
+                            <option value="Select One">Select All Relevant</option>
+                            {this.state.specialities}
+                        </FormControl>
+                    </FormGroup>
+                );
+        }
+    };
 
     setDifficulty() {
         return (
@@ -310,7 +274,7 @@ class CaseManager extends Component {
                 <td> <Button type="button" bsStyle="primary" onClick={(e) => this.handleOpenModal(item)}>View</Button></td >
             </tr>
 
-        ))
+        ));
 
 
         return (
