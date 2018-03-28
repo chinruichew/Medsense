@@ -97,7 +97,21 @@ module.exports = app => {
                 await newSubspeciality.save();
 
                 const selectedSpecialities = values.selectedOptions;
-                // Updated specialities here
+                selectedSpecialities.push("Clinical Practicum");
+
+                for(let i = 0; i < selectedSpecialities.length; i++) {
+                    const selectedSpeciality = selectedSpecialities[i];
+                    const speciality = await Speciality.find({speciality: selectedSpeciality});
+                    const specialitySubSpecialities = speciality[0].subspecialities;
+                    specialitySubSpecialities.push(newSubspeciality._id);
+                    speciality[0].subspecialities = specialitySubSpecialities;
+                    await Speciality.findByIdAndUpdate(speciality[0]._id, speciality, {new: true}).exec(async(err, speciality) => {
+                        if(err) {
+                            console.log(err);
+                        }
+                        console.log(speciality);
+                    });
+                }
 
                 res.send(newSubspeciality);
             } else {
