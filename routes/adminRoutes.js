@@ -421,17 +421,17 @@ module.exports = app => {
     });
 
     app.get('/api/fetchCount', async (req, res) => {
-        const specialityCount = await Case.aggregate([
-            { $group: { _id: '$speciality', count: { $addToSet: '$_id' } } },
-            { $unwind: "$count" },
-            { $group: { _id: "$_id", count: { $sum: 1 } } },
-            { $sort: { 'count': -1 } }
-        ]).exec();
-        res.send(specialityCount);
+        const approachCount = await Case.aggregate([ 
+            { $unwind: '$approach' }, 
+            { $group: { _id: '$approach', count: { $sum: 1 } } }]).sort({count : -1}).exec();
+        res.send(approachCount);
     });
 
     app.post('/api/fetchSpecialityCount', async (req, res) => {
-        const specialityCount = await Case.aggregate([{ $match: { speciality: { $gte: req.body['speciality'] } } }, { $unwind: '$subspeciality' }, { $group: { _id: '$subspeciality', count: { $sum: 1 } } }]).exec();
+        const specialityCount = await Case.aggregate([
+            { $match: { speciality: { $gte: req.body['speciality'] } } }, 
+            { $unwind: '$subspeciality' }, 
+            { $group: { _id: '$subspeciality', count: { $sum: 1 } } }]).sort({count : -1}).exec();
         res.send(specialityCount);
     });
 };

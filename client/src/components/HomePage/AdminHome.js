@@ -93,14 +93,14 @@ class AdminHome extends Component {
                                 <option value="Clinical Practicum">Clinical Practicum</option>
                                 <option value="Medicine">Medicine</option>
                                 <option value="Surgery">Surgery</option>
-                                <option value="Orthopedics">Orthopedics</option>
+                                <option value="Orthopaedics">Orthopedics</option>
                                 <option value="Others">Others</option>
                             </FormControl>
                         </FormGroup>
                         <Table responsive className="table">
                             <thead>
                                 <tr style={{ background: '#D9EDF7', fontSize: "130%" }}>
-                                    <th><center>Approach</center></th>
+                                    <th><center>Subspeciality</center></th>
                                     <th><center>Count</center></th>
                                 </tr>
                             </thead>
