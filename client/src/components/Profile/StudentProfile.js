@@ -139,7 +139,7 @@ class StudentProfile extends Component {
                     <BootstrapModal.Body>
                         <UploadProfilePicture/>
 
-                        <div className="main-center" style={{paddingTop:'0%', paddingBottom:'0%'}}>
+                        <div className="main-center" style={{paddingTop:'5%', paddingBottom:'0%'}}>
                             <div className="form-group">
 
                                 <div className="input-group">
