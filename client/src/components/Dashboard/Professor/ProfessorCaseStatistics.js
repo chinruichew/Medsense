@@ -6,19 +6,8 @@ import ProfessorIndividualCaseStatistics from "./ProfessorIndividualCaseStatisti
 
 class ProfessorCaseStatistics extends Component {
     state = {
-        associatedCases: null,
         reviewedCase: null
     };
-
-    componentDidMount() {
-        axios.get('/api/getProfessorAssociatedCases').then(res => {
-            this.setState({
-                associatedCases: res.data
-            });
-        }).catch(err => {
-            console.log(err);
-        });
-    }
 
     returnToCaseStats = () => {
         this.setState({
@@ -29,12 +18,12 @@ class ProfessorCaseStatistics extends Component {
     renderContent = () => {
         switch(this.state.reviewedCase) {
             case null:
-                switch(this.state.associatedCases) {
+                switch(this.props.associatedCases) {
                     case null:
                         return;
                     default:
-                        const uploadedCases = this.state.associatedCases.uploaded;
-                        const vettedCases = this.state.associatedCases.vetted;
+                        const uploadedCases = this.props.associatedCases.uploaded;
+                        const vettedCases = this.props.associatedCases.vetted;
                         const uploadedSection = uploadedCases.map((uploadedCase, index) => {
                             // let placeholderImage = <Image circle src="/case-display-pictures/individual_case_image.jpg" style={{height: '150px', width: '150px'}} />;
                             // if(index % 2 === 0) {
@@ -42,7 +31,7 @@ class ProfessorCaseStatistics extends Component {
                             // }
                             let placeholderImage = <Image circle src="/userMD.png" style={{height: '150px', width: '150px'}} />;
                             return(
-                                <div key={uploadedCase._id} className="col-md-4">
+                                <div key={uploadedCase._id} className="col-md-4 case-div">
                                     <div className="card">
                                         <div className="card-content text-center">
                                             {placeholderImage}
@@ -61,7 +50,7 @@ class ProfessorCaseStatistics extends Component {
                             // }
                             let placeholderImage = <Image circle src="/userMD.png" style={{height: '150px', width: '150px'}} />;
                             return(
-                                <div key={vettedCase._id} className="col-md-4">
+                                <div key={vettedCase._id} className="col-md-4 case-div">
                                     <div className="card">
                                         <div className="card-content text-center">
                                             {placeholderImage}

@@ -83,7 +83,7 @@ module.exports = app => {
                     if(counter < maxCounter) {
                         if(leaders[key] === max) {
                             sortedLeaders[key] = leaders[key];
-                            counter -= 1;
+                            counter += 1;
                             delete leaders[key];
                         }
                     } else {
@@ -148,6 +148,36 @@ module.exports = app => {
     app.get('/api/getUserAnswersByCase', async(req, res) => {
         const id = req.query.id;
         AnswerOverview.find({case: id, user: req.session.user._id}).populate({
+            path: 'case',
+            model: 'cases',
+            populate: {
+                path: 'questions',
+                model: 'questions',
+                populate: {
+                    path: 'options',
+                    model: 'options'
+                }
+            }
+        }).populate({
+            path: 'user',
+            model: 'users',
+        }).populate({
+            path: 'openEndedAnswers',
+            model: 'openEndedAnswers',
+        }).populate({
+            path: 'mcqAnswers',
+            model: 'mcqAnswers',
+        }).exec(function(err, answers) {
+            if(err) {
+                throw(err);
+            }
+            res.send(answers);
+        });
+    });
+
+    app.get('/api/getCohortAnswersByCase', async(req, res) => {
+        const id = req.query.id;
+        AnswerOverview.find().populate({
             path: 'case',
             model: 'cases',
             populate: {

@@ -6,18 +6,32 @@ import { Charts, ChartContainer, ChartRow, YAxis, LineChart } from "react-timese
 import { TimeSeries, TimeRange } from "pondjs";
 import Timeline from 'react-visjs-timeline';
 
+import StudentIndividualCaseOverviewChart from "./StudentIndividualCaseOverviewChart";
+import StudentIndividualCaseQuestionChart from "./StudentIndividualCaseQuestionChart";
+
 class StudentIndividualCaseStatistics extends Component {
     state = {
         answers: null,
         selectedAnswerIndex: 0,
-        questionFilter: 'All'
+        questionFilter: 'All',
+        cohortAnswers: null
     };
 
     componentDidMount() {
         axios.get('/api/getUserAnswersByCase?id=' + this.props.caseId).then(res => {
             this.setState({answers: res.data});
         });
+
+        axios.get('/api/getCohortAnswersByCase?id=' + this.props.caseId).then(res => {
+            this.setState({cohortAnswers: res.data});
+        });
     }
+
+    setSelectedAnswerIndex = (selectedAnswerIndex) => {
+        this.setState({
+            selectedAnswerIndex
+        });
+    };
 
     visTimelineClickHandler = (props) => {
         const answerId = props.item;
@@ -80,14 +94,6 @@ class StudentIndividualCaseStatistics extends Component {
                         </Charts>
                     </ChartRow>
                 </ChartContainer>
-            </div>
-        );
-    };
-
-    renderGraphs = () => {
-        return(
-            <div className="col-md-12">
-                {this.renderTimeSeriesGraphs()}
             </div>
         );
     };
@@ -204,11 +210,9 @@ class StudentIndividualCaseStatistics extends Component {
                         break;
                     }
                 }
-                let nlpAccuracy = '';
                 let displayAnswer = '';
                 if(answerType === 'open-ended') {
                     displayAnswer = ReactHtmlParser(answerOfQuestion.studentAnswer);
-                    nlpAccuracy = 'Accuracy: ' + answerOfQuestion.nlpAccuracy + '%';
                 } else {
                     const mcqAnswerOptions = answerOfQuestion.answerOptions;
                     for(let i = 0; i < mcqAnswerOptions.length; i++) {
@@ -218,7 +222,6 @@ class StudentIndividualCaseStatistics extends Component {
                         }
                     }
                 }
-                const nlpAccuracyColor = answerOfQuestion.nlpAccuracy < 50? 'red': 'green';
                 const score = answerOfQuestion.score < answerOfQuestion.mark/2? 'red': 'green';
 
                 // Display Picture if there is an attachment
@@ -240,6 +243,7 @@ class StudentIndividualCaseStatistics extends Component {
                             </Panel.Heading>
                             <Panel.Collapse>
                                 <Panel.Body>
+                                    <StudentIndividualCaseQuestionChart setSelectedAnswerIndex={this.setSelectedAnswerIndex} question={question} answers={this.state.answers} answer={answerOfQuestion} cohortAnswers={this.state.cohortAnswers} />
                                     <h3>Question Description</h3>
                                     {questionDisplay}
                                     <div className="row">
@@ -248,18 +252,19 @@ class StudentIndividualCaseStatistics extends Component {
                                                 <h3>Your Answer</h3>
                                             </div>
                                             <div className="col-md-4 text-center">
-                                                <h4 style={{marginTop: '25px', color: nlpAccuracyColor}}>{nlpAccuracy}</h4>
-                                            </div>
-                                            <div className="col-md-4 text-center">
                                                 <h4 style={{marginTop: '25px', color: score}}>Score: {answerOfQuestion.score}/{answerOfQuestion.mark}</h4>
                                             </div>
+                                            <div className="col-md-4 text-center">
+                                                <h3>Model Answer</h3>
+                                            </div>
                                         </div>
-                                        <div className="col-md-12">
+                                        <div className="col-md-6">
                                             <p>{displayAnswer}</p>
                                         </div>
+                                        <div className="col-md-6">
+                                            <p>{modelAnswer}</p>
+                                        </div>
                                     </div>
-                                    <h3>Model Answer</h3>
-                                    <p>{modelAnswer}</p>
                                 </Panel.Body>
                             </Panel.Collapse>
                         </Panel>
@@ -274,35 +279,32 @@ class StudentIndividualCaseStatistics extends Component {
             case null:
                 return;
             default:
-                return(
-                    <div className="container">
-                        <div className="row">
-                            <br/>
-                            <div className="col-md-4 text-left">
-                                <Button style={{marginTop: '20px'}} onClick={this.props.returnToCaseStats} bsStyle="primary">Back to cases</Button>
+                switch(this.state.cohortAnswers) {
+                    case null:
+                        return;
+                    default:
+                        return(
+                            <div className="container">
+                                <div className="row">
+                                    <br/>
+                                    <div className="col-md-4 text-left">
+                                        <Button style={{marginTop: '20px'}} onClick={this.props.returnToCaseStats} bsStyle="primary">Back to cases</Button>
+                                    </div>
+                                    <div className="col-md-4 text-center">
+                                        <h1>{this.state.answers[0].case.title}</h1>
+                                    </div>
+                                </div>
+                                <div className="row" style={{marginBottom: '10px'}}>
+                                    <StudentIndividualCaseOverviewChart setSelectedAnswerIndex={this.setSelectedAnswerIndex} answers={this.state.answers} caseId={this.props.caseId} cohortAnswers={this.state.cohortAnswers} />
+                                </div>
+                                <div className="row">
+                                    {this.renderAttemptFilter()}
+                                    {this.renderQuestionFilter()}
+                                    {this.renderQuestionAnswers()}
+                                </div>
                             </div>
-                            <div className="col-md-4 text-center">
-                                <h1>{this.state.answers[0].case.title}</h1>
-                            </div>
-                        </div>
-                        <div className="row" style={{marginBottom: '10px'}}>
-                            {this.renderOverviews()}
-                        </div>
-                        {/*To do - Allow hiding and showing of very detailed data*/}
-                        <div className="row" style={{marginBottom: '10px'}}>
-                            {/*To do - Add time series line chart comparison against cohort over several attempts*/}
-                            {/*{this.renderGraphs()}*/}
-                        </div>
-                        <div className="row" style={{marginBottom: '50px'}}>
-                            {/*To do - Add bar chart to show data over several attempts*/}
-                        </div>
-                        <div className="row">
-                            {this.renderAttemptFilter()}
-                            {this.renderQuestionFilter()}
-                            {this.renderQuestionAnswers()}
-                        </div>
-                    </div>
-                );
+                        );
+                }
         }
     };
 

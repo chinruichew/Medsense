@@ -17,10 +17,15 @@ class StudentCaseStatistics extends Component {
     renderContent = () => {
         switch(this.state.caseId) {
             case null:
+                // Clear any duplicate numAttempts due to async state setting.
                 for(let i = 0; i < this.state.answers.length; i++) {
                     const answer = this.state.answers[i];
                     delete answer.case.numAttempts;
                 }
+
+                // This step is to find how many attempts have been done per case.
+                // For each answer, loop through cases and check whether is has been inserted.
+                // If not inserted, set numAttempts for that case id, else add to the numAttempts.
                 const cases = [];
                 for(let i = 0; i < this.state.answers.length; i++) {
                     const answer = this.state.answers[i];
@@ -30,9 +35,9 @@ class StudentCaseStatistics extends Component {
                         if(answerCase._id === answer.case._id) {
                             toAdd = false;
                             if(answerCase.numAttempts === undefined) {
-                                answerCase.numAttempts = 1;
+                                answerCase.numAttempts = 2;
                             } else {
-                                answerCase.numAttempts += 1;
+                                answerCase.numAttempts ++;
                             }
                         }
                     }
@@ -48,7 +53,7 @@ class StudentCaseStatistics extends Component {
                     let placeholderImage = <Image circle src="/userMD.png" style={{height: '150px', width: '150px'}} />;
                     let attemptDisplay = !answerCase.numAttempts || answerCase.numAttempts === 1? 'Attempt': 'Attempts';
                     return(
-                        <div key={answerCase._id} className="col-md-4">
+                        <div key={answerCase._id} className="col-md-4 case-div">
                             <div className="card">
                                 <div className="card-content text-center">
                                     {placeholderImage}

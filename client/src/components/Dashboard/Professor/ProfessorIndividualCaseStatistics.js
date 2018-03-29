@@ -7,6 +7,8 @@ import ReactEcharts from 'echarts-for-react';
 import {connect} from "react-redux";
 
 import {fetchConstantTypes} from "../../../actions";
+import ProfessorIndividualCaseOverviewChart from "./ProfessorIndividualCaseOverviewChart";
+import ProfessorIndividualCaseQuestionChart from "./ProfessorIndividualCaseQuestionChart";
 
 class ProfessorIndividualCaseStatistics extends Component {
     state = {
@@ -58,9 +60,7 @@ class ProfessorIndividualCaseStatistics extends Component {
             });
         }
         return(
-            <div>
-                <Timeline options={options} items={items} clickHandler={this.visTimelineClickHandler} />
-            </div>
+            <Timeline options={options} items={items} clickHandler={this.visTimelineClickHandler} />
         );
     };
 
@@ -102,119 +102,6 @@ class ProfessorIndividualCaseStatistics extends Component {
         );
     };
 
-    renderAverageScoreChart = (caseQuestion) => {
-        // Create time frame of 12 weeks
-        const backlog = 12;
-        const currentDate = new Date();
-        currentDate.setDate(currentDate.getDate() - 7 * backlog);
-        const timeData = [];
-        for(let i = 0; i < backlog; i++) {
-            currentDate.setDate(currentDate.getDate() + 7);
-            timeData.push({
-                dateString: currentDate.toDateString(),
-                count: 0,
-                totalScore: 0
-            });
-        }
-        for(let i = 0; i < this.state.answers.length; i++){
-            const answer = this.state.answers[i];
-            for(let j = 0; j < timeData.length; j++) {
-                const dateTime = timeData[j];
-                const dateTimeForward = timeData[j + 1];
-                if(dateTimeForward === undefined) {
-                    // Factor this here
-                } else if(new Date(answer.endTime) >= new Date(dateTime.dateString) && new Date(answer.endTime) <= new Date(dateTimeForward.dateString)) {
-                    dateTime.count++;
-                    if(answer.openEndedAnswers.length > 0) {
-                        for(let k = 0; k < answer.openEndedAnswers.length; k++) {
-                            const openEndedAnswer = answer.openEndedAnswers[k];
-                            if(openEndedAnswer.question === caseQuestion._id) {
-                                dateTime.totalScore += openEndedAnswer.score;
-                                break;
-                            }
-                        }
-                    }
-                    if(answer.mcqAnswers.length > 0) {
-                        for(let k = 0; k < answer.mcqAnswers.length; k++) {
-                            const mcqAnswer = answer.mcqAnswers[k];
-                            if(mcqAnswer.question === caseQuestion._id) {
-                                dateTime.totalScore += mcqAnswer.score;
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        const xAxisData = [];
-        const yAxisData = [];
-        for(let i = 0; i < timeData.length; i++){
-            xAxisData.push(timeData[i].dateString);
-            let averageScore = timeData[i].totalScore !== 0 && timeData[i].count !== 0? (timeData[i].totalScore/timeData[i].count).toFixed(2): 0;
-            yAxisData.push(averageScore);
-        }
-        const option = {
-            backgroundColor:'#FFFFFF',
-            title: {
-                text: 'Average score over time'
-            },
-            tooltip: {
-                trigger: 'axis'
-            },
-            legend: {
-                data:['Average Score']
-            },
-            grid: {
-                left: '3%',
-                right: '4%',
-                bottom: '3%',
-                containLabel: true
-            },
-            xAxis: {
-                type: 'category',
-                boundaryGap: false,
-                data: xAxisData
-            },
-            yAxis: {
-                type: 'value',
-                name: 'Score',
-                min: 0,
-                max: parseInt(caseQuestion.mark),
-                interval: 10,
-            },
-            series: [
-                {
-                    name:'Average Score',
-                    type:'line',
-                    data:yAxisData
-                }
-            ]
-        };
-        return(
-            <ReactEcharts option={option} notMerge={true} lazyUpdate={true} />
-        );
-    };
-
-    renderQuestionCharts = (caseQuestion) => {
-        if(caseQuestion.type === this.props.constants.QUESTION_TYPE_MCQ) {
-            return(
-                <div className="row">
-                    <div className="col-md-12 chart-col">
-                        {this.renderAverageScoreChart(caseQuestion)}
-                    </div>
-                </div>
-            );
-        } else {
-            return(
-                <div className="row">
-                    <div className="col-md-12 chart-col">
-                        {this.renderAverageScoreChart(caseQuestion)}
-                    </div>
-                </div>
-            );
-        }
-    };
-
     renderQuestionStats = () => {
         const reviewedCase = this.props.reviewedCase;
         const caseQuestions = reviewedCase.questions;
@@ -233,9 +120,6 @@ class ProfessorIndividualCaseStatistics extends Component {
 
         return caseQuestions.map((caseQuestion, index) => {
             if(this.state.questionFilter === 'All' || this.state.questionFilter === caseQuestion.id) {
-                // Get Question chart stats
-                const questionCharts = this.renderQuestionCharts(caseQuestion);
-
                 // Get Model Answer
                 let modelAnswer = caseQuestion.openEnded;
                 if (caseQuestion.openEnded === '') {
@@ -271,7 +155,7 @@ class ProfessorIndividualCaseStatistics extends Component {
                             </Panel.Heading>
                             <Panel.Collapse>
                                 <Panel.Body>
-                                    {questionCharts}
+                                    <ProfessorIndividualCaseQuestionChart answers={this.state.answers} question={caseQuestion} />
                                     <h3>Question Description</h3>
                                     {questionDisplay}
                                     <h3>Model Answer</h3>
@@ -323,7 +207,7 @@ class ProfessorIndividualCaseStatistics extends Component {
                             </div>
                         </div>
                         <div className="row" style={{marginBottom: '10px'}}>
-                            {this.renderOverviews()}
+                            <ProfessorIndividualCaseOverviewChart answers={this.state.answers} />
                         </div>
                         <div className="row">
                             {this.renderQuestionFilter()}

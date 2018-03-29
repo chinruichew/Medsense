@@ -20,7 +20,7 @@ class NoGamesFound extends Component {
                             <div className="col-md-12 text-center">
                                 <h1>Unfortunately, it seems that you have not attempted any games yet!</h1>
                                 <h2>We cannot analyse your scores and ability without that :/</h2>
-                                <h2>Head on to the Game section to play some games: <Button type="button" bsStyle="primary" onClick={(e) => this.redirectToGame()}>Play Game</Button></h2>
+                                <h2>Head on to the Game page to play some games: <Button type="button" bsStyle="primary" onClick={(e) => this.redirectToGame()}>Play Game</Button></h2>
                             </div>
                         </Row>
                     </div>

@@ -6,6 +6,7 @@ import ContributionLeaderboard from "../DashboardComponents/ContributionLeaderbo
 import StudentCaseStatistics from "./StudentCaseStatistics";
 import {Tab, Tabs} from "react-bootstrap";
 import NoGamesFound from "./NoGamesFound";
+import StudentOverview from "./StudentOverview";
 
 class DashboardStudent extends Component {
     state = {
@@ -26,7 +27,6 @@ class DashboardStudent extends Component {
         // Get all individual answers
         axios.get('/api/getIndividualAnswers').then(res => {
             this.setState({answers: res.data});
-
         }).catch(err => {
             throw(err);
         });
@@ -63,12 +63,17 @@ class DashboardStudent extends Component {
                         return(
                             <div className="container">
                                 <Tabs defaultActiveKey={1}>
-                                    <Tab eventKey={1} title="Case Statistics">
+                                    <Tab eventKey={1} title="Overview">
+                                        <div className="row">
+                                            <StudentOverview answers={this.state.answers} />
+                                        </div>
+                                    </Tab>
+                                    <Tab eventKey={2} title="Case Statistics">
                                         <div className="row">
                                             <StudentCaseStatistics answers={this.state.answers} />
                                         </div>
                                     </Tab>
-                                    <Tab eventKey={2} title="Leaderboard">
+                                    <Tab eventKey={3} title="Leaderboard">
                                         <div className="row">
                                             <br/>
                                             <div className="col-md-6">
