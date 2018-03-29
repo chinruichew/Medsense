@@ -80,8 +80,7 @@ class Approach extends Component {
                 } else {
                     window.alert("Approach Created")
                 }
-            })
-            console.log(this.state.approach)
+            });
         }
     }
 

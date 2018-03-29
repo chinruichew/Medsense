@@ -10,14 +10,42 @@ module.exports = app => {
 
     app.post('/api/addNewApproach', function (req, res) {
         const values = req.body.values;
-        Approach.findOne({ approach: values.approach }, function (err, approach) {
+        Approach.findOne({ approach: values.approach }, async (err, approach) => {
             if (!approach) {
                 const newApproach = new Approach();
-                newApproach.approach = values.approach;
-                newApproach.save();
-                return res.send(newApproach);
+
+                // Uppercase the first letter of each word
+                const spaceIndexes = [];
+                const uncheckedApproach = ' ' + values.approach.trim();
+                for(let i = 0; i < uncheckedApproach.length; i++) {
+                    const approachAlphabet = uncheckedApproach[i];
+                    if(approachAlphabet === ' ') {
+                        spaceIndexes.push(i);
+                    }
+                }
+                let cappedApproach = '';
+                for(let i = 0; i < uncheckedApproach.length; i++) {
+                    const approachAlphabet = uncheckedApproach[i];
+                    let toUpperCase = false;
+                    for(let j = 0; j < spaceIndexes.length; j++) {
+                        const spacedIndex = spaceIndexes[j];
+                        if(spacedIndex + 1 === i) {
+                            toUpperCase = true;
+                            break;
+                        }
+                    }
+                    if(toUpperCase) {
+                        cappedApproach += approachAlphabet.toUpperCase();
+                    } else {
+                        cappedApproach += approachAlphabet;
+                    }
+                }
+
+                newApproach.approach = cappedApproach;
+                await newApproach.save();
+                res.send(newApproach);
             } else {
-                return res.send('Approach Exists');
+                res.send('Approach Exists');
             }
         });
     });
@@ -37,14 +65,42 @@ module.exports = app => {
 
     app.post('/api/addNewSpeciality', function (req, res) {
         const values = req.body.values;
-        Speciality.findOne({ speciality: values.speciality }, function (err, speciality) {
+        Speciality.findOne({ speciality: values.speciality }, async (err, speciality) => {
             if (!speciality) {
                 const newSpeciality = new Speciality();
-                newSpeciality.speciality = values.speciality;
-                newSpeciality.save();
-                return res.send(newSpeciality);
+
+                // Uppercase the first letter of each word
+                const spaceIndexes = [];
+                const uncheckedSpeciality = ' ' + values.speciality.trim();
+                for(let i = 0; i < uncheckedSpeciality.length; i++) {
+                    const specialityAlphabet = uncheckedSpeciality[i];
+                    if(specialityAlphabet === ' ') {
+                        spaceIndexes.push(i);
+                    }
+                }
+                let cappedSpeciality = '';
+                for(let i = 0; i < uncheckedSpeciality.length; i++) {
+                    const specialityAlphabet = uncheckedSpeciality[i];
+                    let toUpperCase = false;
+                    for(let j = 0; j < spaceIndexes.length; j++) {
+                        const spacedIndex = spaceIndexes[j];
+                        if(spacedIndex + 1 === i) {
+                            toUpperCase = true;
+                            break;
+                        }
+                    }
+                    if(toUpperCase) {
+                        cappedSpeciality += specialityAlphabet.toUpperCase();
+                    } else {
+                        cappedSpeciality += specialityAlphabet;
+                    }
+                }
+
+                newSpeciality.speciality = cappedSpeciality;
+                await newSpeciality.save();
+                res.send(newSpeciality);
             } else {
-                return res.send('Speciality Exists');
+                res.send('Speciality Exists');
             }
         });
     });
@@ -104,7 +160,35 @@ module.exports = app => {
         Subspeciality.findOne({ subspeciality: values.subspeciality }, async (err, subspeciality) => {
             if (!subspeciality) {
                 const newSubspeciality = new Subspeciality();
-                newSubspeciality.subspeciality = values.subspeciality;
+
+                // Uppercase the first letter of each word
+                const spaceIndexes = [];
+                const uncheckedSubSpeciality = ' ' + values.subspeciality.trim();
+                for(let i = 0; i < uncheckedSubSpeciality.length; i++) {
+                    const subSpecialityAlphabet = uncheckedSubSpeciality[i];
+                    if(subSpecialityAlphabet === ' ') {
+                        spaceIndexes.push(i);
+                    }
+                }
+                let cappedSubSpeciality = '';
+                for(let i = 0; i < uncheckedSubSpeciality.length; i++) {
+                    const subSpecialityAlphabet = uncheckedSubSpeciality[i];
+                    let toUpperCase = false;
+                    for(let j = 0; j < spaceIndexes.length; j++) {
+                        const spacedIndex = spaceIndexes[j];
+                        if(spacedIndex + 1 === i) {
+                            toUpperCase = true;
+                            break;
+                        }
+                    }
+                    if(toUpperCase) {
+                        cappedSubSpeciality += subSpecialityAlphabet.toUpperCase();
+                    } else {
+                        cappedSubSpeciality += subSpecialityAlphabet;
+                    }
+                }
+
+                newSubspeciality.subspeciality = cappedSubSpeciality;
                 await newSubspeciality.save();
 
                 const selectedSpecialities = values.selectedOptions;
@@ -120,7 +204,6 @@ module.exports = app => {
                         if(err) {
                             console.log(err);
                         }
-                        console.log(speciality);
                     });
                 }
 
