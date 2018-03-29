@@ -202,24 +202,34 @@ module.exports = app => {
         res.send(String(rank));
     });
 
-    app.post('/api/calculateContributionPoints', function (req, res){
+    app.post('/api/calculateContributionPoints', async (req, res) => {
         let points;
         let numUploads = 0;
         let numGames = 0;
-        Case.count({ vetter: req.session.user._id }).exec(async (err, count) => {
-            points = 0.2 * count;
-            const uploads = await Case.find({ authorid: req.session.user._id }).select();
-            for (let i=0;i<uploads.length;i++){
-                numUploads += 1;
-                let upload = uploads[i];
-                if (upload.status === "Vetted"){
-                    const games = await AnswerOverview.find({ case: upload._id }).exec();
-                    numGames += games.length;
-                }
+
+        // This is an I/O Operation, will run async if not handled
+        // Add 'await' to wait for Case count query to complete before running next lines of code
+        const count = await Case.count({ vetter: req.session.user._id }).exec();
+        points = 0.2 * count;
+
+        // This is an I/O Operation, will run async if not handled
+        // Add 'await' to wait for Case query to complete before running next lines of code
+        const uploads = await Case.find({ authorid: req.session.user._id }).select();
+
+        for (let i=0;i<uploads.length;i++){
+            numUploads += 1;
+            let upload = uploads[i];
+            if (upload.status === "Vetted") {
+                // This is an I/O Operation, will run async if not handled
+                // Add 'await' to wait for AnswerOverview query to complete before running next lines of code
+                const games = await AnswerOverview.find({ case: upload._id }).exec();
+                numGames += games.length;
             }
-            points += 0.3*numUploads+0.5*numGames;
-            console.log(numUploads, points);
-            res.send(String(points));
-        });
+        }
+
+        points += 0.3*numUploads+0.5*numGames;
+
+        console.log(numUploads, points);
+        res.send(String(points));
     });
 };
