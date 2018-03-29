@@ -222,14 +222,12 @@ module.exports = app => {
             if (upload.status === "Vetted") {
                 // This is an I/O Operation, will run async if not handled
                 // Add 'await' to wait for AnswerOverview query to complete before running next lines of code
-                const games = await AnswerOverview.find({ case: upload._id }).exec();
+                const games = await AnswerOverview.find({ case: upload._id, user : { $ne: req.session.user._id } }).exec();
                 numGames += games.length;
             }
         }
 
         points += 0.3*numUploads+0.5*numGames;
-
-        console.log(numUploads, points);
         res.send(String(points));
     });
 };
