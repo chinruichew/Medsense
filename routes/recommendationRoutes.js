@@ -1,6 +1,7 @@
 const Case = require('../models/Case');
 const AnswerOverview = require('../models/AnswerOverview');
 const Subspeciality = require('../models/Subspeciality');
+const Recommendation = require('../models/Recommendation');
 
 const constants = require('../utility/constantTypes');
 
@@ -439,5 +440,22 @@ module.exports = app => {
                 res.send(difficultySortedCases);
             }
         }
+    });
+
+    app.post('/api/addRecommendationClick', async(req, res) => {
+        const caseId = req.body.caseId;
+        let recommendation = await Recommendation.find({case: caseId, user: req.session.user}).select();
+        if(recommendation !== null && recommendation.length !== 0) {
+            recommendation.numClicks++;
+            await Recommendation.findByIdAndUpdate(recommendation._id, recommendation, {new: true}).exec();
+        } else {
+            recommendation = new Recommendation({
+                case: caseId,
+                user: req.session.user,
+                numClicks: 1
+            });
+            await recommendation.save();
+        }
+        res.send(recommendation);
     });
 };

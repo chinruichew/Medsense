@@ -38,9 +38,15 @@ class ProfessorHome extends Component {
     }
 
     handleCarouselButtonClick = (caseId) => {
-        this.setState({
-            redirectToVetting: true,
+        axios.post('/api/addRecommendationClick', {
             caseId
+        }).then(res => {
+            this.setState({
+                redirectToVetting: true,
+                caseId
+            });
+        }).catch(err => {
+            console.log(err);
         });
     };
 

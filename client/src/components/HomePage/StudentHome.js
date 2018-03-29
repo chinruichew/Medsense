@@ -66,9 +66,15 @@ class StudentHome extends Component {
     };
 
     handleCarouselButtonClick = (gameId) => {
-        this.setState({
-            directToRecommendedGame: true,
-            gameId
+        axios.post('/api/addRecommendationClick', {
+            caseId: gameId
+        }).then(res => {
+            this.setState({
+                directToRecommendedGame: true,
+                gameId
+            });
+        }).catch(err => {
+            console.log(err);
         });
     };
 
@@ -484,7 +490,7 @@ class StudentHome extends Component {
                         }
 
                         return(
-                            <div className="col-md-4">
+                            <div key={index} className="col-md-4">
                                 {recommendationAnimation}
                             </div>
                         );
