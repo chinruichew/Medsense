@@ -97,7 +97,7 @@ class StudentIndividualCaseQuestionChart extends Component {
                 if(toAdd) {
                     cohortOverviewData.push({
                         attempt: cohortAnswer.attempt,
-                        totalScore: 0,
+                        totalScore: answerOfQuestion.score,
                         numAttempts: 1
                     });
                 }
