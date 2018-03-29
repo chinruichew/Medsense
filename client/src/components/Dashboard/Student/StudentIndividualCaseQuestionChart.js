@@ -137,7 +137,12 @@ class StudentIndividualCaseQuestionChart extends Component {
         const differenceData = [];
         for(let i = 0; i < questionAnswerData.length; i++) {
             const questionAnswerScore = questionAnswerData[i];
-            differenceData.push(averageCohortData[i] - questionAnswerScore > 0? averageCohortData[i] - questionAnswerScore: 0);
+            let differenceScore = averageCohortData[i] - questionAnswerScore.score > 0? averageCohortData[i] - questionAnswerScore.score: 0;
+            const decimalIndex = String(differenceScore).indexOf('.');
+            if(decimalIndex !== -1 && !(decimalIndex + 2 >= differenceScore.length - 1)) {
+                differenceScore = differenceScore.toFixed(2);
+            }
+            differenceData.push(differenceScore);
         }
 
         // Define the chart options
