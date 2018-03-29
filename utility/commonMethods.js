@@ -43,11 +43,11 @@ module.exports = {
         return userRank;
     },
     CALCULATE_CONTRIBUTION_RANK: async(points) => {
-        const contributionSchemes = await ContributionLevelScheme.find().sort({points: -1});
+        const contributionSchemes = await ContributionLevelScheme.find().sort({point: -1});
         let rank = '';
         for(let i = 0; i < contributionSchemes.length; i++) {
             const contributionScheme = contributionSchemes[i];
-            if(contributionScheme.points <= points) {
+            if(contributionScheme.point <= points) {
                 rank = contributionScheme.rank;
                 break;
             }

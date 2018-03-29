@@ -76,7 +76,12 @@ class StudentProfile extends Component {
     };
 
     render() {
-        let vmClose = () => this.setState({ vmShow: false });
+        const showContributor = this.state.contribution==="" ? "" : <td><center>
+            <Image src="./contribution.png" circle style={{width: "3em", height: "3em"}} />
+        </center></td>;
+        const contributionRank = this.state.contribution==="" ? "" : <td style={{width: '100px'}} ><center>
+            <h4> {this.state.contribution} </h4>
+        </center></td>;
         return (
             <div>
                 <div align="center">
@@ -101,9 +106,7 @@ class StudentProfile extends Component {
                             <td><center>
                                 <Image src="./experience.png" circle style={{width: "3em", height: "3em"}} />
                             </center></td>
-                            <td><center>
-                                <Image src="./contribution.png" circle style={{width: "3em", height: "3em"}} />
-                            </center></td>
+                            {showContributor}
                         </tr>
                         <tr>
                             <td style={{width: '100px'}} ><center>
@@ -115,9 +118,7 @@ class StudentProfile extends Component {
                             <td style={{width: '100px'}} ><center>
                                 <h4> {this.state.rank} </h4>
                             </center></td>
-                            <td style={{width: '100px'}} ><center>
-                                <h4> {this.state.contribution} </h4>
-                            </center></td>
+                            {contributionRank}
                         </tr>
                     </Table>
                     <br/>

@@ -197,7 +197,7 @@ module.exports = app => {
     });
 
     app.get('/api/getContributionRank', async(req, res) => {
-        const points = req.query.points;
+        const points = parseInt(req.query.points,10);
         const rank = await commonMethods.CALCULATE_CONTRIBUTION_RANK(points);
         res.send(String(rank));
     });
@@ -206,21 +206,22 @@ module.exports = app => {
         let points;
         let numUploads = 0;
         let numGames = 0;
-        Case.count({ vetter: req.session.user._id }, function (err, count){
+        Case.count({ vetter: req.session.user._id }).exec(function (err, count){
             points = 0.2 * count;
-            // Case.find({ author: req.session.user._id }).exec(async (err, uploads) =>{
-            //     for (let i=0;i<uploads.length;i++){
-            //         numUploads += 1;
-            //         let upload = uploads[i];
-            //         if (upload.status === "Vetted"){
-            //             AnswerOverview.find({ case: upload._id }).exec(async (err, games) =>{
-            //                 numGames += games.length;
-            //             });
-            //         }
-            //     }
-            // });
+            Case.find({ authorid: req.session.user._id }).exec(async (err, uploads) => {
+                for (let i=0;i<uploads.length;i++){
+                    numUploads += 1;
+                    let upload = uploads[i];
+                    if (upload.status === "Vetted"){
+                        await AnswerOverview.find({ case: upload._id }).exec(function (err, games){
+                            numGames += games.length;
+                        });
+                    }
+                }
+            });
             points += 0.3*numUploads+0.5*numGames;
-            res.send(points);
+            console.log(numUploads);
+            res.send(String(points));
         });
     });
 };
