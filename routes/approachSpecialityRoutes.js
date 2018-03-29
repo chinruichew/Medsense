@@ -64,22 +64,33 @@ module.exports = app => {
     });
 
     app.post('/api/batchFetchSubSpecialities', async(req, res) => {
+        // Get the list of specialities, of which their sub-specialities we want to fetch.
         let specialities = req.body.specialities;
+
+        // For each speciality, fetch from database their Mongoose object and all of their sub-specialities.
+        // For each speciality, we want a json object which includes their list of sub-specialities.
+        // specialityMapping: [{speciality: Clinical Practicum, subspecialities: [Array]}, {speciality: Medicine, subspecialities: [Array]}]
+        // The counter will go from 0 to specialities.length - 1, allowing us to iterate through all the specialities.
         const specialityMapping = [];
         let counter = 0;
         while(counter < specialities.length) {
             const speciality = specialities[counter];
+
+            // Wait for DB to fetch Speciality details.
             const subSpecialities = await Speciality.find({"speciality": speciality}).populate({
                 path: 'subspecialities',
                 model: 'subspecialities'
             });
+
+            // Add into specialityMapping array as unique objects..
             specialityMapping.push({
                 speciality,
                 subSpecialities
             });
+
+            // Increase counter increment to match array index.
             counter++;
         }
-        console.log(specialityMapping);
         res.send(specialityMapping);
     });
 
