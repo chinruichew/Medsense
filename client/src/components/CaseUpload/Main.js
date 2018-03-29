@@ -377,7 +377,7 @@ class Main extends Component {
                         } else if (this.props.process!=="vet" && obj.attachment && !this.validFileType(obj.attachment)) {
                             error = "Question #" + obj.id + ": Please make sure your Question attachment is an image of type .jpg, .jpeg, or .png!";
                             throw BreakException;
-                        } else if (this.props.process==="vet" && typeof(obj.attachment)!=="string" && !this.validFileType(obj.attachment)){
+                        } else if (this.props.process==="vet" && typeof(obj.attachment)!=="string" && obj.attachment !== null && !this.validFileType(obj.attachment)){
                             error = "Question #" + obj.id + ": Please make sure your Question attachment is an image of type .jpg, .jpeg, or .png!";
                             throw BreakException;
                         } else if (obj.type === "Select One") {
@@ -471,6 +471,7 @@ class Main extends Component {
 
                 } catch (e) {
                     this.setState({vmShow: true, error: error});
+                    console.log(e);
                     return;
                 }
             }
