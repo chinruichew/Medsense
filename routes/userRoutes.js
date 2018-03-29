@@ -206,21 +206,19 @@ module.exports = app => {
         let points;
         let numUploads = 0;
         let numGames = 0;
-        Case.count({ vetter: req.session.user._id }).exec(function (err, count){
+        Case.count({ vetter: req.session.user._id }).exec(async (err, count) => {
             points = 0.2 * count;
-            Case.find({ authorid: req.session.user._id }).exec(async (err, uploads) => {
-                for (let i=0;i<uploads.length;i++){
-                    numUploads += 1;
-                    let upload = uploads[i];
-                    if (upload.status === "Vetted"){
-                        await AnswerOverview.find({ case: upload._id }).exec(function (err, games){
-                            numGames += games.length;
-                        });
-                    }
+            const uploads = await Case.find({ authorid: req.session.user._id }).select();
+            for (let i=0;i<uploads.length;i++){
+                numUploads += 1;
+                let upload = uploads[i];
+                if (upload.status === "Vetted"){
+                    const games = await AnswerOverview.find({ case: upload._id }).exec();
+                    numGames += games.length;
                 }
-            });
+            }
             points += 0.3*numUploads+0.5*numGames;
-            console.log(numUploads);
+            console.log(numUploads, points);
             res.send(String(points));
         });
     });
