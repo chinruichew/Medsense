@@ -104,7 +104,7 @@ module.exports = app => {
                 ...averagedSubSpecialityMapping
             ];
             // Keep looping and adding to upload recommendations while its length is lower than threshold and averagedSubSpecialityMappingFilter > 0
-            while(uploadRecommendations.length < constants.UPLOAD_CASES_RECOMMENDATION_THRESHOLD || averagedSubSpecialityMappingFilter.length >= 0) {
+            while(uploadRecommendations.length < constants.UPLOAD_CASES_RECOMMENDATION_THRESHOLD && averagedSubSpecialityMappingFilter.length > 0) {
 
                 // Find lowest score out of averagedSubSpecialityMappingFilter array objects
                 let lowestScore = Number.MAX_SAFE_INTEGER;
