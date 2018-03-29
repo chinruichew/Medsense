@@ -5,7 +5,9 @@ export default function (state = null, action) {
         case FETCH_SPECIALITY:
             return action.payload || false;
         case ADD_NEW_SPECIALITY:
-            return state.concat(action.payload) || false;
+            if (action.payload != "Speciality Exists") {
+                return state.concat(action.payload) || false;
+            }
         case DELETE_SPECIALITY:
             const speciality = action.payload
             return state.filter((item) => item._id !== speciality)

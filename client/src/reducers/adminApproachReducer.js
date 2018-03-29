@@ -5,7 +5,9 @@ export default function (state = null, action) {
         case FETCH_APPROACH:
             return action.payload || false;
         case ADD_NEW_APPROACH:
+        if (action.payload != "Approach Exists") {
             return state.concat(action.payload) || false;
+        }
         case DELETE_APPROACH:
             const approach = action.payload
             return state.filter((item) => item._id !== approach)

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, ControlLabel, FormGroup, FormControl, Table, Row, Col } from 'react-bootstrap';
+import { Button, ControlLabel, FormGroup, FormControl, Table, Col, Row } from 'react-bootstrap';
 import { addNewSpeciality, deleteSpeciality } from '../../actions';
 import './Admin.css';
 
@@ -18,7 +18,7 @@ class Speciality extends Component {
             <Table responsive>
                 <thead>
                     <tr style={{ background: '#D9EDF7', fontSize: "130%" }}>
-                        <th><center>Speciality</center></th>
+                        <th><center>Specialityes</center></th>
                         <th> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
                     </tr>
                 </thead>
@@ -57,8 +57,8 @@ class Speciality extends Component {
                                      onChange={(e) => this.handleSpecialityChange(e)} />
                     </Col>
                     <Col smOffset={10}>
-                        <Button style={{ fontSize: "125%" }} bsStyle="primary" o
-                                nClick={(e) => this.addSpeciality()}>Add Speciality</Button>
+                        <Button style={{ fontSize: "125%" }} bsStyle="primary"
+                                onClick={(e) => this.addSpeciality()}>Add Speciality</Button>
                     </Col>
                 </Row>
             </FormGroup>
@@ -72,7 +72,7 @@ class Speciality extends Component {
 
     addSpeciality() {
         if (this.state.speciality.trim() === '' || this.state.speciality == null) {
-            window.alert("Approach not filled")
+            window.alert("Speciality not filled")
         } else {
             this.props.addNewSpeciality(this.state).then(function (response) {
                 if (response.data === "Speciality Exists") {
@@ -81,9 +81,9 @@ class Speciality extends Component {
                     window.alert("Speciality Created")
                 }
             })
+            console.log(this.state.speciality)
         }
     }
-
 
     render() {
         return (
@@ -101,3 +101,5 @@ function mapStateToProps({ auth, speciality }) {
 }
 
 export default connect(mapStateToProps, { addNewSpeciality, deleteSpeciality })(Speciality);
+
+
