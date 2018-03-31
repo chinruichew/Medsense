@@ -427,6 +427,13 @@ module.exports = app => {
         res.send(approachCount);
     });
 
+    app.get('/api/fetchCaseSpecialityCount', async (req, res) => {
+        const caseSpecialityCount = await Case.aggregate([
+            { $unwind: '$speciality' },
+            { $group: { _id: '$speciality', count: { $sum: 1 } } }]).sort({ count: -1 }).exec();
+        res.send(caseSpecialityCount);
+    });
+
     app.post('/api/fetchSpecialityCount', async (req, res) => {
         const specialityCount = await Case.aggregate([
             { $match: { speciality: { $gte: req.body['speciality'] } } },
