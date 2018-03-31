@@ -404,7 +404,7 @@ class DeleteUser extends Component {
                             <th><center>School</center></th>
                             <th><center>Speciality</center></th>
                             <th><center>Sub-Speciality</center></th>
-                            <th><center>Contribution</center></th>
+                            {/*<th><center>Contribution</center></th>*/}
                             <th> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
                         </tr>
                     </thead>
@@ -423,7 +423,7 @@ class DeleteUser extends Component {
                     <td><center>{user.school}</center></td>
                     <td><center>{user.speciality}</center></td>
                     <td className="prof-table-subspec"><center>{user.subspeciality.join(", ")}</center></td>
-                    <td><center>Contribution Rank</center></td>
+                    {/*<td><center>Contribution Rank</center></td>*/}
                     <td><center><Button bsStyle="primary" onClick={(e) => this.handleDeleteAdminProfessor(user)}>Delete</Button></center></td >
                 </tr>
             }

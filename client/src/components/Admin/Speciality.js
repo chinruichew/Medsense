@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, ControlLabel, FormGroup, FormControl, Table, Col, Row } from 'react-bootstrap';
+import { Button, ControlLabel, FormGroup, FormControl, Table, Col, Row, Modal } from 'react-bootstrap';
 import { addNewSpeciality, deleteSpeciality } from '../../actions';
 import './Admin.css';
 
 class Speciality extends Component {
     state = {
-        speciality: ""
+        speciality: "",
+        showDeleteConfirm: false,
+        specialityidToDelete: ""
     };
 
     componentDidMount() {
@@ -27,15 +29,20 @@ class Speciality extends Component {
         );
     }
 
-    deleteAdminSpeciality(e) {
-        this.props.deleteSpeciality(e._id)
+    handleDeleteAdminSpeciality(e) {
+        this.setState({specialityidToDelete: e._id, showDeleteConfirm: true});
+    }
+
+    deleteAdminSpeciality(e){
+        this.setState({showDeleteConfirm: false});
+        this.props.deleteSpeciality(this.state.specialityidToDelete);
     }
 
     renderSpeciality() {
         let allSpeciality = this.props.speciality.map(speciality => {
             return <tr>
                 <td><center>{speciality.speciality}</center></td>
-                <td><center><Button bsStyle="primary" onClick={(e) => this.deleteAdminSpeciality(speciality)}>Delete</Button></center></td >
+                <td><center><Button bsStyle="primary" onClick={(e) => this.handleDeleteAdminSpeciality(speciality)}>Delete</Button></center></td >
             </tr>
         });
 
@@ -91,6 +98,22 @@ class Speciality extends Component {
                 {this.setSpeciality()}
                 <br/>
                 {this.renderTableSpeciality()}
+
+                <Modal show={this.state.showDeleteConfirm} onHide={(e) => this.setState({ showDeleteConfirm: false })}>
+                    <Modal.Header closeButton>
+                        <Modal.Title id="contained-modal-title">
+                            Deletion Confirmation
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        Are you sure you want to delete this speciality?
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button onClick={(e) => this.deleteAdminSpeciality(e) }>Yes</Button>
+                        <Button onClick={(e) => this.setState({ showDeleteConfirm: false})}>No</Button>
+                    </Modal.Footer>
+                </Modal>
+
             </div>
         );
     }

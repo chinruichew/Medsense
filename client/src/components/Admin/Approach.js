@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, ControlLabel, FormGroup, FormControl, Table, Col, Row } from 'react-bootstrap';
+import { Button, ControlLabel, FormGroup, FormControl, Table, Col, Row, Modal } from 'react-bootstrap';
 import { addNewApproach, deleteApproach } from '../../actions';
 import './Admin.css';
 
 class Approach extends Component {
     state = {
-        approach: ""
+        approach: "",
+        showDeleteConfirm: false,
+        approachidToDelete: ""
     };
 
     componentDidMount() {
@@ -27,15 +29,20 @@ class Approach extends Component {
         );
     }
 
-    deleteAdminApproach(e) {
-        this.props.deleteApproach(e._id)
+    handleDeleteAdminApproach(e) {
+        this.setState({approachidToDelete: e._id, showDeleteConfirm: true});
+    }
+
+    deleteAdminApproach(e){
+        this.setState({showDeleteConfirm: false});
+        this.props.deleteApproach(this.state.approachidToDelete);
     }
 
     renderApproach() {
         let allApproach = this.props.approach.map(approach => {
             return <tr>
                 <td><center>{approach.approach}</center></td>
-                <td><center><Button bsStyle="primary" onClick={(e) => this.deleteAdminApproach(approach)}>Delete</Button></center></td >
+                <td><center><Button bsStyle="primary" onClick={(e) => this.handleDeleteAdminApproach(approach)}>Delete</Button></center></td >
             </tr>
         });
 
@@ -91,6 +98,21 @@ class Approach extends Component {
                 {this.setApproach()}
                 <br/>
                 {this.renderTableApproach()}
+
+                <Modal show={this.state.showDeleteConfirm} onHide={(e) => this.setState({ showDeleteConfirm: false })}>
+                    <Modal.Header closeButton>
+                        <Modal.Title id="contained-modal-title">
+                            Deletion Confirmation
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        Are you sure you want to delete this approach?
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button onClick={(e) => this.deleteAdminApproach(e) }>Yes</Button>
+                        <Button onClick={(e) => this.setState({ showDeleteConfirm: false})}>No</Button>
+                    </Modal.Footer>
+                </Modal>
             </div>
         );
     }

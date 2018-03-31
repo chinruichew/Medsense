@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, ControlLabel, FormGroup, FormControl, Table, Col, Row } from 'react-bootstrap';
+import { Button, ControlLabel, FormGroup, FormControl, Table, Col, Row, Modal } from 'react-bootstrap';
 import { addNewSubspeciality, deleteSubspeciality } from '../../actions';
 import axios from 'axios';
 import Multiselect from 'react-bootstrap-multiselect';
@@ -12,7 +12,9 @@ class Subspeciality extends Component {
         subspeciality: "",
         showSpec: false,
         specialities: null,
-        selectedOptions: []
+        selectedOptions: [],
+        showDeleteConfirm: false,
+        subspecialityidToDelete: ""
     };
 
     componentDidMount() {
@@ -37,15 +39,25 @@ class Subspeciality extends Component {
         );
     }
 
-    deleteAdminSubspeciality(e) {
-        this.props.deleteSubspeciality(e._id)
+    // deleteAdminSubspeciality(e) {
+    //     this.props.deleteSubspeciality(e._id)
+    // }
+
+    handleDeleteAdminSubspeciality(e) {
+        this.setState({subspecialityidToDelete: e._id, showDeleteConfirm: true});
     }
+
+    deleteAdminSubspeciality(e){
+        this.setState({showDeleteConfirm: false});
+        this.props.deleteSubspeciality(this.state.subspecialityidToDelete);
+    }
+
 
     renderSubspeciality() {
         let allSubspeciality = this.props.subspeciality.map(subspeciality => {
             return <tr>
                 <td><center>{subspeciality.subspeciality}</center></td>
-                <td><center><Button bsStyle="primary" onClick={(e) => this.deleteAdminSubspeciality(subspeciality)}>Delete</Button></center></td >
+                <td><center><Button bsStyle="primary" onClick={(e) => this.handleDeleteAdminSubspeciality(subspeciality)}>Delete</Button></center></td >
             </tr>
         });
 
@@ -158,6 +170,22 @@ class Subspeciality extends Component {
         return(
             <div>
                 {this.renderContent()}
+
+                <Modal show={this.state.showDeleteConfirm} onHide={(e) => this.setState({ showDeleteConfirm: false })}>
+                    <Modal.Header closeButton>
+                        <Modal.Title id="contained-modal-title">
+                            Deletion Confirmation
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        Are you sure you want to delete this subspeciality?
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button onClick={(e) => this.deleteAdminSubspeciality(e) }>Yes</Button>
+                        <Button onClick={(e) => this.setState({ showDeleteConfirm: false})}>No</Button>
+                    </Modal.Footer>
+                </Modal>
+
             </div>
         );
     }
