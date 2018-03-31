@@ -1,10 +1,15 @@
-.table > thead > tr > th{
+.case-table > thead > tr > th{
     vertical-align: middle;
 }
 
-.table > tbody > tr > td {
+.case-table > tbody > tr > td {
     vertical-align: middle;
+    text-align: left;
     width: 14%;
+}
+
+.prof-table-subspec{
+    width: 30%;
 }
 
 .delete-case-detail h4{

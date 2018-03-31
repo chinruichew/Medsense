@@ -238,16 +238,16 @@ class CaseManager extends Component {
 
     renderTable() {
         return (
-            <Table responsive className="table">
+            <Table responsive className="case-table">
                 <thead>
                     <tr style={{ background: '#D9EDF7', fontSize: "130%" }}>
-                        <th><center>Case Title</center></th>
-                        <th><center>Approach</center></th>
-                        <th><center>Speciality</center></th>
-                        <th><center>Sub-Speciality</center></th>
-                        <th><center>Difficulty Level</center></th>
-                        <th><center>Uploaded By</center></th>
-                        <th><center>Last Updated</center></th>
+                        <th>Case Title</th>
+                        <th>Approach</th>
+                        <th>Speciality</th>
+                        <th>Sub-Speciality</th>
+                        <th>Difficulty Level</th>
+                        <th>Uploaded By</th>
+                        <th>Last Updated</th>
                         <th> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
                     </tr>
                 </thead>
@@ -315,7 +315,9 @@ class CaseManager extends Component {
                                     {/* <div className='col-sm-4'>
                                             {this.setTime()}
                                         </div> */}
-                                    <div className='col-sm-12' align='right'>
+
+                                    <div className='col-sm-12' align='center'>
+                                        <br/>
                                         <Button type="button" bsSize="lg" bsStyle="primary" onClick={(e) => this.searchCases()}> &nbsp; Search &nbsp;</Button>
                                     </div>
                                 </div>
@@ -386,7 +388,7 @@ class CaseManager extends Component {
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        Are you sure you want to delete the case?
+                        Are you sure you want to delete this case?
                     </Modal.Body>
                     <Modal.Footer>
                         <Button onClick={(e) => this.deleteCase()}>Yes</Button>

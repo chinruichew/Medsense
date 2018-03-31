@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, ControlLabel, FormGroup, FormControl, Table, Col } from 'react-bootstrap';
+import { Button, ControlLabel, FormGroup, FormControl, Table, Col, Modal } from 'react-bootstrap';
 
 import { fetchFilteredAdminStudents, fetchFilteredAdminProfessors, fetchFilteredAdminAdmins, deleteAdminStudent, deleteAdminProfessor, deleteAdminAdmin } from '../../actions';
 import './Admin.css';
@@ -16,7 +16,11 @@ class DeleteUser extends Component {
         speciality: '',
         subspeciality: [],
         seniorStatus: '',
-        constants: ''
+        constants: '',
+        showDeleteProfConfirm: false,
+        showDeleteStuConfirm: false,
+        showDeleteAdminConfirm: false,
+        useridToDelete: ''
     };
 
     componentDidMount() {
@@ -246,7 +250,7 @@ class DeleteUser extends Component {
             } else {
                 return (
                     <FormGroup controlId="formControlsSubspeciality">
-                        <ControlLabel style={{ fontSize: "150%" }}>Sub-speciality<span style={{ color: "red" }}>*</span></ControlLabel>
+                        <ControlLabel style={{ fontSize: "150%" }}>Sub-speciality</ControlLabel>
                         <FormControl componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)}>
                             <option value="Select One">Please select a Speciality first</option>
                         </FormControl>
@@ -287,16 +291,34 @@ class DeleteUser extends Component {
 
     }
 
-    deleteAdminStudent(e) {
-        this.props.deleteAdminStudent(e._id)
+    handleDeleteAdminProfessor(e) {
+        this.setState({useridToDelete: e._id});
+        this.setState({showDeleteProfConfirm: true});
     }
 
-    deleteAdminProfessor(e) {
-        this.props.deleteAdminProfessor(e._id)
+    handleDeleteAdminStudent(e) {
+        this.setState({useridToDelete: e._id});
+        this.setState({showDeleteStuConfirm: true});
     }
 
-    deleteAdminAdmin(e) {
-        this.props.deleteAdminAdmin(e._id)
+    handleDeleteAdminAdmin(e) {
+        this.setState({useridToDelete: e._id});
+        this.setState({showDeleteAdminConfirm: true});
+    }
+
+    deleteAdminProfessor(e){
+        this.setState({showDeleteProfConfirm: false});
+        this.props.deleteAdminProfessor(this.state.useridToDelete);
+    }
+
+    deleteAdminAdmin(e){
+        this.setState({showDeleteAdminConfirm: false});
+        this.props.deleteAdminAdmin(this.state.useridToDelete);
+    }
+
+    deleteAdminStudent(e){
+        this.setState({showDeleteStuConfirm: false});
+        this.props.deleteAdminStudent(this.state.useridToDelete);
     }
 
     convert(xp) {
@@ -321,7 +343,7 @@ class DeleteUser extends Component {
                     <td><center>{this.convert(user.points)}</center></td>
                     <td><center>{user.points}</center></td>
                     <td><center>{user.timestamp.split("T")[0]}</center></td>
-                    <td><center><Button bsStyle="primary" onClick={(e) => this.deleteAdminStudent(user)}>Delete</Button></center></td >
+                    <td><center><Button bsStyle="primary" onClick={(e) => this.handleDeleteAdminStudent(user)}>Delete</Button></center></td >
                 </tr>
             }
             return '';
@@ -358,7 +380,7 @@ class DeleteUser extends Component {
             if (user.usertype === this.state.constants.USER_TYPE_ADMIN) {
                 return <tr>
                     <td><center>{user.username}</center></td>
-                    <td><center><Button bsStyle="primary" onClick={(e) => this.deleteAdminAdmin(user)}>Delete</Button></center></td >
+                    <td><center><Button bsStyle="primary" onClick={(e) => this.handleDeleteAdminAdmin(user)}>Delete</Button></center></td >
                 </tr>
             }
             return '';
@@ -394,14 +416,15 @@ class DeleteUser extends Component {
 
     renderProfessors() {
         let allProfessors = this.props.adminUsers.map(user => {
+            console.log(user);
             if (user.usertype === this.state.constants.USER_TYPE_PROFESSOR) {
                 return <tr>
                     <td><center>{user.username}</center></td>
                     <td><center>{user.school}</center></td>
                     <td><center>{user.speciality}</center></td>
-                    <td><center>{user.subspeciality.join(", ")}</center></td>
-                    <td><center>Contribution 1</center></td>
-                    <td><center><Button bsStyle="primary" onClick={(e) => this.deleteAdminProfessor(user)}>Delete</Button></center></td >
+                    <td className="prof-table-subspec"><center>{user.subspeciality.join(", ")}</center></td>
+                    <td><center>Contribution Rank</center></td>
+                    <td><center><Button bsStyle="primary" onClick={(e) => this.handleDeleteAdminProfessor(user)}>Delete</Button></center></td >
                 </tr>
             }
             return '';
@@ -426,6 +449,8 @@ class DeleteUser extends Component {
         }
     }
 
+
+
     render() {
         return (
             <div style={{paddingTop: "1%"}}>
@@ -443,6 +468,52 @@ class DeleteUser extends Component {
                 {this.renderTableStudent()}
                 {this.renderTableProfessors()}
                 {this.renderTableAdmins()}
+
+                <Modal show={this.state.showDeleteProfConfirm} onHide={(e) => this.setState({ showDeleteProfConfirm: false })}>
+                    <Modal.Header closeButton>
+                        <Modal.Title id="contained-modal-title">
+                            Deletion Confirmation
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        Are you sure you want to delete this user?
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button onClick={(e) => this.deleteAdminProfessor(e) }>Yes</Button>
+                        <Button onClick={(e) => this.setState({ showDeleteProfConfirm: false})}>No</Button>
+                    </Modal.Footer>
+                </Modal>
+
+                <Modal show={this.state.showDeleteAdminConfirm} onHide={(e) => this.setState({ showDeleteAdminConfirm: false })}>
+                    <Modal.Header closeButton>
+                        <Modal.Title id="contained-modal-title">
+                            Deletion Confirmation
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        Are you sure you want to delete this user?
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button onClick={(e) => this.deleteAdminAdmin(e) }>Yes</Button>
+                        <Button onClick={(e) => this.setState({ showDeleteAdminConfirm: false})}>No</Button>
+                    </Modal.Footer>
+                </Modal>
+
+                <Modal show={this.state.showDeleteStuConfirm} onHide={(e) => this.setState({ showDeleteStuConfirm: false })}>
+                    <Modal.Header closeButton>
+                        <Modal.Title id="contained-modal-title">
+                            Deletion Confirmation
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        Are you sure you want to delete this user?
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button onClick={(e) => this.deleteAdminStudent(e) }>Yes</Button>
+                        <Button onClick={(e) => this.setState({ showDeleteStuConfirm: false})}>No</Button>
+                    </Modal.Footer>
+                </Modal>
+
             </div>
         );
     }
