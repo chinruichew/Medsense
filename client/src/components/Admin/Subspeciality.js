@@ -78,7 +78,7 @@ class Subspeciality extends Component {
                         <FormControl type="text" value={this.state.subspeciality} name="username"
                                      onChange={(e) => this.handleSubspecialityChange(e)} />
                     </Col>
-                    <Col smOffset={10}><Button style={{ fontSize: "125%" }} bsStyle="primary" onClick={(e) => this.showSpecialities()}>Add Subspeciality</Button>
+                    <Col smOffset={10}><Button style={{ fontSize: "125%" }} bsStyle="primary" onClick={(e) => this.showSpecialities()}>Choose Speciality</Button>
                     </Col>
                 </Row>
             </FormGroup>
@@ -141,8 +141,14 @@ class Subspeciality extends Component {
 
             return(
                 <form>
-                    <Multiselect onChange={this.handleChange} ref="myRef" data={specialities} multiple />
-                    <Button onClick={(e) => this.addSubspeciality()}>Submit</Button>
+                    <Row>
+                        <Col sm={9}>
+                            <Multiselect onChange={this.handleChange} data={specialities} />
+                        </Col>
+                        <Col smOffset={10}>
+                            <Button style={{ fontSize: "125%" }} bsStyle="primary" onClick={(e) => this.addSubspeciality()}>Add Subspeciality</Button>
+                        </Col>
+                    </Row>
                 </form>
             );
         }
