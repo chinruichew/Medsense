@@ -10,7 +10,11 @@ class AdminHome extends Component {
         specialityCount: [],
         speciality: "",
         subspecialityArray: [],
-        countArray: []
+        countArray: [],
+        caseSpecialityArray: [],
+        nus: [],
+        ntu: [],
+        dukenus: []
     };
 
     componentDidMount() {
@@ -26,6 +30,24 @@ class AdminHome extends Component {
             console.log(res)
             this.setState({
                 specialityCount: res.data
+            });
+        }).catch(err => {
+            console.log(err);
+        });
+        axios.get('/api/fetchCaseSpecialityCount').then(res => {
+            console.log(res)
+            this.setState({
+                caseSpecialityArray: res.data
+            });
+        }).catch(err => {
+            console.log(err);
+        });
+        axios.get('/api/fetchStudentCount').then(res => {
+            console.log(res)
+            this.setState({
+                nus: res.data[0],
+                ntu: res.data[1],
+                dukenus: res.data[2]
             });
         }).catch(err => {
             console.log(err);
@@ -57,6 +79,15 @@ class AdminHome extends Component {
     }
 
     render() {
+
+        let caseSpeciality = this.state.caseSpecialityArray.map(item => (
+            <tr align="center">
+                <td>{item._id}</td>
+                <td>{item.count}</td>
+            </tr>
+
+        ))
+
         let cases = this.state.caseCount.map(item => (
             <tr align="center">
                 <td>{item._id}</td>
@@ -73,14 +104,106 @@ class AdminHome extends Component {
 
         ))
 
+        let nusstudents = this.state.nus.map(item => (
+            <tr align="center">
+                <td>{item._id}</td>
+                <td>{item.count}</td>
+            </tr>
+
+        ))
+
+        let ntustudents = this.state.ntu.map(item => (
+            <tr align="center">
+                <td>{item._id}</td>
+                <td>{item.count}</td>
+            </tr>
+
+        ))
+
+        let dukenustudents = this.state.dukenus.map(item => (
+            <tr align="center">
+                <td>{item._id}</td>
+                <td>{item.count}</td>
+            </tr>
+
+        ))
+
         return (
             <div className="container-fluid">
                 <div className="text-center">
                     {/* <h2>Welcome back to Medsense</h2> */}
                 </div>
                 <div className="row">
-
+                    <Table responsive className="table">
+                        <thead>
+                            <tr style={{ background: '#D9EDF7', fontSize: "130%" }}>
+                                <th><center>Speciality</center></th>
+                                <th><center>Count</center></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {caseSpeciality}
+                        </tbody>
+                    </Table>
                 </div>
+
+                <div className="row">
+                    <div class="col-lg-4">
+                        <center style={{ background: '#D9EDF7', fontSize: "130%" }}> <b>NUS</b> </center>
+                    </div>
+                    <div class="col-lg-4">
+                    <center style={{ background: '#D9EDF7', fontSize: "130%" }}> <b>NTU</b> </center>
+                    </div>
+                    <div class="col-lg-4">
+                    <center style={{ background: '#D9EDF7', fontSize: "130%" }}> <b>Duke-NUS</b> </center>
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div class="col-lg-4">
+                        <Table className="table">
+                            <thead>
+                                <tr style={{ background: '#D9EDF7', fontSize: "130%" }}>
+                                    <th><center>Year</center></th>
+                                    <th><center>Count</center></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {nusstudents}
+                            </tbody>
+                        </Table>
+
+                    </div>
+                    <div class="col-lg-4">
+                        <Table className="table">
+                            <thead>
+                                <tr style={{ background: '#D9EDF7', fontSize: "130%" }}>
+                                    <th><center>Year</center></th>
+                                    <th><center>Count</center></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {ntustudents}
+                            </tbody>
+                        </Table>
+
+                    </div>
+                    <div class="col-lg-4">
+                        <Table className="table">
+                            <thead>
+                                <tr style={{ background: '#D9EDF7', fontSize: "130%" }}>
+                                    <th><center>Year</center></th>
+                                    <th><center>Count</center></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {dukenustudents}
+                            </tbody>
+                        </Table>
+
+                    </div>
+                </div>
+
                 <div className="row">
                     <div class="col-lg-6">
 

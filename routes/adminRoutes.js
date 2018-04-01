@@ -443,26 +443,44 @@ module.exports = app => {
     });
 
     app.get('/api/fetchStudentCount', async (req, res) => {
-        const approachCount = await User.aggregate([
-            { "$group": {
-                "_id": {
-                    "school": "$school",
-                    "year": "$year"
-                },
-                "yearCount": { "$sum": 1 }
-            }},
-            { "$group": {
-                "_id": "$_id.school",
-                "years": { 
-                    "$push": { 
-                        "year": "$_id.year",
-                        "count": "$yearCount"
-                    },
-                },
-                "count": { "$sum": "$yearCount" }
-            }},
-            { "$sort": { "count": -1 } },
-        ]).sort({ count: -1 }).exec();
-        res.send(studentCount);
+        // const studentCount = await User.aggregate([
+        //     { "$group": {
+        //         "_id": {
+        //             "school": "$school",
+        //             "year": "$year"
+        //         },
+        //         "yearCount": { "$sum": 1 }
+        //     }},
+        //     { "$group": {
+        //         "_id": "$_id.school",
+        //         "years": { 
+        //             "$push": { 
+        //                 "year": "$_id.year",
+        //                 "count": "$yearCount"
+        //             },
+        //         },
+        //         "count": { "$sum": "$yearCount" }
+        //     }},
+        //     { "$sort": { "count": -1 } },
+        // ]).sort({ count: -1 }).exec();
+        const nus = await User.aggregate([
+            { $match: { school: { $gte: "NUS" } } },
+            { $unwind: '$year' },
+            { $group: { _id: '$year', count: { $sum: 1 } } }]).sort({ count: -1 }).exec();
+        const ntu = await User.aggregate([
+            { $match: { school: { $gte: "NTU" } } },
+            { $unwind: '$year' },
+            { $group: { _id: '$year', count: { $sum: 1 } } }]).sort({ count: -1 }).exec();
+        const duke_nus = await User.aggregate([
+            { $match: { school: { $gte: "Duke-NUS" } } },
+            { $unwind: '$year' },
+            { $group: { _id: '$year', count: { $sum: 1 } } }]).sort({ count: -1 }).exec();
+        
+        var arr = []
+        arr.push(nus)
+        arr.push(ntu)
+        arr.push(duke_nus)
+
+        res.send(arr);
     });
 };
