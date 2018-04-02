@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import BootstrapModal from '../UI/Modal/VettingBootstrapModal.js';
 import axios from 'axios';
 import { updateStudent } from '../../actions/index';
-import { Button } from 'react-bootstrap';
+import {Button, OverlayTrigger, Popover} from 'react-bootstrap';
 import { Line } from 'rc-progress';
 import UploadProfilePicture from './UploadProfilePicture';
 import {Image, Table} from "react-bootstrap";
@@ -26,6 +26,11 @@ class StudentProfile extends Component {
             this.setState({level: res.data});
             axios.get('/api/getLevelRank?level=' + res.data).then(res => {
                 this.setState({rank: res.data});
+                axios.get('/api/getNextLevelRank?rank=' + res.data).then(res => {
+                    this.setState({nextRank: res.data.rank, nextXP: 480+240*(res.data.level-2)*(res.data.level+1)/2});
+                }).catch(err => {
+                    console.log(err);
+                });
             }).catch(err => {
                 console.log(err);
             });
@@ -33,9 +38,13 @@ class StudentProfile extends Component {
             console.log(err);
         });
         axios.post('/api/calculateContributionPoints').then(res => {
-            console.log(res.data);
             axios.get('/api/getContributionRank?points=' + res.data).then(res => {
                 this.setState({contribution: res.data});
+                axios.get('/api/getNextContributionRank?rank=' + res.data).then(res => {
+                    this.setState({nextContribution: res.data});
+                }).catch(err => {
+                    console.log(err);
+                });
             }).catch(err => {
                 console.log(err);
             });
@@ -76,12 +85,24 @@ class StudentProfile extends Component {
     };
 
     render() {
+        const popoverHover = (
+            <Popover id="popover-trigger-hover" title="Level Rank">
+                You are {this.state.nextXP-this.props.auth.points} XP away from {this.state.nextRank}
+            </Popover>
+        );
+        const popover = (
+            <Popover id="popover-trigger-hover" title="Contribution Rank">
+                Next Goal: {this.state.nextContribution}
+            </Popover>
+        );
+
         const showContributor = this.state.contribution==="" ? "" : <td><center>
-            <Image src="./contribution.png" circle style={{width: "3em", height: "3em"}} />
+            <OverlayTrigger trigger={['hover']} placement="top" overlay={popover}><Image src="./contribution.png" circle style={{width: "3em", height: "3em"}} /></OverlayTrigger>
         </center></td>;
         const contributionRank = this.state.contribution==="" ? "" : <td style={{width: '100px'}} ><center>
             <h4> {this.state.contribution} </h4>
         </center></td>;
+
         return (
             <div>
                 <div align="center">
@@ -104,7 +125,7 @@ class StudentProfile extends Component {
                                 <Image src="./year.png" circle style={{width: "3em", height: "3em"}} />
                             </center></td>
                             <td><center>
-                                <Image src="./experience.png" circle style={{width: "3em", height: "3em"}} />
+                                <OverlayTrigger trigger={['hover']} placement="bottom" overlay={popoverHover}><Image src="./experience.png" circle style={{width: "3em", height: "3em"}} /></OverlayTrigger>
                             </center></td>
                             {showContributor}
                         </tr>

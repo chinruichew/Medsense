@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Image, Table } from 'react-bootstrap';
+import {Button, Image, OverlayTrigger, Popover, Table} from 'react-bootstrap';
 import BootstrapModal from '../UI/Modal/VettingBootstrapModal.js';
 import { updateProfessor } from '../../actions/index';
 import UploadProfilePicture from './UploadProfilePicture';
+import axios from 'axios';
 
 class ProfessorProfile extends Component {
     constructor(props) {
@@ -15,6 +16,23 @@ class ProfessorProfile extends Component {
             subspeciality: this.props.subspeciality,
             school: this.props.school
         };
+    }
+
+    componentDidMount(){
+        axios.post('/api/calculateContributionPoints').then(res => {
+            axios.get('/api/getContributionRank?points=' + res.data).then(res => {
+                this.setState({contribution: res.data});
+                axios.get('/api/getNextContributionRank?rank=' + res.data).then(res => {
+                    this.setState({nextContribution: res.data});
+                }).catch(err => {
+                    console.log(err);
+                });
+            }).catch(err => {
+                console.log(err);
+            });
+        }).catch(err => {
+            console.log(err);
+        });
     }
 
     handleSpecialityChange = (e) =>{
@@ -54,12 +72,22 @@ class ProfessorProfile extends Component {
     };
 
     render() {
-        let vmClose = () => this.setState({ vmShow: false });
-        const subspecialities = this.state.subspeciality;
-        let subSpecialityString = subspecialities[0];
-        for (let i = 1; i < subspecialities.length; i++) {
-            subSpecialityString += ', ' + subspecialities[i];
-        }
+        let subSpeciality = this.state.subspeciality.map((obj, index) => {
+           return <p>{obj}</p>;
+        });
+
+        const popover = (
+            <Popover id="popover-trigger-hover" title="Contribution Rank">
+                Next Goal: {this.state.nextContribution}
+            </Popover>
+        );
+
+        const showContributor = this.state.contribution==="" ? "" : <td><center>
+            <OverlayTrigger trigger={['hover']} placement="top" overlay={popover}><Image src="./contribution.png" circle style={{width: "3em", height: "3em"}} /></OverlayTrigger>
+        </center></td>;
+        const contributionRank = this.state.contribution==="" ? "" : <td style={{width: '100px'}} ><center>
+            <h4> {this.state.contribution} </h4>
+        </center></td>;
 
         return (
             <div>
@@ -79,9 +107,7 @@ class ProfessorProfile extends Component {
                             <td><center>
                                 <Image src="./subspecialty.png" circle style={{width: "3em", height: "3em"}} />
                             </center></td>
-                            <td><center>
-                                <Image src="./contribution.png" circle style={{width: "3em", height: "3em"}} />
-                            </center></td>
+                            {showContributor}
                         </tr>
                         <tr>
                             <td style={{width: '100px'}} ><center>
@@ -91,11 +117,9 @@ class ProfessorProfile extends Component {
                                 <h4> {this.state.speciality} </h4>
                             </center></td>
                             <td style={{width: '100px'}} ><center>
-                                <h4>{subSpecialityString}</h4>
+                                <h4>{subSpeciality}</h4>
                             </center></td>
-                            <td style={{width: '100px'}} ><center>
-                                <h4> Silver </h4>
-                            </center></td>
+                            {contributionRank}
                         </tr>
                     </Table>
                     <br/>
@@ -107,7 +131,7 @@ class ProfessorProfile extends Component {
                 </div>
                 <BootstrapModal
                     show={this.state.vmShow}
-                    onHide={vmClose}
+                    onHide={(e) => this.setState({ vmShow: false })}
                     aria-labelledby="error-modal">
                     <BootstrapModal.Header closeButton>
                         <BootstrapModal.Title id="error-modal-">Profile Update</BootstrapModal.Title>
@@ -160,7 +184,7 @@ class ProfessorProfile extends Component {
                         </center>
                     </BootstrapModal.Body>
                     <BootstrapModal.Footer>
-                        <Button onClick={vmClose}>Close</Button>
+                        <Button onClick={(e) => this.setState({ vmShow: false })}>Close</Button>
                     </BootstrapModal.Footer>
                 </BootstrapModal>
             </div>
