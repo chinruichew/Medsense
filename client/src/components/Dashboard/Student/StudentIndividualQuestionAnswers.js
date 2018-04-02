@@ -87,7 +87,7 @@ class StudentIndividualQuestionAnswers extends Component {
                             <Panel.Collapse>
                                 <Panel.Body>
                                     {/*<StudentIndividualCaseQuestionChart setSelectedAnswerIndex={this.setSelectedAnswerIndex} question={question} answers={this.props.answers} answer={answerOfQuestion} cohortAnswers={this.props.cohortAnswers} />*/}
-                                    <h3>Question Description</h3>
+                                    <h3>Question</h3>
                                     {questionDisplay}
                                     <div className="row">
                                         <div className="col-md-12">

@@ -156,7 +156,7 @@ class ProfessorIndividualCaseStatistics extends Component {
                             <Panel.Collapse>
                                 <Panel.Body>
                                     <ProfessorIndividualCaseQuestionChart answers={this.state.answers} question={caseQuestion} />
-                                    <h3>Question Description</h3>
+                                    <h3>Question</h3>
                                     {questionDisplay}
                                     <h3>Model Answer</h3>
                                     <p>{modelAnswer}</p>
