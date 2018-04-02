@@ -19,7 +19,7 @@ module.exports = app => {
                 newUser.school = values.school;
                 newUser.year = values.year;
                 newUser.email = newUser.generateHash(values.email);
-                newUser.save();
+                // newUser.save();
                 res.send('Done');
             } else {
                 res.send('User Exists');
