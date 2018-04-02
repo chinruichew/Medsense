@@ -76,22 +76,22 @@ class About extends Component {
             case false:
                 return(
                     <div className="container">
-                        <div className="row">
-                            <div className="col-md-offset-2 col-md-8 text-center">
-                                <h1>
-                                Welcome to Medsense!
-                                </h1>
-                                <h1>
-                                The time now is {this.state.currentTime}.
-                                </h1>
-                                <h1 style={{color: 'red'}}>
-                                {this.state.doomsdayCountdown}
-                                </h1>
-                                <h2>
-                                {this.state.motivationalQuote}
-                                </h2>
-                            </div>
-                        </div>
+                        {/*<div className="row">*/}
+                            {/*<div className="col-md-offset-2 col-md-8 text-center">*/}
+                                {/*<h1>*/}
+                                {/*Welcome to Medsense!*/}
+                                {/*</h1>*/}
+                                {/*<h1>*/}
+                                {/*The time now is {this.state.currentTime}.*/}
+                                {/*</h1>*/}
+                                {/*<h1 style={{color: 'red'}}>*/}
+                                {/*{this.state.doomsdayCountdown}*/}
+                                {/*</h1>*/}
+                                {/*<h2>*/}
+                                {/*{this.state.motivationalQuote}*/}
+                                {/*</h2>*/}
+                            {/*</div>*/}
+                        {/*</div>*/}
                         <div className="row">
                             <div className="col-md-offset-2 col-md-8 text-center">
                                 <img src="./medsense_logo.png" style={{width: '70%', marginLeft: '45px'}} alt="Medsense" />
