@@ -7,7 +7,7 @@ import { TimeSeries, TimeRange } from "pondjs";
 import Timeline from 'react-visjs-timeline';
 
 import StudentIndividualCaseLatestAttemptOverview from "./StudentIndividualCaseLatestAttemptOverview";
-import StudentIndividualQuestionAnswers from "./StudentIndividualQuestionAnswers";
+import StudentIndividualCaseQuestionAnswers from "./StudentIndividualCaseQuestionAnswers";
 
 class StudentIndividualCaseStatistics extends Component {
     state = {
@@ -198,7 +198,7 @@ class StudentIndividualCaseStatistics extends Component {
                                 <div className="row">
                                     {/*{this.renderAttemptFilter()}*/}
                                     {this.renderQuestionFilter()}
-                                    <StudentIndividualQuestionAnswers answers={this.state.answers} selectedAnswerIndex={this.state.selectedAnswerIndex} questionFilter={this.state.questionFilter} />
+                                    <StudentIndividualCaseQuestionAnswers answers={this.state.answers} selectedAnswerIndex={this.state.selectedAnswerIndex} questionFilter={this.state.questionFilter} />
                                 </div>
                             </div>
                         );

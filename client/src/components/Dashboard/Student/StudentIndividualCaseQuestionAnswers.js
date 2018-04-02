@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import ReactHtmlParser from "react-html-parser";
 import {Image, Panel} from "react-bootstrap";
 
-class StudentIndividualQuestionAnswers extends Component {
+class StudentIndividualCaseQuestionAnswers extends Component {
     render() {
         const answer = this.props.answers[this.props.selectedAnswerIndex];
         const caseQuestions = answer.case.questions;
@@ -118,4 +118,4 @@ class StudentIndividualQuestionAnswers extends Component {
     }
 }
 
-export default StudentIndividualQuestionAnswers;
+export default StudentIndividualCaseQuestionAnswers;

@@ -13,7 +13,8 @@ class DashboardProfessor extends Component {
         studentLeaders: null,
         contributionLeaders: null,
         associatedCases: null,
-        answers: null
+        answers: null,
+        overviewToCaseDetailId: null
     };
 
     componentDidMount() {
@@ -48,6 +49,25 @@ class DashboardProfessor extends Component {
         });
     };
 
+    showCaseDetail = (caseId) => {
+        this.setState({
+            overviewToCaseDetailId: caseId
+        });
+    };
+
+    renderCaseOverview = () => {
+        switch(this.state.overviewToCaseDetailId) {
+            case null:
+                return(
+                    <ProfessorOverview answers={this.state.answers} showCaseDetail={this.showCaseDetail}/>
+                );
+            default:
+                return(
+                    <ProfessorCaseStatistics associatedCases={this.state.associatedCases} overviewToCaseDetailId={this.state.overviewToCaseDetailId} />
+                );
+        }
+    };
+
     renderContent = () => {
         switch(this.state.studentLeaders) {
             case null:
@@ -75,7 +95,7 @@ class DashboardProfessor extends Component {
                                                 <Tabs defaultActiveKey={1}>
                                                     <Tab eventKey={1} title="Overview">
                                                         <div className="row">
-                                                            <ProfessorOverview answers={this.state.answers} />
+                                                            {this.renderCaseOverview()}
                                                         </div>
                                                     </Tab>
                                                     <Tab eventKey={2} title="Case Statistics">
