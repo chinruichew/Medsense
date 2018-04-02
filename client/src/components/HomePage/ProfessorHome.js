@@ -68,9 +68,9 @@ class ProfessorHome extends Component {
                         subSpecialityString += ', ' + subspecialities[1] + '...';
                     }
 
-
+                    const picName = "./" + recommendedPendingCase.subspeciality[0] + ".png";
                     const recommendationBox = <Button key={index} onClick={(e) => this.handleCarouselButtonClick(recommendedPendingCase._id)} className="carousel-button" bsSize="large">
-                        <img src="./approach1.jpg" alt={recommendedPendingCase.title}/>
+                        <img src={picName} alt={recommendedPendingCase.title}/>
                         <h4>{recommendedPendingCase.title}</h4>
                         <h5>{recommendedPendingCase.speciality}</h5>
                         <h5>{subSpecialityString}</h5>
@@ -253,7 +253,7 @@ class ProfessorHome extends Component {
                     }
 
                     return(
-                        <div className="col-md-4">
+                        <div className="homepage-box">
                             {recommendationAnimation}
                         </div>
                     );
@@ -287,9 +287,9 @@ class ProfessorHome extends Component {
                                     subSpecialityString += ', ' + subspecialities[1] + '...';
                                 }
 
-
+                                const picName = "./" + recommendedPendingCase.subspeciality[0] + ".png";
                                 const recommendationBox = <Button key={index} onClick={(e) => this.handleCarouselButtonClick(recommendedPendingCase._id)} className="carousel-button" bsSize="large">
-                                    <img src="./approach1.jpg" alt={recommendedPendingCase.title}/>
+                                    <img src={picName} alt={recommendedPendingCase.title}/>
                                     <h4>{recommendedPendingCase.title}</h4>
                                     <h5>{recommendedPendingCase.speciality}</h5>
                                     <h5>{subSpecialityString}</h5>
@@ -472,7 +472,7 @@ class ProfessorHome extends Component {
                                 }
 
                                 return(
-                                    <div className="col-md-4">
+                                    <div className="homepage-box">
                                         {recommendationAnimation}
                                     </div>
                                 );
@@ -491,8 +491,9 @@ class ProfessorHome extends Component {
                 }
             default:
                 const uploadRecommendations = this.state.uploadRecommendations.map((uploadRecommendation, index) => {
+                    const picName = "./" + uploadRecommendation + ".png";
                     const recommendationBox = <Button key={index} onClick={(e) => this.setState({uploadRedirect: true})} className="carousel-button" bsSize="large">
-                        <img src="./approach1.jpg" alt={uploadRecommendation}/>
+                        <img src={picName} alt={uploadRecommendation}/>
                         <h4>{uploadRecommendation}</h4>
                     </Button>;
 
@@ -673,7 +674,7 @@ class ProfessorHome extends Component {
                     }
 
                     return(
-                        <div className="col-md-4">
+                        <div className="homepage-box">
                             {recommendationAnimation}
                         </div>
                     );
