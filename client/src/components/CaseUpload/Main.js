@@ -748,7 +748,7 @@ class Main extends Component {
                     <h1 className="upload-heading">Have a case to share?</h1>
                     <h4>
                         <em><br/>
-                        Refer to the <a href="./MedSense WorkPlan.pdf" target="_blank">CASE TEMPLATE</a> to understand the format required.
+                        Refer to the <a href="./medsense_workplan.pdf" target="_blank">CASE TEMPLATE</a> to understand the format required.
                         <br/><br/><Image id="note" src="./exclamation.jpg" alt="Disclaimer" hspace="3em"/>
                         In addition, ensure that all texts and attachments<br/>do not contain identifiable information such as NRICs or patient's faces.
                         <br/><br/>Note that cases uploaded by students will need to be vetted by faculty<br/>before they are released as a game.
