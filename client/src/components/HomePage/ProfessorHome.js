@@ -50,6 +50,18 @@ class ProfessorHome extends Component {
         });
     };
 
+    handleUploadRedirect = (subSpeciality) => {
+        axios.post('/api/addRecommendationClick', {
+            subSpeciality
+        }).then(res => {
+            this.setState({
+                uploadRedirect: true
+            });
+        }).catch(err => {
+            console.log(err);
+        });
+    };
+
     handleCarouselSelect = () => {
         // Animation reset here
     };
@@ -492,7 +504,7 @@ class ProfessorHome extends Component {
             default:
                 const uploadRecommendations = this.state.uploadRecommendations.map((uploadRecommendation, index) => {
                     const picName = "./" + uploadRecommendation + ".png";
-                    const recommendationBox = <Button key={index} onClick={(e) => this.setState({uploadRedirect: true})} className="carousel-button" bsSize="large">
+                    const recommendationBox = <Button key={index} onClick={(e) => this.handleUploadRedirect(uploadRecommendation)} className="carousel-button" bsSize="large">
                         <img src={picName} onError={(e)=>{e.target.src="./Other Subspeciality.png"}}/>
                         <h4>{uploadRecommendation}</h4>
                     </Button>;
@@ -674,7 +686,7 @@ class ProfessorHome extends Component {
                     }
 
                     return(
-                        <div className="homepage-box">
+                        <div key={index} className="homepage-box">
                             {recommendationAnimation}
                         </div>
                     );

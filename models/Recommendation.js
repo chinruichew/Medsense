@@ -5,7 +5,7 @@ const { Schema } = mongoose;
 const recommendationSchema = new Schema({
     case: { type: Schema.Types.ObjectId, ref: 'cases' },
     user: { type: Schema.Types.ObjectId, ref: 'users' },
-    numClicks: {type: Number, default: 0}
+    recommendationClicks: [{type: Schema.Types.ObjectId, ref: 'recommendationClicks'}]
 });
 
 module.exports = mongoose.model('recommendations', recommendationSchema);

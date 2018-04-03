@@ -2,6 +2,7 @@ const Case = require('../models/Case');
 const AnswerOverview = require('../models/AnswerOverview');
 const Subspeciality = require('../models/Subspeciality');
 const Recommendation = require('../models/Recommendation');
+const RecommendationClick = require('../models/RecommendationClick');
 
 const constants = require('../utility/constantTypes');
 
@@ -444,16 +445,30 @@ module.exports = app => {
 
     app.post('/api/addRecommendationClick', async(req, res) => {
         const caseId = req.body.caseId;
-        let recommendation = await Recommendation.find({case: caseId, user: req.session.user}).select();
+        let recommendation = await Recommendation.findOne({case: caseId, user: req.session.user}).populate({
+            path: 'recommendationClicks',
+            model: 'recommendationClicks'
+        }).select();
         if(recommendation !== null && recommendation.length !== 0) {
-            recommendation.numClicks++;
+            const recommendationClick = new RecommendationClick({
+                recommendation: recommendation._id,
+                clickTime: new Date()
+            });
+            await recommendationClick.save();
+            recommendation.recommendationClicks.push(recommendationClick._id);
             await Recommendation.findByIdAndUpdate(recommendation._id, recommendation, {new: true}).exec();
         } else {
             recommendation = new Recommendation({
                 case: caseId,
                 user: req.session.user,
-                numClicks: 1
+                recommendationClicks: []
             });
+            const recommendationClick = new RecommendationClick({
+                recommendation: recommendation._id,
+                clickTime: new Date()
+            });
+            await recommendationClick.save();
+            recommendation.recommendationClicks.push(recommendationClick._id);
             await recommendation.save();
         }
         res.send(recommendation);
