@@ -113,8 +113,10 @@ class SearchBySpeciality extends Component {
 
                     // let subspec = subspecialities==="Select One"?specialities:additionalSubspeciality;
 
+                    let picName = "./" + specialityCase.approach[0] + ".png";
+
                     const caseBox = <Button onClick={(e)=>this.handleReturnCase(specialityCase)} className="case-button" bsSize="large">
-                        <img src="./approach1.jpg" alt={specialityCase.title}/>
+                        <img src={picName} onError={(e)=>{e.target.src="./Other Approach.png"}}/>
                         <h3 className="case-title">{specialityCase.title}</h3>
                         <h4>{specialityCase.difficulty}</h4>
                         {/*<h4>{approachCase.speciality}</h4>*/}

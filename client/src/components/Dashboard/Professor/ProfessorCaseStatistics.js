@@ -34,7 +34,8 @@ class ProfessorCaseStatistics extends Component {
                                     // if(index % 2 === 0) {
                                     //     placeholderImage = <Image circle src="/case-display-pictures/individual_case_image_2.jpg" style={{height: '150px', width: '150px'}} />;
                                     // }
-                                    let placeholderImage = <Image circle src="/userMD.png" style={{height: '150px', width: '150px'}} />;
+                                    let picName = "./" + uploadedCase.subspeciality[0] + ".png";
+                                    let placeholderImage = <Image circle src={picName} style={{height: '150px', width: '150px'}} onError={(e)=>{e.target.src="./Other Subspeciality.png"}}/>;
                                     return(
                                         <div key={uploadedCase._id} className="col-md-4 case-div">
                                             <div className="card">
@@ -53,7 +54,8 @@ class ProfessorCaseStatistics extends Component {
                                     // if(index % 2 === 0) {
                                     //     placeholderImage = <Image circle src="/case-display-pictures/individual_case_image_2.jpg" style={{height: '150px', width: '150px'}} />;
                                     // }
-                                    let placeholderImage = <Image circle src="/userMD.png" style={{height: '150px', width: '150px'}} />;
+                                    let picName = "./" + vettedCase.subspeciality[0] + ".png";
+                                    let placeholderImage = <Image circle src={picName} style={{height: '150px', width: '150px'}} onError={(e)=>{e.target.src="./Other Subspeciality.png"}}/>;
                                     return(
                                         <div key={vettedCase._id} className="col-md-4 case-div">
                                             <div className="card">
@@ -73,10 +75,11 @@ class ProfessorCaseStatistics extends Component {
                                             <h3>Uploaded Cases</h3>
                                             {uploadedSection}
                                         </div>
-                                        <div className="col-md-12 text-center">
+                                        <div className="col-md-12 text-center" style={{marginBottom: "3%"}}>
                                             <h3>Vetted Cases</h3>
                                             {vettedSection}
                                         </div>
+                                        <br/>
                                     </div>
                                 );
                         }

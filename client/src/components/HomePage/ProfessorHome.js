@@ -70,7 +70,7 @@ class ProfessorHome extends Component {
 
                     const picName = "./" + recommendedPendingCase.subspeciality[0] + ".png";
                     const recommendationBox = <Button key={index} onClick={(e) => this.handleCarouselButtonClick(recommendedPendingCase._id)} className="carousel-button" bsSize="large">
-                        <img src={picName} alt={recommendedPendingCase.title}/>
+                        <img src={picName} onError={(e)=>{e.target.src="./Other Subspeciality.png"}}/>
                         <h4>{recommendedPendingCase.title}</h4>
                         <h5>{recommendedPendingCase.speciality}</h5>
                         <h5>{subSpecialityString}</h5>
@@ -289,7 +289,7 @@ class ProfessorHome extends Component {
 
                                 const picName = "./" + recommendedPendingCase.subspeciality[0] + ".png";
                                 const recommendationBox = <Button key={index} onClick={(e) => this.handleCarouselButtonClick(recommendedPendingCase._id)} className="carousel-button" bsSize="large">
-                                    <img src={picName} alt={recommendedPendingCase.title}/>
+                                    <img src={picName} onError={(e)=>{e.target.src="./Other Subspeciality.png"}}/>
                                     <h4>{recommendedPendingCase.title}</h4>
                                     <h5>{recommendedPendingCase.speciality}</h5>
                                     <h5>{subSpecialityString}</h5>
@@ -493,7 +493,7 @@ class ProfessorHome extends Component {
                 const uploadRecommendations = this.state.uploadRecommendations.map((uploadRecommendation, index) => {
                     const picName = "./" + uploadRecommendation + ".png";
                     const recommendationBox = <Button key={index} onClick={(e) => this.setState({uploadRedirect: true})} className="carousel-button" bsSize="large">
-                        <img src={picName} alt={uploadRecommendation}/>
+                        <img src={picName} onError={(e)=>{e.target.src="./Other Subspeciality.png"}}/>
                         <h4>{uploadRecommendation}</h4>
                     </Button>;
 
