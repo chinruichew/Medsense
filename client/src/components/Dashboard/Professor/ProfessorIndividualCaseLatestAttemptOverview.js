@@ -105,7 +105,13 @@ class ProfessorIndividualCaseLatestAttemptOverview extends Component {
 
         const option = {
             title: {
-                text: 'Score Comparison'
+                text: 'Score Comparison',
+                padding: [
+                    10,  // top
+                    10, // right
+                    10,  // bottom
+                    12, // left
+                ]
             },
             tooltip: {
                 trigger: 'axis',
@@ -126,7 +132,15 @@ class ProfessorIndividualCaseLatestAttemptOverview extends Component {
                 name: 'Global Average Score',
                 data: globalAverageScores,
                 type: 'bar'
-            }]
+            }],
+            color: {
+                type: 'bar',
+                colorStops: [{
+                    offset: 0, color: '#56B0CB'
+                }, {
+                    offset: 1, color: '#56B0CB'
+                }],
+            }
         };
 
         return(

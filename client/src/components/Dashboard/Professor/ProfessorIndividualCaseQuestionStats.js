@@ -29,10 +29,10 @@ class ProfessorIndividualCaseQuestionStats extends Component {
                     for (let i = 0; i < questionOptions.length; i++) {
                         const questionOption = questionOptions[i];
                         if (questionOption.check) {
-                            questionOptionsDisplay += questionOption.mcq + ',';
+                            questionOptionsDisplay += questionOption.mcq + ', ';
                         }
                     }
-                    modelAnswer = questionOptionsDisplay;
+                    modelAnswer = questionOptionsDisplay.slice(",", -2);
                 } else {
                     modelAnswer = ReactHtmlParser(modelAnswer);
                 }
@@ -57,9 +57,10 @@ class ProfessorIndividualCaseQuestionStats extends Component {
                             <Panel.Collapse>
                                 <Panel.Body>
                                     {/*<ProfessorIndividualCaseQuestionChart answers={this.props.answers} question={caseQuestion} />*/}
-                                    <h3>Question</h3>
+                                    <h4><strong>Question</strong></h4>
                                     {questionDisplay}
-                                    <h3>Model Answer</h3>
+                                    <br/>
+                                    <h4><strong>Model Answer</strong></h4>
                                     <p>{modelAnswer}</p>
                                 </Panel.Body>
                             </Panel.Collapse>
