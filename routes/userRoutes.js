@@ -192,6 +192,20 @@ module.exports = app => {
         res.send(String(level));
     });
 
+    app.post('/api/calculateUserLevels', async(req, res) => {
+        const users = req.body.users;
+        const userLevelMapping = [];
+        for(let i = 0; i < users.length; i++) {
+            const user = users[i];
+            const level = await commonMethods.CALCULATE_USER_LEVEL(user.points);
+            userLevelMapping.push({
+                user: user,
+                level: level
+            });
+        }
+        res.send(userLevelMapping);
+    });
+
     app.get('/api/getLevelRank', async(req, res) => {
         const level = req.query.level;
         const rank = await commonMethods.CALCULATE_USER_RANK(level);
