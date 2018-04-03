@@ -486,14 +486,7 @@ class ProfessorOverview extends Component {
                         data: seriesData,
                         type: 'bar'
                     }],
-                    color: {
-                        type: 'bar',
-                        colorStops: [{
-                            offset: 0, color: '#56B0CB'
-                        }, {
-                            offset: 1, color: '#56B0CB'
-                        }],
-                    }
+                    color: ['#56B0CB']
                 };
 
                 let onEvents = {

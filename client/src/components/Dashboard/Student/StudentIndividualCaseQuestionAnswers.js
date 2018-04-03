@@ -29,10 +29,10 @@ class StudentIndividualCaseQuestionAnswers extends Component {
                     for(let i = 0; i < questionOptions.length; i++) {
                         const questionOption = questionOptions[i];
                         if(questionOption.check) {
-                            questionOptionsDisplay += questionOption.mcq + ',';
+                            questionOptionsDisplay += questionOption.mcq + ', ';
                         }
                     }
-                    modelAnswer = questionOptionsDisplay;
+                    modelAnswer = questionOptionsDisplay.slice(",", -2);
                 } else {
                     modelAnswer = ReactHtmlParser(modelAnswer);
                 }
@@ -87,24 +87,23 @@ class StudentIndividualCaseQuestionAnswers extends Component {
                             <Panel.Collapse>
                                 <Panel.Body>
                                     {/*<StudentIndividualCaseQuestionChart setSelectedAnswerIndex={this.setSelectedAnswerIndex} question={question} answers={this.props.answers} answer={answerOfQuestion} cohortAnswers={this.props.cohortAnswers} />*/}
-                                    <h3>Question</h3>
+                                    <h4><strong>Question</strong></h4>
                                     {questionDisplay}
+                                    <br/>
                                     <div className="row">
-                                        <div className="col-md-12">
-                                            <div className="col-md-6 text-center">
-                                                <h3>Your Answer</h3>
-                                            </div>
-                                            {/*<div className="col-md-4 text-center">*/}
-                                                {/*<h4 style={{marginTop: '25px', color: score}}>Score: {answerOfQuestion.score}/{answerOfQuestion.mark}</h4>*/}
-                                            {/*</div>*/}
-                                            <div className="col-md-6 text-center">
-                                                <h3>Model Answer</h3>
-                                            </div>
+                                        <div className="col-md-6">
+                                            <h4><strong>Your Answer</strong></h4>
                                         </div>
-                                        <div className="col-md-6 text-center">
+                                        {/*<div className="col-md-4 text-center">*/}
+                                            {/*<h4 style={{marginTop: '25px', color: score}}>Score: {answerOfQuestion.score}/{answerOfQuestion.mark}</h4>*/}
+                                        {/*</div>*/}
+                                        <div className="col-md-6">
+                                            <h4><strong>Model Answer</strong></h4>
+                                        </div>
+                                        <div className="col-md-6 ">
                                             <p>{displayAnswer}</p>
                                         </div>
-                                        <div className="col-md-6 text-center">
+                                        <div className="col-md-6">
                                             <p>{modelAnswer}</p>
                                         </div>
                                     </div>

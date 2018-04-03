@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import {Button, ControlLabel, FormControl, FormGroup, Image, Panel} from "react-bootstrap";
+import {Button, ControlLabel, FormControl, FormGroup, Image, Panel, Glyphicon} from "react-bootstrap";
 import ReactHtmlParser from 'react-html-parser';
 import { Charts, ChartContainer, ChartRow, YAxis, LineChart } from "react-timeseries-charts";
 import { TimeSeries, TimeRange } from "pondjs";
@@ -185,10 +185,14 @@ class StudentIndividualCaseStatistics extends Component {
                                 <div className="row">
                                     <br/>
                                     <div className="col-md-4 text-left">
-                                        <Button style={{marginTop: '20px'}} onClick={this.returnToCaseStats} bsStyle="primary">Back to cases</Button>
+                                        <Button style={{marginTop: '20px', paddingLeft: "0"}} onClick={this.returnToCaseStats} bsSize="large" bsStyle="link">
+                                            <Glyphicon glyph="chevron-left"/>Back to cases
+                                        </Button>
                                     </div>
-                                    <div className="col-md-4 text-center">
-                                        <h1>{this.state.answers[0].case.title}</h1>
+                                </div>
+                                <div className="row">
+                                    <div className="col-md-4 col-md-offset-4 text-center">
+                                        <h2><strong>{this.state.answers[0].case.title}</strong></h2>
                                     </div>
                                 </div>
                                 <div className="row" style={{marginBottom: '10px'}}>
