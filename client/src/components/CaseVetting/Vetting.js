@@ -91,7 +91,7 @@ class Vetting extends Component {
                                             <tr align="center" key={vetCase._id}>
                                                 <td>{vetCase.title}</td>
                                                 <td>{vetCase.subspeciality.join(', ')}</td>
-                                                <td>{vetCase.authorid.username}</td>
+                                                <td>{vetCase.authorname}</td>
                                                 <td>{dateTime}</td>
                                                 <td>{vetButton}</td>
                                             </tr>
