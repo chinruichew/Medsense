@@ -127,8 +127,7 @@ const sessionConfig = {
     secure: false,
     resave: false,
     saveUninitialized: false,
-    httpOnly: false,
-    signed: false
+    httpOnly: false
 };
 if (process.env.NODE_ENV === 'production') {
     app.set('trust proxy', 1);
