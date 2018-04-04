@@ -589,17 +589,16 @@ class Main extends Component {
             return;
         } else {
             const PDPA = this.state.pdpa?(
-                <span className="title" style={{fontSize: "180%"}}><strong><center>-| Credits</center></strong></span>
+                <span className="title" style={{fontSize: "180%"}}><strong>-| Credits</strong></span>
             ):(
-                <span className="title" style={{fontSize: "180%"}}><strong><center>+| Credits</center></strong></span>
+                <span className="title" style={{fontSize: "180%"}}><strong>+| Credits</strong></span>
             );
 
             return(
             <PanelGroup accordion>
                 <Panel eventKey="1" bsStyle="primary" style={{marginLeft: "14%", marginRight: "14%", padding: "0"}}>
-                    <Panel.Heading><Panel.Title toggle>{PDPA}</Panel.Title></Panel.Heading>
-                    {/*<Panel.Body collapsible>*/}
-                    <Panel.Collapse onEnter={(e) => this.setState({pdpa:!this.state.pdpa})} onExit={(e) => this.setState({pdpa:!this.state.pdpa})}>
+                    <Panel.Heading  onClick={(e) => this.setState({pdpa:!this.state.pdpa})}><Panel.Title toggle>{PDPA}</Panel.Title></Panel.Heading>
+                    <Panel.Body collapsible>
                         <FormGroup controlId="formControlsAuthor">
                             <ControlLabel style={{fontSize: "150%"}}>Author of case (Optional)</ControlLabel>
                             <FormControl type="text" placeholder="Enter your name as registered in school"
@@ -646,7 +645,7 @@ class Main extends Component {
                             <br/><br/>
                             Please allow at least 7 business days for your withdrawal of consent to take effect.
                         </h4>
-                    </Panel.Collapse>
+                    </Panel.Body>
                 </Panel>
             </PanelGroup>
             );
@@ -694,15 +693,15 @@ class Main extends Component {
         });
 
         const overviewTitle = this.state.overview?(
-            <span className="title" style={{fontSize: "180%"}}><strong><center>-| Case Overview</center></strong></span>
+            <span className="title" style={{fontSize: "180%"}}><strong>-| Case Overview</strong></span>
         ):(
-            <span className="title" style={{fontSize: "180%"}}><strong><center>+| Case Overview</center></strong></span>
+            <span className="title" style={{fontSize: "180%"}}><strong>+| Case Overview</strong></span>
         );
 
         const questionTitle = this.state.question?(
-            <span className="title" style={{fontSize: "180%"}}><strong><center>-| Case Questions</center></strong></span>
+            <span className="title" style={{fontSize: "180%"}}><strong>-| Case Questions</strong></span>
         ):(
-            <span className="title" style={{fontSize: "180%"}}><strong><center>+| Case Questions</center></strong></span>
+            <span className="title" style={{fontSize: "180%"}}><strong>+| Case Questions</strong></span>
         );
         let questions = this.state.qnData;
         questions.sort(this.compare);
@@ -762,10 +761,10 @@ class Main extends Component {
                     <form className="case-area">
                         <PanelGroup accordion bsStyle="primary" style={{marginLeft: "14%", marginRight: "14%", padding: "0"}}>
                             <Panel eventKey="1">
-                                <Panel.Heading>
+                                <Panel.Heading onClick={(e) => this.setState({overview:!this.state.overview})}>
                                     <Panel.Title toggle>{overviewTitle}</Panel.Title>
                                 </Panel.Heading>
-                                <Panel.Collapse onEnter={(e) => this.setState({overview:!this.state.overview})} onExit={(e) => this.setState({overview:!this.state.overview})}>
+                                <Panel.Body collapsible>
                                     <Overview
                                         title={this.state.title}
                                         difficulty={this.state.difficulty}
@@ -777,14 +776,14 @@ class Main extends Component {
                                         handleUpdateOverview={this.handleUpdateOverview}
                                         process={this.props.process}
                                     />
-                                </Panel.Collapse>
+                                </Panel.Body>
                             </Panel>
                         </PanelGroup>
 
                         <PanelGroup accordion bsStyle="primary" style={{marginLeft: "14%", marginRight: "14%", padding: "0"}}>
                             <Panel eventKey="1" style={{border: "0"}}>
-                                <Panel.Heading><Panel.Title toggle>{questionTitle}</Panel.Title></Panel.Heading>
-                                <Panel.Collapse onEnter={(e) => this.setState({question:!this.state.question})} onExit={(e) => this.setState({question:!this.state.question})}>
+                                <Panel.Heading onClick={(e) => this.setState({question:!this.state.question})}><Panel.Title toggle>{questionTitle}</Panel.Title></Panel.Heading>
+                                <Panel.Body collapsible>
                                     <div className="question-area">
                                         {questionNodes}
                                     </div>
@@ -792,7 +791,7 @@ class Main extends Component {
                                     <div className="add-question-button">
                                         <Button type="button" bsSize="large" bsStyle="link" onClick={(e) => this.addQuestion(this.state.qnData.length+1)}><Glyphicon glyph="plus-sign"/> Add Question</Button><br />
                                     </div>
-                                </Panel.Collapse>
+                                </Panel.Body>
                             </Panel>
                         </PanelGroup>
 
