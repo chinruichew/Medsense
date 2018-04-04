@@ -123,7 +123,7 @@ const sessionConfig = {
     cookie: {
         maxAge: 1000 * 60 * 15,
         keys: [keys.cookieKey],
-        secure: false
+        secure: true
     },
     resave: false,
     saveUninitialized: false,
