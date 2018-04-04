@@ -80,9 +80,9 @@ class ProfessorHome extends Component {
                         subSpecialityString += ', ' + subspecialities[1] + '...';
                     }
 
-                    const picName = "./" + recommendedPendingCase.subspeciality[0] + ".png";
+
                     const recommendationBox = <Button key={index} onClick={(e) => this.handleCarouselButtonClick(recommendedPendingCase._id)} className="carousel-button" bsSize="large">
-                        <img src={picName} alt={recommendedPendingCase.title}/>
+                        <img src="./approach1.jpg" alt={recommendedPendingCase.title}/>
                         <h4>{recommendedPendingCase.title}</h4>
                         <h5>{recommendedPendingCase.speciality}</h5>
                         <h5>{subSpecialityString}</h5>
@@ -265,7 +265,7 @@ class ProfessorHome extends Component {
                     }
 
                     return(
-                        <div className="homepage-box">
+                        <div className="col-md-4">
                             {recommendationAnimation}
                         </div>
                     );
@@ -299,9 +299,9 @@ class ProfessorHome extends Component {
                                     subSpecialityString += ', ' + subspecialities[1] + '...';
                                 }
 
-                                const picName = "./" + recommendedPendingCase.subspeciality[0] + ".png";
+
                                 const recommendationBox = <Button key={index} onClick={(e) => this.handleCarouselButtonClick(recommendedPendingCase._id)} className="carousel-button" bsSize="large">
-                                    <img src={picName} alt={recommendedPendingCase.title}/>
+                                    <img src="./approach1.jpg" alt={recommendedPendingCase.title}/>
                                     <h4>{recommendedPendingCase.title}</h4>
                                     <h5>{recommendedPendingCase.speciality}</h5>
                                     <h5>{subSpecialityString}</h5>
@@ -484,7 +484,7 @@ class ProfessorHome extends Component {
                                 }
 
                                 return(
-                                    <div className="homepage-box">
+                                    <div className="col-md-4">
                                         {recommendationAnimation}
                                     </div>
                                 );
@@ -503,6 +503,7 @@ class ProfessorHome extends Component {
                 }
             default:
                 const uploadRecommendations = this.state.uploadRecommendations.map((uploadRecommendation, index) => {
+<<<<<<< HEAD
                     const picName = "./" + uploadRecommendation + ".png";
 <<<<<<< HEAD
                     const recommendationBox = <Button key={index} onClick={(e) => this.handleUploadRedirect(uploadRecommendation)} className="carousel-button" bsSize="large">
@@ -511,6 +512,10 @@ class ProfessorHome extends Component {
                     const recommendationBox = <Button key={index} onClick={(e) => this.setState({uploadRedirect: true})} className="carousel-button" bsSize="large">
                         <img src={picName} alt={uploadRecommendation}/>
 >>>>>>> parent of 06fe6f8... Change image placeholder
+=======
+                    const recommendationBox = <Button key={index} onClick={(e) => this.setState({uploadRedirect: true})} className="carousel-button" bsSize="large">
+                        <img src="./approach1.jpg" alt={uploadRecommendation}/>
+>>>>>>> parent of c90a04f... Homepage Carousel Pic
                         <h4>{uploadRecommendation}</h4>
                     </Button>;
 
@@ -691,7 +696,11 @@ class ProfessorHome extends Component {
                     }
 
                     return(
+<<<<<<< HEAD
                         <div key={index} className="homepage-box">
+=======
+                        <div className="col-md-4">
+>>>>>>> parent of c90a04f... Homepage Carousel Pic
                             {recommendationAnimation}
                         </div>
                     );

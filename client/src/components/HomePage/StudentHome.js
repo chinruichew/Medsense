@@ -96,9 +96,8 @@ class StudentHome extends Component {
                         subSpecialityString += ', ' + subspecialities[1] + '...';
                     }
 
-                    const picName = "./" + recommendedCase.subspeciality[0] + ".png";
                     const recommendationBox = <Button key={index} onClick={(e) => this.handleCarouselButtonClick(recommendedCase._id)} className="carousel-button" bsSize="large">
-                        <img src={picName} alt={recommendedCase.title}/>
+                        <img src="./approach1.jpg" alt={recommendedCase.title}/>
                         <h4>{recommendedCase.title}</h4>
                         <h5>{recommendedCase.speciality}</h5>
                         <h5>{subSpecialityString}</h5>
@@ -281,7 +280,7 @@ class StudentHome extends Component {
                     }
 
                     return(
-                        <div className="homepage-box">
+                        <div className="col-md-4">
                             {recommendationAnimation}
                         </div>
                     );
@@ -315,9 +314,9 @@ class StudentHome extends Component {
                             subSpecialityString += ', ' + subspecialities[1] + '...';
                         }
 
-                        const picName = "./" + recommendedCase.subspeciality[0] + ".png";
+
                         const recommendationBox = <Button key={index} onClick={(e) => this.handleCarouselButtonClick(recommendedCase._id)} className="carousel-button" bsSize="large">
-                            <img src={picName} alt={recommendedCase.title}/>
+                            <img src="./approach1.jpg" alt={recommendedCase.title}/>
                             <h4>{recommendedCase.title}</h4>
                             <h5>{recommendedCase.speciality}</h5>
                             <h5>{subSpecialityString}</h5>
@@ -500,7 +499,7 @@ class StudentHome extends Component {
                         }
 
                         return(
-                            <div key={index} className="homepage-box">
+                            <div key={index} className="col-md-4">
                                 {recommendationAnimation}
                             </div>
                         );

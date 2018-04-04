@@ -32,20 +32,8 @@
     height: 16em;
 }
 
-.homepage-box {
-    position: relative;
-    min-height: 1px;
-    padding-right: 15px;
-    padding-left: 15px;
-}
-
-@media (min-width: 768px) {
-    .homepage-box {
-        float: left;
-    }
-    .homepage-box {
-        width: 29%;
-    }
+.col-md-4{
+    width: 21em;
 }
 
 .carousel-button > img {
