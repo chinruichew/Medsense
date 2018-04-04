@@ -6,8 +6,6 @@ const AnswerOverview = require('../models/AnswerOverview');
 const keys = require('../config/keys');
 const constants = require('../utility/constantTypes');
 const commonMethods = require('../utility/commonMethods');
-const UserLevelScheme = require('../models/UserLevelScheme');
-const ContributionLevelScheme = require('../models/ContributionLevelScheme');
 
 module.exports = app => {
     app.post('/api/signup', function (req, res) {
@@ -202,42 +200,6 @@ module.exports = app => {
         const points = parseInt(req.query.points,10);
         const rank = await commonMethods.CALCULATE_CONTRIBUTION_RANK(points);
         res.send(String(rank));
-    });
-
-    app.get('/api/getNextLevelRank', async(req, res) => {
-        const rank = req.query.rank;
-        const levelSchemes = await UserLevelScheme.find().sort({level:1});
-        let found = false;
-        let nextRank = '';
-        let nextLevel = '';
-        for (let i = 0; i < levelSchemes.length; i++) {
-            const levelScheme = levelSchemes[i];
-            if (levelScheme.rank === rank) {
-                found = true;
-            } else if (found) {
-                nextRank = levelScheme.rank;
-                nextLevel =levelScheme.level;
-                break;
-            }
-        }
-        res.send({rank:nextRank,level:nextLevel});
-    });
-
-    app.get('/api/getNextContributionRank', async(req, res) => {
-        const rank = req.query.rank;
-        const contributionSchemes = await ContributionLevelScheme.find().sort({point:1});
-        let found = false;
-        let nextRank = '';
-        for (let i = 0; i < contributionSchemes.length; i++) {
-            const contributionScheme = contributionSchemes[i];
-            if (contributionScheme.rank === rank) {
-                found = true;
-            } else if (found) {
-                nextRank = contributionScheme.rank;
-                break;
-            }
-        }
-        res.send(nextRank);
     });
 
     app.post('/api/calculateContributionPoints', async (req, res) => {
