@@ -98,6 +98,7 @@ const deepPopulate = require('mongoose-deep-populate')(mongoose);
 /* End of MongoDB Connection */
 
 /* Start of Middleware configuration */
+app.enable('trust proxy');
 const router = express.Router();
 router.use(function (req, res, next) {
     next();
@@ -121,12 +122,12 @@ const sessionConfig = {
     secret: keys.cookieKeySecret,
     cookie: {
         maxAge: 1000 * 60 * 15,
-        keys: [keys.cookieKey]
+        keys: [keys.cookieKey],
+        secure: true
     },
-    resave: true,
-    saveUninitialized: true,
-    httpOnly: true,
-    overwrite: true
+    resave: false,
+    saveUninitialized: false,
+    httpOnly: false
 };
 if (process.env.NODE_ENV === 'production') {
     app.set('trust proxy', 1);
