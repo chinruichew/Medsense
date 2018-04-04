@@ -2,11 +2,13 @@ import React, {Component} from 'react';
 import {Button, ControlLabel, FormControl, FormGroup, Image, Panel} from "react-bootstrap";
 import Timeline from 'react-visjs-timeline';
 import axios from 'axios';
+import ReactHtmlParser from "react-html-parser";
+import ReactEcharts from 'echarts-for-react';
 import {connect} from "react-redux";
 
 import {fetchConstantTypes} from "../../../actions";
-import ProfessorIndividualCaseQuestionStats from "./ProfessorIndividualCaseQuestionStats";
-import ProfessorIndividualCaseLatestAttemptOverview from "./ProfessorIndividualCaseLatestAttemptOverview";
+import ProfessorIndividualCaseOverviewChart from "./ProfessorIndividualCaseOverviewChart";
+import ProfessorIndividualCaseQuestionChart from "./ProfessorIndividualCaseQuestionChart";
 
 class ProfessorIndividualCaseStatistics extends Component {
     state = {
@@ -100,8 +102,72 @@ class ProfessorIndividualCaseStatistics extends Component {
         );
     };
 
-    returnToCaseStats = () => {
-        this.props.returnToCaseStats(this.props.redirectFromOverview);
+    renderQuestionStats = () => {
+        const reviewedCase = this.props.reviewedCase;
+        const caseQuestions = reviewedCase.questions;
+        let counter = 1;
+        const sortedCaseQuestions = [];
+        while(counter <= caseQuestions.length) {
+            for(let i = 0; i < caseQuestions.length; i++) {
+                const caseQuestion = caseQuestions[i];
+                if(caseQuestion.id === String(counter)) {
+                    sortedCaseQuestions.push(caseQuestion);
+                    counter++;
+                    break;
+                }
+            }
+        }
+
+        return caseQuestions.map((caseQuestion, index) => {
+            if(this.state.questionFilter === 'All' || this.state.questionFilter === caseQuestion.id) {
+                // Get Model Answer
+                let modelAnswer = caseQuestion.openEnded;
+                if (caseQuestion.openEnded === '') {
+                    const questionOptions = caseQuestion.options;
+                    let questionOptionsDisplay = '';
+                    for (let i = 0; i < questionOptions.length; i++) {
+                        const questionOption = questionOptions[i];
+                        if (questionOption.check) {
+                            questionOptionsDisplay += questionOption.mcq + ',';
+                        }
+                    }
+                    modelAnswer = questionOptionsDisplay;
+                } else {
+                    modelAnswer = ReactHtmlParser(modelAnswer);
+                }
+
+                // Display Picture if there is an attachment
+                let questionDisplay = caseQuestion.attachment === '' ? <p>{ReactHtmlParser(caseQuestion.question)}</p> :
+                    <div className="row">
+                        <div className="col-md-4">
+                            <p>{ReactHtmlParser(caseQuestion.question)}</p>
+                        </div>
+                        <div className="col-md-4">
+                            <Image src={caseQuestion.attachment} style={{height: '300px', width: '300px'}} alt=""/>
+                        </div>
+                    </div>;
+
+                return (
+                    <div key={index} className="col-md-12 questionAnswerPanels">
+                        <Panel bsStyle="primary" defaultExpanded>
+                            <Panel.Heading>
+                                <Panel.Title componentClass="h3" toggle>Question {caseQuestion.id}</Panel.Title>
+                            </Panel.Heading>
+                            <Panel.Collapse>
+                                <Panel.Body>
+                                    <ProfessorIndividualCaseQuestionChart answers={this.state.answers} question={caseQuestion} />
+                                    <h3>Question</h3>
+                                    {questionDisplay}
+                                    <h3>Model Answer</h3>
+                                    <p>{modelAnswer}</p>
+                                </Panel.Body>
+                            </Panel.Collapse>
+                        </Panel>
+                    </div>
+                );
+            }
+            return;
+        });
     };
 
     renderContent = () => {
@@ -115,7 +181,7 @@ class ProfessorIndividualCaseStatistics extends Component {
                             <div className="row">
                                 <br/>
                                 <div className="col-md-4 text-left">
-                                    <Button style={{marginTop: '20px'}} onClick={this.returnToCaseStats} bsStyle="primary">Back to cases</Button>
+                                    <Button style={{marginTop: '20px'}} onClick={this.props.returnToCaseStats} bsStyle="primary">Back to cases</Button>
                                 </div>
                                 <div className="col-md-4 text-center">
                                     <h1>{this.props.reviewedCase.title}</h1>
@@ -141,12 +207,11 @@ class ProfessorIndividualCaseStatistics extends Component {
                             </div>
                         </div>
                         <div className="row" style={{marginBottom: '10px'}}>
-                            {/*<ProfessorIndividualCaseOverviewChart answers={this.state.answers} />*/}
-                            <ProfessorIndividualCaseLatestAttemptOverview globalAnswers={this.state.answers} />
+                            <ProfessorIndividualCaseOverviewChart answers={this.state.answers} />
                         </div>
                         <div className="row">
                             {this.renderQuestionFilter()}
-                            <ProfessorIndividualCaseQuestionStats questionFilter={this.state.questionFilter} reviewedCase={this.props.reviewedCase}/>
+                            {this.renderQuestionStats()}
                         </div>
                     </div>
                 );
