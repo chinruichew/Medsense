@@ -3,8 +3,8 @@ import {Button, ControlLabel, FormControl, FormGroup, Image, Panel, Glyphicon} f
 import Timeline from 'react-visjs-timeline';
 import axios from 'axios';
 import {connect} from "react-redux";
-import {fetchConstantTypes} from "../../../actions";
 
+import {fetchConstantTypes} from "../../../actions";
 import ProfessorIndividualCaseQuestionStats from "./ProfessorIndividualCaseQuestionStats";
 import ProfessorIndividualCaseLatestAttemptOverview from "./ProfessorIndividualCaseLatestAttemptOverview";
 
@@ -101,7 +101,7 @@ class ProfessorIndividualCaseStatistics extends Component {
     };
 
     returnToCaseStats = () => {
-        this.props.returnToCaseStats(this.props.redirectFromOverview !== undefined);
+        this.props.returnToCaseStats(this.props.redirectFromOverview);
     };
 
     renderContent = () => {
@@ -138,7 +138,7 @@ class ProfessorIndividualCaseStatistics extends Component {
                         <div className="row">
                             <br/>
                             <div className="col-md-4 text-left">
-                                <Button style={{marginTop: '20px', paddingLeft: "0"}} onClick={this.returnToCaseStats} bsStyle="link" bsSize="large">
+                                <Button style={{marginTop: '20px', paddingLeft: "0"}} onClick={this.props.returnToCaseStats} bsStyle="link" bsSize="large">
                                     <Glyphicon glyph="chevron-left"/> Back to cases
                                 </Button>
                             </div>

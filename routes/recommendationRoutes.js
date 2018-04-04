@@ -9,7 +9,7 @@ const constants = require('../utility/constantTypes');
 module.exports = app => {
     app.get('/api/getProfessorRecommendedCases', async(req, res) => {
         // Recommend pending cases based on their subspecialities, if the number of pending cases are above the pending cases threshold
-        // Recommend cases to upload based on cohort's performance in their subspecialities
+        // To-do: Recommend cases to upload based on cohort's performance in their subspecialities
 
         const sessionUser = req.session.user;
         const pendingCases = await Case.find({status: constants.CASE_STATUS_PENDING});

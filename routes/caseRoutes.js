@@ -285,18 +285,6 @@ module.exports = app => {
         res.send(cases);
     });
 
-    app.get('/api/getCaseById', async (req, res) => {
-        const cases = await Case.findOne({ _id: req.query.caseId }).select().populate({
-            path: 'questions',
-            model: 'questions',
-            populate: {
-                path: 'options',
-                model: 'options'
-            }
-        });
-        res.send(cases);
-    });
-
     app.get('/api/getVettedCasesSinceUserLogin', async(req, res) => {
         const cases = await Case.find({ status: constants.CASE_STATUS_VETTED }).select().populate({
             path: 'questions',

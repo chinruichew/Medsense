@@ -77,7 +77,7 @@ class StudentCaseStatistics extends Component {
                         );
                 }
             default:
-                this.props.resetBarChartFilters();
+                window.location.reload();
         }
     };
 
