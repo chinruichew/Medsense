@@ -55,12 +55,6 @@ class ProfessorProfile extends Component {
 
     render() {
         let vmClose = () => this.setState({ vmShow: false });
-        const subspecialities = this.state.subspeciality;
-        let subSpecialityString = subspecialities[0];
-        for (let i = 1; i < subspecialities.length; i++) {
-            subSpecialityString += ', ' + subspecialities[i];
-        }
-
         return (
             <div>
                 <div align="center">
@@ -68,7 +62,7 @@ class ProfessorProfile extends Component {
                         <Image src={this.props.auth.profilepicture} style={{width: '200px'}} alt={this.props.auth.username}  circle />
                         <h3> <b>{this.state.username}</b> </h3>
                     </div><br />
-                    <Table  style={{width: '700px'}}>
+                    <Table  style={{width: '700px'}} >
                         <tr>
                             <td><center>
                                 <Image src="./school.png" circle style={{width: "3em", height: "3em", borderRight: "1"}} />
@@ -91,7 +85,7 @@ class ProfessorProfile extends Component {
                                 <h4> {this.state.speciality} </h4>
                             </center></td>
                             <td style={{width: '100px'}} ><center>
-                                <h4>{subSpecialityString}</h4>
+                                <h4> {this.state.subspeciality} </h4>
                             </center></td>
                             <td style={{width: '100px'}} ><center>
                                 <h4> Silver </h4>

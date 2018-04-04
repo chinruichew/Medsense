@@ -28,28 +28,23 @@
 .carousel-button {
     background: white;
     color: black;
-    width: 15em;
-    height: 16em;
-}
-
-.col-md-4{
-    width: 21em;
+    width: 14em;
+    height: auto;
 }
 
 .carousel-button > img {
     height: 8em;
-    margin-bottom: 5%;
 }
 
-.carousel-button > h4 {
+.carousel-button > h3 {
     font-weight: bold;
     word-wrap: break-word;
     white-space: pre-line;
-    /*margin: 0;*/
+    margin: 0;
 }
 
-.carousel-button > h5 {
-    /*margin: 0;*/
+.carousel-button > h4 {
+    margin: 0;
     word-wrap: break-word;
     white-space: pre-line;
 }
@@ -137,8 +132,4 @@
     vertical-align: top;
     border-top: 0px solid #ddd;
     width: 50%;
-}
-
-.img{
-    margin-bottom: 1%;
 }

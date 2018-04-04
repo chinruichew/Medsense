@@ -88,19 +88,15 @@ class StudentHome extends Component {
                 if (index >= 3 && index < 6) {
                     const subspecialities = recommendedCase.subspeciality;
                     let subSpecialityString = subspecialities[0];
-                    if(subspecialities.length < 3){
-                        for (let i = 1; i < subspecialities.length; i++) {
-                            subSpecialityString += ', ' + subspecialities[i];
-                        }
-                    }else{
-                        subSpecialityString += ', ' + subspecialities[1] + '...';
+                    for (let i = 1; i < subspecialities.length; i++) {
+                        subSpecialityString += ', ' + subspecialities[i];
                     }
 
                     const recommendationBox = <Button key={index} onClick={(e) => this.handleCarouselButtonClick(recommendedCase._id)} className="carousel-button" bsSize="large">
                         <img src="./approach1.jpg" alt={recommendedCase.title}/>
-                        <h4>{recommendedCase.title}</h4>
-                        <h5>{recommendedCase.speciality}</h5>
-                        <h5>{subSpecialityString}</h5>
+                        <h3>{recommendedCase.title}</h3>
+                        <h4>{recommendedCase.speciality}</h4>
+                        <h4>{subSpecialityString}</h4>
                     </Button>;
 
                     const animationStyles = [Zoom, Fade, Flip, Rotate, Bounce, Slide, Roll, LightSpeed];
@@ -306,20 +302,15 @@ class StudentHome extends Component {
                     if(index < 3) {
                         const subspecialities = recommendedCase.subspeciality;
                         let subSpecialityString = subspecialities[0];
-                        if(subspecialities.length < 3){
-                            for(let i = 1; i < subspecialities.length; i++) {
-                                subSpecialityString += ', ' + subspecialities[i];
-                            }
-                        }else{
-                            subSpecialityString += ', ' + subspecialities[1] + '...';
+                        for(let i = 1; i < subspecialities.length; i++) {
+                            subSpecialityString += ', ' + subspecialities[i];
                         }
-
 
                         const recommendationBox = <Button key={index} onClick={(e) => this.handleCarouselButtonClick(recommendedCase._id)} className="carousel-button" bsSize="large">
                             <img src="./approach1.jpg" alt={recommendedCase.title}/>
-                            <h4>{recommendedCase.title}</h4>
-                            <h5>{recommendedCase.speciality}</h5>
-                            <h5>{subSpecialityString}</h5>
+                            <h3>{recommendedCase.title}</h3>
+                            <h4>{recommendedCase.speciality}</h4>
+                            <h4>{subSpecialityString}</h4>
                         </Button>;
 
                         const animationStyles = [Zoom, Fade, Flip, Rotate, Bounce, Slide, Roll, LightSpeed];
