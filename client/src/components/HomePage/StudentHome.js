@@ -78,185 +78,6 @@ class StudentHome extends Component {
         });
     };
 
-    getRandomAnimationStyle = (recommendationBox) => {
-        const animationStyles = [Zoom, Fade, Flip, Rotate, Bounce, Slide, Roll, LightSpeed];
-        const animationStyle = animationStyles[Math.floor(Math.random()*animationStyles.length)];
-        const animationDirections = ['left', 'right', 'top', 'bottom'];
-        const animationDirection = animationDirections[Math.floor(Math.random()*animationDirections.length)];
-        const animationBiDirections = ['left', 'right'];
-        const animationBiDirection = animationBiDirections[Math.floor(Math.random()*animationBiDirections.length)];
-        const animationDiagonalDirections = ['top left', 'top right', 'bottom left', 'bottom right'];
-        const animationDiagonalDirection = animationDiagonalDirections[Math.floor(Math.random()*animationDiagonalDirections.length)];
-        let recommendationAnimation = '';
-        if(animationStyle === Zoom) {
-            if(animationDirection === 'left') {
-                recommendationAnimation = <Zoom left>
-                    {recommendationBox}
-                </Zoom>;
-            }
-            if(animationDirection === 'right') {
-                recommendationAnimation = <Zoom right>
-                    {recommendationBox}
-                </Zoom>;
-            }
-            if(animationDirection === 'top') {
-                recommendationAnimation = <Zoom top>
-                    {recommendationBox}
-                </Zoom>;
-            }
-            if(animationDirection === 'bottom') {
-                recommendationAnimation = <Zoom bottom>
-                    {recommendationBox}
-                </Zoom>;
-            }
-        }
-        if(animationStyle === Fade) {
-            if(animationDirection === 'left') {
-                recommendationAnimation = <Fade left>
-                    {recommendationBox}
-                </Fade>;
-            }
-            if(animationDirection === 'right') {
-                recommendationAnimation = <Fade right>
-                    {recommendationBox}
-                </Fade>;
-            }
-            if(animationDirection === 'top') {
-                recommendationAnimation = <Fade top>
-                    {recommendationBox}
-                </Fade>;
-            }
-            if(animationDirection === 'bottom') {
-                recommendationAnimation = <Fade bottom>
-                    {recommendationBox}
-                </Fade>;
-            }
-        }
-        if(animationStyle === Flip) {
-            if(animationDirection === 'left') {
-                recommendationAnimation = <Flip left>
-                    {recommendationBox}
-                </Flip>;
-            }
-            if(animationDirection === 'right') {
-                recommendationAnimation = <Flip right>
-                    {recommendationBox}
-                </Flip>;
-            }
-            if(animationDirection === 'top') {
-                recommendationAnimation = <Flip top>
-                    {recommendationBox}
-                </Flip>;
-            }
-            if(animationDirection === 'bottom') {
-                recommendationAnimation = <Flip bottom>
-                    {recommendationBox}
-                </Flip>;
-            }
-        }
-        if(animationStyle === Rotate) {
-            if(animationDiagonalDirection === 'top left') {
-                recommendationAnimation = <Rotate top left>
-                    {recommendationBox}
-                </Rotate>;
-            }
-            if(animationDiagonalDirection === 'top right') {
-                recommendationAnimation = <Rotate top right>
-                    {recommendationBox}
-                </Rotate>;
-            }
-            if(animationDiagonalDirection === 'bottom left') {
-                recommendationAnimation = <Rotate bottom left>
-                    {recommendationBox}
-                </Rotate>;
-            }
-            if(animationDiagonalDirection === 'bottom right') {
-                recommendationAnimation = <Rotate bottom right>
-                    {recommendationBox}
-                </Rotate>;
-            }
-        }
-        if(animationStyle === Bounce) {
-            if(animationDirection === 'left') {
-                recommendationAnimation = <Bounce left>
-                    {recommendationBox}
-                </Bounce>;
-            }
-            if(animationDirection === 'right') {
-                recommendationAnimation = <Bounce right>
-                    {recommendationBox}
-                </Bounce>;
-            }
-            if(animationDirection === 'top') {
-                recommendationAnimation = <Bounce top>
-                    {recommendationBox}
-                </Bounce>;
-            }
-            if(animationDirection === 'bottom') {
-                recommendationAnimation = <Bounce bottom>
-                    {recommendationBox}
-                </Bounce>;
-            }
-        }
-        if(animationStyle === Slide) {
-            if(animationDirection === 'left') {
-                recommendationAnimation = <Slide left>
-                    {recommendationBox}
-                </Slide>;
-            }
-            if(animationDirection === 'right') {
-                recommendationAnimation = <Slide right>
-                    {recommendationBox}
-                </Slide>;
-            }
-            if(animationDirection === 'top') {
-                recommendationAnimation = <Slide top>
-                    {recommendationBox}
-                </Slide>;
-            }
-            if(animationDirection === 'bottom') {
-                recommendationAnimation = <Slide bottom>
-                    {recommendationBox}
-                </Slide>;
-            }
-        }
-        if(animationStyle === Roll) {
-            if(animationDirection === 'left') {
-                recommendationAnimation = <Roll left>
-                    {recommendationBox}
-                </Roll>;
-            }
-            if(animationDirection === 'right') {
-                recommendationAnimation = <Roll right>
-                    {recommendationBox}
-                </Roll>;
-            }
-            if(animationDirection === 'top') {
-                recommendationAnimation = <Roll top>
-                    {recommendationBox}
-                </Roll>;
-            }
-            if(animationDirection === 'bottom') {
-                recommendationAnimation = <Roll bottom>
-                    {recommendationBox}
-                </Roll>;
-            }
-        }
-        if(animationStyle === LightSpeed) {
-            if(animationBiDirection === 'left') {
-                recommendationAnimation = <LightSpeed left>
-                    {recommendationBox}
-                </LightSpeed>;
-            }
-            if(animationBiDirection === 'right') {
-                recommendationAnimation = <LightSpeed right>
-                    {recommendationBox}
-                </LightSpeed>;
-            }
-        }
-        return recommendationAnimation;
-    };
-
     handleCarouselSelect = () => {
         // Animation reset here
     };
@@ -283,7 +104,181 @@ class StudentHome extends Component {
                         <h5>{subSpecialityString}</h5>
                     </Button>;
 
-                    const recommendationAnimation = this.getRandomAnimationStyle(recommendationBox);
+                    const animationStyles = [Zoom, Fade, Flip, Rotate, Bounce, Slide, Roll, LightSpeed];
+                    const animationStyle = animationStyles[Math.floor(Math.random()*animationStyles.length)];
+                    const animationDirections = ['left', 'right', 'top', 'bottom'];
+                    const animationDirection = animationDirections[Math.floor(Math.random()*animationDirections.length)];
+                    const animationBiDirections = ['left', 'right'];
+                    const animationBiDirection = animationBiDirections[Math.floor(Math.random()*animationBiDirections.length)];
+                    const animationDiagonalDirections = ['top left', 'top right', 'bottom left', 'bottom right'];
+                    const animationDiagonalDirection = animationDiagonalDirections[Math.floor(Math.random()*animationDiagonalDirections.length)];
+                    let recommendationAnimation = '';
+                    if(animationStyle === Zoom) {
+                        if(animationDirection === 'left') {
+                            recommendationAnimation = <Zoom left>
+                                {recommendationBox}
+                            </Zoom>;
+                        }
+                        if(animationDirection === 'right') {
+                            recommendationAnimation = <Zoom right>
+                                {recommendationBox}
+                            </Zoom>;
+                        }
+                        if(animationDirection === 'top') {
+                            recommendationAnimation = <Zoom top>
+                                {recommendationBox}
+                            </Zoom>;
+                        }
+                        if(animationDirection === 'bottom') {
+                            recommendationAnimation = <Zoom bottom>
+                                {recommendationBox}
+                            </Zoom>;
+                        }
+                    }
+                    if(animationStyle === Fade) {
+                        if(animationDirection === 'left') {
+                            recommendationAnimation = <Fade left>
+                                {recommendationBox}
+                            </Fade>;
+                        }
+                        if(animationDirection === 'right') {
+                            recommendationAnimation = <Fade right>
+                                {recommendationBox}
+                            </Fade>;
+                        }
+                        if(animationDirection === 'top') {
+                            recommendationAnimation = <Fade top>
+                                {recommendationBox}
+                            </Fade>;
+                        }
+                        if(animationDirection === 'bottom') {
+                            recommendationAnimation = <Fade bottom>
+                                {recommendationBox}
+                            </Fade>;
+                        }
+                    }
+                    if(animationStyle === Flip) {
+                        if(animationDirection === 'left') {
+                            recommendationAnimation = <Flip left>
+                                {recommendationBox}
+                            </Flip>;
+                        }
+                        if(animationDirection === 'right') {
+                            recommendationAnimation = <Flip right>
+                                {recommendationBox}
+                            </Flip>;
+                        }
+                        if(animationDirection === 'top') {
+                            recommendationAnimation = <Flip top>
+                                {recommendationBox}
+                            </Flip>;
+                        }
+                        if(animationDirection === 'bottom') {
+                            recommendationAnimation = <Flip bottom>
+                                {recommendationBox}
+                            </Flip>;
+                        }
+                    }
+                    if(animationStyle === Rotate) {
+                        if(animationDiagonalDirection === 'top left') {
+                            recommendationAnimation = <Rotate top left>
+                                {recommendationBox}
+                            </Rotate>;
+                        }
+                        if(animationDiagonalDirection === 'top right') {
+                            recommendationAnimation = <Rotate top right>
+                                {recommendationBox}
+                            </Rotate>;
+                        }
+                        if(animationDiagonalDirection === 'bottom left') {
+                            recommendationAnimation = <Rotate bottom left>
+                                {recommendationBox}
+                            </Rotate>;
+                        }
+                        if(animationDiagonalDirection === 'bottom right') {
+                            recommendationAnimation = <Rotate bottom right>
+                                {recommendationBox}
+                            </Rotate>;
+                        }
+                    }
+                    if(animationStyle === Bounce) {
+                        if(animationDirection === 'left') {
+                            recommendationAnimation = <Bounce left>
+                                {recommendationBox}
+                            </Bounce>;
+                        }
+                        if(animationDirection === 'right') {
+                            recommendationAnimation = <Bounce right>
+                                {recommendationBox}
+                            </Bounce>;
+                        }
+                        if(animationDirection === 'top') {
+                            recommendationAnimation = <Bounce top>
+                                {recommendationBox}
+                            </Bounce>;
+                        }
+                        if(animationDirection === 'bottom') {
+                            recommendationAnimation = <Bounce bottom>
+                                {recommendationBox}
+                            </Bounce>;
+                        }
+                    }
+                    if(animationStyle === Slide) {
+                        if(animationDirection === 'left') {
+                            recommendationAnimation = <Slide left>
+                                {recommendationBox}
+                            </Slide>;
+                        }
+                        if(animationDirection === 'right') {
+                            recommendationAnimation = <Slide right>
+                                {recommendationBox}
+                            </Slide>;
+                        }
+                        if(animationDirection === 'top') {
+                            recommendationAnimation = <Slide top>
+                                {recommendationBox}
+                            </Slide>;
+                        }
+                        if(animationDirection === 'bottom') {
+                            recommendationAnimation = <Slide bottom>
+                                {recommendationBox}
+                            </Slide>;
+                        }
+                    }
+                    if(animationStyle === Roll) {
+                        if(animationDirection === 'left') {
+                            recommendationAnimation = <Roll left>
+                                {recommendationBox}
+                            </Roll>;
+                        }
+                        if(animationDirection === 'right') {
+                            recommendationAnimation = <Roll right>
+                                {recommendationBox}
+                            </Roll>;
+                        }
+                        if(animationDirection === 'top') {
+                            recommendationAnimation = <Roll top>
+                                {recommendationBox}
+                            </Roll>;
+                        }
+                        if(animationDirection === 'bottom') {
+                            recommendationAnimation = <Roll bottom>
+                                {recommendationBox}
+                            </Roll>;
+                        }
+                    }
+                    if(animationStyle === LightSpeed) {
+                        if(animationBiDirection === 'left') {
+                            recommendationAnimation = <LightSpeed left>
+                                {recommendationBox}
+                            </LightSpeed>;
+                        }
+                        if(animationBiDirection === 'right') {
+                            recommendationAnimation = <LightSpeed right>
+                                {recommendationBox}
+                            </LightSpeed>;
+                        }
+                    }
 
                     return(
                         <div className="homepage-box">
@@ -328,7 +323,181 @@ class StudentHome extends Component {
                             <h5>{subSpecialityString}</h5>
                         </Button>;
 
-                        const recommendationAnimation = this.getRandomAnimationStyle(recommendationBox);
+                        const animationStyles = [Zoom, Fade, Flip, Rotate, Bounce, Slide, Roll, LightSpeed];
+                        const animationStyle = animationStyles[Math.floor(Math.random()*animationStyles.length)];
+                        const animationDirections = ['left', 'right', 'top', 'bottom'];
+                        const animationDirection = animationDirections[Math.floor(Math.random()*animationDirections.length)];
+                        const animationBiDirections = ['left', 'right'];
+                        const animationBiDirection = animationBiDirections[Math.floor(Math.random()*animationBiDirections.length)];
+                        const animationDiagonalDirections = ['top left', 'top right', 'bottom left', 'bottom right'];
+                        const animationDiagonalDirection = animationDiagonalDirections[Math.floor(Math.random()*animationDiagonalDirections.length)];
+                        let recommendationAnimation = '';
+                        if(animationStyle === Zoom) {
+                            if(animationDirection === 'left') {
+                                recommendationAnimation = <Zoom left>
+                                    {recommendationBox}
+                                </Zoom>;
+                            }
+                            if(animationDirection === 'right') {
+                                recommendationAnimation = <Zoom right>
+                                    {recommendationBox}
+                                </Zoom>;
+                            }
+                            if(animationDirection === 'top') {
+                                recommendationAnimation = <Zoom top>
+                                    {recommendationBox}
+                                </Zoom>;
+                            }
+                            if(animationDirection === 'bottom') {
+                                recommendationAnimation = <Zoom bottom>
+                                    {recommendationBox}
+                                </Zoom>;
+                            }
+                        }
+                        if(animationStyle === Fade) {
+                            if(animationDirection === 'left') {
+                                recommendationAnimation = <Fade left>
+                                    {recommendationBox}
+                                </Fade>;
+                            }
+                            if(animationDirection === 'right') {
+                                recommendationAnimation = <Fade right>
+                                    {recommendationBox}
+                                </Fade>;
+                            }
+                            if(animationDirection === 'top') {
+                                recommendationAnimation = <Fade top>
+                                    {recommendationBox}
+                                </Fade>;
+                            }
+                            if(animationDirection === 'bottom') {
+                                recommendationAnimation = <Fade bottom>
+                                    {recommendationBox}
+                                </Fade>;
+                            }
+                        }
+                        if(animationStyle === Flip) {
+                            if(animationDirection === 'left') {
+                                recommendationAnimation = <Flip left>
+                                    {recommendationBox}
+                                </Flip>;
+                            }
+                            if(animationDirection === 'right') {
+                                recommendationAnimation = <Flip right>
+                                    {recommendationBox}
+                                </Flip>;
+                            }
+                            if(animationDirection === 'top') {
+                                recommendationAnimation = <Flip top>
+                                    {recommendationBox}
+                                </Flip>;
+                            }
+                            if(animationDirection === 'bottom') {
+                                recommendationAnimation = <Flip bottom>
+                                    {recommendationBox}
+                                </Flip>;
+                            }
+                        }
+                        if(animationStyle === Rotate) {
+                            if(animationDiagonalDirection === 'top left') {
+                                recommendationAnimation = <Rotate top left>
+                                    {recommendationBox}
+                                </Rotate>;
+                            }
+                            if(animationDiagonalDirection === 'top right') {
+                                recommendationAnimation = <Rotate top right>
+                                    {recommendationBox}
+                                </Rotate>;
+                            }
+                            if(animationDiagonalDirection === 'bottom left') {
+                                recommendationAnimation = <Rotate bottom left>
+                                    {recommendationBox}
+                                </Rotate>;
+                            }
+                            if(animationDiagonalDirection === 'bottom right') {
+                                recommendationAnimation = <Rotate bottom right>
+                                    {recommendationBox}
+                                </Rotate>;
+                            }
+                        }
+                        if(animationStyle === Bounce) {
+                            if(animationDirection === 'left') {
+                                recommendationAnimation = <Bounce left>
+                                    {recommendationBox}
+                                </Bounce>;
+                            }
+                            if(animationDirection === 'right') {
+                                recommendationAnimation = <Bounce right>
+                                    {recommendationBox}
+                                </Bounce>;
+                            }
+                            if(animationDirection === 'top') {
+                                recommendationAnimation = <Bounce top>
+                                    {recommendationBox}
+                                </Bounce>;
+                            }
+                            if(animationDirection === 'bottom') {
+                                recommendationAnimation = <Bounce bottom>
+                                    {recommendationBox}
+                                </Bounce>;
+                            }
+                        }
+                        if(animationStyle === Slide) {
+                            if(animationDirection === 'left') {
+                                recommendationAnimation = <Slide left>
+                                    {recommendationBox}
+                                </Slide>;
+                            }
+                            if(animationDirection === 'right') {
+                                recommendationAnimation = <Slide right>
+                                    {recommendationBox}
+                                </Slide>;
+                            }
+                            if(animationDirection === 'top') {
+                                recommendationAnimation = <Slide top>
+                                    {recommendationBox}
+                                </Slide>;
+                            }
+                            if(animationDirection === 'bottom') {
+                                recommendationAnimation = <Slide bottom>
+                                    {recommendationBox}
+                                </Slide>;
+                            }
+                        }
+                        if(animationStyle === Roll) {
+                            if(animationDirection === 'left') {
+                                recommendationAnimation = <Roll left>
+                                    {recommendationBox}
+                                </Roll>;
+                            }
+                            if(animationDirection === 'right') {
+                                recommendationAnimation = <Roll right>
+                                    {recommendationBox}
+                                </Roll>;
+                            }
+                            if(animationDirection === 'top') {
+                                recommendationAnimation = <Roll top>
+                                    {recommendationBox}
+                                </Roll>;
+                            }
+                            if(animationDirection === 'bottom') {
+                                recommendationAnimation = <Roll bottom>
+                                    {recommendationBox}
+                                </Roll>;
+                            }
+                        }
+                        if(animationStyle === LightSpeed) {
+                            if(animationBiDirection === 'left') {
+                                recommendationAnimation = <LightSpeed left>
+                                    {recommendationBox}
+                                </LightSpeed>;
+                            }
+                            if(animationBiDirection === 'right') {
+                                recommendationAnimation = <LightSpeed right>
+                                    {recommendationBox}
+                                </LightSpeed>;
+                            }
+                        }
 
                         return(
                             <div key={index} className="homepage-box">
