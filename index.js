@@ -131,7 +131,7 @@ const sessionConfig = {
 };
 if (process.env.NODE_ENV === 'production') {
     app.set('trust proxy', 1);
-    sessionConfig.cookie.secure = true;
+    // sessionConfig.cookie.secure = true;
 }
 app.use(cookieSession(sessionConfig));
 /* End of Session Configurations */
@@ -147,7 +147,7 @@ function shouldCompress(req, res) {
 }
 app.use(compression({filter: shouldCompress}));
 
-const csurfProtection = csurf({ cookie: true });
+// const csurfProtection = csurf({ cookie: true });
 
 const Merror = MerrorModule.Merror;
 const MerrorMiddleware = MerrorModule.MerrorMiddleware;
