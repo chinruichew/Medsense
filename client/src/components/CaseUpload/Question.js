@@ -249,8 +249,9 @@ class Question extends Component {
 
                 <PanelGroup accordion>
                     <Panel>
-                        <Panel.Heading onClick={(e) => this.setState({heading:!this.state.heading})}><Panel.Title toggle>{questiontitle}</Panel.Title></Panel.Heading>
-                        <Panel.Body collapsible>
+                        <Panel.Heading><Panel.Title toggle>{questiontitle}</Panel.Title></Panel.Heading>
+                        <Panel.Collapse onEnter={(e) => this.setState({heading:!this.state.heading})} onExit={(e) => this.setState({heading:!this.state.heading})}>
+                        <Panel.Body>
                             <div className="delete-question-button">
                                 <Button  type="button" bsSize="large" bsStyle="link" onClick={(e)=>this.props.handleDeleteQuestion(this.props.id)}>
                                     {/*<Image src="./delete.png" style={{width: '25px'}} /> Delete Question*/}
@@ -346,6 +347,7 @@ class Question extends Component {
                             </FormGroup>
 
                         </Panel.Body>
+                        </Panel.Collapse>
                     </Panel>
                 </PanelGroup>
             </div>

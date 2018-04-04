@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import ReactEcharts from 'echarts-for-react';
 import axios from 'axios';
-<<<<<<< HEAD
 import {NavLink} from "react-router-dom";
 import {Button, Breadcrumb} from "react-bootstrap";
 
@@ -12,12 +11,6 @@ class StudentOverview extends Component {
         subSpecialityFilterName: null,
         caseDataMapping: [],
         headerFilterDisplay: <Breadcrumb><Breadcrumb.Item><Button bsSize="large" bsStyle="link" onClick={this.setSpecialityView}>All</Button></Breadcrumb.Item></Breadcrumb>
-=======
-
-class StudentOverview extends Component {
-    state = {
-        specialityList: null
->>>>>>> parent of e8327a8... Modified Student Analytics for more concise charts
     };
 
     componentDidMount() {
@@ -308,73 +301,75 @@ class StudentOverview extends Component {
                 const answers = this.props.answers;
 
                 const dataMapping = [];
-                for(let i = 0; i < answers.length; i++) {
-                    const answer = answers[i];
-                    const answerCase = answer.case;
-                    const speciality = answerCase.speciality;
-                    const subSpecialities = answerCase.subspeciality;
+                if(this.state.specialityFilterName === null) {
+                    for(let i = 0; i < answers.length; i++) {
+                        const answer = answers[i];
+                        const answerCase = answer.case;
+                        const speciality = answerCase.speciality;
+                        const subSpecialities = answerCase.subspeciality;
 
-                    // Add speciality scores
-                    let toAdd = true;
-                    for(let i = 0; i < dataMapping.length; i++) {
-                        const dataObject = dataMapping[i];
-                        if(dataObject.name === speciality) {
-                            dataObject.value += answer.score;
-                            toAdd = false;
-                            break;
+                        // Add speciality scores
+                        let toAdd = true;
+                        for(let i = 0; i < dataMapping.length; i++) {
+                            const dataObject = dataMapping[i];
+                            if(dataObject.name === speciality) {
+                                dataObject.value += answer.score;
+                                toAdd = false;
+                                break;
+                            }
                         }
-                    }
-                    if(toAdd){
-                        dataMapping.push({
-                            value: answer.score,
-                            name: speciality,
-                            path: speciality,
-                            children: []
-                        });
-                    }
+                        if(toAdd){
+                            dataMapping.push({
+                                value: answer.score,
+                                name: speciality,
+                                path: speciality,
+                                children: []
+                            });
+                        }
 
-                    // Add sub-speciality scores
-                    const specialityList = this.state.specialityList;
-                    for(let j = 0; j < dataMapping.length; j++) {
-                        const dataObject = dataMapping[j];
-                        for(let k = 0; k < specialityList.length; k++) {
-                            const fetchedSpeciality = specialityList[k];
-                            if(fetchedSpeciality.speciality === dataObject.name) {
-                                const fetchedSubspecialities = fetchedSpeciality.subspecialities;
-                                for(let l = 0; l < fetchedSubspecialities.length; l++) {
-                                    const fetchedSubspeciality = fetchedSubspecialities[l];
-                                    for(let m = 0; m < subSpecialities.length; m++) {
-                                        const subSpeciality = subSpecialities[m];
-                                        if(subSpeciality === fetchedSubspeciality.subspeciality) {
-                                            const firstLevelChildren = dataObject.children;
-                                            toAdd = true;
-                                            for(let n = 0; n < firstLevelChildren.length; n++) {
-                                                const firstLevelChild = firstLevelChildren[n];
-                                                if(firstLevelChild.name === subSpeciality) {
-                                                    firstLevelChild.value += answer.score;
-                                                    toAdd = false;
-                                                    break;
-                                                }
-                                            }
-                                            if(toAdd) {
-                                                for(let n = 0; n < dataMapping.length; n++) {
-                                                    const dataObject = dataMapping[n];
-                                                    const firstLevelChildren = dataObject.children;
-                                                    let hasDuplicate = false;
-                                                    for(let o = 0; o < firstLevelChildren.length; o++) {
-                                                        const firstLevelChild = firstLevelChildren[o];
-                                                        if(firstLevelChild.name === subSpeciality) {
-                                                            hasDuplicate = true;
-                                                            break;
-                                                        }
+                        // Add sub-speciality scores
+                        const specialityList = this.state.specialityList;
+                        for(let j = 0; j < dataMapping.length; j++) {
+                            const dataObject = dataMapping[j];
+                            for(let k = 0; k < specialityList.length; k++) {
+                                const fetchedSpeciality = specialityList[k];
+                                if(fetchedSpeciality.speciality === dataObject.name) {
+                                    const fetchedSubspecialities = fetchedSpeciality.subspecialities;
+                                    for(let l = 0; l < fetchedSubspecialities.length; l++) {
+                                        const fetchedSubspeciality = fetchedSubspecialities[l];
+                                        for(let m = 0; m < subSpecialities.length; m++) {
+                                            const subSpeciality = subSpecialities[m];
+                                            if(subSpeciality === fetchedSubspeciality.subspeciality) {
+                                                const firstLevelChildren = dataObject.children;
+                                                toAdd = true;
+                                                for(let n = 0; n < firstLevelChildren.length; n++) {
+                                                    const firstLevelChild = firstLevelChildren[n];
+                                                    if(firstLevelChild.name === subSpeciality) {
+                                                        firstLevelChild.value += answer.score;
+                                                        toAdd = false;
+                                                        break;
                                                     }
-                                                    if(!hasDuplicate) {
-                                                        firstLevelChildren.push({
-                                                            value: answer.score,
-                                                            name: fetchedSubspeciality.subspeciality,
-                                                            path: fetchedSubspeciality.subspeciality,
-                                                            children: []
-                                                        });
+                                                }
+                                                if(toAdd) {
+                                                    for(let n = 0; n < dataMapping.length; n++) {
+                                                        const dataObject = dataMapping[n];
+                                                        const firstLevelChildren = dataObject.children;
+                                                        let hasDuplicate = false;
+                                                        for(let o = 0; o < firstLevelChildren.length; o++) {
+                                                            const firstLevelChild = firstLevelChildren[o];
+                                                            if(firstLevelChild.name === subSpeciality) {
+                                                                hasDuplicate = true;
+                                                                break;
+                                                            }
+                                                        }
+                                                        if(!hasDuplicate) {
+                                                            firstLevelChildren.push({
+                                                                value: answer.score,
+                                                                name: fetchedSubspeciality.subspeciality,
+                                                                path: fetchedSubspeciality.subspeciality,
+                                                                children: []
+                                                            });
+                                                        }
                                                     }
                                                 }
                                             }
@@ -383,6 +378,122 @@ class StudentOverview extends Component {
                                 }
                             }
                         }
+                    }
+                } else if(this.state.subSpecialityFilterName === null) {
+                    const specialityList = this.state.specialityList;
+
+                    // Map out sub-specialities under the chosen speciality, with their number of attempts and total score.
+                    const subSpecialityMapping = [];
+                    for(let i = 0; i < specialityList.length; i++) {
+                        const fetchedSpeciality = specialityList[i];
+                        if(fetchedSpeciality.speciality ===  this.state.specialityFilterName) {
+                            for(let j = 0; j < fetchedSpeciality.subspecialities.length; j++) {
+                                const fetchedSubSpeciality = fetchedSpeciality.subspecialities[j].subspeciality;
+                                subSpecialityMapping.push({
+                                    subSpeciality: fetchedSubSpeciality,
+                                    numAttempts: 0,
+                                    totalScore: 0
+                                });
+                            }
+                            break;
+                        }
+                    }
+
+                    // This step is to retrieve all the sub-specialities of each answer and add their total score to the subSpecialityMapping array.
+                    // Loop through all the answers, then loop through their sub-specialities and compare each with the subSpecialityMapping objects.
+                    for(let i = 0; i < answers.length; i++) {
+                        const answer = answers[i];
+                        const answerCase = answer.case;
+                        const subSpecialities = answerCase.subspeciality;
+                        for(let j = 0; j < subSpecialities.length; j++) {
+                            const subSpeciality = subSpecialities[j];
+                            for(let k = 0; k < subSpecialityMapping.length; k++) {
+                                const subSpecialityMapObject = subSpecialityMapping[k];
+                                if(subSpecialityMapObject.subSpeciality === subSpeciality) {
+                                    subSpecialityMapObject.totalScore += answer.score;
+                                    subSpecialityMapObject.numAttempts++;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    // This step is to chart out the average score for each sub-speciality, for cases done by the student.
+                    // Add the average score to dataMapping if numAttempts is more than 0.
+                    // Change the score to 2.d.p. if necessary.
+                    for(let i = 0; i < subSpecialityMapping.length; i++) {
+                        const subSpecialityMapObject = subSpecialityMapping[i];
+                        if(subSpecialityMapObject.numAttempts > 0) {
+                            let averageScore = subSpecialityMapObject.totalScore !== 0? subSpecialityMapObject.totalScore/subSpecialityMapObject.numAttempts: 0;
+                            const decimalIndex = String(averageScore).indexOf('.');
+                            if(decimalIndex !== -1 && !(decimalIndex + 2 >= averageScore.length - 1)) {
+                                averageScore = averageScore.toFixed(2);
+                            }
+                            dataMapping.push({
+                                value: averageScore,
+                                name: subSpecialityMapObject.subSpeciality,
+                                path: subSpecialityMapObject.subSpeciality
+                            });
+                        }
+                    }
+                } else {
+                    // Map the cases
+                    const caseMapping = [];
+                    for(let i = 0; i < answers.length; i++) {
+                        const answer = answers[i];
+                        const answerCase = answer.case;
+                        const subSpecialities = answerCase.subspeciality;
+                        let subSpecialityInside = false;
+                        for(let j = 0; j < subSpecialities.length; j++) {
+                            const subSpeciality = subSpecialities[j];
+                            if(subSpeciality === this.state.subSpecialityFilterName) {
+                                subSpecialityInside = true;
+                                break;
+                            }
+                        }
+                        if(subSpecialityInside) {
+                            let toAdd = true;
+                            for(let j = 0; j < caseMapping.length; j++) {
+                                const caseMapObject = caseMapping[j];
+                                if(caseMapObject.caseId === answerCase._id) {
+                                    caseMapObject.numAttempts++;
+                                    caseMapObject.totalScore += answer.score;
+                                    toAdd = false;
+                                    break;
+                                }
+                            }
+                            if(toAdd) {
+                                caseMapping.push({
+                                    caseId: answerCase._id,
+                                    caseTitle: answerCase.title,
+                                    numAttempts: 1,
+                                    totalScore: answer.score
+                                });
+                                this.state.caseDataMapping.push({
+                                    caseId: answerCase._id,
+                                    caseTitle: answerCase.title,
+                                    numAttempts: 1,
+                                    totalScore: answer.score
+                                });
+                            }
+                        }
+                    }
+
+                    // This step is to chart out the average score for each case, under the chosen sub-speciality.
+                    // Add the average score to dataMapping if numAttempts is more than 0.
+                    // Change the score to 2.d.p. if necessary.
+                    for(let i = 0; i < caseMapping.length; i++) {
+                        const caseMapObject = caseMapping[i];
+                        let averageScore = caseMapObject.totalScore !== 0? caseMapObject.totalScore/caseMapObject.numAttempts: 0;
+                        const decimalIndex = String(averageScore).indexOf('.');
+                        if(decimalIndex !== -1 && !(decimalIndex + 2 >= averageScore.length - 1)) {
+                            averageScore = averageScore.toFixed(2);
+                        }
+                        dataMapping.push({
+                            value: averageScore,
+                            name: caseMapObject.caseTitle,
+                            path: caseMapObject.caseTitle
+                        });
                     }
                 }
 
@@ -411,7 +522,7 @@ class StudentOverview extends Component {
                         data: xAxisData
                     },
                     yAxis: {
-                        name: 'Score',
+                        name: 'Average Score',
                         type: 'value'
                     },
                     series: [{
@@ -421,20 +532,19 @@ class StudentOverview extends Component {
                     color: ['#56B0CB']
                 };
 
+                let onEvents = {
+                    'click': this.onBarChartClick
+                };
+
                 return(
-<<<<<<< HEAD
                     <div>
                         {this.state.headerFilterDisplay}
                         <ReactEcharts onEvents={onEvents} showLoading={false} option={option} notMerge={true} lazyUpdate={true} />
                     </div>
-=======
-                    <ReactEcharts showLoading={false} option={option} notMerge={true} lazyUpdate={true} />
->>>>>>> parent of e8327a8... Modified Student Analytics for more concise charts
                 );
         }
     };
 
-<<<<<<< HEAD
     setSpecialityView = () => {
         this.setState({
             specialityFilterName: null,
@@ -481,14 +591,12 @@ class StudentOverview extends Component {
         }
     };
 
-=======
->>>>>>> parent of e8327a8... Modified Student Analytics for more concise charts
     render() {
         return(
             <div className="col-md-12" style={{marginTop: '20px'}}>
-                <div className="col-md-12" style={{marginTop: '20px'}}>
-                    {this.renderTreeMapOverview()}
-                </div>
+                {/*<div className="col-md-12" style={{marginTop: '20px'}}>*/}
+                    {/*{this.renderTreeMapOverview()}*/}
+                {/*</div>*/}
                 <div className="col-md-12" style={{marginTop: '20px'}}>
                     {this.renderSpecialityComparison()}
                 </div>

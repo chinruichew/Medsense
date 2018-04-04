@@ -6,8 +6,8 @@ import { Charts, ChartContainer, ChartRow, YAxis, LineChart } from "react-timese
 import { TimeSeries, TimeRange } from "pondjs";
 import Timeline from 'react-visjs-timeline';
 
-import StudentIndividualCaseOverviewChart from "./StudentIndividualCaseOverviewChart";
-import StudentIndividualCaseQuestionChart from "./StudentIndividualCaseQuestionChart";
+import StudentIndividualCaseLatestAttemptOverview from "./StudentIndividualCaseLatestAttemptOverview";
+import StudentIndividualCaseQuestionAnswers from "./StudentIndividualCaseQuestionAnswers";
 
 class StudentIndividualCaseStatistics extends Component {
     state = {
@@ -19,11 +19,18 @@ class StudentIndividualCaseStatistics extends Component {
 
     componentDidMount() {
         axios.get('/api/getUserAnswersByCase?id=' + this.props.caseId).then(res => {
-            this.setState({answers: res.data});
+            this.setState({
+                answers: res.data,
+                selectedAnswerIndex: res.data.length - 1
+            });
+        }).catch(err => {
+            console.log(err);
         });
 
         axios.get('/api/getCohortAnswersByCase?id=' + this.props.caseId).then(res => {
             this.setState({cohortAnswers: res.data});
+        }).catch(err => {
+            console.log(err);
         });
     }
 
@@ -160,118 +167,8 @@ class StudentIndividualCaseStatistics extends Component {
         );
     };
 
-    renderQuestionAnswers = () => {
-        const answer = this.state.answers[this.state.selectedAnswerIndex];
-        const caseQuestions = answer.case.questions;
-        const mcqAnswers = answer.mcqAnswers;
-        const openEndedAnswers = answer.openEndedAnswers;
-        let counter = 1;
-        const sortedCaseQuestions = [];
-        while(counter <= caseQuestions.length) {
-            for(let i = 0; i < caseQuestions.length; i++) {
-                const caseQuestion = caseQuestions[i];
-                if(caseQuestion.id === String(counter)) {
-                    sortedCaseQuestions.push(caseQuestion);
-                    counter++;
-                    break;
-                }
-            }
-        }
-        return sortedCaseQuestions.map((question, index) => {
-            if(this.state.questionFilter === 'All' || this.state.questionFilter === question.id) {
-                let modelAnswer = question.openEnded;
-                if(question.openEnded === '') {
-                    const questionOptions = question.options;
-                    let questionOptionsDisplay = '';
-                    for(let i = 0; i < questionOptions.length; i++) {
-                        const questionOption = questionOptions[i];
-                        if(questionOption.check) {
-                            questionOptionsDisplay += questionOption.mcq + ',';
-                        }
-                    }
-                    modelAnswer = questionOptionsDisplay;
-                } else {
-                    modelAnswer = ReactHtmlParser(modelAnswer);
-                }
-                let answerOfQuestion = '';
-                let answerType = 'mcq';
-                for(let i = 0; i < mcqAnswers.length; i++) {
-                    const mcqAnswer = mcqAnswers[i];
-                    if(mcqAnswer.question === question._id) {
-                        answerOfQuestion = mcqAnswer;
-                        break;
-                    }
-                }
-                for(let i = 0; i < openEndedAnswers.length; i++) {
-                    const openEndedAnswer = openEndedAnswers[i];
-                    if(openEndedAnswer.question === question._id) {
-                        answerOfQuestion = openEndedAnswer;
-                        answerType = 'open-ended';
-                        break;
-                    }
-                }
-                let displayAnswer = '';
-                if(answerType === 'open-ended') {
-                    displayAnswer = ReactHtmlParser(answerOfQuestion.studentAnswer);
-                } else {
-                    const mcqAnswerOptions = answerOfQuestion.answerOptions;
-                    for(let i = 0; i < mcqAnswerOptions.length; i++) {
-                        const mcqAnswerOption = mcqAnswerOptions[i];
-                        if(mcqAnswerOption.check) {
-                            displayAnswer += mcqAnswerOption.option.mcq;
-                        }
-                    }
-                }
-                const score = answerOfQuestion.score < answerOfQuestion.mark/2? 'red': 'green';
-
-                // Display Picture if there is an attachment
-                let questionDisplay = question.attachment === ''? <p>{ReactHtmlParser(question.question)}</p>:
-                    <div className="row">
-                        <div className="col-md-4">
-                            <p>{ReactHtmlParser(question.question)}</p>
-                        </div>
-                        <div className="col-md-4">
-                            <Image src={question.attachment} style={{height: '300px', width: '300px'}} alt="" />
-                        </div>
-                    </div>;
-
-                return(
-                    <div key={index} className="col-md-12 questionAnswerPanels">
-                        <Panel bsStyle="primary" defaultExpanded>
-                            <Panel.Heading>
-                                <Panel.Title componentClass="h3" toggle>Question {question.id}</Panel.Title>
-                            </Panel.Heading>
-                            <Panel.Collapse>
-                                <Panel.Body>
-                                    <StudentIndividualCaseQuestionChart setSelectedAnswerIndex={this.setSelectedAnswerIndex} question={question} answers={this.state.answers} answer={answerOfQuestion} cohortAnswers={this.state.cohortAnswers} />
-                                    <h3>Question Description</h3>
-                                    {questionDisplay}
-                                    <div className="row">
-                                        <div className="col-md-12">
-                                            <div className="col-md-4" style={{paddingLeft: '0px'}}>
-                                                <h3>Your Answer</h3>
-                                            </div>
-                                            <div className="col-md-4 text-center">
-                                                <h4 style={{marginTop: '25px', color: score}}>Score: {answerOfQuestion.score}/{answerOfQuestion.mark}</h4>
-                                            </div>
-                                            <div className="col-md-4 text-center">
-                                                <h3>Model Answer</h3>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-6">
-                                            <p>{displayAnswer}</p>
-                                        </div>
-                                        <div className="col-md-6">
-                                            <p>{modelAnswer}</p>
-                                        </div>
-                                    </div>
-                                </Panel.Body>
-                            </Panel.Collapse>
-                        </Panel>
-                    </div>
-                );
-            }
-        });
+    returnToCaseStats = () => {
+        this.props.returnToCaseStats(this.props.redirectFromOverview);
     };
 
     renderContent = () => {
@@ -288,13 +185,9 @@ class StudentIndividualCaseStatistics extends Component {
                                 <div className="row">
                                     <br/>
                                     <div className="col-md-4 text-left">
-<<<<<<< HEAD
                                         <Button style={{marginTop: '20px', paddingLeft: "0"}} onClick={this.returnToCaseStats} bsSize="large" bsStyle="link">
                                             <Glyphicon glyph="chevron-left"/>Back to cases
                                         </Button>
-=======
-                                        <Button style={{marginTop: '20px'}} onClick={this.props.returnToCaseStats} bsStyle="primary">Back to cases</Button>
->>>>>>> parent of e8327a8... Modified Student Analytics for more concise charts
                                     </div>
                                 </div>
                                 <div className="row">
@@ -303,12 +196,13 @@ class StudentIndividualCaseStatistics extends Component {
                                     </div>
                                 </div>
                                 <div className="row" style={{marginBottom: '10px'}}>
-                                    <StudentIndividualCaseOverviewChart setSelectedAnswerIndex={this.setSelectedAnswerIndex} answers={this.state.answers} caseId={this.props.caseId} cohortAnswers={this.state.cohortAnswers} />
+                                    {/*<StudentIndividualCaseOverviewChart setSelectedAnswerIndex={this.setSelectedAnswerIndex} answers={this.state.answers} caseId={this.props.caseId} cohortAnswers={this.state.cohortAnswers} />*/}
+                                    <StudentIndividualCaseLatestAttemptOverview answers={this.state.answers} globalAnswers={this.state.cohortAnswers} />
                                 </div>
                                 <div className="row">
-                                    {this.renderAttemptFilter()}
+                                    {/*{this.renderAttemptFilter()}*/}
                                     {this.renderQuestionFilter()}
-                                    {this.renderQuestionAnswers()}
+                                    <StudentIndividualCaseQuestionAnswers answers={this.state.answers} selectedAnswerIndex={this.state.selectedAnswerIndex} questionFilter={this.state.questionFilter} />
                                 </div>
                             </div>
                         );

@@ -39,6 +39,13 @@ module.exports = app => {
             // originalAnswer = nlp(originalAnswer).normalize().out('text'); //normalize
         });
 
+        const synonyms = await Synonyms.find().exec();
+        for (var i in synonyms) {
+            studentAnswer = studentAnswer.replace(synonyms[i]['abbreviation'], synonyms[i]['original']);
+        }
+
+        console.log(studentAnswer)
+
         setTimeout(function () {
             //student answer
             const tokenizer = new natural.WordTokenizer();

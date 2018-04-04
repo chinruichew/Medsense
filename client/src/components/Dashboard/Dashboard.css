@@ -7,10 +7,11 @@
 }
 
 .leaderboard_container {
-    border-style: groove;
+    border-style: solid;
     border-width: 1px;
     border-radius: 10px;
     height: 500px;
+    border-color: #C9C9C9;
 }
 
 .leaderboard_image {

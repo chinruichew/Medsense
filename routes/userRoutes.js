@@ -6,6 +6,8 @@ const AnswerOverview = require('../models/AnswerOverview');
 const keys = require('../config/keys');
 const constants = require('../utility/constantTypes');
 const commonMethods = require('../utility/commonMethods');
+const UserLevelScheme = require('../models/UserLevelScheme');
+const ContributionLevelScheme = require('../models/ContributionLevelScheme');
 
 module.exports = app => {
     app.post('/api/signup', function (req, res) {
@@ -19,7 +21,7 @@ module.exports = app => {
                 newUser.school = values.school;
                 newUser.year = values.year;
                 newUser.email = newUser.generateHash(values.email);
-                // newUser.save();
+                newUser.save();
                 res.send('Done');
             } else {
                 res.send('User Exists');
@@ -190,6 +192,20 @@ module.exports = app => {
         res.send(String(level));
     });
 
+    app.post('/api/calculateUserLevels', async(req, res) => {
+        const users = req.body.users;
+        const userLevelMapping = [];
+        for(let i = 0; i < users.length; i++) {
+            const user = users[i];
+            const level = await commonMethods.CALCULATE_USER_LEVEL(user.points);
+            userLevelMapping.push({
+                user: user,
+                level: level
+            });
+        }
+        res.send(userLevelMapping);
+    });
+
     app.get('/api/getLevelRank', async(req, res) => {
         const level = req.query.level;
         const rank = await commonMethods.CALCULATE_USER_RANK(level);
@@ -200,6 +216,42 @@ module.exports = app => {
         const points = parseInt(req.query.points,10);
         const rank = await commonMethods.CALCULATE_CONTRIBUTION_RANK(points);
         res.send(String(rank));
+    });
+
+    app.get('/api/getNextLevelRank', async(req, res) => {
+        const rank = req.query.rank;
+        const levelSchemes = await UserLevelScheme.find().sort({level:1});
+        let found = false;
+        let nextRank = '';
+        let nextLevel = '';
+        for (let i = 0; i < levelSchemes.length; i++) {
+            const levelScheme = levelSchemes[i];
+            if (levelScheme.rank === rank) {
+                found = true;
+            } else if (found) {
+                nextRank = levelScheme.rank;
+                nextLevel =levelScheme.level;
+                break;
+            }
+        }
+        res.send({rank:nextRank,level:nextLevel});
+    });
+
+    app.get('/api/getNextContributionRank', async(req, res) => {
+        const rank = req.query.rank;
+        const contributionSchemes = await ContributionLevelScheme.find().sort({point:1});
+        let found = false;
+        let nextRank = '';
+        for (let i = 0; i < contributionSchemes.length; i++) {
+            const contributionScheme = contributionSchemes[i];
+            if (contributionScheme.rank === rank) {
+                found = true;
+            } else if (found) {
+                nextRank = contributionScheme.rank;
+                break;
+            }
+        }
+        res.send(nextRank);
     });
 
     app.post('/api/calculateContributionPoints', async (req, res) => {

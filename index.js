@@ -79,7 +79,7 @@ s3.getObject(getParams, function (err, data) {
             chalkAnimation.rainbow("SSH connection error: " + error);
         }
 
-        mongoose.connect(keys.mongoURI);
+        mongoose.connect(keys.mongoStagingURI);
 
         mongoose.Promise = global.Promise;
         const db = mongoose.connection;
@@ -98,6 +98,7 @@ const deepPopulate = require('mongoose-deep-populate')(mongoose);
 /* End of MongoDB Connection */
 
 /* Start of Middleware configuration */
+app.enable('trust proxy');
 const router = express.Router();
 router.use(function (req, res, next) {
     next();
@@ -120,20 +121,17 @@ app.use(bodyParser.json());
 const sessionConfig = {
     secret: keys.cookieKeySecret,
     cookie: {
-        maxAge: 1000 * 60 * 30,
+        maxAge: 1000 * 60 * 15,
         keys: [keys.cookieKey]
     },
-    resave: true,
-    saveUninitialized: true,
-    httpOnly: true,
-    overwrite: true
+    secure: false,
+    resave: false,
+    saveUninitialized: false,
+    httpOnly: false,
+    signed: false
 };
 if (process.env.NODE_ENV === 'production') {
-<<<<<<< HEAD
     app.set('trust proxy', 1);
-=======
-    // app.set('trust proxy', 1);
->>>>>>> parent of 3bd5c69... Session Configs
     // sessionConfig.cookie.secure = true;
 }
 app.use(cookieSession(sessionConfig));

@@ -37,7 +37,7 @@ class VettedCases extends Component {
                         return(
                             <tr align="center" key={vettedCase._id}>
                                 <td>{vettedCase.title}</td>
-                                <td>{vettedCase.subspeciality}</td>
+                                <td>{vettedCase.subspeciality.join(', ')}</td>
                                 <td>{vettedCase.authorid.username}</td>
                                 <td>{dateTime}</td>
                                 <td>{vettedDate}</td>
@@ -58,7 +58,7 @@ class VettedCases extends Component {
                         return(
                             <tr align="center" key={vettedCase._id}>
                                 <td>{vettedCase.title}</td>
-                                <td>{vettedCase.subspeciality}</td>
+                                <td>{vettedCase.subspeciality.join(', ')}</td>
                                 <td>{vettedCase.authorname}</td>
                                 <td>{dateTime}</td>
                                 <td>{vettedDate}</td>
