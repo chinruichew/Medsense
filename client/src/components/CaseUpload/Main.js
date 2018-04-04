@@ -598,8 +598,8 @@ class Main extends Component {
             <PanelGroup accordion>
                 <Panel eventKey="1" bsStyle="primary" style={{marginLeft: "14%", marginRight: "14%", padding: "0"}}>
                     <Panel.Heading><Panel.Title toggle>{PDPA}</Panel.Title></Panel.Heading>
-                    {/*<Panel.Body collapsible>*/}
                     <Panel.Collapse onEnter={(e) => this.setState({pdpa:!this.state.pdpa})} onExit={(e) => this.setState({pdpa:!this.state.pdpa})}>
+                        <Panel.Body>
                         <FormGroup controlId="formControlsAuthor">
                             <ControlLabel style={{fontSize: "150%"}}>Author of case (Optional)</ControlLabel>
                             <FormControl type="text" placeholder="Enter your name as registered in school"
@@ -646,6 +646,7 @@ class Main extends Component {
                             <br/><br/>
                             Please allow at least 7 business days for your withdrawal of consent to take effect.
                         </h4>
+                        </Panel.Body>
                     </Panel.Collapse>
                 </Panel>
             </PanelGroup>
@@ -766,6 +767,7 @@ class Main extends Component {
                                     <Panel.Title toggle>{overviewTitle}</Panel.Title>
                                 </Panel.Heading>
                                 <Panel.Collapse onEnter={(e) => this.setState({overview:!this.state.overview})} onExit={(e) => this.setState({overview:!this.state.overview})}>
+                                    <Panel.Body>
                                     <Overview
                                         title={this.state.title}
                                         difficulty={this.state.difficulty}
@@ -777,6 +779,7 @@ class Main extends Component {
                                         handleUpdateOverview={this.handleUpdateOverview}
                                         process={this.props.process}
                                     />
+                                    </Panel.Body>
                                 </Panel.Collapse>
                             </Panel>
                         </PanelGroup>
@@ -785,6 +788,7 @@ class Main extends Component {
                             <Panel eventKey="1" style={{border: "0"}}>
                                 <Panel.Heading><Panel.Title toggle>{questionTitle}</Panel.Title></Panel.Heading>
                                 <Panel.Collapse onEnter={(e) => this.setState({question:!this.state.question})} onExit={(e) => this.setState({question:!this.state.question})}>
+                                    <Panel.Body>
                                     <div className="question-area">
                                         {questionNodes}
                                     </div>
@@ -792,6 +796,7 @@ class Main extends Component {
                                     <div className="add-question-button">
                                         <Button type="button" bsSize="large" bsStyle="link" onClick={(e) => this.addQuestion(this.state.qnData.length+1)}><Glyphicon glyph="plus-sign"/> Add Question</Button><br />
                                     </div>
+                                    </Panel.Body>
                                 </Panel.Collapse>
                             </Panel>
                         </PanelGroup>
