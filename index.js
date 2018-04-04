@@ -122,9 +122,9 @@ const sessionConfig = {
     secret: keys.cookieKeySecret,
     cookie: {
         maxAge: 1000 * 60 * 15,
-        keys: [keys.cookieKey]
+        keys: [keys.cookieKey],
+        secure: false
     },
-    secure: false,
     resave: false,
     saveUninitialized: false,
     httpOnly: false
