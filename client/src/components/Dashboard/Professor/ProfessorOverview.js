@@ -367,7 +367,10 @@ class ProfessorOverview extends Component {
                     color: ['#56B0CB']
 =======
                     }]
+<<<<<<< HEAD
 >>>>>>> parent of cbd9890... Prof Dashboard UI edits
+=======
+>>>>>>> parent of ccf767a... Refactored Analytics Dashboard
                 };
 
                 return(
