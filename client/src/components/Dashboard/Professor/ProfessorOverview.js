@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import ReactEcharts from 'echarts-for-react';
 import axios from 'axios';
-import {Button, Breadcrumb} from "react-bootstrap";
+import {Button} from "react-bootstrap";
 
 class ProfessorOverview extends Component {
     state = {
@@ -9,7 +9,7 @@ class ProfessorOverview extends Component {
         specialityFilterName: null,
         subSpecialityFilterName: null,
         caseDataMapping: [],
-        headerFilterDisplay: <Breadcrumb><Breadcrumb.Item><Button bsSize="large" bsStyle="link" onClick={this.setSpecialityView}>All</Button></Breadcrumb.Item></Breadcrumb>
+        headerFilterDisplay: <h4><Button bsStyle="link" onClick={this.setSpecialityView}>All</Button></h4>
     };
 
     componentDidMount() {
@@ -485,8 +485,12 @@ class ProfessorOverview extends Component {
                     series: [{
                         data: seriesData,
                         type: 'bar'
+<<<<<<< HEAD
                     }],
                     color: ['#56B0CB']
+=======
+                    }]
+>>>>>>> parent of cbd9890... Prof Dashboard UI edits
                 };
 
                 let onEvents = {
@@ -494,7 +498,7 @@ class ProfessorOverview extends Component {
                 };
 
                 return(
-                    <div>
+                    <div className="text-center">
                         {this.state.headerFilterDisplay}
                         <ReactEcharts onEvents={onEvents} showLoading={false} option={option} notMerge={true} lazyUpdate={true} />
                     </div>
@@ -507,7 +511,7 @@ class ProfessorOverview extends Component {
             specialityFilterName: null,
             subSpecialityFilterName: null,
             caseDataMapping: [],
-            headerFilterDisplay: <Breadcrumb><Breadcrumb.Item><Button bsSize="large" bsStyle="link" onClick={this.setSpecialityView}>All</Button></Breadcrumb.Item></Breadcrumb>
+            headerFilterDisplay: <h4><Button bsStyle="link" onClick={this.setSpecialityView}>All</Button></h4>
         });
     };
 
@@ -515,10 +519,7 @@ class ProfessorOverview extends Component {
         this.setState({
             subSpecialityFilterName: null,
             caseDataMapping: [],
-            headerFilterDisplay: <Breadcrumb>
-                                    <Breadcrumb.Item><Button bsSize="large" bsStyle="link" onClick={this.setSpecialityView}>All</Button></Breadcrumb.Item>
-                                    <Breadcrumb.Item><Button bsSize="large" bsStyle="link" onClick={this.setSubSpecialityView}>{this.state.specialityFilterName}</Button></Breadcrumb.Item>
-                                </Breadcrumb>
+            headerFilterDisplay: <h4><Button bsStyle="link" onClick={this.setSpecialityView}>All</Button> > <Button bsStyle="link" onClick={this.setSubSpecialityView}>{this.state.specialityFilterName}</Button></h4>
         });
     };
 
@@ -527,20 +528,13 @@ class ProfessorOverview extends Component {
             const specialityFilterName = params.name;
             this.setState({
                 specialityFilterName,
-                headerFilterDisplay: <Breadcrumb>
-                                        <Breadcrumb.Item><Button bsSize="large" bsStyle="link" onClick={this.setSpecialityView}>All</Button></Breadcrumb.Item>
-                                        <Breadcrumb.Item><Button bsSize="large" bsStyle="link" onClick={this.setSubSpecialityView}>{specialityFilterName}</Button></Breadcrumb.Item>
-                                     </Breadcrumb>
+                headerFilterDisplay: <h4><Button bsStyle="link" onClick={this.setSpecialityView}>All</Button> > <Button bsStyle="link" onClick={this.setSubSpecialityView}>{specialityFilterName}</Button></h4>
             });
         } else if(this.state.subSpecialityFilterName === null) {
             const subSpecialityFilterName = params.name;
             this.setState({
                 subSpecialityFilterName,
-                headerFilterDisplay: <Breadcrumb>
-                                        <Breadcrumb.Item><Button bsSize="large" bsStyle="link" onClick={this.setSpecialityView}>All</Button></Breadcrumb.Item>
-                                        <Breadcrumb.Item><Button bsSize="large" bsStyle="link" onClick={this.setSubSpecialityView}>{this.state.specialityFilterName}</Button></Breadcrumb.Item>
-                                        <Breadcrumb.Item><Button bsSize="large" bsStyle="link">{subSpecialityFilterName}</Button></Breadcrumb.Item>
-                                    </Breadcrumb>
+                headerFilterDisplay: <h4><Button bsStyle="link" onClick={this.setSpecialityView}>All</Button> > <Button bsStyle="link" onClick={this.setSubSpecialityView}>{this.state.specialityFilterName}</Button> > <Button bsStyle="link">{subSpecialityFilterName}</Button></h4>
             });
         } else {
             const selectedCase = this.state.caseDataMapping[params.dataIndex];

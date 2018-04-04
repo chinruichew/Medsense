@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, ControlLabel, FormControl, FormGroup, Image, Panel, Glyphicon} from "react-bootstrap";
+import {Button, ControlLabel, FormControl, FormGroup, Image, Panel} from "react-bootstrap";
 import Timeline from 'react-visjs-timeline';
 import axios from 'axios';
 import {connect} from "react-redux";
@@ -115,14 +115,10 @@ class ProfessorIndividualCaseStatistics extends Component {
                             <div className="row">
                                 <br/>
                                 <div className="col-md-4 text-left">
-                                    <Button style={{marginTop: '20px', paddingLeft: "0"}} onClick={this.returnToCaseStats} bsStyle="link" bsSize="large">
-                                        <Glyphicon glyph="chevron-left"/> Back to cases
-                                    </Button>
+                                    <Button style={{marginTop: '20px'}} onClick={this.returnToCaseStats} bsStyle="primary">Back to cases</Button>
                                 </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-md-4 col-md-offset-4 text-center">
-                                    <h2><strong>{this.props.reviewedCase.title}</strong></h2>
+                                <div className="col-md-4 text-center">
+                                    <h1>{this.props.reviewedCase.title}</h1>
                                 </div>
                             </div>
                             <div className="row" style={{marginBottom: '10px'}}>
@@ -138,14 +134,10 @@ class ProfessorIndividualCaseStatistics extends Component {
                         <div className="row">
                             <br/>
                             <div className="col-md-4 text-left">
-                                <Button style={{marginTop: '20px', paddingLeft: "0"}} onClick={this.props.returnToCaseStats} bsStyle="link" bsSize="large">
-                                    <Glyphicon glyph="chevron-left"/> Back to cases
-                                </Button>
+                                <Button style={{marginTop: '20px'}} onClick={this.props.returnToCaseStats} bsStyle="primary">Back to cases</Button>
                             </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-md-4 col-md-offset-4 text-center">
-                                <h2><strong>{this.props.reviewedCase.title}</strong></h2>
+                            <div className="col-md-4 text-center">
+                                <h1>{this.props.reviewedCase.title}</h1>
                             </div>
                         </div>
                         <div className="row" style={{marginBottom: '10px'}}>
