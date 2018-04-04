@@ -120,7 +120,7 @@ app.use(bodyParser.json());
 const sessionConfig = {
     secret: keys.cookieKeySecret,
     cookie: {
-        maxAge: 1000 * 60 * 30,
+        maxAge: 1000 * 60 * 15,
         keys: [keys.cookieKey]
     },
     resave: true,
@@ -129,8 +129,8 @@ const sessionConfig = {
     overwrite: true
 };
 if (process.env.NODE_ENV === 'production') {
-    // app.set('trust proxy', 1);
-    // sessionConfig.cookie.secure = true;
+    app.set('trust proxy', 1);
+    sessionConfig.cookie.secure = true;
 }
 app.use(cookieSession(sessionConfig));
 /* End of Session Configurations */
