@@ -78,9 +78,9 @@ class SearchByApproach extends Component {
                     // let dateTime = moment(approachCase.uploadTime).format('Do MMMM YYYY h:mm a');
                     // let date = dateTime.substring(0,dateTime.length-8);
                     // let time = dateTime.substring(dateTime.length-8,dateTime.length);
-                    let picName = "./" + approachCase.subspeciality[0] + ".png";
+
                     const caseBox = <Button onClick={(e)=>this.handleReturnCase(approachCase)} className="case-button" bsSize="large">
-                        <img src={picName} onError={(e)=>{e.target.src="./Other Subspeciality.png"}}/>
+                        <img src="./approach1.jpg" alt={approachCase.title}/>
                         <h3 className="case-title">{approachCase.title}</h3>
                         <h4>{approachCase.difficulty}</h4>
                         {/*<h4>{approachCase.speciality}</h4>*/}
