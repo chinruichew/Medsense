@@ -64,16 +64,14 @@ class ProfessorProfile extends Component {
         e.preventDefault();
         this.props.updateProfessor(this.state).then((response) => {
             if (response) {
-                console.log(response);
                 this.setState({ vmShow: false });
-                console.log(this.props.refresh);
             }
         }).catch(() => { })
     };
 
     render() {
         let subSpeciality = this.state.subspeciality.map((obj, index) => {
-           return <p>{obj}</p>;
+           return <li key={index}>{obj}</li>;
         });
 
         const popover = (
@@ -116,9 +114,9 @@ class ProfessorProfile extends Component {
                             <td style={{width: '100px'}} ><center>
                                 <h4> {this.state.speciality} </h4>
                             </center></td>
-                            <td style={{width: '100px'}} ><center>
-                                <h4>{subSpeciality}</h4>
-                            </center></td>
+                            <td style={{width: '100px'}} >
+                                <h4><ul>{subSpeciality}</ul></h4>
+                            </td>
                             {contributionRank}
                         </tr>
                     </Table>

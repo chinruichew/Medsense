@@ -53,6 +53,12 @@ class DashboardStudent extends Component {
         });
     };
 
+    resetBarChartFilters = () => {
+        this.setState({
+            overviewToCaseDetailId: null
+        });
+    };
+
     renderCaseOverview = () => {
         switch(this.state.overviewToCaseDetailId) {
             case null:
@@ -61,7 +67,7 @@ class DashboardStudent extends Component {
                 );
             default:
                 return(
-                    <StudentCaseStatistics answers={this.state.answers} overviewToCaseDetailId={this.state.overviewToCaseDetailId} />
+                    <StudentCaseStatistics answers={this.state.answers} overviewToCaseDetailId={this.state.overviewToCaseDetailId} resetBarChartFilters={this.resetBarChartFilters} />
                 );
         }
     };

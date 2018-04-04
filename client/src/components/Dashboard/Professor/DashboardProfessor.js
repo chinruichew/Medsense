@@ -55,6 +55,12 @@ class DashboardProfessor extends Component {
         });
     };
 
+    resetBarChartFilters = () => {
+        this.setState({
+            overviewToCaseDetailId: null
+        });
+    };
+
     renderCaseOverview = () => {
         switch(this.state.overviewToCaseDetailId) {
             case null:
@@ -63,7 +69,7 @@ class DashboardProfessor extends Component {
                 );
             default:
                 return(
-                    <ProfessorCaseStatistics associatedCases={this.state.associatedCases} overviewToCaseDetailId={this.state.overviewToCaseDetailId} />
+                    <ProfessorCaseStatistics associatedCases={this.state.associatedCases} overviewToCaseDetailId={this.state.overviewToCaseDetailId} resetBarChartFilters={this.resetBarChartFilters} />
                 );
         }
     };
