@@ -3,6 +3,7 @@ const Question = require('../models/Question');
 const Option = require('../models/Option');
 const User = require('../models/User');
 
+const keys = require('../config/keys');
 const constants = require('../utility/constantTypes');
 const commonMethods = require('../utility/commonMethods');
 
@@ -116,6 +117,12 @@ module.exports = app => {
                                 }
                             });
                         }
+
+                        // Generate alert email
+                        const email = keys.medsenseTeamEmail;
+                        const subject = 'Case Upload Alert';
+                        const htmlText = '<h1>' + req.session.user.username + ' has uploaded a case!</h1><p>The case title is: ' + req.body.values.title + '</p>';
+                        commonMethods.SEND_AUTOMATED_EMAIL(email, subject, htmlText);
 
                         res.send({ data: {case:newCase._id, question:finalQuestions}, message: "uploadCase success" });
                     }).catch(err => {
@@ -234,6 +241,13 @@ module.exports = app => {
                     }
                     oneCase.questions = questions;
                     await oneCase.save();
+
+                    // Generate alert email
+                    const email = keys.medsenseTeamEmail;
+                    const subject = 'Case Vetting Alert';
+                    const htmlText = '<h1>' + req.session.user.username + ' has vetted a case uploaded by ' + oneCase.authorid.username + '!</h1><p>The case title is: ' + oneCase.title + '</p>';
+                    commonMethods.SEND_AUTOMATED_EMAIL(email, subject, htmlText);
+
                     res.send({data: {case:oneCase._id, questions:questions}, message: "updateCase success"});
                 });
             });
