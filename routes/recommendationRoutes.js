@@ -307,7 +307,8 @@ module.exports = app => {
                 const vettedCase = vettedCases[i];
                 let toAdd = true;
                 for(let j = 0; j < processedCases.length; j++) {
-                    if(processedCases._id === vettedCase._id) {
+                    const processedCase = processedCases[j];
+                    if(String(processedCase._id) === String(vettedCase._id)) {
                         toAdd = false;
                         break;
                     }
@@ -319,7 +320,7 @@ module.exports = app => {
                     break;
                 }
             }
-
+            
             res.send(processedCases);
         } else {
             // If user has attempted at least threshold number of cases in a spec, prioritise based on poor scoring
