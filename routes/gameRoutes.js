@@ -3,7 +3,10 @@ const AnswerOverview = require('../models/AnswerOverview');
 const MCQAnswer = require('../models/MCQAnswer');
 const MCQAnswerOption = require('../models/MCQAnswerOption');
 const OpenEndedAnswer = require('../models/OpenEndedAnswer');
+
+const keys = require('../config/keys');
 const constants = require('../utility/constantTypes');
+const commonMethods = require('../utility/commonMethods');
 
 module.exports = app => {
     app.post('/api/fetchCasesApproach', async (req, res) => {
@@ -256,6 +259,12 @@ module.exports = app => {
                                         });
                                         await answerOverview.save();
 
+                                        // Generate alert email
+                                        const email = keys.medsenseTeamEmail;
+                                        const subject = 'Case Challenge Alert';
+                                        const htmlText = '<h1>' + req.session.user.username + ' has completed a case challenge!</h1>';
+                                        commonMethods.SEND_AUTOMATED_EMAIL(email, subject, htmlText);
+
                                         res.send('Done');
                                     });
                                 } else {
@@ -274,6 +283,12 @@ module.exports = app => {
                                         openEndedAnswers: []
                                     });
                                     await answerOverview.save();
+
+                                    // Generate alert email
+                                    const email = keys.medsenseTeamEmail;
+                                    const subject = 'Case Challenge Alert';
+                                    const htmlText = '<h1>' + req.session.user.username + ' has completed a case challenge!</h1>';
+                                    commonMethods.SEND_AUTOMATED_EMAIL(email, subject, htmlText);
 
                                     res.send('Done');
                                 }
@@ -321,6 +336,12 @@ module.exports = app => {
                     openEndedAnswers: openEndedAnswerArray
                 });
                 await answerOverview.save();
+
+                // Generate alert email
+                const email = keys.medsenseTeamEmail;
+                const subject = 'Case Challenge Alert';
+                const htmlText = '<h1>' + req.session.user.username + ' has completed a case challenge!</h1>';
+                commonMethods.SEND_AUTOMATED_EMAIL(email, subject, htmlText);
 
                 res.send('Done');
             });
