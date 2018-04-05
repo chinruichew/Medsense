@@ -184,20 +184,76 @@ module.exports = app => {
                 }
             }
 
-            bulk.execute(async(err, result) => {
-                if (err) {
-                    throw(err);
-                }
+            if(optionsToInsert.length > 0) {
+                bulk.execute(async(err, result) => {
+                    if (err) {
+                        throw(err);
+                    }
 
-                const insertedOptionIds = result.getInsertedIds();
-                for(let i = 0; i < optionsToInsert.length; i++) {
-                    const optionToInsert = optionsToInsert[i];
-                    optionToInsert._id = insertedOptionIds._id;
-                }
+                    const insertedOptionIds = result.getInsertedIds();
+                    for(let i = 0; i < optionsToInsert.length; i++) {
+                        const optionToInsert = optionsToInsert[i];
+                        optionToInsert._id = insertedOptionIds._id;
+                    }
 
-                const questionObjectsToAdd = [];
+                    const questionObjectsToAdd = [];
+                    const questions=[];
+                    bulk = Question.collection.initializeUnorderedBulkOp();
+                    for(let i = 0; i < qnData.length; i++) {
+                        const question = qnData[i];
+
+                        const updatedQuestion = {
+                            numOptions: question.numOptions,
+                            openEnded: question.openEnded,
+                            id : question.id,
+                            question : question.question,
+                            attachment : null,
+                            pearlAttachment : null,
+                            type : question.type,
+                            pearl : question.pearl,
+                            time : question.time,
+                            reference : question.reference,
+                            stem : question.stem,
+                            mark : question.mark,
+                            case: req.body.values.id,
+                            options: question.optionData
+                        };
+                        if(question._id !== undefined && question._id !== null) {
+                            bulk.find({_id: question._id}).update({$set: updatedQuestion});
+                            questions.push(question._id);
+                        } else {
+                            questionObjectsToAdd.push(updatedQuestion);
+                        }
+                    }
+
+                    // Add the new questions
+                    for(let i = 0; i < questionObjectsToAdd.length; i++) {
+                        const questionObject = new Question({
+                            ...questionObjectsToAdd[i]
+                        });
+                        await questionObject.save();
+                        questions.push(questionObject);
+                    }
+
+                    // Initiate bulk update operation
+                    bulk.execute(async(err) => {
+                        if(err) {
+                            throw(err);
+                        }
+                        oneCase.questions = questions;
+                        await oneCase.save();
+
+                        // Generate alert email
+                        const email = keys.medsenseTeamEmail;
+                        const subject = 'Case Vetting Alert';
+                        const htmlText = '<h1>' + req.session.user.username + ' has vetted an uploaded case!</h1><p>The case title is: ' + oneCase.title + '</p>';
+                        commonMethods.SEND_AUTOMATED_EMAIL(email, subject, htmlText);
+
+                        res.send({data: {case:oneCase._id, questions:questions}, message: "updateCase success"});
+                    });
+                });
+            } else {
                 const questions=[];
-                bulk = Question.collection.initializeUnorderedBulkOp();
                 for(let i = 0; i < qnData.length; i++) {
                     const question = qnData[i];
 
@@ -218,39 +274,21 @@ module.exports = app => {
                         options: question.optionData
                     };
                     if(question._id !== undefined && question._id !== null) {
-                        bulk.find({_id: question._id}).update({$set: updatedQuestion});
                         questions.push(question._id);
-                    } else {
-                        questionObjectsToAdd.push(updatedQuestion);
                     }
                 }
 
-                // Add the new questions
-                for(let i = 0; i < questionObjectsToAdd.length; i++) {
-                    const questionObject = new Question({
-                        ...questionObjectsToAdd[i]
-                    });
-                    await questionObject.save();
-                    questions.push(questionObject);
-                }
+                oneCase.questions = questions;
+                await oneCase.save();
 
-                // Initiate bulk update operation
-                bulk.execute(async(err) => {
-                    if(err) {
-                        throw(err);
-                    }
-                    oneCase.questions = questions;
-                    await oneCase.save();
+                // Generate alert email
+                const email = keys.medsenseTeamEmail;
+                const subject = 'Case Vetting Alert';
+                const htmlText = '<h1>' + req.session.user.username + ' has vetted a case uploaded by ' + oneCase.authorid.username + '!</h1><p>The case title is: ' + oneCase.title + '</p>';
+                commonMethods.SEND_AUTOMATED_EMAIL(email, subject, htmlText);
 
-                    // Generate alert email
-                    const email = keys.medsenseTeamEmail;
-                    const subject = 'Case Vetting Alert';
-                    const htmlText = '<h1>' + req.session.user.username + ' has vetted a case uploaded by ' + oneCase.authorid.username + '!</h1><p>The case title is: ' + oneCase.title + '</p>';
-                    commonMethods.SEND_AUTOMATED_EMAIL(email, subject, htmlText);
-
-                    res.send({data: {case:oneCase._id, questions:questions}, message: "updateCase success"});
-                });
-            });
+                res.send({data: {case:oneCase._id, questions:questions}, message: "updateCase success"});
+            }
         });
     });
 
