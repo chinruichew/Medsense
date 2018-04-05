@@ -24,7 +24,7 @@ module.exports = app => {
                 newUser.email = newUser.generateHash(values.email);
                 newUser.save();
 
-                const email = keys.medsenseTeamUsername;
+                const email = keys.medsenseTeamEmail;
                 const subject = 'User Registration Alert';
                 const htmlText = '<h1>A new user has registered an account!</h1><p>The user is: ' + values.username + '</p>';
                 await commonMethods.SEND_AUTOMATED_EMAIL(email, subject, htmlText);

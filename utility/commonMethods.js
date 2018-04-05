@@ -67,7 +67,6 @@ module.exports = {
 
             // Do not erase - Production Logging
             console.log('Email sent: ' + info.response);
-            return('Done');
         });
     }
 };

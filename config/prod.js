@@ -18,5 +18,6 @@ module.exports = {
     httpsPrivateKey: keyManagement.decryptKey(process.env.HTTPS_PRIVATE_KEY),
     httpsCertificate: keyManagement.decryptKey(process.env.HTTPS_CERTIFICATE),
     medsenseEmailUsername: keyManagement.decryptKey(process.env.MEDSENSE_EMAIL_USERNAME),
-    medsenseEmailPassword: keyManagement.decryptKey(process.env.MEDSENSE_EMAIL_PASSWORD)
+    medsenseEmailPassword: keyManagement.decryptKey(process.env.MEDSENSE_EMAIL_PASSWORD),
+    medsenseTeamEmail: keyManagement.decryptKey(process.env.MEDSENSE_TEAM_EMAIL)
 };
