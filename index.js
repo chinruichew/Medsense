@@ -76,6 +76,7 @@ s3.getObject(getParams, function (err, data) {
 });
 
 /* Start of Middleware configuration */
+app.set('trust proxy');
 const router = express.Router();
 router.use(function (req, res, next) {
     next();
