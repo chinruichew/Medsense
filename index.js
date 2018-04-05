@@ -100,7 +100,8 @@ const sessionConfig = {
     keys: [keys.cookieKey],
 
     // Cookie Options
-    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+    maxAge: 24 * 60 * 60 * 1000,
+    secure: false
 };
 app.use(cookieSession(sessionConfig));
 /* End of Session Configurations */
