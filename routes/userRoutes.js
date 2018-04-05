@@ -3,16 +3,17 @@ const nodemailer = require('nodemailer');
 const User = mongoose.model('users');
 const Case = mongoose.model('cases');
 const AnswerOverview = require('../models/AnswerOverview');
+const UserLevelScheme = require('../models/UserLevelScheme');
+const ContributionLevelScheme = require('../models/ContributionLevelScheme');
+
 const keys = require('../config/keys');
 const constants = require('../utility/constantTypes');
 const commonMethods = require('../utility/commonMethods');
-const UserLevelScheme = require('../models/UserLevelScheme');
-const ContributionLevelScheme = require('../models/ContributionLevelScheme');
 
 module.exports = app => {
     app.post('/api/signup', function (req, res) {
         const values = req.body;
-        User.findOne({ username: values.username}, null, {collation: {locale: 'en', strength: 2 }}, function (err, user) {
+        User.findOne({ username: values.username}, null, {collation: {locale: 'en', strength: 2 }}, async (err, user) => {
             if (!user) {
                 const newUser = new User();
                 newUser.username = values.username;
@@ -22,6 +23,12 @@ module.exports = app => {
                 newUser.year = values.year;
                 newUser.email = newUser.generateHash(values.email);
                 newUser.save();
+
+                const email = keys.medsenseTeamUsername;
+                const subject = 'User Registration Alert';
+                const htmlText = '<h1>A new user has registered an account!</h1><p>The user is: ' + values.username + '</p>';
+                await commonMethods.SEND_AUTOMATED_EMAIL(email, subject, htmlText);
+
                 res.send('Done');
             } else {
                 res.send('User Exists');
@@ -49,28 +56,11 @@ module.exports = app => {
                 await user.save();
 
                 // Generate email
-                const transporter = nodemailer.createTransport({
-                    service: 'gmail',
-                    auth: {
-                        user: keys.medsenseEmailUsername,
-                        pass: keys.medsenseEmailPassword
-                    }
-                });
-                const mailOptions = {
-                    from: keys.medsenseEmailUsername,
-                    to: email,
-                    subject: 'Resetting of password',
-                    html: '<h1>Your password has been reset!</h1><p>Your new password is: ' + password + '</p>'
-                };
-                transporter.sendMail(mailOptions, function(err, info){
-                    if (err) {
-                        throw(err);
-                    }
-
-                    // Do not erase - Production Logging
-                    console.log('Email sent: ' + info.response);
-                    res.send('Done');
-                });
+                const toEmail = email;
+                const subject = 'Resetting of password';
+                const htmlText = '<h1>Your password has been reset!</h1><p>Your new password is: ' + password + '</p>';
+                await commonMethods.SEND_AUTOMATED_EMAIL(toEmail, subject, htmlText);
+                res.send('Done');
             } else {
                 res.send('Invalid Username/Email!');
             }

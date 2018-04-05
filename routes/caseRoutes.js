@@ -4,6 +4,7 @@ const Option = require('../models/Option');
 const User = require('../models/User');
 
 const constants = require('../utility/constantTypes');
+const commonMethods = require('../utility/commonMethods');
 
 module.exports = app => {
     app.post('/api/uploadCase', async (req, res) => {
