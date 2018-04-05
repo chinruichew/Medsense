@@ -29,25 +29,6 @@ require('./models/User');
 
 const app = express();
 
-/* Start of Console Log configuration */
-const log = console.log;
-console.log = function(){
-    log.call(console, 'Logging -> [' + new Date().toString() + ']');
-    log.apply(console, arguments);
-};
-/* End of Console Log configuration */
-
-// Uncomment for Keys encryption
-// const keyManagement = require('./utility/keyManagement');
-// const keyJSON = {
-//     // Fill in here
-// };
-// let encryptedKeys = {};
-// for(let key in keyJSON) {
-//     encryptedKeys[key] = keyManagement.encryptKey(keyJSON[key]).toString();
-// }
-// console.log(encryptedKeys);
-
 /* Start of MongoDB Connection */
 aws.config.update({
     accessKeyId: keys.awsAccessKeyId,
@@ -94,17 +75,12 @@ s3.getObject(getParams, function (err, data) {
     });
 });
 
-const deepPopulate = require('mongoose-deep-populate')(mongoose);
-/* End of MongoDB Connection */
-
 /* Start of Middleware configuration */
-app.enable('trust proxy');
 const router = express.Router();
 router.use(function (req, res, next) {
     next();
 });
 app.use(router);
-app.use(helmet());
 
 /* Start of Morgan Logger Configurations */
 morgan.token('date', function() {
@@ -119,83 +95,14 @@ app.use(bodyParser.json());
 
 /* Start of Session Configurations */
 const sessionConfig = {
-    secret: keys.cookieKeySecret,
-    cookie: {
-        maxAge: 1000 * 60 * 15,
-        keys: [keys.cookieKey]
-    },
-    secure: false,
-    resave: false,
-    saveUninitialized: false,
-    httpOnly: false,
-    signed: false
+    name: 'session',
+    keys: [keys.cookieKey],
+
+    // Cookie Options
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
 };
-if (process.env.NODE_ENV === 'production') {
-    app.set('trust proxy', 1);
-    // sessionConfig.cookie.secure = true;
-}
 app.use(cookieSession(sessionConfig));
 /* End of Session Configurations */
-
-app.use(flash());
-
-function shouldCompress(req, res) {
-    if (req.headers['x-no-compression']) {
-        return false;
-    }
-
-    return compression.filter(req, res);
-}
-app.use(compression({filter: shouldCompress}));
-
-// const csurfProtection = csurf({ cookie: true });
-
-const Merror = MerrorModule.Merror;
-const MerrorMiddleware = MerrorModule.MerrorMiddleware;
-app.use(MerrorMiddleware());
-
-/**
- * This function notifies any error in a request method.
- */
-function errorNotification (err, str, req) {
-    const title = 'Error in ' + req.method + ' ' + req.url;
-
-    notifier.notify({
-        title: title,
-        message: str
-    })
-}
-if (process.env.NODE_ENV !== 'production') {
-    app.use(errorhandler({log: errorNotification}))
-}
-
-// CORS Requests Configurations
-app.use(cors({
-    origin: ["http://localhost:3000"],
-    methods: ["GET", "POST"],
-    allowedHeaders: ["Content-Type", "Authorization"]
-}));
-/* End of Middleware configuration */
-
-/* Start of Slug URL String configuration */
-slug.defaults.mode ='pretty';
-slug.defaults.modes['rfc3986'] = {
-    replacement: '-',      // replace spaces with replacement
-    symbols: true,         // replace unicode symbols or not
-    remove: null,          // (optional) regex to remove characters
-    lower: true,           // result in lower case
-    charmap: slug.charmap, // replace special characters
-    multicharmap: slug.multicharmap // replace multi-characters
-};
-slug.defaults.modes['pretty'] = {
-    replacement: '-',
-    symbols: true,
-    remove: /[.]/g,
-    lower: false,
-    charmap: slug.charmap,
-    multicharmap: slug.multicharmap
-};
-/* End of Slug URL String configuration */
 
 /* Start of REST API Configurations */
 require('./routes/authRoutes')(app);
@@ -211,12 +118,6 @@ require('./routes/analyticsRoutes')(app);
 require('./routes/recommendationRoutes')(app);
 /* End of REST API Configurations */
 
-/* Start of GraphQL Configurations */
-app.use('/graphiql', apolloServerExpress.graphiqlExpress({
-    endpointURL: "/graphql"
-}));
-/* End of GraphQL Configurations */
-
 if (process.env.NODE_ENV === 'production') {
     // Express will serve up production assets
     // like our main.js file, or main.css file!
@@ -228,36 +129,6 @@ if (process.env.NODE_ENV === 'production') {
     app.get('*', (req, res) => {
         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
     });
-
-    // getParams = {
-    //     Bucket: keys.httpsBucket,
-    //     Key: keys.httpsPrivateKey
-    // };
-    //
-    // s3.getObject(getParams, function (err, data) {
-    //     if (err)
-    //         console.log(err);
-    //
-    //     const privateKey = data.Body.toString('utf-8');
-    //
-    //     const getParams = {
-    //         Bucket: keys.httpsBucket,
-    //         Key: keys.httpsCertificate
-    //     };
-    //
-    //     s3.getObject(getParams, function (err, data) {
-    //         if (err)
-    //             console.log(err);
-    //
-    //         const certificate = data.Body.toString('utf-8');
-    //
-    //         const credentials = {
-    //             key: privateKey,
-    //             cert: certificate
-    //         };
-    //         https.createServer(credentials, app).listen(process.env.PORT);
-    //     });
-    // });
 }
 
 const PORT = process.env.PORT || 5000;
