@@ -121,7 +121,12 @@ module.exports = app => {
                         // Generate alert email
                         const email = keys.medsenseTeamEmail;
                         const subject = 'Case Upload Alert';
-                        const htmlText = '<h1>' + req.session.user.username + ' has uploaded a case!</h1><p>The case title is: ' + req.body.values.title + '</p>';
+                        const htmlText = '<h1>' + req.session.user.username + ' has uploaded a case!</h1>'
+                            + '<p>The case title is: ' + req.body.values.title + '</p>'
+                            + "<p>The case's difficulty is: " + req.body.values.difficulty + "</p>"
+                            + "<p>The case's speciality is: " + req.body.values.speciality + "</p>"
+                            + "<p>The case's approaches are: " + req.body.values.approach.join(', ') + "</p>"
+                            + "<p>The case's sub-specialities are: " + req.body.values.subspeciality.join(', ') + "</p>";
                         commonMethods.SEND_AUTOMATED_EMAIL(email, subject, htmlText);
 
                         res.send({ data: {case:newCase._id, question:finalQuestions}, message: "uploadCase success" });

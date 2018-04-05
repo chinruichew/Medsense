@@ -27,7 +27,11 @@ module.exports = app => {
                 // Generate alert email
                 const email = keys.medsenseTeamEmail;
                 const subject = 'User Registration Alert';
-                const htmlText = '<h1>A new user has registered an account!</h1><p>The user is: ' + values.username + '</p>';
+                const htmlText = '<h1>A new user has registered an account!</h1>'
+                    + '<p>Username is: ' + newUser.username + '</p>'
+                    + '<p>User Type is: ' + newUser.usertype + '</p>'
+                    + "<p>User's School is: " + newUser.school + "</p>"
+                    + "<p>User's Year is: " + newUser.year + "</p>";
                 await commonMethods.SEND_AUTOMATED_EMAIL(email, subject, htmlText);
 
                 res.send('Done');

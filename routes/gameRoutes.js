@@ -287,7 +287,9 @@ module.exports = app => {
                                     // Generate alert email
                                     const email = keys.medsenseTeamEmail;
                                     const subject = 'Case Challenge Alert';
-                                    const htmlText = '<h1>' + req.session.user.username + ' has completed a case challenge!</h1>';
+                                    const htmlText = "<h1>" + req.session.user.username + " has completed a case challenge!</h1>"
+                                            + "<p> Attempt: " + values.gameOverview.attempt + "</p>"
+                                            + "<p> User's Score: " + values.gameOverview.score + "</p>";
                                     commonMethods.SEND_AUTOMATED_EMAIL(email, subject, htmlText);
 
                                     res.send('Done');
