@@ -77,7 +77,6 @@ class TimeLimit extends Component {
                                 For Open-Ended questions, your answers will be marked automatically.<br/><br/>
                                 Let the game begin!<br/>
                                 <br />
-                                {/*This case has been uploaded by {this.state.challenge.authorid.username}.*/}
                             </em>
                         </h4>
                     </div>
@@ -113,7 +112,7 @@ class TimeLimit extends Component {
                         </Col>
 
                         <br/>
-                        <h4 className="author">This case has been uploaded by {this.state.challenge.authorid.username}.</h4>
+                        <h4 className="author">{this.state.challenge.authorid.username !== '' && this.state.challenge.authorid.username !== undefined? 'This case has been uploaded by ' + this.state.challenge.authorid.username + '.': ''}</h4>
                         <br/>
 
                         <FormGroup style={{width: "95%"}}>
