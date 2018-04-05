@@ -273,20 +273,22 @@ module.exports = app => {
         for(let i = 0; i < answers.length; i++) {
             const answer = answers[i];
             const answerCase = answer.case;
-            let toAdd = true;
-            for(let j = 0; j < caseArray.length; j++) {
-                const indexedCase = caseArray[j];
-                if(indexedCase._doc._id === answerCase._id) {
-                    toAdd = false;
-                    indexedCase.numTries += 1;
-                    break;
+            if(answerCase !== null) {
+                let toAdd = true;
+                for(let j = 0; j < caseArray.length; j++) {
+                    const indexedCase = caseArray[j];
+                    if(indexedCase._doc._id === answerCase._id) {
+                        toAdd = false;
+                        indexedCase.numTries += 1;
+                        break;
+                    }
                 }
-            }
-            if(toAdd) {
-                caseArray.push({
-                    ...answerCase,
-                    numTries: 1
-                });
+                if(toAdd) {
+                    caseArray.push({
+                        ...answerCase,
+                        numTries: 1
+                    });
+                }
             }
         }
 
