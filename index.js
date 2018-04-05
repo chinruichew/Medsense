@@ -101,7 +101,10 @@ const sessionConfig = {
 
     // Cookie Options
     maxAge: 24 * 60 * 60 * 1000,
-    secure: false
+    sameSite: 'lax',
+    secure: false,
+    httpOnly: false,
+    signed: false
 };
 app.use(cookieSession(sessionConfig));
 /* End of Session Configurations */
