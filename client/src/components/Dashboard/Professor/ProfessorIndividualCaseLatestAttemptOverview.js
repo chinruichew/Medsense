@@ -34,8 +34,8 @@ class ProfessorIndividualCaseLatestAttemptOverview extends Component {
                             const globalScoreQuestionMapObject = globalScoreQuestionMap[l];
                             if(globalScoreQuestionMapObject.questionId === answerCaseQuestion._id) {
                                 toAdd = false;
-                                globalScoreQuestionMap.totalScore += openEndedAnswer.score;
-                                globalScoreQuestionMap.numAttempts++;
+                                globalScoreQuestionMapObject.totalScore += openEndedAnswer.score;
+                                globalScoreQuestionMapObject.numAttempts++;
                                 break;
                             }
                         }
@@ -60,8 +60,8 @@ class ProfessorIndividualCaseLatestAttemptOverview extends Component {
                             const globalScoreQuestionMapObject = globalScoreQuestionMap[l];
                             if(globalScoreQuestionMapObject.questionId === answerCaseQuestion._id) {
                                 toAdd = false;
-                                globalScoreQuestionMap.totalScore += mcqAnswer.score;
-                                globalScoreQuestionMap.numAttempts++;
+                                globalScoreQuestionMapObject.totalScore += mcqAnswer.score;
+                                globalScoreQuestionMapObject.numAttempts++;
                                 break;
                             }
                         }

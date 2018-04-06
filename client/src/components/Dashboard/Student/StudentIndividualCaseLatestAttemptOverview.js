@@ -99,7 +99,6 @@ class StudentIndividualCaseLatestAttemptOverview extends Component {
                 }
             }
         }
-        console.log('Global Answers: ', globalScoreQuestionMap);
 
         // Sort the global average scores
         const sortedGlobalScoreQuestionMap = [];
