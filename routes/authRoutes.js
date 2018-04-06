@@ -25,7 +25,7 @@ module.exports = app => {
         });
     });
 
-    app.get('/api/logout', function(req, res) {
+    app.post('/api/logout', function(req, res) {
         // req.session = null;
         req.session.destroy();
         res.clearCookie("session");
@@ -33,7 +33,7 @@ module.exports = app => {
         res.clearCookie("AWSELB");
         res.clearCookie("express:sess");
         res.clearCookie("express:sess.sig");
-        res.redirect('/');
+        res.send('Done');
     });
 
     app.get('/api/current_user', (req, res) => {

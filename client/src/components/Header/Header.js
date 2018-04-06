@@ -17,6 +17,15 @@ class Header extends Component {
         });
     }
 
+    onLogoutClick = () => {
+        axios.post('/api/logout').then(res => {
+            console.log(res.data);
+            window.location = '/';
+        }).catch(err => {
+            console.log(err);
+        });
+    };
+
     renderContent() {
         switch (this.props.auth) {
             case null:
@@ -58,7 +67,7 @@ class Header extends Component {
                                         <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={3} href="/upload">     Upload     </NavItem>
                                         <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={5} href="/dashboard">     Dashboard     </NavItem>
                                         <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={6} href="/about">     About     </NavItem>
-                                        <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={7} href="/api/logout">     Logout               </NavItem>
+                                        <NavItem style={{whiteSpace:"pre-wrap"}} className="navItem" eventKey={7} onClick={this.onLogoutClick}>     Logout               </NavItem>
                                         <a href="/profile"><Image src={this.props.auth.profilepicture} className="img-circle" style={{height: '50px', width: '50px'}} /></a>
                                     </Nav>
                                 );
