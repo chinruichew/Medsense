@@ -64,7 +64,8 @@ module.exports = app => {
                 const toEmail = email;
                 const subject = 'Resetting of password';
                 const htmlText = '<h1>Your password has been reset!</h1><p>Your new password is: ' + password + '</p>';
-                await commonMethods.SEND_AUTOMATED_EMAIL(toEmail, subject, htmlText);
+                commonMethods.SEND_AUTOMATED_EMAIL(toEmail, subject, htmlText);
+
                 res.send('Done');
             } else {
                 res.send('Invalid Username/Email!');

@@ -2,10 +2,11 @@ const User = require('../models/User');
 const Case = require('../models/Case');
 const Question = require('../models/Question');
 const Approach = require('../models/Approach');
-const constants = require('../utility/constantTypes');
 const nodemailer = require('nodemailer');
 
 const keys = require('../config/keys');
+const constants = require('../utility/constantTypes');
+const commonMethods = require('../utility/commonMethods');
 
 module.exports = app => {
     app.get('/api/fetchAdminUsers', async (req, res) => {
@@ -336,28 +337,10 @@ module.exports = app => {
                 await newUser.save();
 
                 // Generate email
-                const transporter = nodemailer.createTransport({
-                    service: 'gmail',
-                    auth: {
-                        user: keys.medsenseEmailUsername,
-                        pass: keys.medsenseEmailPassword
-                    }
-                });
-                const mailOptions = {
-                    from: keys.medsenseEmailUsername,
-                    to: values.email,
-                    subject: 'Creation of Account',
-                    html: '<h1>Your account has been successfully created!</h1><p>Your username is: ' + newUser.username + '</p><p>Your password is: ' + password + '</p>'
-                };
-                transporter.sendMail(mailOptions, function (err, info) {
-                    if (err) {
-                        throw (err);
-                    }
-
-                    // Do not erase - Production Logging
-                    console.log('Email sent: ' + info.response);
-                    res.send('Done');
-                });
+                const toEmail = values.email;
+                const subject = 'Creation of Account';
+                const htmlText = '<h1>Your account has been successfully created!</h1><p>Your username is: ' + newUser.username + '</p><p>Your password is: ' + password + '</p>';
+                commonMethods.SEND_AUTOMATED_EMAIL(toEmail, subject, htmlText);
 
                 res.send(newUser);
             } else {
@@ -368,13 +351,28 @@ module.exports = app => {
 
     app.post('/api/addNewAdmin', function (req, res) {
         const values = req.body.values;
-        User.findOne({ username: values.username }, function (err, user) {
+        User.findOne({ username: values.username }, async (err, user) => {
             if (!user) {
                 const newUser = new User();
                 newUser.username = values.username;
-                newUser.password = newUser.generateHash(values.password);
                 newUser.usertype = constants.USER_TYPE_ADMIN;
-                newUser.save();
+
+                // Generate random password
+                const buf = new Buffer(10);
+                for (let i = 0; i < buf.length; i++) {
+                    buf[i] = Math.floor(Math.random() * 256);
+                }
+                const password = buf.toString('base64');
+                newUser.password = newUser.generateHash(password);
+
+                await newUser.save();
+
+                // Generate email
+                const toEmail = values.email;
+                const subject = 'Creation of Account';
+                const htmlText = '<h1>Your account has been successfully created!</h1><p>Your username is: ' + newUser.username + '</p><p>Your password is: ' + password + '</p>';
+                commonMethods.SEND_AUTOMATED_EMAIL(toEmail, subject, htmlText);
+
                 return res.send(newUser);
             } else {
                 return res.send('User Exists');
@@ -388,16 +386,31 @@ module.exports = app => {
         for (let key in values.subspeciality) {
             subspecialityArray.push(values.subspeciality[key]);
         }
-        User.findOne({ username: values.username }, function (err, user) {
+        User.findOne({ username: values.username }, async (err, user) => {
             if (!user) {
                 const newUser = new User();
                 newUser.username = values.username;
-                newUser.password = newUser.generateHash(values.password);
                 newUser.school = values.school;
                 newUser.usertype = constants.USER_TYPE_PROFESSOR;
                 newUser.speciality = values.speciality;
                 newUser.subspeciality = subspecialityArray;
-                newUser.save();
+
+                // Generate random password
+                const buf = new Buffer(10);
+                for (let i = 0; i < buf.length; i++) {
+                    buf[i] = Math.floor(Math.random() * 256);
+                }
+                const password = buf.toString('base64');
+                newUser.password = newUser.generateHash(password);
+
+                await newUser.save();
+
+                // Generate email
+                const toEmail = values.email;
+                const subject = 'Creation of Account';
+                const htmlText = '<h1>Your account has been successfully created!</h1><p>Your username is: ' + newUser.username + '</p><p>Your password is: ' + password + '</p>';
+                commonMethods.SEND_AUTOMATED_EMAIL(toEmail, subject, htmlText);
+
                 return res.send(newUser);
             } else {
                 return res.send('User Exists');
