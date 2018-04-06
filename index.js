@@ -76,6 +76,7 @@ s3.getObject(getParams, function (err, data) {
 });
 
 /* Start of Middleware configuration */
+app.set('trust proxy');
 const router = express.Router();
 router.use(function (req, res, next) {
     next();
@@ -94,13 +95,18 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 /* Start of Session Configurations */
-app.set('trust proxy', 1); // trust first proxy
-app.use(session({
-    secret: keys.cookieKey,
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false }
-}));
+const sessionConfig = {
+    name: 'session',
+    keys: [keys.cookieKey],
+
+    // Cookie Options
+    maxAge: 24 * 60 * 60 * 1000,
+    sameSite: 'lax',
+    secure: false,
+    httpOnly: false,
+    signed: false
+};
+app.use(cookieSession(sessionConfig));
 /* End of Session Configurations */
 
 /* Start of REST API Configurations */
