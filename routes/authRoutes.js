@@ -5,9 +5,11 @@ module.exports = app => {
     app.post('/api/login', (req, res) => {
         const values = req.body;
         User.findOne({ username: values.username }, null, {collation: {locale: 'en', strength: 2 }}, function (err, user) {
-            if (user !== null) {
-                req.session.user = user;
-                res.send('Authenticated');
+            if (user !== null && user.validPassword(values.password)) {
+                User.findByIdAndUpdate(user._id, { $set: { previousLogin: user.currentLogin, currentLogin: new Date(), loginCount: user.loginCount+1 }}, { new: true }, function(err, user) {
+                    req.session.user = user;
+                    res.send('Authenticated');
+                });
             } else {
                 res.send('Invalid Username/Password!');
             }
