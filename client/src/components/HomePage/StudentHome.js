@@ -281,6 +281,7 @@ class StudentHome extends Component {
                         <h4>{recommendedCase.title}</h4>
                         <h5>{recommendedCase.speciality}</h5>
                         <h5>{subSpecialityString}</h5>
+                        <h5>{recommendedCase.difficulty}</h5>
                     </Button>;
 
                     const recommendationAnimation = this.getRandomAnimationStyle(recommendationBox);
@@ -326,6 +327,7 @@ class StudentHome extends Component {
                             <h4>{recommendedCase.title}</h4>
                             <h5>{recommendedCase.speciality}</h5>
                             <h5>{subSpecialityString}</h5>
+                            <h5>{recommendedCase.difficulty}</h5>
                         </Button>;
 
                         const recommendationAnimation = this.getRandomAnimationStyle(recommendationBox);
