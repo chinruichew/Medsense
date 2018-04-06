@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 
 import './Admin.css';
 import NewUser from './NewUser';
-import DeleteUser from './DeleteUser';
+import DeleteUser from './ManageUser';
 import { fetchAdminUsers } from '../../actions';
 
 class UserManager extends Component {
@@ -39,7 +39,7 @@ class UserManager extends Component {
                                                 <NewUser />
                                                 <br />
                                             </Tab>
-                                            <Tab eventKey={2} title="Delete User">
+                                            <Tab eventKey={2} title="Manage User">
                                                 <br />
                                                 <DeleteUser />
                                             </Tab>

@@ -476,4 +476,18 @@ module.exports = app => {
         }
         res.send(recommendation);
     });
+
+    app.get('/api/getRecommendations', async(req, res) => {
+        const recommendations = await Recommendation.find().populate({
+            path: 'recommendationClicks',
+            model: 'recommendationClicks'
+        }).populate({
+            path: 'user',
+            model: 'users'
+        }).populate({
+            path: 'case',
+            model: 'cases'
+        }).select();
+        res.send(recommendations);
+    });
 };

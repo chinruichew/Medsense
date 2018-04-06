@@ -28,11 +28,20 @@ class CaseManager extends Component {
             oneCase: '',
             approachList: [],
             specialityList: [],
-            specialities: null
+            specialities: null,
+            recommendations: null
         };
         bindAll(this, 'handleTitleChange', 'handleDifficultyChange', 'handleSubspecialityChange',
             'handleApproachChange', 'handleScenarioChange', 'setSubspeciality', 'setName', 'setApproach',
             'setDifficulty', 'handleOpenModal', 'handleCloseModal', 'handleOpenConfirmDelete', 'handleCloseConfirmDelete');
+    }
+
+    componentDidMount() {
+        axios.get('/api/getRecommendations').then(res => {
+            this.setState({ recommendations: res.data });
+        }).catch(err => {
+            console.log(err);
+        });
     }
 
     componentWillMount() {
@@ -247,6 +256,7 @@ class CaseManager extends Component {
                         <th>Sub-Speciality</th>
                         <th>Difficulty Level</th>
                         <th>Uploaded By</th>
+                        <th>Student Recommendation Clicks</th>
                         <th>Last Updated</th>
                         <th> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
                     </tr>
@@ -259,31 +269,45 @@ class CaseManager extends Component {
         );
     }
 
-    renderCases() {
+    renderCases= () => {
+        switch(this.state.recommendations) {
+            case null:
+                return;
+            default:
+                let allCases = this.props.adminCases.map(adminCase => {
+                    // Calculate total clicks for each case
+                    let totalClicks = 0;
+                    for (let i = 0; i < this.state.recommendations.length; i++) {
+                        const recommendation = this.state.recommendations[i];
+                        if (recommendation.case !== undefined && recommendation.case._id === adminCase._id) {
+                            totalClicks += recommendation.recommendationClicks.length;
+                        }
+                    }
+                    return (
+                        <tr align="center">
+                            <td>{adminCase.title}</td>
+                            <td>{adminCase.approach.join(", ")}</td>
+                            <td>{adminCase.speciality}</td>
+                            <td>{adminCase.subspeciality.join(", ")}</td>
+                            <td>{adminCase.difficulty}</td>
+                            <td>{adminCase.authorid['username']}</td>
+                            <td>{totalClicks}</td>
+                            <td>{adminCase.uploadTime.split("T")[0]}</td>
+                            <td><Button type="button" bsStyle="primary"
+                                        onClick={(e) => this.handleOpenModal(adminCase)}>View</Button></td>
+                        </tr>
+                    );
+                });
 
-        let allCases = this.props.adminCases.map(item => (
-            <tr align="center">
-                <td>{item.title}</td>
-                <td>{item.approach.join(", ")}</td>
-                <td>{item.speciality}</td>
-                <td>{item.subspeciality.join(", ")}</td>
-                <td>{item.difficulty}</td>
-                <td>{item.authorid['username']}</td>
-                {/* <td>{item.timestamp.split(" ")[2] + " " + item.timestamp.split(" ")[1] + " " + item.timestamp.split(" ")[3]}<br />{item.timestamp.split(" ")[4].split(":")[0] + ":" + item.timestamp.split(" ")[4].split(":")[1]}</td> */}
-                <td>{item.uploadTime.split("T")[0]}</td>
-                <td> <Button type="button" bsStyle="primary" onClick={(e) => this.handleOpenModal(item)}>View</Button></td >
-            </tr>
 
-        ));
+                return (
+                    <tbody>
+                    {allCases}
+                    </tbody>
 
-
-        return (
-            <tbody>
-                {allCases}
-            </tbody>
-
-        );
-    }
+                );
+        }
+    };
 
     renderContent() {
         switch (this.state.auth) {

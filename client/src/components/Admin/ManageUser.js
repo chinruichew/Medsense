@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, ControlLabel, FormGroup, FormControl, Table, Col, Modal } from 'react-bootstrap';
-
-import { fetchFilteredAdminStudents, fetchFilteredAdminProfessors, fetchFilteredAdminAdmins, deleteAdminStudent, deleteAdminProfessor, deleteAdminAdmin } from '../../actions';
-import './Admin.css';
 import axios from 'axios';
+import { fetchFilteredAdminStudents, fetchFilteredAdminProfessors, fetchFilteredAdminAdmins, deleteAdminStudent, deleteAdminProfessor, deleteAdminAdmin } from '../../actions';
 
-class DeleteUser extends Component {
+import './Admin.css';
+
+class ManageUser extends Component {
     state = {
         display: 'user',
         usertype: 'Student',
@@ -20,12 +20,19 @@ class DeleteUser extends Component {
         showDeleteProfConfirm: false,
         showDeleteStuConfirm: false,
         showDeleteAdminConfirm: false,
-        useridToDelete: ''
+        useridToDelete: '',
+        recommendations: null
     };
 
     componentDidMount() {
         axios.get('/api/getConstantTypes').then(res => {
             this.setState({ constants: res.data });
+        }).catch(err => {
+            console.log(err);
+        });
+
+        axios.get('/api/getRecommendations').then(res => {
+            this.setState({ recommendations: res.data });
         }).catch(err => {
             console.log(err);
         });
@@ -276,9 +283,9 @@ class DeleteUser extends Component {
                             <th><center>Username</center></th>
                             <th><center>School</center></th>
                             <th><center>Year</center></th>
-                            {/*<th><center>Senior Team</center></th>*/}
                             <th><center>Level</center></th>
                             <th><center>XP</center></th>
+                            <th><center>Recommendation Clicks</center></th>
                             <th><center>Date Registered</center></th>
                             <th> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
                         </tr>
@@ -331,31 +338,44 @@ class DeleteUser extends Component {
         return level;
     }
 
-    renderStudents() {
-        let allStudents = this.props.adminUsers.map(user => {
-            if (user.usertype === this.state.constants.USER_TYPE_STUDENT) {
-                return <tr>
-                    <td><center>{user.username}</center></td>
-                    <td><center>{user.school}</center></td>
-                    <td><center>{user.year}</center></td>
-                    {/*<td><center>{user.year === "4" || user.year === "5" ? "Yes" : "No"}</center></td>*/}
-                    {/* <td><center>{user._id}</center></td> */}
-                    <td><center>{this.convert(user.points)}</center></td>
-                    <td><center>{user.points}</center></td>
-                    <td><center>{user.timestamp.split("T")[0]}</center></td>
-                    <td><center><Button bsStyle="primary" onClick={(e) => this.handleDeleteAdminStudent(user)}>Delete</Button></center></td >
-                </tr>
-            }
-            return '';
-        });
-        if (this.state.usertype === this.state.constants.USER_TYPE_STUDENT) {
-            return (
-                <tbody>
-                    {allStudents}
-                </tbody>
-            );
+    renderStudents = () => {
+        switch(this.state.recommendations) {
+            case null:
+                return;
+            default:
+                let allStudents = this.props.adminUsers.map(user => {
+                    if (user.usertype === this.state.constants.USER_TYPE_STUDENT) {
+                        // Calculate total clicks for each student
+                        let totalClicks = 0;
+                        for(let i = 0; i < this.state.recommendations.length; i++) {
+                            const recommendation = this.state.recommendations[i];
+                            if(recommendation.user._id === user._id) {
+                                totalClicks += recommendation.recommendationClicks.length;
+                            }
+                        }
+
+                        return <tr>
+                            <td><center>{user.username}</center></td>
+                            <td><center>{user.school}</center></td>
+                            <td><center>{user.year}</center></td>
+                            <td><center>{this.convert(user.points)}</center></td>
+                            <td><center>{user.points}</center></td>
+                            <td><center>{totalClicks}</center></td>
+                            <td><center>{user.timestamp.split("T")[0]}</center></td>
+                            <td><center><Button bsStyle="primary" onClick={(e) => this.handleDeleteAdminStudent(user)}>Delete</Button></center></td >
+                        </tr>
+                    }
+                    return '';
+                });
+                if (this.state.usertype === this.state.constants.USER_TYPE_STUDENT) {
+                    return (
+                        <tbody>
+                        {allStudents}
+                        </tbody>
+                    );
+                }
         }
-    }
+    };
 
     renderTableAdmins() {
         if (this.state.usertype === this.state.constants.USER_TYPE_ADMIN) {
@@ -523,4 +543,4 @@ function mapStateToProps({ auth, adminUsers }) {
     return { auth, adminUsers };
 }
 
-export default connect(mapStateToProps, { fetchFilteredAdminStudents, fetchFilteredAdminProfessors, fetchFilteredAdminAdmins, deleteAdminStudent, deleteAdminProfessor, deleteAdminAdmin })(DeleteUser);
+export default connect(mapStateToProps, { fetchFilteredAdminStudents, fetchFilteredAdminProfessors, fetchFilteredAdminAdmins, deleteAdminStudent, deleteAdminProfessor, deleteAdminAdmin })(ManageUser);
