@@ -26,13 +26,7 @@ module.exports = app => {
     });
 
     app.post('/api/logout', function(req, res) {
-        // req.session = null;
-        req.session.destroy();
-        res.clearCookie("session");
-        res.clearCookie("session.sig");
-        res.clearCookie("AWSELB");
-        res.clearCookie("express:sess");
-        res.clearCookie("express:sess.sig");
+        req.session = null;
         res.send('Done');
     });
 
