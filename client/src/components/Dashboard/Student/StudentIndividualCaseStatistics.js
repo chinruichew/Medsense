@@ -167,6 +167,27 @@ class StudentIndividualCaseStatistics extends Component {
         );
     };
 
+    renderStudentTotalScore = () => {
+        const answer = this.state.answers[this.state.selectedAnswerIndex];
+        const answerCase = answer.case;
+        const questions = answerCase.questions;
+        let totalScore = 0;
+        for(let i = 0; i < questions.length; i++) {
+            totalScore += parseInt(questions[i].mark);
+        }
+
+        let scoreDisplayColor = 'green';
+        if(answer.score/totalScore < 0.5) {
+            scoreDisplayColor = 'red'
+        }
+
+        return(
+            <div className="col-md-offset-4 col-md-4 text-right">
+                <h3 style={{color: scoreDisplayColor}}>Total Score: {answer.score}/{totalScore}</h3>
+            </div>
+        );
+    };
+
     returnToCaseStats = () => {
         this.props.returnToCaseStats(this.props.redirectFromOverview);
     };
@@ -201,7 +222,10 @@ class StudentIndividualCaseStatistics extends Component {
                                 </div>
                                 <div className="row">
                                     {/*{this.renderAttemptFilter()}*/}
-                                    {this.renderQuestionFilter()}
+                                    <div className="col-md-12">
+                                        {this.renderQuestionFilter()}
+                                        {this.renderStudentTotalScore()}
+                                    </div>
                                     <StudentIndividualCaseQuestionAnswers answers={this.state.answers} selectedAnswerIndex={this.state.selectedAnswerIndex} questionFilter={this.state.questionFilter} />
                                 </div>
                             </div>
