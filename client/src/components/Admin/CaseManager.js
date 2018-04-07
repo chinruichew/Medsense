@@ -29,7 +29,8 @@ class CaseManager extends Component {
             approachList: [],
             specialityList: [],
             specialities: null,
-            recommendations: null
+            recommendations: null,
+            answers: null
         };
         bindAll(this, 'handleTitleChange', 'handleDifficultyChange', 'handleSubspecialityChange',
             'handleApproachChange', 'handleScenarioChange', 'setSubspeciality', 'setName', 'setApproach',
@@ -39,6 +40,12 @@ class CaseManager extends Component {
     componentDidMount() {
         axios.get('/api/getRecommendations').then(res => {
             this.setState({ recommendations: res.data });
+        }).catch(err => {
+            console.log(err);
+        });
+
+        axios.get('/api/fetchAnswers').then(res => {
+            this.setState({ answers: res.data });
         }).catch(err => {
             console.log(err);
         });
@@ -256,6 +263,7 @@ class CaseManager extends Component {
                         <th>Sub-Speciality</th>
                         <th>Difficulty Level</th>
                         <th>Uploaded By</th>
+                        <th>Number of game plays</th>
                         <th>Student Recommendation Clicks</th>
                         <th>Last Updated</th>
                         <th> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
@@ -274,38 +282,54 @@ class CaseManager extends Component {
             case null:
                 return;
             default:
-                let allCases = this.props.adminCases.map(adminCase => {
-                    // Calculate total clicks for each case
-                    let totalClicks = 0;
-                    for (let i = 0; i < this.state.recommendations.length; i++) {
-                        const recommendation = this.state.recommendations[i];
-                        if (recommendation.case !== undefined && recommendation.case._id === adminCase._id) {
-                            totalClicks += recommendation.recommendationClicks.length;
-                        }
-                    }
-                    return (
-                        <tr align="center">
-                            <td>{adminCase.title}</td>
-                            <td>{adminCase.approach.join(", ")}</td>
-                            <td>{adminCase.speciality}</td>
-                            <td>{adminCase.subspeciality.join(", ")}</td>
-                            <td>{adminCase.difficulty}</td>
-                            <td>{adminCase.authorid['username']}</td>
-                            <td>{totalClicks}</td>
-                            <td>{adminCase.uploadTime.split("T")[0]}</td>
-                            <td><Button type="button" bsStyle="primary"
-                                        onClick={(e) => this.handleOpenModal(adminCase)}>View</Button></td>
-                        </tr>
-                    );
-                });
+                switch(this.state.answers) {
+                    case null:
+                        return;
+                    default:
+                        let allCases = this.props.adminCases.map(adminCase => {
+                            // Calculate total clicks for each case
+                            let totalClicks = 0;
+                            for (let i = 0; i < this.state.recommendations.length; i++) {
+                                const recommendation = this.state.recommendations[i];
+                                if (recommendation.case !== undefined && recommendation.case._id === adminCase._id) {
+                                    totalClicks += recommendation.recommendationClicks.length;
+                                }
+                            }
+
+                            // Calculate total game plays for each case
+                            let totalGamePlays = 0;
+                            for (let i = 0; i < this.state.answers.length; i++) {
+                                const answer = this.state.answers[i];
+                                if (answer.case !== undefined && answer.case._id === adminCase._id) {
+                                    totalGamePlays++;
+                                }
+                            }
+
+                            return (
+                                <tr align="center">
+                                    <td>{adminCase.title}</td>
+                                    <td>{adminCase.approach.join(", ")}</td>
+                                    <td>{adminCase.speciality}</td>
+                                    <td>{adminCase.subspeciality.join(", ")}</td>
+                                    <td>{adminCase.difficulty}</td>
+                                    <td>{adminCase.authorid['username']}</td>
+                                    <td>{totalGamePlays}</td>
+                                    <td>{totalClicks}</td>
+                                    <td>{adminCase.uploadTime.split("T")[0]}</td>
+                                    <td><Button type="button" bsStyle="primary"
+                                                onClick={(e) => this.handleOpenModal(adminCase)}>View</Button></td>
+                                </tr>
+                            );
+                        });
 
 
-                return (
-                    <tbody>
-                    {allCases}
-                    </tbody>
+                        return (
+                            <tbody>
+                            {allCases}
+                            </tbody>
 
-                );
+                        );
+                }
         }
     };
 
