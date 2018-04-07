@@ -456,43 +456,120 @@ module.exports = app => {
     });
 
     app.get('/api/fetchStudentCount', async (req, res) => {
-        // const studentCount = await User.aggregate([
-        //     { "$group": {
-        //         "_id": {
-        //             "school": "$school",
-        //             "year": "$year"
-        //         },
-        //         "yearCount": { "$sum": 1 }
-        //     }},
-        //     { "$group": {
-        //         "_id": "$_id.school",
-        //         "years": { 
-        //             "$push": { 
-        //                 "year": "$_id.year",
-        //                 "count": "$yearCount"
-        //             },
-        //         },
-        //         "count": { "$sum": "$yearCount" }
-        //     }},
-        //     { "$sort": { "count": -1 } },
-        // ]).sort({ count: -1 }).exec();
-        const nus = await User.aggregate([
-            { $match: { school: { $gte: "NUS" } } },
-            { $unwind: '$year' },
-            { $group: { _id: '$year', count: { $sum: 1 } } }]).sort({ count: -1 }).exec();
-        const ntu = await User.aggregate([
-            { $match: { school: { $gte: "NTU" } } },
-            { $unwind: '$year' },
-            { $group: { _id: '$year', count: { $sum: 1 } } }]).sort({ count: -1 }).exec();
-        const duke_nus = await User.aggregate([
-            { $match: { school: { $gte: "Duke-NUS" } } },
-            { $unwind: '$year' },
-            { $group: { _id: '$year', count: { $sum: 1 } } }]).sort({ count: -1 }).exec();
-        
-        var arr = []
-        arr.push(nus)
-        arr.push(ntu)
-        arr.push(duke_nus)
+        const nus = await User.find({usertype: constants.USER_TYPE_STUDENT, school: constants.SCHOOL_NUS}).select();
+        const ntu = await User.find({usertype: constants.USER_TYPE_STUDENT, school: constants.SCHOOL_NTU}).select();
+        const dukeNUS = await User.find({usertype: constants.USER_TYPE_STUDENT, school: constants.SCHOOL_DUKE_NUS}).select();
+
+        const nusMap = [
+            {
+                _id: '1',
+                count: 0
+            },
+            {
+                _id: '2',
+                count: 0
+            },
+            {
+                _id: '3',
+                count: 0
+            },
+            {
+                _id: '4',
+                count: 0
+            },
+            {
+                _id: '5',
+                count: 0
+            }
+        ];
+
+        const ntuMap = [
+            {
+                _id: '1',
+                count: 0
+            },
+            {
+                _id: '2',
+                count: 0
+            },
+            {
+                _id: '3',
+                count: 0
+            },
+            {
+                _id: '4',
+                count: 0
+            },
+            {
+                _id: '5',
+                count: 0
+            }
+        ];
+
+        const dukeNUSMap = [
+            {
+                _id: '1',
+                count: 0
+            },
+            {
+                _id: '2',
+                count: 0
+            },
+            {
+                _id: '3',
+                count: 0
+            },
+            {
+                _id: '4',
+                count: 0
+            },
+            {
+                _id: '5',
+                count: 0
+            }
+        ];
+
+        const arr = [];
+
+        // Map NUS students
+        for(let i = 0; i < nus.length; i++) {
+            const student = nus[i];
+            for(let j = 0; j < nusMap.length; j++) {
+                const mapObject = nusMap[j];
+                if(mapObject._id === student.year) {
+                    mapObject.count++;
+                    break;
+                }
+            }
+        }
+
+        // Map NTU students
+        for(let i = 0; i < ntu.length; i++) {
+            const student = ntu[i];
+            for(let j = 0; j < ntuMap.length; j++) {
+                const mapObject = ntuMap[j];
+                if(mapObject._id === student.year) {
+                    mapObject.count++;
+                    break;
+                }
+            }
+        }
+
+        // Map Duke-NUS students
+        for(let i = 0; i < dukeNUS.length; i++) {
+            const student = dukeNUS[i];
+            for(let j = 0; j < dukeNUSMap.length; j++) {
+                const mapObject = dukeNUSMap[j];
+                if(mapObject._id === student.year) {
+                    mapObject.count++;
+                    break;
+                }
+            }
+        }
+
+        arr.push(nusMap);
+        arr.push(ntuMap);
+        arr.push(dukeNUSMap);
 
         res.send(arr);
     });
