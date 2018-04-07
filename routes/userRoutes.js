@@ -108,7 +108,7 @@ module.exports = app => {
         User.findById(req.body.values.id, function (err, user) {
             if (err) { return res.send(err) }
             if (user) {
-                user.year = req.body.values.year;
+                user.year = req.body.values.year[req.body.values.year.length - 1];
                 user.school = req.body.values.school;
                 user.save();
 
