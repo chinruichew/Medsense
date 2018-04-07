@@ -21,7 +21,6 @@ class AdminHome extends Component {
 
     componentDidMount() {
         axios.get('/api/fetchCount').then(res => {
-            console.log(res)
             this.setState({
                 caseCount: res.data
             });
@@ -29,7 +28,6 @@ class AdminHome extends Component {
             console.log(err);
         });
         axios.post('/api/fetchSpecialityCount').then(res => {
-            console.log(res)
             this.setState({
                 specialityCount: res.data
             });
@@ -37,7 +35,6 @@ class AdminHome extends Component {
             console.log(err);
         });
         axios.get('/api/fetchCaseSpecialityCount').then(res => {
-            console.log(res)
             this.setState({
                 caseSpecialityArray: res.data
             });
@@ -45,7 +42,6 @@ class AdminHome extends Component {
             console.log(err);
         });
         axios.get('/api/fetchStudentCount').then(res => {
-            console.log(res)
             this.setState({
                 nus: res.data[0],
                 ntu: res.data[1],
@@ -68,17 +64,12 @@ class AdminHome extends Component {
             this.state.subspecialityArray = [];
             this.state.countArray = [];
             const data = [];
-            for (var item in res.data) {
+            for (let item in res.data) {
                 this.state.subspecialityArray.push(res.data[item]['_id']);
                 this.state.countArray.push(res.data[item]['count']);
                 data.push({name: res.data[item]['_id'], count: res.data[item]['count'] });
-                console.log(res.data[item]['_id'])
-                console.log(res.data[item]['count'])
             }
             this.setState({subspecData: data});
-            console.log(data);
-
-
         }).catch(err => {
             console.log(err);
         });
@@ -87,7 +78,7 @@ class AdminHome extends Component {
 
 
     renderSubspecChart(){
-        if (this.state.subspecData.length == 0) {
+        if (this.state.subspecData.length === 0) {
             return (
                 <Col smOffset={1}>
                     There currently are no cases under this subspeciality.
@@ -114,7 +105,7 @@ class AdminHome extends Component {
             return a._id - b._id;
         });
 
-        for (var item in ntu){
+        for (let item in ntu){
             stuData.push({name: "year" + ntu[item]._id, count: ntu[item].count});
         }
 
@@ -136,7 +127,7 @@ class AdminHome extends Component {
             return a._id - b._id;
         });
 
-        for (var item in nus){
+        for (let item in nus){
             stuData.push({name: "year" + nus[item]._id, count: nus[item].count});
         }
 
@@ -158,7 +149,7 @@ class AdminHome extends Component {
             return a._id - b._id;
         });
 
-        for (var item in duke){
+        for (let item in duke){
             stuData.push({name: "year" + duke[item]._id, count: duke[item].count});
         }
 
@@ -178,15 +169,15 @@ class AdminHome extends Component {
         let nus = this.state.nus;
         let duke = this.state.dukenus;
 
-        for (var item in ntu){
+        for (let item in ntu){
             totalStu += ntu[item].count;
         }
 
-        for (var item in nus){
+        for (let item in nus){
             totalStu += nus[item].count;
         }
 
-        for (var item in duke){
+        for (let item in duke){
             totalStu += duke[item].count;
         }
 
@@ -196,7 +187,7 @@ class AdminHome extends Component {
                 <td>{item.count}</td>
             </tr>
 
-        ))
+        ));
 
         let cases = this.state.caseCount.map(item => (
             <tr align="center">
@@ -204,7 +195,7 @@ class AdminHome extends Component {
                 <td>{item.count}</td>
             </tr>
 
-        ))
+        ));
 
         let scases = this.state.specialityCount.map(item => (
             <tr align="center">
@@ -212,7 +203,7 @@ class AdminHome extends Component {
                 <td>{item.count}</td>
             </tr>
 
-        ))
+        ));
 
         let nusstudents = this.state.nus.map(item => (
             <tr align="center">
@@ -220,7 +211,7 @@ class AdminHome extends Component {
                 <td>{item.count}</td>
             </tr>
 
-        ))
+        ));
 
         let ntustudents = this.state.ntu.map(item => (
             <tr align="center">
@@ -228,7 +219,7 @@ class AdminHome extends Component {
                 <td>{item.count}</td>
             </tr>
 
-        ))
+        ));
 
         let dukenustudents = this.state.dukenus.map(item => (
             <tr align="center">
@@ -236,7 +227,7 @@ class AdminHome extends Component {
                 <td>{item.count}</td>
             </tr>
 
-        ))
+        ));
 
         return (
             <div className="container-fluid">
@@ -255,17 +246,17 @@ class AdminHome extends Component {
                             </Table>
                         </Col>
                         <div className="row">
-                            <div class="col-lg-4">
+                            <div className="col-md-4">
                                 <center> <b>NUS</b> </center>
                                 <br/>
                                 {this.renderNUSStudentChart()}
                             </div>
-                            <div class="col-lg-4">
+                            <div className="col-md-4">
                                 <center> <b>NTU</b> </center>
                                 <br/>
                                 {this.renderNTUStudentChart()}
                             </div>
-                            <div class="col-lg-4">
+                            <div className="col-md-4">
                                 <center> <b>Duke-NUS</b> </center>
                                 <br/>
                                 {this.renderDukeStudentChart()}
@@ -305,93 +296,10 @@ class AdminHome extends Component {
                             </FormControl>
                         </FormGroup>
                     </Col>
-                    <Col sm={12}>
+                    <div className="col-md-12 text-center" style={{paddingLeft: '80px', paddingTop: '20px'}}>
                         {this.renderSubspecChart()}
-                    </Col>
+                    </div>
                 </div>
-
-
-
-
-                {/*<div className="row">*/}
-                    {/*<div class="col-lg-4">*/}
-                        {/*<Table className="table">*/}
-                            {/*<thead>*/}
-                                {/*<tr style={{ background: '#D9EDF7', fontSize: "130%" }}>*/}
-                                    {/*<th><center>Year</center></th>*/}
-                                    {/*<th><center>Count</center></th>*/}
-                                {/*</tr>*/}
-                            {/*</thead>*/}
-                            {/*<tbody>*/}
-                                {/*{nusstudents}*/}
-                            {/*</tbody>*/}
-                        {/*</Table>*/}
-
-                    {/*</div>*/}
-                    {/*<div class="col-lg-4">*/}
-                        {/*<Table className="table">*/}
-                            {/*<thead>*/}
-                                {/*<tr style={{ background: '#D9EDF7', fontSize: "130%" }}>*/}
-                                    {/*<th><center>Year</center></th>*/}
-                                    {/*<th><center>Count</center></th>*/}
-                                {/*</tr>*/}
-                            {/*</thead>*/}
-                            {/*<tbody>*/}
-                                {/*{ntustudents}*/}
-                            {/*</tbody>*/}
-                        {/*</Table>*/}
-
-                    {/*</div>*/}
-                    {/*<div class="col-lg-4">*/}
-                        {/*<Table className="table">*/}
-                            {/*<thead>*/}
-                                {/*<tr style={{ background: '#D9EDF7', fontSize: "130%" }}>*/}
-                                    {/*<th><center>Year</center></th>*/}
-                                    {/*<th><center>Count</center></th>*/}
-                                {/*</tr>*/}
-                            {/*</thead>*/}
-                            {/*<tbody>*/}
-                                {/*{dukenustudents}*/}
-                            {/*</tbody>*/}
-                        {/*</Table>*/}
-
-                    {/*</div>*/}
-                {/*</div>*/}
-
-                {/*<div className="row">*/}
-                    {/*<div class="col-lg-6">*/}
-
-
-                        {/*<Table responsive className="table">*/}
-                            {/*<thead>*/}
-                                {/*<tr style={{ background: '#D9EDF7', fontSize: "130%" }}>*/}
-                                    {/*<th><center>Subspeciality</center></th>*/}
-                                    {/*<th><center>Count</center></th>*/}
-                                {/*</tr>*/}
-                            {/*</thead>*/}
-                            {/*<tbody>*/}
-                                {/*{scases}*/}
-                            {/*</tbody>*/}
-                        {/*</Table>*/}
-
-                    {/*</div>*/}
-                    {/*<div class="col-lg-6">*/}
-                        {/*<br /><br /><br /><br /><br />*/}
-                        {/*<Table responsive className="table">*/}
-                            {/*<thead>*/}
-                                {/*<tr style={{ background: '#D9EDF7', fontSize: "130%" }}>*/}
-                                    {/*<th><center>Approach</center></th>*/}
-                                    {/*<th><center>Count</center></th>*/}
-                                {/*</tr>*/}
-                            {/*</thead>*/}
-                            {/*<tbody>*/}
-                                {/*{cases}*/}
-                            {/*</tbody>*/}
-                        {/*</Table>*/}
-
-                    {/*</div>*/}
-
-                {/*</div>*/}
 
             </div>
         );
