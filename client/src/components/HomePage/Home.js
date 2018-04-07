@@ -8,6 +8,7 @@ import './Home.css';
 import StudentHome from "./StudentHome";
 import ProfessorHome from "./ProfessorHome";
 import AdminHome from "./AdminHome";
+import {Helmet} from "react-helmet";
 
 class Home extends Component {
     state = {
@@ -56,8 +57,14 @@ class Home extends Component {
         ReactGA.initialize('UA-112382826-1');
         ReactGA.pageview(window.location.pathname + window.location.search);
 
+        const medsenseDescription = "Ever felt like getting a bit more practice? This is the place for you. Medsense is a case-based simulation website for medical trainees,with faculty-vetted cases from you, for you. Upload an interesting case or try out a case and check out your strength and weaknesses at your dashboard. Come make sense of medicine.";
+
         return (
             <div style={{ padding: '2%' }}>
+                <Helmet>
+                    <title>Medsense</title>
+                    <meta name="description" content={medsenseDescription} />
+                </Helmet>
                 {this.renderContent()}
             </div>
         );

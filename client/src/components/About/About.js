@@ -74,6 +74,15 @@ class About extends Component {
             case null:
                 return;
             case false:
+                const medsenseDescription = <h4>
+                    Ever felt like getting a bit more practice?<br/>
+                    This is the place for you.<br/><br/>
+                    Medsense is a case-based simulation website for medical trainees, <br/>
+                    with faculty-vetted cases <em>from you, for you</em>.<br/><br/>
+                    <strong>Upload</strong> an interesting case or <strong>try out</strong> a case<br/>
+                    and check out your strength and weaknesses at your dashboard.<br/><br/>
+                    Come make sense of medicine.
+                </h4>;
                 return(
                     <div className="container">
                         {/*<div className="row">*/}
@@ -102,16 +111,8 @@ class About extends Component {
                                 <h1>
                                     Welcome to Medsense
                                 </h1><br/>
-                                <h4>
-                                    {/*Medsense is a gamified learning platform for medical students in Singapore. It was developed as a collaboration between NUS Yong Loo Lin School of Medicine, and Singapore Management University. This platform is a web application that simulates interaction with "patients", facilitates peer learning via a discussion board, and allow Professors to track the performance of students anonymously.*/}
-                                    Ever felt like getting a bit more practice?<br/>
-                                    This is the place for you.<br/><br/>
-                                    Medsense is a case-based simulation website for medical trainees, <br/>
-                                    with faculty-vetted cases <em>from you, for you</em>.<br/><br/>
-                                    <strong>Upload</strong> an interesting case or <strong>try out</strong> a case<br/>
-                                    and check out your strength and weaknesses at your dashboard.<br/><br/>
-                                    Come make sense of medicine.
-                                </h4><br/><br/>
+                                {medsenseDescription}
+                                <br/><br/>
                                 <Button onClick={(e) => window.location='/register'} className="btn btn-primary btn-lg" style={{whiteSpace:"pre-wrap", background: "#483D8B", color:"white", width: "25%"}}>
                                     <p style={{marginTop: "7%"}}>REGISTER</p>
                                 </Button>
