@@ -260,9 +260,13 @@ module.exports = app => {
                                         await answerOverview.save();
 
                                         // Generate alert email
+                                        const completedCase = await Case.findOne({_id: values.gameOverview.case}).select();
                                         const email = keys.medsenseTeamEmail;
                                         const subject = 'Case Challenge Alert';
-                                        const htmlText = '<h1>' + req.session.user.username + ' has completed a case challenge!</h1>';
+                                        const htmlText = '<h1>' + req.session.user.username + ' has completed a case challenge!</h1>'
+                                                + '<p>The Case Title is: ' + completedCase.title + '</p>'
+                                                + "<p> Attempt: " + values.gameOverview.attempt + "</p>"
+                                                + "<p> User's Score: " + values.gameOverview.score + "</p>";
                                         commonMethods.SEND_AUTOMATED_EMAIL(email, subject, htmlText);
 
                                         res.send('Done');
@@ -285,11 +289,13 @@ module.exports = app => {
                                     await answerOverview.save();
 
                                     // Generate alert email
+                                    const completedCase = await Case.findOne({_id: values.gameOverview.case}).select();
                                     const email = keys.medsenseTeamEmail;
                                     const subject = 'Case Challenge Alert';
-                                    const htmlText = "<h1>" + req.session.user.username + " has completed a case challenge!</h1>"
-                                            + "<p> Attempt: " + values.gameOverview.attempt + "</p>"
-                                            + "<p> User's Score: " + values.gameOverview.score + "</p>";
+                                    const htmlText = '<h1>' + req.session.user.username + ' has completed a case challenge!</h1>'
+                                        + '<p>The Case Title is: ' + completedCase.title + '</p>'
+                                        + "<p> Attempt: " + values.gameOverview.attempt + "</p>"
+                                        + "<p> User's Score: " + values.gameOverview.score + "</p>";
                                     commonMethods.SEND_AUTOMATED_EMAIL(email, subject, htmlText);
 
                                     res.send('Done');
@@ -340,9 +346,13 @@ module.exports = app => {
                 await answerOverview.save();
 
                 // Generate alert email
+                const completedCase = await Case.findOne({_id: values.gameOverview.case}).select();
                 const email = keys.medsenseTeamEmail;
                 const subject = 'Case Challenge Alert';
-                const htmlText = '<h1>' + req.session.user.username + ' has completed a case challenge!</h1>';
+                const htmlText = '<h1>' + req.session.user.username + ' has completed a case challenge!</h1>'
+                    + '<p>The Case Title is: ' + completedCase.title + '</p>'
+                    + "<p> Attempt: " + values.gameOverview.attempt + "</p>"
+                    + "<p> User's Score: " + values.gameOverview.score + "</p>";
                 commonMethods.SEND_AUTOMATED_EMAIL(email, subject, htmlText);
 
                 res.send('Done');
