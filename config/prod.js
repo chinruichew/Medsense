@@ -6,7 +6,7 @@ module.exports = {
     awsAccessKeyId: keyManagement.decryptKey(process.env.AWS_ACCESS_KEY_ID),
     awsSecretKey: keyManagement.decryptKey(process.env.AWS_SECRET_KEY),
     mongoURI: keyManagement.decryptKey(process.env.MONGO_URI),
-    mongoUATURI: keyManagement.decryptKey(process.env.MONGO_UAT_URI),
+    mongoProdURI: keyManagement.decryptKey(process.env.MONGO_PROD_URI),
     mongoUser: keyManagement.decryptKey(process.env.MONGO_USER),
     mongoPort: keyManagement.decryptKey(process.env.MONGO_PORT),
     dstPort: keyManagement.decryptKey(process.env.DST_PORT),
