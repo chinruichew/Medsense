@@ -84,6 +84,17 @@ class Question extends Component {
         this.props.handleNumberChange(value, this.props.id);
     };
 
+    renderMCQOptions = () =>{
+        let numbers = [];
+        for (let i=2; i<=20; i++){
+            numbers.push(i);
+        }
+        let options = numbers.map((obj,index) => {
+            return <option value={obj}>{obj}</option>
+        });
+        return options;
+    };
+
     answer = ()=>{
         if(this.props.type==="MCQ"){
             return(
@@ -91,15 +102,16 @@ class Question extends Component {
                     <ControlLabel style={{ fontSize: "150%" }}>Number of Options<span style={{color:"red"}}>*</span></ControlLabel>
                     <FormControl componentClass="select" value={this.props.numOptions} name="numOptions" onChange={(e)=>this.handleNumberChange(e)}>
                         <option value="Select One">Select One</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
+                        {this.renderMCQOptions()}
+                        {/*<option value="2">2</option>*/}
+                        {/*<option value="3">3</option>*/}
+                        {/*<option value="4">4</option>*/}
+                        {/*<option value="5">5</option>*/}
+                        {/*<option value="6">6</option>*/}
+                        {/*<option value="7">7</option>*/}
+                        {/*<option value="8">8</option>*/}
+                        {/*<option value="9">9</option>*/}
+                        {/*<option value="10">10</option>*/}
                     </FormControl>
                 </FormGroup>
             );
