@@ -286,6 +286,7 @@ class ManageUser extends Component {
                             <th><center>Level</center></th>
                             <th><center>XP</center></th>
                             <th><center>Recommendation Clicks</center></th>
+                            <th><center>Last Login</center></th>
                             <th><center>Date Registered</center></th>
                             <th> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
                         </tr>
@@ -361,6 +362,7 @@ class ManageUser extends Component {
                             <td><center>{this.convert(user.points)}</center></td>
                             <td><center>{user.points}</center></td>
                             <td><center>{totalClicks}</center></td>
+                            <td><center>{user.previousLogin}</center></td>
                             <td><center>{user.timestamp.split("T")[0]}</center></td>
                             <td><center><Button bsStyle="primary" onClick={(e) => this.handleDeleteAdminStudent(user)}>Delete</Button></center></td >
                         </tr>
