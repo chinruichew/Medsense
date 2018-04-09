@@ -83,7 +83,7 @@ class AdminCaseStatistics extends Component {
 
         return(
             <div className="case-stats">
-                <div className="col-lg-12">
+                <div className="col-md-12">
                     <h2 align="center"><strong>Case Statistics</strong></h2>
                     <br/>
                     <Col sm={6} smOffset={3}>

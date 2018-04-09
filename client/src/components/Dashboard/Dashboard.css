@@ -47,3 +47,29 @@
 .chart-col {
     margin-bottom: 30px;
 }
+
+.student-stats{
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 10px;
+    border-color: #C9C9C9;
+    height: 450px;
+}
+
+.case-stats{
+    margin-top: 3%;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 10px;
+    border-color: #C9C9C9;
+    height: 700px;
+}
+
+.game-stats {
+    margin-top: 3%;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 10px;
+    border-color: #C9C9C9;
+    height: 450px;
+}

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { Button, Table, ControlLabel, FormGroup, FormControl, Col, Row } from 'react-bootstrap';
-import {BarChart, XAxis, YAxis, Tooltip, Bar} from 'recharts';
 import axios from 'axios';
 import AdminStudentStatistics from "./AdminStudentStatistics";
 import AdminCaseStatistics from "./AdminCaseStatistics";
+import AdminGameStatistics from "./AdminGameStatistics";
 
 
 class AdminDashboard extends Component {
@@ -39,6 +38,7 @@ class AdminDashboard extends Component {
         return (
             <div className="container-fluid">
                 <AdminStudentStatistics nus={this.state.nus} ntu={this.state.ntu} dukenus={this.state.dukenus} />
+                <AdminGameStatistics/>
                 <AdminCaseStatistics/>
             </div>
         );
