@@ -237,7 +237,6 @@ class Main extends Component {
                     }
                     qn.numOptions = value;
                     qn.optionData = temp;
-                    console.log(value, temp);
                 }
                 
                 qnData.push(qn);

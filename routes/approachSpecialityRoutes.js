@@ -40,8 +40,7 @@ module.exports = app => {
                         cappedApproach += approachAlphabet;
                     }
                 }
-
-                newApproach.approach = cappedApproach;
+                newApproach.approach = cappedApproach.substring(1);
                 await newApproach.save();
                 res.send(newApproach);
             } else {
@@ -96,7 +95,7 @@ module.exports = app => {
                     }
                 }
 
-                newSpeciality.speciality = cappedSpeciality;
+                newSpeciality.speciality = cappedSpeciality.substring(1);
                 await newSpeciality.save();
                 res.send(newSpeciality);
             } else {
@@ -188,7 +187,7 @@ module.exports = app => {
                     }
                 }
 
-                newSubspeciality.subspeciality = cappedSubSpeciality;
+                newSubspeciality.subspeciality = cappedSubSpeciality.substring(1);
                 await newSubspeciality.save();
 
                 const selectedSpecialities = values.selectedOptions;

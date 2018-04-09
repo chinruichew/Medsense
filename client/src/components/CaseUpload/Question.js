@@ -103,15 +103,6 @@ class Question extends Component {
                     <FormControl componentClass="select" value={this.props.numOptions} name="numOptions" onChange={(e)=>this.handleNumberChange(e)}>
                         <option value="Select One">Select One</option>
                         {this.renderMCQOptions()}
-                        {/*<option value="2">2</option>*/}
-                        {/*<option value="3">3</option>*/}
-                        {/*<option value="4">4</option>*/}
-                        {/*<option value="5">5</option>*/}
-                        {/*<option value="6">6</option>*/}
-                        {/*<option value="7">7</option>*/}
-                        {/*<option value="8">8</option>*/}
-                        {/*<option value="9">9</option>*/}
-                        {/*<option value="10">10</option>*/}
                     </FormControl>
                 </FormGroup>
             );
@@ -148,7 +139,7 @@ class Question extends Component {
                                 <InputGroup.Addon>
                                     <input type="checkbox" checked={this.props.optionData[number-1].check} name={"check"+number} onChange={(e)=>this.handleMCQChange(e)}/>
                                 </InputGroup.Addon>
-                                <FormControl type="text" value={this.props.optionData[number-1].mcq} placeholder="Enter an answer" name={"mcq"+number} onChange={(e)=>this.handleMCQChange(e)}/>
+                                <FormControl type="text" value={this.props.optionData[number-1].mcq} placeholder="Enter an answer" name={"mcqns"+number} onChange={(e)=>this.handleMCQChange(e)}/>
                             </InputGroup>
                         </FormGroup>
                     </div>
@@ -162,13 +153,10 @@ class Question extends Component {
         const name = e.target.name;
         const optionData = this.props.optionData;
         optionData.forEach(function (obj) {
-            console.log(obj);
-            if (parseInt(obj.id,10)  === parseInt(name.slice(-1),10) || parseInt(obj.id,10)  === parseInt(name.slice(-2),10)){
+            if (parseInt(obj.id,10)  === parseInt(name.substring(5),10)){
                 if (name.substring(0,3)==="mcq"){
-                    console.log(e.target.value);
                     obj.mcq = e.target.value;
                 } else {
-                    console.log(e.target.checked);
                     obj.check = e.target.checked;
                 }
             }
