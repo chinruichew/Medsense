@@ -29,6 +29,14 @@ require('./models/User');
 
 const app = express();
 
+/* Start of Console Log configuration */
+const log = console.log;
+console.log = function(){
+    log.call(console, 'Logging -> [' + new Date().toString() + ']');
+    log.apply(console, arguments);
+};
+/* End of Console Log configuration */
+
 /* Start of MongoDB Connection */
 aws.config.update({
     accessKeyId: keys.awsAccessKeyId,
@@ -81,6 +89,7 @@ router.use(function (req, res, next) {
     next();
 });
 app.use(router);
+app.use(helmet());
 
 /* Start of Morgan Logger Configurations */
 morgan.token('date', function() {
@@ -107,6 +116,66 @@ const sessionConfig = {
 app.use(cookieSession(sessionConfig));
 /* End of Session Configurations */
 
+app.use(flash());
+
+function shouldCompress(req, res) {
+    if (req.headers['x-no-compression']) {
+        return false;
+    }
+
+    return compression.filter(req, res);
+}
+app.use(compression({filter: shouldCompress}));
+
+const csurfProtection = csurf({ cookie: true });
+
+const Merror = MerrorModule.Merror;
+const MerrorMiddleware = MerrorModule.MerrorMiddleware;
+app.use(MerrorMiddleware());
+
+/**
+ * This function notifies any error in a request method.
+ */
+function errorNotification (err, str, req) {
+    const title = 'Error in ' + req.method + ' ' + req.url;
+
+    notifier.notify({
+        title: title,
+        message: str
+    })
+}
+if (process.env.NODE_ENV !== 'production') {
+    app.use(errorhandler({log: errorNotification}))
+}
+
+// CORS Requests Configurations
+app.use(cors({
+    origin: ["http://localhost:3000"],
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type", "Authorization"]
+}));
+/* End of Middleware configuration */
+
+/* Start of Slug URL String configuration */
+slug.defaults.mode ='pretty';
+slug.defaults.modes['rfc3986'] = {
+    replacement: '-',      // replace spaces with replacement
+    symbols: true,         // replace unicode symbols or not
+    remove: null,          // (optional) regex to remove characters
+    lower: true,           // result in lower case
+    charmap: slug.charmap, // replace special characters
+    multicharmap: slug.multicharmap // replace multi-characters
+};
+slug.defaults.modes['pretty'] = {
+    replacement: '-',
+    symbols: true,
+    remove: /[.]/g,
+    lower: false,
+    charmap: slug.charmap,
+    multicharmap: slug.multicharmap
+};
+/* End of Slug URL String configuration */
+
 /* Start of REST API Configurations */
 require('./routes/authRoutes')(app);
 require('./routes/caseRoutes')(app);
@@ -120,6 +189,12 @@ require('./routes/approachSpecialityRoutes')(app);
 require('./routes/analyticsRoutes')(app);
 require('./routes/recommendationRoutes')(app);
 /* End of REST API Configurations */
+
+/* Start of GraphQL Configurations */
+app.use('/graphiql', apolloServerExpress.graphiqlExpress({
+    endpointURL: "/graphql"
+}));
+/* End of GraphQL Configurations */
 
 if (process.env.NODE_ENV === 'production') {
     // Express will serve up production assets
