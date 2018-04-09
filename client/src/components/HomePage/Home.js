@@ -7,7 +7,7 @@ import * as ReactGA from "react-ga";
 import './Home.css';
 import StudentHome from "./StudentHome";
 import ProfessorHome from "./ProfessorHome";
-import AdminHome from "./AdminHome";
+import AdminDashboard from "../Dashboard/Admin/AdminDashboard";
 import {Helmet} from "react-helmet";
 
 class Home extends Component {
@@ -40,7 +40,7 @@ class Home extends Component {
                             );
                         } else if (this.props.auth.usertype === this.state.constants.USER_TYPE_ADMIN) {
                             return (
-                                <AdminHome />
+                                <AdminDashboard />
                             )
 
                         } else {
