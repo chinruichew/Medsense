@@ -320,7 +320,20 @@ module.exports = app => {
                     break;
                 }
             }
-            
+
+            // Randomize cases
+            let currentIndex = processedCases.length, temporaryValue, randomIndex;
+            while (0 !== currentIndex) {
+                // Pick a remaining element...
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
+
+                // And swap it with the current element.
+                temporaryValue = processedCases[currentIndex];
+                processedCases[currentIndex] = processedCases[randomIndex];
+                processedCases[randomIndex] = temporaryValue;
+            }
+
             res.send(processedCases);
         } else {
             // If user has attempted at least threshold number of cases in a spec, prioritise based on poor scoring
