@@ -178,8 +178,7 @@ class SearchBySpeciality extends Component {
                             </FormControl>
                         </Col>
                         <Col sm={2}>
-                            <Button style={{ background: "#199ED8", border: 0 }} bsStyle="primary"
-                                    onClick={(e) => this.filterBySpeciality()}>
+                            <Button style={{ background: "#199ED8", border: 0 }} bsStyle="primary" onClick={(e) => this.filterBySpeciality()}>
                                 Search
                             </Button>
                         </Col>

@@ -57,7 +57,6 @@ class AdminGameStatistics extends Component {
                                 });
                             }
                         }
-                        console.log(answerSpecialityMap);
 
                         const xAxisData = [];
                         for(let i = 0; i < answerSpecialityMap.length; i++) {
