@@ -101,7 +101,7 @@ class CaseManager extends Component {
 
 
     searchCases(e) {
-        this.props.fetchFilteredAdminCases(this.state);
+        this.props.fetchFilteredAdminCases(this.state.subspeciality, this.state.approach, this.state.title, this.state.casestatus, this.state.difficulty);
     }
 
     deleteCase(e) {

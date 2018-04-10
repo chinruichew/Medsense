@@ -181,9 +181,9 @@ export const fetchFilteredAdminAdmins = (values) => async dispatch => {
     dispatch({ type: FETCH_FILTERED_ADMIN_ADMINS, payload: res.data });
 };
 
-export const fetchFilteredAdminCases = (values) => async dispatch => {
+export const fetchFilteredAdminCases = (subspeciality, approach, title, casestatus, difficulty) => async dispatch => {
     const res = await axios.post('/api/fetchFilteredAdminCases', {
-        values
+        subspeciality, approach, title, casestatus, difficulty
     });
     dispatch({ type: FETCH_FILTERED_ADMIN_CASES, payload: res.data });
 };
