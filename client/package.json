@@ -81,7 +81,7 @@
     "react-reveal": "^1.2.1",
     "react-router-dom": "^4.2.2",
     "react-timeseries-charts": "^0.14.0",
-    "react-visjs-timeline": "^1.4.0",
+    "react-visjs-timeline": "^1.5.0",
     "recharts": "^1.0.0-beta.10",
     "redux": "^3.7.2",
     "redux-form": "^7.3.0",
