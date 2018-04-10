@@ -8,7 +8,8 @@ class ContributionLeaderboard extends Component {
                 return;
             default:
                 const leadersToMap = this.props.leaders;
-                const leaders = Object.keys(leadersToMap).map(function(key) {
+                return Object.keys(leadersToMap).map(function(key) {
+                    const caseWord = leadersToMap[key] > 1? 'cases': 'case';
                     return(
                         <div key={key} className="col-md-12">
                             <div className="col-md-offset-2 col-md-8">
@@ -16,14 +17,13 @@ class ContributionLeaderboard extends Component {
                                     <p className="leader_text_font">{key}</p>
                                 </div>
                                 <div className="col-md-6 text-right leader_text_div">
-                                    <p className="leader_text_font">{leadersToMap[key] + ' cases'}</p>
+                                    <p className="leader_text_font">{leadersToMap[key] + ' ' + caseWord}</p>
                                 </div>
                             </div>
                             <div className="col-md-2"></div>
                         </div>
                     );
                 });
-                return leaders;
         }
     };
 
