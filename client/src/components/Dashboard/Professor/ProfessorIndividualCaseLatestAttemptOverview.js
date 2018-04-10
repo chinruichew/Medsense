@@ -113,6 +113,10 @@ class ProfessorIndividualCaseLatestAttemptOverview extends Component {
                     12, // left
                 ]
             },
+            legend: {
+                data: ['Global Average Score'],
+                align: 'left'
+            },
             tooltip: {
                 trigger: 'axis',
                 axisPointer: {

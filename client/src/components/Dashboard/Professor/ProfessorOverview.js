@@ -467,6 +467,10 @@ class ProfessorOverview extends Component {
                     title: {
                         text: 'Speciality Comparison'
                     },
+                    legend: {
+                        data: ['Global Average Score'],
+                        align: 'left'
+                    },
                     tooltip: {
                         trigger: 'axis',
                         axisPointer: {
@@ -483,6 +487,7 @@ class ProfessorOverview extends Component {
                         type: 'value'
                     },
                     series: [{
+                        name: 'Global Average Score',
                         data: seriesData,
                         type: 'bar'
                     }],

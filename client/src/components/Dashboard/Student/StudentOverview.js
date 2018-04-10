@@ -510,6 +510,10 @@ class StudentOverview extends Component {
                     title: {
                         text: 'Speciality Comparison'
                     },
+                    legend: {
+                        data: ['Your Average Score'],
+                        align: 'left'
+                    },
                     tooltip: {
                         trigger: 'axis',
                         axisPointer: {
@@ -526,6 +530,7 @@ class StudentOverview extends Component {
                         type: 'value'
                     },
                     series: [{
+                        name: 'Your Average Score',
                         data: seriesData,
                         type: 'bar'
                     }],
