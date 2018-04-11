@@ -19,11 +19,9 @@ import CaseChallenge from './CaseChallenge/Main';
 import AdminCaseManager from './Admin/CaseManager';
 import AdminUserManager from './Admin/UserManager';
 import AdminTermManager from './Admin/TermManager';
-import Result from './CaseChallenge/GameResults';
 import NotFound from "./NotFound/NotFound";
 import ResetPassword from "./LoginSignup/ResetPassword";
 import Acknowledgement from './Acknowledgement/Acknowledgement';
-import UAT from "./UAT/UAT";
 
 class App extends Component {
     componentDidMount() {
@@ -51,10 +49,8 @@ class App extends Component {
                         <Route exact path="/admincasemanager" component={AdminCaseManager} />
                         <Route exact path="/adminusermanager" component={AdminUserManager} />
                         <Route exact path="/admintermmanager" component={AdminTermManager} />
-                        <Route exact path="/result" component={Result} />
                         <Route exact path="/" component={About}/>
                         <Route exact path="/about" component={Acknowledgement}/>
-                        <Route exact path="/uat" component={UAT}/>
                         <Route path="/" component={NotFound} />
                     </Switch>
                 </HttpsRedirect>

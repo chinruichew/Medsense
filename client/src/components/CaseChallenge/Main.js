@@ -19,11 +19,15 @@ class Main extends Component {
         showSpecialitySearch: false,
         showTimeLimit: false,
         random: false,
-        recommendedCase: null
+        recommendedCase: null,
+        constants: null
     };
 
     componentDidMount() {
         this.props.fetchRandomCase();
+        axios.get('/api/getConstantTypes').then(res => {
+            this.setState({constants: res.data});
+        });
         if(this.props.location.gameId !== undefined) {
             axios.post('/api/fetchGameById', {
                 id: this.props.location.gameId
@@ -162,13 +166,23 @@ class Main extends Component {
             case false:
                 return(<Redirect to="/" />);
             default:
-                return(
-                    <div className="container">
-                        {this.renderMainContent()}
-                        <br /><br />
-                        {this.renderSearch()}
-                    </div>
-                );
+                switch(this.state.constants) {
+                    case null:
+                        return;
+                    default:
+                        switch(this.props.auth.usertype) {
+                            case this.state.constants.USER_TYPE_STUDENT:
+                                return(
+                                    <div className="container">
+                                        {this.renderMainContent()}
+                                        <br /><br />
+                                        {this.renderSearch()}
+                                    </div>
+                                );
+                            default:
+                                return <Redirect to='/' />;
+                        }
+                }
         }
     };
 
