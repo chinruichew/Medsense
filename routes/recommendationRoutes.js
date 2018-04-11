@@ -417,6 +417,19 @@ module.exports = app => {
                     processedCases.push(answerCase);
                 }
 
+                // Randomize cases
+                let currentIndex = processedCases.length, temporaryValue, randomIndex;
+                while (0 !== currentIndex) {
+                    // Pick a remaining element...
+                    randomIndex = Math.floor(Math.random() * currentIndex);
+                    currentIndex -= 1;
+
+                    // And swap it with the current element.
+                    temporaryValue = processedCases[currentIndex];
+                    processedCases[currentIndex] = processedCases[randomIndex];
+                    processedCases[randomIndex] = temporaryValue;
+                }
+
                 res.send(processedCases);
             } else {
                 // Filter cases based on difficulty level according to student year
@@ -452,6 +465,19 @@ module.exports = app => {
                     } else {
                         break;
                     }
+                }
+
+                // Randomize cases
+                let currentIndex = difficultySortedCases.length, temporaryValue, randomIndex;
+                while (0 !== currentIndex) {
+                    // Pick a remaining element...
+                    randomIndex = Math.floor(Math.random() * currentIndex);
+                    currentIndex -= 1;
+
+                    // And swap it with the current element.
+                    temporaryValue = difficultySortedCases[currentIndex];
+                    difficultySortedCases[currentIndex] = difficultySortedCases[randomIndex];
+                    difficultySortedCases[randomIndex] = temporaryValue;
                 }
 
                 res.send(difficultySortedCases);
