@@ -57,15 +57,24 @@ class StudentIndividualCaseQuestionAnswers extends Component {
                 if(answerType === 'open-ended') {
                     displayAnswer = ReactHtmlParser(answerOfQuestion.studentAnswer);
                 } else {
-                    const mcqAnswerOptions = answerOfQuestion.answerOptions;
+                    const mcqAnswerOptions = answerOfQuestion.mcqAnswerOptions;
                     for(let i = 0; i < mcqAnswerOptions.length; i++) {
                         const mcqAnswerOption = mcqAnswerOptions[i];
                         if(mcqAnswerOption.check) {
-                            displayAnswer += mcqAnswerOption.option.mcq;
+                            const questionOptions = question.options;
+                            let questionOptionsDisplay = '';
+                            for(let j = 0; j < questionOptions.length; j++) {
+                                const questionOption = questionOptions[j];
+                                if(questionOption._id === mcqAnswerOption.questionOption) {
+                                    displayAnswer += questionOption.mcq + ', ';
+                                    break;
+                                }
+                            }
                         }
                     }
+                    displayAnswer = displayAnswer.slice(",", -2);
                 }
-                const score = answerOfQuestion.score < answerOfQuestion.mark/2? 'red': 'green';
+                const scoreStyle = answerOfQuestion.score < answerOfQuestion.mark/2? 'red': 'green';
 
                 // Display Picture if there is an attachment
                 let questionDisplay = question.attachment === ''? <p>{ReactHtmlParser(question.question)}</p>:

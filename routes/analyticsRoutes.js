@@ -18,7 +18,15 @@ module.exports = app => {
             model: 'users'
         }).populate({
             path: 'mcqAnswers',
-            model: 'mcqAnswers'
+            model: 'mcqAnswers',
+            populate: {
+                path: 'mcqAnswerOptions',
+                model: 'mcqAnswerOptions',
+                populate: {
+                    path: 'questionOption',
+                    model: 'options'
+                }
+            }
         }).populate({
             path: 'openEndedAnswers',
             model: 'openEndedAnswers'
@@ -31,7 +39,7 @@ module.exports = app => {
             let filteredAnswers = [];
             for(let i = 0; i < answers.length; i++) {
                 const answer = answers[i];
-                if(String(answer.user._id) === req.session.user._id) {
+                if(answer.user!== null && String(answer.user._id) === req.session.user._id) {
                     filteredAnswers.push(answer);
                 }
             }
