@@ -10,7 +10,7 @@
     border-style: solid;
     border-width: 1px;
     border-radius: 10px;
-    height: 500px;
+    height: 600px;
     border-color: #C9C9C9;
 }
 
@@ -72,4 +72,18 @@
     border-radius: 10px;
     border-color: #C9C9C9;
     height: 450px;
+}
+
+.case-challenge-badges {
+    height: 50px;
+    width: 50px;
+    margin-top: -12px;
+    margin-left: 5px;
+}
+
+.case-contributor-badges {
+    height: 40px;
+    width: 40px;
+    margin-top: -5px;
+    margin-left: 10px;
 }

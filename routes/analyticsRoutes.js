@@ -60,11 +60,11 @@ module.exports = app => {
     });
 
     // Get leaders with highest contributions
-    app.get('/api/getLeadersWithHighestContributions', function(req, res) {
+    app.get('/api/getLeadersWithHighestContributions', async(req, res) => {
         Case.find().populate({
             path: 'authorid',
             model: 'users',
-        }).exec(function (err, cases) {
+        }).exec(async(err, cases) => {
             const leaders = {};
             for(let i = 0; i < cases.length; i++) {
                 const uploadedCase = cases[i];
@@ -99,6 +99,16 @@ module.exports = app => {
                     }
                 }
             }
+
+            for(const key in sortedLeaders) {
+                const user = await User.findOne({username: key}).select();
+                const updatedUser = {
+                    ...user._doc,
+                    numContributions: sortedLeaders[key]
+                };
+                sortedLeaders[key] = updatedUser;
+            }
+
             res.send(sortedLeaders);
         });
     });

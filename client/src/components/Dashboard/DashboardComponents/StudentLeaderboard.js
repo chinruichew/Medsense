@@ -4,23 +4,42 @@ import axios from 'axios';
 
 class StudentLeaderboard extends Component {
     state = {
-        userLevelsMapping: null
+        leaders: null,
+        userLevelsMapping: null,
+        userLevelRankMapping: null
     };
 
     componentDidMount() {
-        axios.post('/api/calculateUserLevels', {
-            users: this.props.leaders
-        }).then(res => {
-            this.setState({
-                userLevelsMapping: res.data
+        // Get leaders with highest scores
+        axios.get('/api/getLeadersWithHighestScores').then(res => {
+            this.setState({leaders: res.data});
+
+            axios.post('/api/calculateUserLevels', {
+                users: this.state.leaders
+            }).then(res => {
+                this.setState({
+                    userLevelsMapping: res.data
+                });
+
+                axios.post('/api/getLevelRanks', {
+                    userLevelsMapping: this.state.userLevelsMapping
+                }).then(res => {
+                    this.setState({
+                        userLevelRankMapping: res.data
+                    });
+                }).catch(err => {
+                    console.log(err);
+                });
+            }).catch(err => {
+                console.log(err);
             });
         }).catch(err => {
-            console.log(err);
+            throw(err);
         });
     }
 
     renderLeaderboard = () => {
-        switch(this.props.leaders) {
+        switch(this.state.leaders) {
             case null:
                 return;
             default:
@@ -28,29 +47,51 @@ class StudentLeaderboard extends Component {
                     case null:
                         return;
                     default:
-                        return this.props.leaders.map(leader => {
-                            let level = 0;
-                            for(let i = 0; i < this.state.userLevelsMapping.length; i++) {
-                                const userLevelMap = this.state.userLevelsMapping[i];
-                                if(userLevelMap.user._id === leader._id) {
-                                    level = userLevelMap.level;
-                                    break;
-                                }
-                            }
-                            return(
-                                <div key={leader._id} className="col-md-12">
-                                    <div className="col-md-offset-2 col-md-8">
-                                        <div className="col-md-6 text-left leader_text_div">
-                                            <p className="leader_text_font">{leader.username}</p>
+                        switch(this.state.userLevelRankMapping) {
+                            case null:
+                                return;
+                            default:
+                                return this.state.leaders.map(leader => {
+                                    // Get user level
+                                    let level = 0;
+                                    for(let i = 0; i < this.state.userLevelsMapping.length; i++) {
+                                        const userLevelMap = this.state.userLevelsMapping[i];
+                                        if(userLevelMap.user._id === leader._id) {
+                                            level = userLevelMap.level;
+                                            break;
+                                        }
+                                    }
+
+                                    // Get user rank
+                                    let rank = '';
+                                    for(let i = 0; i < this.state.userLevelRankMapping.length; i++) {
+                                        const userLevelRankMap = this.state.userLevelRankMapping[i];
+                                        if(userLevelRankMap.user._id === leader._id) {
+                                            rank = userLevelRankMap.rank;
+                                            break;
+                                        }
+                                    }
+
+                                    return(
+                                        <div key={leader._id} className="col-md-12">
+                                            <div className="col-md-4 leader_text_div">
+                                                <div className="col-md-5">
+                                                    <Image src={'case-challenge-badges/' + rank + '.png'} className="case-challenge-badges" />
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <p className="leader_text_font">{rank}</p>
+                                                </div>
+                                            </div>
+                                            <div className="col-md-4 leader_text_div">
+                                                <p className="leader_text_font">{leader.username}</p>
+                                            </div>
+                                            <div className="col-md-4 leader_text_div">
+                                                <p className="leader_text_font">Level {level}</p>
+                                            </div>
                                         </div>
-                                        <div className="col-md-6 text-right leader_text_div">
-                                            <p className="leader_text_font">Level {level}</p>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-2"></div>
-                                </div>
-                            );
-                        });
+                                    );
+                                });
+                        }
                 }
         }
     };
@@ -60,6 +101,17 @@ class StudentLeaderboard extends Component {
             <div className="col-md-12 text-center leaderboard_container">
                 <h2>Student Case Challenge Leaderboard</h2>
                 <Image className="leaderboard_image" src="./Student Case Challenge Leaderboard.png" alt="Student Case Challenge Leaderboard" />
+                <div className="col-md-12">
+                    <div className="col-md-4 leader_text_font text-center">
+                        <h4><strong><u>Rank</u></strong></h4>
+                    </div>
+                    <div className="col-md-4 leader_text_font text-center">
+                        <h4><strong><u>Student</u></strong></h4>
+                    </div>
+                    <div className="col-md-4 leader_text_font text-center">
+                        <h4><strong><u>Level</u></strong></h4>
+                    </div>
+                </div>
                 {this.renderLeaderboard()}
             </div>
         );
