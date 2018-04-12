@@ -69,7 +69,7 @@ class AdminGameStatistics extends Component {
                                 <XAxis dataKey="name" />
                                 <YAxis />
                                 <Tooltip />
-                                <Bar dataKey="count" fill="#8c564b" />
+                                <Bar dataKey="count" fill="#ffada3" />
                             </BarChart>
                         );
                 }

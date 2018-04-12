@@ -20,7 +20,7 @@ class AdminStudentStatistics extends Component {
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Tooltip />
-                <Bar dataKey="count" fill="#ff7f0e" />
+                <Bar dataKey="count" fill="#8fd35e" />
             </BarChart>
         );
     }
@@ -42,7 +42,7 @@ class AdminStudentStatistics extends Component {
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Tooltip />
-                <Bar dataKey="count" fill="#1f77b4" />
+                <Bar dataKey="count" fill="#56B0CB" />
             </BarChart>
         );
     }
@@ -64,7 +64,7 @@ class AdminStudentStatistics extends Component {
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Tooltip />
-                <Bar dataKey="count" fill="#8c564b" />
+                <Bar dataKey="count" fill="#FFCC66" />
             </BarChart>
         );
     }
