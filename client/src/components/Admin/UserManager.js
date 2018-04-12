@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Tabs, Tab } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
+import axios from 'axios';
 
 import './Admin.css';
 import NewUser from './NewUser';
@@ -9,11 +10,17 @@ import DeleteUser from './ManageUser';
 import { fetchAdminUsers } from '../../actions';
 
 class UserManager extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            display: 'user',
-        };
+    state = {
+        display: 'user',
+        constants: null
+    };
+
+    componentDidMount() {
+        axios.get('/api/getConstantTypes').then(res => {
+            this.setState({constants: res.data});
+        }).catch(err => {
+            console.log(err);
+        });
     }
 
     componentWillMount() {
@@ -21,36 +28,48 @@ class UserManager extends Component {
     }
 
     renderContent() {
-        switch (this.state.auth) {
+        switch (this.props.auth) {
+            case null:
+                return;
             case false:
                 return <Redirect to='/' />;
             default:
-                switch (this.props.adminUsers) {
+                switch(this.state.constants) {
                     case null:
                         return;
                     default:
-                        return (
-                            <div>
-                                <div className="container-fluid">
-                                    <div className='col-sm-12'>
-                                        <Tabs defaultActiveKey={1} className="tab">
-                                            <Tab eventKey={1} title="Add New User">
+                        switch(this.props.auth.usertype) {
+                            case this.state.constants.USER_TYPE_ADMIN:
+                                switch(this.props.adminUsers) {
+                                    case null:
+                                        return;
+                                    default:
+                                        return (
+                                            <div>
+                                                <div className="container-fluid">
+                                                    <div className='col-sm-12'>
+                                                        <Tabs defaultActiveKey={1} className="tab">
+                                                            <Tab eventKey={1} title="Add New User">
+                                                                <br />
+                                                                <NewUser />
+                                                                <br />
+                                                            </Tab>
+                                                            <Tab eventKey={2} title="Manage User">
+                                                                <br />
+                                                                <DeleteUser />
+                                                            </Tab>
+                                                        </Tabs>
+                                                    </div>
+                                                </div>
                                                 <br />
-                                                <NewUser />
+                                                {/* Insert User Manager code here */}
                                                 <br />
-                                            </Tab>
-                                            <Tab eventKey={2} title="Manage User">
-                                                <br />
-                                                <DeleteUser />
-                                            </Tab>
-                                        </Tabs>
-                                    </div>
-                                </div>
-                                <br />
-                                {/* Insert User Manager code here */}
-                                <br />
-                            </div>
-                        );
+                                            </div>
+                                        );
+                                }
+                            default:
+                                return <Redirect to='/' />;
+                        }
                 }
         }
     }

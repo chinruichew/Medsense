@@ -6,7 +6,6 @@ import { bindAll } from 'lodash';
 import axios from 'axios';
 import { deleteAdminCase, fetchFilteredAdminCases, fetchAdminCases } from '../../actions';
 import ReactHtmlParser from 'react-html-parser';
-import Promise from 'bluebird';
 
 import './Admin.css';
 
@@ -30,7 +29,8 @@ class CaseManager extends Component {
             specialityList: [],
             specialities: null,
             recommendations: null,
-            answers: null
+            answers: null,
+            constants: null
         };
         bindAll(this, 'handleTitleChange', 'handleDifficultyChange', 'handleSubspecialityChange',
             'handleApproachChange', 'handleScenarioChange', 'setSubspeciality', 'setName', 'setApproach',
@@ -46,6 +46,12 @@ class CaseManager extends Component {
 
         axios.get('/api/fetchAnswers').then(res => {
             this.setState({ answers: res.data });
+        }).catch(err => {
+            console.log(err);
+        });
+
+        axios.get('/api/getConstantTypes').then(res => {
+            this.setState({constants: res.data});
         }).catch(err => {
             console.log(err);
         });
@@ -334,48 +340,60 @@ class CaseManager extends Component {
     };
 
     renderContent() {
-        switch (this.state.auth) {
+        switch (this.props.auth) {
+            case null:
+                return;
             case false:
                 return <Redirect to='/' />;
             default:
-                switch (this.props.adminCases) {
+                switch(this.state.constants) {
                     case null:
                         return;
                     default:
-                        return (
-                            <div className="container-fluid" >
-                                <div className='container-fluid'>
-                                    <div className='col-sm-12'>
-                                        {this.setName()}
-                                    </div>
-                                    <div className='col-sm-6'>
-                                        {this.setSubspeciality()}
-                                    </div>
-                                    <div className='col-sm-6'>
-                                        {this.setApproach()}
-                                    </div>
-                                    <div className='col-sm-6'>
-                                        {this.setDifficulty()}
-                                    </div>
-                                    <div className='col-sm-6'>
-                                        {this.setCaseStatus()}
-                                    </div>
-                                    {/* <div className='col-sm-4'>
+                        switch(this.props.auth.usertype) {
+                            case this.state.constants.USER_TYPE_ADMIN:
+                                switch (this.props.adminCases) {
+                                    case null:
+                                        return;
+                                    default:
+                                        return (
+                                            <div className="container-fluid" >
+                                                <div className='container-fluid'>
+                                                    <div className='col-sm-12'>
+                                                        {this.setName()}
+                                                    </div>
+                                                    <div className='col-sm-6'>
+                                                        {this.setSubspeciality()}
+                                                    </div>
+                                                    <div className='col-sm-6'>
+                                                        {this.setApproach()}
+                                                    </div>
+                                                    <div className='col-sm-6'>
+                                                        {this.setDifficulty()}
+                                                    </div>
+                                                    <div className='col-sm-6'>
+                                                        {this.setCaseStatus()}
+                                                    </div>
+                                                    {/* <div className='col-sm-4'>
                                             {this.setTime()}
                                         </div> */}
 
-                                    <div className='col-sm-12' align='center'>
-                                        <br/>
-                                        <Button type="button" bsSize="lg" bsStyle="primary" onClick={(e) => this.searchCases()}> &nbsp; Search &nbsp;</Button>
-                                    </div>
-                                </div>
-                                <br /><br />
-                                <div className='col-sm-12'>
-                                    {this.renderTable()}
-                                </div>
-                                {this.renderModal()}
-                            </div>
-                        );
+                                                    <div className='col-sm-12' align='center'>
+                                                        <br/>
+                                                        <Button type="button" bsSize="lg" bsStyle="primary" onClick={(e) => this.searchCases()}> &nbsp; Search &nbsp;</Button>
+                                                    </div>
+                                                </div>
+                                                <br /><br />
+                                                <div className='col-sm-12'>
+                                                    {this.renderTable()}
+                                                </div>
+                                                {this.renderModal()}
+                                            </div>
+                                        );
+                                }
+                            default:
+                                return <Redirect to='/' />;
+                        }
                 }
         }
     }
@@ -475,8 +493,8 @@ class CaseManager extends Component {
     }
 }
 
-function mapStateToProps({ adminCases }) {
-    return { adminCases };
+function mapStateToProps({ adminCases, auth }) {
+    return { adminCases, auth };
 }
 
 
