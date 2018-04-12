@@ -160,16 +160,16 @@ export const addNewAdmin = (values) => async dispatch => {
     return res
 };
 
-export const fetchFilteredAdminStudents = (values) => async dispatch => {
+export const fetchFilteredAdminStudents = (username, school, year) => async dispatch => {
     const res = await axios.post('/api/fetchFilteredAdminStudents', {
-        values
+        username, school, year
     });
     dispatch({ type: FETCH_FILTERED_ADMIN_STUDENTS, payload: res.data });
 };
 
-export const fetchFilteredAdminProfessors = (values) => async dispatch => {
+export const fetchFilteredAdminProfessors = (subspeciality, speciality, username, school) => async dispatch => {
     const res = await axios.post('/api/fetchFilteredAdminProfessors', {
-        values
+        subspeciality, speciality, username, school
     });
     dispatch({ type: FETCH_FILTERED_ADMIN_PROFESSORS, payload: res.data });
 };
