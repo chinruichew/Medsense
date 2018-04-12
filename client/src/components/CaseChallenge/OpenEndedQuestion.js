@@ -294,7 +294,7 @@ class OpenEndedQuestion extends Component {
 
                 <BootstrapModal bsSize="large" show={this.state.showSTEMs} onHide={(e) => this.setState({ showSTEMs: false })}>
                     <BootstrapModal.Header closeButton>
-                        <BootstrapModal.Title id="contained-modal-title-lg" style={{fontSize: "200%", fontWeight: "bold"}}>Previous STEM</BootstrapModal.Title>
+                        <BootstrapModal.Title id="contained-modal-title-lg" style={{fontSize: "200%", fontWeight: "bold"}}>Story So Far</BootstrapModal.Title>
                     </BootstrapModal.Header>
                     <BootstrapModal.Body>
                         {this.renderStorySoFar()}
