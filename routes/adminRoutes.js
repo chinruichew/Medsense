@@ -2,6 +2,7 @@ const User = require('../models/User');
 const Case = require('../models/Case');
 const Question = require('../models/Question');
 const Approach = require('../models/Approach');
+const Option = require('../models/Option');
 const nodemailer = require('nodemailer');
 
 const keys = require('../config/keys');
@@ -309,7 +310,11 @@ module.exports = app => {
 
     app.post('/api/deleteAdminCase', function (req, res) {
         Case.find({ _id: req.body.values }, function (err, oneCase) {
-            Question.find({ case: req.body.caseid }, function (err, questions) {
+            Question.find({case: req.body.values}, function(err, questions) {
+                for(var i = 0; i < questions[0]["options"].length; i++) {
+                    Option.find({_id: questions[0]["options"][i] }, function(err, options) {
+                    }).remove().exec();
+                }
             }).remove().exec();
         }).remove().exec();
         return res.status(201).send({ data: null, message: "deleteCase success" });
