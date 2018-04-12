@@ -1,26 +1,24 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, ControlLabel, FormGroup, FormControl, Table, Col, Row, Modal } from 'react-bootstrap';
-import { addNewSubspeciality, deleteSubspeciality } from '../../actions';
-import axios from 'axios';
-import Multiselect from 'react-bootstrap-multiselect';
+import { Button, ControlLabel, FormGroup, FormControl, Table } from 'react-bootstrap';
 
+import { addNewSubspeciality, deleteSubspeciality } from '../../actions';
 import './Admin.css';
+import axios from 'axios';
 
 class Subspeciality extends Component {
     state = {
-        subspeciality: "",
-        showSpec: false,
-        specialities: null,
-        selectedOptions: [],
-        showDeleteConfirm: false,
-        subspecialityidToDelete: ""
+        speciality: "",
+        fetchedspecialities: "",
+        subspeciality: ""
     };
 
     componentDidMount() {
         axios.post('/api/fetchSpeciality').then(res => {
+            console.log(res.data)
             this.setState({
-                specialities: res.data
+                speciality: (res.data)[0].speciality,
+                fetchedspecialities: res.data
             });
         });
     }
@@ -39,25 +37,15 @@ class Subspeciality extends Component {
         );
     }
 
-    // deleteAdminSubspeciality(e) {
-    //     this.props.deleteSubspeciality(e._id)
-    // }
-
-    handleDeleteAdminSubspeciality(e) {
-        this.setState({subspecialityidToDelete: e._id, showDeleteConfirm: true});
+    deleteAdminSubspeciality(e) {
+        this.props.deleteSubspeciality(e._id)
     }
-
-    deleteAdminSubspeciality(e){
-        this.setState({showDeleteConfirm: false});
-        this.props.deleteSubspeciality(this.state.subspecialityidToDelete);
-    }
-
 
     renderSubspeciality() {
         let allSubspeciality = this.props.subspeciality.map(subspeciality => {
             return <tr>
                 <td><center>{subspeciality.subspeciality}</center></td>
-                <td><center><Button bsStyle="primary" onClick={(e) => this.handleDeleteAdminSubspeciality(subspeciality)}>Delete</Button></center></td >
+                <td><Button style={{ fontSize: "125%" }} bsStyle="primary" onClick={(e) => this.deleteAdminSubspeciality(subspeciality)}>Delete</Button></td >
             </tr>
         });
 
@@ -69,18 +57,36 @@ class Subspeciality extends Component {
 
     }
 
+    setSpeciality() {
+        let items = [];
+        for (var i = 0; i <= this.state.fetchedspecialities.length; i++) {
+            var arr = this.state.fetchedspecialities;
+            var object = arr[i]
+            if (object != null) {
+                items.push(<option key={object.speciality} value={object.speciality}>{object.speciality}</option>);
+            }
+        }
+        return (
+            <FormGroup controlId="formControlsDifficulty">
+                <ControlLabel style={{ fontSize: "150%" }}>Select Speciality:</ControlLabel>
+                <FormControl componentClass="select" value={this.state.speciality} name="speciality" onChange={(e) => this.handleSpecialityChange(e)}>
+                    {items}
+                </FormControl>
+            </FormGroup>
+        );
+    }
+
+    handleSpecialityChange(e) {
+        const value = e.target.value;
+        this.setState({ speciality: value });
+        console.log(this.state.speciality)
+    }
+
     setSubspeciality() {
         return (
             <FormGroup controlId="formControlsTitle">
                 <ControlLabel style={{ fontSize: "150%" }}>Subspeciality:</ControlLabel>
-                <Row>
-                    <Col sm={9}>
-                        <FormControl type="text" value={this.state.subspeciality} name="username"
-                                     onChange={(e) => this.handleSubspecialityChange(e)} />
-                    </Col>
-                    <Col smOffset={10}><Button style={{ fontSize: "125%" }} bsStyle="primary" onClick={(e) => this.showSpecialities()}>Choose Speciality</Button>
-                    </Col>
-                </Row>
+                <FormControl type="text" value={this.state.subspeciality} name="username" onChange={(e) => this.handleSubspecialityChange(e)} />
             </FormGroup>
         );
     }
@@ -89,12 +95,6 @@ class Subspeciality extends Component {
         const value = e.target.value;
         this.setState({ subspeciality: value });
     }
-
-    showSpecialities = () => {
-        this.setState({
-            showSpec: true
-        });
-    };
 
     addSubspeciality() {
         if (this.state.subspeciality.trim() === '' || this.state.subspeciality == null) {
@@ -106,92 +106,18 @@ class Subspeciality extends Component {
                 } else {
                     window.alert("Subspeciality Created")
                 }
-            });
+            })
+            console.log(this.state.subspeciality)
         }
     }
 
-    handleChange = (options) => {
-        for(let i = 0; i < options.length; i++) {
-            const option = options[i];
-            let toAdd = true;
-            for(let j = 0; j < this.state.selectedOptions.length; j++) {
-                const selectedOption = this.state.selectedOptions[j];
-                if(selectedOption === option.innerText) {
-                    toAdd = false;
-                    break;
-                }
-            }
-            if(toAdd) {
-                this.state.selectedOptions.push(option.innerText);
-            }
-        }
-    };
-
-    renderSpecialitySelection = () => {
-        if(this.state.showSpec) {
-            const specialities = [];
-            for(let i = 0; i < this.state.specialities.length; i++) {
-                const speciality = this.state.specialities[i];
-                if(speciality.speciality !== "Clinical Practicum") {
-                    specialities.push({
-                        value: speciality.speciality
-                    });
-                }
-            }
-
-            return(
-                <form>
-                    <Row>
-                        <Col sm={9}>
-                            <Multiselect onChange={this.handleChange} data={specialities} />
-                        </Col>
-                        <Col smOffset={10}>
-                            <Button style={{ fontSize: "125%" }} bsStyle="primary" onClick={(e) => this.addSubspeciality()}>Add Subspeciality</Button>
-                        </Col>
-                    </Row>
-                </form>
-            );
-        }
-        return;
-    };
-
-    renderContent = () => {
-        switch(this.state.specialities) {
-            case null:
-                return;
-            default:
-                return (
-                    <div style={{paddingTop: "1%"}}>
-                        {this.setSubspeciality()}
-                        <br/>
-                        {this.renderSpecialitySelection()}
-                        <br/>
-                        {this.renderTableSubspeciality()}
-                    </div>
-                );
-        }
-    };
-
     render() {
-        return(
+        return (
             <div>
-                {this.renderContent()}
-
-                <Modal show={this.state.showDeleteConfirm} onHide={(e) => this.setState({ showDeleteConfirm: false })}>
-                    <Modal.Header closeButton>
-                        <Modal.Title id="contained-modal-title">
-                            Deletion Confirmation
-                        </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        Are you sure you want to delete this subspeciality?
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button onClick={(e) => this.deleteAdminSubspeciality(e) }>Yes</Button>
-                        <Button onClick={(e) => this.setState({ showDeleteConfirm: false})}>No</Button>
-                    </Modal.Footer>
-                </Modal>
-
+                {this.setSpeciality()}
+                {this.setSubspeciality()}
+                <Button style={{ fontSize: "125%" }} bsStyle="primary" onClick={(e) => this.addSubspeciality()}>Add Subspeciality</Button>
+                {this.renderTableSubspeciality()}
             </div>
         );
     }
@@ -202,5 +128,3 @@ function mapStateToProps({ auth, subspeciality }) {
 }
 
 export default connect(mapStateToProps, { addNewSubspeciality, deleteSubspeciality })(Subspeciality);
-
-
