@@ -3,23 +3,23 @@ import { connect } from 'react-redux';
 import BootstrapModal from '../UI/Modal/VettingBootstrapModal.js';
 import axios from 'axios';
 import { updateStudent } from '../../actions/index';
-import {Button, OverlayTrigger, Popover} from 'react-bootstrap';
+import {Button, ControlLabel, FormControl, FormGroup, OverlayTrigger, Popover} from 'react-bootstrap';
 import { Line } from 'rc-progress';
 import UploadProfilePicture from './UploadProfilePicture';
 import {Image, Table} from "react-bootstrap";
 
 class StudentProfile extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            id: this.props.id,
-            username: this.props.username,
-            school: this.props.school,
-            year: this.props.year,
-            vmShow: false,
-            level: ''
-        };
-    }
+    state = {
+        id: this.props.id,
+        username: this.props.username,
+        school: this.props.school,
+        year: this.props.year,
+        vmShow: false,
+        level: '',
+        oldPassword: '',
+        newPassword: '',
+        newPasswordConfirmation: ''
+    };
 
     componentDidMount(){
         axios.get('/api/calculateUserLevel?xp=' + this.props.auth.points).then(res => {
@@ -74,9 +74,49 @@ class StudentProfile extends Component {
         }).catch(() => { })
     };
 
+    setOldPassword = (e) => {
+        this.setState({
+            oldPassword: e.target.value
+        });
+    };
+
+    setNewPassword = (e) => {
+        this.setState({
+            newPassword: e.target.value
+        });
+    };
+
+    setNewPasswordConfirmation = (e) => {
+        this.setState({
+            newPasswordConfirmation: e.target.value
+        });
+    };
+
+    handlePasswordChange = () => {
+        axios.post('/api/changePassword', {
+            oldPassword: this.state.oldPassword,
+            newPassword: this.state.newPassword,
+            newPasswordConfirmation: this.state.newPasswordConfirmation
+        }).then(res => {
+            this.setState({
+                oldPassword: '',
+                newPassword: '',
+                newPasswordConfirmation: ''
+            });
+
+            if(res.data !== "Success") {
+                window.alert(res.data);
+            } else {
+                window.location.reload();
+            }
+        }).catch(err => {
+            console.log(err);
+        });
+    };
+
     renderProgressBar = () =>{
         let nextLvlPoints = 480+240*(this.state.level-1)*(this.state.level+2)/2;
-        let progress = this.props.auth.points / nextLvlPoints * 100;
+        const progress = this.props.auth.points / nextLvlPoints * 100;
         return <Line    percent={progress}
                         strokeWidth="8"
                         trailWidth="8"
@@ -162,7 +202,6 @@ class StudentProfile extends Component {
 
                         <div className="main-center" style={{paddingTop:'5%', paddingBottom:'0%'}}>
                             <div className="form-group">
-
                                 <div className="input-group">
                                     <span className="input-group-addon"><i className="fa fa-graduation-cap fa-lg" aria-hidden="true"></i></span>
                                     <select className="form-control" value={this.state.year} onChange={(e) => this.handleYearChange(e)}>
@@ -176,7 +215,7 @@ class StudentProfile extends Component {
                             </div>
                         </div>
 
-                        <div className="main-center" style={{paddingTop:'0%', paddingBotoom:'0%'}}>
+                        <div className="main-center" style={{paddingTop:'0%', paddingBottom:'0%'}}>
                             <div className="form-group">
                                 <div className="input-group">
                                     <span className="input-group-addon"><i className="fa fa-university fa-lg" aria-hidden="true"></i></span>
@@ -190,9 +229,34 @@ class StudentProfile extends Component {
                         </div>
 
                         <center>
-                            <div style={{  maxWidth: 200, maxHeight: 30 , paddingTop:'0%'}}>
-                                <Button type="submit" onClick={(e) => this.handleUpdate(e)} bsStyle="primary" bsSize="small" block>
+                            <div style={{  maxWidth: 200, maxHeight: 30 , paddingTop:'0%', marginBottom: '50px'}}>
+                                <Button type="button" onClick={(e) => this.handleUpdate(e)} bsStyle="primary" bsSize="small" block>
                                     Update Profile
+                                </Button>
+                            </div>
+                        </center>
+
+                        <div className="main-center" style={{paddingTop:'0%', paddingBottom:'0%'}}>
+                            <form>
+                                <FormGroup>
+                                    <ControlLabel>Old Password</ControlLabel>
+                                    <FormControl type="password" value={this.state.oldPassword} onChange={this.setOldPassword} />
+                                </FormGroup>
+                                <FormGroup>
+                                    <ControlLabel>New Password</ControlLabel>
+                                    <FormControl type="password" value={this.state.newPassword} onChange={this.setNewPassword} />
+                                </FormGroup>
+                                <FormGroup>
+                                    <ControlLabel>Confirm New Password</ControlLabel>
+                                    <FormControl type="password" value={this.state.newPasswordConfirmation} onChange={this.setNewPasswordConfirmation} />
+                                </FormGroup>
+                            </form>
+                        </div>
+
+                        <center>
+                            <div style={{  maxWidth: 200, maxHeight: 30 , paddingTop:'0%'}}>
+                                <Button type="button" onClick={(e) => this.handlePasswordChange(e)} bsStyle="primary" bsSize="small" block>
+                                    Change Password
                                 </Button>
                             </div>
                         </center>
