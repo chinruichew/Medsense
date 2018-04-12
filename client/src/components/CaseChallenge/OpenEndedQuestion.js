@@ -264,7 +264,7 @@ class OpenEndedQuestion extends Component {
 
                     {this.state.showAnswers &&
                         <Col sm={11}>
-                            <h3>You got {(this.state.score/this.state.mark*100).toFixed(2)} % correct! </h3>
+                            {/*<h3>You got {(this.state.score/this.state.mark*100).toFixed(2)} % correct! </h3>*/}
                             <h3>Your score for this question: {Math.round(this.state.score)} / {this.state.mark}</h3><br/>
                         </Col>}
 
