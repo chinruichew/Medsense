@@ -43,11 +43,11 @@ class ContributionLeaderboard extends Component {
 
                             return(
                                 <div key={index} className="col-md-12">
-                                    <div className="col-md-4 leader_text_div">
-                                        <div className="col-md-5">
+                                    <div className="col-md-4 leader_text_div text-left">
+                                        <div className="col-md-2">
                                             {contributionImage}
                                         </div>
-                                        <div className="col-md-6">
+                                        <div className="col-md-5">
                                             <p className="leader_text_font">{userContributionRankMap.rank}</p>
                                         </div>
                                     </div>
