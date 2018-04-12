@@ -95,26 +95,46 @@ class StudentProfile extends Component {
         });
     };
 
+    validatePassword = () => {
+        let regex = /^.*(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+).*$/;
+        if(this.state.newPassword === null || this.state.newPassword.length < 8) {
+            window.alert('The password should contain at least 8 characters.');
+            return false;
+        } else if(!regex.test(this.state.newPassword)) {
+            window.alert('The password should contain both letter(s) and number(s).');
+            return false;
+        }
+        return true;
+    };
+
     handlePasswordChange = () => {
-        axios.post('/api/changePassword', {
-            oldPassword: this.state.oldPassword,
-            newPassword: this.state.newPassword,
-            newPasswordConfirmation: this.state.newPasswordConfirmation
-        }).then(res => {
+        if(this.validatePassword()) {
+            axios.post('/api/changePassword', {
+                oldPassword: this.state.oldPassword,
+                newPassword: this.state.newPassword,
+                newPasswordConfirmation: this.state.newPasswordConfirmation
+            }).then(res => {
+                this.setState({
+                    oldPassword: '',
+                    newPassword: '',
+                    newPasswordConfirmation: ''
+                });
+
+                if(res.data !== "Success") {
+                    window.alert(res.data);
+                } else {
+                    window.location.reload();
+                }
+            }).catch(err => {
+                console.log(err);
+            });
+        } else {
             this.setState({
                 oldPassword: '',
                 newPassword: '',
                 newPasswordConfirmation: ''
             });
-
-            if(res.data !== "Success") {
-                window.alert(res.data);
-            } else {
-                window.location.reload();
-            }
-        }).catch(err => {
-            console.log(err);
-        });
+        }
     };
 
     renderProgressBar = () =>{
