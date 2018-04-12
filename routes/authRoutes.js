@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const User = mongoose.model('users');
+const User = require('../models/User');
 
 module.exports = app => {
     app.post('/api/login', (req, res) => {
@@ -41,6 +41,30 @@ module.exports = app => {
             });
         } else {
             res.send(req.session.user);
+        }
+    });
+
+    app.post('/api/changePassword', async(req, res) => {
+        const oldPassword = req.body.oldPassword;
+        const newPassword = req.body.newPassword;
+        const newPasswordConfirmation = req.body.newPasswordConfirmation;
+
+        const sessionUser = req.session.user;
+
+        // Check if old password is the same
+        const user = await User.findOne({_id: sessionUser._id}).select();
+        if(user.validPassword(oldPassword)) {
+            // Check if new password match
+            if(newPassword === newPasswordConfirmation) {
+                user.password = user.generateHash(newPassword);
+                await user.save();
+                sessionUser.password = user.password;
+                res.send('Success');
+            } else {
+                res.send('New password does not match!');
+            }
+        } else {
+            res.send('Old password is invalid!');
         }
     });
 };

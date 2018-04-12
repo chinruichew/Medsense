@@ -208,10 +208,33 @@ module.exports = app => {
         res.send(String(rank));
     });
 
+    app.post('/api/getLevelRanks', async(req, res) => {
+        const userLevelsMapping = req.body.userLevelsMapping;
+        for(let i = 0; i < userLevelsMapping.length; i++) {
+            const userLevelsMap = userLevelsMapping[i];
+            userLevelsMap.rank = await commonMethods.CALCULATE_USER_RANK(userLevelsMap.level);
+        }
+        res.send(userLevelsMapping);
+    });
+
     app.get('/api/getContributionRank', async(req, res) => {
         const points = parseInt(req.query.points,10);
         const rank = await commonMethods.CALCULATE_CONTRIBUTION_RANK(points);
         res.send(String(rank));
+    });
+
+    app.post('/api/getContributionRanks', async(req, res) => {
+        const users = req.body.users;
+        const userRankMapping = [];
+        for(const key in users) {
+            const user = users[key];
+            const rank = await commonMethods.CALCULATE_CONTRIBUTION_RANK(user.numContributions);
+            userRankMapping.push({
+                user: user,
+                rank: rank
+            });
+        }
+        res.send(userRankMapping);
     });
 
     app.get('/api/getNextLevelRank', async(req, res) => {

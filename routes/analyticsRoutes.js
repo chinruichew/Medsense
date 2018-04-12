@@ -18,7 +18,15 @@ module.exports = app => {
             model: 'users'
         }).populate({
             path: 'mcqAnswers',
-            model: 'mcqAnswers'
+            model: 'mcqAnswers',
+            populate: {
+                path: 'mcqAnswerOptions',
+                model: 'mcqAnswerOptions',
+                populate: {
+                    path: 'questionOption',
+                    model: 'options'
+                }
+            }
         }).populate({
             path: 'openEndedAnswers',
             model: 'openEndedAnswers'
@@ -31,7 +39,7 @@ module.exports = app => {
             let filteredAnswers = [];
             for(let i = 0; i < answers.length; i++) {
                 const answer = answers[i];
-                if(String(answer.user._id) === req.session.user._id) {
+                if(answer.user!== null && String(answer.user._id) === req.session.user._id) {
                     filteredAnswers.push(answer);
                 }
             }
@@ -52,11 +60,11 @@ module.exports = app => {
     });
 
     // Get leaders with highest contributions
-    app.get('/api/getLeadersWithHighestContributions', function(req, res) {
+    app.get('/api/getLeadersWithHighestContributions', async(req, res) => {
         Case.find().populate({
             path: 'authorid',
             model: 'users',
-        }).exec(function (err, cases) {
+        }).exec(async(err, cases) => {
             const leaders = {};
             for(let i = 0; i < cases.length; i++) {
                 const uploadedCase = cases[i];
@@ -91,6 +99,16 @@ module.exports = app => {
                     }
                 }
             }
+
+            for(const key in sortedLeaders) {
+                const user = await User.findOne({username: key}).select();
+                const updatedUser = {
+                    ...user._doc,
+                    numContributions: sortedLeaders[key]
+                };
+                sortedLeaders[key] = updatedUser;
+            }
+
             res.send(sortedLeaders);
         });
     });

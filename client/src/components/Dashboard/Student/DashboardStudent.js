@@ -10,8 +10,6 @@ import StudentOverview from "./StudentOverview";
 
 class DashboardStudent extends Component {
     state = {
-        studentLeaders: null,
-        contributionLeaders: null,
         answers: null,
         constants: null,
         overviewToCaseDetailId: null
@@ -28,20 +26,6 @@ class DashboardStudent extends Component {
         // Get all individual answers
         axios.get('/api/getIndividualAnswers').then(res => {
             this.setState({answers: res.data});
-        }).catch(err => {
-            throw(err);
-        });
-
-        // Get leaders with highest scores
-        axios.get('/api/getLeadersWithHighestScores').then(res => {
-            this.setState({studentLeaders: res.data});
-        }).catch(err => {
-            throw(err);
-        });
-
-        // Get leaders with highest contributions
-        axios.get('/api/getLeadersWithHighestContributions').then(res => {
-            this.setState({contributionLeaders: res.data});
         }).catch(err => {
             throw(err);
         });
@@ -103,10 +87,10 @@ class DashboardStudent extends Component {
                                         <div className="row">
                                             <br/>
                                             <div className="col-md-6">
-                                                <StudentLeaderboard leaders={this.state.studentLeaders} />
+                                                <StudentLeaderboard/>
                                             </div>
                                             <div className="col-md-6">
-                                                <ContributionLeaderboard leaders={this.state.contributionLeaders} />
+                                                <ContributionLeaderboard/>
                                             </div>
                                         </div>
                                     </Tab>

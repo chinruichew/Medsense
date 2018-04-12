@@ -131,71 +131,83 @@ class Vetting extends Component {
     renderContent() {
         switch(this.props.location.caseId) {
             case undefined:
-                switch(this.state.auth) {
+                switch(this.props.auth) {
+                    case null:
+                        return;
                     case false:
                         return <Redirect to='/' />;
                     default:
-                        switch(this.props.cases) {
+                        switch(this.state.constants) {
                             case null:
                                 return;
                             default:
-                                if(!this.state.showVetView) {
-                                    return(
-                                        <Tabs defaultActiveKey={1} id="uncontrolled-tab-example" style={{marginRight: '20px', marginLeft: '20px'}}>
-                                            <Tab eventKey={1} title="Pending Cases">
-                                                <br/>
-                                                <Form horizontal>
-                                                    <FormGroup controlId="formControlsPending">
-                                                        <Col componentClass={ControlLabel} sm={2}>
-                                                            Filter by Sub-speciality
-                                                        </Col>
+                                switch(this.props.auth.usertype) {
+                                    case this.state.constants.USER_TYPE_PROFESSOR:
+                                        switch(this.props.cases) {
+                                            case null:
+                                                return;
+                                            default:
+                                                if(!this.state.showVetView) {
+                                                    return(
+                                                        <Tabs defaultActiveKey={1} id="uncontrolled-tab-example" style={{marginRight: '20px', marginLeft: '20px'}}>
+                                                            <Tab eventKey={1} title="Pending Cases">
+                                                                <br/>
+                                                                <Form horizontal>
+                                                                    <FormGroup controlId="formControlsPending">
+                                                                        <Col componentClass={ControlLabel} sm={2}>
+                                                                            Filter by Sub-speciality
+                                                                        </Col>
 
-                                                        <Col sm={3}>
-                                                            <FilterSubSpecialityOptions value={this.state.filterPending} name='filterPending' change={(e)=>this.handleFilterPendingChange(e)} />
-                                                        </Col>
-                                                    </FormGroup>
-                                                </Form>
-                                                <br/>
-                                                <Table responsive>
-                                                    <thead>
-                                                    <tr style={{background: '#D9EDF7', fontSize: "130%"}}>
-                                                        <th><center>Case Title</center></th>
-                                                        <th><center>Sub-speciality</center></th>
-                                                        <th><center>Uploaded by</center></th>
-                                                        <th><center>Upload Date</center></th>
-                                                        <th></th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    {this.renderUnvetCases()}
-                                                    </tbody>
-                                                </Table>
-                                            </Tab>
-                                            <Tab eventKey={2} title="Vetted Cases">
-                                                <br/>
-                                                <Form horizontal>
-                                                    <FormGroup controlId="formControlsVetted">
-                                                        <Col componentClass={ControlLabel} sm={2}>
-                                                            Filter by Sub-speciality
-                                                        </Col>
+                                                                        <Col sm={3}>
+                                                                            <FilterSubSpecialityOptions value={this.state.filterPending} name='filterPending' change={(e)=>this.handleFilterPendingChange(e)} />
+                                                                        </Col>
+                                                                    </FormGroup>
+                                                                </Form>
+                                                                <br/>
+                                                                <Table responsive>
+                                                                    <thead>
+                                                                    <tr style={{background: '#D9EDF7', fontSize: "130%"}}>
+                                                                        <th><center>Case Title</center></th>
+                                                                        <th><center>Sub-speciality</center></th>
+                                                                        <th><center>Uploaded by</center></th>
+                                                                        <th><center>Upload Date</center></th>
+                                                                        <th></th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                    {this.renderUnvetCases()}
+                                                                    </tbody>
+                                                                </Table>
+                                                            </Tab>
+                                                            <Tab eventKey={2} title="Vetted Cases">
+                                                                <br/>
+                                                                <Form horizontal>
+                                                                    <FormGroup controlId="formControlsVetted">
+                                                                        <Col componentClass={ControlLabel} sm={2}>
+                                                                            Filter by Sub-speciality
+                                                                        </Col>
 
-                                                        <Col sm={3}>
-                                                            <FilterSubSpecialityOptions value={this.state.filterVetted} name='filterVetted' change={(e)=>this.handleFilterVettedChange(e)} />
-                                                        </Col>
-                                                    </FormGroup>
-                                                </Form>
+                                                                        <Col sm={3}>
+                                                                            <FilterSubSpecialityOptions value={this.state.filterVetted} name='filterVetted' change={(e)=>this.handleFilterVettedChange(e)} />
+                                                                        </Col>
+                                                                    </FormGroup>
+                                                                </Form>
 
-                                                <br/>
-                                                <VettedCases filterVetted={this.state.filterVetted} />
-                                            </Tab>
-                                        </Tabs>
-                                    );
-                                } else {
-                                    return(
-                                        <div>
-                                            <VettingEditing vetId={this.state.vetId}/>
-                                        </div>
-                                    );
+                                                                <br/>
+                                                                <VettedCases filterVetted={this.state.filterVetted} />
+                                                            </Tab>
+                                                        </Tabs>
+                                                    );
+                                                } else {
+                                                    return(
+                                                        <div>
+                                                            <VettingEditing vetId={this.state.vetId}/>
+                                                        </div>
+                                                    );
+                                                }
+                                        }
+                                    default:
+                                        return <Redirect to='/' />;
                                 }
                         }
                 }
@@ -221,9 +233,10 @@ class Vetting extends Component {
     }
 }
 
-function mapStateToProps({cases}) {
+function mapStateToProps({cases, auth}) {
     return {
-        cases
+        cases,
+        auth
     };
 }
 
