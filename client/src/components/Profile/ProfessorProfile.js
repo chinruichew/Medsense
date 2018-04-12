@@ -15,13 +15,14 @@ class ProfessorProfile extends Component {
         school: this.props.school,
         oldPassword: '',
         newPassword: '',
-        newPasswordConfirmation: ''
+        newPasswordConfirmation: '',
+        contributionRank: null
     };
 
     componentDidMount(){
         axios.post('/api/calculateContributionPoints').then(res => {
             axios.get('/api/getContributionRank?points=' + res.data).then(res => {
-                this.setState({contribution: res.data});
+                this.setState({contributionRank: res.data});
                 axios.get('/api/getNextContributionRank?rank=' + res.data).then(res => {
                     this.setState({nextContribution: res.data});
                 }).catch(err => {
@@ -120,11 +121,11 @@ class ProfessorProfile extends Component {
             </Popover>
         );
 
-        const showContributor = this.state.contribution==="" ? "" : <td><center>
-            <OverlayTrigger trigger={['hover']} placement="top" overlay={popover}><Image src="./contribution.png" circle style={{width: "3em", height: "3em"}} /></OverlayTrigger>
+        const showContributor = this.state.contributionRank === "" ? "" : <td><center>
+            <OverlayTrigger trigger={['hover']} placement="top" overlay={popover}><Image src={'./case-contributor-badges/' + this.state.contributionRank + '.png'} circle style={{width: "3em", height: "3em"}} /></OverlayTrigger>
         </center></td>;
-        const contributionRank = this.state.contribution==="" ? "" : <td style={{width: '100px'}} ><center>
-            <h4> {this.state.contribution} </h4>
+        const contributionRank = this.state.contributionRank === "" ? "" : <td style={{width: '100px'}} ><center>
+            <h4> {this.state.contributionRank} </h4>
         </center></td>;
 
         return (
