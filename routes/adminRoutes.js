@@ -16,13 +16,13 @@ module.exports = app => {
 
     app.post('/api/fetchFilteredAdminAdmins', async (req, res) => {
         let users;
-        if (req.body.values.username === "") {
+        if (req.body.username === "") {
             users = await User.find({
                 usertype: constants.USER_TYPE_ADMIN
             }).select("-password");
         } else {
             users = await User.find({
-                username: { "$regex": req.body.values.username, "$options": "i" },
+                username: { "$regex": req.body.username, "$options": "i" },
                 usertype: constants.USER_TYPE_ADMIN
             }).select("-password");
         }

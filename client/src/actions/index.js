@@ -174,9 +174,9 @@ export const fetchFilteredAdminProfessors = (subspeciality, speciality, username
     dispatch({ type: FETCH_FILTERED_ADMIN_PROFESSORS, payload: res.data });
 };
 
-export const fetchFilteredAdminAdmins = (values) => async dispatch => {
+export const fetchFilteredAdminAdmins = (username) => async dispatch => {
     const res = await axios.post('/api/fetchFilteredAdminAdmins', {
-        values
+        username
     });
     dispatch({ type: FETCH_FILTERED_ADMIN_ADMINS, payload: res.data });
 };
