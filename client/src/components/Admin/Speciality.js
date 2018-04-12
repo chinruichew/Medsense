@@ -20,7 +20,7 @@ class Speciality extends Component {
             <Table responsive>
                 <thead>
                     <tr style={{ background: '#D9EDF7', fontSize: "130%" }}>
-                        <th><center>Specialities</center></th>
+                        <th><center>Specialityes</center></th>
                         <th> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
                     </tr>
                 </thead>
