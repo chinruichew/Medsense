@@ -9,6 +9,7 @@ import BootstrapModal from '../UI/Modal/UploadBootstrapModal.js';
 import './Upload.css';
 import Overview from "./Overview";
 import Question from "./Question";
+import {connect} from "react-redux";
 
 class Main extends Component {
     state = {
@@ -584,7 +585,7 @@ class Main extends Component {
     };
 
     renderPDPA() {
-        if (this.props.process==="vet"){
+        if (this.props.process==="vet" || this.props.auth.usertype==="Professor"){
             return;
         } else {
             const PDPA = this.state.pdpa?(
@@ -881,4 +882,10 @@ class Main extends Component {
     }
 }
 
-export default Main;
+function mapStateToProps({auth}) {
+    return {
+        auth
+    };
+}
+
+export default connect(mapStateToProps)(Main);
