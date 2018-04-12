@@ -131,7 +131,9 @@ class Vetting extends Component {
     renderContent() {
         switch(this.props.location.caseId) {
             case undefined:
-                switch(this.state.auth) {
+                switch(this.props.auth) {
+                    case null:
+                        return;
                     case false:
                         return <Redirect to='/' />;
                     default:
@@ -139,7 +141,7 @@ class Vetting extends Component {
                             case null:
                                 return;
                             default:
-                                switch(this.state.auth.usertype) {
+                                switch(this.props.auth.usertype) {
                                     case this.state.constants.USER_TYPE_PROFESSOR:
                                         switch(this.props.cases) {
                                             case null:
@@ -231,9 +233,10 @@ class Vetting extends Component {
     }
 }
 
-function mapStateToProps({cases}) {
+function mapStateToProps({cases, auth}) {
     return {
-        cases
+        cases,
+        auth
     };
 }
 
