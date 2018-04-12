@@ -1,7 +1,6 @@
 const Approach = require('../models/Approach');
 const Speciality = require('../models/Speciality');
 const Subspeciality = require('../models/Subspeciality');
-const mongoose = require("mongoose");
 
 module.exports = app => {
     app.post('/api/fetchApproach', async (req, res) => {
@@ -18,24 +17,24 @@ module.exports = app => {
                 // Uppercase the first letter of each word
                 const spaceIndexes = [];
                 const uncheckedApproach = ' ' + values.approach.trim();
-                for (let i = 0; i < uncheckedApproach.length; i++) {
+                for(let i = 0; i < uncheckedApproach.length; i++) {
                     const approachAlphabet = uncheckedApproach[i];
-                    if (approachAlphabet === ' ') {
+                    if(approachAlphabet === ' ') {
                         spaceIndexes.push(i);
                     }
                 }
                 let cappedApproach = '';
-                for (let i = 0; i < uncheckedApproach.length; i++) {
+                for(let i = 0; i < uncheckedApproach.length; i++) {
                     const approachAlphabet = uncheckedApproach[i];
                     let toUpperCase = false;
-                    for (let j = 0; j < spaceIndexes.length; j++) {
+                    for(let j = 0; j < spaceIndexes.length; j++) {
                         const spacedIndex = spaceIndexes[j];
-                        if (spacedIndex + 1 === i) {
+                        if(spacedIndex + 1 === i) {
                             toUpperCase = true;
                             break;
                         }
                     }
-                    if (toUpperCase) {
+                    if(toUpperCase) {
                         cappedApproach += approachAlphabet.toUpperCase();
                     } else {
                         cappedApproach += approachAlphabet;
@@ -72,24 +71,24 @@ module.exports = app => {
                 // Uppercase the first letter of each word
                 const spaceIndexes = [];
                 const uncheckedSpeciality = ' ' + values.speciality.trim();
-                for (let i = 0; i < uncheckedSpeciality.length; i++) {
+                for(let i = 0; i < uncheckedSpeciality.length; i++) {
                     const specialityAlphabet = uncheckedSpeciality[i];
-                    if (specialityAlphabet === ' ') {
+                    if(specialityAlphabet === ' ') {
                         spaceIndexes.push(i);
                     }
                 }
                 let cappedSpeciality = '';
-                for (let i = 0; i < uncheckedSpeciality.length; i++) {
+                for(let i = 0; i < uncheckedSpeciality.length; i++) {
                     const specialityAlphabet = uncheckedSpeciality[i];
                     let toUpperCase = false;
-                    for (let j = 0; j < spaceIndexes.length; j++) {
+                    for(let j = 0; j < spaceIndexes.length; j++) {
                         const spacedIndex = spaceIndexes[j];
-                        if (spacedIndex + 1 === i) {
+                        if(spacedIndex + 1 === i) {
                             toUpperCase = true;
                             break;
                         }
                     }
-                    if (toUpperCase) {
+                    if(toUpperCase) {
                         cappedSpeciality += specialityAlphabet.toUpperCase();
                     } else {
                         cappedSpeciality += specialityAlphabet;
@@ -111,15 +110,15 @@ module.exports = app => {
     });
 
     app.post('/api/fetchSubspeciality', async (req, res) => {
-        Speciality.find({ "speciality": req.body.speciality }).populate({
+        Speciality.find({"speciality":req.body.speciality}).populate({
             path: 'subspecialities',
             model: 'subspecialities'
-        }).exec(function (error, subspecialities) {
+        }).exec(function(error, subspecialities) {
             res.send(subspecialities);
         });
     });
 
-    app.post('/api/batchFetchSubSpecialities', async (req, res) => {
+    app.post('/api/batchFetchSubSpecialities', async(req, res) => {
         // Get the list of specialities, of which their sub-specialities we want to fetch.
         let specialities = req.body.specialities;
 
@@ -129,11 +128,11 @@ module.exports = app => {
         // The counter will go from 0 to specialities.length - 1, allowing us to iterate through all the specialities.
         const specialityMapping = [];
         let counter = 0;
-        while (counter < specialities.length) {
+        while(counter < specialities.length) {
             const speciality = specialities[counter];
 
             // Wait for DB to fetch Speciality details.
-            const subSpecialities = await Speciality.find({ "speciality": speciality }).populate({
+            const subSpecialities = await Speciality.find({"speciality": speciality}).populate({
                 path: 'subspecialities',
                 model: 'subspecialities'
             });
@@ -155,80 +154,63 @@ module.exports = app => {
         res.send(subspecialities);
     });
 
-    app.post('/api/addNewSubspeciality', function (req, res) {
+     app.post('/api/addNewSubspeciality', function (req, res) {
         const values = req.body.values;
-        Subspeciality.findOne({ subspeciality: values.subspeciality }, async (err, returnsubspeciality) => {
-            if (!returnsubspeciality) {
-                // newSubspeciality.save();
-                Speciality.findOne({ speciality: values.speciality }, async (err, speciality) => {
-                    const newSubspeciality = new Subspeciality();
-                    newSubspeciality.speciality = values.speciality;
-                    newSubspeciality.subspeciality = values.subspeciality;
-                    newSubspeciality.save();
-                    speciality.subspecialities.push(newSubspeciality);
-                    speciality.save();
-                    res.send(newSubspeciality);
-                })
+        Subspeciality.findOne({ subspeciality: values.subspeciality }, async (err, subspeciality) => {
+            if (!subspeciality) {
+                const newSubspeciality = new Subspeciality();
+
+                // Uppercase the first letter of each word
+                const spaceIndexes = [];
+                const uncheckedSubSpeciality = ' ' + values.subspeciality.trim();
+                for(let i = 0; i < uncheckedSubSpeciality.length; i++) {
+                    const subSpecialityAlphabet = uncheckedSubSpeciality[i];
+                    if(subSpecialityAlphabet === ' ') {
+                        spaceIndexes.push(i);
+                    }
+                }
+                let cappedSubSpeciality = '';
+                for(let i = 0; i < uncheckedSubSpeciality.length; i++) {
+                    const subSpecialityAlphabet = uncheckedSubSpeciality[i];
+                    let toUpperCase = false;
+                    for(let j = 0; j < spaceIndexes.length; j++) {
+                        const spacedIndex = spaceIndexes[j];
+                        if(spacedIndex + 1 === i) {
+                            toUpperCase = true;
+                            break;
+                        }
+                    }
+                    if(toUpperCase) {
+                        cappedSubSpeciality += subSpecialityAlphabet.toUpperCase();
+                    } else {
+                        cappedSubSpeciality += subSpecialityAlphabet;
+                    }
+                }
+
+                newSubspeciality.subspeciality = cappedSubSpeciality.substring(1);
+                await newSubspeciality.save();
+
+                const selectedSpecialities = values.selectedOptions;
+                selectedSpecialities.push("Clinical Practicum");
+
+                for(let i = 0; i < selectedSpecialities.length; i++) {
+                    const selectedSpeciality = selectedSpecialities[i];
+                    const speciality = await Speciality.find({speciality: selectedSpeciality});
+                    const specialitySubSpecialities = speciality[0].subspecialities;
+                    specialitySubSpecialities.push(newSubspeciality._id);
+                    speciality[0].subspecialities = specialitySubSpecialities;
+                    await Speciality.findByIdAndUpdate(speciality[0]._id, speciality, {new: true}).exec(async(err, speciality) => {
+                        if(err) {
+                            console.log(err);
+                        }
+                    });
+                }
+
+                res.send(newSubspeciality);
             } else {
                 res.send('Subspeciality Exists');
             }
         });
-
-        // Subspeciality.findOne({ subspeciality: values.subspeciality }, async (err, subspeciality) => {
-        //     if (!subspeciality) {
-        //         const newSubspeciality = new Subspeciality();
-
-        //         // Uppercase the first letter of each word
-        //         const spaceIndexes = [];
-        //         const uncheckedSubSpeciality = ' ' + values.subspeciality.trim();
-        //         for(let i = 0; i < uncheckedSubSpeciality.length; i++) {
-        //             const subSpecialityAlphabet = uncheckedSubSpeciality[i];
-        //             if(subSpecialityAlphabet === ' ') {
-        //                 spaceIndexes.push(i);
-        //             }
-        //         }
-        //         let cappedSubSpeciality = '';
-        //         for(let i = 0; i < uncheckedSubSpeciality.length; i++) {
-        //             const subSpecialityAlphabet = uncheckedSubSpeciality[i];
-        //             let toUpperCase = false;
-        //             for(let j = 0; j < spaceIndexes.length; j++) {
-        //                 const spacedIndex = spaceIndexes[j];
-        //                 if(spacedIndex + 1 === i) {
-        //                     toUpperCase = true;
-        //                     break;
-        //                 }
-        //             }
-        //             if(toUpperCase) {
-        //                 cappedSubSpeciality += subSpecialityAlphabet.toUpperCase();
-        //             } else {
-        //                 cappedSubSpeciality += subSpecialityAlphabet;
-        //             }
-        //         }
-
-        //         newSubspeciality.subspeciality = cappedSubSpeciality.substring(1);
-        //         await newSubspeciality.save();
-
-        //         const selectedSpecialities = values.selectedOptions;
-        //         selectedSpecialities.push("Clinical Practicum");
-
-        //         for(let i = 0; i < selectedSpecialities.length; i++) {
-        //             const selectedSpeciality = selectedSpecialities[i];
-        //             const speciality = await Speciality.find({speciality: selectedSpeciality});
-        //             const specialitySubSpecialities = speciality[0].subspecialities;
-        //             specialitySubSpecialities.push(newSubspeciality._id);
-        //             speciality[0].subspecialities = specialitySubSpecialities;
-        //             await Speciality.findByIdAndUpdate(speciality[0]._id, speciality, {new: true}).exec(async(err, speciality) => {
-        //                 if(err) {
-        //                     console.log(err);
-        //                 }
-        //             });
-        //         }
-
-        //         res.send(newSubspeciality);
-        //     } else {
-        //         res.send('Subspeciality Exists');
-        //     }
-        // });
     });
 
     app.post('/api/deleteSubspeciality', function (req, res) {
