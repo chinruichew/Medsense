@@ -464,7 +464,7 @@ class ManageUser extends Component {
         if (this.state.usertype === this.state.constants.USER_TYPE_STUDENT) {
             this.props.fetchFilteredAdminStudents(this.state.username, this.state.school, this.state.year);
         } else if (this.state.usertype === this.state.constants.USER_TYPE_ADMIN) {
-            this.props.fetchFilteredAdminAdmins(this.state.username);
+            this.props.fetchFilteredAdminAdmins(this.state);
         }
         else {
             this.props.fetchFilteredAdminProfessors(this.state.subspeciality, this.state.speciality, this.state.username, this.state.school);
