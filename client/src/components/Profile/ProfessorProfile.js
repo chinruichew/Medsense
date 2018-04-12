@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {Button, Image, OverlayTrigger, Popover, Table} from 'react-bootstrap';
+import {Button, ControlLabel, FormControl, FormGroup, Image, OverlayTrigger, Popover, Table} from 'react-bootstrap';
 import BootstrapModal from '../UI/Modal/VettingBootstrapModal.js';
 import { updateProfessor } from '../../actions/index';
 import UploadProfilePicture from './UploadProfilePicture';
 import axios from 'axios';
 
 class ProfessorProfile extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            id: this.props.id,
-            username: this.props.username,
-            speciality: this.props.speciality,
-            subspeciality: this.props.subspeciality,
-            school: this.props.school
-        };
-    }
+    state = {
+        id: this.props.id,
+        username: this.props.username,
+        speciality: this.props.speciality,
+        subspeciality: this.props.subspeciality,
+        school: this.props.school,
+        oldPassword: '',
+        newPassword: '',
+        newPasswordConfirmation: ''
+    };
 
     componentDidMount(){
         axios.post('/api/calculateContributionPoints').then(res => {
@@ -67,6 +67,46 @@ class ProfessorProfile extends Component {
                 this.setState({ vmShow: false });
             }
         }).catch(() => { })
+    };
+
+    setOldPassword = (e) => {
+        this.setState({
+            oldPassword: e.target.value
+        });
+    };
+
+    setNewPassword = (e) => {
+        this.setState({
+            newPassword: e.target.value
+        });
+    };
+
+    setNewPasswordConfirmation = (e) => {
+        this.setState({
+            newPasswordConfirmation: e.target.value
+        });
+    };
+
+    handlePasswordChange = () => {
+        axios.post('/api/changePassword', {
+            oldPassword: this.state.oldPassword,
+            newPassword: this.state.newPassword,
+            newPasswordConfirmation: this.state.newPasswordConfirmation
+        }).then(res => {
+            this.setState({
+                oldPassword: '',
+                newPassword: '',
+                newPasswordConfirmation: ''
+            });
+
+            if(res.data !== "Success") {
+                window.alert(res.data);
+            } else {
+                window.location.reload();
+            }
+        }).catch(err => {
+            console.log(err);
+        });
     };
 
     render() {
@@ -162,7 +202,6 @@ class ProfessorProfile extends Component {
 
                         <div className="main-center" style={{paddingTop:'0%', paddingBottom:'0%'}}>
                             <div className="form-group">
-
                                 <div className="input-group">
                                     <span className="input-group-addon"><i className="fa fa-university fa-lg" aria-hidden="true"></i></span>
                                     <select className="form-control" value={this.state.school} onChange={(e) => this.handleSchoolChange(e)}>
@@ -173,10 +212,36 @@ class ProfessorProfile extends Component {
                                 </div>
                             </div>
                         </div>
+
                         <center>
-                            <div style={{  maxWidth: 200, maxHeight: 30 , paddingTop:'0%'}}>
+                            <div style={{  maxWidth: 200, maxHeight: 30 , paddingTop:'0%', marginBottom: '50px'}}>
                                 <Button type="submit" onClick={(e) => this.handleUpdate(e)} bsStyle="primary" bsSize="small" block>
                                     Update Profile
+                                </Button>
+                            </div>
+                        </center>
+
+                        <div className="main-center" style={{paddingTop:'0%', paddingBottom:'0%'}}>
+                            <form>
+                                <FormGroup>
+                                    <ControlLabel>Old Password</ControlLabel>
+                                    <FormControl type="password" value={this.state.oldPassword} onChange={this.setOldPassword} />
+                                </FormGroup>
+                                <FormGroup>
+                                    <ControlLabel>New Password</ControlLabel>
+                                    <FormControl type="password" value={this.state.newPassword} onChange={this.setNewPassword} />
+                                </FormGroup>
+                                <FormGroup>
+                                    <ControlLabel>Confirm New Password</ControlLabel>
+                                    <FormControl type="password" value={this.state.newPasswordConfirmation} onChange={this.setNewPasswordConfirmation} />
+                                </FormGroup>
+                            </form>
+                        </div>
+
+                        <center>
+                            <div style={{  maxWidth: 200, maxHeight: 30 , paddingTop:'0%'}}>
+                                <Button type="button" onClick={(e) => this.handlePasswordChange(e)} bsStyle="primary" bsSize="small" block>
+                                    Change Password
                                 </Button>
                             </div>
                         </center>
