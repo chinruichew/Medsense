@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {Form, FormGroup, Col, Glyphicon} from 'react-bootstrap';
 import { Button, Row, ControlLabel, Panel } from 'react-bootstrap';
-import { bindAll } from 'lodash';
 import { Line } from 'rc-progress';
 import ReactHtmlParser from 'react-html-parser';
 import OpenEndedAnswer from "./OpenEndedAnswer";
@@ -45,18 +44,15 @@ class OpenEndedQuestion extends Component {
             showSTEMs: false
         };
         this.timer = 0;
-        bindAll(this, 'selectDone', 'startTimer', 'countDown', 'secondsToTime', 'pauseTimer', 'renderTimer',
-            'renderShowNextButton', 'renderProgressBar', 'renderScenario', 'renderContent', 'handleOpenEndedChange',
-            'renderStorySoFar');
     }
 
-    startTimer() {
+    startTimer = () =>{
         if (this.timer === 0) {
             this.timer = setInterval(this.countDown, 1000);
         }
-    }
+    };
 
-    countDown() {
+    countDown = () =>{
         // Remove one second, set state so a re-render happens.
         let seconds = this.state.seconds - 1;
         this.setState({
@@ -69,9 +65,9 @@ class OpenEndedQuestion extends Component {
             clearInterval(this.timer);
             this.selectDone()
         }
-    }
+    };
 
-    secondsToTime(secs) {
+    secondsToTime = (secs) =>{
         let divisor_for_minutes = secs % (60 * 60);
         let minutes = Math.floor(divisor_for_minutes / 60);
 
@@ -83,11 +79,11 @@ class OpenEndedQuestion extends Component {
             "s": seconds
         };
         return obj;
-    }
+    };
 
-    pauseTimer() {
+    pauseTimer = () =>{
         clearInterval(this.timer);
-    }
+    };
 
     componentDidMount() {
         let timeLeftVar = this.secondsToTime(this.state.seconds);
@@ -95,7 +91,7 @@ class OpenEndedQuestion extends Component {
         window.scrollTo(0, 0)
     }
 
-    selectDone() {
+    selectDone = () =>{
         const {showNextButton} = this.state;
         if (!this.state.showAnswers) {
             this.pauseTimer();
@@ -113,9 +109,9 @@ class OpenEndedQuestion extends Component {
                 this.setState({ showNextButton: !showNextButton});
             }
         })
-    }
+    };
 
-    renderTimer(duration) {
+    renderTimer = (duration) =>{
         if (this.props.timeLimit) {
             return (
                 <Col>
@@ -125,9 +121,9 @@ class OpenEndedQuestion extends Component {
                 </Col>
             );
         }
-    }
+    };
 
-    renderStorySoFar(){
+    renderStorySoFar = () =>{
         let stems = this.props.case.questions.map((obj, index) => {
             if (parseFloat(obj.id) < parseFloat(this.props.question.id)) {
                 let stem = '';
@@ -155,7 +151,7 @@ class OpenEndedQuestion extends Component {
                 </div>
             );
         }
-    }
+    };
 
     renderPreviousSTEM = () => {
         if (this.props.question.id > "1") {
@@ -170,9 +166,9 @@ class OpenEndedQuestion extends Component {
             );
         }
 
-    }
+    };
 
-    renderShowNextButton() {
+    renderShowNextButton = () =>{
         const {showNextButton} = this.state;
         if (showNextButton) {
             return (
@@ -183,9 +179,9 @@ class OpenEndedQuestion extends Component {
                 </Col>
             );
         }
-    }
+    };
 
-    renderProgressBar() {
+    renderProgressBar = () =>{
         let progress = parseFloat(this.props.question.id) / parseFloat(this.props.totalQnNum) * 100;
         return (
             <div >
@@ -201,21 +197,21 @@ class OpenEndedQuestion extends Component {
                 <Col sm={2} align="left"><h4>{this.props.question.id}/{this.props.totalQnNum} Questions</h4> </Col>
             </div>
         );
-    }
+    };
 
-    renderScenario() {
+    renderScenario = () =>{
         if (this.props.question.id === 1 + "") {
             return ReactHtmlParser(this.props.scenario);
         } else {
             return ReactHtmlParser(this.props.question.stem);
         }
-    }
+    };
 
-    handleOpenEndedChange(value){
+    handleOpenEndedChange = (value) =>{
         this.setState({ openEnded: value });
-    }
+    };
 
-    renderContent() {
+    renderContent = () =>{
         return (
             <div className='container'>
                 <h1>
@@ -307,7 +303,7 @@ class OpenEndedQuestion extends Component {
             </div>
 
         );
-    }
+    };
 
     render() {
         return (
