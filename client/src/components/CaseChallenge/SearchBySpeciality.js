@@ -28,7 +28,7 @@ class SearchBySpeciality extends Component {
         }).then(res => {
             this.setState({specialityList:res.data.sort()});
         });
-        // this.node.scrollIntoView();
+        this.node.scrollIntoView();
     }
 
     handleReturnCase(game){

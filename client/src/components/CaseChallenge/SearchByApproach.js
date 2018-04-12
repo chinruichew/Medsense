@@ -27,7 +27,7 @@ class SearchByApproach extends Component {
             this.setState({approachList:res.data.sort()});
         });
 
-        // this.node.scrollIntoView();
+        this.node.scrollIntoView();
     }
 
     handleReturnCase = (game) => {
@@ -143,7 +143,7 @@ class SearchByApproach extends Component {
 
     render(){
         return(
-            <div>
+            <div ref={node => this.node = node}>
                 {this.renderContent()}
             </div>
         );
