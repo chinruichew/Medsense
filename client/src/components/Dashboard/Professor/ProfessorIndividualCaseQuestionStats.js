@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import ReactHtmlParser from "react-html-parser";
 import {Image, Panel} from "react-bootstrap";
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import faCheckSquare from '@fortawesome/fontawesome-free-regular/faCheckSquare';
+import faSquare from '@fortawesome/fontawesome-free-regular/faSquare';
 
 class ProfessorIndividualCaseQuestionStats extends Component {
     render() {
@@ -25,14 +28,26 @@ class ProfessorIndividualCaseQuestionStats extends Component {
                 let modelAnswer = caseQuestion.openEnded;
                 if (caseQuestion.openEnded === '') {
                     const questionOptions = caseQuestion.options;
-                    let questionOptionsDisplay = '';
-                    for (let i = 0; i < questionOptions.length; i++) {
+                    const mcqQuestionOptionMapping = [];
+                    for(let i = 0; i < questionOptions.length; i++) {
                         const questionOption = questionOptions[i];
-                        if (questionOption.check) {
-                            questionOptionsDisplay += questionOption.mcq + ', ';
-                        }
+                        mcqQuestionOptionMapping.push({
+                            index: i,
+                            text: questionOption.mcq,
+                            check: questionOption.check
+                        });
                     }
-                    modelAnswer = questionOptionsDisplay.slice(",", -2);
+                    modelAnswer = mcqQuestionOptionMapping.map((mcqQuestionOptionMap, index) => {
+                        if(mcqQuestionOptionMap.check) {
+                            return(
+                                <p key={index}><FontAwesomeIcon icon={faCheckSquare} className="mcq-option-icon" />{mcqQuestionOptionMap.text}</p>
+                            );
+                        } else {
+                            return(
+                                <p key={index}><FontAwesomeIcon icon={faSquare} className="mcq-option-icon" />{mcqQuestionOptionMap.text}</p>
+                            );
+                        }
+                    });
                 } else {
                     modelAnswer = ReactHtmlParser(modelAnswer);
                 }

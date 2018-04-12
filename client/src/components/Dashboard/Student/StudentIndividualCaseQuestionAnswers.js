@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import ReactHtmlParser from "react-html-parser";
 import {Image, Panel} from "react-bootstrap";
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import faCheckSquare from '@fortawesome/fontawesome-free-regular/faCheckSquare';
+import faSquare from '@fortawesome/fontawesome-free-regular/faSquare';
 
 class StudentIndividualCaseQuestionAnswers extends Component {
     render() {
@@ -25,14 +28,26 @@ class StudentIndividualCaseQuestionAnswers extends Component {
                 let modelAnswer = question.openEnded;
                 if(question.openEnded === '') {
                     const questionOptions = question.options;
-                    let questionOptionsDisplay = '';
+                    const mcqQuestionOptionMapping = [];
                     for(let i = 0; i < questionOptions.length; i++) {
                         const questionOption = questionOptions[i];
-                        if(questionOption.check) {
-                            questionOptionsDisplay += questionOption.mcq + ', ';
-                        }
+                        mcqQuestionOptionMapping.push({
+                            index: i,
+                            text: questionOption.mcq,
+                            check: questionOption.check
+                        });
                     }
-                    modelAnswer = questionOptionsDisplay.slice(",", -2);
+                    modelAnswer = mcqQuestionOptionMapping.map((mcqQuestionOptionMap, index) => {
+                        if(mcqQuestionOptionMap.check) {
+                            return(
+                                <p key={index}><FontAwesomeIcon icon={faCheckSquare} className="mcq-option-icon" />{mcqQuestionOptionMap.text}</p>
+                            );
+                        } else {
+                            return(
+                                <p key={index}><FontAwesomeIcon icon={faSquare} className="mcq-option-icon" />{mcqQuestionOptionMap.text}</p>
+                            );
+                        }
+                    });
                 } else {
                     modelAnswer = ReactHtmlParser(modelAnswer);
                 }
@@ -58,6 +73,7 @@ class StudentIndividualCaseQuestionAnswers extends Component {
                     displayAnswer = ReactHtmlParser(answerOfQuestion.studentAnswer);
                 } else {
                     const mcqAnswerOptions = answerOfQuestion.mcqAnswerOptions;
+                    const mcqAnswerOptionMapping = [];
                     for(let i = 0; i < mcqAnswerOptions.length; i++) {
                         const mcqAnswerOption = mcqAnswerOptions[i];
                         if(mcqAnswerOption.check) {
@@ -66,13 +82,42 @@ class StudentIndividualCaseQuestionAnswers extends Component {
                             for(let j = 0; j < questionOptions.length; j++) {
                                 const questionOption = questionOptions[j];
                                 if(questionOption._id === mcqAnswerOption.questionOption) {
-                                    displayAnswer += questionOption.mcq + ', ';
+                                    mcqAnswerOptionMapping.push({
+                                        index: i,
+                                        text: questionOption.mcq,
+                                        check: mcqAnswerOption.check
+                                    });
+                                    break;
+                                }
+                            }
+                        } else {
+                            const questionOptions = question.options;
+                            let questionOptionsDisplay = '';
+                            for(let j = 0; j < questionOptions.length; j++) {
+                                const questionOption = questionOptions[j];
+                                if(questionOption._id === mcqAnswerOption.questionOption) {
+                                    mcqAnswerOptionMapping.push({
+                                        index: i,
+                                        text: questionOption.mcq,
+                                        check: mcqAnswerOption.check
+                                    });
                                     break;
                                 }
                             }
                         }
                     }
-                    displayAnswer = displayAnswer.slice(",", -2);
+
+                    displayAnswer = mcqAnswerOptionMapping.map((mcqAnswerOptionMap, index) => {
+                        if(mcqAnswerOptionMap.check) {
+                            return(
+                                <p key={index}><FontAwesomeIcon icon={faCheckSquare} className="mcq-option-icon" />{mcqAnswerOptionMap.text}</p>
+                            );
+                        } else {
+                            return(
+                                <p key={index}><FontAwesomeIcon icon={faSquare} className="mcq-option-icon" />{mcqAnswerOptionMap.text}</p>
+                            );
+                        }
+                    });
                 }
                 const scoreStyle = answerOfQuestion.score < answerOfQuestion.mark/2? 'red': 'green';
 
