@@ -31,11 +31,11 @@ class SearchBySpeciality extends Component {
         this.node.scrollIntoView();
     }
 
-    handleReturnCase(game){
+    handleReturnCase = (game) =>{
         this.props.handleReturnCase(game);
-    }
+    };
 
-    handleSpecialityChange(e) {
+    handleSpecialityChange = (e) =>{
         const value = e.target.value;
         this.setState({ speciality: value });
         if (value==="Select One") {
@@ -47,7 +47,7 @@ class SearchBySpeciality extends Component {
                 this.setState({subspecialityList: res.data.sort()});
             });
         }
-    }
+    };
 
     handleSubspecialityChange = (e) => {
         const options = e.target.options;

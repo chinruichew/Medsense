@@ -124,7 +124,7 @@ class TimeLimit extends Component {
                             </Col>
                             <Col sm={2} className='pull-right'>
                                 <Button bsStyle="primary" bsSize="large" onClick={(e) => this.startGame()}>
-                                    Start Challenge
+                                    Start Game
                                     <img className="left-picture" hspace="5" src="./nextarrow.png" style={{ height: "18px" }} alt="" />
                                 </Button>
                             </Col>

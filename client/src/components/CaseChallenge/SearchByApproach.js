@@ -102,7 +102,7 @@ class SearchByApproach extends Component {
         });
     };
 
-    renderContent() {
+    renderContent = () =>{
         switch(this.state.answers) {
             case null:
                 return;
@@ -139,7 +139,7 @@ class SearchByApproach extends Component {
                     </div>
                 );
         }
-    }
+    };
 
     render(){
         return(
