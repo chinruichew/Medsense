@@ -5,6 +5,9 @@ import ReactHtmlParser from 'react-html-parser';
 import {connect} from "react-redux";
 import axios from 'axios';
 import {completeGame} from "../../actions";
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import faSquare from "@fortawesome/fontawesome-free-regular/faSquare";
+import faCheckSquare from "@fortawesome/fontawesome-free-regular/faCheckSquare";
 
 class GameResults extends Component {
     state = {
@@ -44,26 +47,70 @@ class GameResults extends Component {
                     if (question.type==="MCQ") {
                         // Concat student answer
                         const mcqAnswerOptions = mcqAnswer.mcqAnswerOptions;
+                        const mcqAnswerOptionMapping = [];
                         for(let i = 0; i < mcqAnswerOptions.length; i++) {
                             const mcqAnswerOption = mcqAnswerOptions[i];
                             if(mcqAnswerOption.check) {
-                                for(let j = 0; j < question.options.length; j++) {
-                                    const option = question.options[j];
-                                    if(option._id === mcqAnswerOption.questionOption) {
-                                        studentAnswer += option.mcq + ', ';
+                                const questionOptions = question.options;
+                                for(let j = 0; j < questionOptions.length; j++) {
+                                    const questionOption = questionOptions[j];
+                                    if(questionOption._id === mcqAnswerOption.questionOption) {
+                                        mcqAnswerOptionMapping.push({
+                                            index: i,
+                                            text: questionOption.mcq,
+                                            check: mcqAnswerOption.check
+                                        });
+                                        break;
+                                    }
+                                }
+                            } else {
+                                const questionOptions = question.options;
+                                for(let j = 0; j < questionOptions.length; j++) {
+                                    const questionOption = questionOptions[j];
+                                    if(questionOption._id === mcqAnswerOption.questionOption) {
+                                        mcqAnswerOptionMapping.push({
+                                            index: i,
+                                            text: questionOption.mcq,
+                                            check: mcqAnswerOption.check
+                                        });
                                         break;
                                     }
                                 }
                             }
                         }
-                        studentAnswer = studentAnswer.substring(0, studentAnswer.length - 2);
+                        studentAnswer = mcqAnswerOptionMapping.map((mcqAnswerOptionMap, index) => {
+                            if(mcqAnswerOptionMap.check) {
+                                return(
+                                    <p key={index}><FontAwesomeIcon icon={faCheckSquare} className="mcq-option-icon" />{mcqAnswerOptionMap.text}</p>
+                                );
+                            } else {
+                                return(
+                                    <p key={index}><FontAwesomeIcon icon={faSquare} className="mcq-option-icon" />{mcqAnswerOptionMap.text}</p>
+                                );
+                            }
+                        });
 
                         // Concat model answer
+                        const mcqQuestionOptionMapping = [];
                         for(let i = 0; i < question.options.length; i++) {
                             const option = question.options[i];
-                            modelAnswer += option.mcq + ', ';
+                            mcqQuestionOptionMapping.push({
+                                index: i,
+                                text: option.mcq,
+                                check: option.check
+                            });
                         }
-                        modelAnswer = modelAnswer.substring(0, modelAnswer.length - 2);
+                        modelAnswer = mcqQuestionOptionMapping.map((mcqQuestionOptionMap, index) => {
+                            if(mcqQuestionOptionMap.check) {
+                                return(
+                                    <p key={index}><FontAwesomeIcon icon={faCheckSquare} className="mcq-option-icon" />{mcqQuestionOptionMap.text}</p>
+                                );
+                            } else {
+                                return(
+                                    <p key={index}><FontAwesomeIcon icon={faSquare} className="mcq-option-icon" />{mcqQuestionOptionMap.text}</p>
+                                );
+                            }
+                        });
                     } else {
                         modelAnswer = question.openEnded;
 
@@ -105,13 +152,13 @@ class GameResults extends Component {
                                                 <div className="col-md-6">
                                                     <h3 className="result-heading">Your Answer</h3>
                                                     <h4>
-                                                        {ReactHtmlParser(studentAnswer)}
+                                                        {studentAnswer}
                                                     </h4>
                                                 </div>
                                                 <div className="col-md-6">
                                                     <h3 className="result-heading">Model Answer</h3>
                                                     <h4>
-                                                        {ReactHtmlParser(modelAnswer)}
+                                                        {modelAnswer}
                                                     </h4>
                                                 </div>
                                             </div>

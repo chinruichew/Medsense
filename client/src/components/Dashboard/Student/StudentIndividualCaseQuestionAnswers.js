@@ -78,7 +78,6 @@ class StudentIndividualCaseQuestionAnswers extends Component {
                         const mcqAnswerOption = mcqAnswerOptions[i];
                         if(mcqAnswerOption.check) {
                             const questionOptions = question.options;
-                            let questionOptionsDisplay = '';
                             for(let j = 0; j < questionOptions.length; j++) {
                                 const questionOption = questionOptions[j];
                                 if(questionOption._id === mcqAnswerOption.questionOption) {
@@ -92,7 +91,6 @@ class StudentIndividualCaseQuestionAnswers extends Component {
                             }
                         } else {
                             const questionOptions = question.options;
-                            let questionOptionsDisplay = '';
                             for(let j = 0; j < questionOptions.length; j++) {
                                 const questionOption = questionOptions[j];
                                 if(questionOption._id === mcqAnswerOption.questionOption) {
