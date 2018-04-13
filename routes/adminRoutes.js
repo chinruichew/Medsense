@@ -1,10 +1,7 @@
 const User = require('../models/User');
 const Case = require('../models/Case');
 const Question = require('../models/Question');
-const Approach = require('../models/Approach');
-const nodemailer = require('nodemailer');
 
-const keys = require('../config/keys');
 const constants = require('../utility/constantTypes');
 const commonMethods = require('../utility/commonMethods');
 
@@ -101,7 +98,6 @@ module.exports = app => {
                     school: req.body.school
                 }).select("-password");
             } else if (req.body.school === "" && subspecialityArray.length === 0) {
-                console.log("in")
                 users = await User.find({
                     usertype: constants.USER_TYPE_PROFESSOR,
                     speciality: req.body.values.speciality

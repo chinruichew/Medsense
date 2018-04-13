@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, ControlLabel, FormControl, FormGroup, Image, Panel, Glyphicon} from "react-bootstrap";
+import {Button, ControlLabel, FormControl, FormGroup, Glyphicon} from "react-bootstrap";
 import Timeline from 'react-visjs-timeline';
 import axios from 'axios';
 import {connect} from "react-redux";

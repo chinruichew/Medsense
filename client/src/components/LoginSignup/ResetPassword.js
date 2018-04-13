@@ -118,8 +118,4 @@ class ResetPassword extends Component {
     }
 }
 
-function mapStateToProps({ auth }) {
-    return { auth };
-}
-
 export default ResetPassword;

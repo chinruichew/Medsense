@@ -117,7 +117,7 @@ class StudentIndividualCaseQuestionAnswers extends Component {
                         }
                     });
                 }
-                const scoreStyle = answerOfQuestion.score < answerOfQuestion.mark/2? 'red': 'green';
+                // const scoreStyle = answerOfQuestion.score < answerOfQuestion.mark/2? 'red': 'green';
 
                 // Display Picture if there is an attachment
                 let questionDisplay = question.attachment === ''? <p>{ReactHtmlParser(question.question)}</p>:
@@ -165,6 +165,7 @@ class StudentIndividualCaseQuestionAnswers extends Component {
                     </div>
                 );
             }
+            return;
         });
     }
 }

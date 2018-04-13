@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Button, Carousel, Col, Image} from 'react-bootstrap';
+import {Button, Carousel, Image} from 'react-bootstrap';
 import {NavLink, Redirect} from "react-router-dom";
 import axios from 'axios';
 import BootstrapModal from '../UI/Modal/UploadBootstrapModal.js';
@@ -277,7 +277,7 @@ class StudentHome extends Component {
 
                     const picName = "./" + recommendedCase.subspeciality[0] + ".png";
                     const recommendationBox = <Button key={index} onClick={(e) => this.handleCarouselButtonClick(recommendedCase._id)} className="carousel-button" bsSize="large">
-                        <img src={picName} onError={(e)=>{e.target.src="./Other Subspeciality.png"}}/>
+                        <Image src={picName} alt={recommendedCase.subspeciality[0]} onError={(e)=>{e.target.src="./Other Subspeciality.png"}}/>
                         <h4>{recommendedCase.title}</h4>
                         <h5>{recommendedCase.speciality}</h5>
                         <h5>{subSpecialityString}</h5>
@@ -292,7 +292,7 @@ class StudentHome extends Component {
                         </div>
                     );
                 }
-                return;
+                return '';
             });
 
             return(
@@ -323,7 +323,7 @@ class StudentHome extends Component {
 
                         const picName = "./" + recommendedCase.subspeciality[0] + ".png";
                         const recommendationBox = <Button key={index} onClick={(e) => this.handleCarouselButtonClick(recommendedCase._id)} className="carousel-button" bsSize="large">
-                            <img src={picName} onError={(e)=>{e.target.src="./Other Subspeciality.png"}}/>
+                            <Image src={picName} alt={recommendedCase.subspeciality[0]} onError={(e)=>{e.target.src="./Other Subspeciality.png"}}/>
                             <h4>{recommendedCase.title}</h4>
                             <h5>{recommendedCase.speciality}</h5>
                             <h5>{subSpecialityString}</h5>
@@ -338,7 +338,7 @@ class StudentHome extends Component {
                             </div>
                         );
                     }
-                    return;
+                    return '';
                 });
 
                 return(
