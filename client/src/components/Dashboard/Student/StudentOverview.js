@@ -10,7 +10,8 @@ class StudentOverview extends Component {
         specialityFilterName: null,
         subSpecialityFilterName: null,
         caseDataMapping: [],
-        headerFilterDisplay: <Breadcrumb><Breadcrumb.Item><Button bsSize="large" bsStyle="link" onClick={this.setSpecialityView}>All</Button></Breadcrumb.Item></Breadcrumb>
+        headerFilterDisplay: <Breadcrumb><Breadcrumb.Item><Button bsSize="large" bsStyle="link" onClick={this.setSpecialityView}>All</Button></Breadcrumb.Item></Breadcrumb>,
+        barChartTitle: 'Speciality Comparison'
     };
 
     componentDidMount() {
@@ -257,36 +258,6 @@ class StudentOverview extends Component {
                     ]
                 };
 
-                // const modes = ['2012Budget', '2011Budget', 'Growth'];
-                // const option = {
-                //     title: {
-                //         top: 5,
-                //         left: 'center',
-                //         text: 'How $3.7 Trillion is Spent',
-                //         subtext: 'Obama’s 2012 Budget Proposal',
-                //         backgroundColor: 'rgb(243,243,243)',
-                //         borderRadius: [5, 5, 0, 0]
-                //     },
-                //
-                //     legend: {
-                //         data: modes,
-                //         selectedMode: 'single',
-                //         top: 55,
-                //         itemGap: 5,
-                //         backgroundColor: 'rgb(243,243,243)',
-                //         borderRadius: 5
-                //     },
-                //
-                //     tooltip: {
-                //     },
-                //
-                //     series: modes.map(function (mode, idx) {
-                //         const seriesOpt = this.createSeriesCommon(idx);
-                //         seriesOpt.name = mode;
-                //         return seriesOpt;
-                //     })
-                // };
-
                 return(
                     <ReactEcharts showLoading={false} option={option} notMerge={true} lazyUpdate={true} />
                 );
@@ -508,7 +479,7 @@ class StudentOverview extends Component {
 
                 const option = {
                     title: {
-                        text: 'Speciality Comparison'
+                        text: this.state.barChartTitle
                     },
                     legend: {
                         data: ['Your Average Score'],
@@ -552,6 +523,7 @@ class StudentOverview extends Component {
 
     setSpecialityView = () => {
         this.setState({
+            barChartTitle: 'Speciality Comparison',
             specialityFilterName: null,
             subSpecialityFilterName: null,
             caseDataMapping: [],
@@ -561,6 +533,7 @@ class StudentOverview extends Component {
 
     setSubSpecialityView = () => {
         this.setState({
+            barChartTitle: 'Sub-Speciality Comparison',
             subSpecialityFilterName: null,
             caseDataMapping: [],
             headerFilterDisplay: <Breadcrumb>
@@ -574,6 +547,7 @@ class StudentOverview extends Component {
         if(this.state.specialityFilterName === null) {
             const specialityFilterName = params.name;
             this.setState({
+                barChartTitle: 'Sub-Speciality Comparison',
                 specialityFilterName,
                 headerFilterDisplay: <Breadcrumb>
                                         <Breadcrumb.Item><Button bsSize="large" bsStyle="link" onClick={this.setSpecialityView}>All</Button></Breadcrumb.Item>
@@ -583,6 +557,7 @@ class StudentOverview extends Component {
         } else if(this.state.subSpecialityFilterName === null) {
             const subSpecialityFilterName = params.name;
             this.setState({
+                barChartTitle: 'Case Comparison',
                 subSpecialityFilterName,
                 headerFilterDisplay: <Breadcrumb>
                                         <Breadcrumb.Item><Button bsSize="large" bsStyle="link" onClick={this.setSpecialityView}>All</Button></Breadcrumb.Item>

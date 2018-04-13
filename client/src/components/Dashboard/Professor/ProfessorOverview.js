@@ -9,7 +9,8 @@ class ProfessorOverview extends Component {
         specialityFilterName: null,
         subSpecialityFilterName: null,
         caseDataMapping: [],
-        headerFilterDisplay: <Breadcrumb><Breadcrumb.Item><Button bsSize="large" bsStyle="link" onClick={this.setSpecialityView}>All</Button></Breadcrumb.Item></Breadcrumb>
+        headerFilterDisplay: <Breadcrumb><Breadcrumb.Item><Button bsSize="large" bsStyle="link" onClick={this.setSpecialityView}>All</Button></Breadcrumb.Item></Breadcrumb>,
+        barChartTitle: 'Speciality Comparison'
     };
 
     componentDidMount() {
@@ -465,7 +466,7 @@ class ProfessorOverview extends Component {
 
                 const option = {
                     title: {
-                        text: 'Speciality Comparison'
+                        text: this.state.barChartTitle
                     },
                     legend: {
                         data: ['Global Average Score'],
@@ -509,6 +510,7 @@ class ProfessorOverview extends Component {
 
     setSpecialityView = () => {
         this.setState({
+            barChartTitle: 'Speciality Comparison',
             specialityFilterName: null,
             subSpecialityFilterName: null,
             caseDataMapping: [],
@@ -518,6 +520,7 @@ class ProfessorOverview extends Component {
 
     setSubSpecialityView = () => {
         this.setState({
+            barChartTitle: 'Sub-Speciality Comparison',
             subSpecialityFilterName: null,
             caseDataMapping: [],
             headerFilterDisplay: <Breadcrumb>
@@ -531,6 +534,7 @@ class ProfessorOverview extends Component {
         if(this.state.specialityFilterName === null) {
             const specialityFilterName = params.name;
             this.setState({
+                barChartTitle: 'Sub-Speciality Comparison',
                 specialityFilterName,
                 headerFilterDisplay: <Breadcrumb>
                                         <Breadcrumb.Item><Button bsSize="large" bsStyle="link" onClick={this.setSpecialityView}>All</Button></Breadcrumb.Item>
@@ -540,6 +544,7 @@ class ProfessorOverview extends Component {
         } else if(this.state.subSpecialityFilterName === null) {
             const subSpecialityFilterName = params.name;
             this.setState({
+                barChartTitle: 'Case Comparison',
                 subSpecialityFilterName,
                 headerFilterDisplay: <Breadcrumb>
                                         <Breadcrumb.Item><Button bsSize="large" bsStyle="link" onClick={this.setSpecialityView}>All</Button></Breadcrumb.Item>
