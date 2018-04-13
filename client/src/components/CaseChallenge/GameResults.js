@@ -129,6 +129,12 @@ class GameResults extends Component {
                             </div>
                         );
                     }else{
+                        const stem = question.stem.replace(/\s+/g, '')===""?<div></div>:<div className="col-md-12">
+                            <h3 className="result-heading">STEM</h3>
+                            <h4>
+                                <p>{ReactHtmlParser(question.stem)}</p>
+                            </h4>
+                        </div>;
                         return (
                             <div key={index}>
                                 <PanelGroup accordion>
@@ -138,12 +144,7 @@ class GameResults extends Component {
                                         </Panel.Heading>
                                         <Panel.Body collapsible>
                                             <div className="row">
-                                                <div className="col-md-12">
-                                                    <h3 className="result-heading">Case Scenario</h3>
-                                                    <h4>
-                                                        <p>{ReactHtmlParser(this.props.case.scenario)}</p>
-                                                    </h4>
-                                                </div>
+                                                {stem}
                                             </div>
                                             <h3 className="result-heading">Question</h3>
                                             <h4>
