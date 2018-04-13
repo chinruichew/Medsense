@@ -25,6 +25,17 @@ class StudentIndividualCaseQuestionAnswers extends Component {
         }
         return sortedCaseQuestions.map((question, index) => {
             if(this.props.questionFilter === 'All' || this.props.questionFilter === question.id) {
+                // Get stem
+                const questionStem = question.stem === ''? '': <div className="row">
+                    <div className="col-md-12">
+                        <h4><strong>Stem</strong></h4>
+                    </div>
+                    <div className="col-md-12">
+                        {ReactHtmlParser(question.stem)}
+                    </div>
+                </div>;
+
+                // Get answers
                 let modelAnswer = question.openEnded;
                 if(question.openEnded === '') {
                     const questionOptions = question.options;
@@ -139,6 +150,8 @@ class StudentIndividualCaseQuestionAnswers extends Component {
                             <Panel.Collapse>
                                 <Panel.Body>
                                     {/*<StudentIndividualCaseQuestionChart setSelectedAnswerIndex={this.setSelectedAnswerIndex} question={question} answers={this.props.answers} answer={answerOfQuestion} cohortAnswers={this.props.cohortAnswers} />*/}
+                                    {questionStem}
+                                    <br/>
                                     <h4><strong>Question</strong></h4>
                                     {questionDisplay}
                                     <br/>

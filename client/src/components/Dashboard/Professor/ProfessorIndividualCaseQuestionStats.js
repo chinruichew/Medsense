@@ -24,6 +24,16 @@ class ProfessorIndividualCaseQuestionStats extends Component {
 
         return caseQuestions.map((caseQuestion, index) => {
             if(this.props.questionFilter === 'All' || this.props.questionFilter === caseQuestion.id) {
+                // Get stem
+                const questionStem = caseQuestion.stem === ''? '': <div className="row">
+                    <div className="col-md-12">
+                        <h4><strong>Stem</strong></h4>
+                    </div>
+                    <div className="col-md-12">
+                        {ReactHtmlParser(caseQuestion.stem)}
+                    </div>
+                </div>;
+
                 // Get Model Answer
                 let modelAnswer = caseQuestion.openEnded;
                 if (caseQuestion.openEnded === '') {
@@ -72,6 +82,8 @@ class ProfessorIndividualCaseQuestionStats extends Component {
                             <Panel.Collapse>
                                 <Panel.Body>
                                     {/*<ProfessorIndividualCaseQuestionChart answers={this.props.answers} question={caseQuestion} />*/}
+                                    {questionStem}
+                                    <br/>
                                     <h4><strong>Question</strong></h4>
                                     {questionDisplay}
                                     <br/>
