@@ -28,7 +28,7 @@ class StudentIndividualCaseQuestionAnswers extends Component {
                 // Get stem
                 const questionStem = question.stem === ''? '': <div className="row">
                     <div className="col-md-12">
-                        <h4><strong>Stem</strong></h4>
+                        <h4 className="dashboard-case-panel-answer"><strong>Stem</strong></h4>
                     </div>
                     <div className="col-md-12">
                         {ReactHtmlParser(question.stem)}
@@ -152,18 +152,18 @@ class StudentIndividualCaseQuestionAnswers extends Component {
                                     {/*<StudentIndividualCaseQuestionChart setSelectedAnswerIndex={this.setSelectedAnswerIndex} question={question} answers={this.props.answers} answer={answerOfQuestion} cohortAnswers={this.props.cohortAnswers} />*/}
                                     {questionStem}
                                     <br/>
-                                    <h4><strong>Question</strong></h4>
+                                    <h4 className="dashboard-case-panel-answer"><strong>Question</strong></h4>
                                     {questionDisplay}
                                     <br/>
                                     <div className="row">
                                         <div className="col-md-6">
-                                            <h4><strong>Your Answer</strong></h4>
+                                            <h4 className="dashboard-case-panel-answer"><strong>Your Answer</strong></h4>
                                         </div>
                                         {/*<div className="col-md-4 text-center">*/}
                                             {/*<h4 style={{marginTop: '25px', color: score}}>Score: {answerOfQuestion.score}/{answerOfQuestion.mark}</h4>*/}
                                         {/*</div>*/}
                                         <div className="col-md-6">
-                                            <h4><strong>Model Answer</strong></h4>
+                                            <h4 className="dashboard-case-panel-answer"><strong>Model Answer</strong></h4>
                                         </div>
                                         <div className="col-md-6 ">
                                             <p>{displayAnswer}</p>

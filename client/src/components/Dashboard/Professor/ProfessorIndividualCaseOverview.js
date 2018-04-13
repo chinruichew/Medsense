@@ -15,10 +15,10 @@ class ProfessorIndividualCaseOverview extends Component {
                         </Panel.Heading>
                         <Panel.Collapse>
                             <Panel.Body>
-                                <h4><strong>Scenario</strong></h4>
+                                <h4 className="dashboard-case-panel-answer"><strong>Scenario</strong></h4>
                                 {ReactHtmlParser(this.props.case.scenario)}
                                 <br/>
-                                <h4><strong>Learning</strong></h4>
+                                <h4 className="dashboard-case-panel-answer"><strong>Learning</strong></h4>
                                 {ReactHtmlParser(this.props.case.learning)}
                             </Panel.Body>
                         </Panel.Collapse>

@@ -27,7 +27,7 @@ class ProfessorIndividualCaseQuestionStats extends Component {
                 // Get stem
                 const questionStem = caseQuestion.stem === ''? '': <div className="row">
                     <div className="col-md-12">
-                        <h4><strong>Stem</strong></h4>
+                        <h4 className="dashboard-case-panel-answer"><strong>Stem</strong></h4>
                     </div>
                     <div className="col-md-12">
                         {ReactHtmlParser(caseQuestion.stem)}
@@ -84,10 +84,10 @@ class ProfessorIndividualCaseQuestionStats extends Component {
                                     {/*<ProfessorIndividualCaseQuestionChart answers={this.props.answers} question={caseQuestion} />*/}
                                     {questionStem}
                                     <br/>
-                                    <h4><strong>Question</strong></h4>
+                                    <h4 className="dashboard-case-panel-answer"><strong>Question</strong></h4>
                                     {questionDisplay}
                                     <br/>
-                                    <h4><strong>Model Answer</strong></h4>
+                                    <h4 className="dashboard-case-panel-answer"><strong>Model Answer</strong></h4>
                                     <p>{modelAnswer}</p>
                                 </Panel.Body>
                             </Panel.Collapse>
