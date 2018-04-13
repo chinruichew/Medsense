@@ -325,6 +325,13 @@ export const fetchApproach = (values) => async dispatch => {
     dispatch({ type: FETCH_APPROACH, payload: res.data });
 };
 
+export const fetchApproach2 = (values) => async dispatch => {
+    const res = await axios.post('/api/fetchApproach2', {
+        values
+    });
+    dispatch({ type: FETCH_APPROACH, payload: res.data });
+};
+
 export const addNewApproach = (values) => async dispatch => {
     const res = await axios.post('/api/addNewApproach', {
         values
