@@ -59,7 +59,7 @@ class CaseManager extends Component {
 
     componentWillMount() {
         this.props.fetchAdminCases();
-        axios.post('/api/fetchApproach', {
+        axios.post('/api/fetchApproach2', {
         }).then(res => {
             this.setState({approachList:res.data});
         });
