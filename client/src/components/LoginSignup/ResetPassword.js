@@ -4,6 +4,7 @@ import { Button } from 'react-bootstrap';
 import {Redirect} from "react-router-dom";
 
 import BootstrapModal from '../UI/Modal/VettingBootstrapModal.js';
+import {connect} from "react-redux";
 
 class ResetPassword extends Component {
     state = {
@@ -118,4 +119,8 @@ class ResetPassword extends Component {
     }
 }
 
-export default ResetPassword;
+function mapStateToProps({ auth }) {
+    return { auth };
+}
+
+export default connect(mapStateToProps)(ResetPassword);
