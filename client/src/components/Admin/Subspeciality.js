@@ -8,11 +8,17 @@ import axios from 'axios';
 
 class Subspeciality extends Component {
     state = {
+        fetchedspecialities: [],
+        speciality: "",
         subspeciality: ""
     };
 
     componentDidMount() {
-
+        axios.post('/api/fetchSpeciality').then(res => {
+            this.setState({
+                fetchedspecialities: res.data
+            });
+        });
     }
 
     renderTableSubspeciality() {
@@ -49,6 +55,30 @@ class Subspeciality extends Component {
 
     }
 
+    setSpecialities() {
+        let items = [];
+        for (var i = 0; i <= this.state.fetchedspecialities.length; i++) {
+            var arr = this.state.fetchedspecialities;
+            var object = arr[i]
+            if (object != null) {
+                items.push(<option key={object.speciality} value={object.speciality}>{object.speciality}</option>);
+            }
+        }
+        return (
+            <FormGroup controlId="formControlsDifficulty">
+                <ControlLabel style={{ fontSize: "150%" }}>Select Speciality:</ControlLabel>
+                <FormControl componentClass="select" value={this.state.speciality} name="speciality" onChange={(e) => this.handleSpecialityChange(e)}>
+                    {items}
+                </FormControl>
+            </FormGroup>
+        );
+    }
+
+    handleSpecialityChange(e) {
+        const value = e.target.value;
+        this.setState({ speciality: value });
+    }
+
     setSubspeciality() {
         return (
             <FormGroup controlId="formControlsTitle">
@@ -81,6 +111,7 @@ class Subspeciality extends Component {
     render() {
         return (
             <div>
+                {this.setSpecialities()}
                 {this.setSubspeciality()}
                 <Button style={{ fontSize: "125%" }} bsStyle="primary" onClick={(e) => this.addSubspeciality()}>Add Subspeciality</Button>
                 {this.renderTableSubspeciality()}
