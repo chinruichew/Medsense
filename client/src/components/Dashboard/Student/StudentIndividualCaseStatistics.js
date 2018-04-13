@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import {Button, ControlLabel, FormControl, FormGroup, Image, Panel, Glyphicon} from "react-bootstrap";
-import ReactHtmlParser from 'react-html-parser';
+import {Button, ControlLabel, FormControl, FormGroup, Glyphicon} from "react-bootstrap";
 import { Charts, ChartContainer, ChartRow, YAxis, LineChart } from "react-timeseries-charts";
 import { TimeSeries, TimeRange } from "pondjs";
 import Timeline from 'react-visjs-timeline';
 
 import StudentIndividualCaseLatestAttemptOverview from "./StudentIndividualCaseLatestAttemptOverview";
 import StudentIndividualCaseQuestionAnswers from "./StudentIndividualCaseQuestionAnswers";
+import StudentIndividualCaseOverview from "./StudentIndividualCaseOverview";
 
 class StudentIndividualCaseStatistics extends Component {
     state = {
@@ -221,11 +221,16 @@ class StudentIndividualCaseStatistics extends Component {
                                     <StudentIndividualCaseLatestAttemptOverview answers={this.state.answers} globalAnswers={this.state.cohortAnswers} />
                                 </div>
                                 <div className="row">
+                                    <StudentIndividualCaseOverview case={this.state.answers[0].case} />
+                                </div>
+                                <div className="row">
                                     {/*{this.renderAttemptFilter()}*/}
                                     <div className="col-md-12">
                                         {this.renderQuestionFilter()}
                                         {this.renderStudentTotalScore()}
                                     </div>
+                                </div>
+                                <div className="row">
                                     <StudentIndividualCaseQuestionAnswers answers={this.state.answers} selectedAnswerIndex={this.state.selectedAnswerIndex} questionFilter={this.state.questionFilter} />
                                 </div>
                             </div>

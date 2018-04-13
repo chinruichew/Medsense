@@ -7,6 +7,7 @@ import {fetchConstantTypes} from "../../../actions";
 
 import ProfessorIndividualCaseQuestionStats from "./ProfessorIndividualCaseQuestionStats";
 import ProfessorIndividualCaseLatestAttemptOverview from "./ProfessorIndividualCaseLatestAttemptOverview";
+import ProfessorIndividualCaseOverview from "./ProfessorIndividualCaseOverview";
 
 class ProfessorIndividualCaseStatistics extends Component {
     state = {
@@ -151,6 +152,9 @@ class ProfessorIndividualCaseStatistics extends Component {
                         <div className="row" style={{marginBottom: '10px'}}>
                             {/*<ProfessorIndividualCaseOverviewChart answers={this.state.answers} />*/}
                             <ProfessorIndividualCaseLatestAttemptOverview globalAnswers={this.state.answers} />
+                        </div>
+                        <div className="row">
+                            <ProfessorIndividualCaseOverview case={this.state.answers[0].case} />
                         </div>
                         <div className="row">
                             {this.renderQuestionFilter()}
