@@ -252,17 +252,6 @@ class GameResults extends Component {
                 );
         }
     }
-    
-    renderDiscussionForum(){ 
-        return(
-            <div className='container' align="justify">
-                <h3> Have a question to ask? </h3> 
-                <Button   bsStyle="primary" bsSize="large">
-                    Start a discussion post!
-                </Button>
-            </div> 
-        );
-    }
 
     checkLevel = () =>{
         const xp = this.state.points + this.props.xp;
