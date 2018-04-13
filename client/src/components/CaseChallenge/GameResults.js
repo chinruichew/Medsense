@@ -117,7 +117,7 @@ class GameResults extends Component {
                                             </div>
                                             <div className="row">
                                                 <div className="col-md-12">
-                                                    <h3 className="result-heading">PEARL</h3>
+                                                    <h3 className="result-heading">Clinical Pearls</h3>
                                                     <h4>
                                                         {ReactHtmlParser(question.pearl)}
                                                     </h4>
@@ -166,7 +166,7 @@ class GameResults extends Component {
                                             </div>
                                             <div className="row">
                                                 <div className="col-md-12">
-                                                    <h3 className="result-heading">PEARL</h3>
+                                                    <h3 className="result-heading">Clinical Pearls</h3>
                                                     <h4>
                                                         {ReactHtmlParser(question.pearl)}
                                                     </h4>
