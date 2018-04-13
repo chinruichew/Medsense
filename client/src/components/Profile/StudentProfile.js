@@ -168,7 +168,7 @@ class StudentProfile extends Component {
                         );
 
                         const showContributor = this.state.contributionRank ==="" ? "" : <td><center>
-                            <OverlayTrigger trigger={['hover']} placement="top" overlay={popover}><Image src="./contribution.png" circle style={{width: "3em", height: "3em"}} /></OverlayTrigger>
+                            <OverlayTrigger trigger={['hover']} placement="top" overlay={popover}><Image src="https://s3-ap-southeast-1.amazonaws.com/medsense-web-decorator/contribution.png" circle style={{width: "3em", height: "3em"}} /></OverlayTrigger>
                         </center></td>;
                         const contributionRank = this.state.contributionRank==="" ? "" : <td style={{width: '100px'}} ><center>
                             <h4> {this.state.contributionRank} </h4>
@@ -196,7 +196,7 @@ class StudentProfile extends Component {
                                                 <Image src="./year.png" circle style={{width: "50px", height: "50px"}} />
                                             </center></td>
                                             <td><center>
-                                                <OverlayTrigger trigger={['hover']} placement="bottom" overlay={popoverHover}><Image src={'./case-challenge-badges/' + this.state.challengeRank + '.png'} circle style={{width: "60px", height: "60px"}} /></OverlayTrigger>
+                                                <OverlayTrigger trigger={['hover']} placement="bottom" overlay={popoverHover}><Image src={'https://s3-ap-southeast-1.amazonaws.com/medsense-web-decorator/case-challenge-badges/' + this.state.challengeRank + '.png'} circle style={{width: "60px", height: "60px"}} /></OverlayTrigger>
                                             </center></td>
                                             {showContributor}
                                         </tr>

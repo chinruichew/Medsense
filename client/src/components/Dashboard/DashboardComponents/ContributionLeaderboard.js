@@ -39,7 +39,7 @@ class ContributionLeaderboard extends Component {
                         return this.state.userContributionRankMapping.map((userContributionRankMap, index) => {
                             const numContributions = userContributionRankMap.user.numContributions;
                             const caseWord = numContributions > 1? 'cases': 'case';
-                            const contributionImage = userContributionRankMap.rank !== ''? <Image src={'case-contributor-badges/' + userContributionRankMap.rank + '.png'} className="case-contributor-badges" />: '';
+                            const contributionImage = userContributionRankMap.rank !== ''? <Image src={'https://s3-ap-southeast-1.amazonaws.com/medsense-web-decorator/case-contributor-badges/' + userContributionRankMap.rank + '.png'} className="case-contributor-badges" />: '';
 
                             return(
                                 <div key={index} className="col-md-12">

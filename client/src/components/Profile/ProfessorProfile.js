@@ -142,7 +142,7 @@ class ProfessorProfile extends Component {
         );
 
         const showContributor = this.state.contributionRank === "" ? "" : <td><center>
-            <OverlayTrigger trigger={['hover']} placement="top" overlay={popover}><Image src={'./case-contributor-badges/' + this.state.contributionRank + '.png'} circle style={{width: "3em", height: "3em"}} /></OverlayTrigger>
+            <OverlayTrigger trigger={['hover']} placement="top" overlay={popover}><Image src={'https://s3-ap-southeast-1.amazonaws.com/medsense-web-decorator/case-contributor-badges/' + this.state.contributionRank + '.png'} circle style={{width: "3em", height: "3em"}} /></OverlayTrigger>
         </center></td>;
         const contributionRank = this.state.contributionRank === "" ? "" : <td style={{width: '100px'}} ><center>
             <h4> {this.state.contributionRank} </h4>

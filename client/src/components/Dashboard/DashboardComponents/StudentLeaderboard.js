@@ -76,7 +76,7 @@ class StudentLeaderboard extends Component {
                                         <div key={leader._id} className="col-md-12">
                                             <div className="col-md-4 leader_text_div">
                                                 <div className="col-md-2">
-                                                    <Image src={'case-challenge-badges/' + rank + '.png'} className="case-challenge-badges" />
+                                                    <Image src={'https://s3-ap-southeast-1.amazonaws.com/medsense-web-decorator/case-challenge-badges/' + rank + '.png'} className="case-challenge-badges" />
                                                 </div>
                                                 <div className="col-md-5">
                                                     <p className="leader_text_font">{rank}</p>
