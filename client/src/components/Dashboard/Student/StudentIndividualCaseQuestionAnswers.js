@@ -128,7 +128,7 @@ class StudentIndividualCaseQuestionAnswers extends Component {
                         }
                     });
                 }
-                // const scoreStyle = answerOfQuestion.score < answerOfQuestion.mark/2? 'red': 'green';
+                const scoreStyle = answerOfQuestion.score < answerOfQuestion.mark/2? 'red': 'green';
 
                 // Display Picture if there is an attachment
                 let questionDisplay = question.attachment === ''? <p>{ReactHtmlParser(question.question)}</p>:
@@ -149,6 +149,7 @@ class StudentIndividualCaseQuestionAnswers extends Component {
                             </Panel.Heading>
                             <Panel.Collapse>
                                 <Panel.Body>
+                                    <h4 style={{color: scoreStyle}}>Your Score: {answerOfQuestion.score}/{answerOfQuestion.mark}</h4>
                                     {/*<StudentIndividualCaseQuestionChart setSelectedAnswerIndex={this.setSelectedAnswerIndex} question={question} answers={this.props.answers} answer={answerOfQuestion} cohortAnswers={this.props.cohortAnswers} />*/}
                                     {questionStem}
                                     <br/>
@@ -159,9 +160,6 @@ class StudentIndividualCaseQuestionAnswers extends Component {
                                         <div className="col-md-6">
                                             <h4 className="dashboard-case-panel-answer"><strong>Your Answer</strong></h4>
                                         </div>
-                                        {/*<div className="col-md-4 text-center">*/}
-                                            {/*<h4 style={{marginTop: '25px', color: score}}>Score: {answerOfQuestion.score}/{answerOfQuestion.mark}</h4>*/}
-                                        {/*</div>*/}
                                         <div className="col-md-6">
                                             <h4 className="dashboard-case-panel-answer"><strong>Model Answer</strong></h4>
                                         </div>
