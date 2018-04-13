@@ -64,20 +64,44 @@ module.exports = app => {
 
     app.post('/api/addNewSpeciality', function (req, res) {
         const values = req.body.values;
-        Subspeciality.findOne({ subspeciality: values.subspeciality }, async (err, returnsubspeciality) => {
-            if (!returnsubspeciality) {
-                Speciality.findOne({ speciality: values.speciality }, async (err, speciality) => {
-                    const newSubspeciality = new Subspeciality();
-                    newSubspeciality.subspeciality = values.subspeciality;
-                    newSubspeciality.save();
-                    speciality.subspecialities.push(newSubspeciality);
-                    speciality.save();
-                    res.send(newSubspeciality);
-                })
+        Speciality.findOne({ speciality: values.speciality }, async (err, speciality) => {
+            if (!speciality) {
+                const newSpeciality = new Speciality();
+
+                // Uppercase the first letter of each word
+                const spaceIndexes = [];
+                const uncheckedSpeciality = ' ' + values.speciality.trim();
+                for(let i = 0; i < uncheckedSpeciality.length; i++) {
+                    const specialityAlphabet = uncheckedSpeciality[i];
+                    if(specialityAlphabet === ' ') {
+                        spaceIndexes.push(i);
+                    }
+                }
+                let cappedSpeciality = '';
+                for(let i = 0; i < uncheckedSpeciality.length; i++) {
+                    const specialityAlphabet = uncheckedSpeciality[i];
+                    let toUpperCase = false;
+                    for(let j = 0; j < spaceIndexes.length; j++) {
+                        const spacedIndex = spaceIndexes[j];
+                        if(spacedIndex + 1 === i) {
+                            toUpperCase = true;
+                            break;
+                        }
+                    }
+                    if(toUpperCase) {
+                        cappedSpeciality += specialityAlphabet.toUpperCase();
+                    } else {
+                        cappedSpeciality += specialityAlphabet;
+                    }
+                }
+
+                newSpeciality.speciality = cappedSpeciality.substring(1);
+                await newSpeciality.save();
+                res.send(newSpeciality);
             } else {
-                res.send('Subspeciality Exists');
+                res.send('Speciality Exists');
             }
-        })
+        });
     });
 
     app.post('/api/deleteSpeciality', function (req, res) {
