@@ -213,10 +213,10 @@ class StudentIndividualCaseStatistics extends Component {
                                 </div>
                                 <div className="row">
                                     <div className="col-md-4 col-md-offset-4 text-center">
-                                        <h2><strong>{this.state.answers[0].case.title}</strong></h2>
+                                        <h2><strong>{this.state.answers[0].case.title + ' - ' + this.state.answers[0].case.difficulty}</strong></h2>
                                     </div>
                                 </div>
-                                <div className="row" style={{marginBottom: '10px'}}>
+                                <div className="row" style={{marginBottom: '10px', marginTop: '20px'}}>
                                     {/*<StudentIndividualCaseOverviewChart setSelectedAnswerIndex={this.setSelectedAnswerIndex} answers={this.state.answers} caseId={this.props.caseId} cohortAnswers={this.state.cohortAnswers} />*/}
                                     <StudentIndividualCaseLatestAttemptOverview answers={this.state.answers} globalAnswers={this.state.cohortAnswers} />
                                 </div>

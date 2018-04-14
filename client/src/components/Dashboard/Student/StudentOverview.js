@@ -437,12 +437,14 @@ class StudentOverview extends Component {
                                 caseMapping.push({
                                     caseId: answerCase._id,
                                     caseTitle: answerCase.title,
+                                    caseDifficulty: answerCase.difficulty,
                                     numAttempts: 1,
                                     totalScore: answer.score
                                 });
                                 this.state.caseDataMapping.push({
                                     caseId: answerCase._id,
                                     caseTitle: answerCase.title,
+                                    caseDifficulty: answerCase.difficulty,
                                     numAttempts: 1,
                                     totalScore: answer.score
                                 });
@@ -462,8 +464,8 @@ class StudentOverview extends Component {
                         }
                         dataMapping.push({
                             value: averageScore,
-                            name: caseMapObject.caseTitle,
-                            path: caseMapObject.caseTitle
+                            name: caseMapObject.caseTitle + ' - ' + caseMapObject.caseDifficulty,
+                            path: caseMapObject.caseTitle + ' - ' + caseMapObject.caseDifficulty
                         });
                     }
                 }

@@ -146,10 +146,10 @@ class ProfessorIndividualCaseStatistics extends Component {
                         </div>
                         <div className="row">
                             <div className="col-md-4 col-md-offset-4 text-center">
-                                <h2><strong>{this.props.reviewedCase.title}</strong></h2>
+                                <h2><strong>{this.state.answers[0].case.title + ' - ' + this.state.answers[0].case.difficulty}</strong></h2>
                             </div>
                         </div>
-                        <div className="row" style={{marginBottom: '10px'}}>
+                        <div className="row" style={{marginBottom: '10px', marginTop: '20px'}}>
                             {/*<ProfessorIndividualCaseOverviewChart answers={this.state.answers} />*/}
                             <ProfessorIndividualCaseLatestAttemptOverview globalAnswers={this.state.answers} />
                         </div>

@@ -44,10 +44,6 @@ class ProfessorCaseStatistics extends Component {
                                         const uploadedCases = this.props.associatedCases.uploaded;
                                         const vettedCases = this.props.associatedCases.vetted;
                                         const uploadedSection = uploadedCases.map((uploadedCase, index) => {
-                                            // let placeholderImage = <Image circle src="/case-display-pictures/individual_case_image.jpg" style={{height: '150px', width: '150px'}} />;
-                                            // if(index % 2 === 0) {
-                                            //     placeholderImage = <Image circle src="/case-display-pictures/individual_case_image_2.jpg" style={{height: '150px', width: '150px'}} />;
-                                            // }
                                             let picName = "./" + uploadedCase.subspeciality[0] + ".png";
                                             let placeholderImage = <Image circle src={picName} style={{height: '150px', width: '150px'}} onError={(e)=>{e.target.src="./Other Subspeciality.png"}}/>;
                                             return(
@@ -57,6 +53,7 @@ class ProfessorCaseStatistics extends Component {
                                                             {placeholderImage}
                                                             <h4>{uploadedCase.title}</h4>
                                                             <p>Speciality: {uploadedCase.speciality}</p>
+                                                            <p>Difficulty: {uploadedCase.difficulty}</p>
                                                             <Button onClick={(e) => this.setState({reviewedCase: uploadedCase})} bsStyle="primary">Review</Button>
                                                         </div>
                                                     </div>
@@ -64,10 +61,6 @@ class ProfessorCaseStatistics extends Component {
                                             );
                                         });
                                         const vettedSection = vettedCases.map((vettedCase, index) => {
-                                            // let placeholderImage = <Image circle src="/case-display-pictures/individual_case_image.jpg" style={{height: '150px', width: '150px'}} />;
-                                            // if(index % 2 === 0) {
-                                            //     placeholderImage = <Image circle src="/case-display-pictures/individual_case_image_2.jpg" style={{height: '150px', width: '150px'}} />;
-                                            // }
                                             let picName = "./" + vettedCase.subspeciality[0] + ".png";
                                             let placeholderImage = <Image circle src={picName} style={{height: '150px', width: '150px'}} onError={(e)=>{e.target.src="./Other Subspeciality.png"}}/>;
                                             return(
@@ -77,6 +70,7 @@ class ProfessorCaseStatistics extends Component {
                                                             {placeholderImage}
                                                             <h4>{vettedCase.title}</h4>
                                                             <p>Speciality: {vettedCase.speciality}</p>
+                                                            <p>Difficulty: {vettedCase.difficulty}</p>
                                                             <Button onClick={(e) => this.setState({reviewedCase: vettedCase})} bsStyle="primary">Review</Button>
                                                         </div>
                                                     </div>

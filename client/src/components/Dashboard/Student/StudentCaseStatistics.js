@@ -50,10 +50,6 @@ class StudentCaseStatistics extends Component {
                             }
                         }
                         return cases.map((answerCase, index) => {
-                            // let placeholderImage = <Image circle src="/case-display-pictures/individual_case_image.jpg" style={{height: '150px', width: '150px'}} />;
-                            // if(index % 2 === 0) {
-                            //     placeholderImage = <Image circle src="/case-display-pictures/individual_case_image_2.jpg" style={{height: '150px', width: '150px'}} />;
-                            // }
                             let picName = "./" + answerCase.subspeciality[0] + ".png";
                             let placeholderImage = <Image circle src={picName} style={{height: '150px', width: '150px'}} onError={(e)=>{e.target.src="./Other Subspeciality.png"}}/>;
                             let attemptDisplay = !answerCase.numAttempts || answerCase.numAttempts === 1? 'Attempt': 'Attempts';
@@ -64,6 +60,7 @@ class StudentCaseStatistics extends Component {
                                             {placeholderImage}
                                             <h4>{answerCase.title}</h4>
                                             <p>Speciality: {answerCase.speciality}</p>
+                                            <p>Difficulty: {answerCase.difficulty}</p>
                                             <p>{answerCase.numAttempts || 1} {attemptDisplay}</p>
                                             <Button onClick={(e) => this.setState({caseId: answerCase._id})} bsStyle="primary">Review</Button>
                                         </div>
