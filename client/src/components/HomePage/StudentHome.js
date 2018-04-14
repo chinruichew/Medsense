@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Button, Carousel, Image} from 'react-bootstrap';
-import {NavLink, Redirect} from "react-router-dom";
+import {Redirect} from "react-router-dom";
 import axios from 'axios';
 import BootstrapModal from '../UI/Modal/UploadBootstrapModal.js';
 import Zoom from 'react-reveal/Zoom';
@@ -14,6 +14,7 @@ import LightSpeed from 'react-reveal/LightSpeed';
 import "./Home.css";
 import Fade from "react-reveal/Fade";
 import HomePageFooter from "./HomePageFooter";
+import HomePageUploadDiv from "./HomePageUploadDiv";
 
 class StudentHome extends Component {
     state = {
@@ -359,7 +360,6 @@ class StudentHome extends Component {
                     case null:
                         return;
                     default:
-                        let imgUrl = './homepage.png';
                         return(
                             <div className="container-fluid">
                                 <div className="text-center">
@@ -368,16 +368,7 @@ class StudentHome extends Component {
 
                                 {this.renderRecommendations()}
 
-                                <div className="image-div" style={{backgroundImage: 'url(' + imgUrl + ')'}}>
-                                    <h1>Upload Case</h1>
-                                    <hr/>
-                                    <p>Description of case upload</p><br/>
-                                    <NavLink to='/upload'>
-                                        <Button className="image-button">
-                                            <h4>Upload</h4>
-                                        </Button>
-                                    </NavLink>
-                                </div>
+                                <HomePageUploadDiv/>
 
                                 <HomePageFooter/>
 

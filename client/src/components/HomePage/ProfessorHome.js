@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Button, Carousel, Image} from 'react-bootstrap';
-import {NavLink, Redirect} from "react-router-dom";
+import {Redirect} from "react-router-dom";
 import axios from 'axios';
 
 import "./Home.css";
@@ -13,6 +13,7 @@ import Rotate from "react-reveal/Rotate";
 import Roll from "react-reveal/Roll";
 import Fade from "react-reveal/Fade";
 import HomePageFooter from "./HomePageFooter";
+import HomePageUploadDiv from "./HomePageUploadDiv";
 
 class ProfessorHome extends Component {
     state = {
@@ -380,18 +381,7 @@ class ProfessorHome extends Component {
 
                                 {this.renderRecommendations()}
 
-                                <div style={{backgroundImage: 'url(' + imgUrl + ')', backgroundSize: 'cover',
-                                    height: "350px", textAlign: "center", color: "white"}}>
-                                    <h1 style={{paddingTop: "7%", fontWeight: "bold"}}>Upload Case</h1>
-                                    <hr style={{borderColor: "white", borderWidth: "5px", marginTop: "1%", width: "70%"}}/>
-                                    <p>Description of case upload</p><br/>
-                                    <NavLink to='/upload'>
-                                        <Button style={{background: "#199ED8", color: 'white', border: "0", width: "8em",
-                                            height: "3em", verticalAlign: "center"}}>
-                                            <h4 style={{padding: "0", margin: "0"}}>Upload</h4>
-                                        </Button>
-                                    </NavLink>
-                                </div>
+                                <HomePageUploadDiv/>
 
                                 <HomePageFooter/>
 

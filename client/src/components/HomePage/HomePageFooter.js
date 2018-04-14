@@ -14,7 +14,7 @@ class HomePageFooter extends Component {
                 <Col md={2} mdOffset={4} className="footer-col-right text-center">
                     <h3>VERSION</h3>
                     <h5>Version 2.0
-                        <br/>Last Updated: 1 April 2018
+                        <br/>Last Updated: April 2018
                     </h5>
                 </Col>
             </div>
