@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import ReactEcharts from 'echarts-for-react';
+import scrollToElement from "scroll-to-element";
 
 class ProfessorIndividualCaseLatestAttemptOverview extends Component {
     render() {
@@ -140,12 +141,21 @@ class ProfessorIndividualCaseLatestAttemptOverview extends Component {
             color: ['#56B0CB']
         };
 
+        let onEvents = {
+            'click': this.onBarChartClick
+        };
+
         return(
             <div>
-                <ReactEcharts showLoading={false} option={option} notMerge={true} lazyUpdate={true} />
+                <ReactEcharts opts={{renderer: 'svg'}} onEvents={onEvents} showLoading={false} option={option} notMerge={true} lazyUpdate={true} />
             </div>
         );
     }
+
+    onBarChartClick = (params) => {
+        const qnId = params.dataIndex + 1;
+        scrollToElement('#qn' + qnId);
+    };
 }
 
 export default ProfessorIndividualCaseLatestAttemptOverview;

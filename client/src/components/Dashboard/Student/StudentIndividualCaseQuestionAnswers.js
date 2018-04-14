@@ -142,7 +142,7 @@ class StudentIndividualCaseQuestionAnswers extends Component {
                     </div>;
 
                 return(
-                    <div key={index} className="col-md-12 questionAnswerPanels">
+                    <div id={'qn' + question.id} key={index} className="col-md-12 questionAnswerPanels">
                         <Panel bsStyle="primary" defaultExpanded>
                             <Panel.Heading>
                                 <Panel.Title componentClass="h3" toggle>Question {question.id}</Panel.Title>

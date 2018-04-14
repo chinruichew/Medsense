@@ -504,7 +504,7 @@ class ProfessorOverview extends Component {
                 return(
                     <div>
                         {this.state.headerFilterDisplay}
-                        <ReactEcharts onEvents={onEvents} showLoading={false} option={option} notMerge={true} lazyUpdate={true} />
+                        <ReactEcharts opts={{renderer: 'svg'}} onEvents={onEvents} showLoading={false} option={option} notMerge={true} lazyUpdate={true} />
                     </div>
                 );
         }
