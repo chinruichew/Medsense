@@ -112,14 +112,14 @@ class GameResults extends Component {
                             }
                         });
                     } else {
-                        modelAnswer = question.openEnded;
+                        modelAnswer = ReactHtmlParser(question.openEnded);
 
                         // Get student answer
                         const openEndedAnswers = game.openEndedAnswers;
                         for(let i = 0; i < openEndedAnswers.length; i++) {
                             const openEndedAnswer = openEndedAnswers[i];
                             if(openEndedAnswer.questionId === question._id) {
-                                studentAnswer = openEndedAnswer.studentAnswer;
+                                studentAnswer = ReactHtmlParser(openEndedAnswer.studentAnswer);
                                 break;
                             }
                         }
@@ -201,13 +201,13 @@ class GameResults extends Component {
                                                 <div className="col-md-6">
                                                     <h3 className="result-heading">Your Answer</h3>
                                                     <h4>
-                                                        {ReactHtmlParser(studentAnswer)}
+                                                        {studentAnswer}
                                                     </h4>
                                                 </div>
                                                 <div className="col-md-6">
                                                     <h3 className="result-heading">Model Answer</h3>
                                                     <h4>
-                                                        {ReactHtmlParser(modelAnswer)}
+                                                        {modelAnswer}
                                                     </h4>
                                                 </div>
                                             </div>
