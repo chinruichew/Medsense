@@ -84,7 +84,7 @@ class MCQAnswers extends Component {
                 return (
                     <Col sm={11}>
                         <h3>You got {this.state.answerIndex.stuCorrectAnswerCount} / {this.state.answerIndex.answerCount} correct!</h3>
-                        <h3>Your score for this question: {this.state.answerIndex.score}</h3><br/>
+                        <h3>Your score for this question: {this.state.answerIndex.score} / {this.state.mark}</h3><br/>
                         <h4 style={{color: "#199ED8"}}><strong>Answer</strong></h4>
                         <h4 style={{border: "0", background: "white", padding: "0", fontSize: "medium",
                             whiteSpace:"pre-wrap", wordBreak:"keep-all"}}>{ReactHtmlParser(this.state.answerIndex.mcqAnswer)}
