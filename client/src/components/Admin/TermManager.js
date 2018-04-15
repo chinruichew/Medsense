@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Tabs, Tab } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
+import * as ReactGA from "react-ga";
 
 import './Admin.css';
 import Approach from './Approach';
@@ -80,6 +81,10 @@ class TermManager extends Component {
     }
 
     render() {
+        // React GA
+        ReactGA.initialize('UA-112382826-1');
+        ReactGA.pageview(window.location.pathname + window.location.search);
+
         return (
             <div>
                 {this.renderContent()}
