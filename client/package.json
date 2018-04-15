@@ -54,7 +54,7 @@
     "jquery": "^3.3.1",
     "jwt-simple": "^0.5.1",
     "mime-types": "^2.1.18",
-    "moment": "^2.22.0",
+    "moment": "^2.22.1",
     "moment-timezone": "^0.5.14",
     "mozaik": "^1.4.4",
     "object-assign": "^4.1.1",
