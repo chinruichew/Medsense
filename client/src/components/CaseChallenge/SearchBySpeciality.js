@@ -97,7 +97,7 @@ class SearchBySpeciality extends Component {
                         </Button>;
 
                         return(
-                            <Col md={4}>
+                            <Col key={index} md={4}>
                                 {caseBox}
                             </Col>
                         );
@@ -128,7 +128,7 @@ class SearchBySpeciality extends Component {
                 return;
             default:
                 let subspecialities = this.state.subspecialityList.map((obj, index) => {
-                    return <option value={obj}>{obj}</option>;
+                    return <option key={index} value={obj}>{obj}</option>;
                 });
                 if (this.state.speciality==="Clinical Practicum") {
                     return <FormGroup controlId="formControlsSubspeciality" style={{ paddingTop: "0", paddingLeft: "7%" }}>
@@ -162,7 +162,7 @@ class SearchBySpeciality extends Component {
 
     render() {
         let specialities = this.state.specialityList.map((obj, index) => {
-            return <option value={obj}>{obj}</option>;
+            return <option key={index} value={obj}>{obj}</option>;
         });
         return (
             <div ref={node => this.node = node}>

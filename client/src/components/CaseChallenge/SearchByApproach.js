@@ -52,7 +52,7 @@ class SearchByApproach extends Component {
             approach: this.state.approach
         }).then(res => {
             if(res.data.length > 0) {
-                const approachCase = res.data.map(approachCase => {
+                const approachCase = res.data.map((approachCase, index) => {
                     const allApproaches = approachCase.approach;
                     let allApproachString = "";
                     for (let k = 0; k < allApproaches.length - 1; k++) {
@@ -77,7 +77,7 @@ class SearchByApproach extends Component {
                     </Button>;
 
                     return(
-                        <Col md={4}>
+                        <Col key={index} md={4}>
                             {caseBox}
                         </Col>
                     );
@@ -108,7 +108,7 @@ class SearchByApproach extends Component {
                 return;
             default:
                 let approaches = this.state.approachList.map((obj, index) => {
-                    return <option value={obj}>{obj}</option>;
+                    return <option key={index} value={obj}>{obj}</option>;
                 });
                 return(
                     <div ref={node => this.node = node}>

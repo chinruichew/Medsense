@@ -34,6 +34,7 @@ class GameResults extends Component {
 
                 const mcqAnswers = game.mcqAnswers;
                 let questions = this.props.case.questions.map((question, index) => {
+                    let openEndedAnswer = null;
                     let mcqAnswer = null;
                     for(let i = 0; i < mcqAnswers.length; i++) {
                         if(mcqAnswers[i].questionId === question._id) {
@@ -45,7 +46,7 @@ class GameResults extends Component {
                     let studentAnswer = "";
                     let modelAnswer = '';
                     if (question.type==="MCQ") {
-                        // Concat student answer
+                        // Map student answer
                         const mcqAnswerOptions = mcqAnswer.mcqAnswerOptions;
                         const mcqAnswerOptionMapping = [];
                         for(let i = 0; i < mcqAnswerOptions.length; i++) {
@@ -117,7 +118,7 @@ class GameResults extends Component {
                         // Get student answer
                         const openEndedAnswers = game.openEndedAnswers;
                         for(let i = 0; i < openEndedAnswers.length; i++) {
-                            const openEndedAnswer = openEndedAnswers[i];
+                            openEndedAnswer = openEndedAnswers[i];
                             if(openEndedAnswer.questionId === question._id) {
                                 studentAnswer = ReactHtmlParser(openEndedAnswer.studentAnswer);
                                 break;
@@ -125,6 +126,8 @@ class GameResults extends Component {
                         }
                     }
 
+                    const answer = openEndedAnswer === null? mcqAnswer: openEndedAnswer;
+                    const scoreStyle = answer.score < answer.mark/2? 'red': 'green';
                     const qnTitle = <span className="title" style={{fontSize: "180%"}}><strong>Question {question.id}</strong></span>;
 
                     if(question.id === "1"){
@@ -136,6 +139,7 @@ class GameResults extends Component {
                                             <Panel.Title toggle>{qnTitle}</Panel.Title>
                                         </Panel.Heading>
                                         <Panel.Body collapsible>
+                                            <h3 style={{color: scoreStyle}}>Your Score: {answer.score}/{answer.mark}</h3>
                                             <div className="row">
                                                 <div className="col-md-12">
                                                     <h3 className="result-heading">Case Scenario</h3>
@@ -193,6 +197,7 @@ class GameResults extends Component {
                                             <div className="row">
                                                 {stem}
                                             </div>
+                                            <h3 style={{color: scoreStyle}}>Your Score: {answer.score}/{answer.mark}</h3>
                                             <h3 className="result-heading">Question</h3>
                                             <h4>
                                                 {ReactHtmlParser(question.question)}
