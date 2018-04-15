@@ -237,7 +237,7 @@ class OpenEndedQuestion extends Component {
                                 whiteSpace: "pre-wrap", wordBreak: "keep-all" }}>{this.renderScenario()}
                             </h4>
                             <h4 style={{ border: "0", background: "white", padding: "0", fontSize: "medium",
-                                whiteSpace: "pre-wrap", wordBreak: "keep-all" }}>{ReactHtmlParser(this.props.question.question)} ({this.state.mark} mark)
+                                whiteSpace: "pre-wrap", wordBreak: "keep-all" }}>{ReactHtmlParser(this.props.question.question)} ({this.state.mark} {this.state.mark > 1? 'marks': 'mark'})
                             </h4>
                             <br/>
                             <Row style={{margin: "0", padding:"0"}}>
