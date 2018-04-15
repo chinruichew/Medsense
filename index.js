@@ -31,7 +31,7 @@ const app = express();
 
 /* Start of Console Log configuration */
 const log = console.log;
-console.log = function(){
+console.log = function() {
     log.call(console, 'Logging -> [' + new Date().toString() + ']');
     log.apply(console, arguments);
 };
