@@ -9,7 +9,7 @@ import './Admin.css';
 import Approach from './Approach';
 import Speciality from './Speciality';
 import Subspeciality from './Subspeciality';
-import { fetchApproach2, fetchSpeciality, fetchSubspeciality } from '../../actions';
+import {fetchApproach, fetchSpeciality, fetchSubspeciality} from '../../actions';
 
 class TermManager extends Component {
     state = {
@@ -25,7 +25,7 @@ class TermManager extends Component {
     }
 
     componentWillMount() {
-        this.props.fetchApproach2();
+        this.props.fetchApproach();
         this.props.fetchSpeciality();
         this.props.fetchSubspeciality();
     }
@@ -99,4 +99,4 @@ function mapStateToProps({ auth, approach, speciality, subspeciality }) {
 
 
 
-export default connect(mapStateToProps, { fetchApproach2, fetchSpeciality, fetchSubspeciality })(TermManager);
+export default connect(mapStateToProps, { fetchApproach, fetchSpeciality, fetchSubspeciality })(TermManager);

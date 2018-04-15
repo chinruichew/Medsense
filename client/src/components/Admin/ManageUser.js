@@ -148,15 +148,15 @@ class ManageUser extends Component {
     }
 
     setSpeciality() {
-        var specialityArray = []
-        for (var i in this.state.fetchSSS) {
+        const specialityArray = [];
+        for (let i in this.state.fetchSSS) {
             specialityArray.push((this.state.fetchSSS)[i].speciality);
         }
         let items = [];
         items.push(<option value="">Select Speciality</option>);
-        for (var i = 0; i < specialityArray.length; i++) {
-            var object = specialityArray[i]
-            if (object != null) {
+        for (let i = 0; i < specialityArray.length; i++) {
+            const object = specialityArray[i];
+            if (object !== null) {
                 items.push(<option key={object} value={object}>{object}</option>);
             }
         }
@@ -174,10 +174,10 @@ class ManageUser extends Component {
     }
     setSubspeciality() {
         if (this.state.usertype === this.state.constants.USER_TYPE_PROFESSOR) {
-            var subspecialityArray = []
-            for (var i in this.state.fetchSSS) {
-                if ((this.state.fetchSSS)[i].speciality == this.state.speciality) {
-                    for (var j in this.state.fetchSSS[i].subspecialities) {
+            const subspecialityArray = [];
+            for (let i in this.state.fetchSSS) {
+                if ((this.state.fetchSSS)[i].speciality === this.state.speciality) {
+                    for (let j in this.state.fetchSSS[i].subspecialities) {
                         // console.log(this.state.fetchSSS[i].subspecialities[j].subspeciality)
                         subspecialityArray.push(this.state.fetchSSS[i].subspecialities[j].subspeciality)
                     }
@@ -185,13 +185,13 @@ class ManageUser extends Component {
             }
             let items = [];
             items.push(<option value="">Select All Relevant</option>);
-            for (var i = 0; i < subspecialityArray.length; i++) {
-                var object = subspecialityArray[i]
+            for (let i = 0; i < subspecialityArray.length; i++) {
+                const object = subspecialityArray[i];
                 if (object != null) {
                     items.push(<option key={object} value={object}>{object}</option>);
                 }
             }
-            if (this.state.speciality != "") {
+            if (this.state.speciality !== "") {
                 return (
                     <FormGroup controlId="formControlsSubspeciality">
                         <ControlLabel style={{ fontSize: "150%" }}>Sub-speciality
@@ -268,7 +268,7 @@ class ManageUser extends Component {
         this.props.deleteAdminStudent(this.state.useridToDelete);
     }
 
-    convert(xp) {
+    convert = (xp) => {
         let level = 1;
         if (xp < 480) {
             level = 1;
@@ -276,7 +276,7 @@ class ManageUser extends Component {
             level = Math.floor((120 + Math.sqrt(120 ** 2 - 4 * 120 * (240 - xp))) / (2 * 120));
         }
         return level;
-    }
+    };
 
     renderStudents = () => {
         switch (this.state.recommendations) {
@@ -474,7 +474,6 @@ class ManageUser extends Component {
                         <Button onClick={(e) => this.setState({ showDeleteStuConfirm: false })}>No</Button>
                     </Modal.Footer>
                 </Modal>
-
             </div>
         );
     }

@@ -11,10 +11,6 @@ class Speciality extends Component {
         specialityidToDelete: ""
     };
 
-    componentDidMount() {
-
-    }
-
     renderTableSpeciality() {
         return (
             <Table responsive>
@@ -83,12 +79,11 @@ class Speciality extends Component {
         } else {
             this.props.addNewSpeciality(this.state).then(function (response) {
                 if (response.data === "Speciality Exists") {
-                    window.alert("Speciality Exists")
+                    window.alert("Speciality Exists");
                 } else {
-                    window.alert("Speciality Created")
+                    window.alert("Speciality Created");
                 }
-            })
-            console.log(this.state.speciality)
+            });
         }
     }
 
@@ -109,8 +104,8 @@ class Speciality extends Component {
                         Are you sure you want to delete this speciality?
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button onClick={(e) => this.deleteAdminSpeciality(e) }>Yes</Button>
-                        <Button onClick={(e) => this.setState({ showDeleteConfirm: false})}>No</Button>
+                        <Button bsStyle="success" onClick={(e) => this.deleteAdminSpeciality(e) }>Yes</Button>
+                        <Button bsStyle="danger" onClick={(e) => this.setState({ showDeleteConfirm: false})}>No</Button>
                     </Modal.Footer>
                 </Modal>
 

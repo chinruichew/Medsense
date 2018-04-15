@@ -8,11 +8,6 @@ module.exports = app => {
         res.send(approaches);
     });
 
-    app.post('/api/fetchApproach2', async (req, res) => {
-        const approaches = await Approach.find({}).sort("approach");
-        res.send(approaches);
-    });
-
     app.post('/api/addNewApproach', function (req, res) {
         const values = req.body.values;
         Approach.findOne({ approach: values.approach }, async (err, approach) => {

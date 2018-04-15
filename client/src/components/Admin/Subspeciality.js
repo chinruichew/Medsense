@@ -43,7 +43,7 @@ class Subspeciality extends Component {
         let allSubspeciality = this.props.subspeciality.map(subspeciality => {
             return <tr>
                 <td><center>{subspeciality.subspeciality}</center></td>
-                <td><Button onClick={(e) => this.deleteAdminSubspeciality(subspeciality)}>Delete</Button></td >
+                <td><Button bsStyle="primary" onClick={(e) => this.deleteAdminSubspeciality(subspeciality)}>Delete</Button></td >
             </tr>
         });
 
@@ -57,9 +57,9 @@ class Subspeciality extends Component {
 
     setSpecialities() {
         let items = [];
-        for (var i = 0; i <= this.state.fetchedspecialities.length; i++) {
-            var arr = this.state.fetchedspecialities;
-            var object = arr[i]
+        for (let i = 0; i <= this.state.fetchedspecialities.length; i++) {
+            const arr = this.state.fetchedspecialities;
+            const object = arr[i];
             if (object != null) {
                 items.push(<option key={object.speciality} value={object.speciality}>{object.speciality}</option>);
             }
@@ -103,8 +103,7 @@ class Subspeciality extends Component {
                 } else {
                     window.alert("Subspeciality Created")
                 }
-            })
-            console.log(this.state.subspeciality)
+            });
         }
     }
 

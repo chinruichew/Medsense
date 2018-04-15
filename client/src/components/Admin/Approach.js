@@ -11,10 +11,6 @@ class Approach extends Component {
         approachidToDelete: ""
     };
 
-    componentDidMount() {
-
-    }
-
     renderTableApproach() {
         return (
             <Table responsive>
@@ -79,13 +75,13 @@ class Approach extends Component {
 
     addApproach() {
         if (this.state.approach.trim() === '' || this.state.approach == null) {
-            window.alert("Approach not filled")
+            window.alert("Approach not filled");
         } else {
             this.props.addNewApproach(this.state).then(function (response) {
                 if (response.data === "Approach Exists") {
-                    window.alert("Approach Exists")
+                    window.alert("Approach Exists");
                 } else {
-                    window.alert("Approach Created")
+                    window.alert("Approach Created");
                 }
             });
         }
@@ -109,8 +105,8 @@ class Approach extends Component {
                         Are you sure you want to delete this approach?
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button onClick={(e) => this.deleteAdminApproach(e) }>Yes</Button>
-                        <Button onClick={(e) => this.setState({ showDeleteConfirm: false})}>No</Button>
+                        <Button bsStyle="success" onClick={(e) => this.deleteAdminApproach(e) }>Yes</Button>
+                        <Button bsStyle="danger" onClick={(e) => this.setState({ showDeleteConfirm: false})}>No</Button>
                     </Modal.Footer>
                 </Modal>
             </div>

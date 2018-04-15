@@ -40,7 +40,6 @@ class Admin extends Component {
                                         <div className="col-sm-4 text-center" style={{ fontSize: '150%' }}>
                                             <a href="/admin_dashboard"><img src="./user_statistics.png" alt="User Statistics" style={{ height: "400px" }} /><br /><br />User Statistics</a>
                                         </div>
-
                                     </div>
                                     <br />
                                 </div>
@@ -71,7 +70,6 @@ class Admin extends Component {
             <div>
                 <div className='col-sm-9 col-sm-offset-1'>
                     <ButtonToolbar>
-                        {/* <Button bsStyle="default" onClick={(e) => this.goToAdmin()}>Admin HomePage</Button> */}
                         <Button bsStyle="default" onClick={(e) => this.goToCaseManager()}>Case Management</Button>
                         <Button bsStyle="default" onClick={(e) => this.goToUserManager()}>User Management</Button>
                     </ButtonToolbar>

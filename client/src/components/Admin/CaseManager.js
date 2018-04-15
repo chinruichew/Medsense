@@ -60,7 +60,7 @@ class CaseManager extends Component {
 
     componentWillMount() {
         this.props.fetchAdminCases();
-        axios.post('/api/fetchApproach2', {
+        axios.post('/api/fetchApproach', {
         }).then(res => {
             this.setState({approachList:res.data});
         });
@@ -151,9 +151,6 @@ class CaseManager extends Component {
         if (value.length > 0) {
             this.setState({ approach: value });
         }
-        // const value = e.target.value;
-        // this.setState({ approach: value });
-        // this.update(value, "approach");
     }
     handleScenarioChange(e) {
         const value = e.target.value;
@@ -418,7 +415,7 @@ class CaseManager extends Component {
         let difficulty = "";
         let learning = "";
 
-        if(this.state.oneCase != '') {
+        if(this.state.oneCase !== '') {
             scenario = this.state.oneCase.scenario;
             console.log(this.state.oneCase);
             caseStatus = this.state.oneCase.status;

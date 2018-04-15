@@ -23,7 +23,7 @@ module.exports = app => {
                 usertype: constants.USER_TYPE_ADMIN
             }).select("-password");
         }
-        console.log(users)
+        console.log(users);
         res.send(users);
     });
 
