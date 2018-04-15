@@ -16,7 +16,9 @@ class ProfessorProfile extends Component {
         oldPassword: '',
         newPassword: '',
         newPasswordConfirmation: '',
-        contributionRank: null
+        contributionRank: null,
+        specialityList: [],
+        subspecialityList: []
     };
 
     componentDidMount(){
@@ -34,10 +36,29 @@ class ProfessorProfile extends Component {
         }).catch(err => {
             console.log(err);
         });
+        axios.post('/api/fetchSpeciality', {
+        }).then(res => {
+            this.setState({specialityList:res.data});
+        });
+        axios.post('/api/fetchSubspeciality', {
+            speciality: this.props.speciality
+        }).then(res => {
+            this.setState({subspecialityList: res.data[0].subspecialities});
+        });
     }
 
     handleSpecialityChange = (e) =>{
-        this.setState({ speciality: e.target.value });
+        const value = e.target.value;
+        this.setState({ speciality: value });
+        if (value==="Select One") {
+            this.setState({subspecialityList: []});
+        } else {
+            axios.post('/api/fetchSubspeciality', {
+                speciality: value,
+            }).then(res => {
+                this.setState({subspecialityList: res.data[0].subspecialities});
+            });
+        }
     };
 
     handleSubSpecialityChange = (e) =>{
@@ -99,7 +120,6 @@ class ProfessorProfile extends Component {
         }
         return true;
     };
-
     handlePasswordChange = () => {
         if(this.validatePassword()) {
             axios.post('/api/changePassword', {
@@ -131,8 +151,16 @@ class ProfessorProfile extends Component {
     };
 
     render() {
+        let specialities = this.state.specialityList.map((obj, index) => {
+            if (obj.speciality!=="Clinical Practicum"){
+                return <option key={index} value={obj.speciality}>{obj.speciality}</option>;
+            }
+        });
+        let subspecialities = this.state.subspecialityList.map((obj, index) => {
+            return <option key={index} value={obj.subspeciality}>{obj.subspeciality}</option>;
+        });
         let subSpeciality = this.state.subspeciality.map((obj, index) => {
-           return <p key={index}>{obj}</p>;
+            return <p key={index}>{obj}</p>;
         });
 
         const popover = (
@@ -147,7 +175,6 @@ class ProfessorProfile extends Component {
         const contributionRank = this.state.contributionRank === "" ? "" : <td style={{width: '100px'}} ><center>
             <h4> {this.state.contributionRank} </h4>
         </center></td>;
-
         return (
             <div>
                 <div align="center">
@@ -203,20 +230,18 @@ class ProfessorProfile extends Component {
                                 <div className="input-group">
                                     <span className="input-group-addon"><i className="fa fa-heartbeat fa-lg" aria-hidden="true"></i></span>
                                     <select className="form-control" value={this.state.speciality} onChange={(e) => this.handleSpecialityChange(e)}>
-                                        <option value="Medicine">Medicine</option>
-                                        <option value="Surgery">Surgery</option>
-                                        <option value="Orthopedics">Orthopedics</option>
-                                        <option value="Others">Others</option>
+                                        {specialities}
                                     </select>
                                 </div>
                             </div>
                         </div>
-
                         <div className="main-center" style={{paddingTop:'0%', paddingBottom:'0%'}}>
                             <div className="form-group">
                                 <div className="input-group">
                                     <span className="input-group-addon"><i className="fa fa-plus-square fa-lg" aria-hidden="true"></i></span>
-                                    {this.setSubspeciality()}
+                                    <select className="form-control" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubSpecialityChange(e)} multiple>
+                                        {subspecialities}
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -241,7 +266,6 @@ class ProfessorProfile extends Component {
                                 </Button>
                             </div>
                         </center>
-
                         <div className="main-center" style={{paddingTop:'0%', paddingBottom:'0%'}}>
                             <form>
                                 <FormGroup>
@@ -274,75 +298,6 @@ class ProfessorProfile extends Component {
             </div>
         )
     }
-
-
-    setSubspeciality() {
-        if (this.state.speciality === "Medicine") {
-            return (
-                <select className="form-control" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubSpecialityChange(e)} multiple>
-                    {/*<option value="Select One">Select One</option>*/}
-                    <option value="Cardiology">Cardiology</option>
-                    <option value="Endocrinology">Endocrinology</option>
-                    <option value="Gastroenterology & Hepatology">Gastroenterology & Hepatology</option>
-                    <option value="Haematology">Haematology</option>
-                    <option value="Internal Medicine">Internal Medicine</option>
-                    <option value="Medical Oncology">Medical Oncology</option>
-                    <option value="Neurology">Neurology</option>
-                    <option value="Renal Medicine">Renal Medicine</option>
-                    <option value="Respiratory & Critical Care Medicine">Respiratory & Critical Care Medicine</option>
-                    <option value="Rheumatology & Immunology">Rheumatology & Immunology</option>
-                </select>
-            );
-        } else if (this.state.speciality === "Others") {
-            return (
-                <select className="form-control" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubSpecialityChange(e)} multiple>
-                    {/*<option value="Select One">Select One</option>*/}
-                    <option value="Anaesthesiology">Anaesthesiology</option>
-                    <option value="Ear Nose & Throat">Ear Nose & Throat</option>
-                    <option value="Emergency Medicine">Emergency Medicine</option>
-                    <option value="Geriatric Medicine">Geriatric Medicine</option>
-                    <option value="Infectious Diseases">Infectious Diseases</option>
-                    <option value="Neonatal">Neonatal</option>
-                    <option value="Obstetrics & Gynaecology">Obstetrics & Gynaecology</option>
-                    <option value="Ophthalmology">Ophthalmology</option>
-                    <option value="Palliative Medicine">Palliative Medicine</option>
-                    <option value="Psychiatry">Psychiatry</option>
-                    <option value="Rehabilitation Medicine">Rehabilitation Medicine</option>
-                </select>
-            );
-        } else if (this.state.speciality === "Surgery") {
-            return (
-                <select className="form-control" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubSpecialityChange(e)} multiple>
-                    {/*<option value="Select One">Select One</option>*/}
-                    <option value="Breast">Breast</option>
-                    <option value="Colorectal">Colorectal</option>
-                    <option value="General Surgery">General Surgery</option>
-                    <option value="Head & Neck">Head & Neck</option>
-                    <option value="Hepato-pancreato-biliary">Hepato-pancreato-biliary</option>
-                    <option value="Surgical Oncology">Surgical Oncology</option>
-                    <option value="Upper Gastrointestinal & Bariatric Surgery">Upper Gastrointestinal & Bariatric Surgery</option>
-                    <option value="Urology">Urology</option>
-                    <option value="Vascular Surgery">Vascular Surgery</option>
-                </select>
-            );
-        } else if (this.state.speciality === "Orthopedics") {
-            return (
-                <select className="form-control" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubSpecialityChange(e)} multiple>
-                        {/*<option value="Select One">Select One</option>*/}
-                        <option value="Foot and Ankle Surgery">Foot and Ankle Surgery</option>
-                        <option value="Hip and Knee Surgery">Hip and Knee Surgery</option>
-                        <option value="Musculoskeletal Oncology">Musculoskeletal Oncology</option>
-                        <option value="Musculoskeletal Trauma">Musculoskeletal Trauma</option>
-                        <option value="Paediatric Orthopaedics">Paediatric Orthopaedics</option>
-                        <option value="Shoulder & Elbow Surgery">Shoulder & Elbow Surgery</option>
-                        <option value="Spine Surgery">Spine Surgery</option>
-                        <option value="Sports medicine">Sports medicine</option>
-                        <option value="Department of Hand & Reconstructive Microsurgery Trauma">Department of Hand & Reconstructive Microsurgery Trauma</option>
-                </select>
-            );
-        }
-        return;
-    }
 }
 
 function mapStateToProps({ auth }) {
@@ -350,4 +305,3 @@ function mapStateToProps({ auth }) {
 }
 
 export default connect(mapStateToProps, { updateProfessor })(ProfessorProfile);
-
