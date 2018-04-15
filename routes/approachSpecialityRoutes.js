@@ -181,12 +181,4 @@ module.exports = app => {
         Subspeciality.find({ _id: req.body.values }, function (err, deleteSubspeciality) { }).remove().exec();
         return res.status(201).send({ data: null, message: "deleteSubspeciality success" });
     });
-
-    app.post('/api/fetchSSS', async (req, res) => {
-        const sss = await Speciality.find({ }).populate({
-            path: 'subspecialities',
-            model: 'subspecialities'
-        });
-        res.send(sss)
-    });
 };

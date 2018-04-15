@@ -8,7 +8,6 @@ import './Admin.css';
 
 class ManageUser extends Component {
     state = {
-        fetchSSS: [],
         display: 'user',
         usertype: 'Student',
         username: '',
@@ -36,10 +35,6 @@ class ManageUser extends Component {
             this.setState({ recommendations: res.data });
         }).catch(err => {
             console.log(err);
-        });
-
-        axios.post('/api/fetchSSS', {}).then(res => {
-            this.setState({ fetchSSS: res.data })
         });
     }
 
@@ -148,24 +143,16 @@ class ManageUser extends Component {
     }
 
     setSpeciality() {
-        var specialityArray = []
-        for (var i in this.state.fetchSSS) {
-            specialityArray.push((this.state.fetchSSS)[i].speciality);
-        }
-        let items = [];
-        items.push(<option value="">Select Speciality</option>);
-        for (var i = 0; i < specialityArray.length; i++) {
-            var object = specialityArray[i]
-            if (object != null) {
-                items.push(<option key={object} value={object}>{object}</option>);
-            }
-        }
         if (this.state.usertype === this.state.constants.USER_TYPE_PROFESSOR) {
             return (
                 <FormGroup controlId="formControlsSpeciality" style={{ paddingBottom: "0" }}>
                     <ControlLabel style={{ fontSize: "150%" }}>Speciality</ControlLabel>
                     <FormControl componentClass="select" value={this.state.speciality} name="speciality" onChange={(e) => this.handleSpecialityChange(e)}>
-                        {items}
+                        <option value="">Select Speciality</option>
+                        <option value="Medicine">Medicine</option>
+                        <option value="Surgery">Surgery</option>
+                        <option value="Orthopedics">Orthopedics</option>
+                        <option value="Others">Others</option>
                     </FormControl>
                 </FormGroup>
             );
@@ -174,24 +161,7 @@ class ManageUser extends Component {
     }
     setSubspeciality() {
         if (this.state.usertype === this.state.constants.USER_TYPE_PROFESSOR) {
-            var subspecialityArray = []
-            for (var i in this.state.fetchSSS) {
-                if ((this.state.fetchSSS)[i].speciality == this.state.speciality) {
-                    for (var j in this.state.fetchSSS[i].subspecialities) {
-                        // console.log(this.state.fetchSSS[i].subspecialities[j].subspeciality)
-                        subspecialityArray.push(this.state.fetchSSS[i].subspecialities[j].subspeciality)
-                    }
-                }
-            }
-            let items = [];
-            items.push(<option value="">Select All Relevant</option>);
-            for (var i = 0; i < subspecialityArray.length; i++) {
-                var object = subspecialityArray[i]
-                if (object != null) {
-                    items.push(<option key={object} value={object}>{object}</option>);
-                }
-            }
-            if (this.state.speciality != "") {
+            if (this.state.speciality === "Medicine") {
                 return (
                     <FormGroup controlId="formControlsSubspeciality">
                         <ControlLabel style={{ fontSize: "150%" }}>Sub-speciality
@@ -200,12 +170,103 @@ class ManageUser extends Component {
                             </div>
                         </ControlLabel>
                         <FormControl size='8' componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)} multiple>
-                            {items}
+                            <option value="Select One">Select All Relevant</option>
+                            <option value="Cardiology">Cardiology</option>
+                            <option value="Endocrinology">Endocrinology</option>
+                            <option value="Gastroenterology & Hepatology">Gastroenterology & Hepatology</option>
+                            <option value="Haematology">Haematology</option>
+                            <option value="Internal Medicine">Internal Medicine</option>
+                            <option value="Medical Oncology">Medical Oncology</option>
+                            <option value="Neurology">Neurology</option>
+                            <option value="Renal Medicine">Renal Medicine</option>
+                            <option value="Respiratory & Critical Care Medicine">Respiratory & Critical Care Medicine</option>
+                            <option value="Rheumatology & Immunology">Rheumatology & Immunology</option>
+                        </FormControl>
+                    </FormGroup>
+                );
+            } else if (this.state.speciality === "Others") {
+                return (
+                    <FormGroup controlId="formControlsSubspeciality">
+                        <ControlLabel style={{ fontSize: "150%" }}>Sub-speciality
+                            <br />
+                            <div style={{ fontSize: "70%", fontWeight: "200" }}>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.
+                            </div>
+                        </ControlLabel>
+                        <FormControl size='8' componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)} multiple>
+                            <option value="Select One">Select All Relevant</option>
+                            <option value="Anaesthesiology">Anaesthesiology</option>
+                            <option value="Ear Nose & Throat">Ear Nose & Throat</option>
+                            <option value="Emergency Medicine">Emergency Medicine</option>
+                            <option value="Geriatric Medicine">Geriatric Medicine</option>
+                            <option value="Infectious Diseases">Infectious Diseases</option>
+                            <option value="Neonatal">Neonatal</option>
+                            <option value="Obstetrics & Gynaecology">Obstetrics & Gynaecology</option>
+                            <option value="Ophthalmology">Ophthalmology</option>
+                            <option value="Palliative Medicine">Palliative Medicine</option>
+                            <option value="Psychiatry">Psychiatry</option>
+                            <option value="Rehabilitation Medicine">Rehabilitation Medicine</option>
+                        </FormControl>
+                    </FormGroup>
+                );
+            } else if (this.state.speciality === "Surgery") {
+                return (
+                    <FormGroup controlId="formControlsSubspeciality">
+                        <ControlLabel style={{ fontSize: "150%" }}>Sub-speciality
+                            <br />
+                            <div style={{ fontSize: "70%", fontWeight: "200" }}>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.
+                            </div>
+                        </ControlLabel>
+                        <FormControl size='8' componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)} multiple>
+                            <option value="Select One">Select All Relevant</option>
+                            <option value="Breast">Breast</option>
+                            <option value="Colorectal">Colorectal</option>
+                            <option value="General Surgery">General Surgery</option>
+                            <option value="Head & Neck">Head & Neck</option>
+                            <option value="Hepato-pancreato-biliary">Hepato-pancreato-biliary</option>
+                            <option value="Surgical Oncology">Surgical Oncology</option>
+                            <option value="Upper Gastrointestinal & Bariatric Surgery">Upper Gastrointestinal & Bariatric Surgery</option>
+                            <option value="Urology">Urology</option>
+                            <option value="Vascular Surgery">Vascular Surgery</option>
+                        </FormControl>
+                    </FormGroup>
+                );
+
+            } else if (this.state.speciality === "Orthopedics") {
+                return (
+                    <FormGroup controlId="formControlsSubspeciality">
+                        <ControlLabel style={{ fontSize: "150%" }}>Sub-speciality
+                            <br />
+                            <div style={{ fontSize: "70%", fontWeight: "200" }}>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.
+                            </div>
+                        </ControlLabel>
+                        <FormControl size='8' componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)} multiple>
+                            <option value="Select One">Select All Relevant</option>
+                            <option value="Foot and Ankle Surgery">Foot and Ankle Surgery</option>
+                            <option value="Hip and Knee Surgery">Hip and Knee Surgery</option>
+                            <option value="Musculoskeletal Oncology">Musculoskeletal Oncology</option>
+                            <option value="Musculoskeletal Trauma">Musculoskeletal Trauma</option>
+                            <option value="Paediatric Orthopaedics">Paediatric Orthopaedics</option>
+                            <option value="Shoulder & Elbow Surgery">Shoulder & Elbow Surgery</option>
+                            <option value="Spine Surgery">Spine Surgery</option>
+                            <option value="Sports medicine">Sports medicine</option>
+                            <option value="Department of Hand & Reconstructive Microsurgery Trauma">Department of Hand & Reconstructive Microsurgery Trauma</option>
+                        </FormControl>
+                    </FormGroup>
+                );
+
+            } else {
+                return (
+                    <FormGroup controlId="formControlsSubspeciality">
+                        <ControlLabel style={{ fontSize: "150%" }}>Sub-speciality</ControlLabel>
+                        <FormControl componentClass="select" value={this.state.subspeciality} name="subspeciality" onChange={(e) => this.handleSubspecialityChange(e)}>
+                            <option value="Select One">Please select a Speciality first</option>
                         </FormControl>
                     </FormGroup>
                 );
             }
+
         }
+
     }
 
     handleSeniorChange(e) {
@@ -239,32 +300,32 @@ class ManageUser extends Component {
     }
 
     handleDeleteAdminProfessor(e) {
-        this.setState({ useridToDelete: e._id });
-        this.setState({ showDeleteProfConfirm: true });
+        this.setState({useridToDelete: e._id});
+        this.setState({showDeleteProfConfirm: true});
     }
 
     handleDeleteAdminStudent(e) {
-        this.setState({ useridToDelete: e._id });
-        this.setState({ showDeleteStuConfirm: true });
+        this.setState({useridToDelete: e._id});
+        this.setState({showDeleteStuConfirm: true});
     }
 
     handleDeleteAdminAdmin(e) {
-        this.setState({ useridToDelete: e._id });
-        this.setState({ showDeleteAdminConfirm: true });
+        this.setState({useridToDelete: e._id});
+        this.setState({showDeleteAdminConfirm: true});
     }
 
-    deleteAdminProfessor(e) {
-        this.setState({ showDeleteProfConfirm: false });
+    deleteAdminProfessor(e){
+        this.setState({showDeleteProfConfirm: false});
         this.props.deleteAdminProfessor(this.state.useridToDelete);
     }
 
-    deleteAdminAdmin(e) {
-        this.setState({ showDeleteAdminConfirm: false });
+    deleteAdminAdmin(e){
+        this.setState({showDeleteAdminConfirm: false});
         this.props.deleteAdminAdmin(this.state.useridToDelete);
     }
 
-    deleteAdminStudent(e) {
-        this.setState({ showDeleteStuConfirm: false });
+    deleteAdminStudent(e){
+        this.setState({showDeleteStuConfirm: false});
         this.props.deleteAdminStudent(this.state.useridToDelete);
     }
 
@@ -279,7 +340,7 @@ class ManageUser extends Component {
     }
 
     renderStudents = () => {
-        switch (this.state.recommendations) {
+        switch(this.state.recommendations) {
             case null:
                 return;
             default:
@@ -287,9 +348,9 @@ class ManageUser extends Component {
                     if (user.usertype === this.state.constants.USER_TYPE_STUDENT) {
                         // Calculate total clicks for each student
                         let totalClicks = 0;
-                        for (let i = 0; i < this.state.recommendations.length; i++) {
+                        for(let i = 0; i < this.state.recommendations.length; i++) {
                             const recommendation = this.state.recommendations[i];
-                            if (recommendation.user._id === user._id) {
+                            if(recommendation.user._id === user._id) {
                                 totalClicks += recommendation.recommendationClicks.length;
                             }
                         }
@@ -311,7 +372,7 @@ class ManageUser extends Component {
                 if (this.state.usertype === this.state.constants.USER_TYPE_STUDENT) {
                     return (
                         <tbody>
-                            {allStudents}
+                        {allStudents}
                         </tbody>
                     );
                 }
@@ -377,7 +438,7 @@ class ManageUser extends Component {
 
     renderProfessors() {
         let allProfessors = this.props.adminUsers.map(user => {
-            // console.log(user);
+            console.log(user);
             if (user.usertype === this.state.constants.USER_TYPE_PROFESSOR) {
                 return <tr>
                     <td><center>{user.username}</center></td>
@@ -414,7 +475,7 @@ class ManageUser extends Component {
 
     render() {
         return (
-            <div style={{ paddingTop: "1%" }}>
+            <div style={{paddingTop: "1%"}}>
                 {this.setUserType()}
                 {this.setUsername()}
                 {this.setSchool()}
@@ -440,8 +501,8 @@ class ManageUser extends Component {
                         Are you sure you want to delete this user?
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button onClick={(e) => this.deleteAdminProfessor(e)}>Yes</Button>
-                        <Button onClick={(e) => this.setState({ showDeleteProfConfirm: false })}>No</Button>
+                        <Button onClick={(e) => this.deleteAdminProfessor(e) }>Yes</Button>
+                        <Button onClick={(e) => this.setState({ showDeleteProfConfirm: false})}>No</Button>
                     </Modal.Footer>
                 </Modal>
 
@@ -455,8 +516,8 @@ class ManageUser extends Component {
                         Are you sure you want to delete this user?
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button onClick={(e) => this.deleteAdminAdmin(e)}>Yes</Button>
-                        <Button onClick={(e) => this.setState({ showDeleteAdminConfirm: false })}>No</Button>
+                        <Button onClick={(e) => this.deleteAdminAdmin(e) }>Yes</Button>
+                        <Button onClick={(e) => this.setState({ showDeleteAdminConfirm: false})}>No</Button>
                     </Modal.Footer>
                 </Modal>
 
@@ -470,8 +531,8 @@ class ManageUser extends Component {
                         Are you sure you want to delete this user?
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button onClick={(e) => this.deleteAdminStudent(e)}>Yes</Button>
-                        <Button onClick={(e) => this.setState({ showDeleteStuConfirm: false })}>No</Button>
+                        <Button onClick={(e) => this.deleteAdminStudent(e) }>Yes</Button>
+                        <Button onClick={(e) => this.setState({ showDeleteStuConfirm: false})}>No</Button>
                     </Modal.Footer>
                 </Modal>
 
