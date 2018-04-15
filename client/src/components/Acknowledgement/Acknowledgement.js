@@ -16,7 +16,7 @@ class Acknowledgement extends Component {
                                 <Col sm={4}>
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
-                                            <Image src="./proftay.png" circle style={{width: "14em", height: "14em"}} />
+                                            <Image src="https://s3-ap-southeast-1.amazonaws.com/medsense-team-images/nus-team-images/proftay.png" circle style={{width: "14em", height: "14em"}} />
                                             <h5 style={{textAlign: "center", fontSize: "100%"}}>Prof. Tay Sook Muay</h5>
                                         </Thumbnail>
                                     </center>
@@ -32,7 +32,7 @@ class Acknowledgement extends Component {
                                 <Col sm={4}>
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
-                                            <Image src="./jamie.png" circle style={{width: "14em", height: "14em"}} />
+                                            <Image src="https://s3-ap-southeast-1.amazonaws.com/medsense-team-images/nus-team-images/jamie.png" circle style={{width: "14em", height: "14em"}} />
                                             <h5 style={{textAlign: "center", fontSize: "100%"}}>Kee Xiang Lee Jamie</h5>
                                         </Thumbnail>
                                     </center>
@@ -40,7 +40,7 @@ class Acknowledgement extends Component {
                                 <Col sm={4}>
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
-                                            <Image src="./justin.png" circle style={{width: "14em", height: "14em"}} />
+                                            <Image src="https://s3-ap-southeast-1.amazonaws.com/medsense-team-images/nus-team-images/justin.png" circle style={{width: "14em", height: "14em"}} />
                                             <h5 style={{textAlign: "center", fontSize: "100%"}}>Justin Ng Choon Hwee</h5>
                                         </Thumbnail>
                                     </center>
@@ -48,7 +48,7 @@ class Acknowledgement extends Component {
                                 <Col sm={4}>
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
-                                            <Image src="./andrea.png" circle style={{width: "14em", height: "14em"}} />
+                                            <Image src="https://s3-ap-southeast-1.amazonaws.com/medsense-team-images/nus-team-images/andrea.png" circle style={{width: "14em", height: "14em"}} />
                                             <h5 style={{textAlign: "center", fontSize: "100%"}}>Andrea Ang Jing Shi</h5>
                                         </Thumbnail>
                                     </center>
@@ -58,7 +58,7 @@ class Acknowledgement extends Component {
                                 <Col sm={4}>
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
-                                            <Image src="./jeremy.png" circle style={{width: "14em", height: "14em"}} />
+                                            <Image src="https://s3-ap-southeast-1.amazonaws.com/medsense-team-images/nus-team-images/jeremy.png" circle style={{width: "14em", height: "14em"}} />
                                             <h5 style={{textAlign: "center", fontSize: "100%"}}>Jeremy Teoh</h5>
                                         </Thumbnail>
                                     </center>
@@ -66,7 +66,7 @@ class Acknowledgement extends Component {
                                 <Col sm={4}>
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
-                                            <Image src="./philip.png" circle style={{width: "14em", height: "14em"}} />
+                                            <Image src="https://s3-ap-southeast-1.amazonaws.com/medsense-team-images/nus-team-images/philip.png" circle style={{width: "14em", height: "14em"}} />
                                             <h5 style={{textAlign: "center", fontSize: "100%"}}>Philip Ong Zheng Yang</h5>
                                         </Thumbnail>
                                     </center>
@@ -74,7 +74,7 @@ class Acknowledgement extends Component {
                                 <Col sm={4}>
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
-                                            <Image src="./sarah.png" circle style={{width: "14em", height: "14em"}} />
+                                            <Image src="https://s3-ap-southeast-1.amazonaws.com/medsense-team-images/nus-team-images/sarah.png" circle style={{width: "14em", height: "14em"}} />
                                             <h5 style={{textAlign: "center", fontSize: "100%"}}>Sarah Tham Zhuling</h5>
                                         </Thumbnail>
                                     </center>
@@ -84,7 +84,7 @@ class Acknowledgement extends Component {
                                 <Col sm={4}>
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
-                                            <Image src="./lawrence.png" circle style={{width: "14em", height: "14em"}} />
+                                            <Image src="https://s3-ap-southeast-1.amazonaws.com/medsense-team-images/nus-team-images/lawrence.png" circle style={{width: "14em", height: "14em"}} />
                                             <h5 style={{textAlign: "center", fontSize: "100%"}}>Wong Wen Jun Lawrence</h5>
                                         </Thumbnail>
                                     </center>
@@ -101,7 +101,7 @@ class Acknowledgement extends Component {
                                 <Col sm={4}>
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
-                                            <Image src="./profhp.png" circle style={{width: "14em", height: "14em"}} />
+                                            <Image src="https://s3-ap-southeast-1.amazonaws.com/medsense-team-images/icity-images/profhp.png" circle style={{width: "14em", height: "14em"}} />
                                             <h5 style={{textAlign: "center", fontSize: "100%"}}>Prof. Tan Hwee Pink</h5>
                                         </Thumbnail>
                                     </center>
@@ -109,7 +109,7 @@ class Acknowledgement extends Component {
                                 <Col sm={4}>
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
-                                            <Image style={{width: "14em", height: "14em"}} src="./profhx.png" circle />
+                                            <Image style={{width: "14em", height: "14em"}} src="https://s3-ap-southeast-1.amazonaws.com/medsense-team-images/icity-images/profhx.png" circle />
                                             <h5 style={{textAlign: "center", fontSize: "100%"}}>Prof. Tan Hwee-Xian</h5>
                                         </Thumbnail>
                                     </center>
@@ -117,7 +117,7 @@ class Acknowledgement extends Component {
                                 <Col sm={4}>
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
-                                            <Image src="./icitybt.png" circle style={{width: "14em", height: "14em"}} />
+                                            <Image src="https://s3-ap-southeast-1.amazonaws.com/medsense-team-images/icity-images/icitybt.png" circle style={{width: "14em", height: "14em"}} />
                                             <h5 style={{textAlign: "center", fontSize: "100%"}}>Ng Boon Thai</h5>
                                         </Thumbnail>
                                     </center>
@@ -125,7 +125,7 @@ class Acknowledgement extends Component {
                                 <Col sm={4}>
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
-                                            <Image src="./icitycris.png" circle style={{width: "14em", height: "14em"}} />
+                                            <Image src="https://s3-ap-southeast-1.amazonaws.com/medsense-team-images/icity-images/icitycris.png" circle style={{width: "14em", height: "14em"}} />
                                             <h5 style={{textAlign: "center", fontSize: "100%"}}>Cris Tan Jun Liang</h5>
                                         </Thumbnail>
                                     </center>
@@ -141,7 +141,7 @@ class Acknowledgement extends Component {
                                 <Col sm={4}>
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
-                                            <Image src="./amelia.jpg" circle style={{width: "14em", height: "14em"}} />
+                                            <Image src="https://s3-ap-southeast-1.amazonaws.com/medsense-team-images/zenith-team-images/amelia.jpg" circle style={{width: "14em", height: "14em"}} />
                                             <h5 style={{textAlign: "center", fontSize: "100%"}}>Lee Jing Hua Amelia</h5>
                                         </Thumbnail>
                                     </center>
@@ -149,7 +149,7 @@ class Acknowledgement extends Component {
                                 <Col sm={4}>
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
-                                            <Image src="./chinrui.jpg" circle style={{width: "14em", height: "14em"}} />
+                                            <Image src="https://s3-ap-southeast-1.amazonaws.com/medsense-team-images/zenith-team-images/chinrui.jpg" circle style={{width: "14em", height: "14em"}} />
                                             <h5 style={{textAlign: "center", fontSize: "100%"}}>Chew Chin Rui</h5>
                                         </Thumbnail>
                                     </center>
@@ -157,7 +157,7 @@ class Acknowledgement extends Component {
                                 <Col sm={4}>
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
-                                            <Image src="./ervin.png" circle style={{width: "14em", height: "14em"}} />
+                                            <Image src="https://s3-ap-southeast-1.amazonaws.com/medsense-team-images/zenith-team-images/ervin.png" circle style={{width: "14em", height: "14em"}} />
                                             <h5 style={{textAlign: "center", fontSize: "100%"}}>Ervin Chong Sheng Loong</h5>
                                         </Thumbnail>
                                     </center>
@@ -167,7 +167,7 @@ class Acknowledgement extends Component {
                                 <Col sm={4}>
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
-                                            <Image src="./mingrui.png" circle style={{width: "14em", height: "14em"}} />
+                                            <Image src="https://s3-ap-southeast-1.amazonaws.com/medsense-team-images/zenith-team-images/mingrui.png" circle style={{width: "14em", height: "14em"}} />
                                             <h5 style={{textAlign: "center", fontSize: "100%"}}>Huang Ming Rui</h5>
                                         </Thumbnail>
                                     </center>
@@ -175,7 +175,7 @@ class Acknowledgement extends Component {
                                 <Col sm={4}>
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
-                                            <Image src="./ricky.jpg" circle style={{width: "14em", height: "14em"}} />
+                                            <Image src="https://s3-ap-southeast-1.amazonaws.com/medsense-team-images/zenith-team-images/ricky.jpg" circle style={{width: "14em", height: "14em"}} />
                                             <h5 style={{textAlign: "center", fontSize: "100%"}}>Ricky Franslay</h5>
                                         </Thumbnail>
                                     </center>
@@ -183,7 +183,7 @@ class Acknowledgement extends Component {
                                 <Col sm={4}>
                                     <center>
                                         <Thumbnail style={{width: "17em", height: "17em"}}>
-                                            <Image src="./qimin.jpg" circle style={{width: "14em", height: "14em"}} />
+                                            <Image src="https://s3-ap-southeast-1.amazonaws.com/medsense-team-images/zenith-team-images/qimin.jpg" circle style={{width: "14em", height: "14em"}} />
                                             <h5 style={{textAlign: "center", fontSize: "100%"}}>Wang Qimin</h5>
                                         </Thumbnail>
                                     </center>
