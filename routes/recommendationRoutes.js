@@ -261,7 +261,7 @@ module.exports = app => {
         // Filter answers by user
         const sessionUser = req.session.user;
         const userAnswers = [];
-        for(let i = 0; i < answers.length; i--) {
+        for(let i = 0; i < answers.length; i++) {
             const answer = answers[i];
             if(String(answer.user) === sessionUser._id) {
                 userAnswers.push(answer);
