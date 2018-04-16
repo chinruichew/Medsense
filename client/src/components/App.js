@@ -36,7 +36,7 @@ class App extends Component {
             <BrowserRouter>
                 <HttpsRedirect>
                     <Header />
-                    <Switch>
+                    <div>
                         <Route exact path="/login" component={Login} />
                         <Route exact path="/resetPassword" component={ResetPassword} />
                         <Route exact path="/home" component={Home} />
@@ -52,7 +52,7 @@ class App extends Component {
                         <Route exact path="/" component={About}/>
                         <Route exact path="/about" component={Acknowledgement}/>
                         <Route path="/" component={NotFound} />
-                    </Switch>
+                    </div>
                 </HttpsRedirect>
             </BrowserRouter>
         );
