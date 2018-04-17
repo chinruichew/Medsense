@@ -74,7 +74,7 @@ class ContributionLeaderboard extends Component {
                         <h4><strong><u>Rank</u></strong></h4>
                     </div>
                     <div className="col-md-4 leader_text_font text-center">
-                        <h4><strong><u>Student</u></strong></h4>
+                        <h4><strong><u>User</u></strong></h4>
                     </div>
                     <div className="col-md-4 leader_text_font text-center">
                         <h4><strong><u>No. of Cases</u></strong></h4>

@@ -301,7 +301,7 @@ class ManageUser extends Component {
                             <td><center>{this.convert(user.points)}</center></td>
                             <td><center>{user.points}</center></td>
                             <td><center>{totalClicks}</center></td>
-                            <td><center>{user.previousLogin}</center></td>
+                            <td><center>{user.previousLogin !== null? new Date(user.previousLogin).toUTCString(): ''}</center></td>
                             <td><center>{user.timestamp.split("T")[0]}</center></td>
                             <td><center><Button bsStyle="primary" onClick={(e) => this.handleDeleteAdminStudent(user)}>Delete</Button></center></td >
                         </tr>

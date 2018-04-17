@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Tabs, Tab, Thumbnail, Row, Col, Image } from 'react-bootstrap';
 
-class Acknowledgement extends Component {
+import './Acknowledgement.css';
 
+class Acknowledgement extends Component {
     render() {
         return(
             <div style={{marginLeft: "4%", marginRight: "4%"}}>
@@ -188,7 +189,21 @@ class Acknowledgement extends Component {
                                         </Thumbnail>
                                     </center>
                                 </Col>
-
+                            </Row>
+                        </div>
+                    </Tab>
+                    <Tab eventKey={3} title="Team">
+                        <div className="container-fluid" style={{marginTop: '30px'}}>
+                            <Row class="text-center">
+                                <h2 style={{textAlign: "center", color: "#199ED8", fontWeight: "bold" }}>TEAM ZENITH FYP Final Presentation 2018</h2>
+                                <hr style={{borderColor: "#199ED8", borderWidth: "3px", marginTop: "1%"}}/>
+                                <div className="col-xs-12 col-md-offset-3 col-md-6">
+                                    <div className="panel panel-default">
+                                        <div className="team-panel-image">
+                                            <Image src="https://s3-ap-southeast-1.amazonaws.com/medsense-team-images/combined-team-image.jpg" circle className="panel-image-preview"/>
+                                        </div>
+                                    </div>
+                                </div>
                             </Row>
                         </div>
                     </Tab>
