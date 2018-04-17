@@ -34,7 +34,7 @@ class App extends Component {
     render() {
         return (
             <BrowserRouter>
-                <HttpsRedirect>
+                <div>
                     <Header />
                     <Switch>
                         <Route exact path="/login" component={Login} />
@@ -53,7 +53,7 @@ class App extends Component {
                         <Route exact path="/about" component={Acknowledgement}/>
                         <Route path="/" component={NotFound} />
                     </Switch>
-                </HttpsRedirect>
+                </div>
             </BrowserRouter>
         );
     }
