@@ -40,14 +40,18 @@ class AdminGameStatistics extends Component {
                             const answer = this.state.answers[i];
                             const answerCase = answer.case;
                             let toAdd = true;
-                            for(let j = 0; j < answerSpecialityMap.length; j++) {
-                                const answerSpecialityMapObject = answerSpecialityMap[j];
-                                if(answerSpecialityMapObject.speciality === answerCase.speciality) {
-                                    answerSpecialityMapObject.totalScore += answer.score;
-                                    answerSpecialityMapObject.numAttempts++;
-                                    toAdd = false;
-                                    break;
+                            if(answerCase !== null) {
+                                for(let j = 0; j < answerSpecialityMap.length; j++) {
+                                    const answerSpecialityMapObject = answerSpecialityMap[j];
+                                    if(answerSpecialityMapObject.speciality === answerCase.speciality) {
+                                        answerSpecialityMapObject.totalScore += answer.score;
+                                        answerSpecialityMapObject.numAttempts++;
+                                        toAdd = false;
+                                        break;
+                                    }
                                 }
+                            } else {
+                                toAdd = false;
                             }
                             if(toAdd) {
                                 answerSpecialityMap.push({

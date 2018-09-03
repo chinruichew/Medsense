@@ -295,7 +295,7 @@ class CaseManager extends Component {
                             let totalClicks = 0;
                             for (let i = 0; i < this.state.recommendations.length; i++) {
                                 const recommendation = this.state.recommendations[i];
-                                if (recommendation.case !== undefined && recommendation.case._id === adminCase._id) {
+                                if (recommendation.case !== undefined && recommendation.case !== null && recommendation.case._id === adminCase._id) {
                                     totalClicks += recommendation.recommendationClicks.length;
                                 }
                             }
@@ -304,7 +304,7 @@ class CaseManager extends Component {
                             let totalGamePlays = 0;
                             for (let i = 0; i < this.state.answers.length; i++) {
                                 const answer = this.state.answers[i];
-                                if (answer.case !== undefined && answer.case._id === adminCase._id) {
+                                if (answer.case !== undefined && answer.case !== null && answer.case._id === adminCase._id) {
                                     totalGamePlays++;
                                 }
                             }
