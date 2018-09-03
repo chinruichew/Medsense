@@ -63,7 +63,9 @@ class SearchByApproach extends Component {
                     let numAttempts = 0;
                     for(let i = 0; i < this.state.answers.length; i++) {
                         const answer = this.state.answers[i];
-                        numAttempts = answer.case._id === approachCase._id? numAttempts+1: numAttempts;
+                        if(answer.case !== null) {
+                            numAttempts = answer.case._id === approachCase._id? numAttempts+1: numAttempts;
+                        }
                     }
                     const attemptDisplay = numAttempts > 1? 'Attempts': 'Attempt';
 

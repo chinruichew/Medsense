@@ -343,13 +343,17 @@ module.exports = app => {
                 const userAnswer = userAnswers[i];
                 const answerCase = userAnswer.case;
                 let toAdd = true;
-                for(let j = 0; j < specialities.length; j++) {
-                    const speciality = specialities[j];
-                    if(speciality.speciality === answerCase.speciality) {
-                        toAdd = false;
-                        speciality.numTries += 1;
-                        break;
+                if(answerCase !== null) {
+                    for(let j = 0; j < specialities.length; j++) {
+                        const speciality = specialities[j];
+                        if(speciality.speciality === answerCase.speciality) {
+                            toAdd = false;
+                            speciality.numTries += 1;
+                            break;
+                        }
                     }
+                } else {
+                    toAdd = false;
                 }
                 if(toAdd) {
                     specialities.push({
@@ -375,7 +379,7 @@ module.exports = app => {
                 let averageSpecialityScore = 0;
                 for(let j = 0; j < userAnswers.length; j++) {
                     const userAnswer = userAnswers[j];
-                    if(userAnswer.case.speciality === speciality) {
+                    if(userAnswer.case !== null && userAnswer.case.speciality === speciality) {
                         averageSpecialityScore += userAnswer.score;
                     }
                 }
@@ -386,7 +390,7 @@ module.exports = app => {
                 let numAnswers = 0;
                 for(let j = 0; j < answers.length; j++) {
                     const answer = answers[j];
-                    if(answer.case.speciality === speciality) {
+                    if(answer.case !== null && answer.case.speciality === speciality) {
                         cohortAverageSpecialityScore += answer.score;
                         numAnswers++;
                     }

@@ -24,7 +24,9 @@ class StudentCaseStatistics extends Component {
                         // Clear any duplicate numAttempts due to async state setting.
                         for(let i = 0; i < this.state.answers.length; i++) {
                             const answer = this.state.answers[i];
-                            delete answer.case.numAttempts;
+                            if(answer.case !== null) {
+                                delete answer.case.numAttempts;
+                            }
                         }
 
                         // This step is to find how many attempts have been done per case.
@@ -34,16 +36,20 @@ class StudentCaseStatistics extends Component {
                         for(let i = 0; i < this.state.answers.length; i++) {
                             const answer = this.state.answers[i];
                             let toAdd = true;
-                            for(let j = 0; j < cases.length; j++) {
-                                const answerCase = cases[j];
-                                if(answerCase._id === answer.case._id) {
-                                    toAdd = false;
-                                    if(answerCase.numAttempts === undefined) {
-                                        answerCase.numAttempts = 2;
-                                    } else {
-                                        answerCase.numAttempts ++;
+                            if(answer.case !== null) {
+                                for(let j = 0; j < cases.length; j++) {
+                                    const answerCase = cases[j];
+                                    if(answerCase !== null && answerCase._id === answer.case._id) {
+                                        toAdd = false;
+                                        if(answerCase.numAttempts === undefined) {
+                                            answerCase.numAttempts = 2;
+                                        } else {
+                                            answerCase.numAttempts ++;
+                                        }
                                     }
                                 }
+                            } else {
+                                toAdd = false;
                             }
                             if(toAdd) {
                                 cases.push(answer.case);
