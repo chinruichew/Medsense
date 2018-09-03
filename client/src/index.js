@@ -8,7 +8,8 @@ import 'bootstrap/dist/css/bootstrap-theme.css';
 
 import './index.css';
 import App from './components/App';
-import registerServiceWorker from './registerServiceWorker';
+// import registerServiceWorker from './registerServiceWorker';
+import { unregister } from './registerServiceWorker';
 import reducers from './reducers/index'
 
 const logger = store => {
@@ -28,4 +29,5 @@ const store = createStore(reducers, {}, composeEnhancers(applyMiddleware(logger,
 
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.querySelector('#root'));
 
-registerServiceWorker();
+// registerServiceWorker();
+unregister();
