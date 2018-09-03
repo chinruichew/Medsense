@@ -58,32 +58,34 @@ module.exports = app => {
             for(let i = 0; i < answers.length; i++) {
                 const answer = answers[i];
                 const answerCase = answer.case;
-                const caseSubSpecialities = answerCase.subspeciality;
+                if(answerCase !== null) {
+                    const caseSubSpecialities = answerCase.subspeciality;
 
-                // Loop through caseSubSpecialities & userSubSpecialities, and set isMatch to true if any subspeciality inside matches.
-                // If isMatch is true at the end, add to subSpecialitiesFilteredAnswers.
-                let isMatch = false;
-                for(let j = 0; j < caseSubSpecialities.length; j++) {
-                    const caseSubSpeciality = caseSubSpecialities[j];
-                    for(let k = 0; k < userSubSpecialities.length; k++) {
-                        const userSubSpeciality = userSubSpecialities[k];
-                        if(userSubSpeciality === caseSubSpeciality) {
-                            isMatch = true;
+                    // Loop through caseSubSpecialities & userSubSpecialities, and set isMatch to true if any subspeciality inside matches.
+                    // If isMatch is true at the end, add to subSpecialitiesFilteredAnswers.
+                    let isMatch = false;
+                    for(let j = 0; j < caseSubSpecialities.length; j++) {
+                        const caseSubSpeciality = caseSubSpecialities[j];
+                        for(let k = 0; k < userSubSpecialities.length; k++) {
+                            const userSubSpeciality = userSubSpecialities[k];
+                            if(userSubSpeciality === caseSubSpeciality) {
+                                isMatch = true;
 
-                            // Find the correct sub-speciality mapping in the subSpecialityMapping array and add the score and attempts accordingly.
-                            for(let l = 0; l < subSpecialityMapping.length; l++) {
-                                const subSpecialityMap = subSpecialityMapping[l];
-                                if(subSpecialityMap.subSpeciality === userSubSpeciality) {
-                                    subSpecialityMap.totalScore += answer.score;
-                                    subSpecialityMap.numAttempts++;
-                                    break;
+                                // Find the correct sub-speciality mapping in the subSpecialityMapping array and add the score and attempts accordingly.
+                                for(let l = 0; l < subSpecialityMapping.length; l++) {
+                                    const subSpecialityMap = subSpecialityMapping[l];
+                                    if(subSpecialityMap.subSpeciality === userSubSpeciality) {
+                                        subSpecialityMap.totalScore += answer.score;
+                                        subSpecialityMap.numAttempts++;
+                                        break;
+                                    }
                                 }
                             }
                         }
                     }
-                }
-                if(isMatch) {
-                    subSpecialitiesFilteredAnswers.push(answer);
+                    if(isMatch) {
+                        subSpecialitiesFilteredAnswers.push(answer);
+                    }
                 }
             }
 

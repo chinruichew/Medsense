@@ -263,70 +263,72 @@ class ProfessorOverview extends Component {
                     for (let i = 0; i < answers.length; i++) {
                         const answer = answers[i];
                         const answerCase = answer.case;
-                        const speciality = answerCase.speciality;
-                        const subSpecialities = answerCase.subspeciality;
+                        if(answerCase !== null) {
+                            const speciality = answerCase.speciality;
+                            const subSpecialities = answerCase.subspeciality;
 
-                        // Add speciality scores
-                        let toAdd = true;
-                        for (let i = 0; i < dataMapping.length; i++) {
-                            const dataObject = dataMapping[i];
-                            if (dataObject.name === speciality) {
-                                dataObject.value += answer.score;
-                                toAdd = false;
-                                break;
+                            // Add speciality scores
+                            let toAdd = true;
+                            for (let i = 0; i < dataMapping.length; i++) {
+                                const dataObject = dataMapping[i];
+                                if (dataObject.name === speciality) {
+                                    dataObject.value += answer.score;
+                                    toAdd = false;
+                                    break;
+                                }
                             }
-                        }
-                        if (toAdd) {
-                            dataMapping.push({
-                                value: answer.score,
-                                name: speciality,
-                                path: speciality,
-                                children: []
-                            });
-                        }
+                            if (toAdd) {
+                                dataMapping.push({
+                                    value: answer.score,
+                                    name: speciality,
+                                    path: speciality,
+                                    children: []
+                                });
+                            }
 
-                        // Add sub-speciality scores
-                        const specialityList = this.state.specialityList;
-                        for (let j = 0; j < dataMapping.length; j++) {
-                            const dataObject = dataMapping[j];
-                            for (let k = 0; k < specialityList.length; k++) {
-                                const fetchedSpeciality = specialityList[k];
-                                if (fetchedSpeciality.speciality === dataObject.name) {
-                                    const fetchedSubspecialities = fetchedSpeciality.subspecialities;
-                                    for (let l = 0; l < fetchedSubspecialities.length; l++) {
-                                        const fetchedSubspeciality = fetchedSubspecialities[l];
-                                        for (let m = 0; m < subSpecialities.length; m++) {
-                                            const subSpeciality = subSpecialities[m];
-                                            if (subSpeciality === fetchedSubspeciality.subspeciality) {
-                                                const firstLevelChildren = dataObject.children;
-                                                toAdd = true;
-                                                for (let n = 0; n < firstLevelChildren.length; n++) {
-                                                    const firstLevelChild = firstLevelChildren[n];
-                                                    if (firstLevelChild.name === subSpeciality) {
-                                                        firstLevelChild.value += answer.score;
-                                                        toAdd = false;
-                                                        break;
-                                                    }
-                                                }
-                                                if (toAdd) {
-                                                    for (let n = 0; n < dataMapping.length; n++) {
-                                                        const dataObject = dataMapping[n];
-                                                        const firstLevelChildren = dataObject.children;
-                                                        let hasDuplicate = false;
-                                                        for (let o = 0; o < firstLevelChildren.length; o++) {
-                                                            const firstLevelChild = firstLevelChildren[o];
-                                                            if (firstLevelChild.name === subSpeciality) {
-                                                                hasDuplicate = true;
-                                                                break;
-                                                            }
+                            // Add sub-speciality scores
+                            const specialityList = this.state.specialityList;
+                            for (let j = 0; j < dataMapping.length; j++) {
+                                const dataObject = dataMapping[j];
+                                for (let k = 0; k < specialityList.length; k++) {
+                                    const fetchedSpeciality = specialityList[k];
+                                    if (fetchedSpeciality.speciality === dataObject.name) {
+                                        const fetchedSubspecialities = fetchedSpeciality.subspecialities;
+                                        for (let l = 0; l < fetchedSubspecialities.length; l++) {
+                                            const fetchedSubspeciality = fetchedSubspecialities[l];
+                                            for (let m = 0; m < subSpecialities.length; m++) {
+                                                const subSpeciality = subSpecialities[m];
+                                                if (subSpeciality === fetchedSubspeciality.subspeciality) {
+                                                    const firstLevelChildren = dataObject.children;
+                                                    toAdd = true;
+                                                    for (let n = 0; n < firstLevelChildren.length; n++) {
+                                                        const firstLevelChild = firstLevelChildren[n];
+                                                        if (firstLevelChild.name === subSpeciality) {
+                                                            firstLevelChild.value += answer.score;
+                                                            toAdd = false;
+                                                            break;
                                                         }
-                                                        if (!hasDuplicate) {
-                                                            firstLevelChildren.push({
-                                                                value: answer.score,
-                                                                name: fetchedSubspeciality.subspeciality,
-                                                                path: fetchedSubspeciality.subspeciality,
-                                                                children: []
-                                                            });
+                                                    }
+                                                    if (toAdd) {
+                                                        for (let n = 0; n < dataMapping.length; n++) {
+                                                            const dataObject = dataMapping[n];
+                                                            const firstLevelChildren = dataObject.children;
+                                                            let hasDuplicate = false;
+                                                            for (let o = 0; o < firstLevelChildren.length; o++) {
+                                                                const firstLevelChild = firstLevelChildren[o];
+                                                                if (firstLevelChild.name === subSpeciality) {
+                                                                    hasDuplicate = true;
+                                                                    break;
+                                                                }
+                                                            }
+                                                            if (!hasDuplicate) {
+                                                                firstLevelChildren.push({
+                                                                    value: answer.score,
+                                                                    name: fetchedSubspeciality.subspeciality,
+                                                                    path: fetchedSubspeciality.subspeciality,
+                                                                    children: []
+                                                                });
+                                                            }
                                                         }
                                                     }
                                                 }
